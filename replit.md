@@ -104,12 +104,14 @@ Optional:
 
 ## Recent Changes
 
-**2025-01-24**: Initial schema and frontend implementation
-- Created complete database schema with 8 tables
-- Built email gate, main launch, sculpture gallery, dashboard, admin panel
-- Configured dark theme with bronze/patina color palette
-- Implemented animated gradient text system
-- Added custom CSS for glassy bronze buttons and aloe background
+**2025-01-24**: Backend implementation and feature completion
+- Removed unused registration/email gate features (replaced with Replit Auth)
+- Seeded 10 sculpture options via automated script
+- Implemented email delivery service with nodemailer (gracefully handles missing SMTP config)
+- Added code redemption tracking (redemptionCount, maxRedemptions, redeemedBy array, lastRedeemedAt)
+- Created referrals table and API endpoint GET /api/referrals/code/:codeId for tracking lifetime referral usage
+- Fixed header nested anchor tag warnings
+- All backend routes operational for purchase flow, code management, and admin analytics
 
 ## Development Notes
 

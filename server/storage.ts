@@ -5,6 +5,7 @@ import {
   codes,
   sculptures,
   sculptureSelections,
+  referrals,
   type User,
   type UpsertUser,
   type Seat,
@@ -16,6 +17,8 @@ import {
   type InsertSculpture,
   type SculptureSelection,
   type InsertSculptureSelection,
+  type Referral,
+  type InsertReferral,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, sql } from "drizzle-orm";
@@ -43,6 +46,7 @@ export interface IStorage {
   getCodesByPurchaseId(purchaseId: string): Promise<Code[]>;
   getAllCodes(): Promise<Code[]>;
   getCodeByCode(code: string): Promise<Code | undefined>;
+  getCodeById(codeId: string): Promise<Code | undefined>;
   redeemCode(codeId: string, redeemedBy: string): Promise<void>;
   
   // Sculpture operations
@@ -53,6 +57,12 @@ export interface IStorage {
   // Sculpture selection operations
   createSculptureSelection(selection: InsertSculptureSelection): Promise<SculptureSelection>;
   getSculptureSelectionByPurchaseId(purchaseId: string): Promise<SculptureSelection | undefined>;
+  
+  // Referral operations
+  createReferral(referral: InsertReferral): Promise<Referral>;
+  getReferralsByCodeId(codeId: string): Promise<Referral[]>;
+  getReferralsByUserId(userId: string): Promise<Referral[]>;
+  getAllReferrals(): Promise<Referral[]>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -152,6 +162,11 @@ export class DatabaseStorage implements IStorage {
     return code;
   }
 
+  async getCodeById(codeId: string): Promise<Code | undefined> {
+    const [code] = await db.select().from(codes).where(eq(codes.id, codeId));
+    return code;
+  }
+
   async redeemCode(codeId: string, redeemedBy: string): Promise<void> {
     const [code] = await db.select().from(codes).where(eq(codes.id, codeId));
     if (!code) {
@@ -195,6 +210,24 @@ export class DatabaseStorage implements IStorage {
   async getSculptureSelectionByPurchaseId(purchaseId: string): Promise<SculptureSelection | undefined> {
     const [selection] = await db.select().from(sculptureSelections).where(eq(sculptureSelections.purchaseId, purchaseId));
     return selection;
+  }
+
+  // Referral operations
+  async createReferral(referral: InsertReferral): Promise<Referral> {
+    const [r] = await db.insert(referrals).values(referral).returning();
+    return r;
+  }
+
+  async getReferralsByCodeId(codeId: string): Promise<Referral[]> {
+    return await db.select().from(referrals).where(eq(referrals.referralCodeId, codeId)).orderBy(desc(referrals.createdAt));
+  }
+
+  async getReferralsByUserId(userId: string): Promise<Referral[]> {
+    return await db.select().from(referrals).where(eq(referrals.referredUserId, userId)).orderBy(desc(referrals.createdAt));
+  }
+
+  async getAllReferrals(): Promise<Referral[]> {
+    return await db.select().from(referrals).orderBy(desc(referrals.createdAt));
   }
 }
 

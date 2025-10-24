@@ -396,6 +396,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Redeem code
       await storage.redeemCode(code.id, user?.email || userId);
 
+      // Create referral tracking record if this is a referral code
+      if (code.type === "lifetime_referral") {
+        await storage.createReferral({
+          referralCodeId: code.id,
+          referredUserId: userId,
+          status: "pending",
+        });
+      }
+
       res.json({
         message: "Code redeemed successfully",
         code: {
@@ -406,6 +415,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error("Code redemption error:", error);
       res.status(500).json({ message: error.message || "Failed to redeem code" });
+    }
+  });
+
+  // Protected: Get referral analytics for a code by ID
+  app.get("/api/referrals/code/:codeId", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { codeId } = req.params;
+
+      // Fetch code by ID
+      const code = await storage.getCodeById(codeId);
+      if (!code) {
+        return res.status(404).json({ message: "Code not found" });
+      }
+
+      // Get purchase for this code to verify ownership
+      const purchase = await storage.getPurchase(code.purchaseId);
+      if (purchase?.userId !== userId) {
+        return res.status(403).json({ message: "Unauthorized" });
+      }
+
+      // Get all referrals for this code
+      const referralRecords = await storage.getReferralsByCodeId(code.id);
+
+      res.json({
+        code,
+        referrals: referralRecords,
+        stats: {
+          totalRedemptions: code.redemptionCount,
+          totalReferrals: referralRecords.length,
+          pendingReferrals: referralRecords.filter(r => r.status === "pending").length,
+          completedReferrals: referralRecords.filter(r => r.status === "completed").length,
+        },
+      });
+    } catch (error: any) {
+      console.error("Referral analytics error:", error);
+      res.status(500).json({ message: error.message || "Failed to fetch referral analytics" });
     }
   });
 

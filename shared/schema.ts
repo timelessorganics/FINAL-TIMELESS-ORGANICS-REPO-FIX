@@ -165,6 +165,28 @@ export const insertSculptureSelectionSchema = createInsertSchema(sculptureSelect
 export type InsertSculptureSelection = z.infer<typeof insertSculptureSelectionSchema>;
 export type SculptureSelection = typeof sculptureSelections.$inferSelect;
 
+// Referral tracking - tracks when referral codes are used
+export const referrals = pgTable("referrals", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  referralCodeId: varchar("referral_code_id").references(() => codes.id).notNull(),
+  referredUserId: varchar("referred_user_id").references(() => users.id),
+  purchaseId: varchar("purchase_id").references(() => purchases.id),
+  discountApplied: integer("discount_applied"), // Percentage or amount
+  status: varchar("status").default("pending").notNull(), // pending, completed, cancelled
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertReferralSchema = createInsertSchema(referrals).pick({
+  referralCodeId: true,
+  referredUserId: true,
+  purchaseId: true,
+  discountApplied: true,
+  status: true,
+}).partial({ discountApplied: true, purchaseId: true, referredUserId: true });
+
+export type InsertReferral = z.infer<typeof insertReferralSchema>;
+export type Referral = typeof referrals.$inferSelect;
+
 // Relations
 export const purchasesRelations = relations(purchases, ({ one, many }) => ({
   user: one(users, {
