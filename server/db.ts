@@ -1,27 +1,39 @@
 // Database configuration - supports both Supabase and Neon
-import { Pool, neonConfig } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-serverless';
+import { Pool as PgPool } from 'pg';
+import { Pool as NeonPool, neonConfig } from '@neondatabase/serverless';
+import { drizzle as drizzlePg } from 'drizzle-orm/node-postgres';
+import { drizzle as drizzleNeon } from 'drizzle-orm/neon-serverless';
 import ws from "ws";
 import * as schema from "@shared/schema";
 
 neonConfig.webSocketConstructor = ws;
 
-// Build connection string based on available credentials
+// Build connection string and database instance based on available credentials
 let connectionString: string | undefined;
+let pool: PgPool | NeonPool;
+let db: ReturnType<typeof drizzlePg> | ReturnType<typeof drizzleNeon>;
 
 if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-  // Supabase connection string format
+  // Supabase connection using standard PostgreSQL driver
   // SUPABASE_URL is like: https://xxxxx.supabase.co
-  // We need to extract the project ref and build the connection string
   const supabaseUrl = process.env.SUPABASE_URL;
   const projectRef = supabaseUrl.replace('https://', '').replace('.supabase.co', '');
-  const password = process.env.SUPABASE_SERVICE_ROLE_KEY;
+  const password = encodeURIComponent(process.env.SUPABASE_SERVICE_ROLE_KEY);
   
+  // Use Supabase pooler connection with properly encoded password
   connectionString = `postgresql://postgres.${projectRef}:${password}@aws-0-us-east-1.pooler.supabase.com:6543/postgres`;
+  
+  pool = new PgPool({ connectionString });
+  db = drizzlePg(pool, { schema });
+  
   console.log(`Using Supabase database: ${projectRef}`);
 } else if (process.env.DATABASE_URL) {
-  // Fall back to Neon or other PostgreSQL
+  // Fall back to Neon using serverless driver
   connectionString = process.env.DATABASE_URL;
+  
+  pool = new NeonPool({ connectionString });
+  db = drizzleNeon({ client: pool, schema });
+  
   console.log('Using DATABASE_URL for database connection');
 } else {
   throw new Error(
@@ -29,5 +41,4 @@ if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
   );
 }
 
-export const pool = new Pool({ connectionString });
-export const db = drizzle({ client: pool, schema });
+export { pool, db };
