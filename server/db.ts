@@ -20,13 +20,16 @@ if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
   const projectRef = supabaseUrl.replace('https://', '').replace('.supabase.co', '');
   const password = encodeURIComponent(process.env.SUPABASE_SERVICE_ROLE_KEY);
   
-  // Use Supabase pooler connection with properly encoded password
-  connectionString = `postgresql://postgres.${projectRef}:${password}@aws-0-us-east-1.pooler.supabase.com:6543/postgres`;
+  // Use Supabase connection pooler (better compatibility with cloud environments)
+  connectionString = `postgresql://postgres.${projectRef}:${password}@aws-0-us-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true`;
   
-  pool = new PgPool({ connectionString });
+  pool = new PgPool({ 
+    connectionString,
+    max: 1, // Pooler works best with single connection from serverless
+  });
   db = drizzlePg(pool, { schema });
   
-  console.log(`Using Supabase database: ${projectRef}`);
+  console.log(`Using Supabase database (pooler): ${projectRef}`);
 } else if (process.env.DATABASE_URL) {
   // Fall back to Neon using serverless driver
   connectionString = process.env.DATABASE_URL;
