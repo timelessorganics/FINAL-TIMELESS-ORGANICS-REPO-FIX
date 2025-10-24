@@ -53,6 +53,19 @@ function LandingPage() {
   );
 }
 
+function RootRedirect() {
+  // Redirect root to /founding100 until main site is ready
+  useEffect(() => {
+    window.location.href = "/founding100";
+  }, []);
+  
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="spinner" />
+    </div>
+  );
+}
+
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
 
@@ -70,13 +83,13 @@ function Router() {
       <Route path="/payment/success" component={PaymentSuccess} />
       <Route path="/payment/cancel" component={PaymentCancel} />
       
-      {!isAuthenticated ? (
-        <Route path="/" component={LandingPage} />
-      ) : (
+      {/* Founding 100 Launch Page */}
+      <Route path="/founding100">
+        {!isAuthenticated ? <LandingPage /> : <MainLaunch />}
+      </Route>
+      
+      {isAuthenticated && (
         <>
-          {/* Main Launch Page */}
-          <Route path="/" component={MainLaunch} />
-          
           {/* Sculpture Gallery */}
           <Route path="/sculpture-selection/:purchaseId">
             {(params) => <SculptureGallery purchaseId={params.purchaseId} />}
@@ -91,6 +104,9 @@ function Router() {
           </Route>
         </>
       )}
+      
+      {/* Root redirects to /founding100 for now */}
+      <Route path="/" component={RootRedirect} />
       
       {/* Fallback to 404 */}
       <Route component={NotFound} />
