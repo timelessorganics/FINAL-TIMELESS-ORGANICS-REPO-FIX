@@ -39,13 +39,16 @@ export function generatePayFastUrl(): string {
 }
 
 export function generateSignature(data: Record<string, string>, passphrase?: string): string {
-  // Create parameter string
+  // Create parameter string in the order fields appear (NOT alphabetically!)
+  // PayFast requires: order as they appear in attributes, NOT alphabetical
   let paramString = '';
-  const sortedKeys = Object.keys(data).sort();
   
-  sortedKeys.forEach((key) => {
-    if (key !== 'signature') {
-      paramString += `${key}=${encodeURIComponent(data[key]).replace(/%20/g, '+')}&`;
+  // Process keys in insertion order (the order they were added to the object)
+  Object.keys(data).forEach((key) => {
+    if (key !== 'signature' && data[key] !== '') {
+      // URL encode and replace %20 with + as per PayFast requirements
+      const encodedValue = encodeURIComponent(data[key].trim()).replace(/%20/g, '+');
+      paramString += `${key}=${encodedValue}&`;
     }
   });
   
@@ -54,10 +57,10 @@ export function generateSignature(data: Record<string, string>, passphrase?: str
   
   // Add passphrase if provided
   if (passphrase) {
-    paramString += `&passphrase=${encodeURIComponent(passphrase).replace(/%20/g, '+')}`;
+    paramString += `&passphrase=${encodeURIComponent(passphrase.trim()).replace(/%20/g, '+')}`;
   }
   
-  // Generate signature
+  // Generate MD5 signature
   return crypto.createHash('md5').update(paramString).digest('hex');
 }
 
