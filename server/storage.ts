@@ -1,0 +1,193 @@
+import {
+  users,
+  registrations,
+  seats,
+  purchases,
+  codes,
+  sculptures,
+  sculptureSelections,
+  type User,
+  type UpsertUser,
+  type Registration,
+  type InsertRegistration,
+  type Seat,
+  type Purchase,
+  type InsertPurchase,
+  type Code,
+  type InsertCode,
+  type Sculpture,
+  type InsertSculpture,
+  type SculptureSelection,
+  type InsertSculptureSelection,
+} from "@shared/schema";
+import { db } from "./db";
+import { eq, desc, sql } from "drizzle-orm";
+
+// Interface for storage operations
+export interface IStorage {
+  // User operations (Required for Replit Auth)
+  getUser(id: string): Promise<User | undefined>;
+  upsertUser(user: UpsertUser): Promise<User>;
+  
+  // Registration operations
+  createRegistration(registration: InsertRegistration): Promise<Registration>;
+  getRegistrationByEmail(email: string): Promise<Registration | undefined>;
+  
+  // Seat operations
+  getSeats(): Promise<Seat[]>;
+  getSeatByType(type: 'founder' | 'patron'): Promise<Seat | undefined>;
+  updateSeatSold(type: 'founder' | 'patron', increment: number): Promise<void>;
+  
+  // Purchase operations
+  createPurchase(purchase: InsertPurchase): Promise<Purchase>;
+  getPurchase(id: string): Promise<Purchase | undefined>;
+  getPurchasesByUserId(userId: string): Promise<Purchase[]>;
+  getAllPurchases(): Promise<Purchase[]>;
+  updatePurchaseStatus(id: string, status: 'pending' | 'completed' | 'failed', paymentReference?: string, certificateUrl?: string): Promise<void>;
+  
+  // Code operations
+  createCode(code: InsertCode): Promise<Code>;
+  getCodesByPurchaseId(purchaseId: string): Promise<Code[]>;
+  getAllCodes(): Promise<Code[]>;
+  
+  // Sculpture operations
+  createSculpture(sculpture: InsertSculpture): Promise<Sculpture>;
+  getSculptures(): Promise<Sculpture[]>;
+  getSculpture(id: string): Promise<Sculpture | undefined>;
+  
+  // Sculpture selection operations
+  createSculptureSelection(selection: InsertSculptureSelection): Promise<SculptureSelection>;
+  getSculptureSelectionByPurchaseId(purchaseId: string): Promise<SculptureSelection | undefined>;
+}
+
+export class DatabaseStorage implements IStorage {
+  // User operations
+  async getUser(id: string): Promise<User | undefined> {
+    const [user] = await db.select().from(users).where(eq(users.id, id));
+    return user;
+  }
+
+  async upsertUser(userData: UpsertUser): Promise<User> {
+    const [user] = await db
+      .insert(users)
+      .values(userData)
+      .onConflictDoUpdate({
+        target: users.id,
+        set: {
+          ...userData,
+          updatedAt: new Date(),
+        },
+      })
+      .returning();
+    return user;
+  }
+
+  // Registration operations
+  async createRegistration(registration: InsertRegistration): Promise<Registration> {
+    const [reg] = await db.insert(registrations).values(registration).returning();
+    return reg;
+  }
+
+  async getRegistrationByEmail(email: string): Promise<Registration | undefined> {
+    const [reg] = await db.select().from(registrations).where(eq(registrations.email, email));
+    return reg;
+  }
+
+  // Seat operations
+  async getSeats(): Promise<Seat[]> {
+    return await db.select().from(seats);
+  }
+
+  async getSeatByType(type: 'founder' | 'patron'): Promise<Seat | undefined> {
+    const [seat] = await db.select().from(seats).where(eq(seats.type, type));
+    return seat;
+  }
+
+  async updateSeatSold(type: 'founder' | 'patron', increment: number): Promise<void> {
+    await db
+      .update(seats)
+      .set({
+        sold: sql`${seats.sold} + ${increment}`,
+        updatedAt: new Date(),
+      })
+      .where(eq(seats.type, type));
+  }
+
+  // Purchase operations
+  async createPurchase(purchase: InsertPurchase): Promise<Purchase> {
+    const [p] = await db.insert(purchases).values(purchase).returning();
+    return p;
+  }
+
+  async getPurchase(id: string): Promise<Purchase | undefined> {
+    const [purchase] = await db.select().from(purchases).where(eq(purchases.id, id));
+    return purchase;
+  }
+
+  async getPurchasesByUserId(userId: string): Promise<Purchase[]> {
+    return await db.select().from(purchases).where(eq(purchases.userId, userId)).orderBy(desc(purchases.createdAt));
+  }
+
+  async getAllPurchases(): Promise<Purchase[]> {
+    return await db.select().from(purchases).orderBy(desc(purchases.createdAt));
+  }
+
+  async updatePurchaseStatus(
+    id: string,
+    status: 'pending' | 'completed' | 'failed',
+    paymentReference?: string,
+    certificateUrl?: string
+  ): Promise<void> {
+    await db
+      .update(purchases)
+      .set({
+        status,
+        paymentReference,
+        certificateUrl,
+        completedAt: status === 'completed' ? new Date() : undefined,
+      })
+      .where(eq(purchases.id, id));
+  }
+
+  // Code operations
+  async createCode(code: InsertCode): Promise<Code> {
+    const [c] = await db.insert(codes).values(code).returning();
+    return c;
+  }
+
+  async getCodesByPurchaseId(purchaseId: string): Promise<Code[]> {
+    return await db.select().from(codes).where(eq(codes.purchaseId, purchaseId));
+  }
+
+  async getAllCodes(): Promise<Code[]> {
+    return await db.select().from(codes);
+  }
+
+  // Sculpture operations
+  async createSculpture(sculpture: InsertSculpture): Promise<Sculpture> {
+    const [s] = await db.insert(sculptures).values(sculpture).returning();
+    return s;
+  }
+
+  async getSculptures(): Promise<Sculpture[]> {
+    return await db.select().from(sculptures).orderBy(sculptures.displayOrder);
+  }
+
+  async getSculpture(id: string): Promise<Sculpture | undefined> {
+    const [sculpture] = await db.select().from(sculptures).where(eq(sculptures.id, id));
+    return sculpture;
+  }
+
+  // Sculpture selection operations
+  async createSculptureSelection(selection: InsertSculptureSelection): Promise<SculptureSelection> {
+    const [s] = await db.insert(sculptureSelections).values(selection).returning();
+    return s;
+  }
+
+  async getSculptureSelectionByPurchaseId(purchaseId: string): Promise<SculptureSelection | undefined> {
+    const [selection] = await db.select().from(sculptureSelections).where(eq(sculptureSelections.purchaseId, purchaseId));
+    return selection;
+  }
+}
+
+export const storage = new DatabaseStorage();
