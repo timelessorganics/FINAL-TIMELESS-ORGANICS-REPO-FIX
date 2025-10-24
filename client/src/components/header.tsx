@@ -19,22 +19,18 @@ export default function Header() {
 
         <nav className="flex items-center gap-4">
           <Link href="/dashboard">
-            <a data-testid="link-dashboard">
-              <Button variant="ghost" size="sm" className="gap-2">
-                <LayoutDashboard className="w-4 h-4" />
-                <span>Dashboard</span>
-              </Button>
-            </a>
+            <Button variant="ghost" size="sm" className="gap-2" data-testid="link-dashboard">
+              <LayoutDashboard className="w-4 h-4" />
+              <span>Dashboard</span>
+            </Button>
           </Link>
 
           {user?.isAdmin && (
             <Link href="/admin">
-              <a data-testid="link-admin">
-                <Button variant="ghost" size="sm" className="gap-2">
-                  <ShieldCheck className="w-4 h-4" />
-                  <span>Admin</span>
-                </Button>
-              </a>
+              <Button variant="ghost" size="sm" className="gap-2" data-testid="link-admin">
+                <ShieldCheck className="w-4 h-4" />
+                <span>Admin</span>
+              </Button>
             </Link>
           )}
 

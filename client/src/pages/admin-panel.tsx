@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/header";
-import type { Seat, Purchase, Registration, Code } from "@shared/schema";
+import type { Seat, Purchase, Code } from "@shared/schema";
 import { Users, Package, DollarSign, Award } from "lucide-react";
 
 export default function AdminPanel() {
@@ -12,10 +12,6 @@ export default function AdminPanel() {
 
   const { data: purchases } = useQuery<Purchase[]>({
     queryKey: ["/api/admin/purchases"],
-  });
-
-  const { data: registrations } = useQuery<Registration[]>({
-    queryKey: ["/api/admin/registrations"],
   });
 
   const { data: codes } = useQuery<Code[]>({
@@ -51,9 +47,9 @@ export default function AdminPanel() {
                 <Badge className="bg-patina text-white">Live</Badge>
               </div>
               <div className="text-3xl font-bold font-serif text-foreground mb-1">
-                {registrations?.length || 0}
+                {completedPurchases}
               </div>
-              <div className="text-sm text-muted-foreground">Registrations</div>
+              <div className="text-sm text-muted-foreground">Total Investors</div>
             </Card>
 
             <Card className="bg-card border-card-border p-6">

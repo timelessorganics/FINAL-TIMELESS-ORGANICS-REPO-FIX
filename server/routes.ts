@@ -4,7 +4,7 @@ import express from "express";
 import path from "path";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
-import { insertRegistrationSchema, insertPurchaseSchema, insertSculptureSchema, insertSculptureSelectionSchema } from "@shared/schema";
+import { insertPurchaseSchema, insertSculptureSchema, insertSculptureSelectionSchema } from "@shared/schema";
 import { fromError } from "zod-validation-error";
 import { 
   generateBronzeClaimCode, 
@@ -20,6 +20,7 @@ import {
   getPayFastConfig
 } from "./utils/payfast";
 import { generateCertificate } from "./utils/certificateGenerator";
+import { sendCertificateEmail, sendPurchaseConfirmationEmail } from "./utils/emailService";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
@@ -37,33 +38,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  // Public: Email registration
-  app.post("/api/register", async (req: Request, res: Response) => {
-    try {
-      const result = insertRegistrationSchema.safeParse(req.body);
-      
-      if (!result.success) {
-        return res.status(400).json({ 
-          message: fromError(result.error).toString() 
-        });
-      }
-
-      // Check if email already registered
-      const existing = await storage.getRegistrationByEmail(result.data.email);
-      if (existing) {
-        return res.status(409).json({ 
-          message: "Email already registered" 
-        });
-      }
-
-      const registration = await storage.createRegistration(result.data);
-      res.status(201).json(registration);
-    } catch (error: any) {
-      console.error("Registration error:", error);
-      res.status(500).json({ message: error.message || "Failed to register" });
-    }
-  });
-
   // Public: Get seat availability
   app.get("/api/seats/availability", async (_req: Request, res: Response) => {
     try {
@@ -178,6 +152,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             purchaseId: purchase.id,
             type: "bronze_claim",
             code: generateBronzeClaimCode(),
+            maxRedemptions: 1, // Single use
           });
 
           const workshopCode = await storage.createCode({
@@ -186,6 +161,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             code: generateWorkshopVoucherCode(purchase.seatType),
             discount: getWorkshopDiscount(purchase.seatType),
             transferable: true,
+            maxRedemptions: 1, // Single use but transferable
           });
 
           const referralCode = await storage.createCode({
@@ -193,6 +169,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             type: "lifetime_referral",
             code: generateLifetimeReferralCode(),
             transferable: true,
+            maxRedemptions: null as any, // Unlimited use
           });
 
           // Get user info for certificate
@@ -217,6 +194,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
           );
 
           console.log("Purchase completed successfully:", purchaseId);
+
+          // Send email notifications
+          const userEmail = user?.email || pfData.email_address;
+          if (userEmail) {
+            // Send purchase confirmation
+            await sendPurchaseConfirmationEmail(userEmail, userName, purchase);
+            
+            // Send certificate with codes
+            await sendCertificateEmail(
+              userEmail,
+              userName,
+              purchase,
+              [bronzeCode, workshopCode, referralCode],
+              certificateUrl
+            );
+          }
         }
       } else if (paymentStatus === "FAILED" || paymentStatus === "CANCELLED") {
         await storage.updatePurchaseStatus(purchaseId, "failed", pfData.pf_payment_id);
@@ -352,25 +345,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin: Get all registrations (admin only)
-  app.get("/api/admin/registrations", isAuthenticated, async (req: any, res: Response) => {
-    try {
-      const userId = req.user.claims.sub;
-      const user = await storage.getUser(userId);
-      
-      if (!user?.isAdmin) {
-        return res.status(403).json({ message: "Admin access required" });
-      }
-
-      // For now, return empty array since we don't have getAllRegistrations in storage
-      // You can add this method to storage if needed
-      res.json([]);
-    } catch (error: any) {
-      console.error("Admin registrations error:", error);
-      res.status(500).json({ message: error.message || "Failed to fetch registrations" });
-    }
-  });
-
   // Admin: Get all codes (admin only)
   app.get("/api/admin/codes", isAuthenticated, async (req: any, res: Response) => {
     try {
@@ -386,6 +360,52 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error("Admin codes error:", error);
       res.status(500).json({ message: error.message || "Failed to fetch codes" });
+    }
+  });
+
+  // Protected: Redeem code
+  app.post("/api/codes/redeem", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      const { code: codeString } = req.body;
+
+      if (!codeString) {
+        return res.status(400).json({ message: "Code is required" });
+      }
+
+      // Find code
+      const code = await storage.getCodeByCode(codeString);
+      if (!code) {
+        return res.status(404).json({ message: "Code not found" });
+      }
+
+      // Check if code has redemption limit
+      if (code.maxRedemptions !== null) {
+        if (code.redemptionCount >= code.maxRedemptions) {
+          return res.status(409).json({ message: "Code has reached maximum redemptions" });
+        }
+      }
+
+      // Check if already redeemed by this user (for single-use codes)
+      const redeemedBy = (code.redeemedBy as string[]) || [];
+      if (code.maxRedemptions === 1 && redeemedBy.includes(userId)) {
+        return res.status(409).json({ message: "Code already redeemed by you" });
+      }
+
+      // Redeem code
+      await storage.redeemCode(code.id, user?.email || userId);
+
+      res.json({
+        message: "Code redeemed successfully",
+        code: {
+          ...code,
+          redemptionCount: code.redemptionCount + 1,
+        },
+      });
+    } catch (error: any) {
+      console.error("Code redemption error:", error);
+      res.status(500).json({ message: error.message || "Failed to redeem code" });
     }
   });
 

@@ -41,7 +41,8 @@ export const users = pgTable("users", {
 export type UpsertUser = typeof users.$inferInsert;
 export type User = typeof users.$inferSelect;
 
-// Email registrations (gate before main site)
+// DEPRECATED: Email registrations table (replaced by Replit Auth)
+// Kept in schema to avoid destructive migrations, but no longer used
 export const registrations = pgTable("registrations", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   email: varchar("email").notNull().unique(),
@@ -49,14 +50,6 @@ export const registrations = pgTable("registrations", {
   verified: boolean("verified").default(false),
   createdAt: timestamp("created_at").defaultNow(),
 });
-
-export const insertRegistrationSchema = createInsertSchema(registrations).pick({
-  email: true,
-  fullName: true,
-});
-
-export type InsertRegistration = z.infer<typeof insertRegistrationSchema>;
-export type Registration = typeof registrations.$inferSelect;
 
 // Seat types enum
 export const seatTypeEnum = pgEnum('seat_type', ['founder', 'patron']);
@@ -111,6 +104,11 @@ export const codes = pgTable("codes", {
   transferable: boolean("transferable").default(false),
   usedAt: timestamp("used_at"),
   createdAt: timestamp("created_at").defaultNow(),
+  // Redemption tracking fields
+  redemptionCount: integer("redemption_count").default(0).notNull(),
+  maxRedemptions: integer("max_redemptions").default(1), // null = unlimited (for lifetime referrals)
+  redeemedBy: jsonb("redeemed_by").$type<string[]>().default([]), // Array of user IDs or emails
+  lastRedeemedAt: timestamp("last_redeemed_at"),
 });
 
 export const insertCodeSchema = createInsertSchema(codes).pick({
@@ -119,6 +117,7 @@ export const insertCodeSchema = createInsertSchema(codes).pick({
   code: true,
   discount: true,
   transferable: true,
+  maxRedemptions: true,
 });
 
 export type InsertCode = z.infer<typeof insertCodeSchema>;

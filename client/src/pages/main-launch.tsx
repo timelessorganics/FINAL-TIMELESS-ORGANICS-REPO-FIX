@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import SeatCard from "@/components/seat-card";
 import Header from "@/components/header";
+import { Button } from "@/components/ui/button";
 import type { Seat } from "@shared/schema";
 
 export default function MainLaunch() {

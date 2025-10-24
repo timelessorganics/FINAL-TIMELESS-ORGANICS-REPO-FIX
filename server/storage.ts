@@ -1,6 +1,5 @@
 import {
   users,
-  registrations,
   seats,
   purchases,
   codes,
@@ -8,8 +7,6 @@ import {
   sculptureSelections,
   type User,
   type UpsertUser,
-  type Registration,
-  type InsertRegistration,
   type Seat,
   type Purchase,
   type InsertPurchase,
@@ -29,10 +26,6 @@ export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   upsertUser(user: UpsertUser): Promise<User>;
   
-  // Registration operations
-  createRegistration(registration: InsertRegistration): Promise<Registration>;
-  getRegistrationByEmail(email: string): Promise<Registration | undefined>;
-  
   // Seat operations
   getSeats(): Promise<Seat[]>;
   getSeatByType(type: 'founder' | 'patron'): Promise<Seat | undefined>;
@@ -49,6 +42,8 @@ export interface IStorage {
   createCode(code: InsertCode): Promise<Code>;
   getCodesByPurchaseId(purchaseId: string): Promise<Code[]>;
   getAllCodes(): Promise<Code[]>;
+  getCodeByCode(code: string): Promise<Code | undefined>;
+  redeemCode(codeId: string, redeemedBy: string): Promise<void>;
   
   // Sculpture operations
   createSculpture(sculpture: InsertSculpture): Promise<Sculpture>;
@@ -80,17 +75,6 @@ export class DatabaseStorage implements IStorage {
       })
       .returning();
     return user;
-  }
-
-  // Registration operations
-  async createRegistration(registration: InsertRegistration): Promise<Registration> {
-    const [reg] = await db.insert(registrations).values(registration).returning();
-    return reg;
-  }
-
-  async getRegistrationByEmail(email: string): Promise<Registration | undefined> {
-    const [reg] = await db.select().from(registrations).where(eq(registrations.email, email));
-    return reg;
   }
 
   // Seat operations
@@ -161,6 +145,30 @@ export class DatabaseStorage implements IStorage {
 
   async getAllCodes(): Promise<Code[]> {
     return await db.select().from(codes);
+  }
+
+  async getCodeByCode(codeString: string): Promise<Code | undefined> {
+    const [code] = await db.select().from(codes).where(eq(codes.code, codeString));
+    return code;
+  }
+
+  async redeemCode(codeId: string, redeemedBy: string): Promise<void> {
+    const [code] = await db.select().from(codes).where(eq(codes.id, codeId));
+    if (!code) {
+      throw new Error("Code not found");
+    }
+
+    const currentRedeemedBy = (code.redeemedBy as string[]) || [];
+    
+    await db
+      .update(codes)
+      .set({
+        redemptionCount: sql`${codes.redemptionCount} + 1`,
+        redeemedBy: [...currentRedeemedBy, redeemedBy] as any,
+        lastRedeemedAt: new Date(),
+        usedAt: code.usedAt || new Date(), // Set usedAt on first redemption
+      })
+      .where(eq(codes.id, codeId));
   }
 
   // Sculpture operations
