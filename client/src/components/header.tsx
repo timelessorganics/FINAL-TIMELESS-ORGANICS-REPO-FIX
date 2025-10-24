@@ -10,10 +10,8 @@ export default function Header() {
     <header className="sticky top-0 z-50 border-b border-border bg-background/80 backdrop-blur-md">
       <div className="max-w-[1100px] mx-auto px-7 py-4 flex items-center justify-between gap-4">
         <div>
-          <Link href="/">
-            <a className="font-serif text-xl font-bold">
-              <span className="moving-fill">Timeless Organics</span>
-            </a>
+          <Link href="/" className="font-serif text-xl font-bold" data-testid="link-home">
+            <span className="moving-fill">Timeless Organics</span>
           </Link>
         </div>
 
