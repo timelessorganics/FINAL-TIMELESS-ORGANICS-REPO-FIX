@@ -455,6 +455,62 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin: Export subscribers CSV
+  app.get("/api/admin/export/subscribers", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      // Get all users with their purchases
+      const allPurchases = await storage.getAllPurchases();
+      const purchasesByUser = new Map<string, Purchase[]>();
+      
+      for (const purchase of allPurchases) {
+        if (!purchasesByUser.has(purchase.userId)) {
+          purchasesByUser.set(purchase.userId, []);
+        }
+        purchasesByUser.get(purchase.userId)!.push(purchase);
+      }
+
+      // Build CSV rows
+      const csvRows: string[] = [
+        "Email,First Name,Last Name,Seat Type,Purchase Date,Amount,Status",
+      ];
+
+      for (const [userIdKey, userPurchases] of purchasesByUser.entries()) {
+        const purchaseUser = await storage.getUser(userIdKey);
+        if (!purchaseUser) continue;
+
+        for (const purchase of userPurchases) {
+          const row = [
+            purchaseUser.email || "",
+            purchaseUser.firstName || "",
+            purchaseUser.lastName || "",
+            purchase.seatType,
+            purchase.createdAt?.toISOString() || "",
+            purchase.amount.toString(),
+            purchase.status,
+          ].map(field => `"${field.replace(/"/g, '""')}"`).join(",");
+          
+          csvRows.push(row);
+        }
+      }
+
+      const csvContent = csvRows.join("\n");
+
+      res.setHeader("Content-Type", "text/csv");
+      res.setHeader("Content-Disposition", "attachment; filename=subscribers.csv");
+      res.send(csvContent);
+    } catch (error: any) {
+      console.error("CSV export error:", error);
+      res.status(500).json({ message: error.message || "Failed to export CSV" });
+    }
+  });
+
   // Admin: Create sculpture (admin only)
   app.post("/api/admin/sculptures", isAuthenticated, async (req: any, res: Response) => {
     try {

@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import Header from "@/components/header";
 import type { Seat, Purchase, Code } from "@shared/schema";
-import { Users, Package, DollarSign, Award } from "lucide-react";
+import { Users, Package, DollarSign, Award, Download } from "lucide-react";
 
 export default function AdminPanel() {
   const { data: seats } = useQuery<Seat[]>({
@@ -29,14 +30,27 @@ export default function AdminPanel() {
       <div className="relative z-10 min-h-screen">
         <div className="max-w-[1400px] mx-auto px-7 py-12">
           {/* Header */}
-          <div className="mb-12">
-            <div className="kicker mb-3">ADMINISTRATOR</div>
-            <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
-              <span className="moving-fill">Admin Panel</span>
-            </h1>
-            <p className="text-lg text-muted-foreground">
-              Founding 100 Launch Analytics & Management
-            </p>
+          <div className="mb-12 flex flex-wrap items-center justify-between gap-4">
+            <div>
+              <div className="kicker mb-3">ADMINISTRATOR</div>
+              <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
+                <span className="moving-fill">Admin Panel</span>
+              </h1>
+              <p className="text-lg text-muted-foreground">
+                Founding 100 Launch Analytics & Management
+              </p>
+            </div>
+            <Button
+              variant="outline"
+              className="gap-2"
+              data-testid="button-export-csv"
+              onClick={() => {
+                window.location.href = "/api/admin/export/subscribers";
+              }}
+            >
+              <Download className="w-4 h-4" />
+              Export Subscribers CSV
+            </Button>
           </div>
 
           {/* Stats Overview */}
