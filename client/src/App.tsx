@@ -10,6 +10,8 @@ import MainLaunch from "@/pages/main-launch";
 import SculptureGallery from "@/pages/sculpture-gallery";
 import Dashboard from "@/pages/dashboard";
 import AdminPanel from "@/pages/admin-panel";
+import PaymentSuccess from "@/pages/payment-success";
+import PaymentCancel from "@/pages/payment-cancel";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
@@ -64,6 +66,10 @@ function Router() {
 
   return (
     <Switch>
+      {/* Payment result pages - accessible without authentication */}
+      <Route path="/payment/success" component={PaymentSuccess} />
+      <Route path="/payment/cancel" component={PaymentCancel} />
+      
       {!isAuthenticated ? (
         <Route path="/" component={LandingPage} />
       ) : (

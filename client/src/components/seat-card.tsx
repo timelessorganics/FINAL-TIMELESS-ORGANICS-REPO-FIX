@@ -37,13 +37,29 @@ export default function SeatCard({
       });
     },
     onSuccess: (data: any) => {
-      // Redirect to PayFast payment gateway
-      if (data.paymentUrl) {
-        window.location.href = data.paymentUrl;
+      // Create and submit form to PayFast
+      if (data.paymentUrl && data.formData) {
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = data.paymentUrl;
+        form.style.display = "none";
+
+        // Add all form fields
+        Object.keys(data.formData).forEach((key) => {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = key;
+          input.value = data.formData[key];
+          form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
       } else {
         toast({
-          title: "Payment initiated",
-          description: "Redirecting to payment gateway...",
+          title: "Payment Error",
+          description: "Invalid payment data received",
+          variant: "destructive",
         });
       }
     },
