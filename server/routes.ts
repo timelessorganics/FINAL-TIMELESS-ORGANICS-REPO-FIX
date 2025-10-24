@@ -121,7 +121,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const pfData = req.body;
       console.log("PayFast notification received:", pfData);
 
-      // Verify signature
+      // 1. Log source IP for security audit
+      const sourceIp = req.headers['x-forwarded-for'] || req.socket.remoteAddress;
+      console.log("PayFast notification from IP:", sourceIp);
+
+      // 2. Verify signature
       const signature = pfData.signature;
       delete pfData.signature;
       
@@ -131,94 +135,121 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).send("Invalid signature");
       }
 
-      // Check payment status
+      // 3. Get purchase and validate
       const purchaseId = pfData.m_payment_id;
       const paymentStatus = pfData.payment_status;
+      
+      const purchase = await storage.getPurchase(purchaseId);
+      if (!purchase) {
+        console.error("Purchase not found:", purchaseId);
+        return res.status(404).send("Purchase not found");
+      }
 
+      // 4. Validate amount matches (prevent forged notifications)
+      const pfAmount = parseFloat(pfData.amount_gross) * 100; // Convert to cents
+      if (Math.abs(purchase.amount - pfAmount) > 1) { // Allow 1 cent rounding
+        console.error("Amount mismatch:", { expected: purchase.amount, received: pfAmount });
+        return res.status(400).send("Amount mismatch");
+      }
+
+      // 5. Respond immediately (PayFast requirement)
+      res.status(200).send("OK");
+
+      // 6. Process asynchronously with atomic idempotency
       if (paymentStatus === "COMPLETE") {
-        const purchase = await storage.getPurchase(purchaseId);
-        if (!purchase) {
-          console.error("Purchase not found:", purchaseId);
-          return res.status(404).send("Purchase not found");
+        // Atomic status update - only proceeds if not already completed
+        const wasUpdated = await storage.updatePurchaseStatus(
+          purchase.id,
+          "completed",
+          pfData.pf_payment_id,
+          undefined // Certificate URL added later
+        );
+
+        if (!wasUpdated) {
+          console.log("Purchase already processed (duplicate notification):", purchaseId);
+          return; // Another notification already processed this purchase
         }
 
-        // Only process if not already completed
-        if (purchase.status !== "completed") {
-          // Update seat count
-          await storage.updateSeatSold(purchase.seatType, 1);
+        // Now safe to proceed - only one notification won the race
+        console.log("Processing purchase completion:", purchaseId);
 
-          // Generate unique codes
-          const bronzeCode = await storage.createCode({
-            purchaseId: purchase.id,
-            type: "bronze_claim",
-            code: generateBronzeClaimCode(),
-            maxRedemptions: 1, // Single use
-          });
+        // Update seat count
+        await storage.updateSeatSold(purchase.seatType, 1);
 
-          const workshopCode = await storage.createCode({
-            purchaseId: purchase.id,
-            type: "workshop_voucher",
-            code: generateWorkshopVoucherCode(purchase.seatType),
-            discount: getWorkshopDiscount(purchase.seatType),
-            transferable: true,
-            maxRedemptions: 1, // Single use but transferable
-          });
+        // Generate unique codes
+        const bronzeCode = await storage.createCode({
+          purchaseId: purchase.id,
+          type: "bronze_claim",
+          code: generateBronzeClaimCode(),
+          maxRedemptions: 1,
+        });
 
-          const referralCode = await storage.createCode({
-            purchaseId: purchase.id,
-            type: "lifetime_referral",
-            code: generateLifetimeReferralCode(),
-            transferable: true,
-            maxRedemptions: null as any, // Unlimited use
-          });
+        const workshopCode = await storage.createCode({
+          purchaseId: purchase.id,
+          type: "workshop_voucher",
+          code: generateWorkshopVoucherCode(purchase.seatType),
+          discount: getWorkshopDiscount(purchase.seatType),
+          transferable: true,
+          maxRedemptions: 1,
+        });
 
-          // Get user info for certificate
-          const user = await storage.getUser(purchase.userId);
-          const userName = user?.firstName && user?.lastName 
-            ? `${user.firstName} ${user.lastName}` 
-            : user?.firstName || "Valued Investor";
+        const referralCode = await storage.createCode({
+          purchaseId: purchase.id,
+          type: "lifetime_referral",
+          code: generateLifetimeReferralCode(),
+          transferable: true,
+          maxRedemptions: null as any,
+        });
 
-          // Generate certificate
-          const certificateUrl = await generateCertificate(
+        // Get user info for certificate
+        const user = await storage.getUser(purchase.userId);
+        const userName = user?.firstName && user?.lastName 
+          ? `${user.firstName} ${user.lastName}` 
+          : user?.firstName || "Valued Investor";
+
+        // Generate certificate (can fail without breaking completion)
+        let certificateUrl = "";
+        try {
+          certificateUrl = await generateCertificate(
             purchase,
             [bronzeCode, workshopCode, referralCode],
             userName
           );
 
-          // Update purchase status
-          await storage.updatePurchaseStatus(
-            purchase.id,
-            "completed",
-            pfData.pf_payment_id,
-            certificateUrl
-          );
-
-          console.log("Purchase completed successfully:", purchaseId);
-
-          // Send email notifications
-          const userEmail = user?.email || pfData.email_address;
-          if (userEmail) {
-            // Send purchase confirmation
-            await sendPurchaseConfirmationEmail(userEmail, userName, purchase);
-            
-            // Send certificate with codes
-            await sendCertificateEmail(
-              userEmail,
-              userName,
-              purchase,
-              [bronzeCode, workshopCode, referralCode],
+          // Update with certificate URL if generated
+          if (certificateUrl) {
+            await storage.updatePurchaseStatus(
+              purchase.id,
+              "completed",
+              pfData.pf_payment_id,
               certificateUrl
             );
           }
+        } catch (certError) {
+          console.error("Certificate generation failed:", certError);
+          // Purchase still marked complete, certificate can be regenerated later
+        }
+
+        console.log("Purchase completed successfully:", purchaseId);
+
+        // Send email notifications (best effort, async)
+        const userEmail = user?.email || pfData.email_address;
+        if (userEmail && certificateUrl) {
+          sendPurchaseConfirmationEmail(userEmail, userName, purchase).catch(console.error);
+          sendCertificateEmail(
+            userEmail,
+            userName,
+            purchase,
+            [bronzeCode, workshopCode, referralCode],
+            certificateUrl
+          ).catch(console.error);
         }
       } else if (paymentStatus === "FAILED" || paymentStatus === "CANCELLED") {
-        await storage.updatePurchaseStatus(purchaseId, "failed", pfData.pf_payment_id);
+        await storage.updatePurchaseStatus(purchaseId, "failed", pfData.pf_payment_id, undefined);
       }
-
-      res.status(200).send("OK");
     } catch (error: any) {
       console.error("Payment notification error:", error);
-      res.status(500).send("Error processing notification");
+      // Already responded, so just log the error
     }
   });
 

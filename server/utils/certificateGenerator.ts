@@ -40,8 +40,7 @@ export async function generateCertificate(
       const bgImagePath = path.join(process.cwd(), 'attached_assets', 'Gemini_Generated_Image_9rrlvn9rrlvn9rrl (1)_1761271985174.png');
       if (fs.existsSync(bgImagePath)) {
         doc.image(bgImagePath, 150, 200, {
-          width: 300,
-          opacity: 0.15
+          width: 300
         });
       }
 

@@ -39,7 +39,7 @@ export interface IStorage {
   getPurchase(id: string): Promise<Purchase | undefined>;
   getPurchasesByUserId(userId: string): Promise<Purchase[]>;
   getAllPurchases(): Promise<Purchase[]>;
-  updatePurchaseStatus(id: string, status: 'pending' | 'completed' | 'failed', paymentReference?: string, certificateUrl?: string): Promise<void>;
+  updatePurchaseStatus(id: string, status: 'pending' | 'completed' | 'failed', paymentReference?: string, certificateUrl?: string): Promise<boolean>;
   
   // Code operations
   createCode(code: InsertCode): Promise<Code>;
@@ -131,8 +131,22 @@ export class DatabaseStorage implements IStorage {
     status: 'pending' | 'completed' | 'failed',
     paymentReference?: string,
     certificateUrl?: string
-  ): Promise<void> {
-    await db
+  ): Promise<boolean> {
+    const purchase = await this.getPurchase(id);
+    if (!purchase) return false;
+
+    // If already completed and just updating certificate URL, allow update
+    if (purchase.status === 'completed' && status === 'completed' && certificateUrl) {
+      const result = await db
+        .update(purchases)
+        .set({ certificateUrl })
+        .where(eq(purchases.id, id))
+        .returning();
+      return result.length > 0;
+    }
+
+    // For initial completion, only update if not already completed (atomic idempotency)
+    const result = await db
       .update(purchases)
       .set({
         status,
@@ -140,7 +154,15 @@ export class DatabaseStorage implements IStorage {
         certificateUrl,
         completedAt: status === 'completed' ? new Date() : undefined,
       })
-      .where(eq(purchases.id, id));
+      .where(
+        status === 'completed'
+          ? sql`${purchases.id} = ${id} AND ${purchases.status} != 'completed'`
+          : eq(purchases.id, id)
+      )
+      .returning();
+    
+    // Return true if a row was updated, false if already completed
+    return result.length > 0;
   }
 
   // Code operations
