@@ -6,7 +6,9 @@ A premium dark-themed launch platform for Timeless Organics' founding investor p
 
 **Purpose**: Launch site for selling 100 limited founding seats (50 Founder + 50 Patron) with automated certificate generation, PayFast payment processing, and lifetime benefit codes.
 
-**Tech Stack**: React + TypeScript + Express + PostgreSQL + Tailwind CSS + Shadcn UI
+**Production Domain**: www.timeless.organic (hosted on Netlify)
+
+**Tech Stack**: React + TypeScript + Express + PostgreSQL (Supabase) + Tailwind CSS + Shadcn UI
 
 ## Visual Design
 
@@ -92,7 +94,8 @@ The application features a stunning dark aesthetic with:
 ## Environment Variables
 
 Required:
-- `DATABASE_URL` - PostgreSQL connection string
+- `SUPABASE_URL` - Supabase project URL (e.g., https://xxxxx.supabase.co)
+- `SUPABASE_SERVICE_ROLE_KEY` - Supabase service role key (for server-side operations)
 - `SESSION_SECRET` - Session encryption key
 - `PAYFAST_MERCHANT_ID` - PayFast merchant ID
 - `PAYFAST_MERCHANT_KEY` - PayFast merchant key
@@ -100,6 +103,7 @@ Required:
 - `PAYFAST_MODE` - "sandbox" or "production"
 
 Optional:
+- `DATABASE_URL` - Fallback PostgreSQL connection string (if not using Supabase)
 - `SMTP_HOST`, `SMTP_PORT`, `SMTP_USER`, `SMTP_PASS` - Email delivery
 
 ## Recent Changes
@@ -110,7 +114,9 @@ Optional:
 - Implemented email delivery service with nodemailer (gracefully handles missing SMTP config)
 - Added code redemption tracking (redemptionCount, maxRedemptions, redeemedBy array, lastRedeemedAt)
 - Created referrals table and API endpoint GET /api/referrals/code/:codeId for tracking lifetime referral usage
-- Fixed header nested anchor tag warnings
+- Fixed header nested anchor tag warnings (removed nested `<a>` elements)
+- Migrated database from Neon to Supabase for shared access with main production site
+- Production domain configured: www.timeless.organic (Netlify)
 - All backend routes operational for purchase flow, code management, and admin analytics
 
 ## Development Notes
