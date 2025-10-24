@@ -1,0 +1,48 @@
+
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+Using Supabase database via DATABASE_URL
+Re-optimizing dependencies because lockfile has changed
+11:30:53 PM [express] serving on port 5000
+Browserslist: browsers data (caniuse-lite) is 12 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+
+A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+11:31:03 PM [express] GET /api/auth/user 401 in 5ms :: {"message":"Unauthorized"}
+AggregateError [ETIMEDOUT]: 
+    at /home/runner/workspace/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async PGStore._asyncQuery (/home/runner/workspace/node_modules/connect-pg-simple/index.js:322:21)
+Failed to prune sessions: AggregateError [ETIMEDOUT]: 
+    at /home/runner/workspace/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async PGStore._asyncQuery (/home/runner/workspace/node_modules/connect-pg-simple/index.js:322:21) {
+  code: 'ETIMEDOUT',
+  [errors]: [
+    Error: connect ETIMEDOUT 54.247.26.119:6643
+        at createConnectionError (node:net:1652:14)
+        at Timeout.internalConnectMultipleTimeout (node:net:1711:38)
+        at listOnTimeout (node:internal/timers:583:11)
+        at process.processTimers (node:internal/timers:519:7) {
+      errno: -110,
+      code: 'ETIMEDOUT',
+      syscall: 'connect',
+      address: '54.247.26.119',
+      port: 6643
+    },
+    Error: connect ETIMEDOUT 18.202.64.2:6643
+        at createConnectionError (node:net:1652:14)
+        at afterConnectMultiple (node:net:1682:16) {
+      errno: -110,
+      code: 'ETIMEDOUT',
+      syscall: 'connect',
+      address: '18.202.64.2',
+      port: 6643
+    }
+  ]
+}
+AggregateError [ETIMEDOUT]: 
+    at /home/runner/workspace/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
