@@ -13,34 +13,25 @@ let connectionString: string | undefined;
 let pool: PgPool | NeonPool;
 let db: ReturnType<typeof drizzlePg> | ReturnType<typeof drizzleNeon>;
 
-if (process.env.SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY) {
-  // Supabase connection using standard PostgreSQL driver
-  // SUPABASE_URL is like: https://xxxxx.supabase.co
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const projectRef = supabaseUrl.replace('https://', '').replace('.supabase.co', '');
-  const password = encodeURIComponent(process.env.SUPABASE_SERVICE_ROLE_KEY);
-  
-  // Use Supabase connection pooler (better compatibility with cloud environments)
-  connectionString = `postgresql://postgres.${projectRef}:${password}@aws-0-us-east-1.pooler.supabase.com:6543/postgres?pgbouncer=true`;
-  
-  pool = new PgPool({ 
-    connectionString,
-    max: 1, // Pooler works best with single connection from serverless
-  });
-  db = drizzlePg(pool, { schema });
-  
-  console.log(`Using Supabase database (pooler): ${projectRef}`);
-} else if (process.env.DATABASE_URL) {
-  // Fall back to Neon using serverless driver
+// Priority: Use DATABASE_URL first (works for both Supabase and Neon)
+if (process.env.DATABASE_URL) {
   connectionString = process.env.DATABASE_URL;
   
-  pool = new NeonPool({ connectionString });
-  db = drizzleNeon({ client: pool, schema });
-  
-  console.log('Using DATABASE_URL for database connection');
+  // Check if it's a Supabase connection string
+  if (connectionString.includes('supabase.com')) {
+    // Use standard PostgreSQL driver for Supabase
+    pool = new PgPool({ connectionString });
+    db = drizzlePg(pool, { schema });
+    console.log('Using Supabase database via DATABASE_URL');
+  } else {
+    // Use Neon serverless driver for Neon databases
+    pool = new NeonPool({ connectionString });
+    db = drizzleNeon({ client: pool, schema });
+    console.log('Using Neon database via DATABASE_URL');
+  }
 } else {
   throw new Error(
-    "Database connection not configured. Provide either SUPABASE_URL + SUPABASE_SERVICE_ROLE_KEY or DATABASE_URL",
+    "DATABASE_URL must be set. Please configure your database connection string.",
   );
 }
 
