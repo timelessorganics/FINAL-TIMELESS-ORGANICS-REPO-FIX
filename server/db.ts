@@ -18,9 +18,12 @@ if (process.env.DATABASE_URL) {
   connectionString = process.env.DATABASE_URL;
   
   // Check if it's a Supabase connection string
-  if (connectionString.includes('supabase.com')) {
-    // Use standard PostgreSQL driver for Supabase
-    pool = new PgPool({ connectionString });
+  if (connectionString.includes('supabase.co')) {
+    // Use standard PostgreSQL driver for Supabase with SSL
+    pool = new PgPool({ 
+      connectionString,
+      ssl: { rejectUnauthorized: false }
+    });
     db = drizzlePg(pool, { schema });
     console.log('Using Supabase database via DATABASE_URL');
   } else {
