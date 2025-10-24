@@ -108,14 +108,22 @@ Optional:
 
 ## Recent Changes
 
+**2025-10-24**: Supabase database successfully connected and operational
+- Resolved "Tenant or user not found" errors by switching from direct connection to transaction pooler
+- Connection string format: `postgresql://postgres.{project-ref}:[password]@aws-0-{region}.pooler.supabase.com:6543/postgres`
+- Added SSL configuration: `{ ssl: { rejectUnauthorized: false } }` for pg Pool
+- Database schema pushed successfully with all tables created
+- Seeded 50 Founder seats (R3,000) and 50 Patron seats (R6,000)
+- Seeded 10 aloe sculpture options with descriptions and images
+- API endpoints tested and working: `/api/seats/availability`, `/api/sculptures`
+- Database now accessible from both Replit development environment and Netlify production site
+
 **2025-01-24**: Backend implementation and feature completion
 - Removed unused registration/email gate features (replaced with Replit Auth)
-- Seeded 10 sculpture options via automated script
 - Implemented email delivery service with nodemailer (gracefully handles missing SMTP config)
 - Added code redemption tracking (redemptionCount, maxRedemptions, redeemedBy array, lastRedeemedAt)
 - Created referrals table and API endpoint GET /api/referrals/code/:codeId for tracking lifetime referral usage
 - Fixed header nested anchor tag warnings (removed nested `<a>` elements)
-- Migrated database from Neon to Supabase for shared access with main production site
 - Production domain configured: www.timeless.organic (Netlify)
 - All backend routes operational for purchase flow, code management, and admin analytics
 
