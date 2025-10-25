@@ -14,15 +14,13 @@ import PaymentSuccess from "@/pages/payment-success";
 import PaymentCancel from "@/pages/payment-cancel";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { SmokeFireBackground } from "@/components/SmokeFireBackground";
 
 function LandingPage() {
   return (
     <>
       <div className="bg-aloe" />
-      {/* Animated fire/smoke background */}
-      <div className="fixed inset-0 z-40 overflow-hidden pointer-events-none">
-        <div className="fire-smoke-bg absolute inset-0"></div>
-      </div>
+      <SmokeFireBackground />
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
         <Card className="relative z-10 w-full max-w-[720px] mx-4 bg-card/90 border-border backdrop-blur-md p-7">
           <div className="text-center mb-6">
