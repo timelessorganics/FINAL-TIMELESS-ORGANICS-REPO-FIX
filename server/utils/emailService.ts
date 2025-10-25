@@ -72,7 +72,7 @@ export async function sendCertificateEmail(
     const seatName = purchase.seatType === "founder" ? "Founder" : "Patron";
     const bronzeCode = codes.find((c) => c.type === "bronze_claim");
     const workshopCode = codes.find((c) => c.type === "workshop_voucher");
-    const referralCode = codes.find((c) => c.type === "lifetime_referral");
+    const lifetimeWorkshopCode = codes.find((c) => c.type === "lifetime_workshop");
 
     // Build full certificate URL
     const fullCertificateUrl = `${process.env.REPLIT_DEV_DOMAIN || 'https://timeless-organics.replit.app'}${certificateUrl}`;
@@ -203,11 +203,11 @@ export async function sendCertificateEmail(
       </div>
       ` : ''}
       
-      ${referralCode ? `
+      ${lifetimeWorkshopCode ? `
       <div class="code-box">
-        <div class="code-label">Lifetime Referral Code</div>
-        <div class="code-value">${referralCode.code}</div>
-        <div class="code-description">Share this code for lifetime discounts on referrals (20-30% off)</div>
+        <div class="code-label">Lifetime Workshop Discount Code</div>
+        <div class="code-value">${lifetimeWorkshopCode.code}</div>
+        <div class="code-description">${lifetimeWorkshopCode.discount}% lifetime discount on all future workshops (unlimited uses, forever)</div>
       </div>
       ` : ''}
       
@@ -332,7 +332,7 @@ export async function sendPurchaseConfirmationEmail(
         <li>Your official Certificate of Patronage (PDF)</li>
         <li>Bronze claim code</li>
         <li>Workshop voucher code (${purchase.seatType === "founder" ? "50%" : "80%"} discount)</li>
-        <li>Lifetime referral code</li>
+        <li>Lifetime workshop discount code (${purchase.seatType === "founder" ? "20%" : "30%"} discount)</li>
       </ul>
       
       <p>In the meantime, you can log in to your dashboard to select your bronze casting specimen.</p>

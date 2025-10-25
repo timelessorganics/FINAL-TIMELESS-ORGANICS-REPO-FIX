@@ -492,4 +492,35 @@
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
   }
+
+  /* Fire/Smoke Background Animation */
+  .fire-smoke-bg {
+    background: linear-gradient(
+      to top,
+      rgba(166, 124, 82, 0.3) 0%,
+      rgba(216, 195, 165, 0.2) 30%,
+      rgba(111, 143, 121, 0.15) 60%,
+      transparent 100%
+    );
+    animation: fireSmoke 8s ease-in-out infinite;
+  }
+
+  @keyframes fireSmoke {
+    0%, 100% {
+      opacity: 0.3;
+      transform: translateY(0) scale(1);
+    }
+    25% {
+      opacity: 0.5;
+      transform: translateY(-10px) scale(1.02);
+    }
+    50% {
+      opacity: 0.4;
+      transform: translateY(-20px) scale(1.05);
+    }
+    75% {
+      opacity: 0.6;
+      transform: translateY(-10px) scale(1.02);
+    }
+  }
 }

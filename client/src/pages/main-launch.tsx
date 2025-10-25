@@ -99,6 +99,66 @@ export default function MainLaunch() {
             )}
           </section>
 
+          {/* Workshop Explanation Section */}
+          <section className="mb-16 py-12 border-t border-border" data-testid="section-workshop">
+            <div className="max-w-3xl mx-auto">
+              <div className="text-center mb-10">
+                <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
+                  The <span className="text-accent-gold">Workshop Experience</span>
+                </h2>
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Experience the ancient art of lost-wax bronze casting in our intensive 2-day workshops. 
+                  Work hands-on in our Kommetjie studio to create your own bronze sculpture from start to finish.
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+                <div className="text-center p-6 bg-card border border-card-border rounded-lg">
+                  <div className="text-accent-gold text-5xl font-bold font-serif mb-3">2</div>
+                  <div className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wide">Days</div>
+                  <div className="text-xs text-muted-foreground">Intensive hands-on work</div>
+                </div>
+                <div className="text-center p-6 bg-card border border-card-border rounded-lg">
+                  <div className="text-bronze text-5xl font-bold font-serif mb-3">1</div>
+                  <div className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wide">Bronze Piece</div>
+                  <div className="text-xs text-muted-foreground">Your completed sculpture</div>
+                </div>
+                <div className="text-center p-6 bg-card border border-card-border rounded-lg">
+                  <div className="text-patina text-5xl font-bold font-serif mb-3">∞</div>
+                  <div className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wide">Lifetime Skill</div>
+                  <div className="text-xs text-muted-foreground">Ancient craft knowledge</div>
+                </div>
+              </div>
+
+              <div className="bg-card/50 border border-card-border rounded-lg p-6">
+                <h3 className="font-serif text-xl font-bold mb-4 text-foreground">What You'll Learn</h3>
+                <ul className="space-y-3">
+                  <li className="flex gap-3 text-sm text-muted-foreground">
+                    <span className="text-bronze">→</span>
+                    <span>Specimen selection and preparation techniques</span>
+                  </li>
+                  <li className="flex gap-3 text-sm text-muted-foreground">
+                    <span className="text-bronze">→</span>
+                    <span>Investment casting process using traditional lost-wax method</span>
+                  </li>
+                  <li className="flex gap-3 text-sm text-muted-foreground">
+                    <span className="text-bronze">→</span>
+                    <span>Bronze pouring, finishing, and patina application</span>
+                  </li>
+                  <li className="flex gap-3 text-sm text-muted-foreground">
+                    <span className="text-bronze">→</span>
+                    <span>Studio safety and foundry best practices</span>
+                  </li>
+                </ul>
+              </div>
+
+              <p className="text-sm text-muted-foreground text-center mt-8 italic">
+                <span className="text-accent-gold font-semibold">Important:</span> Your workshop voucher codes and lifetime discount codes 
+                apply exclusively to workshops—they cannot be used to purchase Founding 100 seats.
+              </p>
+            </div>
+          </section>
+
           {/* About Expertise Section */}
           <section className="mb-16">
             <div className="bg-card border border-card-border rounded-lg p-7 md:p-10">
