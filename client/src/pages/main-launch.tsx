@@ -75,9 +75,9 @@ export default function MainLaunch() {
                     subtitle="R3,000"
                     description="One bronze casting included of a Studio-Guaranteed Specimen"
                     benefits={[
-                      "40% off your first 3-day workshop (Transferable/Usable by Buyer)",
-                      "40% off your first piece (in the first year). Discount: Prep labour + 10% of 100% retail (unlimited uses, forever)",
-                      "Give anyone 30% off (unlimited uses, forever)",
+                      "50% off your first 3-day workshop (Transferable, one-time use)",
+                      "20% lifetime workshop discount code (Unlimited uses, forever)",
+                      "Both codes work for workshops only, not for seat purchases",
                     ]}
                   />
                 )}
@@ -88,9 +88,9 @@ export default function MainLaunch() {
                     subtitle="R6,000"
                     description="One bronze casting included of a Studio-Guaranteed Specimen"
                     benefits={[
-                      "60% off your first 3-day workshop (Transferable/Usable by Buyer)",
-                      "60% off your first 3 pieces (in the first year). Discount: Prep labour + 10% of retail (unlimited uses, forever)",
-                      "Give anyone 30% off (unlimited uses, forever)",
+                      "80% off your first 3-day workshop (Transferable, one-time use)",
+                      "30% lifetime workshop discount code (Unlimited uses, forever)",
+                      "Both codes work for workshops only, not for seat purchases",
                     ]}
                     featured
                   />
