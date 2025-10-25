@@ -92,7 +92,10 @@ export type InsertPurchase = z.infer<typeof insertPurchaseSchema>;
 export type Purchase = typeof purchases.$inferSelect;
 
 // Code types enum
-export const codeTypeEnum = pgEnum('code_type', ['bronze_claim', 'workshop_voucher', 'lifetime_referral']);
+export const codeTypeEnum = pgEnum('code_type', ['bronze_claim', 'workshop_voucher', 'lifetime_workshop']);
+
+// Code applies to enum (workshop-only, seat purchases, or any)
+export const codeAppliesToEnum = pgEnum('code_applies_to', ['workshop', 'seat', 'any']);
 
 // Unique codes generated for purchases
 export const codes = pgTable("codes", {
@@ -100,13 +103,14 @@ export const codes = pgTable("codes", {
   purchaseId: varchar("purchase_id").references(() => purchases.id).notNull(),
   type: codeTypeEnum("type").notNull(),
   code: varchar("code").notNull().unique(),
-  discount: integer("discount"), // For workshop vouchers (e.g., 40 for 40% off)
+  discount: integer("discount"), // For workshop vouchers (e.g., 50 for 50% off)
   transferable: boolean("transferable").default(false),
+  appliesTo: codeAppliesToEnum("applies_to").default('any').notNull(), // Scope: workshop, seat, or any
   usedAt: timestamp("used_at"),
   createdAt: timestamp("created_at").defaultNow(),
   // Redemption tracking fields
   redemptionCount: integer("redemption_count").default(0).notNull(),
-  maxRedemptions: integer("max_redemptions").default(1), // null = unlimited (for lifetime referrals)
+  maxRedemptions: integer("max_redemptions").default(1), // null = unlimited (for lifetime workshop codes)
   redeemedBy: jsonb("redeemed_by").$type<string[]>().default([]), // Array of user IDs or emails
   lastRedeemedAt: timestamp("last_redeemed_at"),
 });
@@ -117,6 +121,7 @@ export const insertCodeSchema = createInsertSchema(codes).pick({
   code: true,
   discount: true,
   transferable: true,
+  appliesTo: true,
   maxRedemptions: true,
 });
 

@@ -9,8 +9,9 @@ import { fromError } from "zod-validation-error";
 import { 
   generateBronzeClaimCode, 
   generateWorkshopVoucherCode, 
-  generateLifetimeReferralCode,
-  getWorkshopDiscount 
+  generateLifetimeWorkshopCode,
+  getWorkshopVoucherDiscount,
+  getLifetimeWorkshopDiscount
 } from "./utils/codeGenerator";
 import { 
   createPaymentData, 
@@ -182,23 +183,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
           type: "bronze_claim",
           code: generateBronzeClaimCode(),
           maxRedemptions: 1,
+          appliesTo: 'any',
         });
 
         const workshopCode = await storage.createCode({
           purchaseId: purchase.id,
           type: "workshop_voucher",
           code: generateWorkshopVoucherCode(purchase.seatType),
-          discount: getWorkshopDiscount(purchase.seatType),
+          discount: getWorkshopVoucherDiscount(purchase.seatType),
           transferable: true,
           maxRedemptions: 1,
+          appliesTo: 'workshop',
         });
 
-        const referralCode = await storage.createCode({
+        const lifetimeWorkshopCode = await storage.createCode({
           purchaseId: purchase.id,
-          type: "lifetime_referral",
-          code: generateLifetimeReferralCode(),
+          type: "lifetime_workshop",
+          code: generateLifetimeWorkshopCode(purchase.seatType),
+          discount: getLifetimeWorkshopDiscount(purchase.seatType),
           transferable: true,
           maxRedemptions: null as any,
+          appliesTo: 'workshop',
         });
 
         // Get user info for certificate
@@ -212,7 +217,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         try {
           certificateUrl = await generateCertificate(
             purchase,
-            [bronzeCode, workshopCode, referralCode],
+            [bronzeCode, workshopCode, lifetimeWorkshopCode],
             userName
           );
 
@@ -240,7 +245,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             userEmail,
             userName,
             purchase,
-            [bronzeCode, workshopCode, referralCode],
+            [bronzeCode, workshopCode, lifetimeWorkshopCode],
             certificateUrl
           ).catch(console.error);
         }
@@ -427,8 +432,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Redeem code
       await storage.redeemCode(code.id, user?.email || userId);
 
-      // Create referral tracking record if this is a referral code
-      if (code.type === "lifetime_referral") {
+      // Create referral tracking record if this is a lifetime workshop code
+      if (code.type === "lifetime_workshop") {
         await storage.createReferral({
           referralCodeId: code.id,
           referredUserId: userId,

@@ -19,19 +19,28 @@ export function generateBronzeClaimCode(): string {
 }
 
 export function generateWorkshopVoucherCode(seatType: 'founder' | 'patron'): string {
-  // Format: FO-40-XXXX-XXXX (Founder) or PA-60-XXXX-XXXX (Patron)
-  const prefix = seatType === 'founder' ? 'FO-40' : 'PA-60';
+  // Format: FO-50-XXXX-XXXX (Founder 50%) or PA-80-XXXX-XXXX (Patron 80%)
+  const prefix = seatType === 'founder' ? 'FO-50' : 'PA-80';
   const part1 = generateRandomCode(4);
   const part2 = generateRandomCode(4);
   return `${prefix}-${part1}-${part2}`;
 }
 
-export function generateLifetimeReferralCode(): string {
-  // Format: REF-LIFETIME-20%
-  // This is a standard code for all users
-  return "REF-LIFETIME-20%";
+export function generateLifetimeWorkshopCode(seatType: 'founder' | 'patron'): string {
+  // Format: LF-20-XXXX-XXXX (Founder 20% lifetime) or LP-30-XXXX-XXXX (Patron 30% lifetime)
+  // Unique per purchase to prevent cross-user sharing
+  const prefix = seatType === 'founder' ? 'LF-20' : 'LP-30';
+  const part1 = generateRandomCode(4);
+  const part2 = generateRandomCode(4);
+  return `${prefix}-${part1}-${part2}`;
 }
 
-export function getWorkshopDiscount(seatType: 'founder' | 'patron'): number {
-  return seatType === 'founder' ? 40 : 60;
+export function getWorkshopVoucherDiscount(seatType: 'founder' | 'patron'): number {
+  // One-time workshop voucher discounts
+  return seatType === 'founder' ? 50 : 80;
+}
+
+export function getLifetimeWorkshopDiscount(seatType: 'founder' | 'patron'): number {
+  // Lifetime workshop discounts
+  return seatType === 'founder' ? 20 : 30;
 }
