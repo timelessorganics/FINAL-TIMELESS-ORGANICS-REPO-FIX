@@ -4,3 +4,6 @@ dist
 server/public
 vite.config.ts.*
 *.tar.gz
+
+# Large video files - don't commit to Git
+attached_assets/*.mp4
