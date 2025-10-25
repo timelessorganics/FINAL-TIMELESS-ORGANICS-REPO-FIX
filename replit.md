@@ -17,6 +17,7 @@ The application features a stunning dark aesthetic with:
 - **Typography**: Playfair Display (headings), Inter (body)
 - **Animations**: Slow-moving gradient text effects (10-16s cycles) on key elements
 - **Background**: Fixed aloe sculpture image with radial gradient overlays
+- **Sign-in Page**: Crossfading smoke/fire video backgrounds (6 videos rotating with 1.5s transitions)
 - **Buttons**: Glassy bronze buttons with backdrop-blur and animated gradient overlays
 
 ## Features
@@ -39,9 +40,10 @@ The application features a stunning dark aesthetic with:
 - `registrations` - Email gate registrations
 - `seats` - Seat inventory (type, price, total, sold)
 - `purchases` - User seat purchases with PayFast references
-- `codes` - Unique codes (bronze_claim, workshop_voucher, lifetime_referral)
+- `codes` - Unique codes (bronze_claim, workshop_voucher, lifetime_workshop) with `appliesTo` enum field
 - `sculptures` - Available sculpture options with images
 - `sculpture_selections` - User's chosen sculptures
+- `referrals` - Tracks lifetime workshop code redemptions
 
 ### Key Relationships
 - Purchase → User (many-to-one)
@@ -73,16 +75,20 @@ The application features a stunning dark aesthetic with:
 ### Bronze Claim Code
 - Format: `BR-XXXX-XXXX`
 - One per purchase, used to claim bronze casting
+- Applies to: Any
 
-### Workshop Voucher
-- Format: `FO-40-XXXX-XXXX` (Founder) or `PA-60-XXXX-XXXX` (Patron)
-- Discount: 40% (Founder) or 60% (Patron)
-- Transferable, first 2-day workshop
+### Workshop Voucher (One-Time Use)
+- Format: `FO-50-XXXX-XXXX` (Founder) or `PA-80-XXXX-XXXX` (Patron)
+- Discount: 50% (Founder) or 80% (Patron)
+- Transferable, first 2-day workshop only
+- Applies to: Workshops only (NOT valid for seat purchases)
 
-### Lifetime Referral
-- Format: `REF-LIFETIME-20%`
-- 20-30% discount for referrals
+### Lifetime Workshop Code
+- Format: `LF-20-XXXX-XXXX` (Founder) or `LP-30-XXXX-XXXX` (Patron)
+- Discount: 20% (Founder) or 30% (Patron)
 - Unlimited uses, transferable for life
+- Applies to: Workshops only (NOT valid for seat purchases)
+- Unique code per user (not shared)
 
 ## PayFast Integration
 
@@ -122,10 +128,20 @@ Optional:
 - Removed unused registration/email gate features (replaced with Replit Auth)
 - Implemented email delivery service with nodemailer (gracefully handles missing SMTP config)
 - Added code redemption tracking (redemptionCount, maxRedemptions, redeemedBy array, lastRedeemedAt)
-- Created referrals table and API endpoint GET /api/referrals/code/:codeId for tracking lifetime referral usage
+- Created referrals table and API endpoint GET /api/referrals/code/:codeId for tracking lifetime workshop code usage
 - Fixed header nested anchor tag warnings (removed nested `<a>` elements)
 - Production domain configured: www.timeless.organic (Netlify)
 - All backend routes operational for purchase flow, code management, and admin analytics
+
+**2025-10-25**: Discount code system overhaul & visual enhancements
+- Updated code generation: Workshop vouchers now 50%/80%, lifetime codes now 20%/30%
+- Changed code types: `lifetime_referral` → `lifetime_workshop` (unique per user)
+- Added `appliesTo` enum field to codes table (workshop/seat/any) to enforce workshop-only restrictions
+- Created comprehensive workshop explanation section on main launch page
+- Implemented SmokeFireBackground component with 6 crossfading videos for sign-in page
+- Fixed email template bug where lifetime workshop codes weren't appearing
+- Added .gitignore rules for video files (140+ MB total, excluded from Git)
+- All text updated: "3-day" → "2-day" workshops, correct discount percentages everywhere
 
 ## Development Notes
 
@@ -134,6 +150,22 @@ Optional:
 - All gradient animations use CSS `animation` with `text-hue` keyframe
 - Seat counters update in real-time from database
 - Certificates generated server-side with aloe background image
+
+## Production Deployment Notes
+
+### Video Assets
+- Sign-in page uses 6 smoke/fire video files (140+ MB total)
+- Videos are NOT committed to Git (excluded via .gitignore)
+- For production deployment to Netlify:
+  1. **Option A**: Upload videos directly to Netlify's `public/` folder during deploy
+  2. **Option B**: Host videos on CDN (Cloudflare R2, AWS S3, or Supabase Storage) and update URLs in `SmokeFireBackground.tsx`
+  3. **Option C**: Use Netlify Large Media (Git LFS) for video assets
+- Current local paths: `/attached_assets/*.mp4` work in development only
+
+### Database Schema
+- Schema changes may need manual SQL updates due to Supabase connection timeouts
+- Run `npm run db:push --force` if regular push fails
+- For production: Ensure `appliesTo` column exists in `codes` table before go-live
 
 ## Next Steps
 
