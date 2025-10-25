@@ -77,7 +77,7 @@ The application features a stunning dark aesthetic with:
 ### Workshop Voucher
 - Format: `FO-40-XXXX-XXXX` (Founder) or `PA-60-XXXX-XXXX` (Patron)
 - Discount: 40% (Founder) or 60% (Patron)
-- Transferable, first 3-day workshop
+- Transferable, first 2-day workshop
 
 ### Lifetime Referral
 - Format: `REF-LIFETIME-20%`

@@ -75,7 +75,7 @@ export default function MainLaunch() {
                     subtitle="R3,000"
                     description="One bronze casting included of a Studio-Guaranteed Specimen"
                     benefits={[
-                      "50% off your first 3-day workshop (Transferable, one-time use)",
+                      "50% off your first 2-day workshop (Transferable, one-time use)",
                       "20% lifetime workshop discount code (Unlimited uses, forever)",
                       "Both codes work for workshops only, not for seat purchases",
                     ]}
@@ -88,7 +88,7 @@ export default function MainLaunch() {
                     subtitle="R6,000"
                     description="One bronze casting included of a Studio-Guaranteed Specimen"
                     benefits={[
-                      "80% off your first 3-day workshop (Transferable, one-time use)",
+                      "80% off your first 2-day workshop (Transferable, one-time use)",
                       "30% lifetime workshop discount code (Unlimited uses, forever)",
                       "Both codes work for workshops only, not for seat purchases",
                     ]}
@@ -127,7 +127,7 @@ export default function MainLaunch() {
                 <span className="moving-fill">Workshops</span>
               </h2>
               <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
-                Learn the art of lost-wax casting in our immersive 3-day workshops. 
+                Learn the art of lost-wax casting in our immersive 2-day workshops. 
                 Founding members receive exclusive discounts.
               </p>
               <Button 

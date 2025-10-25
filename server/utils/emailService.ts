@@ -199,7 +199,7 @@ export async function sendCertificateEmail(
       <div class="code-box">
         <div class="code-label">Workshop Voucher Code</div>
         <div class="code-value">${workshopCode.code}</div>
-        <div class="code-description">${workshopCode.discount}% discount on your first 3-day workshop (transferable)</div>
+        <div class="code-description">${workshopCode.discount}% discount on your first 2-day workshop (transferable)</div>
       </div>
       ` : ''}
       
@@ -215,7 +215,7 @@ export async function sendCertificateEmail(
       
       <p><strong>1. Select Your Specimen:</strong> Log in to your dashboard to choose your bronze casting from our curated collection of aloe specimens.</p>
       
-      <p><strong>2. Schedule Your Workshop:</strong> Use your voucher code to book a 3-day lost-wax casting workshop at our Kommetjie studio.</p>
+      <p><strong>2. Schedule Your Workshop:</strong> Use your voucher code to book a 2-day lost-wax casting workshop at our Kommetjie studio.</p>
       
       <p><strong>3. Claim Your Bronze:</strong> Present your bronze claim code when you're ready to receive your finished casting.</p>
       
@@ -331,7 +331,7 @@ export async function sendPurchaseConfirmationEmail(
       <ul style="color: #d8c3a5;">
         <li>Your official Certificate of Patronage (PDF)</li>
         <li>Bronze claim code</li>
-        <li>Workshop voucher code (${purchase.seatType === "founder" ? "40%" : "60%"} discount)</li>
+        <li>Workshop voucher code (${purchase.seatType === "founder" ? "50%" : "80%"} discount)</li>
         <li>Lifetime referral code</li>
       </ul>
       
