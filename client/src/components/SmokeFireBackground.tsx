@@ -24,14 +24,14 @@ export function SmokeFireBackground() {
       const duration = currentVideo.duration;
       const currentTime = currentVideo.currentTime;
       
-      if (duration - currentTime <= 1.5) {
+      if (duration - currentTime <= 1.0) {
         if (!isTransitioning) {
           setIsTransitioning(true);
           setTimeout(() => {
             setCurrentIndex(nextIndex);
             setNextIndex((nextIndex + 1) % videos.length);
             setIsTransitioning(false);
-          }, 1500);
+          }, 1000);
         }
       }
     };
@@ -48,9 +48,9 @@ export function SmokeFireBackground() {
         autoPlay
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms]"
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
         style={{ 
-          opacity: isTransitioning ? 0 : 0.4,
+          opacity: isTransitioning ? 0 : 0.85,
           mixBlendMode: 'screen'
         }}
       >
@@ -63,16 +63,16 @@ export function SmokeFireBackground() {
         autoPlay
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms]"
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
         style={{ 
-          opacity: isTransitioning ? 0.4 : 0,
+          opacity: isTransitioning ? 0.85 : 0,
           mixBlendMode: 'screen'
         }}
       >
         <source src={videos[nextIndex]} type="video/mp4" />
       </video>
       
-      <div className="absolute inset-0 bg-gradient-to-t from-bronze/20 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-bronze/30 via-transparent to-transparent" />
     </div>
   );
 }
