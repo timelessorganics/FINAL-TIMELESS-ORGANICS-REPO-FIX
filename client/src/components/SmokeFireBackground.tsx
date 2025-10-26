@@ -1,13 +1,12 @@
 import { useEffect, useState, useRef } from 'react';
+import video1 from '@assets/1 SMOKE HOVERS BOTTOM OF SCREEN_1761435915769.mp4';
+import video2 from '@assets/2 SMOKE HOVERS IN BACKGROUND_1761435915770.mp4';
+import video3 from '@assets/3 SMOKE HOVERS TINY SPARKS7_1761435915770.mp4';
+import video4 from '@assets/4 SMOKE HOVERS FLAMES STSRT_1761435915771.mp4';
+import video5 from '@assets/5 SMOKE HOVERS BIGGER SPARKS_1761435915772.mp4';
+import video6 from '@assets/6 SMOKE HOVERS BIGGER SPARKS_1761435915771.mp4';
 
-const videos = [
-  '/attached_assets/1 SMOKE HOVERS BOTTOM OF SCREEN_1761435915769.mp4',
-  '/attached_assets/2 SMOKE HOVERS IN BACKGROUND_1761435915770.mp4',
-  '/attached_assets/3 SMOKE HOVERS TINY SPARKS7_1761435915770.mp4',
-  '/attached_assets/4 SMOKE HOVERS FLAMES STSRT_1761435915771.mp4',
-  '/attached_assets/5 SMOKE HOVERS BIGGER SPARKS_1761435915772.mp4',
-  '/attached_assets/6 SMOKE HOVERS BIGGER SPARKS_1761435915771.mp4',
-];
+const videos = [video1, video2, video3, video4, video5, video6];
 
 export function SmokeFireBackground() {
   const [currentIndex, setCurrentIndex] = useState(0);
