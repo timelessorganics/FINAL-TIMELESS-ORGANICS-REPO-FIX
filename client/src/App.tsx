@@ -85,10 +85,8 @@ function Router() {
       <Route path="/payment/success" component={PaymentSuccess} />
       <Route path="/payment/cancel" component={PaymentCancel} />
       
-      {/* Founding 100 Launch Page */}
-      <Route path="/founding100">
-        {!isAuthenticated ? <LandingPage /> : <MainLaunch />}
-      </Route>
+      {/* Founding 100 Launch Page - NOW PUBLIC FOR ALL VISITORS */}
+      <Route path="/founding100" component={MainLaunch} />
       
       {isAuthenticated && (
         <>
