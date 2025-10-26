@@ -51,6 +51,88 @@ export default function MainLaunch() {
             </div>
           </section>
 
+          {/* Why This Exists - The Story Section */}
+          <section className="mb-20 py-12" data-testid="section-story">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                  Why the <span className="moving-fill">Founding 100</span>?
+                </h2>
+                <div className="w-20 h-1 bg-gradient-to-r from-bronze via-accent-gold to-patina mx-auto mb-8"></div>
+              </div>
+
+              <div className="prose prose-invert prose-lg max-w-none text-muted-foreground leading-relaxed space-y-6">
+                <p className="text-xl text-foreground/90 font-light">
+                  We're building something rare — a studio where ancient bronze-casting traditions meet 
+                  contemporary South African artistry. But completing our foundry requires capital, and we 
+                  believe that capital should come with <span className="text-accent-gold font-semibold">real, lasting value</span>.
+                </p>
+
+                <p>
+                  The Founding 100 program isn't just a fundraising campaign. It's an invitation to become 
+                  part of our origin story — to fund the final fit-out of our Kommetjie foundry while securing 
+                  your own piece of bronze art and lifetime access to the ancient craft of lost-wax casting.
+                </p>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 my-10 not-prose">
+                  <div className="bg-card/50 border border-card-border rounded-lg p-6">
+                    <h3 className="font-serif text-2xl font-bold mb-3 text-foreground">Your Investment Funds</h3>
+                    <ul className="space-y-2 text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <span className="text-patina mt-1">•</span>
+                        <span>Foundry equipment & tooling</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-patina mt-1">•</span>
+                        <span>Studio infrastructure completion</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-patina mt-1">•</span>
+                        <span>Materials for your guaranteed casting</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-patina mt-1">•</span>
+                        <span>Workshop program development</span>
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div className="bg-card/50 border border-card-border rounded-lg p-6">
+                    <h3 className="font-serif text-2xl font-bold mb-3 text-foreground">You Receive Forever</h3>
+                    <ul className="space-y-2 text-muted-foreground">
+                      <li className="flex items-start gap-2">
+                        <span className="text-bronze mt-1">•</span>
+                        <span>One bronze sculpture (studio-approved specimen)</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-bronze mt-1">•</span>
+                        <span>Lifetime workshop discount codes</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-bronze mt-1">•</span>
+                        <span>Founding member status & certificate</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="text-bronze mt-1">•</span>
+                        <span>Access to ancient lost-wax casting</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <p>
+                  Only 100 seats exist. 50 for Founders. 50 for Patrons. Once they're gone, this opportunity 
+                  closes forever. Your investment becomes infrastructure, and infrastructure becomes art — 
+                  both yours to keep, and ours to build upon.
+                </p>
+
+                <p className="text-foreground/90 font-medium text-center text-xl pt-6 border-t border-border mt-8">
+                  This isn't crowdfunding. It's co-creation. <span className="text-accent-gold">Your investment is our investment.</span>
+                </p>
+              </div>
+            </div>
+          </section>
+
           {/* Seat Selection Section */}
           <section className="mb-16" data-testid="section-seats">
             <div className="text-center mb-12">
