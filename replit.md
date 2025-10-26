@@ -143,6 +143,14 @@ Optional:
 - Added .gitignore rules for video files (140+ MB total, excluded from Git)
 - All text updated: "3-day" → "2-day" workshops, correct discount percentages everywhere
 
+**2025-10-26**: Session storage hotfix - Supabase connectivity issue
+- **CRITICAL FIX**: Switched from Postgres session storage to memory-based session storage
+- Supabase connection timeouts were preventing user authentication and site access
+- Changed session store from `connect-pg-simple` to `memorystore` in `server/replitAuth.ts`
+- Site now fully operational with login functionality restored
+- **NOTE**: Session data now stored in memory (sessions will reset on server restart)
+- **TODO**: Investigate Supabase pooler connection issues (port 6643 timeouts) and potentially restore PG session storage once resolved
+
 ## Development Notes
 
 - Application enforces dark mode (`.dark` class on `documentElement`)
