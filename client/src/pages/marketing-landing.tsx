@@ -37,7 +37,6 @@ export default function MarketingLanding() {
     <>
       <div className="bg-aloe" />
       <SmokeFireBackground />
-      
       {/* Fixed Header with Logo and Seat Counter */}
       <header className="fixed top-0 left-0 right-0 z-[100] bg-card/10 backdrop-blur-md border-b border-card-border">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
@@ -100,7 +99,6 @@ export default function MarketingLanding() {
           </div>
         </div>
       </header>
-      
       {/* Hero Section - Full Screen */}
       <section className="relative z-50 min-h-screen flex items-center justify-center px-4 pt-20">
         <div className="max-w-5xl mx-auto text-center">
@@ -163,11 +161,10 @@ export default function MarketingLanding() {
           </div>
         </div>
       </section>
-
       {/* How It Works Section */}
       <section 
         id="how-it-works" 
-        className="relative z-50 min-h-screen flex items-center py-20 px-4 pl-[16px] pr-[16px] pt-[50px] pb-[50px]"
+        className="relative z-50 min-h-screen flex items-center py-20 px-4 pl-[16px] pr-[16px] mt-[10px] mb-[10px] pt-[20px] pb-[20px]"
       >
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -276,7 +273,6 @@ export default function MarketingLanding() {
           </div>
         </div>
       </section>
-
       {/* What You Get Section */}
       <section className="relative z-50 min-h-screen flex items-center py-20 px-4">
         <div className="max-w-6xl mx-auto">
@@ -375,7 +371,6 @@ export default function MarketingLanding() {
           </div>
         </div>
       </section>
-
       {/* David Junor - The Founder Section */}
       <section className="relative z-50 min-h-screen flex items-center py-20 px-4">
         <div className="max-w-6xl mx-auto">
@@ -459,7 +454,6 @@ export default function MarketingLanding() {
           </div>
         </div>
       </section>
-
       {/* The Vision Section */}
       <section className="relative z-50 min-h-screen flex items-center py-20 px-4">
         <div className="max-w-4xl mx-auto">
@@ -497,7 +491,6 @@ export default function MarketingLanding() {
           </Card>
         </div>
       </section>
-
       {/* Interest Registration Section */}
       <section className="relative z-50 py-20 px-4" id="register-interest">
         <div className="max-w-2xl mx-auto">
@@ -514,7 +507,6 @@ export default function MarketingLanding() {
           <InterestForm />
         </div>
       </section>
-
       {/* Final CTA Section */}
       <section className="relative z-50 py-20 px-4">
         <div className="max-w-4xl mx-auto text-center">
@@ -555,7 +547,6 @@ export default function MarketingLanding() {
           </p>
         </div>
       </section>
-
       <Footer />
     </>
   );
