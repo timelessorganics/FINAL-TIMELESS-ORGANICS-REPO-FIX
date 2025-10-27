@@ -117,6 +117,10 @@ export default function MainLaunch() {
                         <span>Founding member status & certificate</span>
                       </li>
                       <li className="flex items-start gap-2">
+                        <span className="text-accent-gold mt-1">★</span>
+                        <span><strong className="text-foreground">Your name engraved on our Founders & Patrons Leaf Wall — Priceless!</strong></span>
+                      </li>
+                      <li className="flex items-start gap-2">
                         <span className="text-bronze mt-1">•</span>
                         <span>Access to ancient lost-wax casting</span>
                       </li>
@@ -161,6 +165,7 @@ export default function MainLaunch() {
                     subtitle="R3,000"
                     description="One bronze casting included of a Studio-Guaranteed Cutting"
                     benefits={[
+                      "Your name permanently engraved on our Founders & Patrons Leaf Wall",
                       "50% off first workshop (Transferable, single-use, never expires)",
                       "20% lifetime discount code (Unlimited uses, transferable & giftable)",
                       "Both codes for workshops only — not redeemable for Founding 100 seats",
@@ -174,6 +179,7 @@ export default function MainLaunch() {
                     subtitle="R5,000"
                     description="One bronze casting included of a Studio-Guaranteed Cutting"
                     benefits={[
+                      "Your name permanently engraved on our Founders & Patrons Leaf Wall",
                       "80% off first workshop (Transferable, single-use, never expires)",
                       "30% lifetime discount code (Unlimited uses, transferable & giftable)",
                       "Both codes for workshops only — not redeemable for Founding 100 seats",
@@ -411,6 +417,20 @@ export default function MainLaunch() {
                     </ul>
                   </div>
                 </div>
+              </Card>
+
+              <Card className="bg-card border-card-border p-6 bg-gradient-to-br from-bronze/10 to-accent-gold/10 border-bronze/40">
+                <h3 className="font-semibold text-foreground mb-2">
+                  <span className="text-accent-gold">★</span> Will my name really be on the Founders & Patrons Leaf Wall?
+                </h3>
+                <p className="text-muted-foreground text-sm mb-3">
+                  <strong className="text-foreground">Yes — permanently engraved!</strong> Every Founding 100 member becomes part of Timeless Organics history.
+                </p>
+                <p className="text-muted-foreground text-sm">
+                  Your name (or the name you designate) will be engraved on our bronze Founders & Patrons Leaf Wall, 
+                  displayed at the studio entrance. This is your permanent recognition as an infrastructure investor who 
+                  made the foundry possible. <strong className="text-foreground">Priceless!</strong>
+                </p>
               </Card>
 
               <Card className="bg-card border-card-border p-6">
