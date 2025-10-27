@@ -20,7 +20,7 @@ export function SmokeFireBackground({ intensity = 'full' }: SmokeFireBackgroundP
   const currentVideoRef = useRef<HTMLVideoElement>(null);
   const nextVideoRef = useRef<HTMLVideoElement>(null);
   
-  const videoOpacity = intensity === 'full' ? 0.85 : 0.35;
+  const videoOpacity = intensity === 'full' ? 0.25 : 0.15;
 
   useEffect(() => {
     const currentVideo = currentVideoRef.current;
@@ -82,7 +82,7 @@ export function SmokeFireBackground({ intensity = 'full' }: SmokeFireBackgroundP
         <source src={videos[nextIndex]} type="video/mp4" />
       </video>
       
-      <div className="absolute inset-0 bg-gradient-to-t from-bronze/30 via-transparent to-transparent" />
+      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-transparent" />
     </div>
   );
 }
