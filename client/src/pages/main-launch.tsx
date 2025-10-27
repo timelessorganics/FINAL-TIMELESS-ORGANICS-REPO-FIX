@@ -137,7 +137,7 @@ export default function MainLaunch() {
           </section>
 
           {/* Seat Selection Section */}
-          <section className="mb-16" data-testid="section-seats">
+          <section id="seats" className="mb-16" data-testid="section-seats">
             <div className="text-center mb-12">
               <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
                 <span className="text-accent-gold">FOUNDING 100:</span> LIMITED SEATS!

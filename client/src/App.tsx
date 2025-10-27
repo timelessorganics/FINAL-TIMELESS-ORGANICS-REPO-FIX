@@ -19,9 +19,21 @@ function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
   const [location] = useLocation();
   
-  // Scroll to top on route change
+  // Scroll to top on route change, or to hash anchor if present
   useEffect(() => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    const hash = window.location.hash.slice(1); // Remove # from hash
+    
+    if (hash) {
+      // Delay to ensure DOM is ready
+      setTimeout(() => {
+        const element = document.getElementById(hash);
+        if (element) {
+          element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      }, 100);
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }, [location]);
 
   if (isLoading) {
