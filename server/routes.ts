@@ -293,15 +293,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Update seat count
         await storage.updateSeatSold(purchase.seatType, 1);
 
-        // Generate unique codes
-        const bronzeCode = await storage.createCode({
-          purchaseId: purchase.id,
-          type: "bronze_claim",
-          code: generateBronzeClaimCode(),
-          maxRedemptions: 1,
-          appliesTo: 'any',
-        });
-
+        // Generate workshop codes only (specimen selected during checkout)
         const workshopCode = await storage.createCode({
           purchaseId: purchase.id,
           type: "workshop_voucher",
@@ -333,7 +325,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         try {
           certificateUrl = await generateCertificate(
             purchase,
-            [bronzeCode, workshopCode, lifetimeWorkshopCode],
+            [workshopCode, lifetimeWorkshopCode],
             userName
           );
 
@@ -361,7 +353,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             userEmail,
             userName,
             purchase,
-            [bronzeCode, workshopCode, lifetimeWorkshopCode],
+            [workshopCode, lifetimeWorkshopCode],
             certificateUrl
           ).catch(console.error);
         }

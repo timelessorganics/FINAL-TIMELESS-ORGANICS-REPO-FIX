@@ -22,141 +22,199 @@ export async function generateCertificate(
       // Create PDF document
       const doc = new PDFDocument({
         size: 'LETTER',
-        margins: { top: 40, bottom: 40, left: 40, right: 40 }
+        margins: { top: 50, bottom: 50, left: 60, right: 60 }
       });
 
       const stream = fs.createWriteStream(filePath);
       doc.pipe(stream);
 
+      // Site colors
+      const BRONZE = '#a67c52';
+      const PATINA = '#6f8f79';
+      const ACCENT_GOLD = '#d8c3a5';
+      const DARK_BG = '#0a0a0a';
+      const CARD_BG = '#1a1a1a';
+
       // Dark background
-      doc.rect(0, 0, doc.page.width, doc.page.height).fill('#1f1f1f');
+      doc.rect(0, 0, doc.page.width, doc.page.height).fill(DARK_BG);
 
-      // Gold border
-      doc.rect(15, 15, doc.page.width - 30, doc.page.height - 30)
-        .lineWidth(15)
-        .stroke('#e0c8a9');
-
-      // Try to add background image (aloe)
-      const bgImagePath = path.join(process.cwd(), 'attached_assets', 'Gemini_Generated_Image_9rrlvn9rrlvn9rrl (1)_1761271985174.png');
-      if (fs.existsSync(bgImagePath)) {
-        doc.image(bgImagePath, 150, 200, {
-          width: 300
+      // Full-page translucent aloe background
+      const aloeImagePath = path.join(process.cwd(), 'attached_assets', 'aloe-certificate-background.png');
+      if (fs.existsSync(aloeImagePath)) {
+        doc.save();
+        doc.opacity(0.15);
+        // Center the image and scale to fit page
+        const imgWidth = doc.page.width * 0.7;
+        const imgX = (doc.page.width - imgWidth) / 2;
+        const imgY = 100;
+        doc.image(aloeImagePath, imgX, imgY, {
+          width: imgWidth,
+          align: 'center'
         });
+        doc.restore();
       }
 
-      // Title
-      doc.fontSize(48)
-        .fillColor('#e0c8a9')
-        .font('Helvetica-Bold')
-        .text('TIMELESS ORGANICS', 40, 80, { align: 'center' });
+      // Bronze border frame
+      doc.rect(30, 30, doc.page.width - 60, doc.page.height - 60)
+        .lineWidth(2)
+        .stroke(BRONZE);
+
+      // Inner accent frame
+      doc.rect(40, 40, doc.page.width - 80, doc.page.height - 80)
+        .lineWidth(1)
+        .stroke(ACCENT_GOLD);
+
+      // Title - Playfair-style serif
+      doc.fontSize(52)
+        .fillColor(ACCENT_GOLD)
+        .font('Times-Bold')
+        .text('TIMELESS ORGANICS', 60, 90, { align: 'center', width: doc.page.width - 120 });
 
       // Subtitle
-      doc.fontSize(24)
-        .fillColor('#6f8f79')
-        .font('Helvetica-Bold')
-        .text('OFFICIAL CERTIFICATE OF PATRONAGE', 40, 150, { align: 'center' });
+      doc.fontSize(18)
+        .fillColor(PATINA)
+        .font('Times-Roman')
+        .text('Official Certificate of Investment', 60, 160, { align: 'center', width: doc.page.width - 120 });
+
+      // Decorative line
+      const lineY = 195;
+      doc.moveTo(doc.page.width / 2 - 80, lineY)
+        .lineTo(doc.page.width / 2 + 80, lineY)
+        .lineWidth(1)
+        .stroke(BRONZE);
 
       // Recognition text
-      doc.fontSize(14)
-        .fillColor('#999')
+      doc.fontSize(13)
+        .fillColor('#999999')
         .font('Helvetica')
-        .text('This document formally recognizes and certifies the status of:', 40, 220, { align: 'center' });
+        .text('This document certifies that', 60, 230, { align: 'center', width: doc.page.width - 120 });
 
-      // Investor name
-      doc.fontSize(40)
-        .fillColor('#f5f5f5')
-        .font('Helvetica-Bold')
-        .text(userName.toUpperCase(), 40, 260, { align: 'center' });
+      // Investor name - large serif
+      doc.fontSize(44)
+        .fillColor('#ffffff')
+        .font('Times-Bold')
+        .text(userName.toUpperCase(), 60, 265, { align: 'center', width: doc.page.width - 120 });
 
       // Status description
-      const seatName = purchase.seatType === 'founder' ? 'FOUNDER' : 'PATRON';
-      doc.fontSize(16)
-        .fillColor('#ccc')
+      const seatName = purchase.seatType === 'founder' ? 'Founder' : 'Patron';
+      const seatPrice = purchase.seatType === 'founder' ? 'R3,000' : 'R5,000';
+      
+      doc.fontSize(15)
+        .fillColor('#cccccc')
         .font('Helvetica')
         .text(
-          `as a founding member of the Timeless Organics initiative, having secured a prestigious ${seatName} status.`,
-          40, 330, { align: 'center', width: doc.page.width - 80 }
+          `has secured a ${seatName} Pass (${seatPrice}) in the Founding 100,`,
+          60, 330, { align: 'center', width: doc.page.width - 120 }
+      );
+      
+      doc.text(
+        'investing in the final fit-out of Timeless Organics foundry.',
+        60, 355, { align: 'center', width: doc.page.width - 120 }
       );
 
-      // Codes section box
-      doc.rect(80, 400, doc.page.width - 160, 200)
-        .lineWidth(1)
-        .stroke('#555')
-        .fillColor('rgba(0, 0, 0, 0.3)');
+      // Benefits section box
+      const boxTop = 410;
+      doc.rect(90, boxTop, doc.page.width - 180, 170)
+        .fillAndStroke('rgba(26, 26, 26, 0.8)', BRONZE);
 
-      // Codes section title
+      // Benefits title
       doc.fontSize(16)
-        .fillColor('#ccc')
-        .font('Helvetica-Bold')
-        .text('INVESTMENT PERKS & LIFETIME CODES', 100, 415);
+        .fillColor(ACCENT_GOLD)
+        .font('Times-Bold')
+        .text('LIFETIME INVESTMENT BENEFITS', 110, boxTop + 20, { width: doc.page.width - 220 });
 
-      // Draw horizontal line
-      doc.moveTo(100, 440).lineTo(doc.page.width - 100, 440).stroke('#555');
+      // Divider
+      doc.moveTo(110, boxTop + 48)
+        .lineTo(doc.page.width - 110, boxTop + 48)
+        .lineWidth(0.5)
+        .stroke(BRONZE);
 
-      // Codes content
-      let yPos = 455;
+      // Benefits list
+      let yPos = boxTop + 60;
 
-      // Founding Status
-      doc.fontSize(11)
-        .fillColor('#6f8f79')
-        .font('Helvetica-Bold')
-        .text('FOUNDING STATUS:', 100, yPos);
-      doc.fillColor('#fff')
-        .font('Helvetica')
-        .text(
-          `${seatName} PASS (R${(purchase.amount / 100).toFixed(0)})`,
-          300, yPos
-        );
-
-      yPos += 25;
-
-      // Each code
-      codes.forEach((code) => {
-        const label = code.type === 'bronze_claim' 
-          ? 'GUARANTEED BRONZE CLAIM:'
-          : code.type === 'workshop_voucher'
-          ? `WORKSHOP VOUCHER CODE (${code.discount}% OFF):`
-          : 'LIFETIME REFERRAL CODE:';
-
+      // Workshop Voucher
+      const workshopCode = codes.find((c) => c.type === 'workshop_voucher');
+      if (workshopCode) {
         doc.fontSize(11)
-          .fillColor('#6f8f79')
+          .fillColor(PATINA)
           .font('Helvetica-Bold')
-          .text(label, 100, yPos);
-
-        doc.fillColor('#e0c8a9')
+          .text(`Workshop Voucher (${workshopCode.discount}% off):`, 110, yPos);
+        
+        doc.fillColor(ACCENT_GOLD)
           .font('Courier-Bold')
-          .text(code.code, 300, yPos);
+          .fontSize(12)
+          .text(workshopCode.code, 340, yPos);
+        
+        doc.fontSize(9)
+          .fillColor('#999999')
+          .font('Helvetica')
+          .text('Transferable • One-time use', 110, yPos + 15);
+        
+        yPos += 38;
+      }
 
-        yPos += 20;
-      });
+      // Lifetime Workshop Code
+      const lifetimeCode = codes.find((c) => c.type === 'lifetime_workshop');
+      if (lifetimeCode) {
+        doc.fontSize(11)
+          .fillColor(PATINA)
+          .font('Helvetica-Bold')
+          .text(`Lifetime Workshop (${lifetimeCode.discount}% off):`, 110, yPos);
+        
+        doc.fillColor(ACCENT_GOLD)
+          .font('Courier-Bold')
+          .fontSize(12)
+          .text(lifetimeCode.code, 340, yPos);
+        
+        doc.fontSize(9)
+          .fillColor('#999999')
+          .font('Helvetica')
+          .text('Transferable • Unlimited use', 110, yPos + 15);
+        
+        yPos += 38;
+      }
 
-      // Footer
+      // Guaranteed bronze casting
+      doc.fontSize(11)
+        .fillColor(BRONZE)
+        .font('Helvetica-Bold')
+        .text('Guaranteed Bronze Casting:', 110, yPos);
+      
+      doc.fontSize(10)
+        .fillColor('#cccccc')
+        .font('Helvetica')
+        .text('Your selected botanical specimen', 340, yPos);
+
+      // Footer - Date and signature
       const currentDate = new Date().toLocaleDateString('en-US', {
         year: 'numeric',
-        month: 'short',
+        month: 'long',
         day: 'numeric'
       });
 
+      // Date
       doc.fontSize(10)
-        .fillColor('#999')
+        .fillColor('#999999')
         .font('Helvetica')
-        .text(`Date Issued: ${currentDate}`, 40, doc.page.height - 120, { align: 'right' });
+        .text(`Issued ${currentDate}`, 60, doc.page.height - 110, { align: 'center', width: doc.page.width - 120 });
 
       // Signature line
-      doc.moveTo(doc.page.width - 290, doc.page.height - 90)
-        .lineTo(doc.page.width - 40, doc.page.height - 90)
-        .lineWidth(2)
-        .stroke('#a67c52');
+      const sigY = doc.page.height - 80;
+      doc.moveTo(doc.page.width - 280, sigY)
+        .lineTo(doc.page.width - 60, sigY)
+        .lineWidth(1)
+        .stroke(BRONZE);
 
+      // Founder signature
       doc.fontSize(14)
-        .fillColor('#fff')
-        .font('Helvetica-Bold')
-        .text('David Junor, Founder', 40, doc.page.height - 75, { align: 'right' });
+        .fillColor(BRONZE)
+        .font('Times-Italic')
+        .text('David Junor', doc.page.width - 280, sigY + 10, { width: 220, align: 'center' });
 
-      doc.fontSize(10)
-        .fillColor('#999')
+      doc.fontSize(9)
+        .fillColor('#999999')
         .font('Helvetica')
-        .text('Timeless Organics, Kommetjie, Cape Town', 40, doc.page.height - 55, { align: 'right' });
+        .text('Founder, Timeless Organics', doc.page.width - 280, sigY + 30, { width: 220, align: 'center' });
 
       // Finalize PDF
       doc.end();
