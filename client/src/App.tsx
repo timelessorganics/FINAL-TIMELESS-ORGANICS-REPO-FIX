@@ -64,9 +64,12 @@ function Router() {
       <Route path="/privacy" component={Privacy} />
       <Route path="/waiver" component={Waiver} />
       
+      {/* Sculpture/Cutting Gallery - Can view without purchase */}
+      <Route path="/sculptures" component={SculptureGallery} />
+      
       {isAuthenticated && (
         <>
-          {/* Sculpture Gallery */}
+          {/* Sculpture Selection with Purchase ID */}
           <Route path="/sculpture-selection/:purchaseId">
             {(params) => <SculptureGallery purchaseId={params.purchaseId} />}
           </Route>
