@@ -162,7 +162,7 @@ export default function Dashboard() {
                 Need Help?
               </h3>
               <p className="text-muted-foreground mb-4">
-                For questions about your codes, workshop bookings, or bronze castings,
+                For questions about your codes, cutting selection, or bronze castings,
                 please contact us at{" "}
                 <a
                   href="mailto:support@timelessorganics.com"
@@ -171,16 +171,9 @@ export default function Dashboard() {
                   support@timelessorganics.com
                 </a>
               </p>
-              <div className="flex gap-4">
-                <Button variant="outline" size="sm">
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Workshop Schedule
-                </Button>
-                <Button variant="outline" size="sm">
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Cutting Gallery
-                </Button>
-              </div>
+              <p className="text-sm text-muted-foreground italic">
+                Workshop scheduling will open after your purchase is complete and your cutting is selected.
+              </p>
             </Card>
           </div>
         </div>

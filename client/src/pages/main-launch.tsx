@@ -357,29 +357,19 @@ export default function MainLaunch() {
             </div>
           </section>
 
-          {/* Workshops Section */}
+          {/* Coming Soon Section */}
           <section>
             <div className="text-center">
               <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
-                <span className="moving-fill">Workshops</span>
+                <span className="moving-fill">What's Next?</span>
               </h2>
-              <p className="text-muted-foreground text-lg mb-8 max-w-2xl mx-auto">
-                Learn the art of lost-wax casting in our immersive 2-day workshops. 
-                Founding members receive exclusive discounts.
+              <p className="text-muted-foreground text-lg mb-6 max-w-2xl mx-auto">
+                After you invest in a founding seat, you'll select your botanical cutting from our curated gallery, 
+                then receive your workshop discount codes for future 2-day casting sessions.
               </p>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="btn-bronze"
-                onClick={() => {
-                  document.querySelector('[data-testid="section-workshop"]')?.scrollIntoView({ 
-                    behavior: "smooth" 
-                  });
-                }}
-                data-testid="button-workshops"
-              >
-                <span className="moving-fill">Explore Workshops</span>
-              </Button>
+              <p className="text-sm text-muted-foreground italic">
+                Workshop scheduling opens after the Founding 100 launch completes.
+              </p>
             </div>
           </section>
         </div>
