@@ -8,13 +8,19 @@ import video6 from '@assets/6 SMOKE HOVERS BIGGER SPARKS_1761435915771.mp4';
 
 const videos = [video1, video2, video3, video4, video5, video6];
 
-export function SmokeFireBackground() {
+interface SmokeFireBackgroundProps {
+  intensity?: 'full' | 'subtle';
+}
+
+export function SmokeFireBackground({ intensity = 'full' }: SmokeFireBackgroundProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [nextIndex, setNextIndex] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
   
   const currentVideoRef = useRef<HTMLVideoElement>(null);
   const nextVideoRef = useRef<HTMLVideoElement>(null);
+  
+  const videoOpacity = intensity === 'full' ? 0.85 : 0.35;
 
   useEffect(() => {
     const currentVideo = currentVideoRef.current;
@@ -54,7 +60,7 @@ export function SmokeFireBackground() {
         preload="auto"
         className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
         style={{ 
-          opacity: isTransitioning ? 0 : 0.85,
+          opacity: isTransitioning ? 0 : videoOpacity,
           mixBlendMode: 'screen'
         }}
       >
@@ -69,7 +75,7 @@ export function SmokeFireBackground() {
         preload="auto"
         className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
         style={{ 
-          opacity: isTransitioning ? 0.85 : 0,
+          opacity: isTransitioning ? videoOpacity : 0,
           mixBlendMode: 'screen'
         }}
       >
