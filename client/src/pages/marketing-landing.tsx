@@ -4,8 +4,9 @@ import { Card } from "@/components/ui/card";
 import { SmokeFireBackground } from "@/components/SmokeFireBackground";
 import { InterestForm } from "@/components/InterestForm";
 import Footer from "@/components/footer";
-import { Flame, Hammer, Users, Award, ArrowRight, Sparkles } from "lucide-react";
+import { Flame, Hammer, Users, Award, ArrowRight, Sparkles, LogIn, LayoutDashboard } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import type { User } from "@shared/schema";
 
 interface Seat {
   id: string;
@@ -17,6 +18,11 @@ interface Seat {
 
 export default function MarketingLanding() {
   const [, setLocation] = useLocation();
+
+  const { data: user } = useQuery<User>({
+    queryKey: ["/api/auth/user"],
+    retry: false,
+  });
 
   const { data: seats } = useQuery<Seat[]>({
     queryKey: ["/api/seats/availability"],
@@ -42,29 +48,56 @@ export default function MarketingLanding() {
             <p className="text-sm text-accent-gold">Timeless Organics</p>
           </div>
           
-          {seats && (
-            <div className="flex items-center gap-6 text-sm">
-              <div className="text-right">
-                <div className="text-muted-foreground">Seats Remaining</div>
-                <div className="text-2xl font-bold font-serif text-accent-gold">
-                  {totalRemaining} / 100
+          <div className="flex items-center gap-6 text-sm">
+            {seats && (
+              <>
+                <div className="text-right">
+                  <div className="text-muted-foreground">Seats Remaining</div>
+                  <div className="text-2xl font-bold font-serif text-accent-gold">
+                    {totalRemaining} / 100
+                  </div>
                 </div>
-              </div>
-              <div className="h-10 w-px bg-card-border"></div>
-              <div className="text-right">
-                <div className="text-xs text-muted-foreground">Founders</div>
-                <div className="text-lg font-semibold text-bronze">
-                  {founderSeats ? founderSeats.totalAvailable - founderSeats.sold : 0} left
+                <div className="h-10 w-px bg-card-border"></div>
+                <div className="text-right">
+                  <div className="text-xs text-muted-foreground">Founders</div>
+                  <div className="text-lg font-semibold text-bronze">
+                    {founderSeats ? founderSeats.totalAvailable - founderSeats.sold : 0} left
+                  </div>
                 </div>
-              </div>
-              <div className="text-right">
-                <div className="text-xs text-muted-foreground">Patrons</div>
-                <div className="text-lg font-semibold text-patina">
-                  {patronSeats ? patronSeats.totalAvailable - patronSeats.sold : 0} left
+                <div className="text-right">
+                  <div className="text-xs text-muted-foreground">Patrons</div>
+                  <div className="text-lg font-semibold text-patina">
+                    {patronSeats ? patronSeats.totalAvailable - patronSeats.sold : 0} left
+                  </div>
                 </div>
-              </div>
-            </div>
-          )}
+                <div className="h-10 w-px bg-card-border"></div>
+              </>
+            )}
+            
+            {user ? (
+              <Button
+                onClick={() => setLocation("/dashboard")}
+                variant="outline"
+                size="sm"
+                className="border-bronze/50 text-bronze hover-elevate active-elevate-2"
+                data-testid="button-dashboard"
+              >
+                <LayoutDashboard className="w-4 h-4 mr-2" />
+                Dashboard
+              </Button>
+            ) : (
+              <Button
+                onClick={() => window.location.href = "/api/login"}
+                variant="outline"
+                size="sm"
+                className="border-bronze/50 text-bronze hover-elevate active-elevate-2"
+                data-testid="button-sign-in"
+              >
+                <LogIn className="w-4 h-4 mr-2" />
+                Sign In
+              </Button>
+            )}
+          </div>
         </div>
       </header>
       
