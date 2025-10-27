@@ -493,6 +493,15 @@
     100% { transform: rotate(360deg); }
   }
 
+  @keyframes text-hue {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
   /* Fire/Smoke Background Animation */
   .fire-smoke-bg {
     background: linear-gradient(

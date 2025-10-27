@@ -39,24 +39,32 @@ export default function SeatCard({
       });
     },
     onSuccess: (data: any) => {
+      // Show redirect message
+      toast({
+        title: "Redirecting to PayFast...",
+        description: "You'll be redirected to complete your payment in a moment.",
+      });
+
       // Create and submit form to PayFast
       if (data.paymentUrl && data.formData) {
-        const form = document.createElement("form");
-        form.method = "POST";
-        form.action = data.paymentUrl;
-        form.style.display = "none";
+        setTimeout(() => {
+          const form = document.createElement("form");
+          form.method = "POST";
+          form.action = data.paymentUrl;
+          form.style.display = "none";
 
-        // Add all form fields
-        Object.keys(data.formData).forEach((key) => {
-          const input = document.createElement("input");
-          input.type = "hidden";
-          input.name = key;
-          input.value = data.formData[key];
-          form.appendChild(input);
-        });
+          // Add all form fields
+          Object.keys(data.formData).forEach((key) => {
+            const input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = data.formData[key];
+            form.appendChild(input);
+          });
 
-        document.body.appendChild(form);
-        form.submit();
+          document.body.appendChild(form);
+          form.submit();
+        }, 800);
       } else {
         toast({
           title: "Payment Error",
