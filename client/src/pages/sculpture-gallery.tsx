@@ -76,10 +76,10 @@ export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) 
           <div className="text-center mb-12">
             <div className="kicker mb-3">YOUR BRONZE SELECTION</div>
             <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
-              Choose Your <span className="moving-fill">Sculpture</span>
+              Choose Your <span className="moving-fill">Cutting</span>
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Select one of our studio-approved specimens for your guaranteed bronze casting.
+              Select one of our studio-approved botanical specimens for your guaranteed bronze casting.
               Each piece is carefully preserved using traditional lost-wax methods.
             </p>
           </div>
