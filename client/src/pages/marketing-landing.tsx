@@ -241,6 +241,90 @@ export default function MarketingLanding() {
         </div>
       </section>
 
+      {/* David Junor - The Founder Section */}
+      <section className="relative z-50 min-h-screen flex items-center py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="font-serif text-4xl md:text-6xl font-bold mb-4">
+              <span className="moving-fill">David Junor</span>
+            </h2>
+            <p className="text-xl text-accent-gold">Founder, Timeless Organics</p>
+            <div className="w-20 h-1 bg-gradient-to-r from-bronze via-accent-gold to-patina mx-auto mt-6"></div>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
+            <Card className="bg-card/60 backdrop-blur-md border-card-border p-8">
+              <div className="prose prose-invert prose-lg max-w-none space-y-5">
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  My foundation in <span className="text-foreground font-semibold">25 years of technical precision casting</span> began 
+                  with 15 years in high-end London dental laboratories, including 3 years owning my own 
+                  Harley Street lab. This work—focusing on metallurgy, investment casting techniques, 
+                  and assembly—provided the technical mastery required for flawless results.
+                </p>
+
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Returning to Cape Town, I leveraged my specialist technical background, which led me 
+                  to connect with a <span className="text-patina font-semibold">globally recognized bronze artist</span>. I became the primary 
+                  technical fabricator for their botanical bronze collection. In this role, I successfully 
+                  cast hundreds of botanical bronzes that sold internationally, proving my technical skills 
+                  at the highest level of the art world.
+                </p>
+
+                <p className="text-xl text-foreground/90 font-medium italic leading-relaxed pt-4 border-t border-border">
+                  "Those pieces weren't mine to sign; the craft became mine to master."
+                </p>
+
+                <p className="text-lg text-muted-foreground leading-relaxed">
+                  Timeless Organics is the necessary next step — where decades of technical precision 
+                  meet artistic independence. Where priceless craft meets timeless art.
+                </p>
+              </div>
+            </Card>
+
+            <Card className="bg-card/60 backdrop-blur-md border-card-border p-8">
+              <h3 className="font-serif text-2xl font-bold mb-6 text-foreground">Expertise & Process</h3>
+              
+              <div className="space-y-6">
+                <div>
+                  <h4 className="font-semibold text-accent-gold mb-2">Technical Foundation</h4>
+                  <p className="text-muted-foreground">
+                    25 years in high-precision investment casting and assembly, with specialized 
+                    training in metallurgy and lost-wax techniques.
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-bronze mb-2">Casting Process</h4>
+                  <p className="text-muted-foreground">
+                    Direct casting from real plant matter, silicon bronze pour, sand/glass 
+                    bead-blast finish. Each piece a perfect botanical replica.
+                  </p>
+                </div>
+
+                <div>
+                  <h4 className="font-semibold text-patina mb-2">Studio Location</h4>
+                  <p className="text-muted-foreground">
+                    Independent studio in Kommetjie, Cape Town. Where the Atlantic meets ancient craft.
+                  </p>
+                </div>
+
+                <div className="pt-6 border-t border-border">
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Ready to connect with the craft?
+                  </p>
+                  <a 
+                    href="mailto:studio@timeless.organic"
+                    className="text-accent-gold hover:text-accent-gold/80 font-semibold text-lg"
+                  >
+                    studio@timeless.organic
+                  </a>
+                </div>
+              </div>
+            </Card>
+          </div>
+        </div>
+      </section>
+
       {/* The Vision Section */}
       <section className="relative z-50 min-h-screen flex items-center py-20 px-4">
         <div className="max-w-4xl mx-auto">
@@ -255,7 +339,8 @@ export default function MarketingLanding() {
             <div className="prose prose-invert prose-lg max-w-none space-y-6">
               <p className="text-xl text-foreground/90 font-light leading-relaxed">
                 We're building something rare — a studio where <span className="text-accent-gold font-semibold">ancient bronze-casting traditions</span> meet 
-                contemporary South African artistry. But completing our foundry requires capital.
+                contemporary South African artistry. But completing our foundry requires capital, and we 
+                believe that capital should come with <span className="text-accent-gold font-semibold">real, lasting value</span>.
               </p>
 
               <p className="text-lg text-muted-foreground leading-relaxed">
