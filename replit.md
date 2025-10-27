@@ -153,6 +153,18 @@ Optional:
 - Created deployment guides: DEPLOYMENT_RAILWAY.md ($7/mo backend) and DEPLOYMENT_VIDEOS.md (free video hosting)
 - Marketing page publicly accessible without login for immediate investor viewing
 
+**2025-10-27 PM**: Navigation and user flow improvements
+- Added "Sign In" button to header (shows when not authenticated)
+- Improved purchase flow with clear "Sign In Required" message when attempting to invest without authentication
+- Fixed "Secure Your Seat Now" button - now properly scrolls to top of /founding100 page
+- Added smooth scroll-to-top on all route changes for better UX
+- Updated "Workshops" section to "What's Next?" with clear explanation of post-purchase flow
+- Removed broken "Workshop Schedule" and "Cutting Gallery" buttons from dashboard (workshops not live yet during Founding 100 launch)
+- Added placeholder images for cutting gallery using placehold.co service (bronze/dark theme colors)
+- Cutting gallery automatically falls back to placeholders if images don't exist
+- Fixed z-index layering: Background (z-40), Content (z-50), Header (z-100) for consistent text visibility
+- SmokeFireBackground opacity set to 85% for dramatic effect matching marketing page
+
 **2025-10-26**: Session storage hotfix - Supabase connectivity issue
 - **CRITICAL FIX**: Switched from Postgres session storage to memory-based session storage
 - Supabase connection timeouts were preventing user authentication and site access

@@ -103,9 +103,13 @@ export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) 
                   }`}
                 >
                   <img
-                    src={sculpture.imageUrl}
+                    src={sculpture.imageUrl || `https://placehold.co/400x300/2d3436/a67c52?text=${encodeURIComponent(sculpture.name)}`}
                     alt={sculpture.name}
-                    className="w-full h-48 object-cover"
+                    className="w-full h-48 object-cover bg-card"
+                    onError={(e) => {
+                      const target = e.target as HTMLImageElement;
+                      target.src = `https://placehold.co/400x300/2d3436/a67c52?text=${encodeURIComponent(sculpture.name)}`;
+                    }}
                   />
                   <div className="p-4">
                     <h3 className="font-serif font-bold text-lg mb-1 text-foreground">
