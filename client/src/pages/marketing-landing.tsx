@@ -164,7 +164,7 @@ export default function MarketingLanding() {
       {/* How It Works Section */}
       <section 
         id="how-it-works" 
-        className="relative z-50 min-h-screen flex items-center py-20 px-4 pl-[16px] pr-[16px] pt-[50px] pb-[50px]"
+        className="relative z-50 min-h-screen flex items-center py-16 px-4"
       >
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
@@ -274,7 +274,7 @@ export default function MarketingLanding() {
         </div>
       </section>
       {/* What You Get Section */}
-      <section className="relative z-50 min-h-screen flex items-center py-20 px-4 text-center pt-[5px] pb-[5px]">
+      <section className="relative z-50 min-h-screen flex items-center py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="font-serif text-4xl md:text-6xl font-bold mb-6">
@@ -372,7 +372,7 @@ export default function MarketingLanding() {
         </div>
       </section>
       {/* David Junor - The Founder Section */}
-      <section className="relative z-50 min-h-screen flex items-center py-20 px-4">
+      <section className="relative z-50 min-h-screen flex items-center py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="font-serif text-4xl md:text-6xl font-bold mb-4">
@@ -455,7 +455,7 @@ export default function MarketingLanding() {
         </div>
       </section>
       {/* The Vision Section */}
-      <section className="relative z-50 min-h-screen flex items-center py-20 px-4">
+      <section className="relative z-50 min-h-screen flex items-center py-16 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="font-serif text-4xl md:text-6xl font-bold mb-6">
@@ -492,7 +492,7 @@ export default function MarketingLanding() {
         </div>
       </section>
       {/* Interest Registration Section */}
-      <section className="relative z-50 py-20 px-4" id="register-interest">
+      <section className="relative z-50 py-16 px-4" id="register-interest">
         <div className="max-w-2xl mx-auto">
           <div className="text-center mb-10">
             <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
@@ -508,7 +508,7 @@ export default function MarketingLanding() {
         </div>
       </section>
       {/* Final CTA Section */}
-      <section className="relative z-50 py-20 px-4">
+      <section className="relative z-50 py-16 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">
             Ready to <span className="moving-fill">Join the Founding 100</span>?
