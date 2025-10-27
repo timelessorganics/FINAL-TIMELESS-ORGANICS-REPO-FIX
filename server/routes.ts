@@ -59,9 +59,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       console.log('[Purchase] User initiating purchase:', userId, userEmail);
 
+      // Calculate amount based on seat type + patina
+      const { seatType, hasPatina } = req.body;
+      const seat = await storage.getSeatByType(seatType);
+      if (!seat) {
+        return res.status(404).json({ message: "Seat type not found" });
+      }
+
+      const available = seat.totalAvailable - seat.sold;
+      if (available <= 0) {
+        return res.status(409).json({ message: `All ${seatType} seats are sold out` });
+      }
+
+      // Calculate total: base price + patina (R1000 = 100000 cents)
+      const amount = seat.price + (hasPatina ? 100000 : 0);
+
       const result = insertPurchaseSchema.safeParse({
         ...req.body,
         userId,
+        amount,
       });
       
       if (!result.success) {
@@ -70,22 +86,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Check seat availability
-      const seat = await storage.getSeatByType(result.data.seatType);
-      if (!seat) {
-        return res.status(404).json({ message: "Seat type not found" });
-      }
-
-      const available = seat.totalAvailable - seat.sold;
-      if (available <= 0) {
-        return res.status(409).json({ message: `All ${result.data.seatType} seats are sold out` });
-      }
-
-      // Create purchase record
+      // Create purchase record with all checkout data
       const purchase = await storage.createPurchase({
         userId: result.data.userId,
         seatType: result.data.seatType,
         amount: result.data.amount,
+        specimenId: result.data.specimenId,
+        hasPatina: result.data.hasPatina,
+        deliveryName: result.data.deliveryName,
+        deliveryPhone: result.data.deliveryPhone,
+        deliveryAddress: result.data.deliveryAddress,
       });
 
       console.log('[Purchase] Created purchase record:', purchase.id, purchase.seatType, purchase.amount);

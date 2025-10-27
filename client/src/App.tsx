@@ -13,6 +13,7 @@ import Dashboard from "@/pages/dashboard";
 import AdminPanel from "@/pages/admin-panel";
 import PaymentSuccess from "@/pages/payment-success";
 import PaymentCancel from "@/pages/payment-cancel";
+import CheckoutPage from "@/pages/checkout";
 import Terms from "@/pages/terms";
 import Privacy from "@/pages/privacy";
 import Waiver from "@/pages/waiver";
@@ -58,6 +59,14 @@ function Router() {
       
       {/* Founding 100 Launch Page - PUBLIC */}
       <Route path="/founding100" component={MainLaunch} />
+      
+      {/* Checkout Pages - PUBLIC */}
+      <Route path="/checkout/founder">
+        {() => <CheckoutPage seatType="founder" />}
+      </Route>
+      <Route path="/checkout/patron">
+        {() => <CheckoutPage seatType="patron" />}
+      </Route>
       
       {/* Legal Pages - PUBLIC */}
       <Route path="/terms" component={Terms} />
