@@ -39,6 +39,8 @@ export default function SeatCard({
       });
     },
     onSuccess: (data: any) => {
+      console.log("Payment response:", data);
+      
       // Show redirect message
       toast({
         title: "Redirecting to PayFast...",
