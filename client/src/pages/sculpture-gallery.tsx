@@ -86,6 +86,37 @@ export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) 
             </p>
           </div>
 
+          {/* Onboarding Explanation */}
+          <Card className="mb-12 p-8 bg-card/50 backdrop-blur-sm">
+            <div className="max-w-3xl mx-auto space-y-4">
+              <h2 className="font-serif text-2xl font-bold text-foreground mb-4">
+                How This Works
+              </h2>
+              
+              <div className="space-y-3 text-muted-foreground">
+                <p>
+                  <strong className="text-foreground">Step 1: Choose Your Cutting</strong> — Select one botanical specimen from our curated gallery below. These are aloe cuttings handpicked by David Junor for their exceptional detail and artistic merit.
+                </p>
+                
+                <p>
+                  <strong className="text-foreground">Step 2: Immediate Ceramic Encasement</strong> — Once selected, your cutting will be encased in ceramic within days. This preserves every detail: spines, texture, serrations—exactly as nature created it.
+                </p>
+                
+                <p>
+                  <strong className="text-foreground">Step 3: Lost-Wax Casting</strong> — The ceramic mold is fired in a kiln (burning away the organic material), then filled with molten bronze at 1,100°C. After cooling and finishing, you receive a perfect bronze replica of your chosen cutting.
+                </p>
+                
+                <p>
+                  <strong className="text-foreground">Timeline:</strong> Allow 6-12 weeks for the complete process (ceramic work, kiln firing, bronze pouring, finishing). You'll receive updates via email and can claim your finished piece with your bronze claim code.
+                </p>
+
+                <p className="text-sm text-muted-foreground/70 pt-3 border-t border-border">
+                  Your selection is permanent once confirmed. Choose carefully—this is the piece you'll treasure for life.
+                </p>
+              </div>
+            </div>
+          </Card>
+
           {/* Image Grid */}
           <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-12">
             {availableSculptures?.map((sculpture) => (

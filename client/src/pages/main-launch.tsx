@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import SeatCard from "@/components/seat-card";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SmokeFireBackground } from "@/components/SmokeFireBackground";
@@ -374,6 +375,8 @@ export default function MainLaunch() {
           </section>
         </div>
       </div>
+      
+      <Footer />
     </>
   );
 }

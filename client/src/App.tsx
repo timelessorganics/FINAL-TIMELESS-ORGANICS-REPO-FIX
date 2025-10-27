@@ -13,6 +13,9 @@ import Dashboard from "@/pages/dashboard";
 import AdminPanel from "@/pages/admin-panel";
 import PaymentSuccess from "@/pages/payment-success";
 import PaymentCancel from "@/pages/payment-cancel";
+import Terms from "@/pages/terms";
+import Privacy from "@/pages/privacy";
+import Waiver from "@/pages/waiver";
 
 
 function Router() {
@@ -55,6 +58,11 @@ function Router() {
       
       {/* Founding 100 Launch Page - PUBLIC */}
       <Route path="/founding100" component={MainLaunch} />
+      
+      {/* Legal Pages - PUBLIC */}
+      <Route path="/terms" component={Terms} />
+      <Route path="/privacy" component={Privacy} />
+      <Route path="/waiver" component={Waiver} />
       
       {isAuthenticated && (
         <>

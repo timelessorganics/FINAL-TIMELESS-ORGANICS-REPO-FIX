@@ -2,6 +2,7 @@ import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SmokeFireBackground } from "@/components/SmokeFireBackground";
+import Footer from "@/components/footer";
 import { Flame, Hammer, Users, Award, ArrowRight, Sparkles } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 
@@ -503,6 +504,8 @@ export default function MarketingLanding() {
           </p>
         </div>
       </section>
+
+      <Footer />
     </>
   );
 }
