@@ -5,6 +5,7 @@ import type { Seat } from "@shared/schema";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useAuth } from "@/hooks/useAuth";
 
 interface SeatCardProps {
   seat: Seat;
@@ -25,6 +26,7 @@ export default function SeatCard({
 }: SeatCardProps) {
   const { toast } = useToast();
   const queryClient = useQueryClient();
+  const { isAuthenticated } = useAuth();
 
   const available = seat.totalAvailable - seat.sold;
   const percentageSold = (seat.sold / seat.totalAvailable) * 100;
@@ -73,6 +75,15 @@ export default function SeatCard({
   });
 
   const handlePurchase = () => {
+    if (!isAuthenticated) {
+      toast({
+        title: "Sign In Required",
+        description: "Please sign in to invest in a seat. Click the 'Sign In' button in the header.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     if (available <= 0) {
       toast({
         title: "Sold Out",
