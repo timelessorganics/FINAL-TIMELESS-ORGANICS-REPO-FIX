@@ -72,7 +72,7 @@ export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) 
       <div className="bg-aloe" />
       <SmokeFireBackground />
       <Header />
-      <div className="relative z-10 min-h-screen">
+      <div className="relative z-50 min-h-screen">
         <div className="max-w-[1100px] mx-auto px-7 py-12">
           {/* Header */}
           <div className="text-center mb-12">

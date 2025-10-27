@@ -19,7 +19,7 @@ export default function MainLaunch() {
       <div className="bg-aloe" />
       <SmokeFireBackground />
       <Header />
-      <div className="relative z-10 min-h-screen">
+      <div className="relative z-50 min-h-screen">
         <div className="max-w-[1100px] mx-auto px-7 py-12">
           {/* Hero Section */}
           <section className="text-center mb-16 pt-8" data-testid="section-hero">
