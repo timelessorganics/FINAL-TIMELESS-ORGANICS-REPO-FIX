@@ -2,10 +2,9 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import type { Seat } from "@shared/schema";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
+import { useLocation } from "wouter";
 
 interface SeatCardProps {
   seat: Seat;
@@ -25,40 +24,11 @@ export default function SeatCard({
   featured = false,
 }: SeatCardProps) {
   const { toast } = useToast();
-  const queryClient = useQueryClient();
   const { isAuthenticated } = useAuth();
+  const [, setLocation] = useLocation();
 
   const available = seat.totalAvailable - seat.sold;
   const percentageSold = (seat.sold / seat.totalAvailable) * 100;
-
-  const purchaseMutation = useMutation({
-    mutationFn: async () => {
-      const response = await apiRequest("POST", "/api/purchase/initiate", {
-        seatType: seat.type,
-        amount: seat.price,
-      });
-      return await response.json();
-    },
-    onSuccess: (data: any) => {
-      // Redirect to server-side PayFast endpoint (more reliable than client-side form)
-      if (data.purchaseId) {
-        window.location.href = `/api/purchase/${data.purchaseId}/redirect`;
-      } else {
-        toast({
-          title: "Payment Error",
-          description: "Invalid payment data received",
-          variant: "destructive",
-        });
-      }
-    },
-    onError: (error: Error) => {
-      toast({
-        title: "Purchase failed",
-        description: error.message || "Please try again",
-        variant: "destructive",
-      });
-    },
-  });
 
   const handlePurchase = () => {
     if (!isAuthenticated) {
@@ -78,7 +48,9 @@ export default function SeatCard({
       });
       return;
     }
-    purchaseMutation.mutate();
+
+    // Navigate to checkout page
+    setLocation(`/checkout/${seat.type}`);
   };
 
   return (
@@ -146,18 +118,13 @@ export default function SeatCard({
       {/* CTA Button */}
       <Button
         onClick={handlePurchase}
-        disabled={available <= 0 || purchaseMutation.isPending}
+        disabled={available <= 0}
         className={`w-full btn-bronze font-bold py-6 ${
           available <= 0 ? "opacity-50 cursor-not-allowed" : ""
         }`}
         data-testid={`button-purchase-${seat.type}`}
       >
-        {purchaseMutation.isPending ? (
-          <div className="flex items-center justify-center gap-2">
-            <div className="spinner w-5 h-5 border-2" />
-            <span>Processing...</span>
-          </div>
-        ) : available <= 0 ? (
+        {available <= 0 ? (
           "SOLD OUT"
         ) : (
           <span className="moving-fill">Invest Now</span>

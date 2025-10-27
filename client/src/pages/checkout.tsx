@@ -56,17 +56,16 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
         throw new Error("Please select a botanical specimen");
       }
       
-      return apiRequest("/api/purchase/initiate", {
-        method: "POST",
-        body: JSON.stringify({
-          seatType,
-          specimenId: selectedSpecimen,
-          hasPatina,
-          deliveryName: data.deliveryName,
-          deliveryPhone: data.deliveryPhone,
-          deliveryAddress: data.deliveryAddress,
-        }),
+      const response = await apiRequest("POST", "/api/purchase/initiate", {
+        seatType,
+        specimenId: selectedSpecimen,
+        hasPatina,
+        deliveryName: data.deliveryName,
+        deliveryPhone: data.deliveryPhone,
+        deliveryAddress: data.deliveryAddress,
       });
+      
+      return await response.json();
     },
     onSuccess: (response: any) => {
       // Redirect to PayFast
