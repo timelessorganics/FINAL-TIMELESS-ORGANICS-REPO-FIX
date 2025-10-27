@@ -7,66 +7,13 @@ import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import MainLaunch from "@/pages/main-launch";
+import MarketingLanding from "@/pages/marketing-landing";
 import SculptureGallery from "@/pages/sculpture-gallery";
 import Dashboard from "@/pages/dashboard";
 import AdminPanel from "@/pages/admin-panel";
 import PaymentSuccess from "@/pages/payment-success";
 import PaymentCancel from "@/pages/payment-cancel";
-import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { SmokeFireBackground } from "@/components/SmokeFireBackground";
 
-function LandingPage() {
-  return (
-    <>
-      <div className="bg-aloe" />
-      <SmokeFireBackground />
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-        <Card className="relative z-10 w-full max-w-[720px] mx-4 bg-card/90 border-border backdrop-blur-md p-7">
-          <div className="text-center mb-6">
-            <div className="kicker mb-3" data-testid="text-kicker">
-              FOUNDING 100 INVESTOR LAUNCH
-            </div>
-            <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4 text-foreground">
-              <span className="moving-fill">Your Investment</span> is Our Investment
-            </h1>
-            <p className="text-muted-foreground text-base md:text-lg max-w-xl mx-auto mb-8">
-              Welcome to Timeless Organics. Please sign in to access the founding investor portal
-              and secure your exclusive seat.
-            </p>
-          </div>
-
-          <div className="pt-4">
-            <Button
-              onClick={() => window.location.href = "/api/login"}
-              className="w-full btn-bronze font-bold py-6 text-lg"
-              data-testid="button-login"
-            >
-              <span className="moving-fill">Sign In with Replit</span>
-            </Button>
-          </div>
-
-          <p className="text-xs text-muted-foreground text-center mt-6">
-            Limited to 100 founding seats. Sign in to begin your investment journey.
-          </p>
-        </Card>
-      </div>
-    </>
-  );
-}
-
-function RootRedirect() {
-  // Redirect root to /founding100 until main site is ready
-  useEffect(() => {
-    window.location.href = "/founding100";
-  }, []);
-  
-  return (
-    <div className="flex items-center justify-center min-h-screen">
-      <div className="spinner" />
-    </div>
-  );
-}
 
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -85,7 +32,10 @@ function Router() {
       <Route path="/payment/success" component={PaymentSuccess} />
       <Route path="/payment/cancel" component={PaymentCancel} />
       
-      {/* Founding 100 Launch Page - NOW PUBLIC FOR ALL VISITORS */}
+      {/* Marketing Landing Page - Root */}
+      <Route path="/" component={MarketingLanding} />
+      
+      {/* Founding 100 Launch Page - PUBLIC */}
       <Route path="/founding100" component={MainLaunch} />
       
       {isAuthenticated && (
@@ -104,9 +54,6 @@ function Router() {
           </Route>
         </>
       )}
-      
-      {/* Root redirects to /founding100 for now */}
-      <Route path="/" component={RootRedirect} />
       
       {/* Fallback to 404 */}
       <Route component={NotFound} />

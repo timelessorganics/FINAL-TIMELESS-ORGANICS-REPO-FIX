@@ -1,0 +1,317 @@
+import { useLocation } from "wouter";
+import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import { SmokeFireBackground } from "@/components/SmokeFireBackground";
+import { Flame, Hammer, Users, Award, ArrowRight, Sparkles } from "lucide-react";
+
+export default function MarketingLanding() {
+  const [, setLocation] = useLocation();
+
+  return (
+    <>
+      <div className="bg-aloe" />
+      <SmokeFireBackground />
+      
+      {/* Hero Section - Full Screen */}
+      <section className="relative z-50 min-h-screen flex items-center justify-center px-4">
+        <div className="max-w-5xl mx-auto text-center">
+          <div className="kicker mb-6 text-lg" data-testid="text-kicker">
+            FOUNDING 100 INVESTOR LAUNCH
+          </div>
+          
+          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
+            <span className="moving-fill">Where Ancient Craft</span><br />
+            Meets Modern Investment
+          </h1>
+          
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
+            Fund our Kommetjie foundry's final fit-out and receive a guaranteed bronze sculpture, 
+            lifetime workshop discounts, and exclusive access to the timeless art of lost-wax casting.
+          </p>
+
+          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+            <Button
+              onClick={() => setLocation("/founding100")}
+              size="lg"
+              className="btn-bronze text-lg px-8 py-6"
+              data-testid="button-explore"
+            >
+              <span className="moving-fill flex items-center gap-2">
+                Explore the Founding 100
+                <ArrowRight className="w-5 h-5" />
+              </span>
+            </Button>
+            <Button
+              onClick={() => {
+                document.getElementById("how-it-works")?.scrollIntoView({ 
+                  behavior: "smooth" 
+                });
+              }}
+              size="lg"
+              variant="outline"
+              className="text-lg px-8 py-6 backdrop-blur-md bg-card/30 border-card-border hover:bg-card/50"
+              data-testid="button-learn-more"
+            >
+              Learn More
+            </Button>
+          </div>
+
+          {/* Key Stats */}
+          <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto">
+            <div className="bg-card/40 backdrop-blur-md border border-card-border rounded-lg p-6">
+              <div className="text-4xl font-bold font-serif text-accent-gold mb-2">100</div>
+              <div className="text-sm text-muted-foreground">Limited Seats</div>
+            </div>
+            <div className="bg-card/40 backdrop-blur-md border border-card-border rounded-lg p-6">
+              <div className="text-4xl font-bold font-serif text-bronze mb-2">1</div>
+              <div className="text-sm text-muted-foreground">Bronze Sculpture</div>
+            </div>
+            <div className="bg-card/40 backdrop-blur-md border border-card-border rounded-lg p-6">
+              <div className="text-4xl font-bold font-serif text-patina mb-2">∞</div>
+              <div className="text-sm text-muted-foreground">Lifetime Benefits</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How It Works Section */}
+      <section 
+        id="how-it-works" 
+        className="relative z-50 min-h-screen flex items-center py-20 px-4"
+      >
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-serif text-4xl md:text-6xl font-bold mb-6">
+              How the <span className="moving-fill">Founding 100</span> Works
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              Your investment becomes infrastructure. Infrastructure becomes art. 
+              Art becomes yours to keep, forever.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+            {/* Step 1 */}
+            <Card className="bg-card/80 backdrop-blur-md border-card-border p-7 hover-elevate active-elevate-2">
+              <div className="flex items-center justify-between mb-4">
+                <div className="text-6xl font-bold font-serif text-accent-gold/20">1</div>
+                <Users className="w-10 h-10 text-accent-gold" />
+              </div>
+              <h3 className="font-serif text-2xl font-bold mb-3">Choose Your Seat</h3>
+              <p className="text-muted-foreground">
+                Select between Founder (R3,000) or Patron (R6,000) passes. Only 100 seats exist.
+              </p>
+            </Card>
+
+            {/* Step 2 */}
+            <Card className="bg-card/80 backdrop-blur-md border-card-border p-7 hover-elevate active-elevate-2">
+              <div className="flex items-center justify-between mb-4">
+                <div className="text-6xl font-bold font-serif text-bronze/20">2</div>
+                <Hammer className="w-10 h-10 text-bronze" />
+              </div>
+              <h3 className="font-serif text-2xl font-bold mb-3">Fund the Foundry</h3>
+              <p className="text-muted-foreground">
+                Your capital funds equipment, tooling, and our Kommetjie studio's final fit-out.
+              </p>
+            </Card>
+
+            {/* Step 3 */}
+            <Card className="bg-card/80 backdrop-blur-md border-card-border p-7 hover-elevate active-elevate-2">
+              <div className="flex items-center justify-between mb-4">
+                <div className="text-6xl font-bold font-serif text-patina/20">3</div>
+                <Sparkles className="w-10 h-10 text-patina" />
+              </div>
+              <h3 className="font-serif text-2xl font-bold mb-3">Select Your Sculpture</h3>
+              <p className="text-muted-foreground">
+                Choose from studio-approved aloe specimens for your guaranteed bronze casting.
+              </p>
+            </Card>
+
+            {/* Step 4 */}
+            <Card className="bg-card/80 backdrop-blur-md border-card-border p-7 hover-elevate active-elevate-2">
+              <div className="flex items-center justify-between mb-4">
+                <div className="text-6xl font-bold font-serif text-accent-gold/20">4</div>
+                <Award className="w-10 h-10 text-accent-gold" />
+              </div>
+              <h3 className="font-serif text-2xl font-bold mb-3">Receive Forever</h3>
+              <p className="text-muted-foreground">
+                Get your bronze sculpture, lifetime workshop codes, and founding member certificate.
+              </p>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* What You Get Section */}
+      <section className="relative z-50 min-h-screen flex items-center py-20 px-4">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="font-serif text-4xl md:text-6xl font-bold mb-6">
+              What <span className="moving-fill">You Receive</span>
+            </h2>
+            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+              This isn't crowdfunding. It's co-creation. Your investment unlocks tangible, 
+              lasting value that grows with our studio.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+            {/* Founder Benefits */}
+            <Card className="bg-gradient-to-br from-bronze/10 to-accent-gold/5 backdrop-blur-md border-bronze/30 p-8">
+              <div className="flex items-center gap-3 mb-6">
+                <Flame className="w-8 h-8 text-bronze" />
+                <div>
+                  <h3 className="font-serif text-3xl font-bold text-foreground">Founders Pass</h3>
+                  <p className="text-2xl text-bronze font-semibold">R3,000</p>
+                </div>
+              </div>
+              
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-bronze mt-2 flex-shrink-0" />
+                  <span className="text-muted-foreground">
+                    <strong className="text-foreground">One bronze sculpture</strong> — Studio-approved specimen, lost-wax cast
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-bronze mt-2 flex-shrink-0" />
+                  <span className="text-muted-foreground">
+                    <strong className="text-foreground">50% off first workshop</strong> — Transferable, 2-day intensive
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-bronze mt-2 flex-shrink-0" />
+                  <span className="text-muted-foreground">
+                    <strong className="text-foreground">20% lifetime workshop code</strong> — Unlimited uses, forever
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-bronze mt-2 flex-shrink-0" />
+                  <span className="text-muted-foreground">
+                    <strong className="text-foreground">Founding member certificate</strong> — Digital + PDF delivery
+                  </span>
+                </li>
+              </ul>
+            </Card>
+
+            {/* Patron Benefits */}
+            <Card className="bg-gradient-to-br from-patina/10 to-accent-gold/5 backdrop-blur-md border-patina/30 p-8 relative overflow-hidden">
+              <div className="absolute top-4 right-4">
+                <div className="bg-accent-gold text-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wide">
+                  Best Value
+                </div>
+              </div>
+              
+              <div className="flex items-center gap-3 mb-6">
+                <Flame className="w-8 h-8 text-patina" />
+                <div>
+                  <h3 className="font-serif text-3xl font-bold text-foreground">Patron Gift Card</h3>
+                  <p className="text-2xl text-patina font-semibold">R6,000</p>
+                </div>
+              </div>
+              
+              <ul className="space-y-4">
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-patina mt-2 flex-shrink-0" />
+                  <span className="text-muted-foreground">
+                    <strong className="text-foreground">One bronze sculpture</strong> — Studio-approved specimen, lost-wax cast
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-patina mt-2 flex-shrink-0" />
+                  <span className="text-muted-foreground">
+                    <strong className="text-foreground">80% off first workshop</strong> — Transferable, 2-day intensive
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-patina mt-2 flex-shrink-0" />
+                  <span className="text-muted-foreground">
+                    <strong className="text-foreground">30% lifetime workshop code</strong> — Unlimited uses, forever
+                  </span>
+                </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-patina mt-2 flex-shrink-0" />
+                  <span className="text-muted-foreground">
+                    <strong className="text-foreground">Founding member certificate</strong> — Digital + PDF delivery
+                  </span>
+                </li>
+              </ul>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* The Vision Section */}
+      <section className="relative z-50 min-h-screen flex items-center py-20 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="font-serif text-4xl md:text-6xl font-bold mb-6">
+              The <span className="moving-fill">Vision</span>
+            </h2>
+            <div className="w-20 h-1 bg-gradient-to-r from-bronze via-accent-gold to-patina mx-auto mb-8"></div>
+          </div>
+
+          <Card className="bg-card/60 backdrop-blur-md border-card-border p-10">
+            <div className="prose prose-invert prose-lg max-w-none space-y-6">
+              <p className="text-xl text-foreground/90 font-light leading-relaxed">
+                We're building something rare — a studio where <span className="text-accent-gold font-semibold">ancient bronze-casting traditions</span> meet 
+                contemporary South African artistry. But completing our foundry requires capital.
+              </p>
+
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                The Founding 100 program isn't just fundraising. It's an invitation to become 
+                part of our origin story — to fund the final fit-out of our Kommetjie foundry while securing 
+                your own piece of bronze art and <span className="text-patina font-semibold">lifetime access to the ancient craft</span> of lost-wax casting.
+              </p>
+
+              <p className="text-lg text-muted-foreground leading-relaxed">
+                Only 100 seats exist. 50 for Founders. 50 for Patrons. Once they're gone, this opportunity 
+                closes forever. Your investment becomes infrastructure, and infrastructure becomes art — 
+                both yours to keep, and ours to build upon.
+              </p>
+
+              <p className="text-xl text-foreground/90 font-medium text-center pt-6 border-t border-border">
+                This isn't crowdfunding. It's co-creation. <span className="text-accent-gold">Your investment is our investment.</span>
+              </p>
+            </div>
+          </Card>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="relative z-50 py-20 px-4">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">
+            Ready to <span className="moving-fill">Join the Founding 100</span>?
+          </h2>
+          <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto">
+            Secure your seat in our founding community. Limited to 100 investors. 
+            Once they're gone, they're gone forever.
+          </p>
+          
+          <Button
+            onClick={() => setLocation("/founding100")}
+            size="lg"
+            className="btn-bronze text-xl px-12 py-7"
+            data-testid="button-get-started"
+          >
+            <span className="moving-fill flex items-center gap-3">
+              Secure Your Seat Now
+              <ArrowRight className="w-6 h-6" />
+            </span>
+          </Button>
+
+          <p className="text-sm text-muted-foreground mt-8">
+            Questions? Contact us at{" "}
+            <a 
+              href="mailto:hello@timeless.organic" 
+              className="text-accent-gold hover:text-accent-gold/80 underline"
+            >
+              hello@timeless.organic
+            </a>
+          </p>
+        </div>
+      </section>
+    </>
+  );
+}
