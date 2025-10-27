@@ -4,10 +4,14 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import type { Purchase, Code } from "@shared/schema";
-import { Download, ExternalLink } from "lucide-react";
+import type { Purchase, Code, User } from "@shared/schema";
+import { Download, ExternalLink, User as UserIcon } from "lucide-react";
 
 export default function Dashboard() {
+  const { data: user } = useQuery<User>({
+    queryKey: ["/api/auth/user"],
+  });
+
   const { data: purchases, isLoading } = useQuery<(Purchase & { codes: Code[] })[]>({
     queryKey: ["/api/dashboard"],
   });
@@ -36,6 +40,30 @@ export default function Dashboard() {
               Manage your investments, codes, and certificates
             </p>
           </div>
+
+          {/* User Profile Card */}
+          {user && (
+            <Card className="bg-card/60 border-card-border p-6 mb-8" data-testid="user-profile-card">
+              <div className="flex items-center gap-4">
+                <div className="w-16 h-16 rounded-full bg-bronze/20 border-2 border-bronze/50 flex items-center justify-center">
+                  <UserIcon className="w-8 h-8 text-bronze" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-xl font-semibold text-foreground mb-1" data-testid="user-name">
+                    {user.firstName && user.lastName 
+                      ? `${user.firstName} ${user.lastName}` 
+                      : user.firstName || user.email}
+                  </h3>
+                  <p className="text-sm text-muted-foreground" data-testid="user-email">
+                    {user.email}
+                  </p>
+                </div>
+                <Badge className="bg-patina/20 text-patina border-patina/30">
+                  Founding Member
+                </Badge>
+              </div>
+            </Card>
+          )}
 
 
           {/* Purchases */}
