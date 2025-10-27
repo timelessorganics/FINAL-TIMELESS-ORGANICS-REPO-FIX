@@ -60,21 +60,28 @@ export function generatePayFastUrl(): string {
     : 'https://www.payfast.co.za/eng/process';
 }
 
-export function generateSignature(data: Record<string, string>, passphrase?: string): string {
+export function generateSignature(data: Record<string, string>, passphrase?: string, skipEmptyFields: boolean = true): string {
   // CRITICAL: PayFast PHP example uses foreach($data as $key => $val) which preserves insertion order
   // JavaScript objects maintain insertion order as of ES2015+
   // Reference: https://developers.payfast.co.za/docs#step_2_signature
+  // For webhooks: skipEmptyFields=false (include all fields PayFast sends)
+  // For payment forms: skipEmptyFields=true (skip empty/blank fields)
   
   let paramString = '';
   
-  // Build parameter string - skip empty values and signature field
+  // Build parameter string
   for (const key in data) {
     const value = data[key];
-    if (value && value !== '' && key !== 'signature') {
-      // URL encode and replace %20 with + as per PayFast spec
-      const encodedValue = encodeURIComponent(value.trim()).replace(/%20/g, '+');
-      paramString += `${key}=${encodedValue}&`;
-    }
+    
+    // Skip signature field always
+    if (key === 'signature') continue;
+    
+    // For payment forms, skip empty fields. For webhooks, include them.
+    if (skipEmptyFields && (!value || value === '')) continue;
+    
+    // URL encode and replace %20 with + as per PayFast spec
+    const encodedValue = encodeURIComponent((value || '').trim()).replace(/%20/g, '+');
+    paramString += `${key}=${encodedValue}&`;
   }
   
   // Remove trailing ampersand
@@ -130,6 +137,15 @@ export function createPaymentData(
 
 export function verifyPayFastSignature(data: Record<string, string>, signature: string): boolean {
   const config = getPayFastConfig();
-  const calculatedSignature = generateSignature(data, config.passphrase);
-  return calculatedSignature === signature;
+  // For webhook verification, include ALL fields (even empty ones)
+  const calculatedSignature = generateSignature(data, config.passphrase, false);
+  const isValid = calculatedSignature === signature;
+  
+  if (!isValid) {
+    console.log('[PayFast] Signature mismatch!');
+    console.log('[PayFast] Expected:', signature);
+    console.log('[PayFast] Calculated:', calculatedSignature);
+  }
+  
+  return isValid;
 }
