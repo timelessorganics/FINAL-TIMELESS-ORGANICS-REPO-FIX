@@ -3,6 +3,7 @@ import SeatCard from "@/components/seat-card";
 import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
+import { SmokeFireBackground } from "@/components/SmokeFireBackground";
 import type { Seat } from "@shared/schema";
 
 export default function MainLaunch() {
@@ -16,6 +17,7 @@ export default function MainLaunch() {
   return (
     <>
       <div className="bg-aloe" />
+      <SmokeFireBackground />
       <Header />
       <div className="relative z-10 min-h-screen">
         <div className="max-w-[1100px] mx-auto px-7 py-12">
