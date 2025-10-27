@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import SeatCard from "@/components/seat-card";
 import Header from "@/components/header";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import type { Seat } from "@shared/schema";
 
 export default function MainLaunch() {
@@ -259,6 +260,98 @@ export default function MainLaunch() {
                   investing in a legacy.
                 </p>
               </div>
+            </div>
+          </section>
+
+          {/* FAQ Section */}
+          <section className="mb-16" data-testid="section-faq">
+            <div className="text-center mb-12">
+              <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
+                Frequently Asked <span className="text-accent-gold">Questions</span>
+              </h2>
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+                Everything you need to know about the Founding 100 program
+              </p>
+            </div>
+
+            <div className="max-w-4xl mx-auto space-y-4">
+              {/* FAQ Items */}
+              <Card className="bg-card border-card-border p-6">
+                <h3 className="font-semibold text-foreground mb-2">Is there an age restriction?</h3>
+                <p className="text-muted-foreground text-sm">
+                  Purchases are 18+ only. Ages 16–17 may assist with non-hazardous prep (cleaning, spruing, investing under supervision, basic finishing). No pouring/molten metal for under-18s. Under 16 may observe only.
+                </p>
+              </Card>
+
+              <Card className="bg-card border-card-border p-6">
+                <h3 className="font-semibold text-foreground mb-2">Do 16–17 year olds need a guardian present?</h3>
+                <p className="text-muted-foreground text-sm">
+                  Guardian Consent & Indemnity is required. Guardian must be contactable during the session.
+                </p>
+              </Card>
+
+              <Card className="bg-card border-card-border p-6">
+                <h3 className="font-semibold text-foreground mb-2">What should I wear?</h3>
+                <p className="text-muted-foreground text-sm">
+                  Closed robust shoes, long pants, natural-fibre tops. Tie back hair; avoid loose sleeves/jewellery. Studio PPE will be supplied on site.
+                </p>
+              </Card>
+
+              <Card className="bg-card border-card-border p-6">
+                <h3 className="font-semibold text-foreground mb-2">Is alcohol allowed?</h3>
+                <p className="text-muted-foreground text-sm">
+                  No alcohol or substances before or during the session—safety first. After we're done, you're welcome to relax in the safe zone. We welcome post-session feedback. If you plan to drink, please arrange safe transport.
+                </p>
+              </Card>
+
+              <Card className="bg-card border-card-border p-6">
+                <h3 className="font-semibold text-foreground mb-2">What can I bring to cast?</h3>
+                <p className="text-muted-foreground text-sm">
+                  Organic specimens only (no shells/pressurised items/batteries/resin). We may refuse unsafe/unsuitable items. You can choose from our range of studio specimens on site or bring your own and decide when you arrive. Availability is seasonal—not all plants/flowers are year-round, and every season makes beautiful work.
+                </p>
+              </Card>
+
+              <Card className="bg-card border-card-border p-6">
+                <h3 className="font-semibold text-foreground mb-2">Who does the pour?</h3>
+                <p className="text-muted-foreground text-sm">
+                  Our team handles all molten-metal operations. Guests may assist with approved non-hazardous prep only (16–17 with consent).
+                </p>
+              </Card>
+
+              <Card className="bg-card border-card-border p-6">
+                <h3 className="font-semibold text-foreground mb-2">How long is the experience?</h3>
+                <p className="text-muted-foreground text-sm">
+                  Expect 1.5–2.5 hours depending on the piece and group size.
+                </p>
+              </Card>
+
+              <Card className="bg-card border-card-border p-6">
+                <h3 className="font-semibold text-foreground mb-2">When do I get my finished piece?</h3>
+                <p className="text-muted-foreground text-sm">
+                  Standard finishing and patina take approximately 5 business days. We'll notify you for collection or arrange shipping.
+                </p>
+              </Card>
+
+              <Card className="bg-card border-card-border p-6">
+                <h3 className="font-semibold text-foreground mb-2">Do you ship? International?</h3>
+                <p className="text-muted-foreground text-sm">
+                  Yes—South Africa and international. Shipping quoted at checkout or after weighing. Customs/VAT at destination are the recipient's responsibility.
+                </p>
+              </Card>
+
+              <Card className="bg-card border-card-border p-6">
+                <h3 className="font-semibold text-foreground mb-2">Can you publish my feedback?</h3>
+                <p className="text-muted-foreground text-sm">
+                  Yes—opt in on the form. With consent we may quote your name + country; otherwise we'll publish anonymously. POPIA-compliant; consent can be withdrawn.
+                </p>
+              </Card>
+
+              <Card className="bg-card border-card-border p-6">
+                <h3 className="font-semibold text-foreground mb-2">Contact?</h3>
+                <p className="text-muted-foreground text-sm">
+                  studio@timeless.organic. For any urgent issues, the confirmation email includes a mobile number.
+                </p>
+              </Card>
             </div>
           </section>
 
