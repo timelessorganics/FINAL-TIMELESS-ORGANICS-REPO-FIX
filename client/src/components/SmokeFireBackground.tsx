@@ -20,7 +20,7 @@ export function SmokeFireBackground({ intensity = 'full' }: SmokeFireBackgroundP
   const currentVideoRef = useRef<HTMLVideoElement>(null);
   const nextVideoRef = useRef<HTMLVideoElement>(null);
   
-  const videoOpacity = intensity === 'full' ? 0.7 : 0.15;
+  const videoOpacity = intensity === 'full' ? 0.55 : 0.15;
 
   useEffect(() => {
     const currentVideo = currentVideoRef.current;
