@@ -41,17 +41,30 @@ export default function AdminPanel() {
                 Founding 100 Launch Analytics & Management
               </p>
             </div>
-            <Button
-              variant="outline"
-              className="gap-2"
-              data-testid="button-export-csv"
-              onClick={() => {
-                window.location.href = "/api/admin/export/subscribers";
-              }}
-            >
-              <Download className="w-4 h-4" />
-              Export Subscribers CSV
-            </Button>
+            <div className="flex gap-3">
+              <Button
+                variant="outline"
+                className="gap-2"
+                data-testid="button-export-customers"
+                onClick={() => {
+                  window.location.href = "/api/admin/export/subscribers";
+                }}
+              >
+                <Download className="w-4 h-4" />
+                Export Customers
+              </Button>
+              <Button
+                variant="outline"
+                className="gap-2"
+                data-testid="button-export-subscribers"
+                onClick={() => {
+                  window.location.href = "/api/admin/subscribers/export";
+                }}
+              >
+                <Download className="w-4 h-4" />
+                Export Pre-Launch List
+              </Button>
+            </div>
           </div>
 
           {/* Stats Overview */}
