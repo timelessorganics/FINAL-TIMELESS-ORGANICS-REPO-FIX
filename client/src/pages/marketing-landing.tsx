@@ -7,11 +7,11 @@ import { Flame, Hammer, Users, Award, ArrowRight, Sparkles } from "lucide-react"
 import { useQuery } from "@tanstack/react-query";
 
 interface Seat {
-  id: number;
+  id: string;
   type: string;
   price: number;
-  totalSeats: number;
-  seatsSold: number;
+  totalAvailable: number;
+  sold: number;
 }
 
 export default function MarketingLanding() {
@@ -21,10 +21,10 @@ export default function MarketingLanding() {
     queryKey: ["/api/seats/availability"],
   });
 
-  const founderSeats = seats?.find(s => s.type === "Founder");
-  const patronSeats = seats?.find(s => s.type === "Patron");
-  const totalRemaining = (founderSeats ? founderSeats.totalSeats - founderSeats.seatsSold : 0) + 
-                        (patronSeats ? patronSeats.totalSeats - patronSeats.seatsSold : 0);
+  const founderSeats = seats?.find(s => s.type === "founder");
+  const patronSeats = seats?.find(s => s.type === "patron");
+  const totalRemaining = (founderSeats ? founderSeats.totalAvailable - founderSeats.sold : 0) + 
+                        (patronSeats ? patronSeats.totalAvailable - patronSeats.sold : 0);
 
   return (
     <>
@@ -53,13 +53,13 @@ export default function MarketingLanding() {
               <div className="text-right">
                 <div className="text-xs text-muted-foreground">Founders</div>
                 <div className="text-lg font-semibold text-bronze">
-                  {founderSeats ? founderSeats.totalSeats - founderSeats.seatsSold : 0} left
+                  {founderSeats ? founderSeats.totalAvailable - founderSeats.sold : 0} left
                 </div>
               </div>
               <div className="text-right">
                 <div className="text-xs text-muted-foreground">Patrons</div>
                 <div className="text-lg font-semibold text-patina">
-                  {patronSeats ? patronSeats.totalSeats - patronSeats.seatsSold : 0} left
+                  {patronSeats ? patronSeats.totalAvailable - patronSeats.sold : 0} left
                 </div>
               </div>
             </div>
