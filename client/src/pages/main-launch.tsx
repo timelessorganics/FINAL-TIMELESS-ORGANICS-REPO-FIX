@@ -17,7 +17,7 @@ export default function MainLaunch() {
   return (
     <>
       <div className="bg-aloe" />
-      <SmokeFireBackground intensity="subtle" />
+      <SmokeFireBackground />
       <Header />
       <div className="relative z-10 min-h-screen">
         <div className="max-w-[1100px] mx-auto px-7 py-12">
