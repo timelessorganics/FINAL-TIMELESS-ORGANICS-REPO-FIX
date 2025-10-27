@@ -20,6 +20,7 @@ interface PaymentData {
   item_name: string;
   item_description: string;
   passphrase?: string;
+  [key: string]: string | undefined;
 }
 
 export function getPayFastConfig(): PayFastConfig {
