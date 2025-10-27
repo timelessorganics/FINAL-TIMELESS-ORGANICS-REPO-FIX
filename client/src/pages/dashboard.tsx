@@ -178,7 +178,7 @@ export default function Dashboard() {
                 </Button>
                 <Button variant="outline" size="sm">
                   <ExternalLink className="w-4 h-4 mr-2" />
-                  Sculpture Gallery
+                  Cutting Gallery
                 </Button>
               </div>
             </Card>

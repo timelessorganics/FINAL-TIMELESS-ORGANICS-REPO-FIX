@@ -102,7 +102,7 @@ export default function MainLaunch() {
                     <ul className="space-y-2 text-muted-foreground">
                       <li className="flex items-start gap-2">
                         <span className="text-bronze mt-1">•</span>
-                        <span>One bronze sculpture (studio-approved specimen)</span>
+                        <span>One bronze casting (studio-approved cutting)</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <span className="text-bronze mt-1">•</span>
@@ -190,7 +190,7 @@ export default function MainLaunch() {
                 </h2>
                 <p className="text-lg text-muted-foreground leading-relaxed">
                   Experience the ancient art of lost-wax bronze casting in our intensive 2-day workshops. 
-                  Work hands-on in our Kommetjie studio to create your own bronze sculpture from start to finish.
+                  Work hands-on in our Kommetjie studio to create your own bronze casting from start to finish.
                 </p>
               </div>
 
@@ -203,7 +203,7 @@ export default function MainLaunch() {
                 <div className="text-center p-6 bg-card border border-card-border rounded-lg">
                   <div className="text-bronze text-5xl font-bold font-serif mb-3">1</div>
                   <div className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wide">Bronze Piece</div>
-                  <div className="text-xs text-muted-foreground">Your completed sculpture</div>
+                  <div className="text-xs text-muted-foreground">Your completed casting</div>
                 </div>
                 <div className="text-center p-6 bg-card border border-card-border rounded-lg">
                   <div className="text-patina text-5xl font-bold font-serif mb-3">∞</div>

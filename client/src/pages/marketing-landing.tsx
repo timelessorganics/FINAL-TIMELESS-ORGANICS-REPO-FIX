@@ -154,7 +154,7 @@ export default function MarketingLanding() {
               </div>
               <h3 className="font-serif text-2xl font-bold mb-3">Choose Your Seat</h3>
               <p className="text-muted-foreground">
-                Select between Founder (R3,000) or Patron (R5,000) passes. Only 100 seats exist.
+                Select between Founder (R3,000) or Patron (R5,000) passes. Only 100 seats exist: 50 Founders, 50 Patrons.
               </p>
             </Card>
 
@@ -178,7 +178,7 @@ export default function MarketingLanding() {
               </div>
               <h3 className="font-serif text-2xl font-bold mb-3">Select Your Cutting</h3>
               <p className="text-muted-foreground">
-                Choose from studio-approved botanical cuttings for your guaranteed bronze casting.
+                Choose from our studio-approved botanical cuttings (same style you choose). Specimens will differ — these are one-of-a-kind pieces. You get a guaranteed bronze casting.
               </p>
             </Card>
 
@@ -190,7 +190,7 @@ export default function MarketingLanding() {
               </div>
               <h3 className="font-serif text-2xl font-bold mb-3">Receive Forever</h3>
               <p className="text-muted-foreground">
-                Your bronze casting will be sand or glass bead-blasted and couriered to you, along with lifetime workshop codes and founding member certificate.
+                Your bronze casting will be sandblasted or glass bead-blasted and couriered to you, along with a once-off discount voucher for your first real workshop, plus lifetime workshop codes and founding member certificate.
               </p>
             </Card>
           </div>
@@ -276,7 +276,7 @@ export default function MarketingLanding() {
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-bronze mt-2 flex-shrink-0" />
                   <span className="text-muted-foreground">
-                    <strong className="text-foreground">50% off first workshop</strong> — Transferable, 2-day intensive
+                    <strong className="text-foreground">50% off first workshop</strong> — Transferable, 2-day experience
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -320,7 +320,7 @@ export default function MarketingLanding() {
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-patina mt-2 flex-shrink-0" />
                   <span className="text-muted-foreground">
-                    <strong className="text-foreground">80% off first workshop</strong> — Transferable, 2-day intensive
+                    <strong className="text-foreground">80% off first workshop</strong> — Transferable, 2-day experience
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
