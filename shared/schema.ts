@@ -51,6 +51,26 @@ export const registrations = pgTable("registrations", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
+// Subscribers table - Pre-launch interest capture for marketing
+export const subscribers = pgTable("subscribers", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: varchar("name").notNull(),
+  email: varchar("email").notNull().unique(),
+  phone: varchar("phone"),
+  notes: text("notes"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertSubscriberSchema = createInsertSchema(subscribers).pick({
+  name: true,
+  email: true,
+  phone: true,
+  notes: true,
+});
+
+export type InsertSubscriber = z.infer<typeof insertSubscriberSchema>;
+export type Subscriber = typeof subscribers.$inferSelect;
+
 // Seat types enum
 export const seatTypeEnum = pgEnum('seat_type', ['founder', 'patron']);
 

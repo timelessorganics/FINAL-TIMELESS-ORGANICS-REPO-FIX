@@ -6,6 +6,7 @@ import {
   sculptures,
   sculptureSelections,
   referrals,
+  subscribers,
   type User,
   type UpsertUser,
   type Seat,
@@ -19,6 +20,8 @@ import {
   type InsertSculptureSelection,
   type Referral,
   type InsertReferral,
+  type Subscriber,
+  type InsertSubscriber,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, sql } from "drizzle-orm";
@@ -63,6 +66,11 @@ export interface IStorage {
   getReferralsByCodeId(codeId: string): Promise<Referral[]>;
   getReferralsByUserId(userId: string): Promise<Referral[]>;
   getAllReferrals(): Promise<Referral[]>;
+  
+  // Subscriber operations (pre-launch interest capture)
+  createSubscriber(subscriber: InsertSubscriber): Promise<Subscriber>;
+  getSubscribers(): Promise<Subscriber[]>;
+  getSubscriberByEmail(email: string): Promise<Subscriber | undefined>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -250,6 +258,21 @@ export class DatabaseStorage implements IStorage {
 
   async getAllReferrals(): Promise<Referral[]> {
     return await db.select().from(referrals).orderBy(desc(referrals.createdAt));
+  }
+
+  // Subscriber operations
+  async createSubscriber(subscriber: InsertSubscriber): Promise<Subscriber> {
+    const [s] = await db.insert(subscribers).values(subscriber).returning();
+    return s;
+  }
+
+  async getSubscribers(): Promise<Subscriber[]> {
+    return await db.select().from(subscribers).orderBy(desc(subscribers.createdAt));
+  }
+
+  async getSubscriberByEmail(email: string): Promise<Subscriber | undefined> {
+    const [subscriber] = await db.select().from(subscribers).where(eq(subscribers.email, email));
+    return subscriber;
   }
 }
 

@@ -4,7 +4,7 @@ import express from "express";
 import path from "path";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
-import { insertPurchaseSchema, insertSculptureSchema, insertSculptureSelectionSchema } from "@shared/schema";
+import { insertPurchaseSchema, insertSculptureSchema, insertSculptureSelectionSchema, insertSubscriberSchema } from "@shared/schema";
 import { fromError } from "zod-validation-error";
 import { 
   generateBronzeClaimCode, 
@@ -660,6 +660,88 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error("CSV export error:", error);
       res.status(500).json({ message: error.message || "Failed to export CSV" });
+    }
+  });
+
+  // Public: Register interest (pre-launch subscriber)
+  app.post("/api/subscribers", async (req: Request, res: Response) => {
+    try {
+      const result = insertSubscriberSchema.safeParse(req.body);
+      
+      if (!result.success) {
+        return res.status(400).json({ 
+          message: fromError(result.error).toString() 
+        });
+      }
+
+      // Check if email already exists
+      const existing = await storage.getSubscriberByEmail(result.data.email);
+      if (existing) {
+        return res.status(409).json({ message: "Email already registered" });
+      }
+
+      const subscriber = await storage.createSubscriber(result.data);
+      res.status(201).json({ message: "Thank you for your interest! We'll be in touch soon." });
+    } catch (error: any) {
+      console.error("Subscriber registration error:", error);
+      res.status(500).json({ message: error.message || "Failed to register interest" });
+    }
+  });
+
+  // Admin: Get all subscribers
+  app.get("/api/admin/subscribers", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const subscribers = await storage.getSubscribers();
+      res.json(subscribers);
+    } catch (error: any) {
+      console.error("Get subscribers error:", error);
+      res.status(500).json({ message: error.message || "Failed to fetch subscribers" });
+    }
+  });
+
+  // Admin: Export subscribers as CSV
+  app.get("/api/admin/subscribers/export", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const subscribers = await storage.getSubscribers();
+
+      const csvRows: string[] = [
+        "Name,Email,Phone,Notes,Registration Date",
+      ];
+
+      for (const sub of subscribers) {
+        const row = [
+          sub.name || "",
+          sub.email || "",
+          sub.phone || "",
+          (sub.notes || "").replace(/\n/g, " "),
+          sub.createdAt?.toISOString() || "",
+        ].map(field => `"${String(field).replace(/"/g, '""')}"`).join(",");
+        
+        csvRows.push(row);
+      }
+
+      const csvContent = csvRows.join("\n");
+
+      res.setHeader("Content-Type", "text/csv");
+      res.setHeader("Content-Disposition", "attachment; filename=interested-subscribers.csv");
+      res.send(csvContent);
+    } catch (error: any) {
+      console.error("Subscriber CSV export error:", error);
+      res.status(500).json({ message: error.message || "Failed to export subscribers" });
     }
   });
 
