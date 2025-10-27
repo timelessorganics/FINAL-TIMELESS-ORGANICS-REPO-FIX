@@ -112,16 +112,16 @@ export default function MarketingLanding() {
           </div>
 
           {/* Key Stats */}
-          <div className="grid grid-cols-3 gap-6 max-w-2xl mx-auto">
-            <div className="bg-card/40 backdrop-blur-md border border-card-border rounded-lg p-6">
+          <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
+            <div className="bg-card/40 backdrop-blur-md border border-card-border rounded-lg p-8">
               <div className="text-4xl font-bold font-serif text-accent-gold mb-2">100</div>
               <div className="text-sm text-muted-foreground">Limited Seats</div>
             </div>
-            <div className="bg-card/40 backdrop-blur-md border border-card-border rounded-lg p-6">
+            <div className="bg-card/40 backdrop-blur-md border border-card-border rounded-lg p-8">
               <div className="text-4xl font-bold font-serif text-bronze mb-2">1</div>
               <div className="text-sm text-muted-foreground">Bronze Casting</div>
             </div>
-            <div className="bg-card/40 backdrop-blur-md border border-card-border rounded-lg p-6">
+            <div className="bg-card/40 backdrop-blur-md border border-card-border rounded-lg p-8">
               <div className="text-4xl font-bold font-serif text-patina mb-2">∞</div>
               <div className="text-sm text-muted-foreground">Lifetime Benefits</div>
             </div>
@@ -145,9 +145,9 @@ export default function MarketingLanding() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
             {/* Step 1 */}
-            <Card className="bg-card/80 backdrop-blur-md border-card-border p-7 hover-elevate active-elevate-2">
+            <Card className="bg-card/80 backdrop-blur-md border-card-border p-8 hover-elevate active-elevate-2">
               <div className="flex items-center justify-between mb-4">
                 <div className="text-6xl font-bold font-serif text-accent-gold/20">1</div>
                 <Users className="w-10 h-10 text-accent-gold" />
@@ -159,7 +159,7 @@ export default function MarketingLanding() {
             </Card>
 
             {/* Step 2 */}
-            <Card className="bg-card/80 backdrop-blur-md border-card-border p-7 hover-elevate active-elevate-2">
+            <Card className="bg-card/80 backdrop-blur-md border-card-border p-8 hover-elevate active-elevate-2">
               <div className="flex items-center justify-between mb-4">
                 <div className="text-6xl font-bold font-serif text-bronze/20">2</div>
                 <Hammer className="w-10 h-10 text-bronze" />
@@ -171,7 +171,7 @@ export default function MarketingLanding() {
             </Card>
 
             {/* Step 3 */}
-            <Card className="bg-card/80 backdrop-blur-md border-card-border p-7 hover-elevate active-elevate-2">
+            <Card className="bg-card/80 backdrop-blur-md border-card-border p-8 hover-elevate active-elevate-2">
               <div className="flex items-center justify-between mb-4">
                 <div className="text-6xl font-bold font-serif text-patina/20">3</div>
                 <Sparkles className="w-10 h-10 text-patina" />
@@ -183,7 +183,7 @@ export default function MarketingLanding() {
             </Card>
 
             {/* Step 4 */}
-            <Card className="bg-card/80 backdrop-blur-md border-card-border p-7 hover-elevate active-elevate-2">
+            <Card className="bg-card/80 backdrop-blur-md border-card-border p-8 hover-elevate active-elevate-2">
               <div className="flex items-center justify-between mb-4">
                 <div className="text-6xl font-bold font-serif text-accent-gold/20">4</div>
                 <Award className="w-10 h-10 text-accent-gold" />
@@ -211,7 +211,7 @@ export default function MarketingLanding() {
                 </p>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                  <div className="bg-card/30 border border-card-border rounded-lg p-6">
+                  <div className="bg-card/30 border border-card-border rounded-lg p-8">
                     <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                       <span className="text-accent-gold">💰</span> Your Financial Investment
                     </h4>
@@ -221,7 +221,7 @@ export default function MarketingLanding() {
                     </p>
                   </div>
                   
-                  <div className="bg-card/30 border border-card-border rounded-lg p-6">
+                  <div className="bg-card/30 border border-card-border rounded-lg p-8">
                     <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
                       <span className="text-bronze">🔥</span> Our Technical Investment
                     </h4>
