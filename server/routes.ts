@@ -619,7 +619,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Get all users with their purchases
       const allPurchases = await storage.getAllPurchases();
-      const purchasesByUser = new Map<string, Purchase[]>();
+      const purchasesByUser = new Map<string, any[]>();
       
       for (const purchase of allPurchases) {
         if (!purchasesByUser.has(purchase.userId)) {
@@ -633,7 +633,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         "Email,First Name,Last Name,Seat Type,Purchase Date,Amount,Status",
       ];
 
-      for (const [userIdKey, userPurchases] of purchasesByUser.entries()) {
+      for (const [userIdKey, userPurchases] of Array.from(purchasesByUser.entries())) {
         const purchaseUser = await storage.getUser(userIdKey);
         if (!purchaseUser) continue;
 

@@ -2,6 +2,7 @@ import { useLocation } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SmokeFireBackground } from "@/components/SmokeFireBackground";
+import { InterestForm } from "@/components/InterestForm";
 import Footer from "@/components/footer";
 import { Flame, Hammer, Users, Award, ArrowRight, Sparkles } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
@@ -461,6 +462,23 @@ export default function MarketingLanding() {
               </p>
             </div>
           </Card>
+        </div>
+      </section>
+
+      {/* Interest Registration Section */}
+      <section className="relative z-50 py-20 px-4" id="register-interest">
+        <div className="max-w-2xl mx-auto">
+          <div className="text-center mb-10">
+            <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
+              Not Ready to Invest Yet?
+            </h2>
+            <p className="text-lg text-muted-foreground max-w-xl mx-auto">
+              Join our mailing list to receive exclusive updates, workshop schedules, 
+              and early access to future opportunities.
+            </p>
+          </div>
+          
+          <InterestForm />
         </div>
       </section>
 
