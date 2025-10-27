@@ -61,37 +61,20 @@ export function generatePayFastUrl(): string {
 }
 
 export function generateSignature(data: Record<string, string>, passphrase?: string): string {
-  // CRITICAL: PayFast Custom Integration requires fields in ORDER THEY APPEAR in documentation
-  // PayFast documentation field order (for payment forms):
-  const orderedKeys = [
-    'merchant_id', 'merchant_key', 'return_url', 'cancel_url', 'notify_url',
-    'name_first', 'name_last', 'email_address', 'cell_number',
-    'm_payment_id', 'amount', 'item_name', 'item_description',
-    'custom_int1', 'custom_int2', 'custom_int3', 'custom_int4', 'custom_int5',
-    'custom_str1', 'custom_str2', 'custom_str3', 'custom_str4', 'custom_str5',
-    'email_confirmation', 'confirmation_address', 'payment_method',
-    // Webhook-specific fields
-    'pf_payment_id', 'payment_status', 'item_description', 'gross'
-  ];
+  // CRITICAL: PayFast requires fields in the EXACT ORDER they appear in the data object
+  // DO NOT reorganize keys - use them as-is from the object
+  // This matches PayFast's example PHP code which iterates foreach($data as $key => $val)
   
-  // Create parameter string in documentation order
   let paramString = '';
   
-  // First, add fields in documented order
-  orderedKeys.forEach((key) => {
-    if (data[key] && data[key] !== '' && key !== 'signature') {
+  // Iterate in the natural object key order (insertion order in modern JS)
+  for (const key in data) {
+    if (key !== 'signature' && data[key] !== '') {
+      // URL encode and replace %20 with + as per PayFast requirements
       const encodedValue = encodeURIComponent(data[key].trim()).replace(/%20/g, '+');
       paramString += `${key}=${encodedValue}&`;
     }
-  });
-  
-  // Then add any remaining fields not in our ordered list (alphabetically)
-  Object.keys(data).sort().forEach((key) => {
-    if (!orderedKeys.includes(key) && key !== 'signature' && data[key] !== '') {
-      const encodedValue = encodeURIComponent(data[key].trim()).replace(/%20/g, '+');
-      paramString += `${key}=${encodedValue}&`;
-    }
-  });
+  }
   
   // Remove last ampersand
   paramString = paramString.slice(0, -1);
@@ -105,7 +88,10 @@ export function generateSignature(data: Record<string, string>, passphrase?: str
   }
   
   // Generate MD5 signature
-  return crypto.createHash('md5').update(paramString).digest('hex');
+  const signature = crypto.createHash('md5').update(paramString).digest('hex');
+  console.log('[PayFast Signature] Generated signature:', signature);
+  
+  return signature;
 }
 
 export function createPaymentData(
