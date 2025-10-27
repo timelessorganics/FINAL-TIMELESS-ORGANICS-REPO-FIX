@@ -155,7 +155,7 @@ export default function MainLaunch() {
                     seat={founderSeat}
                     title="Founders Pass"
                     subtitle="R3,000"
-                    description="One bronze casting included of a Studio-Guaranteed Specimen"
+                    description="One bronze casting included of a Studio-Guaranteed Cutting"
                     benefits={[
                       "50% off your first 2-day workshop (Transferable, one-time use)",
                       "20% lifetime workshop discount code (Unlimited uses, forever)",
@@ -167,8 +167,8 @@ export default function MainLaunch() {
                   <SeatCard
                     seat={patronSeat}
                     title="Patron Gift Card"
-                    subtitle="R6,000"
-                    description="One bronze casting included of a Studio-Guaranteed Specimen"
+                    subtitle="R5,000"
+                    description="One bronze casting included of a Studio-Guaranteed Cutting"
                     benefits={[
                       "80% off your first 2-day workshop (Transferable, one-time use)",
                       "30% lifetime workshop discount code (Unlimited uses, forever)",

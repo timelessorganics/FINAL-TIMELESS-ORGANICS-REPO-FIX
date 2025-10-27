@@ -23,7 +23,7 @@ async function seed() {
       },
       {
         type: "patron",
-        price: 600000, // R6,000 in cents
+        price: 500000, // R5,000 in cents
         totalAvailable: 50,
         sold: 0,
       },
@@ -31,7 +31,7 @@ async function seed() {
 
     console.log("✓ Seats seeded successfully");
     console.log("  - 50 Founder seats at R3,000");
-    console.log("  - 50 Patron seats at R6,000");
+    console.log("  - 50 Patron seats at R5,000");
   } catch (error) {
     console.error("Error seeding database:", error);
     throw error;

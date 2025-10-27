@@ -119,7 +119,7 @@ Optional:
 - Connection string format: `postgresql://postgres.{project-ref}:[password]@aws-0-{region}.pooler.supabase.com:6543/postgres`
 - Added SSL configuration: `{ ssl: { rejectUnauthorized: false } }` for pg Pool
 - Database schema pushed successfully with all tables created
-- Seeded 50 Founder seats (R3,000) and 50 Patron seats (R6,000)
+- Seeded 50 Founder seats (R3,000) and 50 Patron seats (R5,000)
 - Seeded 10 aloe sculpture options with descriptions and images
 - API endpoints tested and working: `/api/seats/availability`, `/api/sculptures`
 - Database now accessible from both Replit development environment and Netlify production site

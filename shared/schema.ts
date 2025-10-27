@@ -58,7 +58,7 @@ export const seatTypeEnum = pgEnum('seat_type', ['founder', 'patron']);
 export const seats = pgTable("seats", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   type: seatTypeEnum("type").notNull(),
-  price: integer("price").notNull(), // In cents (R3000 = 300000, R6000 = 600000)
+  price: integer("price").notNull(), // In cents (R3000 = 300000, R5000 = 500000)
   totalAvailable: integer("total_available").notNull(), // 50 for each type
   sold: integer("sold").default(0).notNull(),
   updatedAt: timestamp("updated_at").defaultNow(),

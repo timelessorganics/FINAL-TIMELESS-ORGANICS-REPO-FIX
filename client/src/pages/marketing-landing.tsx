@@ -119,7 +119,7 @@ export default function MarketingLanding() {
             </div>
             <div className="bg-card/40 backdrop-blur-md border border-card-border rounded-lg p-6">
               <div className="text-4xl font-bold font-serif text-bronze mb-2">1</div>
-              <div className="text-sm text-muted-foreground">Bronze Sculpture</div>
+              <div className="text-sm text-muted-foreground">Bronze Casting</div>
             </div>
             <div className="bg-card/40 backdrop-blur-md border border-card-border rounded-lg p-6">
               <div className="text-4xl font-bold font-serif text-patina mb-2">∞</div>
@@ -154,7 +154,7 @@ export default function MarketingLanding() {
               </div>
               <h3 className="font-serif text-2xl font-bold mb-3">Choose Your Seat</h3>
               <p className="text-muted-foreground">
-                Select between Founder (R3,000) or Patron (R6,000) passes. Only 100 seats exist.
+                Select between Founder (R3,000) or Patron (R5,000) passes. Only 100 seats exist.
               </p>
             </Card>
 
@@ -176,9 +176,9 @@ export default function MarketingLanding() {
                 <div className="text-6xl font-bold font-serif text-patina/20">3</div>
                 <Sparkles className="w-10 h-10 text-patina" />
               </div>
-              <h3 className="font-serif text-2xl font-bold mb-3">Select Your Sculpture</h3>
+              <h3 className="font-serif text-2xl font-bold mb-3">Select Your Cutting</h3>
               <p className="text-muted-foreground">
-                Choose from studio-approved aloe specimens for your guaranteed bronze casting.
+                Choose from studio-approved botanical cuttings for your guaranteed bronze casting.
               </p>
             </Card>
 
@@ -190,7 +190,7 @@ export default function MarketingLanding() {
               </div>
               <h3 className="font-serif text-2xl font-bold mb-3">Receive Forever</h3>
               <p className="text-muted-foreground">
-                Get your bronze sculpture, lifetime workshop codes, and founding member certificate.
+                Your bronze casting will be sand or glass bead-blasted and couriered to you, along with lifetime workshop codes and founding member certificate.
               </p>
             </Card>
           </div>
@@ -225,7 +225,7 @@ export default function MarketingLanding() {
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-bronze mt-2 flex-shrink-0" />
                   <span className="text-muted-foreground">
-                    <strong className="text-foreground">One bronze sculpture</strong> — Studio-approved specimen, lost-wax cast
+                    <strong className="text-foreground">One bronze casting</strong> — Studio-approved cutting, lost-wax cast, sand/glass bead-blasted finish (patina extra)
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -261,7 +261,7 @@ export default function MarketingLanding() {
                 <Flame className="w-8 h-8 text-patina" />
                 <div>
                   <h3 className="font-serif text-3xl font-bold text-foreground">Patron Gift Card</h3>
-                  <p className="text-2xl text-patina font-semibold">R6,000</p>
+                  <p className="text-2xl text-patina font-semibold">R5,000</p>
                 </div>
               </div>
               
@@ -269,7 +269,7 @@ export default function MarketingLanding() {
                 <li className="flex items-start gap-3">
                   <div className="w-2 h-2 rounded-full bg-patina mt-2 flex-shrink-0" />
                   <span className="text-muted-foreground">
-                    <strong className="text-foreground">One bronze sculpture</strong> — Studio-approved specimen, lost-wax cast
+                    <strong className="text-foreground">One bronze casting</strong> — Studio-approved cutting, lost-wax cast, sand/glass bead-blasted finish (patina extra)
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
