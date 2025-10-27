@@ -274,7 +274,7 @@ export default function MarketingLanding() {
         </div>
       </section>
       {/* What You Get Section */}
-      <section className="relative z-50 min-h-screen flex items-center py-20 px-4 pt-[10px] pb-[20px]">
+      <section className="relative z-50 min-h-screen flex items-center py-20 px-4 text-center pt-[5px] pb-[5px]">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="font-serif text-4xl md:text-6xl font-bold mb-6">
