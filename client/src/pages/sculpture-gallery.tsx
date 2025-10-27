@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import Header from "@/components/header";
+import { SmokeFireBackground } from "@/components/SmokeFireBackground";
 import type { Sculpture, Purchase } from "@shared/schema";
 import { useState } from "react";
 
@@ -69,6 +70,7 @@ export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) 
   return (
     <>
       <div className="bg-aloe" />
+      <SmokeFireBackground />
       <Header />
       <div className="relative z-10 min-h-screen">
         <div className="max-w-[1100px] mx-auto px-7 py-12">
