@@ -1,13 +1,21 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
-import type { Seat, Purchase, Code } from "@shared/schema";
-import { Users, Package, DollarSign, Award, Download } from "lucide-react";
+import type { Seat, Purchase, Code, PromoCode } from "@shared/schema";
+import { Users, Package, DollarSign, Award, Download, Gift, Copy } from "lucide-react";
+import { useState } from "react";
 
 export default function AdminPanel() {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const [codeCount, setCodeCount] = useState("10");
+
   const { data: seats } = useQuery<Seat[]>({
     queryKey: ["/api/admin/seats"],
   });
@@ -20,9 +28,43 @@ export default function AdminPanel() {
     queryKey: ["/api/admin/codes"],
   });
 
+  const { data: promoCodes } = useQuery<PromoCode[]>({
+    queryKey: ["/api/admin/promo-codes"],
+  });
+
+  const generateCodes = useMutation({
+    mutationFn: async (count: number) => {
+      const response = await apiRequest("POST", "/api/admin/promo-codes/generate", { count });
+      return await response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/promo-codes"] });
+      toast({
+        title: "Codes Generated!",
+        description: `Successfully generated ${codeCount} promo codes.`,
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        variant: "destructive",
+        title: "Generation Failed",
+        description: error.message || "Could not generate codes.",
+      });
+    },
+  });
+
+  const copyToClipboard = (code: string) => {
+    navigator.clipboard.writeText(code);
+    toast({
+      title: "Copied!",
+      description: `Code ${code} copied to clipboard.`,
+    });
+  };
+
   const totalRevenue = purchases?.reduce((sum, p) => sum + (p.status === "completed" ? p.amount : 0), 0) || 0;
   const completedPurchases = purchases?.filter((p) => p.status === "completed").length || 0;
   const totalSeats = seats?.reduce((sum, s) => sum + s.sold, 0) || 0;
+  const unusedPromoCodes = promoCodes?.filter((pc) => !pc.used).length || 0;
 
   return (
     <>
@@ -154,6 +196,96 @@ export default function AdminPanel() {
               );
             })}
           </div>
+
+          {/* Promo Code Management */}
+          <Card className="bg-card border-card-border p-7 mb-12">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+              <div>
+                <h2 className="font-serif text-2xl font-bold text-foreground mb-1">
+                  Free Patron Passes
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Generate and manage promo codes for friends & family
+                </p>
+              </div>
+              <div className="flex items-center gap-3">
+                <Gift className="w-5 h-5 text-patina" />
+                <span className="font-semibold text-foreground">
+                  {unusedPromoCodes} unused
+                </span>
+              </div>
+            </div>
+
+            <div className="flex flex-wrap items-end gap-3 mb-6 p-4 bg-muted rounded-lg border border-border">
+              <div className="flex-1 min-w-[120px]">
+                <label className="block text-sm font-medium text-foreground mb-2">
+                  Number of Codes
+                </label>
+                <Input
+                  type="number"
+                  min="1"
+                  max="20"
+                  value={codeCount}
+                  onChange={(e) => setCodeCount(e.target.value)}
+                  className="bg-background"
+                  data-testid="input-code-count"
+                />
+              </div>
+              <Button
+                onClick={() => generateCodes.mutate(parseInt(codeCount) || 1)}
+                disabled={generateCodes.isPending}
+                className="bg-patina hover:bg-patina/90 text-white"
+                data-testid="button-generate-codes"
+              >
+                <Gift className="w-4 h-4 mr-2" />
+                {generateCodes.isPending ? "Generating..." : "Generate Codes"}
+              </Button>
+            </div>
+
+            {promoCodes && promoCodes.length > 0 ? (
+              <div className="space-y-3 max-h-[400px] overflow-y-auto">
+                {promoCodes.map((promoCode) => (
+                  <div
+                    key={promoCode.id}
+                    className="flex flex-wrap items-center justify-between gap-3 p-4 bg-muted rounded-lg border border-border hover-elevate"
+                  >
+                    <div className="flex-1">
+                      <div className="flex items-center gap-3 mb-1">
+                        <code className="font-mono text-lg font-bold text-foreground">
+                          {promoCode.code}
+                        </code>
+                        {promoCode.used ? (
+                          <Badge className="bg-bronze text-white">Used</Badge>
+                        ) : (
+                          <Badge className="bg-patina text-white">Active</Badge>
+                        )}
+                      </div>
+                      <div className="text-sm text-muted-foreground">
+                        {promoCode.used
+                          ? `Redeemed on ${new Date(promoCode.usedAt!).toLocaleDateString()}`
+                          : "Ready to redeem"}
+                      </div>
+                    </div>
+                    {!promoCode.used && (
+                      <Button
+                        size="sm"
+                        variant="outline"
+                        onClick={() => copyToClipboard(promoCode.code)}
+                        data-testid={`button-copy-${promoCode.code}`}
+                      >
+                        <Copy className="w-4 h-4 mr-2" />
+                        Copy
+                      </Button>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-muted-foreground">
+                No promo codes generated yet
+              </div>
+            )}
+          </Card>
 
           {/* Recent Purchases */}
           <Card className="bg-card border-card-border p-7">

@@ -4,7 +4,7 @@ import express from "express";
 import path from "path";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./replitAuth";
-import { insertPurchaseSchema, insertSculptureSchema, insertSculptureSelectionSchema, insertSubscriberSchema } from "@shared/schema";
+import { insertPurchaseSchema, insertSculptureSchema, insertSculptureSelectionSchema, insertSubscriberSchema, insertPromoCodeSchema } from "@shared/schema";
 import { fromError } from "zod-validation-error";
 import { 
   generateBronzeClaimCode, 
@@ -22,6 +22,7 @@ import {
 } from "./utils/payfast";
 import { generateCertificate } from "./utils/certificateGenerator";
 import { sendCertificateEmail, sendPurchaseConfirmationEmail } from "./utils/emailService";
+import { generatePromoCode } from "./utils/promoCodeGenerator";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
@@ -744,6 +745,217 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error("Subscriber CSV export error:", error);
       res.status(500).json({ message: error.message || "Failed to export subscribers" });
+    }
+  });
+
+  // Public: Validate promo code
+  app.post("/api/promo-code/validate", async (req: Request, res: Response) => {
+    try {
+      const { code } = req.body;
+      
+      if (!code) {
+        return res.status(400).json({ valid: false, message: "Promo code is required" });
+      }
+
+      const promoCode = await storage.getPromoCodeByCode(code.toUpperCase());
+      
+      if (!promoCode) {
+        return res.status(200).json({ valid: false, message: "Invalid promo code" });
+      }
+
+      if (promoCode.used) {
+        return res.status(200).json({ valid: false, message: "This code has already been used" });
+      }
+
+      res.json({ 
+        valid: true, 
+        seatType: promoCode.seatType,
+        discount: promoCode.discount 
+      });
+    } catch (error: any) {
+      console.error("Promo code validation error:", error);
+      res.status(500).json({ valid: false, message: "Failed to validate code" });
+    }
+  });
+
+  // Protected: Redeem promo code (creates free purchase)
+  app.post("/api/promo-code/redeem", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = req.user.claims.sub;
+      const { code, specimenId, hasPatina, deliveryName, deliveryPhone, deliveryAddress } = req.body;
+
+      // Validate code
+      const promoCode = await storage.getPromoCodeByCode(code.toUpperCase());
+      
+      if (!promoCode || promoCode.used) {
+        return res.status(400).json({ message: "Invalid or already used promo code" });
+      }
+
+      // Check seat availability BEFORE creating purchase
+      const seats = await storage.getSeats();
+      const seat = seats.find((s) => s.type === promoCode.seatType);
+      
+      if (!seat) {
+        return res.status(400).json({ message: "Invalid seat type" });
+      }
+
+      const available = seat.totalAvailable - seat.sold;
+      if (available <= 0) {
+        return res.status(409).json({ message: "No seats available for this type" });
+      }
+
+      // Create free purchase (R0)
+      const purchase = await storage.createPurchase({
+        userId,
+        seatType: promoCode.seatType,
+        amount: 0, // Free!
+        specimenId,
+        hasPatina: hasPatina || false,
+        deliveryName,
+        deliveryPhone,
+        deliveryAddress,
+      });
+
+      // Mark purchase as completed immediately (no payment needed)
+      await storage.updatePurchaseStatus(purchase.id, "completed", `PROMO-${code}`, undefined);
+
+      // Mark code as used
+      await storage.markPromoCodeAsUsed(promoCode.id, userId, purchase.id);
+
+      // Update seat count
+      await storage.updateSeatSold(promoCode.seatType, 1);
+
+      // Generate workshop codes (same as paid purchases)
+      const workshopCode = await storage.createCode({
+        purchaseId: purchase.id,
+        type: "workshop_voucher",
+        code: generateWorkshopVoucherCode(promoCode.seatType),
+        discount: getWorkshopVoucherDiscount(promoCode.seatType),
+        transferable: true,
+        maxRedemptions: 1,
+        appliesTo: 'workshop',
+      });
+
+      const lifetimeWorkshopCode = await storage.createCode({
+        purchaseId: purchase.id,
+        type: "lifetime_workshop",
+        code: generateLifetimeWorkshopCode(promoCode.seatType),
+        discount: getLifetimeWorkshopDiscount(promoCode.seatType),
+        transferable: true,
+        maxRedemptions: null as any,
+        appliesTo: 'workshop',
+      });
+
+      // Get user info for certificate and emails
+      const user = await storage.getUser(userId);
+      const userName = user?.firstName && user?.lastName 
+        ? `${user.firstName} ${user.lastName}` 
+        : user?.firstName || "Valued Investor";
+      const userEmail = user?.email || "";
+
+      // Generate certificate (same as paid purchases)
+      let certificateUrl = "";
+      try {
+        certificateUrl = await generateCertificate(
+          purchase,
+          [workshopCode, lifetimeWorkshopCode],
+          userName
+        );
+
+        if (certificateUrl) {
+          await storage.updatePurchaseStatus(
+            purchase.id,
+            "completed",
+            `PROMO-${code}`,
+            certificateUrl
+          );
+        }
+      } catch (certError) {
+        console.error("Certificate generation failed:", certError);
+      }
+
+      // Send confirmation emails (same as paid purchases)
+      try {
+        if (userEmail) {
+          await sendPurchaseConfirmationEmail(
+            userEmail,
+            userName,
+            purchase,
+            [workshopCode, lifetimeWorkshopCode]
+          );
+
+          if (certificateUrl) {
+            await sendCertificateEmail(
+              userEmail,
+              userName,
+              certificateUrl
+            );
+          }
+        }
+      } catch (emailError) {
+        console.error("Email sending failed:", emailError);
+        // Don't fail the redemption if email fails
+      }
+
+      console.log("Promo code redeemed successfully:", code, purchase.id);
+
+      res.json({ 
+        success: true, 
+        message: "Promo code redeemed successfully!",
+        purchaseId: purchase.id 
+      });
+    } catch (error: any) {
+      console.error("Promo code redemption error:", error);
+      res.status(500).json({ message: error.message || "Failed to redeem code" });
+    }
+  });
+
+  // Admin: Get all promo codes
+  app.get("/api/admin/promo-codes", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const promoCodes = await storage.getAllPromoCodes();
+      res.json(promoCodes);
+    } catch (error: any) {
+      console.error("Get promo codes error:", error);
+      res.status(500).json({ message: error.message || "Failed to fetch promo codes" });
+    }
+  });
+
+  // Admin: Generate promo codes (batch)
+  app.post("/api/admin/promo-codes/generate", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const { count = 1 } = req.body;
+      const generatedCodes = [];
+
+      for (let i = 0; i < Math.min(count, 20); i++) { // Max 20 at once
+        const code = generatePromoCode();
+        const promoCode = await storage.createPromoCode({
+          code,
+          seatType: 'patron',
+          discount: 100,
+          createdBy: userId,
+        });
+        generatedCodes.push(promoCode);
+      }
+
+      res.status(201).json(generatedCodes);
+    } catch (error: any) {
+      console.error("Generate promo codes error:", error);
+      res.status(500).json({ message: error.message || "Failed to generate promo codes" });
     }
   });
 

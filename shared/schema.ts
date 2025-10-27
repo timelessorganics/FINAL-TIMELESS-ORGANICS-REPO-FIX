@@ -202,6 +202,30 @@ export const insertSculptureSelectionSchema = createInsertSchema(sculptureSelect
 export type InsertSculptureSelection = z.infer<typeof insertSculptureSelectionSchema>;
 export type SculptureSelection = typeof sculptureSelections.$inferSelect;
 
+// Promo codes for free seats (e.g., for friends/family supporters)
+export const promoCodes = pgTable("promo_codes", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  code: varchar("code").notNull().unique(), // The actual promo code (e.g., PATRON-GIFT-A1B2)
+  seatType: seatTypeEnum("seat_type").notNull(), // Which seat type this code grants
+  discount: integer("discount").notNull().default(100), // Percentage discount (100 = free)
+  used: boolean("used").default(false).notNull(),
+  redeemedBy: varchar("redeemed_by").references(() => users.id), // User who redeemed it
+  purchaseId: varchar("purchase_id").references(() => purchases.id), // Resulting purchase
+  redeemedAt: timestamp("redeemed_at"),
+  createdAt: timestamp("created_at").defaultNow(),
+  createdBy: varchar("created_by").references(() => users.id), // Admin who generated it
+});
+
+export const insertPromoCodeSchema = createInsertSchema(promoCodes).pick({
+  code: true,
+  seatType: true,
+  discount: true,
+  createdBy: true,
+});
+
+export type InsertPromoCode = z.infer<typeof insertPromoCodeSchema>;
+export type PromoCode = typeof promoCodes.$inferSelect;
+
 // Referral tracking - tracks when referral codes are used
 export const referrals = pgTable("referrals", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),

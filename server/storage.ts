@@ -7,6 +7,7 @@ import {
   sculptureSelections,
   referrals,
   subscribers,
+  promoCodes,
   type User,
   type UpsertUser,
   type Seat,
@@ -22,6 +23,8 @@ import {
   type InsertReferral,
   type Subscriber,
   type InsertSubscriber,
+  type PromoCode,
+  type InsertPromoCode,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, sql } from "drizzle-orm";
@@ -71,6 +74,12 @@ export interface IStorage {
   createSubscriber(subscriber: InsertSubscriber): Promise<Subscriber>;
   getSubscribers(): Promise<Subscriber[]>;
   getSubscriberByEmail(email: string): Promise<Subscriber | undefined>;
+  
+  // Promo code operations (for free passes)
+  createPromoCode(promoCode: InsertPromoCode): Promise<PromoCode>;
+  getPromoCodeByCode(code: string): Promise<PromoCode | undefined>;
+  getAllPromoCodes(): Promise<PromoCode[]>;
+  markPromoCodeAsUsed(id: string, userId: string, purchaseId: string): Promise<void>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -273,6 +282,33 @@ export class DatabaseStorage implements IStorage {
   async getSubscriberByEmail(email: string): Promise<Subscriber | undefined> {
     const [subscriber] = await db.select().from(subscribers).where(eq(subscribers.email, email));
     return subscriber;
+  }
+
+  // Promo code operations
+  async createPromoCode(promoCode: InsertPromoCode): Promise<PromoCode> {
+    const [pc] = await db.insert(promoCodes).values(promoCode).returning();
+    return pc;
+  }
+
+  async getPromoCodeByCode(code: string): Promise<PromoCode | undefined> {
+    const [promoCode] = await db.select().from(promoCodes).where(eq(promoCodes.code, code));
+    return promoCode;
+  }
+
+  async getAllPromoCodes(): Promise<PromoCode[]> {
+    return await db.select().from(promoCodes).orderBy(desc(promoCodes.createdAt));
+  }
+
+  async markPromoCodeAsUsed(id: string, userId: string, purchaseId: string): Promise<void> {
+    await db
+      .update(promoCodes)
+      .set({
+        used: true,
+        redeemedBy: userId,
+        purchaseId,
+        redeemedAt: new Date(),
+      })
+      .where(eq(promoCodes.id, id));
   }
 }
 

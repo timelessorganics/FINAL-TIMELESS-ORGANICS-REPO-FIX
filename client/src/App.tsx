@@ -14,6 +14,7 @@ import AdminPanel from "@/pages/admin-panel";
 import PaymentSuccess from "@/pages/payment-success";
 import PaymentCancel from "@/pages/payment-cancel";
 import CheckoutPage from "@/pages/checkout";
+import RedeemCodePage from "@/pages/redeem-code";
 import Terms from "@/pages/terms";
 import Privacy from "@/pages/privacy";
 import Waiver from "@/pages/waiver";
@@ -67,6 +68,9 @@ function Router() {
       <Route path="/checkout/patron">
         {() => <CheckoutPage seatType="patron" />}
       </Route>
+      
+      {/* Promo Code Redemption - PUBLIC */}
+      <Route path="/redeem" component={RedeemCodePage} />
       
       {/* Legal Pages - PUBLIC */}
       <Route path="/terms" component={Terms} />
