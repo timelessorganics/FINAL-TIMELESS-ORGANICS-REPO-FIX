@@ -61,35 +61,37 @@ export function generatePayFastUrl(): string {
 }
 
 export function generateSignature(data: Record<string, string>, passphrase?: string): string {
-  // CRITICAL: PayFast requires fields in the EXACT ORDER they appear in the data object
-  // DO NOT reorganize keys - use them as-is from the object
-  // This matches PayFast's example PHP code which iterates foreach($data as $key => $val)
+  // CRITICAL: PayFast PHP example uses foreach($data as $key => $val) which preserves insertion order
+  // JavaScript objects maintain insertion order as of ES2015+
+  // Reference: https://developers.payfast.co.za/docs#step_2_signature
   
   let paramString = '';
   
-  // Iterate in the natural object key order (insertion order in modern JS)
+  // Build parameter string - skip empty values and signature field
   for (const key in data) {
-    if (key !== 'signature' && data[key] !== '') {
-      // URL encode and replace %20 with + as per PayFast requirements
-      const encodedValue = encodeURIComponent(data[key].trim()).replace(/%20/g, '+');
+    const value = data[key];
+    if (value && value !== '' && key !== 'signature') {
+      // URL encode and replace %20 with + as per PayFast spec
+      const encodedValue = encodeURIComponent(value.trim()).replace(/%20/g, '+');
       paramString += `${key}=${encodedValue}&`;
     }
   }
   
-  // Remove last ampersand
+  // Remove trailing ampersand
   paramString = paramString.slice(0, -1);
   
-  // SECURITY: Log BEFORE adding passphrase to avoid exposing secrets
-  console.log('[PayFast Signature] Param string (first 80 chars, before passphrase):', paramString.substring(0, 80));
+  // SECURITY: Log BEFORE adding passphrase
+  console.log('[PayFast] Building signature for merchant:', data.merchant_id?.substring(0, 4) + '****');
+  console.log('[PayFast] Param string (first 100 chars):', paramString.substring(0, 100));
   
-  // Add passphrase if provided
+  // Append passphrase to end
   if (passphrase) {
     paramString += `&passphrase=${encodeURIComponent(passphrase.trim()).replace(/%20/g, '+')}`;
   }
   
-  // Generate MD5 signature
+  // Generate MD5 hash
   const signature = crypto.createHash('md5').update(paramString).digest('hex');
-  console.log('[PayFast Signature] Generated signature:', signature);
+  console.log('[PayFast] Generated signature:', signature);
   
   return signature;
 }
@@ -106,19 +108,17 @@ export function createPaymentData(
     ? `https://${process.env.REPLIT_DOMAINS.split(',')[0]}`
     : 'http://localhost:5000';
 
-  // IMPORTANT: Order matters! This order is used for signature generation
-  // PayFast requires: merchant details → customer details → transaction details
+  // CRITICAL: Order of properties MUST match PayFast documentation exactly
+  // This order is used for signature generation - DO NOT REORDER!
+  // Reference: https://developers.payfast.co.za/docs#step_2_signature
   const data: PaymentData = {
-    // Merchant details (in order)
     merchant_id: config.merchantId,
     merchant_key: config.merchantKey,
     return_url: `${baseUrl}/payment/success`,
     cancel_url: `${baseUrl}/payment/cancel`,
     notify_url: `${baseUrl}/api/payment/notify`,
-    // Customer details
     name_first: firstName,
     email_address: email,
-    // Transaction details
     m_payment_id: purchaseId,
     amount: (amount / 100).toFixed(2), // Convert cents to rands
     item_name: seatType === 'founder' ? 'Founders Pass' : 'Patron Gift Card',

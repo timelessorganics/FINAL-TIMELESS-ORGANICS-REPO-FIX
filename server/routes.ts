@@ -54,6 +54,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/purchase/initiate", isAuthenticated, async (req: any, res: Response) => {
     try {
       const userId = req.user.claims.sub;
+      const userEmail = req.user.claims.email || 'noreply@timelessorganics.com';
+      const userFirstName = req.user.claims.first_name || 'Investor';
+
+      console.log('[Purchase] User initiating purchase:', userId, userEmail);
 
       const result = insertPurchaseSchema.safeParse({
         ...req.body,
@@ -84,16 +88,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         amount: result.data.amount,
       });
 
+      console.log('[Purchase] Created purchase record:', purchase.id, purchase.seatType, purchase.amount);
+
       // Create PayFast payment data
       const paymentData = createPaymentData(
         purchase.id,
         purchase.amount,
         purchase.seatType,
-        req.user.email || 'noreply@timelessorganics.com',
-        req.user.firstName || 'Investor'
+        userEmail,
+        userFirstName
       );
 
-      // Add passphrase and generate signature
+      // Generate signature with passphrase
       const config = getPayFastConfig();
       const signature = generateSignature(paymentData, config.passphrase);
 
