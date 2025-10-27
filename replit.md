@@ -143,6 +143,16 @@ Optional:
 - Added .gitignore rules for video files (140+ MB total, excluded from Git)
 - All text updated: "3-day" → "2-day" workshops, correct discount percentages everywhere
 
+**2025-10-27**: Marketing landing page with David Junor's personal story
+- Created stunning root landing page (/) with full-screen hero, scrolling sections, and compelling CTAs
+- Increased video visibility: opacity 0.85, transition 1000ms for dramatic effect
+- Added "David Junor - The Founder" section with personal background, London dental lab experience, globally recognized bronze artist collaboration
+- Featured iconic quote: "Those pieces weren't mine to sign; the craft became mine to master"
+- Emphasized brand values: timeless/priceless craft meets artistic independence
+- Layout: Hero → How It Works → Founder vs Patron → David's Story → Vision → Final CTA
+- Created deployment guides: DEPLOYMENT_RAILWAY.md ($7/mo backend) and DEPLOYMENT_VIDEOS.md (free video hosting)
+- Marketing page publicly accessible without login for immediate investor viewing
+
 **2025-10-26**: Session storage hotfix - Supabase connectivity issue
 - **CRITICAL FIX**: Switched from Postgres session storage to memory-based session storage
 - Supabase connection timeouts were preventing user authentication and site access
