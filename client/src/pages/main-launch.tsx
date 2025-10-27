@@ -161,9 +161,9 @@ export default function MainLaunch() {
                     subtitle="R3,000"
                     description="One bronze casting included of a Studio-Guaranteed Cutting"
                     benefits={[
-                      "50% off your first 2-day workshop (Transferable, one-time use)",
-                      "20% lifetime workshop discount code (Unlimited uses, forever)",
-                      "Both codes work for workshops only, not for seat purchases",
+                      "50% off first workshop (Transferable, single-use, never expires)",
+                      "20% lifetime discount code (Unlimited uses, transferable & giftable)",
+                      "Both codes for workshops only — not redeemable for Founding 100 seats",
                     ]}
                   />
                 )}
@@ -174,9 +174,9 @@ export default function MainLaunch() {
                     subtitle="R5,000"
                     description="One bronze casting included of a Studio-Guaranteed Cutting"
                     benefits={[
-                      "80% off your first 2-day workshop (Transferable, one-time use)",
-                      "30% lifetime workshop discount code (Unlimited uses, forever)",
-                      "Both codes work for workshops only, not for seat purchases",
+                      "80% off first workshop (Transferable, single-use, never expires)",
+                      "30% lifetime discount code (Unlimited uses, transferable & giftable)",
+                      "Both codes for workshops only — not redeemable for Founding 100 seats",
                     ]}
                     featured
                   />
@@ -379,6 +379,40 @@ export default function MainLaunch() {
 
             <div className="max-w-4xl mx-auto space-y-4">
               {/* FAQ Items */}
+              <Card className="bg-card border-card-border p-6">
+                <h3 className="font-semibold text-foreground mb-2">One bronze of a Studio-Guaranteed Specimen — included</h3>
+                <p className="text-muted-foreground text-sm mb-3">
+                  This initial purchase guarantees you a perfectly cast bronze piece from our pre-vetted flora range. It will be the size of a typical casting (starting R20,000 value).
+                </p>
+                <p className="text-muted-foreground text-sm">
+                  <strong className="text-foreground">The true value is the unique authorship</strong> — you are guaranteed a flawless cast created by an expert founder and backed by over two decades of fabrication and casting experience.
+                </p>
+              </Card>
+
+              <Card className="bg-card border-card-border p-6">
+                <h3 className="font-semibold text-foreground mb-2">How do the workshop voucher codes work?</h3>
+                <div className="space-y-3 text-muted-foreground text-sm">
+                  <div>
+                    <strong className="text-foreground">First Workshop Voucher (Single-Use):</strong>
+                    <ul className="list-disc pl-5 mt-2 space-y-1">
+                      <li>Founders get 50% off their first 2-day workshop</li>
+                      <li>Patrons get 80% off their first 2-day workshop</li>
+                      <li>Transferable & giftable, never expires</li>
+                      <li>Not redeemable for Founding 100 seats</li>
+                    </ul>
+                  </div>
+                  <div>
+                    <strong className="text-foreground">Lifetime Workshop Discount (Unlimited Use):</strong>
+                    <ul className="list-disc pl-5 mt-2 space-y-1">
+                      <li>Founders get 20% off all future workshops (forever)</li>
+                      <li>Patrons get 30% off all future workshops (forever)</li>
+                      <li>Transferable & giftable for life</li>
+                      <li>Applies when workshops launch</li>
+                    </ul>
+                  </div>
+                </div>
+              </Card>
+
               <Card className="bg-card border-card-border p-6">
                 <h3 className="font-semibold text-foreground mb-2">Is there an age restriction?</h3>
                 <p className="text-muted-foreground text-sm">
