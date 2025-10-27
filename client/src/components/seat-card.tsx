@@ -33,10 +33,11 @@ export default function SeatCard({
 
   const purchaseMutation = useMutation({
     mutationFn: async () => {
-      return await apiRequest("POST", "/api/purchase/initiate", {
+      const response = await apiRequest("POST", "/api/purchase/initiate", {
         seatType: seat.type,
         amount: seat.price,
       });
+      return await response.json();
     },
     onSuccess: (data: any) => {
       // Redirect to server-side PayFast endpoint (more reliable than client-side form)
