@@ -1,0 +1,188 @@
+Switched to branch 'main'
+Updating 92611b1..23d023c
+Fast-forward
+ .gitignore                                                                                        |   5 +-
+ .replit                                                                                           |  10 +-
+ DEPLOYMENT_RAILWAY.md                                                                             | 126 +++++++++++++
+ DEPLOYMENT_VIDEOS.md                                                                              | 142 ++++++++++++++
+ PUSH_TO_GITHUB.md                                                                                 |  83 ++++++++
+ attached_assets/1 SMOKE HOVERS BOTTOM OF SCREEN_1761435915769.mp4                                 | Bin 0 -> 17341754 bytes
+ attached_assets/2 SMOKE HOVERS IN BACKGROUND_1761435915770.mp4                                    | Bin 0 -> 17353736 bytes
+ attached_assets/3 SMOKE HOVERS TINY SPARKS7_1761435915770.mp4                                     | Bin 0 -> 18999065 bytes
+ attached_assets/4 SMOKE HOVERS FLAMES STSRT_1761435915771.mp4                                     | Bin 0 -> 7222570 bytes
+ attached_assets/5 SMOKE HOVERS BIGGER SPARKS_1761435915772.mp4                                    | Bin 0 -> 19663451 bytes
+ attached_assets/6 SMOKE HOVERS BIGGER SPARKS_1761435915771.mp4                                    | Bin 0 -> 6884268 bytes
+ ...development-tsx-server-index-ts-Using-Supabase-database-via-DA-1761350005328_1761350005328.txt |  48 +++++
+ ...7aa2b696d8640ee8ab8ada4b1f870982d7bd596d-noble-12-45-42-AM-bui-1761432567558_1761432567559.txt | 130 +++++++++++++
+ ...r-Investment-Secure-your-financial-Investment-in-our-studio-an-1761564333281_1761564333281.txt |  94 +++++++++
+ ...-Founding-100-Your-Investment-is-Our-Investment-Secure-your-fi-1761564494625_1761564494626.txt |  95 ++++++++++
+ attached_assets/Screenshot (2739)_1761434822256.png                                               | Bin 0 -> 409767 bytes
+ attached_assets/Screenshot (2739)_1761434966908.png                                               | Bin 0 -> 409767 bytes
+ attached_assets/Screenshot (2740)_1761434822256.png                                               | Bin 0 -> 404691 bytes
+ attached_assets/Screenshot (2740)_1761434966908.png                                               | Bin 0 -> 404691 bytes
+ attached_assets/Screenshot (2741)_1761434822256.png                                               | Bin 0 -> 371895 bytes
+ attached_assets/Screenshot (2741)_1761434966907.png                                               | Bin 0 -> 371895 bytes
+ attached_assets/Screenshot (2742)_1761434822255.png                                               | Bin 0 -> 350171 bytes
+ attached_assets/Screenshot (2742)_1761434966907.png                                               | Bin 0 -> 350171 bytes
+ attached_assets/Screenshot (2743)_1761434822255.png                                               | Bin 0 -> 263567 bytes
+ attached_assets/Screenshot (2743)_1761434966907.png                                               | Bin 0 -> 263567 bytes
+ attached_assets/Screenshot (2744)_1761434822254.png                                               | Bin 0 -> 402783 bytes
+ attached_assets/Screenshot (2744)_1761434966907.png                                               | Bin 0 -> 402783 bytes
+ attached_assets/Screenshot (2745)_1761434822253.png                                               | Bin 0 -> 386867 bytes
+ attached_assets/Screenshot (2745)_1761434966906.png                                               | Bin 0 -> 386867 bytes
+ attached_assets/image_1761348343914.png                                                           | Bin 0 -> 234348 bytes
+ attached_assets/image_1761348743742.png                                                           | Bin 0 -> 163694 bytes
+ attached_assets/image_1761349764057.png                                                           | Bin 0 -> 180005 bytes
+ attached_assets/image_1761350132211.png                                                           | Bin 0 -> 208191 bytes
+ attached_assets/image_1761350355014.png                                                           | Bin 0 -> 212408 bytes
+ attached_assets/image_1761350967146.png                                                           | Bin 0 -> 232542 bytes
+ attached_assets/image_1761351025544.png                                                           | Bin 0 -> 180966 bytes
+ attached_assets/image_1761419176420.png                                                           | Bin 0 -> 217981 bytes
+ attached_assets/image_1761419351728.png                                                           | Bin 0 -> 216227 bytes
+ attached_assets/image_1761419702845.png                                                           | Bin 0 -> 398133 bytes
+ attached_assets/image_1761421154200.png                                                           | Bin 0 -> 221530 bytes
+ attached_assets/image_1761421320709.png                                                           | Bin 0 -> 235410 bytes
+ attached_assets/image_1761425530382.png                                                           | Bin 0 -> 344292 bytes
+ attached_assets/image_1761425739314.png                                                           | Bin 0 -> 208427 bytes
+ attached_assets/image_1761427199960.png                                                           | Bin 0 -> 85307 bytes
+ attached_assets/image_1761427216362.png                                                           | Bin 0 -> 226805 bytes
+ attached_assets/image_1761427861281.png                                                           | Bin 0 -> 190395 bytes
+ attached_assets/image_1761427894892.png                                                           | Bin 0 -> 189857 bytes
+ attached_assets/image_1761427944098.png                                                           | Bin 0 -> 207168 bytes
+ attached_assets/image_1761427971279.png                                                           | Bin 0 -> 223850 bytes
+ attached_assets/image_1761428778540.png                                                           | Bin 0 -> 182582 bytes
+ attached_assets/image_1761428905204.png                                                           | Bin 0 -> 329638 bytes
+ attached_assets/image_1761429222351.png                                                           | Bin 0 -> 805215 bytes
+ attached_assets/image_1761429312835.png                                                           | Bin 0 -> 343297 bytes
+ attached_assets/image_1761429509260.png                                                           | Bin 0 -> 249491 bytes
+ attached_assets/image_1761429927386.png                                                           | Bin 0 -> 215761 bytes
+ attached_assets/image_1761430015952.png                                                           | Bin 0 -> 203352 bytes
+ attached_assets/image_1761430041795.png                                                           | Bin 0 -> 207840 bytes
+ attached_assets/image_1761430898135.png                                                           | Bin 0 -> 230761 bytes
+ attached_assets/image_1761431095335.png                                                           | Bin 0 -> 242286 bytes
+ attached_assets/image_1761431226174.png                                                           | Bin 0 -> 281223 bytes
+ attached_assets/image_1761431278311.png                                                           | Bin 0 -> 272801 bytes
+ attached_assets/image_1761431717039.png                                                           | Bin 0 -> 202611 bytes
+ attached_assets/image_1761432214255.png                                                           | Bin 0 -> 84985 bytes
+ attached_assets/image_1761432865677.png                                                           | Bin 0 -> 125360 bytes
+ attached_assets/image_1761432908940.png                                                           | Bin 0 -> 77906 bytes
+ attached_assets/image_1761434892917.png                                                           | Bin 0 -> 213969 bytes
+ attached_assets/image_1761435056872.png                                                           | Bin 0 -> 295055 bytes
+ attached_assets/image_1761438316014.png                                                           | Bin 0 -> 425311 bytes
+ attached_assets/image_1761464394981.png                                                           | Bin 0 -> 79259 bytes
+ attached_assets/image_1761464878705.png                                                           | Bin 0 -> 58175 bytes
+ attached_assets/image_1761465267372.png                                                           | Bin 0 -> 272301 bytes
+ attached_assets/image_1761466796487.png                                                           | Bin 0 -> 306805 bytes
+ attached_assets/image_1761466829996.png                                                           | Bin 0 -> 115487 bytes
+ attached_assets/image_1761468639315.png                                                           | Bin 0 -> 218146 bytes
+ attached_assets/image_1761497537048.png                                                           | Bin 0 -> 212215 bytes
+ attached_assets/image_1761497815307.png                                                           | Bin 0 -> 134666 bytes
+ attached_assets/image_1761571596416.png                                                           | Bin 0 -> 211243 bytes
+ client/src/App.tsx                                                                                |  65 +------
+ client/src/components/SmokeFireBackground.tsx                                                     |  82 ++++++++
+ client/src/index.css                                                                              |  31 +++
+ client/src/pages/main-launch.tsx                                                                  | 162 +++++++++++++++-
+ client/src/pages/marketing-landing.tsx                                                            | 502 +++++++++++++++++++++++++++++++++++++++++++++++++
+ founding100_page.png                                                                              | Bin 0 -> 51945 bytes
+ package-lock.json                                                                                 | 183 ++++++++++++++++++
+ package.json                                                                                      |   1 +
+ replit.md                                                                                         |  70 ++++++-
+ scripts/push-to-github.ts                                                                         | 108 +++++++++++
+ server/replitAuth.ts                                                                              |  11 +-
+ server/routes.ts                                                                                  |  25 ++-
+ server/seed.ts                                                                                    |   4 +-
+ server/utils/codeGenerator.ts                                                                     |  25 ++-
+ server/utils/emailService.ts                                                                      |  18 +-
+ shared/schema.ts                                                                                  |  13 +-
+ simple-push.sh                                                                                    |  17 ++
+ upload-to-github.js                                                                               | 157 ++++++++++++++++
+ 95 files changed, 2086 insertions(+), 121 deletions(-)
+ create mode 100644 DEPLOYMENT_RAILWAY.md
+ create mode 100644 DEPLOYMENT_VIDEOS.md
+ create mode 100644 PUSH_TO_GITHUB.md
+ create mode 100644 attached_assets/1 SMOKE HOVERS BOTTOM OF SCREEN_1761435915769.mp4
+ create mode 100644 attached_assets/2 SMOKE HOVERS IN BACKGROUND_1761435915770.mp4
+ create mode 100644 attached_assets/3 SMOKE HOVERS TINY SPARKS7_1761435915770.mp4
+ create mode 100644 attached_assets/4 SMOKE HOVERS FLAMES STSRT_1761435915771.mp4
+ create mode 100644 attached_assets/5 SMOKE HOVERS BIGGER SPARKS_1761435915772.mp4
+ create mode 100644 attached_assets/6 SMOKE HOVERS BIGGER SPARKS_1761435915771.mp4
+ create mode 100644 attached_assets/Pasted--rest-express-1-0-0-dev-NODE-ENV-development-tsx-server-index-ts-Using-Supabase-database-via-DA-1761350005328_1761350005328.txt
+ create mode 100644 attached_assets/Pasted-12-45-42-AM-build-image-version-7aa2b696d8640ee8ab8ada4b1f870982d7bd596d-noble-12-45-42-AM-bui-1761432567558_1761432567559.txt
+ create mode 100644 attached_assets/Pasted-Founding-100-Your-Investment-is-Our-Investment-Secure-your-financial-Investment-in-our-studio-an-1761564333281_1761564333281.txt
+ create mode 100644 attached_assets/Pasted-Timeless-Organics-INVESTOR-LAUNCH-Founding-100-Your-Investment-is-Our-Investment-Secure-your-fi-1761564494625_1761564494626.txt
+ create mode 100644 attached_assets/Screenshot (2739)_1761434822256.png
+ create mode 100644 attached_assets/Screenshot (2739)_1761434966908.png
+ create mode 100644 attached_assets/Screenshot (2740)_1761434822256.png
+ create mode 100644 attached_assets/Screenshot (2740)_1761434966908.png
+ create mode 100644 attached_assets/Screenshot (2741)_1761434822256.png
+ create mode 100644 attached_assets/Screenshot (2741)_1761434966907.png
+ create mode 100644 attached_assets/Screenshot (2742)_1761434822255.png
+ create mode 100644 attached_assets/Screenshot (2742)_1761434966907.png
+ create mode 100644 attached_assets/Screenshot (2743)_1761434822255.png
+ create mode 100644 attached_assets/Screenshot (2743)_1761434966907.png
+ create mode 100644 attached_assets/Screenshot (2744)_1761434822254.png
+ create mode 100644 attached_assets/Screenshot (2744)_1761434966907.png
+ create mode 100644 attached_assets/Screenshot (2745)_1761434822253.png
+ create mode 100644 attached_assets/Screenshot (2745)_1761434966906.png
+ create mode 100644 attached_assets/image_1761348343914.png
+ create mode 100644 attached_assets/image_1761348743742.png
+ create mode 100644 attached_assets/image_1761349764057.png
+ create mode 100644 attached_assets/image_1761350132211.png
+ create mode 100644 attached_assets/image_1761350355014.png
+ create mode 100644 attached_assets/image_1761350967146.png
+ create mode 100644 attached_assets/image_1761351025544.png
+ create mode 100644 attached_assets/image_1761419176420.png
+ create mode 100644 attached_assets/image_1761419351728.png
+ create mode 100644 attached_assets/image_1761419702845.png
+ create mode 100644 attached_assets/image_1761421154200.png
+ create mode 100644 attached_assets/image_1761421320709.png
+ create mode 100644 attached_assets/image_1761425530382.png
+ create mode 100644 attached_assets/image_1761425739314.png
+ create mode 100644 attached_assets/image_1761427199960.png
+ create mode 100644 attached_assets/image_1761427216362.png
+ create mode 100644 attached_assets/image_1761427861281.png
+ create mode 100644 attached_assets/image_1761427894892.png
+ create mode 100644 attached_assets/image_1761427944098.png
+ create mode 100644 attached_assets/image_1761427971279.png
+ create mode 100644 attached_assets/image_1761428778540.png
+ create mode 100644 attached_assets/image_1761428905204.png
+ create mode 100644 attached_assets/image_1761429222351.png
+ create mode 100644 attached_assets/image_1761429312835.png
+ create mode 100644 attached_assets/image_1761429509260.png
+ create mode 100644 attached_assets/image_1761429927386.png
+ create mode 100644 attached_assets/image_1761430015952.png
+ create mode 100644 attached_assets/image_1761430041795.png
+ create mode 100644 attached_assets/image_1761430898135.png
+ create mode 100644 attached_assets/image_1761431095335.png
+ create mode 100644 attached_assets/image_1761431226174.png
+ create mode 100644 attached_assets/image_1761431278311.png
+ create mode 100644 attached_assets/image_1761431717039.png
+ create mode 100644 attached_assets/image_1761432214255.png
+ create mode 100644 attached_assets/image_1761432865677.png
+ create mode 100644 attached_assets/image_1761432908940.png
+ create mode 100644 attached_assets/image_1761434892917.png
+ create mode 100644 attached_assets/image_1761435056872.png
+ create mode 100644 attached_assets/image_1761438316014.png
+ create mode 100644 attached_assets/image_1761464394981.png
+ create mode 100644 attached_assets/image_1761464878705.png
+ create mode 100644 attached_assets/image_1761465267372.png
+ create mode 100644 attached_assets/image_1761466796487.png
+ create mode 100644 attached_assets/image_1761466829996.png
+ create mode 100644 attached_assets/image_1761468639315.png
+ create mode 100644 attached_assets/image_1761497537048.png
+ create mode 100644 attached_assets/image_1761497815307.png
+ create mode 100644 attached_assets/image_1761571596416.png
+ create mode 100644 client/src/components/SmokeFireBackground.tsx
+ create mode 100644 client/src/pages/marketing-landing.tsx
+ create mode 100644 founding100_page.png
+ create mode 100644 scripts/push-to-github.ts
+ create mode 100644 simple-push.sh
+ create mode 100644 upload-to-github.js
+To https://github.com/timelessorganics/Timeless-Organics-Fouding-100.git
+ ! [rejected]        main -> main (non-fast-forward)
+error: failed to push some refs to 'https://github.com/timelessorganics/Timeless-Organics-Fouding-100.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. If you want to integrate the remote changes,
+hint: use 'git pull' before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+~/workspace$ 
