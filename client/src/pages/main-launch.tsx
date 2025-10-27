@@ -293,56 +293,157 @@ export default function MainLaunch() {
 
           {/* Workshop Explanation Section */}
           <section className="mb-16 py-12 border-t border-border" data-testid="section-workshop">
-            <div className="max-w-3xl mx-auto">
+            <div className="max-w-4xl mx-auto">
               <div className="text-center mb-10">
                 <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
-                  The <span className="text-accent-gold">Workshop Experience</span>
+                  The Upcoming <span className="text-accent-gold">Workshop Experience</span>
                 </h2>
-                <p className="text-lg text-muted-foreground leading-relaxed">
-                  Experience the ancient art of lost-wax bronze casting in our intensive 2-day workshops. 
-                  Work hands-on in our Kommetjie studio to create your own bronze casting from start to finish.
+                <p className="text-lg text-muted-foreground leading-relaxed mb-4">
+                  The 2-Day Botanical Bronze Casting Workshop offers a unique window into the process of investment casting. 
+                  This is where you create your personal specimen piece.
+                </p>
+                <p className="text-sm text-muted-foreground/80 italic">
+                  *The actual value lies in the personal authorship — you melt the bronze and cast a piece of art that, 
+                  if sold by an expert, starts at <strong className="text-accent-gold">R25,000 value</strong>. You keep the story and the unique piece.
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                <div className="text-center p-6 bg-card border border-card-border rounded-lg">
-                  <div className="text-accent-gold text-5xl font-bold font-serif mb-3">2</div>
-                  <div className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wide">Days</div>
-                  <div className="text-xs text-muted-foreground">Intensive hands-on work</div>
+              {/* Workshop Cost Card */}
+              <Card className="bg-bronze/5 border-bronze/30 p-6 mb-8">
+                <h3 className="font-serif text-xl font-bold mb-3 text-foreground">Workshop Pricing</h3>
+                <p className="text-muted-foreground text-sm">
+                  The workshop cost is <strong className="text-foreground">variable</strong>, calculated based on your specimen choice 
+                  (complexity/size), with prices ranging from the base workshop cost up to a maximum of <strong className="text-accent-gold">R10,000</strong>.
+                </p>
+                <p className="text-muted-foreground text-sm mt-2">
+                  <strong className="text-foreground">Vouchers will deduct the relevant percentage off the final price</strong> upon booking, 
+                  including Patina add-ons.
+                </p>
+              </Card>
+
+              {/* Schedule */}
+              <div className="mb-8">
+                <h3 className="font-serif text-2xl font-bold mb-4 text-center text-foreground">
+                  Proposed Schedule <span className="text-sm text-muted-foreground font-normal">(not yet finalized - Kommetjie Studio)</span>
+                </h3>
+                
+                <div className="grid md:grid-cols-2 gap-4 mb-6">
+                  <Card className="bg-card border-card-border p-5">
+                    <h4 className="font-semibold text-foreground mb-2">Workshop 1</h4>
+                    <p className="text-sm text-muted-foreground">Mon (12:00–15:00) & Tue (12:00–16:00)</p>
+                  </Card>
+                  <Card className="bg-card border-card-border p-5">
+                    <h4 className="font-semibold text-foreground mb-2">Workshop 2</h4>
+                    <p className="text-sm text-muted-foreground">Thu (12:00–15:00) & Fri (12:00–16:00)</p>
+                  </Card>
                 </div>
-                <div className="text-center p-6 bg-card border border-card-border rounded-lg">
-                  <div className="text-bronze text-5xl font-bold font-serif mb-3">1</div>
-                  <div className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wide">Bronze Piece</div>
-                  <div className="text-xs text-muted-foreground">Your completed casting</div>
-                </div>
-                <div className="text-center p-6 bg-card border border-card-border rounded-lg">
-                  <div className="text-patina text-5xl font-bold font-serif mb-3">∞</div>
-                  <div className="text-sm font-semibold text-foreground mb-2 uppercase tracking-wide">Lifetime Skill</div>
-                  <div className="text-xs text-muted-foreground">Ancient craft knowledge</div>
+
+                {/* Day-by-Day Breakdown */}
+                <div className="space-y-4">
+                  <Card className="bg-card border-card-border p-6">
+                    <div className="flex items-start gap-4">
+                      <div className="text-accent-gold text-3xl font-bold font-serif">1</div>
+                      <div className="flex-1">
+                        <h4 className="font-serif text-lg font-bold text-foreground mb-2">Day 1 (09:30–13:00)</h4>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          Intake, invest your cutting, sprues & vents, mould prep, studio tour. 
+                          <strong className="text-foreground"> Burn-out runs overnight only.</strong>
+                        </p>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                          <li className="flex gap-2">
+                            <span className="text-bronze">•</span>
+                            <span>Specimen selection and preparation</span>
+                          </li>
+                          <li className="flex gap-2">
+                            <span className="text-bronze">•</span>
+                            <span>Investment casting setup</span>
+                          </li>
+                          <li className="flex gap-2">
+                            <span className="text-bronze">•</span>
+                            <span>Mould construction techniques</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </Card>
+
+                  <Card className="bg-card border-card-border p-6">
+                    <div className="flex items-start gap-4">
+                      <div className="text-bronze text-3xl font-bold font-serif">2</div>
+                      <div className="flex-1">
+                        <h4 className="font-serif text-lg font-bold text-foreground mb-2">Day 2 (09:30–15:00)</h4>
+                        <p className="text-sm text-muted-foreground mb-3">
+                          Bronze pour & reveal (hands-on experience), bead-blast, light finishing, and care tips.
+                        </p>
+                        <ul className="space-y-2 text-sm text-muted-foreground">
+                          <li className="flex gap-2">
+                            <span className="text-bronze">•</span>
+                            <span>Hands-on bronze pouring experience</span>
+                          </li>
+                          <li className="flex gap-2">
+                            <span className="text-bronze">•</span>
+                            <span>Bead-blasting and finishing techniques</span>
+                          </li>
+                          <li className="flex gap-2">
+                            <span className="text-bronze">•</span>
+                            <span>Leave with your finished bronze (≤10 cm Ø × ≤15 cm)</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </Card>
                 </div>
               </div>
 
-              <div className="bg-card/50 border border-card-border rounded-lg p-6">
-                <h3 className="font-serif text-xl font-bold mb-4 text-foreground">What You'll Learn</h3>
-                <ul className="space-y-3">
-                  <li className="flex gap-3 text-sm text-muted-foreground">
-                    <span className="text-bronze">→</span>
-                    <span>Specimen selection and preparation techniques</span>
+              {/* Optional Add-Ons */}
+              <Card className="bg-patina/10 border-patina/30 p-6 mb-8">
+                <h3 className="font-serif text-xl font-bold mb-3 text-foreground">Optional Add-Ons</h3>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex gap-2">
+                    <span className="text-patina">•</span>
+                    <span><strong className="text-foreground">Patina service:</strong> R1,000 - R3,000 (available for purchase on-site)</span>
                   </li>
-                  <li className="flex gap-3 text-sm text-muted-foreground">
-                    <span className="text-bronze">→</span>
-                    <span>Investment casting process using traditional lost-wax method</span>
-                  </li>
-                  <li className="flex gap-3 text-sm text-muted-foreground">
-                    <span className="text-bronze">→</span>
-                    <span>Bronze pouring, finishing, and patina application</span>
-                  </li>
-                  <li className="flex gap-3 text-sm text-muted-foreground">
-                    <span className="text-bronze">→</span>
-                    <span>Studio safety and foundry best practices</span>
+                  <li className="flex gap-2">
+                    <span className="text-patina">•</span>
+                    <span><strong className="text-foreground">Mounting options:</strong> Available on-site</span>
                   </li>
                 </ul>
-              </div>
+              </Card>
+
+              {/* What to Bring/Wear */}
+              <Card className="bg-card border-card-border p-6">
+                <h3 className="font-serif text-xl font-bold mb-4 text-foreground">What to Bring / Wear</h3>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-3 text-sm uppercase tracking-wide">Specimen</h4>
+                    <p className="text-sm text-muted-foreground">
+                      Fresh specimen within size limits; or choose <strong className="text-foreground">"studio cutting"</strong> and 
+                      we'll select on-site.
+                    </p>
+                  </div>
+                  <div>
+                    <h4 className="font-semibold text-foreground mb-3 text-sm uppercase tracking-wide">Clothing & Safety</h4>
+                    <ul className="space-y-2 text-sm text-muted-foreground">
+                      <li className="flex gap-2">
+                        <span className="text-bronze">•</span>
+                        <span>Closed shoes (robust)</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="text-bronze">•</span>
+                        <span>Long pants</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="text-bronze">•</span>
+                        <span>Cotton top</span>
+                      </li>
+                      <li className="flex gap-2">
+                        <span className="text-patina">✓</span>
+                        <span><strong className="text-foreground">PPE provided</strong> on-site</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </Card>
 
               <p className="text-sm text-muted-foreground text-center mt-8 italic">
                 <span className="text-accent-gold font-semibold">Important:</span> Your workshop voucher codes and lifetime discount codes 
