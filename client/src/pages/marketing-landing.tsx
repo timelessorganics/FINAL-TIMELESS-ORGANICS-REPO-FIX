@@ -194,6 +194,51 @@ export default function MarketingLanding() {
               </p>
             </Card>
           </div>
+
+          {/* Investment Explanation Callout */}
+          <div className="max-w-4xl mx-auto mt-16">
+            <Card className="bg-gradient-to-br from-accent-gold/10 via-bronze/5 to-patina/10 backdrop-blur-md border-accent-gold/30 p-10">
+              <div className="text-center mb-6">
+                <h3 className="font-serif text-3xl font-bold text-foreground mb-3">
+                  What Does "<span className="text-accent-gold">Investment</span>" Mean?
+                </h3>
+                <div className="w-16 h-1 bg-gradient-to-r from-bronze to-accent-gold mx-auto"></div>
+              </div>
+              
+              <div className="space-y-6 text-muted-foreground leading-relaxed">
+                <p className="text-lg text-center">
+                  The word "<span className="text-accent-gold font-semibold">investment</span>" carries a double meaning in our program — one financial, one technical.
+                </p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="bg-card/30 border border-card-border rounded-lg p-6">
+                    <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                      <span className="text-accent-gold">💰</span> Your Financial Investment
+                    </h4>
+                    <p className="text-sm">
+                      You invest capital (R3,000 or R5,000) to fund our foundry's final fit-out — equipment, tooling, 
+                      and infrastructure that makes Timeless Organics possible.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-card/30 border border-card-border rounded-lg p-6">
+                    <h4 className="font-semibold text-foreground mb-3 flex items-center gap-2">
+                      <span className="text-bronze">🔥</span> Our Technical Investment
+                    </h4>
+                    <p className="text-sm">
+                      We <span className="font-semibold text-accent-gold">invest</span> your chosen botanical cutting — encasing it in a ceramic shell 
+                      (a powder/water mix) using the ancient lost-wax method. This "investment" creates the mold for your bronze.
+                    </p>
+                  </div>
+                </div>
+
+                <p className="text-center text-sm italic pt-4 border-t border-border">
+                  Both investments happen simultaneously. You invest in our future. We invest your cutting. 
+                  Together, we create something <span className="text-accent-gold font-semibold">timeless</span>.
+                </p>
+              </div>
+            </Card>
+          </div>
         </div>
       </section>
 
