@@ -29,10 +29,10 @@ export default function MainLaunch() {
               <span className="moving-fill">Founding 100</span> — Your Investment is Our Investment.
             </h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
-              Secure your financial investment in our studio and receive a guaranteed bronze casting 
-              of a Studio-Pre-Approved Specimen, where you select and{" "}
-              <span className="text-accent-gold font-semibold">where your capital funds our foundry's final fit-out</span>, 
-              allowing you to participate in the ancient art of lost-wax casting.
+              Your investment funds our foundry's final fit-out. In return, we invest (encase) your chosen botanical specimen now — 
+              guaranteeing you a flawless bronze casting when Timeless Organics studio is{" "}
+              <span className="text-accent-gold font-semibold">"workshop experience" ready & testing of all infrastructure 
+              and equipment signed off</span> (estimated Jan 2026). We store your molds securely until then and they are the first to ever become timeless!
             </p>
 
             <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">

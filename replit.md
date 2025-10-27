@@ -165,6 +165,20 @@ Optional:
 - Fixed z-index layering: Background (z-40), Content (z-50), Header (z-100) for consistent text visibility
 - SmokeFireBackground opacity set to 85% for dramatic effect matching marketing page
 
+**2025-10-27 LATE PM**: Payment flow fixes, content updates, and specimen expansion
+- **CRITICAL FIX**: Fixed payment flow bug - apiRequest now properly parses JSON response before accessing purchaseId
+- Expanded cutting gallery from 10 aloe-only to 20 diverse South African botanicals:
+  - Added King Protea, Silver Tree, Strelitzia, Fern Frond, Succulent Rosette, Cycad Leaf, Restio, Protea Neriifolia, Cotyledon, Watsonia
+  - Placeholders use themed colors (bronze/patina/gold) for visual consistency
+- Updated investment timeline explanation: "Jan 2026 workshop-ready" with mold secure storage details
+- Removed confusing "Pending Purchases Explained" card from dashboard
+- Improved pending purchase UX: clearer messaging, "Return to Invest Page" button
+- Added comprehensive workshop schedule details: Day 1 (09:30-13:00), Day 2 (09:30-15:00), two weekly sessions
+- Added workshop pricing structure: variable cost up to R10,000 max, vouchers deduct percentage off final price
+- Added "What to Bring/Wear" section: specimen requirements, safety clothing (closed shoes, long pants, cotton top)
+- Added optional add-ons pricing: Patina service (R1,000-R3,000), mounting options
+- **PayFast Debugging**: Added merchant ID logging (first 4 digits) to identify configuration issues
+
 **2025-10-26**: Session storage hotfix - Supabase connectivity issue
 - **CRITICAL FIX**: Switched from Postgres session storage to memory-based session storage
 - Supabase connection timeouts were preventing user authentication and site access

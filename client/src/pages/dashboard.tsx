@@ -37,24 +37,6 @@ export default function Dashboard() {
             </p>
           </div>
 
-          {/* Status Explanation for Pending Purchases */}
-          {purchases && purchases.some(p => p.status === 'pending') && (
-            <Card className="mb-6 p-6 bg-bronze/10 border-bronze/30">
-              <div className="flex items-start gap-3">
-                <div className="text-bronze text-2xl">ℹ️</div>
-                <div>
-                  <h3 className="font-serif text-lg font-bold text-foreground mb-2">
-                    Pending Purchases Explained
-                  </h3>
-                  <p className="text-sm text-muted-foreground">
-                    <strong className="text-foreground">Pending</strong> purchases are awaiting payment confirmation from PayFast. 
-                    If you didn't complete the payment, these will remain pending. Only <strong className="text-patina">completed</strong> purchases 
-                    generate your codes and certificate. To complete a pending purchase, click "Invest Now" again with the same seat type.
-                  </p>
-                </div>
-              </div>
-            </Card>
-          )}
 
           {/* Purchases */}
           <div className="space-y-6">
@@ -99,10 +81,24 @@ export default function Dashboard() {
                   {/* Pending Purchase Notice */}
                   {purchase.status === 'pending' && (
                     <div className="mb-6 p-4 bg-bronze/10 border border-bronze/30 rounded-lg">
-                      <p className="text-sm text-muted-foreground">
-                        <strong className="text-bronze">⏳ Payment Pending:</strong> Complete your PayFast payment to receive your codes, 
-                        certificate, and cutting selection link. If you abandoned this payment, you can start a new purchase.
-                      </p>
+                      <div className="flex items-start gap-3">
+                        <div className="text-bronze text-xl">⏳</div>
+                        <div className="flex-1">
+                          <p className="text-sm font-semibold text-foreground mb-2">Complete Your Payment</p>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            This purchase is awaiting PayFast payment confirmation. Once payment is completed, your codes and certificate will be generated automatically.
+                          </p>
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            className="w-full md:w-auto"
+                            onClick={() => window.location.href = '/founding100'}
+                            data-testid="button-complete-payment"
+                          >
+                            Return to Invest Page
+                          </Button>
+                        </div>
+                      </div>
                     </div>
                   )}
 

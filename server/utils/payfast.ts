@@ -24,12 +24,16 @@ interface PaymentData {
 }
 
 export function getPayFastConfig(): PayFastConfig {
-  return {
+  const config = {
     merchantId: process.env.PAYFAST_MERCHANT_ID || '10000100',
     merchantKey: process.env.PAYFAST_MERCHANT_KEY || '46f0cd694581a',
     passphrase: process.env.PAYFAST_PASSPHRASE || 'jt7NOE43FZPn',
     mode: (process.env.PAYFAST_MODE as 'sandbox' | 'production') || 'sandbox',
   };
+  
+  console.log(`[PayFast Config] Mode: ${config.mode}, Merchant ID starts with: ${config.merchantId.substring(0, 4)}****`);
+  
+  return config;
 }
 
 export function generatePayFastUrl(): string {
