@@ -24,14 +24,31 @@ interface PaymentData {
 }
 
 export function getPayFastConfig(): PayFastConfig {
-  const config = {
-    merchantId: process.env.PAYFAST_MERCHANT_ID || '10000100',
-    merchantKey: process.env.PAYFAST_MERCHANT_KEY || '46f0cd694581a',
-    passphrase: process.env.PAYFAST_PASSPHRASE || 'jt7NOE43FZPn',
-    mode: (process.env.PAYFAST_MODE as 'sandbox' | 'production') || 'sandbox',
+  const mode = (process.env.PAYFAST_MODE as 'sandbox' | 'production') || 'sandbox';
+  
+  // Sandbox credentials (PayFast test account)
+  const sandboxConfig = {
+    merchantId: process.env.PAYFAST_SANDBOX_MERCHANT_ID || '10043126',
+    merchantKey: process.env.PAYFAST_SANDBOX_MERCHANT_KEY || 'tqjx0xk2w4hqe',
+    passphrase: process.env.PAYFAST_SANDBOX_PASSPHRASE || 'DavidjunorTimeorg123',
   };
   
-  console.log(`[PayFast Config] Mode: ${config.mode}, Merchant ID starts with: ${config.merchantId.substring(0, 4)}****`);
+  // Production credentials (your live PayFast account)
+  const productionConfig = {
+    merchantId: process.env.PAYFAST_PRODUCTION_MERCHANT_ID || '',
+    merchantKey: process.env.PAYFAST_PRODUCTION_MERCHANT_KEY || '',
+    passphrase: process.env.PAYFAST_PRODUCTION_PASSPHRASE || '',
+  };
+  
+  // Select config based on mode
+  const selectedConfig = mode === 'sandbox' ? sandboxConfig : productionConfig;
+  
+  const config = {
+    ...selectedConfig,
+    mode,
+  };
+  
+  console.log(`[PayFast Config] Mode: ${config.mode}, Merchant ID: ${config.merchantId}`);
   
   return config;
 }
@@ -44,26 +61,43 @@ export function generatePayFastUrl(): string {
 }
 
 export function generateSignature(data: Record<string, string>, passphrase?: string): string {
-  // CRITICAL: PayFast requires alphabetically sorted keys for signature generation!
-  // Sort keys alphabetically
-  const sortedData: Record<string, string> = {};
-  Object.keys(data).sort().forEach((key) => {
-    sortedData[key] = data[key];
-  });
+  // CRITICAL: PayFast Custom Integration requires fields in ORDER THEY APPEAR in documentation
+  // PayFast documentation field order (for payment forms):
+  const orderedKeys = [
+    'merchant_id', 'merchant_key', 'return_url', 'cancel_url', 'notify_url',
+    'name_first', 'name_last', 'email_address', 'cell_number',
+    'm_payment_id', 'amount', 'item_name', 'item_description',
+    'custom_int1', 'custom_int2', 'custom_int3', 'custom_int4', 'custom_int5',
+    'custom_str1', 'custom_str2', 'custom_str3', 'custom_str4', 'custom_str5',
+    'email_confirmation', 'confirmation_address', 'payment_method',
+    // Webhook-specific fields
+    'pf_payment_id', 'payment_status', 'item_description', 'gross'
+  ];
   
-  // Create parameter string
+  // Create parameter string in documentation order
   let paramString = '';
   
-  Object.keys(sortedData).forEach((key) => {
-    if (key !== 'signature' && sortedData[key] !== '') {
-      // URL encode and replace %20 with + as per PayFast requirements
-      const encodedValue = encodeURIComponent(sortedData[key].trim()).replace(/%20/g, '+');
+  // First, add fields in documented order
+  orderedKeys.forEach((key) => {
+    if (data[key] && data[key] !== '' && key !== 'signature') {
+      const encodedValue = encodeURIComponent(data[key].trim()).replace(/%20/g, '+');
+      paramString += `${key}=${encodedValue}&`;
+    }
+  });
+  
+  // Then add any remaining fields not in our ordered list (alphabetically)
+  Object.keys(data).sort().forEach((key) => {
+    if (!orderedKeys.includes(key) && key !== 'signature' && data[key] !== '') {
+      const encodedValue = encodeURIComponent(data[key].trim()).replace(/%20/g, '+');
       paramString += `${key}=${encodedValue}&`;
     }
   });
   
   // Remove last ampersand
   paramString = paramString.slice(0, -1);
+  
+  // SECURITY: Log BEFORE adding passphrase to avoid exposing secrets
+  console.log('[PayFast Signature] Param string (first 80 chars, before passphrase):', paramString.substring(0, 80));
   
   // Add passphrase if provided
   if (passphrase) {
@@ -86,14 +120,19 @@ export function createPaymentData(
     ? `https://${process.env.REPLIT_DOMAINS.split(',')[0]}`
     : 'http://localhost:5000';
 
+  // IMPORTANT: Order matters! This order is used for signature generation
+  // PayFast requires: merchant details → customer details → transaction details
   const data: PaymentData = {
+    // Merchant details (in order)
     merchant_id: config.merchantId,
     merchant_key: config.merchantKey,
     return_url: `${baseUrl}/payment/success`,
     cancel_url: `${baseUrl}/payment/cancel`,
     notify_url: `${baseUrl}/api/payment/notify`,
+    // Customer details
     name_first: firstName,
     email_address: email,
+    // Transaction details
     m_payment_id: purchaseId,
     amount: (amount / 100).toFixed(2), // Convert cents to rands
     item_name: seatType === 'founder' ? 'Founders Pass' : 'Patron Gift Card',

@@ -179,6 +179,18 @@ Optional:
 - Added optional add-ons pricing: Patina service (R1,000-R3,000), mounting options
 - **PayFast Debugging**: Added merchant ID logging (first 4 digits) to identify configuration issues
 
+**2025-10-27 EVENING**: PayFast signature and credential management overhaul
+- **CRITICAL FIX**: Fixed PayFast signature generation - was using alphabetical order (API style) but should use insertion order (payment form style)
+- Implemented dual-credential system: separate sandbox and production credentials
+- No more manual credential swapping! Change `PAYFAST_MODE` to switch between sandbox/production
+- Environment variables now:
+  - `PAYFAST_SANDBOX_MERCHANT_ID`, `PAYFAST_SANDBOX_MERCHANT_KEY`, `PAYFAST_SANDBOX_PASSPHRASE`
+  - `PAYFAST_PRODUCTION_MERCHANT_ID`, `PAYFAST_PRODUCTION_MERCHANT_KEY`, `PAYFAST_PRODUCTION_PASSPHRASE`
+  - `PAYFAST_MODE` (sandbox or production)
+- Added signature debugging: logs first 100 chars of param string for troubleshooting
+- Clarified field ordering in createPaymentData: merchant → customer → transaction details
+- Created PAYFAST_CREDENTIALS_SETUP.md with complete configuration guide
+
 **2025-10-26**: Session storage hotfix - Supabase connectivity issue
 - **CRITICAL FIX**: Switched from Postgres session storage to memory-based session storage
 - Supabase connection timeouts were preventing user authentication and site access
