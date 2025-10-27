@@ -18,20 +18,23 @@ export function SmokeFireBackground() {
 
   useEffect(() => {
     const currentVideo = currentVideoRef.current;
-    if (!currentVideo) return;
+    const nextVideo = nextVideoRef.current;
+    if (!currentVideo || !nextVideo) return;
 
     const handleTimeUpdate = () => {
       const duration = currentVideo.duration;
       const currentTime = currentVideo.currentTime;
       
-      if (duration - currentTime <= 1.0) {
+      if (duration - currentTime <= 0.5) {
         if (!isTransitioning) {
           setIsTransitioning(true);
+          nextVideo.currentTime = 0;
+          nextVideo.play();
           setTimeout(() => {
             setCurrentIndex(nextIndex);
             setNextIndex((nextIndex + 1) % videos.length);
             setIsTransitioning(false);
-          }, 1000);
+          }, 500);
         }
       }
     };
@@ -48,7 +51,8 @@ export function SmokeFireBackground() {
         autoPlay
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+        preload="auto"
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
         style={{ 
           opacity: isTransitioning ? 0 : 0.85,
           mixBlendMode: 'screen'
@@ -60,10 +64,10 @@ export function SmokeFireBackground() {
       <video
         ref={nextVideoRef}
         key={`next-${nextIndex}`}
-        autoPlay
         muted
         playsInline
-        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-1000"
+        preload="auto"
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
         style={{ 
           opacity: isTransitioning ? 0.85 : 0,
           mixBlendMode: 'screen'

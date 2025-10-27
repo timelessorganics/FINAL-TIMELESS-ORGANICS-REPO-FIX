@@ -3,17 +3,71 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SmokeFireBackground } from "@/components/SmokeFireBackground";
 import { Flame, Hammer, Users, Award, ArrowRight, Sparkles } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+
+interface Seat {
+  id: number;
+  type: string;
+  price: number;
+  totalSeats: number;
+  seatsSold: number;
+}
 
 export default function MarketingLanding() {
   const [, setLocation] = useLocation();
+
+  const { data: seats } = useQuery<Seat[]>({
+    queryKey: ["/api/seats/availability"],
+  });
+
+  const founderSeats = seats?.find(s => s.type === "Founder");
+  const patronSeats = seats?.find(s => s.type === "Patron");
+  const totalRemaining = (founderSeats ? founderSeats.totalSeats - founderSeats.seatsSold : 0) + 
+                        (patronSeats ? patronSeats.totalSeats - patronSeats.seatsSold : 0);
 
   return (
     <>
       <div className="bg-aloe" />
       <SmokeFireBackground />
       
+      {/* Fixed Header with Logo and Seat Counter */}
+      <header className="fixed top-0 left-0 right-0 z-[100] bg-card/10 backdrop-blur-md border-b border-card-border">
+        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex flex-col">
+            <h1 className="font-serif text-2xl font-bold text-foreground">
+              David Junor
+            </h1>
+            <p className="text-sm text-accent-gold">Timeless Organics</p>
+          </div>
+          
+          {seats && (
+            <div className="flex items-center gap-6 text-sm">
+              <div className="text-right">
+                <div className="text-muted-foreground">Seats Remaining</div>
+                <div className="text-2xl font-bold font-serif text-accent-gold">
+                  {totalRemaining} / 100
+                </div>
+              </div>
+              <div className="h-10 w-px bg-card-border"></div>
+              <div className="text-right">
+                <div className="text-xs text-muted-foreground">Founders</div>
+                <div className="text-lg font-semibold text-bronze">
+                  {founderSeats ? founderSeats.totalSeats - founderSeats.seatsSold : 0} left
+                </div>
+              </div>
+              <div className="text-right">
+                <div className="text-xs text-muted-foreground">Patrons</div>
+                <div className="text-lg font-semibold text-patina">
+                  {patronSeats ? patronSeats.totalSeats - patronSeats.seatsSold : 0} left
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </header>
+      
       {/* Hero Section - Full Screen */}
-      <section className="relative z-50 min-h-screen flex items-center justify-center px-4">
+      <section className="relative z-50 min-h-screen flex items-center justify-center px-4 pt-20">
         <div className="max-w-5xl mx-auto text-center">
           <div className="kicker mb-6 text-lg" data-testid="text-kicker">
             FOUNDING 100 INVESTOR LAUNCH
@@ -25,8 +79,9 @@ export default function MarketingLanding() {
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
-            Fund our Kommetjie foundry's final fit-out and receive a guaranteed bronze sculpture, 
-            lifetime workshop discounts, and exclusive access to the timeless art of lost-wax casting.
+            Your investment funds our foundry's final fit-out. In return, we <span className="text-accent-gold font-semibold">invest</span> (encase) 
+            your chosen botanical specimen now — guaranteeing you a flawless bronze casting, 
+            lifetime workshop discounts, and exclusive access to the ancient art of lost-wax casting.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
@@ -109,9 +164,9 @@ export default function MarketingLanding() {
                 <div className="text-6xl font-bold font-serif text-bronze/20">2</div>
                 <Hammer className="w-10 h-10 text-bronze" />
               </div>
-              <h3 className="font-serif text-2xl font-bold mb-3">Fund the Foundry</h3>
+              <h3 className="font-serif text-2xl font-bold mb-3">Invest in the Foundry</h3>
               <p className="text-muted-foreground">
-                Your capital funds equipment, tooling, and our Kommetjie studio's final fit-out.
+                Your capital funds equipment, tooling, and our Kommetjie studio's final fit-out. We invest your chosen piece immediately.
               </p>
             </Card>
 
@@ -344,9 +399,9 @@ export default function MarketingLanding() {
               </p>
 
               <p className="text-lg text-muted-foreground leading-relaxed">
-                The Founding 100 program isn't just fundraising. It's an invitation to become 
-                part of our origin story — to fund the final fit-out of our Kommetjie foundry while securing 
-                your own piece of bronze art and <span className="text-patina font-semibold">lifetime access to the ancient craft</span> of lost-wax casting.
+                The Founding 100 isn't crowdfunding — it's co-creation. You invest capital in our final fit-out. 
+                We <span className="text-accent-gold font-semibold">invest</span> (encase in ceramic) your chosen botanical specimen <span className="font-semibold">immediately</span>, 
+                guaranteeing you a flawless bronze casting plus <span className="text-patina font-semibold">lifetime workshop access</span> at the ancient craft of lost-wax casting.
               </p>
 
               <p className="text-lg text-muted-foreground leading-relaxed">
