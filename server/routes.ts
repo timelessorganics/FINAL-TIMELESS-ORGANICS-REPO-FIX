@@ -116,6 +116,116 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Protected: Server-side PayFast redirect - builds HTML form and auto-submits
+  app.get("/api/purchase/:id/redirect", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const purchaseId = req.params.id;
+      const userId = req.user.claims.sub;
+
+      // Get purchase and verify ownership
+      const purchase = await storage.getPurchase(purchaseId);
+      if (!purchase) {
+        return res.status(404).send("Purchase not found");
+      }
+      
+      if (purchase.userId !== userId) {
+        return res.status(403).send("Unauthorized");
+      }
+
+      // Create PayFast payment data
+      const paymentData = createPaymentData(
+        purchase.id,
+        purchase.amount,
+        purchase.seatType,
+        req.user.email || 'noreply@timelessorganics.com',
+        req.user.firstName || 'Investor'
+      );
+
+      // Add passphrase and generate signature
+      const config = getPayFastConfig();
+      const signature = generateSignature(paymentData, config.passphrase);
+
+      // Build PayFast form data
+      const payFastUrl = generatePayFastUrl();
+      const formFields = {
+        ...paymentData,
+        signature,
+      };
+
+      // Generate HTML form that auto-submits
+      const formHtml = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="UTF-8">
+          <title>Redirecting to PayFast...</title>
+          <style>
+            body {
+              background: #0a0a0a;
+              color: #a67c52;
+              font-family: 'Inter', sans-serif;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              height: 100vh;
+              margin: 0;
+            }
+            .loader {
+              text-align: center;
+            }
+            .spinner {
+              border: 4px solid rgba(166, 124, 82, 0.3);
+              border-top: 4px solid #a67c52;
+              border-radius: 50%;
+              width: 50px;
+              height: 50px;
+              animation: spin 1s linear infinite;
+              margin: 0 auto 20px;
+            }
+            @keyframes spin {
+              0% { transform: rotate(0deg); }
+              100% { transform: rotate(360deg); }
+            }
+          </style>
+        </head>
+        <body>
+          <div class="loader">
+            <div class="spinner"></div>
+            <p>Redirecting to PayFast secure payment...</p>
+          </div>
+          <form id="payfast_form" method="POST" action="${payFastUrl}">
+            ${Object.entries(formFields).map(([key, value]) => 
+              `<input type="hidden" name="${key}" value="${value}">`
+            ).join('\n            ')}
+          </form>
+          <script>
+            // Auto-submit after brief delay
+            setTimeout(function() {
+              document.getElementById('payfast_form').submit();
+            }, 500);
+          </script>
+        </body>
+        </html>
+      `;
+
+      res.setHeader('Content-Type', 'text/html');
+      res.send(formHtml);
+    } catch (error: any) {
+      console.error("PayFast redirect error:", error);
+      res.status(500).send(`
+        <!DOCTYPE html>
+        <html>
+        <head><title>Payment Error</title></head>
+        <body style="background:#0a0a0a;color:#fff;font-family:sans-serif;padding:40px;text-align:center;">
+          <h1>Payment Error</h1>
+          <p>${error.message || 'Failed to initiate payment'}</p>
+          <a href="/founding100" style="color:#a67c52;">Return to site</a>
+        </body>
+        </html>
+      `);
+    }
+  });
+
   // Public: PayFast webhook (ITN - Instant Transaction Notification)
   app.post("/api/payment/notify", async (req: Request, res: Response) => {
     try {

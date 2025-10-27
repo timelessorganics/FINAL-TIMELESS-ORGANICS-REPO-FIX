@@ -39,34 +39,9 @@ export default function SeatCard({
       });
     },
     onSuccess: (data: any) => {
-      console.log("Payment response:", data);
-      
-      // Show redirect message
-      toast({
-        title: "Redirecting to PayFast...",
-        description: "You'll be redirected to complete your payment in a moment.",
-      });
-
-      // Create and submit form to PayFast
-      if (data.paymentUrl && data.formData) {
-        setTimeout(() => {
-          const form = document.createElement("form");
-          form.method = "POST";
-          form.action = data.paymentUrl;
-          form.style.display = "none";
-
-          // Add all form fields
-          Object.keys(data.formData).forEach((key) => {
-            const input = document.createElement("input");
-            input.type = "hidden";
-            input.name = key;
-            input.value = data.formData[key];
-            form.appendChild(input);
-          });
-
-          document.body.appendChild(form);
-          form.submit();
-        }, 800);
+      // Redirect to server-side PayFast endpoint (more reliable than client-side form)
+      if (data.purchaseId) {
+        window.location.href = `/api/purchase/${data.purchaseId}/redirect`;
       } else {
         toast({
           title: "Payment Error",
