@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 import type { Purchase, Code } from "@shared/schema";
 import { Download, ExternalLink } from "lucide-react";
 
@@ -207,6 +208,8 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+      
+      <Footer />
     </>
   );
 }

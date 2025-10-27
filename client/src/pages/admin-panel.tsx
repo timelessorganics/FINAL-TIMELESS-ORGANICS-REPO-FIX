@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 import type { Seat, Purchase, Code } from "@shared/schema";
 import { Users, Package, DollarSign, Award, Download } from "lucide-react";
 
@@ -203,6 +204,8 @@ export default function AdminPanel() {
           </Card>
         </div>
       </div>
+      
+      <Footer />
     </>
   );
 }

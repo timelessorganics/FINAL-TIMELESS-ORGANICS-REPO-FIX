@@ -1,4 +1,5 @@
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { SmokeFireBackground } from "@/components/SmokeFireBackground";
 
 export default function Privacy() {
@@ -115,6 +116,8 @@ export default function Privacy() {
           </div>
         </div>
       </div>
+      
+      <Footer />
     </>
   );
 }

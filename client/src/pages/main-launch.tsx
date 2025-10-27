@@ -185,6 +185,106 @@ export default function MainLaunch() {
             )}
           </section>
 
+          {/* Founding 100 Specimen Options */}
+          <section className="mb-16">
+            <Card className="bg-card border-card-border p-8">
+              <h2 className="font-serif text-3xl md:text-4xl font-bold mb-6 text-center">
+                <span className="moving-fill">Founding 100 Specimen Options</span>
+              </h2>
+              
+              <div className="space-y-4 text-muted-foreground">
+                <div>
+                  <h3 className="font-serif text-xl font-semibold text-foreground mb-3">
+                    Choose your Guaranteed Casting
+                  </h3>
+                  <p>
+                    For this Founding 100 purchase, you select <strong className="text-foreground">one studio-guaranteed specimen</strong> from 
+                    a limited range in the payment form above. These pieces are pre-vetted for perfect casting (98-99% confidence) and fit 
+                    the flask size limits. This is the bronze you will receive at the studio opening.
+                  </p>
+                </div>
+                
+                <div className="bg-bronze/10 border border-bronze/30 rounded-md p-6">
+                  <Button
+                    asChild
+                    variant="outline"
+                    className="w-full border-bronze/50 hover:bg-bronze/20"
+                    data-testid="button-view-catalog"
+                  >
+                    <a href="/sculptures" target="_blank" rel="noopener noreferrer">
+                      View the Full 20+ Specimen Catalog (Opens New Window)
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          </section>
+
+          {/* Workshop Specimen Rules */}
+          <section className="mb-16">
+            <Card className="bg-card border-card-border p-8">
+              <h2 className="font-serif text-3xl md:text-4xl font-bold mb-6 text-center">
+                <span className="moving-fill">Workshop Specimen Rules</span>
+              </h2>
+              
+              <p className="text-sm text-muted-foreground/80 mb-6 text-center italic">
+                Spec limits (single source of truth)
+              </p>
+              
+              <div className="space-y-6 text-muted-foreground">
+                <p className="text-foreground/90">
+                  These rules apply to the <strong>personal cutting you bring</strong> to your discounted workshop.
+                </p>
+                
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div className="bg-background/50 rounded-md p-5 border border-border">
+                    <h3 className="font-semibold text-foreground mb-2">Maximum Cost</h3>
+                    <p className="text-sm">
+                      Final cost of the workshop is capped at <strong className="text-accent-gold">R10,000</strong> for the largest, 
+                      densest piece permitted.
+                    </p>
+                  </div>
+                  
+                  <div className="bg-background/50 rounded-md p-5 border border-border">
+                    <h3 className="font-semibold text-foreground mb-2">Casting Confidence</h3>
+                    <p className="text-sm">
+                      Thin, flat leaves are tricky (low confidence). Compact, solid forms (like small succulents) are high 
+                      confidence (98%+).
+                    </p>
+                  </div>
+                  
+                  <div className="bg-background/50 rounded-md p-5 border border-border">
+                    <h3 className="font-semibold text-foreground mb-2">Size Limits</h3>
+                    <p className="text-sm">
+                      Must fit a <strong className="text-foreground">10 cm diameter flask</strong> and <strong className="text-foreground">≤ 15 cm long</strong>
+                    </p>
+                  </div>
+                  
+                  <div className="bg-background/50 rounded-md p-5 border border-border">
+                    <h3 className="font-semibold text-foreground mb-2">Not Allowed</h3>
+                    <p className="text-sm">
+                      Hardwood/bark, woody cones or fruit, thick cacti, dense stems.
+                    </p>
+                  </div>
+                </div>
+                
+                <div className="border-t border-border pt-6 space-y-3">
+                  <h3 className="font-serif text-xl font-semibold text-foreground">Logistics</h3>
+                  <ul className="space-y-2 text-sm">
+                    <li className="flex items-start gap-2">
+                      <span className="text-bronze mt-1">•</span>
+                      <span>We can courier finished bronzes worldwide; SA from R100.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-bronze mt-1">•</span>
+                      <span><strong className="text-foreground">Rescheduling:</strong> 7-day notice to move your seat.</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </Card>
+          </section>
+
           {/* Workshop Explanation Section */}
           <section className="mb-16 py-12 border-t border-border" data-testid="section-workshop">
             <div className="max-w-3xl mx-auto">

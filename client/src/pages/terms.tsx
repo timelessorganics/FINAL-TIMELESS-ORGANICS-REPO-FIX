@@ -1,4 +1,5 @@
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { SmokeFireBackground } from "@/components/SmokeFireBackground";
 
 export default function Terms() {
@@ -102,6 +103,8 @@ export default function Terms() {
           </div>
         </div>
       </div>
+      
+      <Footer />
     </>
   );
 }

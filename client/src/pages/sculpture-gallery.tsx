@@ -4,12 +4,13 @@ import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { SmokeFireBackground } from "@/components/SmokeFireBackground";
 import type { Sculpture, Purchase } from "@shared/schema";
 import { useState } from "react";
 
 interface SculptureGalleryProps {
-  purchaseId: string;
+  purchaseId?: string;
 }
 
 export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) {
@@ -184,6 +185,8 @@ export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) 
           </div>
         </div>
       </div>
+      
+      <Footer />
     </>
   );
 }
