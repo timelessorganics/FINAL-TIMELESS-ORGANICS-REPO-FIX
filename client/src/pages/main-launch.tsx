@@ -371,6 +371,11 @@ export default function MainLaunch() {
                 variant="outline" 
                 size="lg" 
                 className="btn-bronze"
+                onClick={() => {
+                  document.querySelector('[data-testid="section-workshop"]')?.scrollIntoView({ 
+                    behavior: "smooth" 
+                  });
+                }}
                 data-testid="button-workshops"
               >
                 <span className="moving-fill">Explore Workshops</span>
