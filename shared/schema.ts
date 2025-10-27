@@ -98,6 +98,13 @@ export const purchases = pgTable("purchases", {
   status: purchaseStatusEnum("status").default('pending').notNull(),
   paymentReference: varchar("payment_reference"), // PayFast payment ID
   certificateUrl: varchar("certificate_url"), // URL to PDF certificate
+  // Specimen selection and add-ons (selected during checkout)
+  specimenId: varchar("specimen_id").references(() => sculptures.id),
+  hasPatina: boolean("has_patina").default(false).notNull(), // +R1000 add-on
+  // Delivery information (collected during checkout)
+  deliveryName: varchar("delivery_name"),
+  deliveryPhone: varchar("delivery_phone"),
+  deliveryAddress: text("delivery_address"),
   createdAt: timestamp("created_at").defaultNow(),
   completedAt: timestamp("completed_at"),
 });
@@ -106,13 +113,18 @@ export const insertPurchaseSchema = createInsertSchema(purchases).pick({
   userId: true,
   seatType: true,
   amount: true,
+  specimenId: true,
+  hasPatina: true,
+  deliveryName: true,
+  deliveryPhone: true,
+  deliveryAddress: true,
 });
 
 export type InsertPurchase = z.infer<typeof insertPurchaseSchema>;
 export type Purchase = typeof purchases.$inferSelect;
 
-// Code types enum
-export const codeTypeEnum = pgEnum('code_type', ['bronze_claim', 'workshop_voucher', 'lifetime_workshop']);
+// Code types enum - removed 'bronze_claim' as users select specimen during checkout
+export const codeTypeEnum = pgEnum('code_type', ['workshop_voucher', 'lifetime_workshop']);
 
 // Code applies to enum (workshop-only, seat purchases, or any)
 export const codeAppliesToEnum = pgEnum('code_applies_to', ['workshop', 'seat', 'any']);
