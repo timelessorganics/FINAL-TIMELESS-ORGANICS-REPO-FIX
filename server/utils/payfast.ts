@@ -44,15 +44,20 @@ export function generatePayFastUrl(): string {
 }
 
 export function generateSignature(data: Record<string, string>, passphrase?: string): string {
-  // Create parameter string in the order fields appear (NOT alphabetically!)
-  // PayFast requires: order as they appear in attributes, NOT alphabetical
+  // CRITICAL: PayFast requires alphabetically sorted keys for signature generation!
+  // Sort keys alphabetically
+  const sortedData: Record<string, string> = {};
+  Object.keys(data).sort().forEach((key) => {
+    sortedData[key] = data[key];
+  });
+  
+  // Create parameter string
   let paramString = '';
   
-  // Process keys in insertion order (the order they were added to the object)
-  Object.keys(data).forEach((key) => {
-    if (key !== 'signature' && data[key] !== '') {
+  Object.keys(sortedData).forEach((key) => {
+    if (key !== 'signature' && sortedData[key] !== '') {
       // URL encode and replace %20 with + as per PayFast requirements
-      const encodedValue = encodeURIComponent(data[key].trim()).replace(/%20/g, '+');
+      const encodedValue = encodeURIComponent(sortedData[key].trim()).replace(/%20/g, '+');
       paramString += `${key}=${encodedValue}&`;
     }
   });
