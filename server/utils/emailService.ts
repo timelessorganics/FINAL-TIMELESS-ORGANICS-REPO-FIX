@@ -211,9 +211,29 @@ export async function sendCertificateEmail(
       </div>
       ` : ''}
       
+      <h2>Your Specimen Selection</h2>
+      
+      ${purchase.purchaseChoice === 'cast_now' ? `
+      <p><strong>Cast Now:</strong> You've chosen to have our studio select the best in-season botanical specimen. Your bronze will be cast from our current collection for fastest turnaround (6-12 weeks).</p>
+      ` : purchase.purchaseChoice === 'wait_till_season' ? `
+      <p><strong>Wait Till Season:</strong> You've chosen to wait for peak seasonal quality. We'll cast your ${purchase.specimenStyle ? purchase.specimenStyle.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()) : 'selected'} specimen when it reaches its finest form in nature.</p>
+      <p style="color: #999; font-size: 14px;">You'll receive an email notification when your seasonal batch enters production.</p>
+      ` : purchase.purchaseChoice === 'provide_your_own' ? `
+      <p><strong>Custom Specimen:</strong> You've submitted a custom botanical photo for approval. Our studio will review it within 48-72 hours for cast-ability.</p>
+      ${purchase.customSpecimenApprovalStatus === 'approved' ? `
+      <p style="color: #6f8f79; font-weight: bold;">✓ Your specimen has been approved for casting!</p>
+      ${purchase.customSpecimenNotes ? `<p style="color: #999; font-size: 14px;">Studio Notes: ${purchase.customSpecimenNotes}</p>` : ''}
+      ` : purchase.customSpecimenApprovalStatus === 'rejected' ? `
+      <p style="color: #d8c3a5;">Your specimen was reviewed but is not viable for lost-wax casting. Please log in to select an alternative path.</p>
+      ${purchase.customSpecimenNotes ? `<p style="color: #999; font-size: 14px;">Studio Notes: ${purchase.customSpecimenNotes}</p>` : ''}
+      ` : `
+      <p style="color: #999; font-size: 14px;">Status: Under Review - We'll email you once the studio completes the assessment.</p>
+      `}
+      ` : ''}
+      
       <h2>Next Steps</h2>
       
-      <p><strong>1. Select Your Specimen:</strong> Log in to your dashboard to choose your bronze casting from our curated collection of aloe specimens.</p>
+      <p><strong>1. Track Your Production:</strong> Log in to your dashboard to see your bronze's production status (Queued → Invested → Ready to Pour → Poured & Finishing → Complete).</p>
       
       <p><strong>2. Schedule Your Workshop:</strong> Use your voucher code to book a 2-day lost-wax casting workshop at our Kommetjie studio.</p>
       
@@ -326,6 +346,17 @@ export async function sendPurchaseConfirmationEmail(
       
       <p>Thank you for your purchase! We've received your payment of <strong>R${amount}</strong> for a <strong>${seatName} seat</strong>.</p>
       
+      <h2 style="color: #d8c3a5; font-size: 20px; margin-top: 30px;">Your Specimen Selection</h2>
+      
+      ${purchase.purchaseChoice === 'cast_now' ? `
+      <p><strong>Cast Now:</strong> You've chosen to have our studio select the best in-season botanical specimen. Your bronze will be cast from our current collection for fastest turnaround (6-12 weeks).</p>
+      ` : purchase.purchaseChoice === 'wait_till_season' ? `
+      <p><strong>Wait Till Season:</strong> You've chosen to wait for peak seasonal quality. We'll cast your ${purchase.specimenStyle ? purchase.specimenStyle.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()) : 'selected'} specimen when it reaches its finest form in nature.</p>
+      <p style="color: #999; font-size: 14px;">You'll receive an email notification when your seasonal batch enters production.</p>
+      ` : purchase.purchaseChoice === 'provide_your_own' ? `
+      <p><strong>Custom Specimen:</strong> You've submitted a custom botanical photo for approval. Our studio will review it within 48-72 hours for cast-ability and email you with the decision.</p>
+      ` : ''}
+      
       <p>Your certificate and exclusive codes are being generated. You'll receive another email shortly with:</p>
       
       <ul style="color: #d8c3a5;">
@@ -335,7 +366,7 @@ export async function sendPurchaseConfirmationEmail(
         <li>Lifetime workshop discount code (${purchase.seatType === "founder" ? "20%" : "30%"} discount)</li>
       </ul>
       
-      <p>In the meantime, you can log in to your dashboard to select your bronze casting specimen.</p>
+      <p>In the meantime, you can log in to your dashboard to track your production status and view your investment details.</p>
       
       <p style="margin-top: 30px; color: #6f8f79; font-style: italic;">— The Timeless Organics Team</p>
     </div>

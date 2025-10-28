@@ -313,8 +313,8 @@ export default function AdminPanel() {
                         )}
                       </div>
                       <div className="text-sm text-muted-foreground">
-                        {promoCode.used
-                          ? `Redeemed on ${new Date(promoCode.usedAt!).toLocaleDateString()}`
+                        {promoCode.used && promoCode.redeemedAt
+                          ? `Redeemed on ${new Date(promoCode.redeemedAt).toLocaleDateString()}`
                           : "Ready to redeem"}
                       </div>
                     </div>

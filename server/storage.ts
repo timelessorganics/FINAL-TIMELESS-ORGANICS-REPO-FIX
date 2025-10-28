@@ -46,6 +46,7 @@ export interface IStorage {
   getPurchasesByUserId(userId: string): Promise<Purchase[]>;
   getAllPurchases(): Promise<Purchase[]>;
   updatePurchaseStatus(id: string, status: 'pending' | 'completed' | 'failed', paymentReference?: string, certificateUrl?: string): Promise<boolean>;
+  updatePurchase(id: string, updates: Partial<Purchase>): Promise<void>;
   
   // Code operations
   createCode(code: InsertCode): Promise<Code>;
@@ -180,6 +181,13 @@ export class DatabaseStorage implements IStorage {
     
     // Return true if a row was updated, false if already completed
     return result.length > 0;
+  }
+
+  async updatePurchase(id: string, updates: Partial<Purchase>): Promise<void> {
+    await db
+      .update(purchases)
+      .set(updates)
+      .where(eq(purchases.id, id));
   }
 
   // Code operations
