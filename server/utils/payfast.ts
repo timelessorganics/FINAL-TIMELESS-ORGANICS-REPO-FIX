@@ -97,9 +97,12 @@ export function createPaymentData(
   firstName: string
 ): PaymentData {
   const config = getPayFastConfig();
-  const baseUrl = process.env.REPLIT_DOMAINS
-    ? `https://${process.env.REPLIT_DOMAINS.split(',')[0]}`
-    : 'http://localhost:5000';
+  // Use BACKEND_URL for production (Railway), REPLIT_DOMAINS for Replit dev, fallback to localhost
+  const baseUrl = process.env.BACKEND_URL
+    || (process.env.REPLIT_DOMAINS ? `https://${process.env.REPLIT_DOMAINS.split(',')[0]}` : null)
+    || 'http://localhost:5000';
+  
+  console.log('[PayFast] Using base URL:', baseUrl);
 
   // CRITICAL: Order of properties MUST match PayFast documentation exactly
   // This order is used for signature generation - DO NOT REORDER!

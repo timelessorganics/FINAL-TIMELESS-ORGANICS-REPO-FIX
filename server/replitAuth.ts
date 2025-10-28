@@ -9,9 +9,9 @@ import memoize from "memoizee";
 import createMemoryStore from "memorystore";
 import { storage } from "./storage";
 
-if (!process.env.REPLIT_DOMAINS) {
-  throw new Error("Environment variable REPLIT_DOMAINS not provided");
-}
+// REPLIT_DOMAINS is only required when actually using Replit Auth
+// For production deployments (Railway), auth happens through frontend
+const isReplitEnvironment = !!process.env.REPLIT_DOMAINS;
 
 const getOidcConfig = memoize(
   async () => {
@@ -69,6 +69,14 @@ export async function setupAuth(app: Express) {
   app.use(getSession());
   app.use(passport.initialize());
   app.use(passport.session());
+
+  // Only set up Replit Auth if we're in a Replit environment
+  if (!isReplitEnvironment) {
+    console.log('[Auth] Running without Replit Auth (production deployment)');
+    passport.serializeUser((user: Express.User, cb) => cb(null, user));
+    passport.deserializeUser((user: Express.User, cb) => cb(null, user));
+    return;
+  }
 
   const config = await getOidcConfig();
 
