@@ -16,13 +16,26 @@ Your code is already syncing to: `https://github.com/timelessorganics/Timeless-O
 4. Choose: `timelessorganics/Timeless-Organics-Fouding-100`
 5. Railway will auto-detect `railway.json` config ✅
 
-### 3. Set Environment Variables in Railway
+### 3. Generate Public Domain in Railway
+
+1. Go to your service in Railway
+2. Click **Settings** tab
+3. Scroll to **Networking** → **Public Networking**
+4. Click **"Generate Domain"**
+5. Copy the URL (e.g., `https://timeless-organics-production-xyz.up.railway.app`)
+
+### 4. Set Environment Variables in Railway
 
 Go to your Railway project → **Variables** tab and add:
 
+#### Backend URL (CRITICAL - use the domain from step 3)
+```
+BACKEND_URL=https://timeless-organics-production-xyz.up.railway.app
+```
+
 #### Database (CRITICAL)
 ```
-DATABASE_URL=postgresql://postgres.zagsuh...your-supabase-connection-string
+DATABASE_URL=postgresql://postgres.rcillyhlieikmzeuaghc:yQOn9lLYcEvMl0dZ@aws-1-eu-west-1.pooler.supabase.com:6543/postgres
 ```
 
 #### Authentication
@@ -57,12 +70,12 @@ SUPABASE_SERVICE_ROLE_KEY=your-supabase-service-key
 NODE_ENV=production
 ```
 
-### 4. Deploy!
+### 5. Deploy!
 - Railway will automatically build and deploy
 - Monitor the deployment logs
-- You'll get a URL like: `https://your-app.up.railway.app`
+- Your backend will be live at the domain you generated
 
-### 5. Update Netlify Frontend
+### 6. Update Netlify Frontend
 Once Railway is live:
 1. Go to Netlify → Site settings → Environment variables
 2. Update `VITE_API_URL` to your Railway URL (e.g., `https://your-app.up.railway.app`)
@@ -103,8 +116,18 @@ Once Railway is live:
 ✅ Build command: `npm run build`
 ✅ Start command: `npm start`
 ✅ Build tested: **SUCCESS** (71.6kb backend bundle)
+✅ Node.js version: **20.11.0** (specified in `.node-version`)
 ✅ CORS configured for: `https://www.timeless.organic` and `https://timeless.organic`
+✅ REPLIT_DOMAINS optional (works on Railway)
 ✅ All routes registered
 ✅ Database schema ready
+
+## ⚠️ IMPORTANT: Node.js Version
+
+Railway **MUST use Node.js v20 or later**. The `.node-version` file enforces this.
+
+If Railway still uses v18:
+1. In Railway Settings → **Environment**
+2. Add variable: `NIXPACKS_NODE_VERSION=20`
 
 **You're ready to deploy!** 🚀
