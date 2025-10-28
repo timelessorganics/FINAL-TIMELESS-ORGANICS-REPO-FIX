@@ -247,9 +247,9 @@ export default function MarketingLanding() {
         </div>
       </section>
       {/* What You Get Section */}
-      <section className="relative z-50 min-h-screen flex items-center py-16 px-4 pt-[1px] pb-[1px]">
+      <section className="relative z-50 py-12 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8">
             <h2 className="font-serif text-4xl md:text-6xl font-bold mb-6">
               What <span className="moving-fill">You Receive</span>
             </h2>
@@ -259,7 +259,7 @@ export default function MarketingLanding() {
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-16">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             {/* Founder Benefits */}
             <Card className="bg-gradient-to-br from-bronze/10 to-accent-gold/5 backdrop-blur-md border-bronze/30 p-8">
               <div className="flex items-center gap-3 mb-6">
