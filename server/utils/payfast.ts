@@ -26,25 +26,11 @@ interface PaymentData {
 export function getPayFastConfig(): PayFastConfig {
   const mode = (process.env.PAYFAST_MODE as 'sandbox' | 'production') || 'sandbox';
   
-  // Sandbox credentials (PayFast test account)
-  const sandboxConfig = {
-    merchantId: process.env.PAYFAST_SANDBOX_MERCHANT_ID || '10043126',
-    merchantKey: process.env.PAYFAST_SANDBOX_MERCHANT_KEY || 'tqjx0xk2w4hqe',
-    passphrase: process.env.PAYFAST_SANDBOX_PASSPHRASE || 'DavidjunorTimeorg123',
-  };
-  
-  // Production credentials (your live PayFast account)
-  const productionConfig = {
-    merchantId: process.env.PAYFAST_PRODUCTION_MERCHANT_ID || '',
-    merchantKey: process.env.PAYFAST_PRODUCTION_MERCHANT_KEY || '',
-    passphrase: process.env.PAYFAST_PRODUCTION_PASSPHRASE || '',
-  };
-  
-  // Select config based on mode
-  const selectedConfig = mode === 'sandbox' ? sandboxConfig : productionConfig;
-  
-  const config = {
-    ...selectedConfig,
+  // Use the credentials from environment secrets
+  const config: PayFastConfig = {
+    merchantId: process.env.PAYFAST_MERCHANT_ID || '10043126',
+    merchantKey: process.env.PAYFAST_MERCHANT_KEY || 'tqjx0xk2w4hqe',
+    passphrase: process.env.PAYFAST_PASSPHRASE || 'DavidjunorTimeorg123',
     mode,
   };
   
