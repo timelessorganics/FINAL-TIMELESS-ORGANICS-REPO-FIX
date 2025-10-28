@@ -357,7 +357,7 @@ export default function MarketingLanding() {
         </div>
       </section>
       {/* David Junor - The Founder Section */}
-      <section className="relative z-50 min-h-screen flex items-center py-12 px-4">
+      <section className="relative z-50 py-12 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-4">
             <h2 className="font-serif text-4xl md:text-6xl font-bold mb-2">
@@ -440,7 +440,7 @@ export default function MarketingLanding() {
         </div>
       </section>
       {/* The Vision Section */}
-      <section className="relative z-50 min-h-screen flex items-center py-12 px-4">
+      <section className="relative z-50 py-12 px-4">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-4">
             <h2 className="font-serif text-4xl md:text-6xl font-bold mb-2">
