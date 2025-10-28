@@ -68,10 +68,11 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
       return await response.json();
     },
     onSuccess: (response: any) => {
-      // Submit form data to PayFast
+      // Submit form data to PayFast in a new window
       const form = document.createElement('form');
       form.method = 'POST';
       form.action = response.paymentUrl;
+      form.target = '_blank'; // Open in new tab
       
       // Add all form fields from formData
       Object.keys(response.formData).forEach(key => {
@@ -83,7 +84,19 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
       });
       
       document.body.appendChild(form);
+      
+      // Show user feedback
+      toast({
+        title: "Redirecting to Payment",
+        description: "Opening PayFast in a new window. Please complete your payment there.",
+      });
+      
       form.submit();
+      
+      // Clean up
+      setTimeout(() => {
+        document.body.removeChild(form);
+      }, 1000);
     },
     onError: (error: Error) => {
       toast({
