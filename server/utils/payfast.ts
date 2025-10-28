@@ -47,20 +47,22 @@ export function generatePayFastUrl(): string {
 }
 
 export function generateSignature(data: Record<string, string>, passphrase?: string, skipEmptyFields: boolean = true): string {
-  // CRITICAL: PayFast PHP example uses foreach($data as $key => $val) which preserves insertion order
-  // JavaScript objects maintain insertion order as of ES2015+
+  // CRITICAL: PayFast requires parameters to be sorted alphabetically by key name
   // Reference: https://developers.payfast.co.za/docs#step_2_signature
   // For webhooks: skipEmptyFields=false (include all fields PayFast sends)
   // For payment forms: skipEmptyFields=true (skip empty/blank fields)
   
   let paramString = '';
   
-  // Build parameter string
-  for (const key in data) {
+  // Sort keys alphabetically (REQUIRED by PayFast)
+  const sortedKeys = Object.keys(data).sort();
+  
+  // Build parameter string with sorted keys
+  for (const key of sortedKeys) {
     const value = data[key];
     
-    // Skip signature field always
-    if (key === 'signature') continue;
+    // Skip signature and passphrase fields (passphrase is appended separately at the end)
+    if (key === 'signature' || key === 'passphrase') continue;
     
     // For payment forms, skip empty fields. For webhooks, include them.
     if (skipEmptyFields && (!value || value === '')) continue;

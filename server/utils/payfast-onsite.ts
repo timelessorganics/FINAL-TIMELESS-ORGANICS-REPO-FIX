@@ -55,11 +55,16 @@ export async function generatePaymentIdentifier(
     });
 
     // Call PayFast Onsite API to generate UUID
-    const onsiteUrl = config.mode === 'sandbox' 
-      ? 'https://sandbox.payfast.co.za/onsite/process'
-      : 'https://www.payfast.co.za/onsite/process';
+    // IMPORTANT: PayFast Onsite Payments ONLY work with production credentials
+    // Sandbox mode does not support onsite payments - always use production endpoint
+    const onsiteUrl = 'https://www.payfast.co.za/onsite/process';
 
     console.log('[PayFast Onsite] Making request to:', onsiteUrl);
+    console.log('[PayFast Onsite] NOTE: Onsite payments require production credentials (sandbox not supported)');
+    console.log('[PayFast Onsite] Merchant ID:', config.merchantId);
+    console.log('[PayFast Onsite] Payment Data Keys:', Object.keys(dataWithSignature));
+    console.log('[PayFast Onsite] Signature (first 20 chars):', signature.substring(0, 20) + '...');
+    console.log('[PayFast Onsite] Full request body:', params.toString().substring(0, 200) + '...');
 
     const response = await axios.post(
       onsiteUrl,
