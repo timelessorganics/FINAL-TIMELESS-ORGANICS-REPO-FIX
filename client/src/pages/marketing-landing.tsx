@@ -354,32 +354,17 @@ export default function MarketingLanding() {
               </ul>
             </Card>
           </div>
-
-          {/* CTA Button */}
-          <div className="text-center mt-12">
-            <Button
-              onClick={() => setLocation("/founding100")}
-              size="lg"
-              className="btn-bronze text-lg px-8 py-6"
-              data-testid="button-explore-bottom"
-            >
-              <span className="moving-fill flex items-center gap-2">
-                Explore the Founding 100
-                <ArrowRight className="w-5 h-5" />
-              </span>
-            </Button>
-          </div>
         </div>
       </section>
       {/* David Junor - The Founder Section */}
       <section className="relative z-50 min-h-screen flex items-center py-12 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-6">
+          <div className="text-center mb-4">
             <h2 className="font-serif text-4xl md:text-6xl font-bold mb-2">
               <span className="moving-fill">David Junor</span>
             </h2>
             <p className="text-xl text-accent-gold">Founder, Timeless Organics</p>
-            <div className="w-20 h-1 bg-gradient-to-r from-bronze via-accent-gold to-patina mx-auto mt-3"></div>
+            <div className="w-20 h-1 bg-gradient-to-r from-bronze via-accent-gold to-patina mx-auto mt-2"></div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
@@ -455,13 +440,13 @@ export default function MarketingLanding() {
         </div>
       </section>
       {/* The Vision Section */}
-      <section className="relative z-50 min-h-screen flex items-center py-16 px-4">
+      <section className="relative z-50 min-h-screen flex items-center py-12 px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-6">
-            <h2 className="font-serif text-4xl md:text-6xl font-bold mb-4">
+          <div className="text-center mb-4">
+            <h2 className="font-serif text-4xl md:text-6xl font-bold mb-2">
               The <span className="moving-fill">Vision</span>
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-bronze via-accent-gold to-patina mx-auto mb-4"></div>
+            <div className="w-20 h-1 bg-gradient-to-r from-bronze via-accent-gold to-patina mx-auto mb-2"></div>
           </div>
 
           <Card className="bg-card/60 backdrop-blur-md border-card-border p-10">
