@@ -72,8 +72,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(409).json({ message: `All ${seatType} seats are sold out` });
       }
 
-      // Calculate total: base price + patina (R1000 = 100000 cents)
-      const amount = seat.price + (hasPatina ? 100000 : 0);
+      // Calculate total: base price + patina (R10 = 1000 cents for testing)
+      const amount = seat.price + (hasPatina ? 1000 : 0);
 
       const result = insertPurchaseSchema.safeParse({
         ...req.body,

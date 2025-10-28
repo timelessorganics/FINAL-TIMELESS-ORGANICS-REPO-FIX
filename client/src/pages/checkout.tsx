@@ -119,9 +119,9 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
     initiatePurchase.mutate(data);
   };
 
-  // Price calculation
-  const basePrice = seatType === "founder" ? 3000 : 5000;
-  const patinaPrice = hasPatina ? 1000 : 0;
+  // Price calculation - R10 for testing
+  const basePrice = 10;
+  const patinaPrice = hasPatina ? 10 : 0;
   const totalPrice = basePrice + patinaPrice;
 
   const seatLabel = seatType === "founder" ? "Founder Pass" : "Patron Pass";
@@ -209,7 +209,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                 <CardHeader>
                   <CardTitle className="text-[#6f8f79]">Add Patina Finish</CardTitle>
                   <CardDescription>
-                    Enhance your bronze with a natural green patina finish (+R1,000)
+                    Enhance your bronze with a natural green patina finish (+R10)
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -321,7 +321,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                   {hasPatina && (
                     <div className="flex justify-between">
                       <span className="text-muted-foreground">Patina Finish</span>
-                      <span className="font-semibold text-[#6f8f79]">+R1,000</span>
+                      <span className="font-semibold text-[#6f8f79]">+R10</span>
                     </div>
                   )}
 

@@ -163,7 +163,7 @@ export default function MainLaunch() {
                   <SeatCard
                     seat={founderSeat}
                     title="Founders Pass"
-                    subtitle="R3,000"
+                    subtitle="R10"
                     description="One bronze casting included of a Studio-Guaranteed Cutting"
                     benefits={[
                       "Your name permanently engraved on our Founders & Patrons Leaf Wall",
@@ -177,7 +177,7 @@ export default function MainLaunch() {
                   <SeatCard
                     seat={patronSeat}
                     title="Patron Gift Card"
-                    subtitle="R5,000"
+                    subtitle="R10"
                     description="One bronze casting included of a Studio-Guaranteed Cutting"
                     benefits={[
                       "Your name permanently engraved on our Founders & Patrons Leaf Wall",
