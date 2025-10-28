@@ -177,7 +177,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                     Choose one South African botanical to be cast in bronze. Your selection will be processed when the foundry is workshop-ready (estimated January 2026).
                   </CardDescription>
                 </CardHeader>
-                <CardContent>
+                <CardContent className="space-y-4">
                   <div className="grid sm:grid-cols-2 gap-4">
                     {specimens?.map((specimen) => (
                       <button
@@ -200,6 +200,12 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                         <p className="text-sm text-muted-foreground">{specimen.description}</p>
                       </button>
                     ))}
+                  </div>
+                  
+                  <div className="bg-accent-gold/10 border border-accent-gold/30 rounded-lg p-3 mt-4">
+                    <p className="text-sm text-muted-foreground">
+                      <span className="text-foreground font-semibold">🌿 Seasonal Variety:</span> Plants and flowers are seasonal—different species bloom at different times. This natural rhythm means workshops throughout the year feature unique botanical specimens, creating diverse casting opportunities across all four seasons!
+                    </p>
                   </div>
                 </CardContent>
               </Card>

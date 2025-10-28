@@ -108,8 +108,17 @@ export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) 
                 </p>
                 
                 <p>
-                  <strong className="text-foreground">Timeline:</strong> Allow 6-12 weeks for the complete process (ceramic work, kiln firing, bronze pouring, finishing). You'll receive updates via email and can claim your finished piece with your bronze claim code.
+                  <strong className="text-foreground">Timeline:</strong> We're aiming for Christmas delivery, though timelines can vary. The complete process (ceramic work, kiln firing, bronze pouring, finishing) typically takes several weeks. You'll receive updates via email and can claim your finished piece with your bronze claim code.
                 </p>
+
+                <div className="bg-accent-gold/10 border border-accent-gold/30 rounded-lg p-4 mt-4">
+                  <p className="text-foreground font-semibold mb-2">
+                    🌿 Nature Works on Her Own Schedule
+                  </p>
+                  <p className="text-sm">
+                    Plants and flowers are seasonal—different species bloom and flourish at different times of year. Summer brings different specimens than winter, just as spring differs from autumn. This natural rhythm creates unique workshop experiences throughout the year, each season offering its own botanical treasures. This is why we recommend booking workshops across all four seasons to experience the full diversity of South African flora!
+                  </p>
+                </div>
 
                 <p className="text-sm text-muted-foreground/70 pt-3 border-t border-border">
                   Your selection is permanent once confirmed. Choose carefully—this is the piece you'll treasure for life.
