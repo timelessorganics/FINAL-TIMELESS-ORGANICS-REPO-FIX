@@ -102,47 +102,20 @@ export default function MarketingLanding() {
       {/* Hero Section - Full Screen */}
       <section className="relative z-50 min-h-screen flex items-center justify-center px-4 pt-20">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="kicker mb-6 text-lg" data-testid="text-kicker">
+          <div className="kicker mb-4 text-lg" data-testid="text-kicker">
             FOUNDING 100 INVESTOR LAUNCH
           </div>
           
-          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-8 leading-tight">
+          <h1 className="font-serif text-5xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
             <span className="moving-fill">Where Ancient Craft</span><br />
             Meets Modern Investment
           </h1>
           
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-12 leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
             Your investment funds our foundry's final fit-out. In return, we <span className="text-accent-gold font-semibold">invest</span> (encase) 
             your chosen botanical specimen now — guaranteeing you a flawless bronze casting, 
             lifetime workshop discounts, and exclusive access to the ancient art of lost-wax casting.
           </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <Button
-              onClick={() => setLocation("/founding100")}
-              size="lg"
-              className="btn-bronze text-lg px-8 py-6"
-              data-testid="button-explore"
-            >
-              <span className="moving-fill flex items-center gap-2">
-                Explore the Founding 100
-                <ArrowRight className="w-5 h-5" />
-              </span>
-            </Button>
-            <Button
-              onClick={() => {
-                document.getElementById("how-it-works")?.scrollIntoView({ 
-                  behavior: "smooth" 
-                });
-              }}
-              size="lg"
-              variant="outline"
-              className="text-lg px-8 py-6 backdrop-blur-md bg-card/30 border-card-border hover:bg-card/50"
-              data-testid="button-learn-more"
-            >
-              Learn More
-            </Button>
-          </div>
 
           {/* Key Stats */}
           <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
@@ -322,6 +295,12 @@ export default function MarketingLanding() {
                     <strong className="text-foreground">Founding member certificate</strong> — Digital + PDF delivery
                   </span>
                 </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-accent-gold mt-2 flex-shrink-0" />
+                  <span className="text-muted-foreground">
+                    <strong className="text-foreground">Your name on the Wall of Leaves</strong> — Timeless preservation of our gratitude
+                  </span>
+                </li>
               </ul>
             </Card>
 
@@ -366,20 +345,41 @@ export default function MarketingLanding() {
                     <strong className="text-foreground">Founding member certificate</strong> — Digital + PDF delivery
                   </span>
                 </li>
+                <li className="flex items-start gap-3">
+                  <div className="w-2 h-2 rounded-full bg-accent-gold mt-2 flex-shrink-0" />
+                  <span className="text-muted-foreground">
+                    <strong className="text-foreground">Your name on the Wall of Leaves</strong> — Timeless preservation of our gratitude
+                  </span>
+                </li>
               </ul>
             </Card>
+          </div>
+
+          {/* CTA Button */}
+          <div className="text-center mt-12">
+            <Button
+              onClick={() => setLocation("/founding100")}
+              size="lg"
+              className="btn-bronze text-lg px-8 py-6"
+              data-testid="button-explore-bottom"
+            >
+              <span className="moving-fill flex items-center gap-2">
+                Explore the Founding 100
+                <ArrowRight className="w-5 h-5" />
+              </span>
+            </Button>
           </div>
         </div>
       </section>
       {/* David Junor - The Founder Section */}
       <section className="relative z-50 min-h-screen flex items-center py-16 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-serif text-4xl md:text-6xl font-bold mb-4">
+          <div className="text-center mb-8">
+            <h2 className="font-serif text-4xl md:text-6xl font-bold mb-3">
               <span className="moving-fill">David Junor</span>
             </h2>
             <p className="text-xl text-accent-gold">Founder, Timeless Organics</p>
-            <div className="w-20 h-1 bg-gradient-to-r from-bronze via-accent-gold to-patina mx-auto mt-6"></div>
+            <div className="w-20 h-1 bg-gradient-to-r from-bronze via-accent-gold to-patina mx-auto mt-4"></div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">

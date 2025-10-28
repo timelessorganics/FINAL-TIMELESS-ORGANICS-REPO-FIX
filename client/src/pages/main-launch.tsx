@@ -330,11 +330,11 @@ export default function MainLaunch() {
                 <div className="grid md:grid-cols-2 gap-4 mb-6">
                   <Card className="bg-card border-card-border p-5">
                     <h4 className="font-semibold text-foreground mb-2">Workshop 1</h4>
-                    <p className="text-sm text-muted-foreground">Mon (12:00–15:00) & Tue (12:00–16:00)</p>
+                    <p className="text-sm text-muted-foreground">Mon (11am-2pm) & Tue (12:00–16:00)</p>
                   </Card>
                   <Card className="bg-card border-card-border p-5">
                     <h4 className="font-semibold text-foreground mb-2">Workshop 2</h4>
-                    <p className="text-sm text-muted-foreground">Thu (12:00–15:00) & Fri (12:00–16:00)</p>
+                    <p className="text-sm text-muted-foreground">Thu (11am-2pm) & Fri (12:00–16:00)</p>
                   </Card>
                 </div>
 
@@ -344,9 +344,9 @@ export default function MainLaunch() {
                     <div className="flex items-start gap-4">
                       <div className="text-accent-gold text-3xl font-bold font-serif">1</div>
                       <div className="flex-1">
-                        <h4 className="font-serif text-lg font-bold text-foreground mb-2">Day 1 (09:30–13:00)</h4>
+                        <h4 className="font-serif text-lg font-bold text-foreground mb-2">Day 1 (11am-2pm)</h4>
                         <p className="text-sm text-muted-foreground mb-3">
-                          Intake, invest your cutting, sprues & vents, mould prep, studio tour. 
+                          Intake, spruing techniques/science, invest your cutting (hands-on experience), overview of the upcoming casting process. 
                           <strong className="text-foreground"> Burn-out runs overnight only.</strong>
                         </p>
                         <ul className="space-y-2 text-sm text-muted-foreground">
@@ -371,9 +371,9 @@ export default function MainLaunch() {
                     <div className="flex items-start gap-4">
                       <div className="text-bronze text-3xl font-bold font-serif">2</div>
                       <div className="flex-1">
-                        <h4 className="font-serif text-lg font-bold text-foreground mb-2">Day 2 (09:30–15:00)</h4>
+                        <h4 className="font-serif text-lg font-bold text-foreground mb-2">Day 2 (12pm-4pm)</h4>
                         <p className="text-sm text-muted-foreground mb-3">
-                          Bronze pour & reveal (hands-on experience), bead-blast, light finishing, and care tips.
+                          Bronze pour & reveal (hands-on experience), sand/bead-blast, light finishing, and care tips.
                         </p>
                         <ul className="space-y-2 text-sm text-muted-foreground">
                           <li className="flex gap-2">
@@ -382,7 +382,7 @@ export default function MainLaunch() {
                           </li>
                           <li className="flex gap-2">
                             <span className="text-bronze">•</span>
-                            <span>Bead-blasting and finishing techniques</span>
+                            <span>Sand/Bead-blasting and finishing techniques</span>
                           </li>
                           <li className="flex gap-2">
                             <span className="text-bronze">•</span>

@@ -18,6 +18,7 @@ import RedeemCodePage from "@/pages/redeem-code";
 import Terms from "@/pages/terms";
 import Privacy from "@/pages/privacy";
 import Waiver from "@/pages/waiver";
+import WallOfLeaves from "@/pages/wall-of-leaves";
 
 
 function Router() {
@@ -76,6 +77,9 @@ function Router() {
       <Route path="/terms" component={Terms} />
       <Route path="/privacy" component={Privacy} />
       <Route path="/waiver" component={Waiver} />
+      
+      {/* Wall of Leaves - PUBLIC */}
+      <Route path="/wall-of-leaves" component={WallOfLeaves} />
       
       {/* Sculpture/Cutting Gallery - Can view without purchase */}
       <Route path="/sculptures" component={SculptureGallery} />

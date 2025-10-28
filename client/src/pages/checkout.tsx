@@ -317,10 +317,11 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                   </div>
 
                   <div className="pt-4 space-y-2 text-sm text-muted-foreground">
-                    <p>✓ Workshop voucher ({seatType === "founder" ? "80%" : "50%"} off)</p>
-                    <p>✓ Lifetime workshop code ({seatType === "founder" ? "30%" : "20%"} off)</p>
+                    <p>✓ Workshop voucher ({seatType === "founder" ? "50%" : "80%"} off first workshop)</p>
+                    <p>✓ Lifetime workshop code ({seatType === "founder" ? "20%" : "30%"} off forever)</p>
                     <p>✓ Guaranteed bronze casting</p>
                     <p>✓ Official investment certificate</p>
+                    <p className="text-accent-gold">✓ Your name on the Wall of Leaves</p>
                   </div>
                 </CardContent>
                 <CardFooter>
