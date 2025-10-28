@@ -19,6 +19,7 @@ import Terms from "@/pages/terms";
 import Privacy from "@/pages/privacy";
 import Waiver from "@/pages/waiver";
 import WallOfLeaves from "@/pages/wall-of-leaves";
+import SeasonalGuide from "@/pages/seasonal-guide";
 
 
 function Router() {
@@ -80,6 +81,9 @@ function Router() {
       
       {/* Wall of Leaves - PUBLIC */}
       <Route path="/wall-of-leaves" component={WallOfLeaves} />
+      
+      {/* Seasonal Guide - PUBLIC */}
+      <Route path="/seasonal-guide" component={SeasonalGuide} />
       
       {/* Sculpture/Cutting Gallery - Can view without purchase */}
       <Route path="/sculptures" component={SculptureGallery} />

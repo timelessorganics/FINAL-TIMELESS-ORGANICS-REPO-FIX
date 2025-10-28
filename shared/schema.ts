@@ -89,6 +89,34 @@ export type Seat = typeof seats.$inferSelect;
 // Purchase status enum
 export const purchaseStatusEnum = pgEnum('purchase_status', ['pending', 'completed', 'failed']);
 
+// Purchase choice enum - how the customer wants to proceed with specimen selection
+export const purchaseChoiceEnum = pgEnum('purchase_choice', ['cast_now', 'wait_till_season', 'provide_your_own']);
+
+// Production status enum - batch fulfillment tracking
+export const productionStatusEnum = pgEnum('production_status', ['queued', 'invested', 'ready_to_pour', 'poured_finishing', 'complete']);
+
+// Custom specimen approval status
+export const approvalStatusEnum = pgEnum('approval_status', ['pending', 'approved', 'rejected']);
+
+// Specimen style enum - categories of botanical forms
+export const specimenStyleEnum = pgEnum('specimen_style', [
+  'protea_head',
+  'pincushion_bloom',
+  'cone_bracts',
+  'aloe_inflorescence',
+  'erica_spray',
+  'restio_seedheads',
+  'bulb_spike',
+  'pelargonium_leaf',
+  'woody_branch',
+  'cone_seedpod',
+  'succulent_rosette',
+  'miniature_mix'
+]);
+
+// Season window enum
+export const seasonWindowEnum = pgEnum('season_window', ['winter', 'spring', 'summer', 'autumn', 'year_round']);
+
 // Purchases made by users
 export const purchases = pgTable("purchases", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -98,9 +126,23 @@ export const purchases = pgTable("purchases", {
   status: purchaseStatusEnum("status").default('pending').notNull(),
   paymentReference: varchar("payment_reference"), // PayFast payment ID
   certificateUrl: varchar("certificate_url"), // URL to PDF certificate
+  
+  // Seasonal purchase choice
+  purchaseChoice: purchaseChoiceEnum("purchase_choice").default('cast_now').notNull(),
+  
+  // Production status tracking (Queued → Invested → Ready to Pour → Poured & Finishing → Complete)
+  productionStatus: productionStatusEnum("production_status").default('queued').notNull(),
+  seasonalBatchWindow: varchar("seasonal_batch_window"), // e.g., "Winter 2025", "Spring 2025"
+  
+  // Custom specimen for "Provide Your Own" option
+  customSpecimenPhotoUrl: varchar("custom_specimen_photo_url"),
+  customSpecimenApprovalStatus: approvalStatusEnum("custom_specimen_approval_status"),
+  customSpecimenNotes: text("custom_specimen_notes"), // Admin notes about approval/rejection
+  
   // Specimen selection and add-ons (selected during checkout)
   specimenId: varchar("specimen_id").references(() => sculptures.id),
   hasPatina: boolean("has_patina").default(false).notNull(), // +R1000 add-on
+  
   // Delivery information (collected during checkout)
   deliveryName: varchar("delivery_name"),
   deliveryPhone: varchar("delivery_phone"),
@@ -113,8 +155,10 @@ export const insertPurchaseSchema = createInsertSchema(purchases).pick({
   userId: true,
   seatType: true,
   amount: true,
+  purchaseChoice: true,
   specimenId: true,
   hasPatina: true,
+  customSpecimenPhotoUrl: true,
   deliveryName: true,
   deliveryPhone: true,
   deliveryAddress: true,
@@ -160,12 +204,19 @@ export const insertCodeSchema = createInsertSchema(codes).pick({
 export type InsertCode = z.infer<typeof insertCodeSchema>;
 export type Code = typeof codes.$inferSelect;
 
-// Available sculpture/cutting options
+// Available sculpture/cutting options (botanical specimens)
 export const sculptures = pgTable("sculptures", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   name: varchar("name").notNull(),
   description: text("description"),
   imageUrl: varchar("image_url").notNull(),
+  
+  // Specimen categorization
+  specimenStyle: specimenStyleEnum("specimen_style"), // Category of botanical form
+  seasonWindow: seasonWindowEnum("season_window").default('year_round').notNull(), // Primary season
+  peakSeasons: jsonb("peak_seasons").$type<string[]>().default([]), // Array of peak season names
+  
+  // Legacy fields
   availableFor: seatTypeEnum("available_for"), // null = both, or specific to founder/patron
   isBronze: boolean("is_bronze").default(false), // Special treatment for bronze pieces
   displayOrder: integer("display_order").default(0),
@@ -176,6 +227,9 @@ export const insertSculptureSchema = createInsertSchema(sculptures).pick({
   name: true,
   description: true,
   imageUrl: true,
+  specimenStyle: true,
+  seasonWindow: true,
+  peakSeasons: true,
   availableFor: true,
   isBronze: true,
   displayOrder: true,

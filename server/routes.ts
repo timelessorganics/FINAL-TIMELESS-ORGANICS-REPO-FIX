@@ -62,7 +62,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log('[Purchase] User initiating purchase:', userId, userEmail);
 
       // Calculate amount based on seat type + patina
-      const { seatType, hasPatina } = req.body;
+      const { seatType, hasPatina, purchaseChoice, customSpecimenPhotoUrl } = req.body;
       const seat = await storage.getSeatByType(seatType);
       if (!seat) {
         return res.status(404).json({ message: "Seat type not found" });
@@ -80,6 +80,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         ...req.body,
         userId,
         amount,
+        purchaseChoice: purchaseChoice || 'cast_now',
       });
       
       if (!result.success) {
@@ -88,13 +89,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Create purchase record with all checkout data
+      // Create purchase record with all checkout data (including seasonal fields)
       const purchase = await storage.createPurchase({
         userId: result.data.userId,
         seatType: result.data.seatType,
         amount: result.data.amount,
+        purchaseChoice: result.data.purchaseChoice,
         specimenId: result.data.specimenId,
         hasPatina: result.data.hasPatina,
+        customSpecimenPhotoUrl: result.data.customSpecimenPhotoUrl,
         deliveryName: result.data.deliveryName,
         deliveryPhone: result.data.deliveryPhone,
         deliveryAddress: result.data.deliveryAddress,
