@@ -20,6 +20,7 @@ import {
   verifyPayFastSignature,
   getPayFastConfig
 } from "./utils/payfast";
+import { generatePaymentIdentifier } from "./utils/payfast-onsite";
 import { generateCertificate } from "./utils/certificateGenerator";
 import { sendCertificateEmail, sendPurchaseConfirmationEmail } from "./utils/emailService";
 import { generatePromoCode } from "./utils/promoCodeGenerator";
@@ -101,32 +102,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       console.log('[Purchase] Created purchase record:', purchase.id, purchase.seatType, purchase.amount);
 
-      // Create PayFast payment data
-      const paymentData = createPaymentData(
-        purchase.id,
-        purchase.amount,
-        purchase.seatType,
-        userEmail,
-        userFirstName
-      );
+      // Generate PayFast Onsite Payment Identifier (UUID)
+      try {
+        const uuid = await generatePaymentIdentifier(
+          purchase.id,
+          purchase.amount,
+          purchase.seatType,
+          userEmail,
+          userFirstName
+        );
 
-      // Generate signature with passphrase
-      const config = getPayFastConfig();
-      const signature = generateSignature(paymentData, config.passphrase);
+        console.log('[Purchase] Generated PayFast UUID for purchase:', purchase.id);
 
-      // Build PayFast form data
-      const payFastUrl = generatePayFastUrl();
-      const formData = {
-        ...paymentData,
-        signature,
-      };
-
-      // Return form data for frontend to submit
-      res.json({
-        paymentUrl: payFastUrl,
-        formData,
-        purchaseId: purchase.id,
-      });
+        // Return UUID for onsite payment modal
+        res.json({
+          uuid,
+          purchaseId: purchase.id,
+        });
+      } catch (uuidError: any) {
+        console.error('[Purchase] Failed to generate PayFast UUID:', uuidError);
+        // Mark purchase as failed since payment can't proceed
+        await storage.updatePurchaseStatus(purchase.id, 'failed');
+        return res.status(500).json({ 
+          message: "Failed to initiate payment: " + uuidError.message 
+        });
+      }
     } catch (error: any) {
       console.error("Purchase initiation error:", error);
       res.status(500).json({ message: error.message || "Failed to initiate purchase" });
@@ -160,7 +160,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Add passphrase and generate signature
       const config = getPayFastConfig();
-      const signature = generateSignature(paymentData, config.passphrase);
+      
+      // Convert PaymentData to Record<string, string> for signature generation
+      const dataForSignature: Record<string, string> = {};
+      Object.keys(paymentData).forEach(key => {
+        const value = (paymentData as any)[key];
+        if (value !== undefined) {
+          dataForSignature[key] = value;
+        }
+      });
+      
+      const signature = generateSignature(dataForSignature, config.passphrase);
 
       // Build PayFast form data
       const payFastUrl = generatePayFastUrl();
@@ -880,14 +890,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
           await sendPurchaseConfirmationEmail(
             userEmail,
             userName,
-            purchase,
-            [workshopCode, lifetimeWorkshopCode]
+            purchase
           );
 
           if (certificateUrl) {
             await sendCertificateEmail(
               userEmail,
               userName,
+              purchase,
+              [workshopCode, lifetimeWorkshopCode],
               certificateUrl
             );
           }

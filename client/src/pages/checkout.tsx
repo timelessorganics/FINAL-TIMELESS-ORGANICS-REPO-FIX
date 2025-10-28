@@ -68,35 +68,49 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
       return await response.json();
     },
     onSuccess: (response: any) => {
-      // Submit form data to PayFast in a new window
-      const form = document.createElement('form');
-      form.method = 'POST';
-      form.action = response.paymentUrl;
-      form.target = '_blank'; // Open in new tab
-      
-      // Add all form fields from formData
-      Object.keys(response.formData).forEach(key => {
-        const input = document.createElement('input');
-        input.type = 'hidden';
-        input.name = key;
-        input.value = response.formData[key];
-        form.appendChild(input);
-      });
-      
-      document.body.appendChild(form);
-      
       // Show user feedback
       toast({
-        title: "Redirecting to Payment",
-        description: "Opening PayFast in a new window. Please complete your payment there.",
+        title: "Opening Payment",
+        description: "Secure payment modal loading...",
       });
+
+      // Trigger PayFast Onsite Payment Modal
+      // The payfast_do_onsite_payment function is provided by the PayFast engine.js script
+      const payFastModal = (window as any).payfast_do_onsite_payment;
       
-      form.submit();
-      
-      // Clean up
-      setTimeout(() => {
-        document.body.removeChild(form);
-      }, 1000);
+      if (typeof payFastModal !== 'function') {
+        toast({
+          variant: "destructive",
+          title: "Payment Error",
+          description: "PayFast payment system not loaded. Please refresh and try again.",
+        });
+        return;
+      }
+
+      // Open PayFast modal with payment UUID
+      payFastModal(
+        { uuid: response.uuid },
+        function (result: boolean) {
+          if (result === true) {
+            // Payment completed successfully
+            toast({
+              title: "Payment Successful!",
+              description: "Redirecting to confirmation page...",
+            });
+            // Redirect to success page
+            setTimeout(() => {
+              setLocation('/payment/success');
+            }, 1500);
+          } else {
+            // Payment window closed or cancelled
+            toast({
+              variant: "destructive",
+              title: "Payment Cancelled",
+              description: "You can try again when ready.",
+            });
+          }
+        }
+      );
     },
     onError: (error: Error) => {
       toast({
