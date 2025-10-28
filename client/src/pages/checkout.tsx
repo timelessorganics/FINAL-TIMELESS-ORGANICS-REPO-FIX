@@ -109,6 +109,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
         seatType,
         purchaseChoice: data.purchaseChoice,
         specimenId: data.specimenId,
+        specimenStyle: data.specimenStyle,
         hasPatina,
         customSpecimenPhotoUrl: data.customSpecimenPhotoUrl,
         deliveryName: data.deliveryName,

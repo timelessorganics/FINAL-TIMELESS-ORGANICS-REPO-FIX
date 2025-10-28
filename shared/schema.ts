@@ -134,6 +134,9 @@ export const purchases = pgTable("purchases", {
   productionStatus: productionStatusEnum("production_status").default('queued').notNull(),
   seasonalBatchWindow: varchar("seasonal_batch_window"), // e.g., "Winter 2025", "Spring 2025"
   
+  // "Wait Till Season" - chosen specimen style
+  specimenStyle: specimenStyleEnum("specimen_style"), // The style they want (protea_head, pincushion_bloom, etc.)
+  
   // Custom specimen for "Provide Your Own" option
   customSpecimenPhotoUrl: varchar("custom_specimen_photo_url"),
   customSpecimenApprovalStatus: approvalStatusEnum("custom_specimen_approval_status"),
@@ -157,6 +160,7 @@ export const insertPurchaseSchema = createInsertSchema(purchases).pick({
   amount: true,
   purchaseChoice: true,
   specimenId: true,
+  specimenStyle: true,
   hasPatina: true,
   customSpecimenPhotoUrl: true,
   deliveryName: true,

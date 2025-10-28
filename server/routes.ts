@@ -89,6 +89,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
+      // Server-side validation based on purchase choice
+      const choice = result.data.purchaseChoice || 'cast_now';
+      
+      if (choice === 'cast_now' && !result.data.specimenId) {
+        return res.status(400).json({ 
+          message: "Specimen selection is required for 'Cast Now' option" 
+        });
+      }
+      
+      if (choice === 'wait_till_season' && !result.data.specimenStyle) {
+        return res.status(400).json({ 
+          message: "Specimen style selection is required for 'Wait Till Season' option" 
+        });
+      }
+      
+      if (choice === 'provide_your_own' && !result.data.customSpecimenPhotoUrl) {
+        return res.status(400).json({ 
+          message: "Photo upload is required for 'Provide Your Own' option" 
+        });
+      }
+
       // Create purchase record with all checkout data (including seasonal fields)
       const purchase = await storage.createPurchase({
         userId: result.data.userId,
@@ -96,6 +117,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         amount: result.data.amount,
         purchaseChoice: result.data.purchaseChoice,
         specimenId: result.data.specimenId,
+        specimenStyle: result.data.specimenStyle,
         hasPatina: result.data.hasPatina,
         customSpecimenPhotoUrl: result.data.customSpecimenPhotoUrl,
         deliveryName: result.data.deliveryName,
