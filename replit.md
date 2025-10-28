@@ -26,13 +26,20 @@ The application uses a React + TypeScript frontend with Tailwind CSS and Shadcn 
 - **Authentication:** Replit Auth is used for user management.
 - **Email Gate:** (Deprecated, replaced by Replit Auth).
 - **Seat Sales:** Founder (R3,000) and Patron (R6,000) seats with live counters and PayFast integration.
+- **Seasonal Purchase System:** Three purchase paths for bronze casting:
+  - **Cast Now:** Studio-selected in-season specimen for fastest turnaround (6-12 weeks)
+  - **Wait Till Season:** User selects specimen style, waits for peak seasonal quality (specimen chosen when in bloom)
+  - **Provide Your Own:** Custom botanical photo upload with admin approval workflow
+- **Specimen Organization:** 20+ South African botanicals organized by style categories (Protea Heads, Pincushion Blooms, Cone Bracts, Aloe Inflorescences, Erica Sprays, Restio Seedheads, Bulb Spikes, Succulent Rosettes, Fern Fronds, etc.)
+- **Production Status Tracking:** Visual dashboard showing cast progress (Queued → Invested → Ready to Pour → Poured & Finishing → Complete)
+- **Admin Approval Workflow:** Custom specimen review UI with approve/reject functionality, email notifications for status updates
 - **Code Generation:** Automated generation of unique bronze claim, workshop voucher (50%/80% discount), and lifetime workshop codes (20%/30% discount). Codes have an `appliesTo` field (workshop/seat/any).
-- **Certificate Generation:** Automated PDF certificates with an aloe background.
-- **Sculpture Gallery:** Interface for users to select bronze casting specimens from 20 diverse South African botanicals.
-- **User Dashboard:** Displays purchases, codes, and downloadable certificates.
-- **Admin Panel:** Provides analytics, seat tracking, purchase management, and subscriber export.
-- **Database Schema:** Key tables include `users`, `seats`, `purchases`, `codes`, `sculptures`, `sculpture_selections`, `referrals`, and `subscribers`.
-- **API Endpoints:** Public endpoints for registration and seat availability; protected endpoints for purchase initiation/completion, sculpture selection, and user dashboards; admin endpoints for comprehensive data management.
+- **Certificate Generation:** Automated PDF certificates with aloe background and seasonal purchase details.
+- **Email Notifications:** Seasonal messaging in confirmation and certificate emails based on purchase choice
+- **User Dashboard:** Displays purchases, production status, seasonal batch windows, codes, and downloadable certificates.
+- **Admin Panel:** Provides analytics, seat tracking, purchase management, custom specimen approval, and subscriber export.
+- **Database Schema:** Key tables include `users`, `seats`, `purchases`, `codes`, `sculptures`, `sculpture_selections`, `referrals`, and `subscribers`. Purchases table includes `purchaseChoice`, `specimenStyle`, `seasonalBatchWindow`, `customSpecimenPhotoUrl`, `customSpecimenApprovalStatus`, and `productionStatus` fields.
+- **API Endpoints:** Public endpoints for registration and seat availability; protected endpoints for purchase initiation/completion, sculpture selection, and user dashboards; admin endpoints for comprehensive data management including custom specimen approval (`POST /api/admin/approve-specimen/:id`, `POST /api/admin/reject-specimen/:id`).
 - **Payment Processing:** Secure PayFast Onsite Payments integration with in-house checkout experience (no redirect to PayFast). Uses production endpoint with signature validation. **CRITICAL**: Onsite payments ONLY work with production credentials - sandbox mode is not supported by PayFast for onsite integration.
 - **Session Management:** Currently uses memory-based session storage due to Supabase connection issues, but aims to restore PostgreSQL session storage.
 - **Subscriber System:** Captures pre-launch interest (name, email, phone, notes) with dedicated API endpoints for administration.
