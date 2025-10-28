@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import type { Purchase, Code, User } from "@shared/schema";
-import { Download, ExternalLink, User as UserIcon } from "lucide-react";
+import { Download, ExternalLink, User as UserIcon, Sparkles, CalendarDays, Upload, Clock, Leaf, Flame, Package } from "lucide-react";
 
 export default function Dashboard() {
   const { data: user } = useQuery<User>({
@@ -105,6 +105,113 @@ export default function Dashboard() {
                       )}
                     </div>
                   </div>
+
+                  {/* Purchase Choice & Production Status */}
+                  {purchase.status === 'completed' && (
+                    <div className="mb-6 space-y-4">
+                      {/* Purchase Choice */}
+                      <div className="p-4 bg-background/50 rounded-lg border border-border">
+                        <div className="flex items-center gap-3 mb-3">
+                          {purchase.purchaseChoice === 'cast_now' && (
+                            <>
+                              <Sparkles className="w-5 h-5 text-bronze" />
+                              <h3 className="font-semibold text-foreground">Cast Now Selection</h3>
+                            </>
+                          )}
+                          {purchase.purchaseChoice === 'wait_till_season' && (
+                            <>
+                              <CalendarDays className="w-5 h-5 text-patina" />
+                              <h3 className="font-semibold text-foreground">Waiting for Peak Season</h3>
+                            </>
+                          )}
+                          {purchase.purchaseChoice === 'provide_your_own' && (
+                            <>
+                              <Upload className="w-5 h-5 text-accent" />
+                              <h3 className="font-semibold text-foreground">Custom Specimen</h3>
+                            </>
+                          )}
+                        </div>
+                        
+                        {/* Specimen Style (for Wait Till Season) */}
+                        {purchase.specimenStyle && (
+                          <div className="text-sm text-secondary mb-2">
+                            <span className="font-medium">Chosen Style:</span> {purchase.specimenStyle.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                          </div>
+                        )}
+                        
+                        {/* Seasonal Batch Window */}
+                        {purchase.seasonalBatchWindow && (
+                          <div className="text-sm text-secondary mb-2">
+                            <span className="font-medium">Batch Window:</span> {purchase.seasonalBatchWindow}
+                          </div>
+                        )}
+                        
+                        {/* Custom Specimen Approval Status */}
+                        {purchase.purchaseChoice === 'provide_your_own' && purchase.customSpecimenApprovalStatus && (
+                          <div className="mt-3">
+                            <Badge className={
+                              purchase.customSpecimenApprovalStatus === 'approved' 
+                                ? "bg-patina/20 text-patina border-patina/30"
+                                : purchase.customSpecimenApprovalStatus === 'pending'
+                                ? "bg-bronze/20 text-bronze border-bronze/30"
+                                : "bg-destructive/20 text-destructive border-destructive/30"
+                            }>
+                              {purchase.customSpecimenApprovalStatus === 'approved' && '✓ Approved for Casting'}
+                              {purchase.customSpecimenApprovalStatus === 'pending' && '⏳ Under Review'}
+                              {purchase.customSpecimenApprovalStatus === 'rejected' && '✗ Not Viable for Casting'}
+                            </Badge>
+                            {purchase.customSpecimenNotes && (
+                              <p className="text-sm text-secondary mt-2">
+                                <span className="font-medium">Studio Notes:</span> {purchase.customSpecimenNotes}
+                              </p>
+                            )}
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Production Status Tracker */}
+                      <div className="p-4 bg-background/50 rounded-lg border border-border">
+                        <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                          <Package className="w-5 h-5 text-bronze" />
+                          Production Status
+                        </h3>
+                        <div className="flex items-center justify-between gap-2">
+                          {['queued', 'invested', 'ready_to_pour', 'poured_finishing', 'complete'].map((status, index) => {
+                            const currentIndex = ['queued', 'invested', 'ready_to_pour', 'poured_finishing', 'complete'].indexOf(purchase.productionStatus);
+                            const isActive = index <= currentIndex;
+                            const isCurrent = status === purchase.productionStatus;
+                            
+                            return (
+                              <div key={status} className="flex-1 flex flex-col items-center">
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-2 ${
+                                  isCurrent 
+                                    ? "bg-bronze text-white ring-2 ring-bronze ring-offset-2" 
+                                    : isActive 
+                                    ? "bg-patina/30 text-patina" 
+                                    : "bg-muted text-muted-foreground"
+                                }`}>
+                                  {status === 'queued' && <Clock className="w-4 h-4" />}
+                                  {status === 'invested' && <Leaf className="w-4 h-4" />}
+                                  {status === 'ready_to_pour' && <Package className="w-4 h-4" />}
+                                  {status === 'poured_finishing' && <Flame className="w-4 h-4" />}
+                                  {status === 'complete' && <Download className="w-4 h-4" />}
+                                </div>
+                                <div className={`text-xs text-center ${
+                                  isCurrent ? "font-semibold text-foreground" : "text-secondary"
+                                }`}>
+                                  {status === 'queued' && 'Queued'}
+                                  {status === 'invested' && 'Invested'}
+                                  {status === 'ready_to_pour' && 'Ready'}
+                                  {status === 'poured_finishing' && 'Casting'}
+                                  {status === 'complete' && 'Complete'}
+                                </div>
+                              </div>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    </div>
+                  )}
 
                   {/* Pending Purchase Notice */}
                   {purchase.status === 'pending' && (
