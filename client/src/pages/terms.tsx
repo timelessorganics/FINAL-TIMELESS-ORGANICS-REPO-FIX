@@ -26,15 +26,30 @@ export default function Terms() {
             </section>
 
             <section>
-              <h2 className="text-2xl font-serif font-bold text-foreground mb-4">2. Botanical Cutting Selection</h2>
+              <h2 className="text-2xl font-serif font-bold text-foreground mb-4">2. Botanical Specimen Selection & Seasonal Batch Production</h2>
               <p>
-                Upon successful payment, you will select one botanical specimen from our curated gallery. This specimen 
-                will be encased in ceramic immediately and cast in bronze using the ancient lost-wax method. The resulting 
-                bronze casting is yours to keep.
+                Upon successful payment, you will choose one of three paths for your bronze casting:
               </p>
-              <p>
-                Studio-guaranteed cuttings are selected by David Junor for their artistic and botanical merit. All cuttings 
-                are sourced ethically and prepared for optimal casting results.
+              <ul className="list-disc pl-6 space-y-2">
+                <li>
+                  <strong>Cast Now:</strong> Select from our current in-season botanical specimens. Studio-guaranteed specimens 
+                  are selected by David Junor for their artistic and botanical merit. Fastest turnaround (6-12 weeks).
+                </li>
+                <li>
+                  <strong>Wait Till Season:</strong> Choose a specimen style category (e.g., Protea Head, Pincushion Bloom, 
+                  Aloe Inflorescence). We'll cast it during its peak seasonal window when the botanical reaches finest form. 
+                  You'll be notified when your batch enters production (timing varies by species).
+                </li>
+                <li>
+                  <strong>Provide Your Own (Founder's Choice):</strong> Upload a photo of your desired botanical specimen 
+                  for approval. Our studio will review for cast-ability within 48-72 hours. If approved, we'll coordinate 
+                  specimen sourcing and casting. If not viable, you may select an alternative path.
+                </li>
+              </ul>
+              <p className="mt-4">
+                All botanical specimens are sourced ethically from Cape Fynbos regions and prepared for optimal casting 
+                results using the ancient lost-wax method. Production follows natural seasonal cycles to ensure peak 
+                specimen quality.
               </p>
             </section>
 

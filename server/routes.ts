@@ -553,6 +553,106 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin: Get custom specimens pending review (admin only)
+  app.get("/api/admin/custom-specimens", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const purchases = await storage.getAllPurchases();
+      // Filter to only "provide_your_own" purchases with pending approval status
+      const pending = purchases.filter(p => 
+        p.purchaseChoice === 'provide_your_own' && 
+        p.customSpecimenApprovalStatus === 'pending'
+      );
+      
+      res.json(pending);
+    } catch (error: any) {
+      console.error("Admin custom specimens error:", error);
+      res.status(500).json({ message: error.message || "Failed to fetch custom specimens" });
+    }
+  });
+
+  // Admin: Approve custom specimen (admin only)
+  app.post("/api/admin/custom-specimens/:purchaseId/approve", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const { purchaseId } = req.params;
+      const { notes } = req.body;
+
+      const purchase = await storage.getPurchase(purchaseId);
+      if (!purchase) {
+        return res.status(404).json({ message: "Purchase not found" });
+      }
+
+      if (purchase.purchaseChoice !== 'provide_your_own') {
+        return res.status(400).json({ message: "Purchase is not a custom specimen submission" });
+      }
+
+      // Update purchase with approved status
+      await storage.updatePurchase(purchaseId, {
+        customSpecimenApprovalStatus: 'approved',
+        customSpecimenNotes: notes || 'Approved for casting',
+      });
+
+      console.log('[Admin] Custom specimen approved:', purchaseId);
+      res.json({ message: "Custom specimen approved" });
+    } catch (error: any) {
+      console.error("Admin approve specimen error:", error);
+      res.status(500).json({ message: error.message || "Failed to approve specimen" });
+    }
+  });
+
+  // Admin: Reject custom specimen (admin only)
+  app.post("/api/admin/custom-specimens/:purchaseId/reject", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = req.user.claims.sub;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const { purchaseId } = req.params;
+      const { notes } = req.body;
+
+      if (!notes || !notes.trim()) {
+        return res.status(400).json({ message: "Rejection reason is required" });
+      }
+
+      const purchase = await storage.getPurchase(purchaseId);
+      if (!purchase) {
+        return res.status(404).json({ message: "Purchase not found" });
+      }
+
+      if (purchase.purchaseChoice !== 'provide_your_own') {
+        return res.status(400).json({ message: "Purchase is not a custom specimen submission" });
+      }
+
+      // Update purchase with rejected status
+      await storage.updatePurchase(purchaseId, {
+        customSpecimenApprovalStatus: 'rejected',
+        customSpecimenNotes: notes,
+      });
+
+      console.log('[Admin] Custom specimen rejected:', purchaseId);
+      res.json({ message: "Custom specimen rejected" });
+    } catch (error: any) {
+      console.error("Admin reject specimen error:", error);
+      res.status(500).json({ message: error.message || "Failed to reject specimen" });
+    }
+  });
+
   // Protected: Redeem code
   app.post("/api/codes/redeem", isAuthenticated, async (req: any, res: Response) => {
     try {

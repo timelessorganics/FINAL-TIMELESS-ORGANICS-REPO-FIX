@@ -8,8 +8,10 @@ import { apiRequest } from "@/lib/queryClient";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import type { Seat, Purchase, Code, PromoCode } from "@shared/schema";
-import { Users, Package, DollarSign, Award, Download, Gift, Copy } from "lucide-react";
+import { Users, Package, DollarSign, Award, Download, Gift, Copy, CheckCircle, XCircle, Upload, Image as ImageIcon } from "lucide-react";
 import { useState } from "react";
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
 
 export default function AdminPanel() {
   const { toast } = useToast();
@@ -30,6 +32,56 @@ export default function AdminPanel() {
 
   const { data: promoCodes } = useQuery<PromoCode[]>({
     queryKey: ["/api/admin/promo-codes"],
+  });
+
+  const { data: customSpecimens } = useQuery<Purchase[]>({
+    queryKey: ["/api/admin/custom-specimens"],
+  });
+
+  const [approvalNotes, setApprovalNotes] = useState<{[key: string]: string}>({});
+
+  const approveSpecimen = useMutation({
+    mutationFn: async ({ purchaseId, notes }: { purchaseId: string; notes?: string }) => {
+      const response = await apiRequest("POST", `/api/admin/custom-specimens/${purchaseId}/approve`, { notes });
+      return await response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/custom-specimens"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/purchases"] });
+      toast({
+        title: "Specimen Approved!",
+        description: "The custom specimen has been approved for casting.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        variant: "destructive",
+        title: "Approval Failed",
+        description: error.message || "Could not approve specimen.",
+      });
+    },
+  });
+
+  const rejectSpecimen = useMutation({
+    mutationFn: async ({ purchaseId, notes }: { purchaseId: string; notes: string }) => {
+      const response = await apiRequest("POST", `/api/admin/custom-specimens/${purchaseId}/reject`, { notes });
+      return await response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/custom-specimens"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/purchases"] });
+      toast({
+        title: "Specimen Rejected",
+        description: "The custom specimen has been rejected. User has been notified.",
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        variant: "destructive",
+        title: "Rejection Failed",
+        description: error.message || "Could not reject specimen.",
+      });
+    },
   });
 
   const generateCodes = useMutation({
@@ -286,6 +338,148 @@ export default function AdminPanel() {
               </div>
             )}
           </Card>
+
+          {/* Custom Specimen Review */}
+          {customSpecimens && customSpecimens.length > 0 && (
+            <Card className="bg-card border-card-border p-7 mb-12">
+              <div className="flex items-center gap-3 mb-6">
+                <Upload className="w-6 h-6 text-accent" />
+                <div>
+                  <h2 className="font-serif text-2xl font-bold text-foreground mb-1">
+                    Custom Specimens Awaiting Review
+                  </h2>
+                  <p className="text-sm text-muted-foreground">
+                    Approve or reject custom botanical specimens submitted by investors
+                  </p>
+                </div>
+              </div>
+
+              <div className="space-y-6">
+                {customSpecimens.map((purchase) => (
+                  <div key={purchase.id} className="p-6 bg-muted rounded-lg border border-border space-y-4">
+                    <div className="flex flex-wrap items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <h3 className="font-semibold text-foreground">
+                            Purchase #{purchase.id.slice(0, 8)}
+                          </h3>
+                          <Badge className="bg-bronze/20 text-bronze border-bronze/30">
+                            {purchase.seatType}
+                          </Badge>
+                        </div>
+                        <div className="text-sm text-secondary">
+                          Submitted on {new Date(purchase.createdAt!).toLocaleDateString()}
+                        </div>
+                      </div>
+                      
+                      {purchase.customSpecimenPhotoUrl && (
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="outline" size="sm" className="gap-2">
+                              <ImageIcon className="w-4 h-4" />
+                              View Photo
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-3xl">
+                            <DialogHeader>
+                              <DialogTitle>Custom Specimen Photo</DialogTitle>
+                              <DialogDescription>
+                                Review the botanical specimen submitted by the investor
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="mt-4">
+                              <img
+                                src={purchase.customSpecimenPhotoUrl}
+                                alt="Custom specimen"
+                                className="w-full rounded-lg"
+                              />
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      )}
+                    </div>
+
+                    <div className="space-y-3">
+                      <div>
+                        <label className="text-sm font-medium text-foreground block mb-2">
+                          Studio Notes (optional for approval, required for rejection)
+                        </label>
+                        <Textarea
+                          placeholder="Enter notes about cast-ability, timing, or alternative suggestions..."
+                          value={approvalNotes[purchase.id] || ""}
+                          onChange={(e) => setApprovalNotes({ ...approvalNotes, [purchase.id]: e.target.value })}
+                          className="min-h-[80px]"
+                        />
+                      </div>
+
+                      <div className="flex gap-3">
+                        <Button
+                          onClick={() => approveSpecimen.mutate({ 
+                            purchaseId: purchase.id, 
+                            notes: approvalNotes[purchase.id] 
+                          })}
+                          disabled={approveSpecimen.isPending}
+                          className="bg-patina hover:bg-patina/90 text-white gap-2"
+                        >
+                          <CheckCircle className="w-4 h-4" />
+                          Approve for Casting
+                        </Button>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button
+                              variant="outline"
+                              className="gap-2 border-destructive/30 text-destructive hover:bg-destructive/10"
+                            >
+                              <XCircle className="w-4 h-4" />
+                              Reject
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent>
+                            <DialogHeader>
+                              <DialogTitle>Reject Custom Specimen</DialogTitle>
+                              <DialogDescription>
+                                Please provide a reason for rejection. The investor will be notified and can choose an alternative path.
+                              </DialogDescription>
+                            </DialogHeader>
+                            <div className="py-4">
+                              <Textarea
+                                placeholder="Explain why this specimen is not viable for casting..."
+                                value={approvalNotes[purchase.id] || ""}
+                                onChange={(e) => setApprovalNotes({ ...approvalNotes, [purchase.id]: e.target.value })}
+                                className="min-h-[120px]"
+                              />
+                            </div>
+                            <DialogFooter>
+                              <Button
+                                onClick={() => {
+                                  if (!approvalNotes[purchase.id]?.trim()) {
+                                    toast({
+                                      variant: "destructive",
+                                      title: "Notes Required",
+                                      description: "Please provide a reason for rejection.",
+                                    });
+                                    return;
+                                  }
+                                  rejectSpecimen.mutate({ 
+                                    purchaseId: purchase.id, 
+                                    notes: approvalNotes[purchase.id] 
+                                  });
+                                }}
+                                disabled={rejectSpecimen.isPending}
+                                className="bg-destructive hover:bg-destructive/90 text-white"
+                              >
+                                Confirm Rejection
+                              </Button>
+                            </DialogFooter>
+                          </DialogContent>
+                        </Dialog>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </Card>
+          )}
 
           {/* Recent Purchases */}
           <Card className="bg-card border-card-border p-7">
