@@ -36,7 +36,7 @@ export default function MainLaunch() {
               and equipment signed off</span> (estimated Jan 2026). We store your molds securely until then and they are the first to ever become timeless!
             </p>
 
-            <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
+            <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground mb-8">
               <div className="flex items-center gap-2">
                 <span className="text-patina">•</span>
                 <span>Studio-approved specimens</span>
@@ -54,6 +54,18 @@ export default function MainLaunch() {
                 <span>Lifetime benefits</span>
               </div>
             </div>
+
+            <Button 
+              variant="outline" 
+              size="lg"
+              asChild
+              className="bg-background/30 backdrop-blur-sm border-bronze/50 hover:border-bronze"
+              data-testid="button-preview-specimens"
+            >
+              <a href="/sculptures">
+                Preview Botanical Specimens <ArrowRight className="ml-2 h-4 w-4" />
+              </a>
+            </Button>
           </section>
 
           {/* Why This Exists - The Story Section */}
