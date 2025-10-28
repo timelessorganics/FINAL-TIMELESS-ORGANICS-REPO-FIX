@@ -137,7 +137,7 @@ export default function MarketingLanding() {
       {/* How It Works Section */}
       <section 
         id="how-it-works" 
-        className="relative z-50 min-h-screen flex items-center py-16 px-4"
+        className="relative z-50 min-h-screen flex items-center py-16 px-4 pt-[20px] pb-[20px]"
       >
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
