@@ -457,11 +457,11 @@ export default function MarketingLanding() {
       {/* The Vision Section */}
       <section className="relative z-50 min-h-screen flex items-center py-16 px-4">
         <div className="max-w-4xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="font-serif text-4xl md:text-6xl font-bold mb-6">
+          <div className="text-center mb-6">
+            <h2 className="font-serif text-4xl md:text-6xl font-bold mb-4">
               The <span className="moving-fill">Vision</span>
             </h2>
-            <div className="w-20 h-1 bg-gradient-to-r from-bronze via-accent-gold to-patina mx-auto mb-8"></div>
+            <div className="w-20 h-1 bg-gradient-to-r from-bronze via-accent-gold to-patina mx-auto mb-4"></div>
           </div>
 
           <Card className="bg-card/60 backdrop-blur-md border-card-border p-10">

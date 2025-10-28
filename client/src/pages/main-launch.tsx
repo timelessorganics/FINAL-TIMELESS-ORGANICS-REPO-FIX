@@ -5,6 +5,7 @@ import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SmokeFireBackground } from "@/components/SmokeFireBackground";
+import { ArrowRight } from "lucide-react";
 import type { Seat } from "@shared/schema";
 
 export default function MainLaunch() {
@@ -35,7 +36,7 @@ export default function MainLaunch() {
               and equipment signed off</span> (estimated Jan 2026). We store your molds securely until then and they are the first to ever become timeless!
             </p>
 
-            <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground">
+            <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground mb-8">
               <div className="flex items-center gap-2">
                 <span className="text-patina">•</span>
                 <span>Studio-approved specimens</span>
@@ -52,6 +53,25 @@ export default function MainLaunch() {
                 <span className="text-patina">•</span>
                 <span>Lifetime benefits</span>
               </div>
+            </div>
+
+            {/* CTA Button */}
+            <div className="text-center">
+              <a 
+                href="#seats"
+                className="inline-block"
+              >
+                <Button
+                  size="lg"
+                  className="btn-bronze text-xl px-12 py-7"
+                  data-testid="button-join-founding"
+                >
+                  <span className="moving-fill flex items-center gap-3">
+                    Ready to Join? Secure Your Seat
+                    <ArrowRight className="w-6 h-6" />
+                  </span>
+                </Button>
+              </a>
             </div>
           </section>
 
