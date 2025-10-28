@@ -321,28 +321,43 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                           render={({ field }) => (
                             <FormItem>
                               <FormControl>
-                                <div className="grid sm:grid-cols-2 gap-4">
-                                  {specimens?.map((specimen) => (
-                                    <button
-                                      key={specimen.id}
-                                      type="button"
-                                      onClick={() => field.onChange(specimen.id)}
-                                      className={`relative p-4 rounded-lg border-2 transition-all text-left hover-elevate ${
-                                        field.value === specimen.id
-                                          ? "border-bronze bg-bronze/10"
-                                          : "border-border bg-card"
-                                      }`}
-                                      data-testid={`button-specimen-${specimen.id}`}
-                                    >
-                                      {field.value === specimen.id && (
-                                        <div className="absolute top-2 right-2 bg-bronze text-white rounded-full p-1">
-                                          <Check className="w-4 h-4" />
+                                <div className="space-y-6">
+                                  {specimenStyles.map((style) => {
+                                    const specimensInStyle = specimens?.filter(s => s.specimenStyle === style.value);
+                                    if (!specimensInStyle || specimensInStyle.length === 0) return null;
+                                    
+                                    return (
+                                      <div key={style.value} className="space-y-3">
+                                        <div className="flex items-center gap-2">
+                                          <h4 className="font-semibold text-foreground">{style.label}</h4>
+                                          <span className="text-xs text-secondary">({style.season})</span>
                                         </div>
-                                      )}
-                                      <h3 className="font-semibold text-foreground mb-1">{specimen.name}</h3>
-                                      <p className="text-sm text-secondary">{specimen.description}</p>
-                                    </button>
-                                  ))}
+                                        <div className="grid sm:grid-cols-2 gap-4">
+                                          {specimensInStyle.map((specimen) => (
+                                            <button
+                                              key={specimen.id}
+                                              type="button"
+                                              onClick={() => field.onChange(specimen.id)}
+                                              className={`relative p-4 rounded-lg border-2 transition-all text-left hover-elevate ${
+                                                field.value === specimen.id
+                                                  ? "border-bronze bg-bronze/10"
+                                                  : "border-border bg-card"
+                                              }`}
+                                              data-testid={`button-specimen-${specimen.id}`}
+                                            >
+                                              {field.value === specimen.id && (
+                                                <div className="absolute top-2 right-2 bg-bronze text-white rounded-full p-1">
+                                                  <Check className="w-4 h-4" />
+                                                </div>
+                                              )}
+                                              <h3 className="font-semibold text-foreground mb-1">{specimen.name}</h3>
+                                              <p className="text-sm text-secondary">{specimen.description}</p>
+                                            </button>
+                                          ))}
+                                        </div>
+                                      </div>
+                                    );
+                                  })}
                                 </div>
                               </FormControl>
                               <FormMessage />
