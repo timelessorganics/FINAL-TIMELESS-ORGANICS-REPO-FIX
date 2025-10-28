@@ -504,13 +504,7 @@ export default function MarketingLanding() {
           </p>
           
           <Button
-            onClick={() => {
-              setLocation("/founding100#seats");
-              // Scroll to seats section after navigation
-              setTimeout(() => {
-                document.getElementById('seats')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }, 100);
-            }}
+            onClick={() => setLocation("/founding100")}
             size="lg"
             className="btn-bronze text-xl px-12 py-7"
             data-testid="button-get-started"
