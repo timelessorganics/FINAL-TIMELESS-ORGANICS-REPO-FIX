@@ -68,8 +68,22 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
       return await response.json();
     },
     onSuccess: (response: any) => {
-      // Redirect to PayFast
-      window.location.href = response.paymentUrl;
+      // Submit form data to PayFast
+      const form = document.createElement('form');
+      form.method = 'POST';
+      form.action = response.paymentUrl;
+      
+      // Add all form fields from formData
+      Object.keys(response.formData).forEach(key => {
+        const input = document.createElement('input');
+        input.type = 'hidden';
+        input.name = key;
+        input.value = response.formData[key];
+        form.appendChild(input);
+      });
+      
+      document.body.appendChild(form);
+      form.submit();
     },
     onError: (error: Error) => {
       toast({
