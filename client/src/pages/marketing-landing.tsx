@@ -372,27 +372,27 @@ export default function MarketingLanding() {
         </div>
       </section>
       {/* David Junor - The Founder Section */}
-      <section className="relative z-50 min-h-screen flex items-center py-16 px-4">
+      <section className="relative z-50 min-h-screen flex items-center py-12 px-4">
         <div className="max-w-6xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="font-serif text-4xl md:text-6xl font-bold mb-3">
+          <div className="text-center mb-6">
+            <h2 className="font-serif text-4xl md:text-6xl font-bold mb-2">
               <span className="moving-fill">David Junor</span>
             </h2>
             <p className="text-xl text-accent-gold">Founder, Timeless Organics</p>
-            <div className="w-20 h-1 bg-gradient-to-r from-bronze via-accent-gold to-patina mx-auto mt-4"></div>
+            <div className="w-20 h-1 bg-gradient-to-r from-bronze via-accent-gold to-patina mx-auto mt-3"></div>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-start">
-            <Card className="bg-card/60 backdrop-blur-md border-card-border p-8">
-              <div className="prose prose-invert prose-lg max-w-none space-y-5">
-                <p className="text-lg text-muted-foreground leading-relaxed">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 items-stretch">
+            <Card className="bg-card/60 backdrop-blur-md border-card-border p-6 flex flex-col">
+              <div className="prose prose-invert prose-lg max-w-none space-y-4 flex-1">
+                <p className="text-base text-muted-foreground leading-relaxed">
                   My foundation in <span className="text-foreground font-semibold">25 years of technical precision casting</span> began 
                   with 15 years in high-end London dental laboratories, including 3 years owning my own 
                   Harley Street lab. This work—focusing on metallurgy, investment casting techniques, 
                   and assembly—provided the technical mastery required for flawless results.
                 </p>
 
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <p className="text-base text-muted-foreground leading-relaxed">
                   Returning to Cape Town, I leveraged my specialist technical background, which led me 
                   to connect with a <span className="text-patina font-semibold">globally recognized bronze artist</span>. I became the primary 
                   technical fabricator for their botanical bronze collection. In this role, I successfully 
@@ -400,24 +400,24 @@ export default function MarketingLanding() {
                   at the highest level of the art world.
                 </p>
 
-                <p className="text-xl text-foreground/90 font-medium italic leading-relaxed pt-4 border-t border-border">
+                <p className="text-lg text-foreground/90 font-medium italic leading-relaxed pt-3 border-t border-border">
                   "Those pieces weren't mine to sign; the craft became mine to master."
                 </p>
 
-                <p className="text-lg text-muted-foreground leading-relaxed">
+                <p className="text-base text-muted-foreground leading-relaxed">
                   Timeless Organics is the necessary next step — where decades of technical precision 
                   meet artistic independence. Where priceless craft meets timeless art.
                 </p>
               </div>
             </Card>
 
-            <Card className="bg-card/60 backdrop-blur-md border-card-border p-8">
-              <h3 className="font-serif text-2xl font-bold mb-6 text-foreground">Expertise & Process</h3>
+            <Card className="bg-card/60 backdrop-blur-md border-card-border p-6 flex flex-col">
+              <h3 className="font-serif text-2xl font-bold mb-4 text-foreground">Expertise & Process</h3>
               
-              <div className="space-y-6">
+              <div className="space-y-4 flex-1">
                 <div>
                   <h4 className="font-semibold text-accent-gold mb-2">Technical Foundation</h4>
-                  <p className="text-muted-foreground">
+                  <p className="text-sm text-muted-foreground">
                     25 years in high-precision investment casting and assembly, with specialized 
                     training in metallurgy and lost-wax techniques.
                   </p>
@@ -425,7 +425,7 @@ export default function MarketingLanding() {
 
                 <div>
                   <h4 className="font-semibold text-bronze mb-2">Casting Process</h4>
-                  <p className="text-muted-foreground">
+                  <p className="text-sm text-muted-foreground">
                     Direct casting from real plant matter, silicon bronze pour, sand/glass 
                     bead-blast finish. Each piece a perfect botanical replica.
                   </p>
@@ -433,18 +433,18 @@ export default function MarketingLanding() {
 
                 <div>
                   <h4 className="font-semibold text-patina mb-2">Studio Location</h4>
-                  <p className="text-muted-foreground">
+                  <p className="text-sm text-muted-foreground">
                     Independent studio in Kommetjie, Cape Town. Where the Atlantic meets ancient craft.
                   </p>
                 </div>
 
-                <div className="pt-6 border-t border-border">
-                  <p className="text-sm text-muted-foreground mb-3">
+                <div className="pt-4 border-t border-border mt-auto">
+                  <p className="text-sm text-muted-foreground mb-2">
                     Ready to connect with the craft?
                   </p>
                   <a 
                     href="mailto:studio@timeless.organic"
-                    className="text-accent-gold hover:text-accent-gold/80 font-semibold text-lg"
+                    className="text-accent-gold hover:text-accent-gold/80 font-semibold text-base"
                   >
                     studio@timeless.organic
                   </a>
