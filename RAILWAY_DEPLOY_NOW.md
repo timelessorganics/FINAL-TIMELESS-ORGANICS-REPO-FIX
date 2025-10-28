@@ -28,9 +28,9 @@ Your code is already syncing to: `https://github.com/timelessorganics/Timeless-O
 
 Go to your Railway project → **Variables** tab and add:
 
-#### Backend URL (CRITICAL - use the domain from step 3)
+#### Backend URL (CRITICAL - use your generated domain)
 ```
-BACKEND_URL=https://timeless-organics-production-xyz.up.railway.app
+BACKEND_URL=https://timeless-organics-fouding-100-production.up.railway.app
 ```
 
 #### Database (CRITICAL)
