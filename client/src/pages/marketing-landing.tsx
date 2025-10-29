@@ -307,7 +307,7 @@ export default function MarketingLanding() {
 
                 <p className="text-center text-sm italic pt-4 border-t border-border">
                   Both investments happen simultaneously. You invest in our future. We invest your cutting. 
-                  Together, we create something <span className="text-accent-gold font-semibold">timeless</span>.
+                  Together, we create something <span className="moving-fill font-serif text-4xl font-bold block mt-2">timeless</span>.
                 </p>
               </div>
             </Card>
