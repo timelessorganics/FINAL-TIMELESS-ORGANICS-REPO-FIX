@@ -41,63 +41,129 @@ export default function MarketingLanding() {
       <SmokeFireBackground />
       {/* Fixed Header with Logo and Seat Counter */}
       <header className="fixed top-0 left-0 right-0 z-[100] bg-card/10 backdrop-blur-md border-b border-card-border">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex flex-col">
-            <h1 className="font-serif text-2xl font-bold text-foreground">
-              David Junor
-            </h1>
-            <p className="text-sm text-accent-gold">Timeless Organics</p>
-          </div>
-          
-          <div className="flex items-center gap-6 text-sm">
-            {seats && (
-              <>
-                <div className="text-right">
-                  <div className="text-muted-foreground">Seats Remaining</div>
-                  <div className="text-2xl font-bold font-serif text-accent-gold">
-                    {totalRemaining} / 100
-                  </div>
-                </div>
-                <div className="h-10 w-px bg-card-border"></div>
-                <div className="text-right">
-                  <div className="text-xs text-muted-foreground">Founders</div>
-                  <div className="text-lg font-semibold text-bronze">
-                    {founderSeats ? founderSeats.totalAvailable - founderSeats.sold : 0} left
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-xs text-muted-foreground">Patrons</div>
-                  <div className="text-lg font-semibold text-patina">
-                    {patronSeats ? patronSeats.totalAvailable - patronSeats.sold : 0} left
-                  </div>
-                </div>
-                <div className="h-10 w-px bg-card-border"></div>
-              </>
-            )}
+        <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 md:py-4">
+          {/* Mobile: Stacked Layout */}
+          <div className="flex md:hidden flex-col gap-3">
+            {/* Logo - Small on Mobile */}
+            <div className="flex items-center justify-between">
+              <div className="flex flex-col">
+                <h1 className="font-serif text-sm font-bold text-foreground">
+                  David Junor
+                </h1>
+                <p className="text-xs text-accent-gold">Timeless Organics</p>
+              </div>
+              
+              {user ? (
+                <Button
+                  onClick={() => setLocation("/dashboard")}
+                  variant="outline"
+                  size="sm"
+                  className="border-bronze/50 text-bronze hover-elevate active-elevate-2 h-8 px-2"
+                  data-testid="button-dashboard"
+                >
+                  <LayoutDashboard className="w-3 h-3 mr-1" />
+                  <span className="text-xs">Dashboard</span>
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => window.location.href = `${API_BASE_URL}/api/login`}
+                  variant="outline"
+                  size="sm"
+                  className="border-bronze/50 text-bronze hover-elevate active-elevate-2 h-8 px-2"
+                  data-testid="button-sign-in"
+                >
+                  <LogIn className="w-3 h-3 mr-1" />
+                  <span className="text-xs">Sign In</span>
+                </Button>
+              )}
+            </div>
             
-            {user ? (
-              <Button
-                onClick={() => setLocation("/dashboard")}
-                variant="outline"
-                size="sm"
-                className="border-bronze/50 text-bronze hover-elevate active-elevate-2"
-                data-testid="button-dashboard"
-              >
-                <LayoutDashboard className="w-4 h-4 mr-2" />
-                Dashboard
-              </Button>
-            ) : (
-              <Button
-                onClick={() => window.location.href = `${API_BASE_URL}/api/login`}
-                variant="outline"
-                size="sm"
-                className="border-bronze/50 text-bronze hover-elevate active-elevate-2"
-                data-testid="button-sign-in"
-              >
-                <LogIn className="w-4 h-4 mr-2" />
-                Sign In
-              </Button>
+            {/* Counters - Mobile */}
+            {seats && (
+              <div className="flex items-center justify-between gap-3 text-xs">
+                <div className="text-center flex-1">
+                  <div className="text-muted-foreground text-xs">Total</div>
+                  <div className="text-lg font-bold font-serif text-accent-gold">
+                    {totalRemaining}
+                  </div>
+                </div>
+                <div className="h-8 w-px bg-card-border"></div>
+                <div className="text-center flex-1">
+                  <div className="text-xs text-muted-foreground">Founders</div>
+                  <div className="text-base font-semibold text-bronze">
+                    {founderSeats ? founderSeats.totalAvailable - founderSeats.sold : 0}
+                  </div>
+                </div>
+                <div className="h-8 w-px bg-card-border"></div>
+                <div className="text-center flex-1">
+                  <div className="text-xs text-muted-foreground">Patrons</div>
+                  <div className="text-base font-semibold text-patina">
+                    {patronSeats ? patronSeats.totalAvailable - patronSeats.sold : 0}
+                  </div>
+                </div>
+              </div>
             )}
+          </div>
+
+          {/* Desktop: Original Layout */}
+          <div className="hidden md:flex items-center justify-between">
+            <div className="flex flex-col">
+              <h1 className="font-serif text-2xl font-bold text-foreground">
+                David Junor
+              </h1>
+              <p className="text-sm text-accent-gold">Timeless Organics</p>
+            </div>
+            
+            <div className="flex items-center gap-6 text-sm">
+              {seats && (
+                <>
+                  <div className="text-right">
+                    <div className="text-muted-foreground">Seats Remaining</div>
+                    <div className="text-2xl font-bold font-serif text-accent-gold">
+                      {totalRemaining} / 100
+                    </div>
+                  </div>
+                  <div className="h-10 w-px bg-card-border"></div>
+                  <div className="text-right">
+                    <div className="text-xs text-muted-foreground">Founders</div>
+                    <div className="text-lg font-semibold text-bronze">
+                      {founderSeats ? founderSeats.totalAvailable - founderSeats.sold : 0} left
+                    </div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xs text-muted-foreground">Patrons</div>
+                    <div className="text-lg font-semibold text-patina">
+                      {patronSeats ? patronSeats.totalAvailable - patronSeats.sold : 0} left
+                    </div>
+                  </div>
+                  <div className="h-10 w-px bg-card-border"></div>
+                </>
+              )}
+              
+              {user ? (
+                <Button
+                  onClick={() => setLocation("/dashboard")}
+                  variant="outline"
+                  size="sm"
+                  className="border-bronze/50 text-bronze hover-elevate active-elevate-2"
+                  data-testid="button-dashboard"
+                >
+                  <LayoutDashboard className="w-4 h-4 mr-2" />
+                  Dashboard
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => window.location.href = `${API_BASE_URL}/api/login`}
+                  variant="outline"
+                  size="sm"
+                  className="border-bronze/50 text-bronze hover-elevate active-elevate-2"
+                  data-testid="button-sign-in"
+                >
+                  <LogIn className="w-4 h-4 mr-2" />
+                  Sign In
+                </Button>
+              )}
+            </div>
           </div>
         </div>
       </header>
