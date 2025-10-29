@@ -270,7 +270,7 @@ export default function MarketingLanding() {
 
           {/* Investment Explanation Callout */}
           <div className="max-w-4xl mx-auto mt-16">
-            <Card className="bg-gradient-to-br from-accent-gold/10 via-bronze/5 to-patina/10 backdrop-blur-md border-accent-gold/30 p-10">
+            <Card className="bg-gradient-to-br from-accent-gold/10 via-bronze/5 to-patina/10 backdrop-blur-md border-accent-gold/30 pt-6 pb-6">
               <div className="text-center mb-6">
                 <h3 className="font-serif text-3xl font-bold text-foreground mb-3">
                   What Does "<span className="text-accent-gold">Investment</span>" Mean?
