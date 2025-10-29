@@ -2,6 +2,8 @@ import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import { useToast } from "@/hooks/use-toast";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+
 interface ProtectedRouteProps {
   children: React.ReactNode;
   requireAdmin?: boolean;
@@ -19,7 +21,7 @@ export default function ProtectedRoute({ children, requireAdmin = false }: Prote
         variant: "destructive",
       });
       setTimeout(() => {
-        window.location.href = "/api/login";
+        window.location.href = `${API_BASE_URL}/api/login`;
       }, 500);
     } else if (!isLoading && requireAdmin && !user?.isAdmin) {
       toast({

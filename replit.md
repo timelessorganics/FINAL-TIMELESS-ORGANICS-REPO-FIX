@@ -14,6 +14,14 @@ Timeless Organics is launching a premium, dark-themed platform to sell 100 limit
 ## System Architecture
 The application uses a React + TypeScript frontend with Tailwind CSS and Shadcn UI for a stunning dark aesthetic. The backend is built with Express, connecting to a PostgreSQL database hosted on Supabase.
 
+**Deployment Architecture:**
+- **Frontend:** Hosted on Netlify at `www.timeless.organic` (static build from `main` branch)
+- **Backend:** Hosted on Railway at `timeless-organics-fouding-100-production.up.railway.app` (auto-deploys from GitHub)
+- **Database:** PostgreSQL on Supabase (connected via `DATABASE_URL`)
+- **CRITICAL:** Netlify requires `VITE_API_URL` environment variable set to Railway backend URL for API communication
+- **Auth Flow:** Replit Auth endpoints (`/api/login`, `/api/logout`) must redirect to Railway backend, not Netlify frontend
+- All frontend API calls and auth redirects use `import.meta.env.VITE_API_URL` to point to Railway backend in production
+
 **UI/UX Decisions:**
 - **Color Scheme:** Dark theme with Bronze (#a67c52), Patina (#6f8f79), and Accent Gold (#d8c3a5).
 - **Typography:** Playfair Display for headings and Inter for body text.

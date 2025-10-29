@@ -7,6 +7,8 @@ import Footer from "@/components/footer";
 import { CheckCircle, ArrowRight, LogIn } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+
 export default function PaymentSuccess() {
   const [, setLocation] = useLocation();
   const { isAuthenticated, isLoading } = useAuth();
@@ -84,7 +86,7 @@ export default function PaymentSuccess() {
               </Button>
             ) : (
               <Button
-                onClick={() => window.location.href = "/api/login"}
+                onClick={() => window.location.href = `${API_BASE_URL}/api/login`}
                 className="gap-2"
                 data-testid="button-login"
               >

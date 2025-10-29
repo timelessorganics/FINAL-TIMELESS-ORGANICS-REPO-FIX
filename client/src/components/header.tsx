@@ -3,6 +3,8 @@ import { Button } from "@/components/ui/button";
 import { LogOut, LayoutDashboard, ShieldCheck, LogIn } from "lucide-react";
 import { Link } from "wouter";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+
 export default function Header() {
   const { user, isAuthenticated } = useAuth();
 
@@ -37,7 +39,7 @@ export default function Header() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => window.location.href = "/api/logout"}
+                onClick={() => window.location.href = `${API_BASE_URL}/api/logout`}
                 className="gap-2"
                 data-testid="button-logout"
               >
@@ -49,7 +51,7 @@ export default function Header() {
             <Button
               variant="default"
               size="sm"
-              onClick={() => window.location.href = "/api/login"}
+              onClick={() => window.location.href = `${API_BASE_URL}/api/login`}
               className="btn-bronze gap-2"
               data-testid="button-login"
             >

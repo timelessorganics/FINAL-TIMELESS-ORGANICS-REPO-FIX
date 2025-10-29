@@ -8,6 +8,8 @@ import { Flame, Hammer, Users, Award, ArrowRight, Sparkles, LogIn, LayoutDashboa
 import { useQuery } from "@tanstack/react-query";
 import type { User } from "@shared/schema";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+
 interface Seat {
   id: string;
   type: string;
@@ -86,7 +88,7 @@ export default function MarketingLanding() {
               </Button>
             ) : (
               <Button
-                onClick={() => window.location.href = "/api/login"}
+                onClick={() => window.location.href = `${API_BASE_URL}/api/login`}
                 variant="outline"
                 size="sm"
                 className="border-bronze/50 text-bronze hover-elevate active-elevate-2"

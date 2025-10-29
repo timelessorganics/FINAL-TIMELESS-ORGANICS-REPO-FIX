@@ -13,6 +13,8 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+
 export default function AdminPanel() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -141,7 +143,7 @@ export default function AdminPanel() {
                 className="gap-2"
                 data-testid="button-export-customers"
                 onClick={() => {
-                  window.location.href = "/api/admin/export/subscribers";
+                  window.location.href = `${API_BASE_URL}/api/admin/export/subscribers`;
                 }}
               >
                 <Download className="w-4 h-4" />
@@ -152,7 +154,7 @@ export default function AdminPanel() {
                 className="gap-2"
                 data-testid="button-export-subscribers"
                 onClick={() => {
-                  window.location.href = "/api/admin/subscribers/export";
+                  window.location.href = `${API_BASE_URL}/api/admin/subscribers/export`;
                 }}
               >
                 <Download className="w-4 h-4" />
