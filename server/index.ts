@@ -21,6 +21,7 @@ app.use(cors({
     if (allowedOrigins.indexOf(origin) !== -1 || process.env.NODE_ENV === 'development') {
       callback(null, true);
     } else {
+      console.error(`[CORS] Blocked origin: "${origin}" | Allowed origins:`, allowedOrigins);
       callback(new Error('Not allowed by CORS'));
     }
   },
