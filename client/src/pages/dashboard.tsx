@@ -252,11 +252,9 @@ export default function Dashboard() {
                           >
                             <div className="flex-1">
                               <div className="text-xs text-patina font-semibold uppercase mb-1">
-                                {code.type === "bronze_claim"
-                                  ? "Bronze Claim Code"
-                                  : code.type === "workshop_voucher"
+                                {code.type === "workshop_voucher"
                                   ? `Workshop Voucher (${code.discount}% Off)`
-                                  : "Lifetime Referral Code"}
+                                  : "Lifetime Workshop Code (Referral)"}
                               </div>
                               <div className="font-mono text-lg font-bold text-accent-gold">
                                 {code.code}
