@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { SiGithub } from "react-icons/si";
+import { SiGithub, SiGoogle } from "react-icons/si";
 import { Mail } from "lucide-react";
 
 export default function SignIn() {
@@ -17,7 +17,7 @@ export default function SignIn() {
 
   const redirectUrl = `${window.location.origin}/auth/callback`;
 
-  const signInWithProvider = async (provider: 'github') => {
+  const signInWithProvider = async (provider: 'github' | 'google') => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
@@ -91,7 +91,16 @@ export default function SignIn() {
         </div>
 
         {/* OAuth Providers */}
-        <div className="mb-6">
+        <div className="mb-6 space-y-3">
+          <Button
+            onClick={() => signInWithProvider('google')}
+            variant="outline"
+            className="w-full"
+            data-testid="button-google-signin"
+          >
+            <SiGoogle className="mr-2 h-4 w-4" />
+            Continue with Google
+          </Button>
           <Button
             onClick={() => signInWithProvider('github')}
             variant="outline"
