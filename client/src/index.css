@@ -506,9 +506,9 @@
   .fire-smoke-bg {
     background: linear-gradient(
       to top,
-      rgba(166, 124, 82, 0.3) 0%,
-      rgba(216, 195, 165, 0.2) 30%,
-      rgba(111, 143, 121, 0.15) 60%,
+      rgba(166, 124, 82, 0.5) 0%,
+      rgba(216, 195, 165, 0.35) 30%,
+      rgba(111, 143, 121, 0.25) 60%,
       transparent 100%
     );
     animation: fireSmoke 8s ease-in-out infinite;
@@ -516,19 +516,19 @@
 
   @keyframes fireSmoke {
     0%, 100% {
-      opacity: 0.2;
+      opacity: 0.45;
       transform: translateY(0) scale(1);
     }
     25% {
-      opacity: 0.35;
+      opacity: 0.65;
       transform: translateY(-10px) scale(1.02);
     }
     50% {
-      opacity: 0.28;
+      opacity: 0.55;
       transform: translateY(-20px) scale(1.05);
     }
     75% {
-      opacity: 0.4;
+      opacity: 0.7;
       transform: translateY(-10px) scale(1.02);
     }
   }
