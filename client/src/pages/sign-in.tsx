@@ -15,14 +15,12 @@ export default function SignIn() {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
-  const redirectUrl = `${window.location.origin}/auth/callback`;
-
   const signInWithProvider = async (provider: 'github' | 'google') => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-          redirectTo: redirectUrl,
+          redirectTo: `${window.location.origin}/auth/callback`,
         },
       });
 
@@ -46,7 +44,7 @@ export default function SignIn() {
           email,
           password,
           options: {
-            emailRedirectTo: redirectUrl,
+            emailRedirectTo: `${window.location.origin}/auth/callback`,
           },
         });
 
@@ -64,8 +62,8 @@ export default function SignIn() {
 
         if (error) throw error;
 
-        // Redirect to dashboard on success
-        window.location.href = "/dashboard";
+        // Redirect to auth callback which handles dashboard redirect
+        window.location.href = "/auth/callback";
       }
     } catch (error: any) {
       toast({
