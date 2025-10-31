@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import express from "express";
 import path from "path";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./replitAuth";
+import { setupAuth, isAuthenticated } from "./supabaseAuth";
 import { insertPurchaseSchema, insertSculptureSchema, insertSculptureSelectionSchema, insertSubscriberSchema, insertPromoCodeSchema } from "@shared/schema";
 import { fromError } from "zod-validation-error";
 import { 
@@ -32,7 +32,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth route
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const user = await storage.getUser(userId);
       res.json(user);
     } catch (error) {
@@ -55,9 +55,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Initiate purchase with PayFast
   app.post("/api/purchase/initiate", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
-      const userEmail = req.user.claims.email || 'noreply@timelessorganics.com';
-      const userFirstName = req.user.claims.first_name || 'Investor';
+      const userId = req.user.id;
+      const userEmail = req.user.email || 'noreply@timelessorganics.com';
+      const userFirstName = req.user.user_metadata?.first_name || 'Investor';
 
       console.log('[Purchase] User initiating purchase:', userId, userEmail);
 
@@ -162,7 +162,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/purchase/:id/redirect", isAuthenticated, async (req: any, res: Response) => {
     try {
       const purchaseId = req.params.id;
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
 
       // Get purchase and verify ownership
       const purchase = await storage.getPurchase(purchaseId);
@@ -426,7 +426,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Create sculpture selection
   app.post("/api/sculpture-selection", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
 
       const result = insertSculptureSelectionSchema.safeParse(req.body);
       
@@ -459,7 +459,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Get user's dashboard data
   app.get("/api/dashboard", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
 
       const purchases = await storage.getPurchasesByUserId(userId);
       
@@ -481,7 +481,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Get specific purchase
   app.get("/api/purchase/:id", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
 
       const purchase = await storage.getPurchase(req.params.id);
       if (!purchase) {
@@ -502,7 +502,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get all seats (admin only)
   app.get("/api/admin/seats", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -520,7 +520,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get all purchases (admin only)
   app.get("/api/admin/purchases", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -538,7 +538,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get all codes (admin only)
   app.get("/api/admin/codes", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -556,7 +556,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get custom specimens pending review (admin only)
   app.get("/api/admin/custom-specimens", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -580,7 +580,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Approve custom specimen (admin only)
   app.post("/api/admin/custom-specimens/:purchaseId/approve", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -616,7 +616,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Reject custom specimen (admin only)
   app.post("/api/admin/custom-specimens/:purchaseId/reject", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -656,7 +656,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Redeem code
   app.post("/api/codes/redeem", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const user = await storage.getUser(userId);
       const { code: codeString } = req.body;
 
@@ -711,7 +711,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Get referral analytics for a code by ID
   app.get("/api/referrals/code/:codeId", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const { codeId } = req.params;
 
       // Fetch code by ID
@@ -748,7 +748,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Export subscribers CSV
   app.get("/api/admin/export/subscribers", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -829,7 +829,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get all subscribers
   app.get("/api/admin/subscribers", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -847,7 +847,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Export subscribers as CSV
   app.get("/api/admin/subscribers/export", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -916,7 +916,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Redeem promo code (creates free purchase)
   app.post("/api/promo-code/redeem", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const { code, specimenId, hasPatina, deliveryName, deliveryPhone, deliveryAddress } = req.body;
 
       // Validate code
@@ -1049,7 +1049,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get all promo codes
   app.get("/api/admin/promo-codes", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -1067,7 +1067,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Generate promo codes (batch)
   app.post("/api/admin/promo-codes/generate", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -1098,7 +1098,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Create sculpture (admin only)
   app.post("/api/admin/sculptures", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.claims.sub;
+      const userId = req.user.id;
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
