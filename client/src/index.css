@@ -516,19 +516,19 @@
 
   @keyframes fireSmoke {
     0%, 100% {
-      opacity: 0.3;
+      opacity: 0.2;
       transform: translateY(0) scale(1);
     }
     25% {
-      opacity: 0.5;
+      opacity: 0.35;
       transform: translateY(-10px) scale(1.02);
     }
     50% {
-      opacity: 0.4;
+      opacity: 0.28;
       transform: translateY(-20px) scale(1.05);
     }
     75% {
-      opacity: 0.6;
+      opacity: 0.4;
       transform: translateY(-10px) scale(1.02);
     }
   }
