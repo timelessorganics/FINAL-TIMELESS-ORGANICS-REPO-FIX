@@ -20,6 +20,8 @@ import Privacy from "@/pages/privacy";
 import Waiver from "@/pages/waiver";
 import WallOfLeaves from "@/pages/wall-of-leaves";
 import SeasonalGuide from "@/pages/seasonal-guide";
+import SignIn from "@/pages/sign-in";
+import AuthCallback from "@/pages/auth-callback";
 
 
 function Router() {
@@ -53,6 +55,10 @@ function Router() {
 
   return (
     <Switch>
+      {/* Auth Routes */}
+      <Route path="/sign-in" component={SignIn} />
+      <Route path="/auth/callback" component={AuthCallback} />
+      
       {/* Payment result pages - accessible without authentication */}
       <Route path="/payment/success" component={PaymentSuccess} />
       <Route path="/payment/cancel" component={PaymentCancel} />

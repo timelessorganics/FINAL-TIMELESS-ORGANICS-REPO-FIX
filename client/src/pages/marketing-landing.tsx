@@ -7,6 +7,7 @@ import Footer from "@/components/footer";
 import { Flame, Hammer, Users, Award, ArrowRight, Sparkles, LogIn, LayoutDashboard } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import type { User } from "@shared/schema";
+import { redirectToSignIn } from "@/lib/auth-helpers";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
@@ -66,7 +67,7 @@ export default function MarketingLanding() {
                 </Button>
               ) : (
                 <Button
-                  onClick={() => window.location.href = `${API_BASE_URL}/api/login`}
+                  onClick={() => redirectToSignIn()}
                   variant="outline"
                   size="sm"
                   className="border-bronze/50 text-bronze hover-elevate active-elevate-2 h-8 px-2"
@@ -153,7 +154,7 @@ export default function MarketingLanding() {
                 </Button>
               ) : (
                 <Button
-                  onClick={() => window.location.href = `${API_BASE_URL}/api/login`}
+                  onClick={() => redirectToSignIn()}
                   variant="outline"
                   size="sm"
                   className="border-bronze/50 text-bronze hover-elevate active-elevate-2"

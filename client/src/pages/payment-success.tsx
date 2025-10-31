@@ -6,8 +6,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { CheckCircle, ArrowRight, LogIn } from "lucide-react";
 import { useAuth } from "@/hooks/useAuth";
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+import { redirectToSignIn } from "@/lib/auth-helpers";
 
 export default function PaymentSuccess() {
   const [, setLocation] = useLocation();
@@ -86,7 +85,7 @@ export default function PaymentSuccess() {
               </Button>
             ) : (
               <Button
-                onClick={() => window.location.href = `${API_BASE_URL}/api/login`}
+                onClick={() => redirectToSignIn()}
                 className="gap-2"
                 data-testid="button-login"
               >
