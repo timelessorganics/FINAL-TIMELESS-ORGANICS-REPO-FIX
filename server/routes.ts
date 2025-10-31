@@ -33,7 +33,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {
       const userId = req.user.id;
-      const user = await storage.getUser(userId);
+      const supabaseUser = req.user;
+      
+      // Try to get existing user from database
+      let user = await storage.getUser(userId);
+      
+      // If user doesn't exist, create them (first time OAuth login)
+      if (!user) {
+        console.log('[Auth] Creating new user from OAuth:', userId, supabaseUser.email);
+        user = await storage.upsertUser({
+          id: userId,
+          email: supabaseUser.email || '',
+          firstName: supabaseUser.user_metadata?.first_name || supabaseUser.user_metadata?.full_name?.split(' ')[0] || null,
+          lastName: supabaseUser.user_metadata?.last_name || supabaseUser.user_metadata?.full_name?.split(' ').slice(1).join(' ') || null,
+          isAdmin: false,
+        });
+      }
+      
       res.json(user);
     } catch (error) {
       console.error("Error fetching user:", error);
