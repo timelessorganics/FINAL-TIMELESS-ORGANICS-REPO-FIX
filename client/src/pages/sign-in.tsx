@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { SiGoogle, SiGithub, SiApple } from "react-icons/si";
+import { SiGithub } from "react-icons/si";
 import { Mail } from "lucide-react";
 
 export default function SignIn() {
@@ -17,7 +17,7 @@ export default function SignIn() {
 
   const redirectUrl = `${window.location.origin}/auth/callback`;
 
-  const signInWithProvider = async (provider: 'google' | 'github' | 'apple') => {
+  const signInWithProvider = async (provider: 'github') => {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
@@ -91,17 +91,7 @@ export default function SignIn() {
         </div>
 
         {/* OAuth Providers */}
-        <div className="space-y-3 mb-6">
-          <Button
-            onClick={() => signInWithProvider('google')}
-            variant="outline"
-            className="w-full"
-            data-testid="button-google-signin"
-          >
-            <SiGoogle className="mr-2 h-4 w-4" />
-            Continue with Google
-          </Button>
-
+        <div className="mb-6">
           <Button
             onClick={() => signInWithProvider('github')}
             variant="outline"
@@ -110,16 +100,6 @@ export default function SignIn() {
           >
             <SiGithub className="mr-2 h-4 w-4" />
             Continue with GitHub
-          </Button>
-
-          <Button
-            onClick={() => signInWithProvider('apple')}
-            variant="outline"
-            className="w-full"
-            data-testid="button-apple-signin"
-          >
-            <SiApple className="mr-2 h-4 w-4" />
-            Continue with Apple
           </Button>
         </div>
 
