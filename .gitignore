@@ -5,5 +5,5 @@ server/public
 vite.config.ts.*
 *.tar.gz
 
-# Large video files - don't commit to Git
-attached_assets/*.mp4
+# Large assets folder - don't commit to Git (too large for GitHub)
+attached_assets/
