@@ -10,23 +10,29 @@ export default function AuthCallback() {
   useEffect(() => {
     const handleCallback = async () => {
       try {
-        // Exchange the OAuth code for a session
-        const { data, error: exchangeError } = await supabase.auth.exchangeCodeForSession(window.location.href);
+        // Supabase automatically handles the session from URL hash/params
+        // with detectSessionInUrl: true in the client config
         
-        if (exchangeError) {
-          console.error('[Auth Callback] Exchange error:', exchangeError);
-          setError(exchangeError.message);
+        // Wait a bit for Supabase to process the session
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        
+        // Check if session was established
+        const { data: { session }, error: sessionError } = await supabase.auth.getSession();
+        
+        if (sessionError) {
+          console.error('[Auth Callback] Session error:', sessionError);
+          setError(sessionError.message);
           setTimeout(() => setLocation("/sign-in"), 2000);
           return;
         }
 
         // Session established successfully
-        if (data?.session) {
-          console.log('[Auth Callback] Session established:', data.session.user.email);
+        if (session) {
+          console.log('[Auth Callback] Session established:', session.user.email);
           setLocation("/dashboard");
         } else {
-          // No session after exchange
-          console.warn('[Auth Callback] No session after exchange');
+          // No session found
+          console.warn('[Auth Callback] No session found');
           setLocation("/sign-in");
         }
       } catch (err: any) {
