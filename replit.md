@@ -37,11 +37,12 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Email Notifications:** Seasonal messaging in confirmation and certificate emails.
 - **User Dashboard:** Displays purchases, production status, codes, and downloadable certificates.
 - **Admin Panel:** Provides analytics, seat tracking, purchase management, custom specimen approval, and subscriber export.
-- **Database Schema:** Key tables include `users`, `seats`, `purchases`, `codes`, `sculptures`, and `subscribers`. `purchases` table tracks `purchaseChoice`, `specimenStyle`, `customSpecimenApprovalStatus`, etc.
+- **Database Schema:** Key tables include `users`, `seats`, `purchases`, `codes`, `sculptures`, and `subscribers`. Legacy seasonal fields preserved for backward compatibility (30 existing purchases). New Founding 100 purchases use studio-selected approach.
 - **API Endpoints:** Public for registration/seat availability; protected for purchases, sculpture selection, user dashboards; admin for data management and specimen approval.
 - **Payment Processing:** Secure PayFast Onsite Payments integration for in-house checkout. Critical: Requires production credentials; sandbox mode not supported for onsite.
 - **Session Management:** Currently memory-based; aiming to restore PostgreSQL session storage.
 - **Subscriber System:** API endpoints for managing pre-launch interest (name, email, phone).
+- **Seasonal Guide:** Educational page showcasing all 12 specimen styles with seasonal availability chart (for future workshop reference).
 
 ## External Dependencies
 - **Supabase:** PostgreSQL database and authentication.
