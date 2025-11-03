@@ -113,77 +113,70 @@ export async function generateCertificate(
       );
 
       // Benefits section box
-      const boxTop = 410;
-      doc.rect(90, boxTop, doc.page.width - 180, 170)
+      const boxTop = 400;
+      doc.rect(80, boxTop, doc.page.width - 160, 200)
         .fillAndStroke('rgba(26, 26, 26, 0.8)', BRONZE);
 
       // Benefits title
-      doc.fontSize(16)
+      doc.fontSize(18)
         .fillColor(ACCENT_GOLD)
         .font('Times-Bold')
-        .text('LIFETIME INVESTMENT BENEFITS', 110, boxTop + 20, { width: doc.page.width - 220 });
+        .text('LIFETIME INVESTMENT BENEFITS', 100, boxTop + 25, { width: doc.page.width - 200, align: 'center' });
 
       // Divider
-      doc.moveTo(110, boxTop + 48)
-        .lineTo(doc.page.width - 110, boxTop + 48)
+      doc.moveTo(120, boxTop + 58)
+        .lineTo(doc.page.width - 120, boxTop + 58)
         .lineWidth(0.5)
         .stroke(BRONZE);
 
-      // Benefits list
-      let yPos = boxTop + 60;
+      // Benefits list (elegant, no codes)
+      let yPos = boxTop + 75;
+      const lineHeight = 28;
 
-      // Workshop Voucher
-      const workshopCode = codes.find((c) => c.type === 'workshop_voucher');
-      if (workshopCode) {
-        doc.fontSize(11)
-          .fillColor(PATINA)
-          .font('Helvetica-Bold')
-          .text(`Workshop Voucher (${workshopCode.discount}% off):`, 110, yPos);
-        
-        doc.fillColor(ACCENT_GOLD)
-          .font('Courier-Bold')
-          .fontSize(12)
-          .text(workshopCode.code, 340, yPos);
-        
-        doc.fontSize(9)
-          .fillColor('#999999')
-          .font('Helvetica')
-          .text('Transferable • One-time use', 110, yPos + 15);
-        
-        yPos += 38;
-      }
-
-      // Lifetime Workshop Code
-      const lifetimeCode = codes.find((c) => c.type === 'lifetime_workshop');
-      if (lifetimeCode) {
-        doc.fontSize(11)
-          .fillColor(PATINA)
-          .font('Helvetica-Bold')
-          .text(`Lifetime Workshop (${lifetimeCode.discount}% off):`, 110, yPos);
-        
-        doc.fillColor(ACCENT_GOLD)
-          .font('Courier-Bold')
-          .fontSize(12)
-          .text(lifetimeCode.code, 340, yPos);
-        
-        doc.fontSize(9)
-          .fillColor('#999999')
-          .font('Helvetica')
-          .text('Transferable • Unlimited use', 110, yPos + 15);
-        
-        yPos += 38;
-      }
-
-      // Guaranteed bronze casting
-      doc.fontSize(11)
+      // Signed bronze sculpture
+      doc.fontSize(12)
         .fillColor(BRONZE)
         .font('Helvetica-Bold')
-        .text('Guaranteed Bronze Casting:', 110, yPos);
+        .text('• ', 120, yPos);
       
-      doc.fontSize(10)
-        .fillColor('#cccccc')
+      doc.fillColor('#e8e8e8')
         .font('Helvetica')
-        .text('Your selected botanical specimen', 340, yPos);
+        .text('One signed bronze botanical sculpture, cast from your chosen specimen', 135, yPos, { width: doc.page.width - 255 });
+      yPos += lineHeight;
+
+      // Workshop access
+      const workshopDiscount = purchase.seatType === 'founder' ? '50%' : '80%';
+      doc.fontSize(12)
+        .fillColor(PATINA)
+        .font('Helvetica-Bold')
+        .text('• ', 120, yPos);
+      
+      doc.fillColor('#e8e8e8')
+        .font('Helvetica')
+        .text(`One-time workshop experience voucher (${workshopDiscount} discount, transferable)`, 135, yPos, { width: doc.page.width - 255 });
+      yPos += lineHeight;
+
+      // Lifetime privileges
+      const lifetimeDiscount = purchase.seatType === 'founder' ? '20%' : '30%';
+      doc.fontSize(12)
+        .fillColor(ACCENT_GOLD)
+        .font('Helvetica-Bold')
+        .text('• ', 120, yPos);
+      
+      doc.fillColor('#e8e8e8')
+        .font('Helvetica')
+        .text(`Lifetime workshop access privileges (${lifetimeDiscount} discount, unlimited use)`, 135, yPos, { width: doc.page.width - 255 });
+      yPos += lineHeight;
+
+      // Studio access
+      doc.fontSize(12)
+        .fillColor(BRONZE)
+        .font('Helvetica-Bold')
+        .text('• ', 120, yPos);
+      
+      doc.fillColor('#e8e8e8')
+        .font('Helvetica')
+        .text('Priority studio access and exclusive founder events', 135, yPos, { width: doc.page.width - 255 });
 
       // Footer - Date and signature
       const currentDate = new Date().toLocaleDateString('en-US', {
