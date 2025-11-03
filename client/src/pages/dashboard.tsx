@@ -279,23 +279,50 @@ export default function Dashboard() {
                     </div>
                   )}
 
-                  {/* Certificate Download */}
+                  {/* Document Downloads */}
                   {purchase.certificateUrl && (
-                    <div className="pt-4 border-t border-border">
-                      <Button
-                        asChild
-                        className="btn-bronze"
-                        data-testid="button-download-certificate"
-                      >
-                        <a
-                          href={purchase.certificateUrl}
-                          download
-                          className="flex items-center gap-2"
+                    <div className="pt-4 border-t border-border space-y-3">
+                      <h4 className="text-sm font-semibold text-muted-foreground uppercase tracking-wide mb-3">
+                        Your Documents
+                      </h4>
+                      
+                      <div className="grid md:grid-cols-2 gap-3">
+                        <Button
+                          asChild
+                          variant="outline"
+                          className="border-patina/30 hover-elevate active-elevate-2"
+                          data-testid="button-download-certificate"
                         >
-                          <Download className="w-4 h-4" />
-                          <span className="moving-fill">Download Certificate</span>
-                        </a>
-                      </Button>
+                          <a
+                            href={purchase.certificateUrl}
+                            download
+                            className="flex items-center gap-2"
+                          >
+                            <Download className="w-4 h-4" />
+                            <span>Investment Certificate</span>
+                          </a>
+                        </Button>
+
+                        <Button
+                          asChild
+                          variant="outline"
+                          className="border-bronze/30 hover-elevate active-elevate-2"
+                          data-testid="button-download-code-slips"
+                        >
+                          <a
+                            href={`/certificates/code-slips-${purchase.id}.pdf`}
+                            download
+                            className="flex items-center gap-2"
+                          >
+                            <Download className="w-4 h-4" />
+                            <span>Code Gift Slips</span>
+                          </a>
+                        </Button>
+                      </div>
+                      
+                      <p className="text-xs text-muted-foreground italic">
+                        💡 Print your code slips and cut along the dotted lines to create beautiful gift vouchers
+                      </p>
                     </div>
                   )}
                 </Card>
