@@ -22,6 +22,7 @@ import {
 } from "./utils/payfast";
 import { generatePaymentIdentifier } from "./utils/payfast-onsite";
 import { generateCertificate } from "./utils/certificateGenerator";
+import { generateCodeSlips } from "./utils/codeSlipsGenerator";
 import { sendCertificateEmail, sendPurchaseConfirmationEmail } from "./utils/emailService";
 import { generatePromoCode } from "./utils/promoCodeGenerator";
 
@@ -382,10 +383,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
           ? `${user.firstName} ${user.lastName}` 
           : user?.firstName || "Valued Investor";
 
-        // Generate certificate (can fail without breaking completion)
+        // Generate certificate and code slips (can fail without breaking completion)
         let certificateUrl = "";
+        let codeSlipsUrl = "";
         try {
           certificateUrl = await generateCertificate(
+            purchase,
+            [workshopCode, lifetimeWorkshopCode],
+            userName
+          );
+
+          codeSlipsUrl = await generateCodeSlips(
             purchase,
             [workshopCode, lifetimeWorkshopCode],
             userName
@@ -401,7 +409,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             );
           }
         } catch (certError) {
-          console.error("Certificate generation failed:", certError);
+          console.error("Certificate/code slip generation failed:", certError);
           // Purchase still marked complete, certificate can be regenerated later
         }
 
@@ -416,7 +424,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             userName,
             purchase,
             [workshopCode, lifetimeWorkshopCode],
-            certificateUrl
+            certificateUrl,
+            codeSlipsUrl
           ).catch(console.error);
         }
       } else if (paymentStatus === "FAILED" || paymentStatus === "CANCELLED") {
@@ -1004,10 +1013,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         : user?.firstName || "Valued Investor";
       const userEmail = user?.email || "";
 
-      // Generate certificate (same as paid purchases)
+      // Generate certificate and code slips (same as paid purchases)
       let certificateUrl = "";
+      let codeSlipsUrl = "";
       try {
         certificateUrl = await generateCertificate(
+          purchase,
+          [workshopCode, lifetimeWorkshopCode],
+          userName
+        );
+
+        codeSlipsUrl = await generateCodeSlips(
           purchase,
           [workshopCode, lifetimeWorkshopCode],
           userName
@@ -1022,7 +1038,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           );
         }
       } catch (certError) {
-        console.error("Certificate generation failed:", certError);
+        console.error("Certificate/code slip generation failed:", certError);
       }
 
       // Send confirmation emails (same as paid purchases)
@@ -1040,7 +1056,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
               userName,
               purchase,
               [workshopCode, lifetimeWorkshopCode],
-              certificateUrl
+              certificateUrl,
+              codeSlipsUrl
             );
           }
         }

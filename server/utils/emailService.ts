@@ -53,13 +53,14 @@ function getTransporter(): Transporter | null {
   return transporter;
 }
 
-// Send certificate email to user
+// Send certificate email to user with both certificate and code slips
 export async function sendCertificateEmail(
   userEmail: string,
   userName: string,
   purchase: Purchase,
   codes: Code[],
-  certificateUrl: string
+  certificateUrl: string,
+  codeSlipsUrl?: string
 ): Promise<boolean> {
   const transport = getTransporter();
   
@@ -179,37 +180,35 @@ export async function sendCertificateEmail(
       
       <p>Congratulations on securing your <strong>${seatName} seat</strong>. Your investment is now part of our foundry's history, and your bronze casting awaits.</p>
       
-      <p>Download your official certificate of patronage:</p>
+      <h2 style="color: #d8c3a5; font-size: 20px; margin-top: 30px;">📜 Your Investment Documents</h2>
       
-      <div style="text-align: center;">
-        <a href="${fullCertificateUrl}" class="cta-button">Download Certificate</a>
+      <p>We've prepared two beautiful documents for you:</p>
+      
+      <div class="code-box" style="background: rgba(111, 143, 121, 0.1); border-color: #6f8f79;">
+        <div class="code-label" style="color: #6f8f79;">Official Certificate</div>
+        <div class="code-description" style="margin-top: 10px; margin-bottom: 15px;">
+          Your elegant certificate of investment — free of codes, designed to be framed and cherished. This document celebrates your role as a founding patron.
+        </div>
+        <div style="text-align: center;">
+          <a href="${fullCertificateUrl}" class="cta-button" style="display: inline-block; font-size: 14px; padding: 12px 24px;">Download Certificate</a>
+        </div>
       </div>
       
-      <h2>Your Exclusive Codes</h2>
-      
-      ${bronzeCode ? `
-      <div class="code-box">
-        <div class="code-label">Bronze Claim Code</div>
-        <div class="code-value">${bronzeCode.code}</div>
-        <div class="code-description">Use this code to claim your bronze casting specimen</div>
-      </div>
-      ` : ''}
-      
-      ${workshopCode ? `
-      <div class="code-box">
-        <div class="code-label">Workshop Voucher Code</div>
-        <div class="code-value">${workshopCode.code}</div>
-        <div class="code-description">${workshopCode.discount}% discount on your first 2-day workshop (transferable)</div>
-      </div>
-      ` : ''}
-      
-      ${lifetimeWorkshopCode ? `
-      <div class="code-box">
-        <div class="code-label">Lifetime Workshop Discount Code</div>
-        <div class="code-value">${lifetimeWorkshopCode.code}</div>
-        <div class="code-description">${lifetimeWorkshopCode.discount}% lifetime discount on all future workshops (unlimited uses, forever)</div>
+      ${codeSlipsUrl ? `
+      <div class="code-box" style="background: rgba(166, 124, 82, 0.1); border-color: #a67c52;">
+        <div class="code-label" style="color: #a67c52;">Workshop Access Codes</div>
+        <div class="code-description" style="margin-top: 10px; margin-bottom: 15px;">
+          Beautiful printable gift cards containing your workshop voucher codes. Print and cut along the dotted lines — perfect for gifting to friends and family.
+        </div>
+        <div style="text-align: center;">
+          <a href="${process.env.REPLIT_DEV_DOMAIN || 'https://timeless-organics.replit.app'}${codeSlipsUrl}" class="cta-button" style="display: inline-block; font-size: 14px; padding: 12px 24px; background: linear-gradient(135deg, #6f8f79 0%, #5a7563 100%);">Download Code Slips</a>
+        </div>
       </div>
       ` : ''}
+      
+      <p style="color: #999; font-size: 14px; font-style: italic; margin-top: 20px;">
+        💡 <strong>Tip:</strong> Your code slips are designed as gift vouchers. The one-time workshop voucher is transferable — perfect for introducing someone special to the art of bronze casting.
+      </p>
       
       <h2>Your Specimen Selection</h2>
       
