@@ -57,69 +57,198 @@ export default function SeasonalGuide() {
           </div>
         </section>
 
-        {/* Purchase Options */}
+        {/* Seasonal Availability Chart */}
         <section className="space-y-6">
           <div className="flex items-center gap-3">
-            <Sparkles className="w-8 h-8 text-bronze" />
-            <h2 className="font-serif text-3xl font-bold">Three Ways to Invest</h2>
+            <CalendarDays className="w-8 h-8 text-bronze" />
+            <h2 className="font-serif text-3xl font-bold">Seasonal Availability Chart</h2>
           </div>
 
           <p className="text-secondary">
-            Because timing is everything, we offer three purchase paths. Choose the one that fits 
-            your style:
+            All 12 specimen styles available for future workshop bookings, organized by peak season:
+          </p>
+
+          {/* Seasonal Chart */}
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="border-b-2 border-bronze/30">
+                  <th className="text-left p-4 font-serif text-lg text-bronze">Specimen Style</th>
+                  <th className="text-center p-4 text-sm font-semibold text-muted-foreground">Winter</th>
+                  <th className="text-center p-4 text-sm font-semibold text-muted-foreground">Spring</th>
+                  <th className="text-center p-4 text-sm font-semibold text-muted-foreground">Summer</th>
+                  <th className="text-center p-4 text-sm font-semibold text-muted-foreground">Autumn</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border">
+                <tr className="hover-elevate">
+                  <td className="p-4 font-medium">Protea Head</td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="p-4 font-medium">Pincushion Bloom</td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="p-4 font-medium">Cone + Bracts</td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="p-4 font-medium">Aloe Inflorescence</td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="p-4 font-medium">Erica Spray</td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="p-4 font-medium">Restio Seedheads</td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="p-4 font-medium">Bulb Spike (Watsonia)</td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="p-4 font-medium">Pelargonium Leaf/Flower</td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="p-4 font-medium">Woody Branch + Leaves</td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="p-4 font-medium">Cone/Seed Pod</td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="p-4 font-medium">Succulent Rosette</td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="p-4 font-medium">Miniature Mix</td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div className="flex items-center gap-6 justify-center text-sm mt-6">
+            <div className="flex items-center gap-2">
+              <span className="inline-block w-3 h-3 rounded-full bg-bronze"></span>
+              <span className="text-muted-foreground">Peak Season</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span>
+              <span className="text-muted-foreground">Available</span>
+            </div>
+            <div className="flex items-center gap-2">
+              <span className="inline-block w-3 h-3 rounded-full bg-border"></span>
+              <span className="text-muted-foreground">Not Available</span>
+            </div>
+          </div>
+        </section>
+
+        {/* Founding 100 Note */}
+        <section className="space-y-6">
+          <div className="flex items-center gap-3">
+            <Sparkles className="w-8 h-8 text-bronze" />
+            <h2 className="font-serif text-3xl font-bold">For the Founding 100</h2>
+          </div>
+
+          <Card className="border-bronze/30">
+            <CardContent className="p-6 space-y-4">
+              <p className="text-lg font-medium text-foreground">
+                Studio-Selected Specimens Only
+              </p>
+              <p className="text-secondary">
+                For this exclusive launch, David Junor personally curates and selects each botanical specimen from the current season's finest Cape Fynbos. Your bronze will be one-of-a-kind, chosen for optimal detail retention and sculptural beauty. No specimen selection required—just complete your checkout and we'll handle the rest.
+              </p>
+              <div className="bg-muted/50 border border-border rounded-lg p-4 mt-4">
+                <p className="text-xs text-muted-foreground italic">
+                  💡 Note: Custom specimen selection and "bring your own" options will be available for regular workshop bookings after the Founding 100 launch.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
+        </section>
+
+        {/* Future Workshop Options (Coming Soon) */}
+        <section className="space-y-6">
+          <div className="flex items-center gap-3">
+            <Flower2 className="w-8 h-8 text-patina" />
+            <h2 className="font-serif text-3xl font-bold">Future Workshop Options</h2>
+          </div>
+
+          <p className="text-secondary">
+            After the Founding 100 launch, regular workshop participants will have flexible specimen selection:
           </p>
 
           <div className="space-y-4">
-            <Card className="border-bronze/30 hover-elevate">
+            <Card className="border-patina/30 hover-elevate opacity-75">
               <CardHeader>
-                <CardTitle className="text-bronze">Cast Now</CardTitle>
+                <CardTitle className="text-patina">Choose Your Style</CardTitle>
                 <CardDescription>
-                  Trust our studio to select the best in-season specimen
+                  Pick from 12 specimen styles and wait for peak season
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 <p className="text-secondary">
-                  We choose an A-grade specimen from our curated collection—whatever is at peak 
-                  beauty right now. You get the fastest path to casting with no seasonal wait.
+                  Select your favorite botanical form from the chart above. We'll cast it when that species hits its seasonal sweet spot.
                 </p>
                 <div className="flex items-center gap-2 text-sm text-tertiary">
                   <CalendarDays className="w-4 h-4" />
-                  <span>Fastest turnaround • No waiting for seasons</span>
+                  <span>Coming after Founding 100</span>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-patina/30 hover-elevate">
+            <Card className="border-accent/30 hover-elevate opacity-75">
               <CardHeader>
-                <CardTitle className="text-patina">Wait Till Season</CardTitle>
+                <CardTitle className="text-accent">Bring Your Own</CardTitle>
                 <CardDescription>
-                  Choose your species; we'll cast it in its next peak window
+                  Upload a photo of your exact desired specimen
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
                 <p className="text-secondary">
-                  Pick your favorite botanical style from our list. We'll add you to the production 
-                  queue and invest/cast your piece when that species hits its seasonal sweet spot.
-                </p>
-                <div className="flex items-center gap-2 text-sm text-tertiary">
-                  <Flower2 className="w-4 h-4" />
-                  <span>Your chosen species • One free season deferral</span>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card className="border-accent/30 hover-elevate">
-              <CardHeader>
-                <CardTitle className="text-accent">Provide Your Own (Founder's Choice)</CardTitle>
-                <CardDescription>
-                  Upload a photo of exactly what you want—even if it's not on our list
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <p className="text-secondary">
-                  Send us a clear photo. We'll confirm cast-ability within 48–72 hours. If viable, 
-                  you can choose: wait for the exact season, or we'll use the closest available 
-                  match sooner.
+                  Send us a clear photo of what you'd like cast. We'll confirm viability within 48–72 hours and schedule it for the appropriate season.
                 </p>
                 <div className="flex items-center gap-2 text-sm text-tertiary">
                   <Sparkles className="w-4 h-4" />

@@ -111,6 +111,12 @@ export const specimenStyleEnum = pgEnum('specimen_style', [
 // Season window enum (for future workshop use)
 export const seasonWindowEnum = pgEnum('season_window', ['winter', 'spring', 'summer', 'autumn', 'year_round']);
 
+// Purchase choice enum - LEGACY for existing purchases (Founding 100 uses studio-selected only)
+export const purchaseChoiceEnum = pgEnum('purchase_choice', ['cast_now', 'wait_till_season', 'provide_your_own']);
+
+// Custom specimen approval status - LEGACY for existing purchases
+export const approvalStatusEnum = pgEnum('approval_status', ['pending', 'approved', 'rejected']);
+
 // Purchases made by users
 export const purchases = pgTable("purchases", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -123,6 +129,15 @@ export const purchases = pgTable("purchases", {
   
   // Production status tracking (Queued → Invested → Ready to Pour → Poured & Finishing → Complete)
   productionStatus: productionStatusEnum("production_status").default('queued').notNull(),
+  
+  // LEGACY FIELDS - Preserved for existing purchases, not used in Founding 100 checkout
+  purchaseChoice: purchaseChoiceEnum("purchase_choice").default('cast_now'),
+  seasonalBatchWindow: varchar("seasonal_batch_window"),
+  specimenStyle: specimenStyleEnum("specimen_style"),
+  customSpecimenPhotoUrl: varchar("custom_specimen_photo_url"),
+  customSpecimenApprovalStatus: approvalStatusEnum("custom_specimen_approval_status"),
+  customSpecimenNotes: text("custom_specimen_notes"),
+  specimenId: varchar("specimen_id").references(() => sculptures.id),
   
   // Add-ons and delivery (collected during checkout)
   hasPatina: boolean("has_patina").default(false).notNull(), // +R1000 add-on
