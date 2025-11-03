@@ -29,11 +29,9 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 
 **Technical Implementations & Features:**
 - **Authentication:** Supabase Auth for user management; backend verifies JWT tokens using service role key.
-- **Seat Sales:** Founder (R3,000) and Patron (R6,000) seats with live counters and PayFast integration.
-- **Seasonal Purchase System:** Three options: "Cast Now" (studio-selected, 6-12 weeks), "Wait Till Season" (user selects style, waits for peak quality), "Provide Your Own" (custom photo upload with admin approval).
-- **Specimen Organization:** Over 20 South African botanicals categorized by style (e.g., Protea Heads, Aloe Inflorescences).
+- **Seat Sales:** Founder (R3,000) and Patron (R5,000) seats with live counters and PayFast integration.
+- **Studio-Selected Specimens:** For Founding 100, David Junor curates and selects all botanical specimens from the current season's finest Cape Fynbos. No user choice required - simplified checkout flow.
 - **Production Status Tracking:** Visual dashboard (Queued → Invested → Ready to Pour → Poured & Finishing → Complete).
-- **Admin Approval Workflow:** UI for custom specimen review, with email notifications.
 - **Code Generation:** Automated unique bronze claim, workshop voucher (50%/80% discount), and lifetime workshop codes (20%/30% discount), each with an `appliesTo` field.
 - **Certificate Generation:** Automated PDF certificates with aloe background.
 - **Email Notifications:** Seasonal messaging in confirmation and certificate emails.

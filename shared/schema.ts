@@ -89,16 +89,10 @@ export type Seat = typeof seats.$inferSelect;
 // Purchase status enum
 export const purchaseStatusEnum = pgEnum('purchase_status', ['pending', 'completed', 'failed']);
 
-// Purchase choice enum - how the customer wants to proceed with specimen selection
-export const purchaseChoiceEnum = pgEnum('purchase_choice', ['cast_now', 'wait_till_season', 'provide_your_own']);
-
 // Production status enum - batch fulfillment tracking
 export const productionStatusEnum = pgEnum('production_status', ['queued', 'invested', 'ready_to_pour', 'poured_finishing', 'complete']);
 
-// Custom specimen approval status
-export const approvalStatusEnum = pgEnum('approval_status', ['pending', 'approved', 'rejected']);
-
-// Specimen style enum - categories of botanical forms
+// Specimen style enum - categories of botanical forms (for future workshop use)
 export const specimenStyleEnum = pgEnum('specimen_style', [
   'protea_head',
   'pincushion_bloom',
@@ -114,7 +108,7 @@ export const specimenStyleEnum = pgEnum('specimen_style', [
   'miniature_mix'
 ]);
 
-// Season window enum
+// Season window enum (for future workshop use)
 export const seasonWindowEnum = pgEnum('season_window', ['winter', 'spring', 'summer', 'autumn', 'year_round']);
 
 // Purchases made by users
@@ -127,29 +121,15 @@ export const purchases = pgTable("purchases", {
   paymentReference: varchar("payment_reference"), // PayFast payment ID
   certificateUrl: varchar("certificate_url"), // URL to PDF certificate
   
-  // Seasonal purchase choice
-  purchaseChoice: purchaseChoiceEnum("purchase_choice").default('cast_now').notNull(),
-  
   // Production status tracking (Queued → Invested → Ready to Pour → Poured & Finishing → Complete)
   productionStatus: productionStatusEnum("production_status").default('queued').notNull(),
-  seasonalBatchWindow: varchar("seasonal_batch_window"), // e.g., "Winter 2025", "Spring 2025"
   
-  // "Wait Till Season" - chosen specimen style
-  specimenStyle: specimenStyleEnum("specimen_style"), // The style they want (protea_head, pincushion_bloom, etc.)
-  
-  // Custom specimen for "Provide Your Own" option
-  customSpecimenPhotoUrl: varchar("custom_specimen_photo_url"),
-  customSpecimenApprovalStatus: approvalStatusEnum("custom_specimen_approval_status"),
-  customSpecimenNotes: text("custom_specimen_notes"), // Admin notes about approval/rejection
-  
-  // Specimen selection and add-ons (selected during checkout)
-  specimenId: varchar("specimen_id").references(() => sculptures.id),
+  // Add-ons and delivery (collected during checkout)
   hasPatina: boolean("has_patina").default(false).notNull(), // +R1000 add-on
-  
-  // Delivery information (collected during checkout)
   deliveryName: varchar("delivery_name"),
   deliveryPhone: varchar("delivery_phone"),
   deliveryAddress: text("delivery_address"),
+  
   createdAt: timestamp("created_at").defaultNow(),
   completedAt: timestamp("completed_at"),
 });
@@ -158,11 +138,7 @@ export const insertPurchaseSchema = createInsertSchema(purchases).pick({
   userId: true,
   seatType: true,
   amount: true,
-  purchaseChoice: true,
-  specimenId: true,
-  specimenStyle: true,
   hasPatina: true,
-  customSpecimenPhotoUrl: true,
   deliveryName: true,
   deliveryPhone: true,
   deliveryAddress: true,

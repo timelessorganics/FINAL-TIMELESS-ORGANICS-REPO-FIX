@@ -79,7 +79,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log('[Purchase] User initiating purchase:', userId, userEmail);
 
       // Calculate amount based on seat type + patina
-      const { seatType, hasPatina, purchaseChoice, customSpecimenPhotoUrl } = req.body;
+      const { seatType, hasPatina, deliveryName, deliveryPhone, deliveryAddress } = req.body;
       const seat = await storage.getSeatByType(seatType);
       if (!seat) {
         return res.status(404).json({ message: "Seat type not found" });
@@ -93,53 +93,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Calculate total: base price + patina (R10 = 1000 cents for testing)
       const amount = seat.price + (hasPatina ? 1000 : 0);
 
-      const result = insertPurchaseSchema.safeParse({
-        ...req.body,
-        userId,
-        amount,
-        purchaseChoice: purchaseChoice || 'cast_now',
-      });
-      
-      if (!result.success) {
+      // Validate delivery information
+      if (!deliveryName || !deliveryPhone || !deliveryAddress) {
         return res.status(400).json({ 
-          message: fromError(result.error).toString() 
+          message: "Delivery information is required (name, phone, address)" 
         });
       }
 
-      // Server-side validation based on purchase choice
-      const choice = result.data.purchaseChoice || 'cast_now';
-      
-      if (choice === 'cast_now' && !result.data.specimenId) {
-        return res.status(400).json({ 
-          message: "Specimen selection is required for 'Cast Now' option" 
-        });
-      }
-      
-      if (choice === 'wait_till_season' && !result.data.specimenStyle) {
-        return res.status(400).json({ 
-          message: "Specimen style selection is required for 'Wait Till Season' option" 
-        });
-      }
-      
-      if (choice === 'provide_your_own' && !result.data.customSpecimenPhotoUrl) {
-        return res.status(400).json({ 
-          message: "Photo upload is required for 'Provide Your Own' option" 
-        });
-      }
-
-      // Create purchase record with all checkout data (including seasonal fields)
+      // Create purchase record (studio selects specimen - no user choice)
       const purchase = await storage.createPurchase({
-        userId: result.data.userId,
-        seatType: result.data.seatType,
-        amount: result.data.amount,
-        purchaseChoice: result.data.purchaseChoice,
-        specimenId: result.data.specimenId,
-        specimenStyle: result.data.specimenStyle,
-        hasPatina: result.data.hasPatina,
-        customSpecimenPhotoUrl: result.data.customSpecimenPhotoUrl,
-        deliveryName: result.data.deliveryName,
-        deliveryPhone: result.data.deliveryPhone,
-        deliveryAddress: result.data.deliveryAddress,
+        userId,
+        seatType,
+        amount,
+        hasPatina: hasPatina || false,
+        deliveryName,
+        deliveryPhone,
+        deliveryAddress,
       });
 
       console.log('[Purchase] Created purchase record:', purchase.id, purchase.seatType, purchase.amount);
@@ -578,105 +547,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin: Get custom specimens pending review (admin only)
-  app.get("/api/admin/custom-specimens", isAuthenticated, async (req: any, res: Response) => {
-    try {
-      const userId = req.user.id;
-      const user = await storage.getUser(userId);
-      
-      if (!user?.isAdmin) {
-        return res.status(403).json({ message: "Admin access required" });
-      }
-
-      const purchases = await storage.getAllPurchases();
-      // Filter to only "provide_your_own" purchases with pending approval status
-      const pending = purchases.filter(p => 
-        p.purchaseChoice === 'provide_your_own' && 
-        p.customSpecimenApprovalStatus === 'pending'
-      );
-      
-      res.json(pending);
-    } catch (error: any) {
-      console.error("Admin custom specimens error:", error);
-      res.status(500).json({ message: error.message || "Failed to fetch custom specimens" });
-    }
-  });
-
-  // Admin: Approve custom specimen (admin only)
-  app.post("/api/admin/custom-specimens/:purchaseId/approve", isAuthenticated, async (req: any, res: Response) => {
-    try {
-      const userId = req.user.id;
-      const user = await storage.getUser(userId);
-      
-      if (!user?.isAdmin) {
-        return res.status(403).json({ message: "Admin access required" });
-      }
-
-      const { purchaseId } = req.params;
-      const { notes } = req.body;
-
-      const purchase = await storage.getPurchase(purchaseId);
-      if (!purchase) {
-        return res.status(404).json({ message: "Purchase not found" });
-      }
-
-      if (purchase.purchaseChoice !== 'provide_your_own') {
-        return res.status(400).json({ message: "Purchase is not a custom specimen submission" });
-      }
-
-      // Update purchase with approved status
-      await storage.updatePurchase(purchaseId, {
-        customSpecimenApprovalStatus: 'approved',
-        customSpecimenNotes: notes || 'Approved for casting',
-      });
-
-      console.log('[Admin] Custom specimen approved:', purchaseId);
-      res.json({ message: "Custom specimen approved" });
-    } catch (error: any) {
-      console.error("Admin approve specimen error:", error);
-      res.status(500).json({ message: error.message || "Failed to approve specimen" });
-    }
-  });
-
-  // Admin: Reject custom specimen (admin only)
-  app.post("/api/admin/custom-specimens/:purchaseId/reject", isAuthenticated, async (req: any, res: Response) => {
-    try {
-      const userId = req.user.id;
-      const user = await storage.getUser(userId);
-      
-      if (!user?.isAdmin) {
-        return res.status(403).json({ message: "Admin access required" });
-      }
-
-      const { purchaseId } = req.params;
-      const { notes } = req.body;
-
-      if (!notes || !notes.trim()) {
-        return res.status(400).json({ message: "Rejection reason is required" });
-      }
-
-      const purchase = await storage.getPurchase(purchaseId);
-      if (!purchase) {
-        return res.status(404).json({ message: "Purchase not found" });
-      }
-
-      if (purchase.purchaseChoice !== 'provide_your_own') {
-        return res.status(400).json({ message: "Purchase is not a custom specimen submission" });
-      }
-
-      // Update purchase with rejected status
-      await storage.updatePurchase(purchaseId, {
-        customSpecimenApprovalStatus: 'rejected',
-        customSpecimenNotes: notes,
-      });
-
-      console.log('[Admin] Custom specimen rejected:', purchaseId);
-      res.json({ message: "Custom specimen rejected" });
-    } catch (error: any) {
-      console.error("Admin reject specimen error:", error);
-      res.status(500).json({ message: error.message || "Failed to reject specimen" });
-    }
-  });
 
   // Protected: Redeem code
   app.post("/api/codes/redeem", isAuthenticated, async (req: any, res: Response) => {
@@ -964,12 +834,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(409).json({ message: "No seats available for this type" });
       }
 
-      // Create free purchase (R0)
+      // Create free purchase (R0) - studio will select specimen
       const purchase = await storage.createPurchase({
         userId,
         seatType: promoCode.seatType,
         amount: 0, // Free!
-        specimenId,
         hasPatina: hasPatina || false,
         deliveryName,
         deliveryPhone,
