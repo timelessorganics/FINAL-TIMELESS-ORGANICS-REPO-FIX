@@ -71,7 +71,6 @@ export async function sendCertificateEmail(
 
   try {
     const seatName = purchase.seatType === "founder" ? "Founder" : "Patron";
-    const bronzeCode = codes.find((c) => c.type === "bronze_claim");
     const workshopCode = codes.find((c) => c.type === "workshop_voucher");
     const lifetimeWorkshopCode = codes.find((c) => c.type === "lifetime_workshop");
 
