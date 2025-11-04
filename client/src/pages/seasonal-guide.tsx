@@ -1,5 +1,5 @@
 import { Link } from "wouter";
-import { Leaf, CalendarDays, Flower2, Sparkles } from "lucide-react";
+import { Leaf, CalendarDays, Flower2, Sparkles, ArrowLeft, Camera, CheckCircle2, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
@@ -8,6 +8,16 @@ export default function SeasonalGuide() {
     <div className="min-h-screen bg-background">
       <div className="max-w-5xl mx-auto px-4 py-12 space-y-16">
         
+        {/* Back Navigation */}
+        <div>
+          <Link href="/">
+            <Button variant="ghost" className="gap-2" data-testid="button-back-home">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Home
+            </Button>
+          </Link>
+        </div>
+
         {/* Hero Section */}
         <header className="text-center space-y-4">
           <h1 className="font-serif text-5xl font-bold text-bronze">
@@ -216,44 +226,99 @@ export default function SeasonalGuide() {
             <h2 className="font-serif text-3xl font-bold">Future Workshop Options</h2>
           </div>
 
-          <p className="text-muted-foreground">
-            After the Founding 100 launch, regular workshop participants will have flexible specimen selection:
+          <p className="text-lg text-foreground">
+            After the Founding 100 launch, workshops will be available on a <strong>date-based booking system</strong>. You book available dates, and what's available is what's on offer—no seasonal waiting lists. Perfect for tourists and locals alike.
           </p>
 
-          <div className="space-y-4">
-            <Card className="border-patina/30 hover-elevate opacity-75">
+          <div className="space-y-6">
+            {/* Option 1: Studio Selection */}
+            <Card className="border-bronze/40 hover-elevate">
               <CardHeader>
-                <CardTitle className="text-patina">Choose Your Style</CardTitle>
-                <CardDescription>
-                  Pick from 12 specimen styles and wait for peak season
+                <div className="flex items-center gap-3">
+                  <CheckCircle2 className="w-6 h-6 text-bronze" />
+                  <CardTitle className="text-xl text-bronze">Studio-Selected Specimen</CardTitle>
+                </div>
+                <CardDescription className="text-base">
+                  Let us choose the perfect specimen for you from current availability
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-3">
+              <CardContent className="space-y-4">
                 <p className="text-muted-foreground">
-                  Select your favorite botanical form from the chart above. We'll cast it when that species hits its seasonal sweet spot.
+                  Choose your preferred botanical style from the specimen ranges and availability charts above. 
+                  We'll select a premium specimen that's currently at its peak and has the highest chance of 
+                  casting success.
                 </p>
-                <div className="flex items-center gap-2 text-sm text-tertiary">
-                  <CalendarDays className="w-4 h-4" />
-                  <span>Coming after Founding 100</span>
+                <div className="bg-muted/50 border border-border rounded-lg p-4">
+                  <p className="text-sm text-foreground font-medium mb-2">✓ Includes Safety Net:</p>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
+                    <li>• Free second casting if the first doesn't work out</li>
+                    <li>• Worldwide courier (costs to customer or flat international rate)</li>
+                    <li>• If second casting fails: Commission option at 50% workshop cost (for similar specimens)</li>
+                  </ul>
                 </div>
               </CardContent>
             </Card>
 
-            <Card className="border-accent/30 hover-elevate opacity-75">
+            {/* Option 2: Bring Your Own */}
+            <Card className="border-accent-gold/60 hover-elevate bg-gradient-to-br from-background to-accent-gold/5">
               <CardHeader>
-                <CardTitle className="text-accent">Bring Your Own</CardTitle>
-                <CardDescription>
-                  Upload a photo of your exact desired specimen
+                <div className="flex items-center gap-3">
+                  <Camera className="w-6 h-6 text-accent-gold" />
+                  <CardTitle className="text-xl text-accent-gold">Bring Your Own Specimen</CardTitle>
+                </div>
+                <CardDescription className="text-base font-medium text-foreground">
+                  Ultimate customization—cast something personally meaningful to you
                 </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <p className="text-foreground">
+                  Bring any botanical specimen you'd like cast, subject to practical restrictions:
+                </p>
+                <div className="bg-background/80 border border-accent-gold/30 rounded-lg p-4">
+                  <p className="text-sm font-semibold text-foreground mb-2">Restrictions:</p>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
+                    <li>• Maximum size limitations (workshop-compatible)</li>
+                    <li>• No hardwood (too dense for lost-wax casting)</li>
+                    <li>• Not too thin/delicate (must survive burnout)</li>
+                    <li>• Structural integrity requirements</li>
+                  </ul>
+                </div>
+                <div className="bg-muted/50 border border-border rounded-lg p-4">
+                  <p className="text-sm text-foreground font-medium mb-2">✓ Includes Safety Net:</p>
+                  <ul className="space-y-1 text-sm text-muted-foreground">
+                    <li>• Free second casting on the house (in our own time)</li>
+                    <li>• Worldwide courier (costs to customer or flat international rate)</li>
+                    <li>• If second fails: Commission at 50% cost (similar specimen) or full commission costing (different/larger request)</li>
+                  </ul>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Future Services Callout */}
+            <Card className="border-patina/40 bg-gradient-to-br from-background to-patina/5">
+              <CardHeader>
+                <div className="flex items-center gap-3">
+                  <Package className="w-6 h-6 text-patina" />
+                  <CardTitle className="text-patina">Coming Soon: Bespoke Services</CardTitle>
+                </div>
               </CardHeader>
               <CardContent className="space-y-3">
                 <p className="text-muted-foreground">
-                  Send us a clear photo of what you'd like cast. We'll confirm viability within 48–72 hours and schedule it for the appropriate season.
+                  Beyond workshops, we'll be offering standalone services to artists, designers, and anyone who needs something cast in bronze:
                 </p>
-                <div className="flex items-center gap-2 text-sm text-tertiary">
-                  <Sparkles className="w-4 h-4" />
-                  <span>Ultimate customization • Approval required</span>
-                </div>
+                <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <span className="text-patina mt-1">•</span>
+                    <span><strong className="text-foreground">Bespoke Commissions:</strong> Custom bronze sculptures designed and cast to your specifications</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <span className="text-patina mt-1">•</span>
+                    <span><strong className="text-foreground">Casting Service:</strong> Flat-rate casting up to certain size, then scaled pricing for larger works—perfect for artists, jewelers, or anyone needing professional bronze casting</span>
+                  </li>
+                </ul>
+                <p className="text-xs italic text-muted-foreground mt-4">
+                  Contact us to discuss your project—we'd love to help bring your vision to life.
+                </p>
               </CardContent>
             </Card>
           </div>
