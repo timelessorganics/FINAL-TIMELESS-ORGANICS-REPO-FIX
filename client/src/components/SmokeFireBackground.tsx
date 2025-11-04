@@ -35,7 +35,10 @@ export function SmokeFireBackground({ intensity = 'full' }: SmokeFireBackgroundP
         if (!isTransitioning) {
           setIsTransitioning(true);
           nextVideo.currentTime = 0;
-          nextVideo.play();
+          // Catch play() promise rejection to prevent console errors
+          nextVideo.play().catch(() => {
+            // Silently handle play interruption (video removed from DOM)
+          });
           setTimeout(() => {
             setCurrentIndex(nextIndex);
             setNextIndex((nextIndex + 1) % videos.length);
