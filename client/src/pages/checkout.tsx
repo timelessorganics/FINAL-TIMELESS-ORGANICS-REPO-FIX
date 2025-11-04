@@ -12,7 +12,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { Check, Sparkles } from "lucide-react";
+import { Check, Sparkles, Gift, AlertCircle } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
 
 const checkoutFormSchema = z.object({
   deliveryName: z.string().min(2, "Name must be at least 2 characters"),
@@ -31,6 +32,9 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   const { toast } = useToast();
   
   const [hasPatina, setHasPatina] = useState(false);
+  const [promoCode, setPromoCode] = useState("");
+  const [validatedPromo, setValidatedPromo] = useState<{valid: boolean; discount?: number; seatType?: string} | null>(null);
+  const [isValidatingPromo, setIsValidatingPromo] = useState(false);
 
   // Form setup
   const form = useForm<CheckoutForm>({
@@ -105,14 +109,89 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
     },
   });
 
+  // Promo code redemption mutation (for 100% discount codes)
+  const redeemPromo = useMutation({
+    mutationFn: async (data: CheckoutForm & { promoCode: string }) => {
+      return await apiRequest("POST", "/api/promo-code/redeem", {
+        code: data.promoCode,
+        deliveryName: data.deliveryName,
+        deliveryPhone: data.deliveryPhone,
+        deliveryAddress: data.deliveryAddress,
+        hasPatina,
+      });
+    },
+    onSuccess: () => {
+      toast({
+        title: "Complimentary Seat Confirmed!",
+        description: "Your VIP seat has been reserved. Redirecting to dashboard...",
+      });
+      setTimeout(() => {
+        setLocation('/dashboard');
+      }, 2000);
+    },
+    onError: (error: Error) => {
+      toast({
+        variant: "destructive",
+        title: "Promo Code Error",
+        description: error.message || "Failed to redeem promo code.",
+      });
+    },
+  });
+
   const handleCheckout = (data: CheckoutForm) => {
-    initiatePurchase.mutate(data);
+    // If 100% discount promo code, redeem directly (bypass payment)
+    if (validatedPromo?.valid && validatedPromo.discount === 100) {
+      redeemPromo.mutate({ ...data, promoCode: promoCode.toUpperCase() });
+    } else {
+      // Regular payment flow
+      initiatePurchase.mutate(data);
+    }
+  };
+
+  const validatePromoCode = async () => {
+    if (!promoCode.trim()) {
+      setValidatedPromo(null);
+      return;
+    }
+
+    setIsValidatingPromo(true);
+    try {
+      const response = await apiRequest("POST", "/api/promo-code/validate", {
+        code: promoCode.toUpperCase(),
+      });
+      const result = await response.json();
+      
+      setValidatedPromo(result);
+      
+      if (result.valid) {
+        toast({
+          title: "Promo Code Applied!",
+          description: `${result.discount}% discount - ${result.seatType === 'patron' ? 'Complimentary Patron' : 'Complimentary Founder'} seat`,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Invalid Promo Code",
+          description: result.message || "This code is not valid.",
+        });
+      }
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Validation Error",
+        description: "Could not validate promo code.",
+      });
+      setValidatedPromo(null);
+    } finally {
+      setIsValidatingPromo(false);
+    }
   };
 
   // Price calculation - R10 for testing
   const basePrice = 10;
   const patinaPrice = hasPatina ? 10 : 0;
-  const totalPrice = basePrice + patinaPrice;
+  const discount = validatedPromo?.valid ? ((basePrice + patinaPrice) * (validatedPromo.discount! / 100)) : 0;
+  const totalPrice = basePrice + patinaPrice - discount;
 
   const seatLabel = seatType === "founder" ? "Founder Pass" : "Patron Pass";
 
@@ -303,23 +382,63 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                   <CardTitle className="text-bronze">Order Summary</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  <div className="flex justify-between">
-                    <span className="text-muted-foreground">{seatLabel}</span>
-                    <span className="font-semibold">R{basePrice.toLocaleString()}</span>
+                  {/* Promo Code Input */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-medium text-muted-foreground">Promo Code (Optional)</label>
+                    <div className="flex gap-2">
+                      <Input
+                        placeholder="Enter code"
+                        value={promoCode}
+                        onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
+                        disabled={isValidatingPromo || validatedPromo?.valid}
+                        data-testid="input-promo-code"
+                        className="flex-1"
+                      />
+                      <Button
+                        onClick={validatePromoCode}
+                        disabled={!promoCode.trim() || isValidatingPromo || validatedPromo?.valid}
+                        variant="outline"
+                        data-testid="button-apply-promo"
+                      >
+                        {isValidatingPromo ? "..." : validatedPromo?.valid ? "Applied" : "Apply"}
+                      </Button>
+                    </div>
+                    {validatedPromo?.valid && (
+                      <Alert className="bg-accent-gold/10 border-accent-gold/30">
+                        <Gift className="h-4 w-4 text-accent-gold" />
+                        <AlertDescription className="text-sm">
+                          <strong>Complimentary {validatedPromo.seatType === 'patron' ? 'Patron' : 'Founder'} Seat</strong> - {validatedPromo.discount}% discount applied!
+                        </AlertDescription>
+                      </Alert>
+                    )}
                   </div>
 
-                  {hasPatina && (
+                  <div className="border-t border-border pt-4 space-y-2">
                     <div className="flex justify-between">
-                      <span className="text-muted-foreground">Patina Finish</span>
-                      <span className="font-semibold text-patina">+R10</span>
+                      <span className="text-muted-foreground">{seatLabel}</span>
+                      <span className="font-semibold">R{basePrice.toLocaleString()}</span>
                     </div>
-                  )}
+
+                    {hasPatina && (
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Patina Finish</span>
+                        <span className="font-semibold text-patina">+R10</span>
+                      </div>
+                    )}
+
+                    {validatedPromo?.valid && discount > 0 && (
+                      <div className="flex justify-between text-accent-gold">
+                        <span>Promo Discount ({validatedPromo.discount}%)</span>
+                        <span>-R{discount.toLocaleString()}</span>
+                      </div>
+                    )}
+                  </div>
 
                   <div className="pt-4 border-t border-border">
                     <div className="flex justify-between text-lg font-bold">
                       <span className="text-foreground">Total</span>
-                      <span className="text-bronze" data-testid="text-total-price">
-                        R{totalPrice.toLocaleString()}
+                      <span className={totalPrice === 0 ? "text-accent-gold" : "text-bronze"} data-testid="text-total-price">
+                        {totalPrice === 0 ? "FREE" : `R${totalPrice.toLocaleString()}`}
                       </span>
                     </div>
                   </div>
@@ -334,13 +453,19 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                 </CardContent>
                 <CardFooter>
                   <Button
-                    className="w-full bg-bronze hover:bg-bronze/90 text-white"
+                    className={validatedPromo?.valid && validatedPromo.discount === 100 
+                      ? "w-full bg-gradient-to-r from-accent-gold to-bronze text-white" 
+                      : "w-full bg-bronze hover:bg-bronze/90 text-white"}
                     size="lg"
                     onClick={form.handleSubmit(handleCheckout)}
-                    disabled={initiatePurchase.isPending}
+                    disabled={initiatePurchase.isPending || redeemPromo.isPending}
                     data-testid="button-proceed-payment"
                   >
-                    {initiatePurchase.isPending ? "Processing..." : "Proceed to Payment"}
+                    {initiatePurchase.isPending || redeemPromo.isPending 
+                      ? "Processing..." 
+                      : validatedPromo?.valid && validatedPromo.discount === 100
+                      ? "Complete Complimentary Reservation"
+                      : "Proceed to Payment"}
                   </Button>
                 </CardFooter>
               </Card>

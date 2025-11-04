@@ -74,7 +74,7 @@ export default function Dashboard() {
                   {/* Purchase Header */}
                   <div className="flex flex-wrap justify-between items-start mb-6 gap-4">
                     <div>
-                      <div className="flex items-center gap-3 mb-2">
+                      <div className="flex items-center gap-3 mb-2 flex-wrap">
                         <h2 className="font-serif text-2xl font-bold text-foreground">
                           {purchase.seatType === "founder" ? "Founders Pass" : "Patron Gift Card"}
                         </h2>
@@ -89,9 +89,16 @@ export default function Dashboard() {
                         >
                           {purchase.status}
                         </Badge>
+                        {purchase.paymentReference?.startsWith('PROMO-') && (
+                          <Badge className="bg-gradient-to-r from-accent-gold to-bronze text-white">
+                            ✨ Complimentary VIP Seat
+                          </Badge>
+                        )}
                       </div>
                       <div className="text-sm text-muted-foreground">
-                        Purchased on {new Date(purchase.createdAt!).toLocaleDateString()}
+                        {purchase.paymentReference?.startsWith('PROMO-') 
+                          ? `Complimentary seat reserved on ${new Date(purchase.createdAt!).toLocaleDateString()}`
+                          : `Purchased on ${new Date(purchase.createdAt!).toLocaleDateString()}`}
                       </div>
                     </div>
                     <div className="text-right">
