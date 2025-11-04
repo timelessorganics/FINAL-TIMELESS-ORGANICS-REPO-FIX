@@ -98,7 +98,7 @@ function Router() {
         <>
           {/* Sculpture Selection with Purchase ID */}
           <Route path="/sculpture-selection/:purchaseId">
-            {(params) => <SculptureGallery purchaseId={params.purchaseId} />}
+            {(params: { purchaseId?: string }) => <SculptureGallery purchaseId={params.purchaseId} />}
           </Route>
           
           {/* User Dashboard */}
