@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { SmokeFireBackground } from "@/components/SmokeFireBackground";
 import { InterestForm } from "@/components/InterestForm";
 import Footer from "@/components/footer";
-import { Flame, Hammer, Users, Award, ArrowRight, Sparkles, LogIn, LayoutDashboard } from "lucide-react";
+import { Flame, Hammer, Users, Award, ArrowRight, Sparkles, LogIn, LayoutDashboard, Leaf } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import type { User } from "@shared/schema";
 import { redirectToSignIn } from "@/lib/auth-helpers";
@@ -185,6 +185,45 @@ export default function MarketingLanding() {
             your chosen botanical specimen now — guaranteeing you a flawless bronze casting, 
             lifetime workshop discounts, and exclusive access to the ancient art of lost-wax casting.
           </p>
+
+          {/* Call to Action Buttons */}
+          <div className="flex flex-wrap justify-center gap-4 mb-12">
+            <Button 
+              variant="outline" 
+              size="lg"
+              asChild
+              className="bg-background/30 backdrop-blur-sm border-bronze/50 hover:border-bronze"
+              data-testid="button-view-specimens"
+            >
+              <a href="/sculptures">
+                <Sparkles className="w-4 h-4 mr-2" />
+                View Botanical Specimens
+              </a>
+            </Button>
+            <Button 
+              variant="outline" 
+              size="lg"
+              asChild
+              className="bg-background/30 backdrop-blur-sm border-patina/50 hover:border-patina"
+              data-testid="button-seasonal-guide"
+            >
+              <a href="/seasonal-guide">
+                <Leaf className="w-4 h-4 mr-2" />
+                Seasonal Guide
+              </a>
+            </Button>
+            <Button 
+              variant="default" 
+              size="lg"
+              asChild
+              className="bg-accent-gold/20 border-accent-gold/50 hover:border-accent-gold"
+              data-testid="button-view-seats"
+            >
+              <a href="/founding100">
+                Explore Founding 100 <ArrowRight className="w-4 h-4 ml-2" />
+              </a>
+            </Button>
+          </div>
 
           {/* Key Stats */}
           <div className="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
