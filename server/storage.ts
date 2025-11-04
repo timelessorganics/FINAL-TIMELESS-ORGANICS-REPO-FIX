@@ -91,13 +91,15 @@ export class DatabaseStorage implements IStorage {
   }
 
   async upsertUser(userData: UpsertUser): Promise<User> {
+    // Exclude id from update to avoid breaking foreign key constraints
+    const { id, ...updateData } = userData;
     const [user] = await db
       .insert(users)
       .values(userData)
       .onConflictDoUpdate({
         target: users.email,
         set: {
-          ...userData,
+          ...updateData,
           updatedAt: new Date(),
         },
       })
