@@ -124,7 +124,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-2xl font-serif text-bronze">Timeless Organics</h1>
-              <p className="text-sm text-secondary">Founding 100 Checkout</p>
+              <p className="text-sm text-muted-foreground">Founding 100 Checkout</p>
             </div>
             <Button
               variant="ghost"
@@ -165,10 +165,10 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                           <Sparkles className="w-5 h-5 text-bronze mt-0.5 flex-shrink-0" />
                           <div className="space-y-2">
                             <h4 className="font-semibold text-foreground">Curated for Peak Quality</h4>
-                            <p className="text-sm text-secondary">
+                            <p className="text-sm text-muted-foreground">
                               Each founder receives a unique botanical specimen selected by David Junor from the current season's finest Cape Fynbos specimens. Your casting will be one-of-a-kind, chosen for optimal detail retention and sculptural beauty.
                             </p>
-                            <ul className="text-sm text-secondary space-y-1 mt-2">
+                            <ul className="text-sm text-muted-foreground space-y-1 mt-2">
                               <li className="flex items-start gap-2">
                                 <Check className="w-4 h-4 text-bronze mt-0.5 flex-shrink-0" />
                                 <span>Expert selection from over 20 botanical varieties</span>
@@ -217,7 +217,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                           >
                             Add Patina Finish
                           </label>
-                          <p className="text-sm text-secondary">
+                          <p className="text-sm text-muted-foreground">
                             A chemical process that creates a distinctive green-blue oxidation on the bronze surface, reminiscent of aged copper. This traditional finish adds depth and character to your casting.
                           </p>
                         </div>
@@ -304,13 +304,13 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   <div className="flex justify-between">
-                    <span className="text-secondary">{seatLabel}</span>
+                    <span className="text-muted-foreground">{seatLabel}</span>
                     <span className="font-semibold">R{basePrice.toLocaleString()}</span>
                   </div>
 
                   {hasPatina && (
                     <div className="flex justify-between">
-                      <span className="text-secondary">Patina Finish</span>
+                      <span className="text-muted-foreground">Patina Finish</span>
                       <span className="font-semibold text-patina">+R10</span>
                     </div>
                   )}
@@ -324,7 +324,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                     </div>
                   </div>
 
-                  <div className="pt-4 space-y-2 text-sm text-secondary">
+                  <div className="pt-4 space-y-2 text-sm text-muted-foreground">
                     <p>✓ Workshop voucher ({seatType === "founder" ? "50%" : "80%"} off first workshop)</p>
                     <p>✓ Lifetime workshop code ({seatType === "founder" ? "20%" : "30%"} off forever)</p>
                     <p>✓ Guaranteed bronze casting</p>

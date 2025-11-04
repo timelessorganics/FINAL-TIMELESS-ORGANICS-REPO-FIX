@@ -13,7 +13,7 @@ export default function SeasonalGuide() {
           <h1 className="font-serif text-5xl font-bold text-bronze">
             The Seasonal Nature of Fynbos
           </h1>
-          <p className="text-xl text-secondary max-w-3xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Cape Fynbos is a winter-rainfall ecosystem. Each botanical specimen has its own season 
             of peak beauty—when flowers bloom, bracts colour, and seedheads form. We cast nature 
             at its finest, which means timing matters.
@@ -33,7 +33,7 @@ export default function SeasonalGuide() {
                 <Flower2 className="w-10 h-10 text-bronze mb-2" />
                 <CardTitle>Peak Beauty Windows</CardTitle>
               </CardHeader>
-              <CardContent className="text-secondary">
+              <CardContent className="text-muted-foreground">
                 <p>
                   Proteas bloom in winter-spring. Pincushions peak in late winter through early summer. 
                   Watsonias spike in spring. Each species has a narrow window when it's truly spectacular.
@@ -46,7 +46,7 @@ export default function SeasonalGuide() {
                 <Leaf className="w-10 h-10 text-patina mb-2" />
                 <CardTitle>Structural Integrity</CardTitle>
               </CardHeader>
-              <CardContent className="text-secondary">
+              <CardContent className="text-muted-foreground">
                 <p>
                   Some specimens (like restios) are architectural year-round, while others need to be 
                   caught at exactly the right moment—too early and the form isn't developed; too late 
@@ -64,7 +64,7 @@ export default function SeasonalGuide() {
             <h2 className="font-serif text-3xl font-bold">Seasonal Availability Chart</h2>
           </div>
 
-          <p className="text-secondary">
+          <p className="text-muted-foreground">
             All 12 specimen styles available for future workshop bookings, organized by peak season:
           </p>
 
@@ -197,7 +197,7 @@ export default function SeasonalGuide() {
               <p className="text-lg font-medium text-foreground">
                 Studio-Selected Specimens Only
               </p>
-              <p className="text-secondary">
+              <p className="text-muted-foreground">
                 For this exclusive launch, David Junor personally curates and selects each botanical specimen from the current season's finest Cape Fynbos. Your bronze will be one-of-a-kind, chosen for optimal detail retention and sculptural beauty. No specimen selection required—just complete your checkout and we'll handle the rest.
               </p>
               <div className="bg-muted/50 border border-border rounded-lg p-4 mt-4">
@@ -216,7 +216,7 @@ export default function SeasonalGuide() {
             <h2 className="font-serif text-3xl font-bold">Future Workshop Options</h2>
           </div>
 
-          <p className="text-secondary">
+          <p className="text-muted-foreground">
             After the Founding 100 launch, regular workshop participants will have flexible specimen selection:
           </p>
 
@@ -229,7 +229,7 @@ export default function SeasonalGuide() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="text-secondary">
+                <p className="text-muted-foreground">
                   Select your favorite botanical form from the chart above. We'll cast it when that species hits its seasonal sweet spot.
                 </p>
                 <div className="flex items-center gap-2 text-sm text-tertiary">
@@ -247,7 +247,7 @@ export default function SeasonalGuide() {
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">
-                <p className="text-secondary">
+                <p className="text-muted-foreground">
                   Send us a clear photo of what you'd like cast. We'll confirm viability within 48–72 hours and schedule it for the appropriate season.
                 </p>
                 <div className="flex items-center gap-2 text-sm text-tertiary">
@@ -262,7 +262,7 @@ export default function SeasonalGuide() {
         {/* Specimen Styles */}
         <section className="space-y-6">
           <h2 className="font-serif text-3xl font-bold">Specimen Styles</h2>
-          <p className="text-secondary">
+          <p className="text-muted-foreground">
             Instead of naming exact species, we group botanicals by their visual form. This gives 
             you creative freedom while ensuring we can source A-grade material when the season opens.
           </p>
@@ -278,7 +278,7 @@ export default function SeasonalGuide() {
                   </div>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-sm text-secondary">{style.description}</p>
+                  <p className="text-sm text-muted-foreground">{style.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -288,7 +288,7 @@ export default function SeasonalGuide() {
         {/* Seasonal Calendar */}
         <section className="space-y-6">
           <h2 className="font-serif text-3xl font-bold">The Fynbos Year</h2>
-          <p className="text-secondary">
+          <p className="text-muted-foreground">
             A quick guide to what's showy when in the Western Cape (winter-rainfall region):
           </p>
 
@@ -300,7 +300,7 @@ export default function SeasonalGuide() {
                   <CardDescription>{season.months}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <ul className="space-y-2 text-sm text-secondary">
+                  <ul className="space-y-2 text-sm text-muted-foreground">
                     {season.highlights.map((highlight, idx) => (
                       <li key={idx} className="flex items-start gap-2">
                         <span className="text-bronze mt-1">•</span>
@@ -317,7 +317,7 @@ export default function SeasonalGuide() {
         {/* CTA */}
         <section className="text-center space-y-6 py-12">
           <h3 className="font-serif text-3xl font-bold">Ready to Invest?</h3>
-          <p className="text-secondary max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto">
             Join the Founding 100 and secure your bronze casting. Choose your path—Cast Now, 
             Wait Till Season, or Provide Your Own—and we'll create something timeless.
           </p>

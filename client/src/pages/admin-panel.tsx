@@ -369,7 +369,7 @@ export default function AdminPanel() {
                             {purchase.seatType}
                           </Badge>
                         </div>
-                        <div className="text-sm text-secondary">
+                        <div className="text-sm text-muted-foreground">
                           Submitted on {new Date(purchase.createdAt!).toLocaleDateString()}
                         </div>
                       </div>

@@ -134,14 +134,14 @@ export default function Dashboard() {
                         
                         {/* Specimen Style (for Wait Till Season) */}
                         {purchase.specimenStyle && (
-                          <div className="text-sm text-secondary mb-2">
+                          <div className="text-sm text-muted-foreground mb-2">
                             <span className="font-medium">Chosen Style:</span> {purchase.specimenStyle.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
                           </div>
                         )}
                         
                         {/* Seasonal Batch Window */}
                         {purchase.seasonalBatchWindow && (
-                          <div className="text-sm text-secondary mb-2">
+                          <div className="text-sm text-muted-foreground mb-2">
                             <span className="font-medium">Batch Window:</span> {purchase.seasonalBatchWindow}
                           </div>
                         )}
@@ -161,7 +161,7 @@ export default function Dashboard() {
                               {purchase.customSpecimenApprovalStatus === 'rejected' && '✗ Not Viable for Casting'}
                             </Badge>
                             {purchase.customSpecimenNotes && (
-                              <p className="text-sm text-secondary mt-2">
+                              <p className="text-sm text-muted-foreground mt-2">
                                 <span className="font-medium">Studio Notes:</span> {purchase.customSpecimenNotes}
                               </p>
                             )}
@@ -197,7 +197,7 @@ export default function Dashboard() {
                                   {status === 'complete' && <Download className="w-4 h-4" />}
                                 </div>
                                 <div className={`text-xs text-center ${
-                                  isCurrent ? "font-semibold text-foreground" : "text-secondary"
+                                  isCurrent ? "font-semibold text-foreground" : "text-muted-foreground"
                                 }`}>
                                   {status === 'queued' && 'Queued'}
                                   {status === 'invested' && 'Invested'}
