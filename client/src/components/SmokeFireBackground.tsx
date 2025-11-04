@@ -13,18 +13,22 @@ interface SmokeFireBackgroundProps {
 }
 
 export function SmokeFireBackground({ intensity = 'full' }: SmokeFireBackgroundProps) {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [nextIndex, setNextIndex] = useState(1);
-  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [activeVideo, setActiveVideo] = useState<'A' | 'B'>('A');
+  const [videoAIndex, setVideoAIndex] = useState(0);
+  const [videoBIndex, setVideoBIndex] = useState(1);
   
-  const currentVideoRef = useRef<HTMLVideoElement>(null);
-  const nextVideoRef = useRef<HTMLVideoElement>(null);
+  const videoARef = useRef<HTMLVideoElement>(null);
+  const videoBRef = useRef<HTMLVideoElement>(null);
+  const transitioningRef = useRef(false);
   
   const videoOpacity = intensity === 'full' ? 0.55 : 0.15;
 
   useEffect(() => {
-    const currentVideo = currentVideoRef.current;
-    const nextVideo = nextVideoRef.current;
+    const activeRef = activeVideo === 'A' ? videoARef : videoBRef;
+    const inactiveRef = activeVideo === 'A' ? videoBRef : videoARef;
+    const currentVideo = activeRef.current;
+    const nextVideo = inactiveRef.current;
+    
     if (!currentVideo || !nextVideo) return;
 
     const handleTimeUpdate = () => {
@@ -32,59 +36,67 @@ export function SmokeFireBackground({ intensity = 'full' }: SmokeFireBackgroundP
       const currentTime = currentVideo.currentTime;
       
       // Start crossfade 2 seconds before end for seamless transition
-      if (duration - currentTime <= 2.0) {
-        if (!isTransitioning) {
-          setIsTransitioning(true);
-          nextVideo.currentTime = 0;
-          // Catch play() promise rejection to prevent console errors
-          nextVideo.play().catch(() => {
-            // Silently handle play interruption (video removed from DOM)
-          });
-          // Complete transition after 1.5 seconds (smooth crossfade)
-          setTimeout(() => {
-            setCurrentIndex(nextIndex);
-            setNextIndex((nextIndex + 1) % videos.length);
-            setIsTransitioning(false);
-          }, 1500);
-        }
+      if (duration - currentTime <= 2.0 && !transitioningRef.current) {
+        transitioningRef.current = true;
+        
+        // Prepare and play next video
+        nextVideo.currentTime = 0;
+        nextVideo.play().catch(() => {});
+        
+        // Swap active video after 1.5 second fade
+        setTimeout(() => {
+          setActiveVideo(activeVideo === 'A' ? 'B' : 'A');
+          
+          // Update the index of the video that just became inactive
+          if (activeVideo === 'A') {
+            setVideoAIndex((videoBIndex + 1) % videos.length);
+          } else {
+            setVideoBIndex((videoAIndex + 1) % videos.length);
+          }
+          
+          transitioningRef.current = false;
+        }, 1500);
       }
     };
 
     currentVideo.addEventListener('timeupdate', handleTimeUpdate);
     return () => currentVideo.removeEventListener('timeupdate', handleTimeUpdate);
-  }, [currentIndex, nextIndex, isTransitioning]);
+  }, [activeVideo, videoAIndex, videoBIndex]);
 
   return (
     <div className="fixed inset-0 z-40 overflow-hidden pointer-events-none">
       <video
-        ref={currentVideoRef}
-        key={`current-${currentIndex}`}
-        autoPlay
+        ref={videoARef}
+        key={`video-a-${videoAIndex}`}
+        autoPlay={activeVideo === 'A'}
         muted
         playsInline
         preload="auto"
-        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out"
+        className="absolute inset-0 w-full h-full object-cover"
         style={{ 
-          opacity: isTransitioning ? 0 : videoOpacity,
-          mixBlendMode: 'screen'
+          opacity: activeVideo === 'A' ? videoOpacity : 0,
+          mixBlendMode: 'screen',
+          transition: 'opacity 1.5s ease-in-out'
         }}
       >
-        <source src={videos[currentIndex]} type="video/mp4" />
+        <source src={videos[videoAIndex]} type="video/mp4" />
       </video>
       
       <video
-        ref={nextVideoRef}
-        key={`next-${nextIndex}`}
+        ref={videoBRef}
+        key={`video-b-${videoBIndex}`}
+        autoPlay={activeVideo === 'B'}
         muted
         playsInline
         preload="auto"
-        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out"
+        className="absolute inset-0 w-full h-full object-cover"
         style={{ 
-          opacity: isTransitioning ? videoOpacity : 0,
-          mixBlendMode: 'screen'
+          opacity: activeVideo === 'B' ? videoOpacity : 0,
+          mixBlendMode: 'screen',
+          transition: 'opacity 1.5s ease-in-out'
         }}
       >
-        <source src={videos[nextIndex]} type="video/mp4" />
+        <source src={videos[videoBIndex]} type="video/mp4" />
       </video>
       
       <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/20 to-transparent" />
