@@ -35,7 +35,13 @@ Go to **Authentication** → **Providers** and enable:
 #### Apple OAuth (Optional)
 1. Click **Apple** provider
 2. Enable it
-3. Add Apple Service ID and credentials (create at https://developer.apple.com/)
+3. Add![https___timeless-organics-fouding-100-production](https___timeless-organics-fouding-100-production.up.railway.app_api_seats_availability.url)[InternetShortcut]
+URL=https://timeless-organics-fouding-100-production.up.railway.app/api/seats/availability
+IDList=
+HotKey=0
+IconFile=C:\Users\DavidHelena\AppData\Local\Mozilla\Firefox\Profiles\pkqzpo2c.default-release\shortcutCache\Jf15rvVQkVFXkHn7HvhVfsZ4wq2fLHMPUJxuDkoL1qU=.ico
+IconIndex=0
+ Apple Service ID and credentials (create at https://developer.apple.com/)
 
 #### Email Auth
 1. Click **Email** provider
