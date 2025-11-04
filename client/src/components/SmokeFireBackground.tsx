@@ -31,7 +31,8 @@ export function SmokeFireBackground({ intensity = 'full' }: SmokeFireBackgroundP
       const duration = currentVideo.duration;
       const currentTime = currentVideo.currentTime;
       
-      if (duration - currentTime <= 0.5) {
+      // Start crossfade 2 seconds before end for seamless transition
+      if (duration - currentTime <= 2.0) {
         if (!isTransitioning) {
           setIsTransitioning(true);
           nextVideo.currentTime = 0;
@@ -39,11 +40,12 @@ export function SmokeFireBackground({ intensity = 'full' }: SmokeFireBackgroundP
           nextVideo.play().catch(() => {
             // Silently handle play interruption (video removed from DOM)
           });
+          // Complete transition after 1.5 seconds (smooth crossfade)
           setTimeout(() => {
             setCurrentIndex(nextIndex);
             setNextIndex((nextIndex + 1) % videos.length);
             setIsTransitioning(false);
-          }, 500);
+          }, 1500);
         }
       }
     };
@@ -61,7 +63,7 @@ export function SmokeFireBackground({ intensity = 'full' }: SmokeFireBackgroundP
         muted
         playsInline
         preload="auto"
-        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out"
         style={{ 
           opacity: isTransitioning ? 0 : videoOpacity,
           mixBlendMode: 'screen'
@@ -76,7 +78,7 @@ export function SmokeFireBackground({ intensity = 'full' }: SmokeFireBackgroundP
         muted
         playsInline
         preload="auto"
-        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-500"
+        className="absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out"
         style={{ 
           opacity: isTransitioning ? videoOpacity : 0,
           mixBlendMode: 'screen'
