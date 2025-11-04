@@ -141,6 +141,15 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   const handleCheckout = (data: CheckoutForm) => {
     // If 100% discount promo code, redeem directly (bypass payment)
     if (validatedPromo?.valid && validatedPromo.discount === 100) {
+      // Security: Ensure promo seat type matches checkout seat type
+      if (validatedPromo.seatType !== seatType) {
+        toast({
+          variant: "destructive",
+          title: "Seat Type Mismatch",
+          description: `This promo code is for ${validatedPromo.seatType} seats only.`,
+        });
+        return;
+      }
       redeemPromo.mutate({ ...data, promoCode: promoCode.toUpperCase() });
     } else {
       // Regular payment flow

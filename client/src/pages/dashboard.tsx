@@ -5,7 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import type { Purchase, Code, User } from "@shared/schema";
-import { Download, ExternalLink, User as UserIcon, Sparkles, CalendarDays, Upload, Clock, Leaf, Flame, Package } from "lucide-react";
+import { Download, ExternalLink, User as UserIcon, Sparkles, CalendarDays, Upload, Clock, Leaf, Flame, Package, Gift } from "lucide-react";
 
 export default function Dashboard() {
   const { data: user } = useQuery<User>({
@@ -90,8 +90,9 @@ export default function Dashboard() {
                           {purchase.status}
                         </Badge>
                         {purchase.paymentReference?.startsWith('PROMO-') && (
-                          <Badge className="bg-gradient-to-r from-accent-gold to-bronze text-white">
-                            ✨ Complimentary VIP Seat
+                          <Badge className="bg-gradient-to-r from-accent-gold to-bronze text-white flex items-center gap-1">
+                            <Gift className="w-3 h-3" />
+                            Complimentary VIP Seat
                           </Badge>
                         )}
                       </div>
