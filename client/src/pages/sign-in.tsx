@@ -22,6 +22,10 @@ export default function SignIn() {
         options: {
           redirectTo: `${window.location.origin}`,
           skipBrowserRedirect: false,
+          // Force Google account picker to show
+          queryParams: provider === 'google' 
+            ? { prompt: 'select_account' }
+            : undefined,
         },
       });
 
