@@ -532,6 +532,9 @@ export default function AdminPanel() {
                       Amount
                     </th>
                     <th className="text-left py-3 px-4 text-sm font-semibold text-muted-foreground">
+                      Add-ons
+                    </th>
+                    <th className="text-left py-3 px-4 text-sm font-semibold text-muted-foreground">
                       Status
                     </th>
                     <th className="text-left py-3 px-4 text-sm font-semibold text-muted-foreground">
@@ -550,6 +553,28 @@ export default function AdminPanel() {
                       </td>
                       <td className="py-3 px-4 text-sm font-semibold text-accent-gold">
                         R{(purchase.amount / 100).toFixed(2)}
+                      </td>
+                      <td className="py-3 px-4">
+                        <div className="flex flex-col gap-1">
+                          {purchase.hasPatina && (
+                            <Badge variant="outline" className="text-xs w-fit">
+                              Patina
+                            </Badge>
+                          )}
+                          {purchase.hasMounting && (
+                            <Badge variant="outline" className="text-xs w-fit">
+                              Mounting
+                            </Badge>
+                          )}
+                          {purchase.internationalShipping && (
+                            <Badge variant="outline" className="text-xs w-fit bg-accent-gold/10 text-accent-gold border-accent-gold/30">
+                              Int'l Ship
+                            </Badge>
+                          )}
+                          {!purchase.hasPatina && !purchase.hasMounting && !purchase.internationalShipping && (
+                            <span className="text-xs text-muted-foreground">—</span>
+                          )}
+                        </div>
                       </td>
                       <td className="py-3 px-4">
                         <Badge
