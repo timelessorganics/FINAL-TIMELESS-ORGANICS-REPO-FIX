@@ -43,11 +43,13 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Payment Processing:** Secure PayFast Onsite Payments integration for in-house checkout. Critical: Requires production credentials; sandbox mode not supported for onsite.
 - **Session Management:** Currently memory-based; aiming to restore PostgreSQL session storage.
 - **Subscriber System:** API endpoints for managing pre-launch interest (name, email, phone).
+- **Mailchimp Integration:** Automated email list sync. Pre-launch subscribers tagged "Pre-Launch Subscriber"; purchasers tagged "Founding 100 Investor" + seat type; VIP promo redemptions tagged "VIP Complimentary". Admin panel includes "Sync to Mailchimp" button for bulk-syncing existing contacts. Requires `MAILCHIMP_API_KEY`, `MAILCHIMP_SERVER`, and `MAILCHIMP_LIST_ID` environment variables.
 - **Seasonal Guide:** Educational page showcasing all 12 specimen styles with seasonal availability chart. Includes updated "Future Workshop Options" section explaining date-based booking system, studio selection vs. bring-your-own options, safety net (free second casting), commission fallback options, and future bespoke/casting services.
 
 ## External Dependencies
 - **Supabase:** PostgreSQL database and authentication.
 - **PayFast:** Payment gateway for seat purchases.
+- **Mailchimp:** Email marketing platform for subscriber list management and campaigns.
 - **Netlify:** Frontend hosting.
 - **Railway:** Backend API hosting.
 - **Nodemailer:** Email delivery.
