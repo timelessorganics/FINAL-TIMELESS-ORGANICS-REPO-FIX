@@ -2,8 +2,8 @@ import { Link } from "wouter";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import pincushionImg1 from "@assets/Leucospermum-prostratum-6-1_1762380839587.jpg";
-import pincushionImg2 from "@assets/Comparison-of-Leucospermum-gracile-and-prostratum-8-1_1762380839588.jpg";
+import pincushionImg1 from "../assets/Leucospermum-prostratum-6-1_1762380839587.jpg";
+import pincushionImg2 from "../assets/Comparison-of-Leucospermum-gracile-and-prostratum-8-1_1762380839588.jpg";
 
 interface SculptureGalleryProps {
   purchaseId?: string;
