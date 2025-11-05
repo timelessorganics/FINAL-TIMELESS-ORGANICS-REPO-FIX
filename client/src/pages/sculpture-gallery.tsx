@@ -75,15 +75,28 @@ export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) 
       <Header />
       <div className="relative z-50 min-h-screen">
         <div className="max-w-[1100px] mx-auto px-7 py-12">
+          {/* Important Notice - Sample Specimens */}
+          <div className="mb-8 bg-accent-gold/10 border border-accent-gold/30 rounded-lg p-6">
+            <h3 className="font-serif text-xl font-bold text-foreground mb-3 flex items-center gap-2">
+              <span>🌿</span> Sample Specimens Only
+            </h3>
+            <p className="text-muted-foreground mb-2">
+              <strong className="text-foreground">These images are reference examples.</strong> Your actual botanical specimen will be hand-selected by David Junor from the current season's finest Cape Fynbos harvests.
+            </p>
+            <p className="text-sm text-muted-foreground">
+              Each Founding 100 piece is unique and subject to seasonal availability. After your purchase, you'll receive photos of your personally selected specimen for approval before casting begins.
+            </p>
+          </div>
+
           {/* Header */}
           <div className="text-center mb-12">
-            <div className="kicker mb-3">YOUR BRONZE SELECTION</div>
+            <div className="kicker mb-3">FOUNDING 100 SPECIMENS</div>
             <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
-              Choose Your <span className="moving-fill">Cutting</span>
+              Botanical <span className="moving-fill">Artistry</span>
             </h1>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Select one of our studio-approved botanical specimens for your guaranteed bronze casting.
-              Each piece is carefully preserved using traditional lost-wax methods.
+              David personally curates each specimen from this season's harvest. 
+              These images showcase the style and caliber—your actual piece will be even more exceptional.
             </p>
           </div>
 

@@ -244,7 +244,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                     <CardHeader>
                       <CardTitle className="text-bronze">Studio-Selected Specimen</CardTitle>
                       <CardDescription>
-                        For the Founding 100 launch, our studio will curate and select your botanical specimen
+                        For the Founding 100 launch, David personally curates each botanical specimen from this season's finest harvests
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
@@ -252,18 +252,18 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                         <div className="flex items-start gap-3">
                           <Sparkles className="w-5 h-5 text-bronze mt-0.5 flex-shrink-0" />
                           <div className="space-y-2">
-                            <h4 className="font-semibold text-foreground">Curated for Peak Quality</h4>
+                            <h4 className="font-semibold text-foreground">Hand-Selected by David Junor</h4>
                             <p className="text-sm text-muted-foreground">
-                              Each founder receives a unique botanical specimen selected by David Junor from the current season's finest Cape Fynbos specimens. Your casting will be one-of-a-kind, chosen for optimal detail retention and sculptural beauty.
+                              Each Founding 100 member receives a unique botanical specimen personally selected by David from the current season's finest Cape Fynbos. Your casting will be one-of-a-kind, chosen for optimal detail retention and sculptural beauty.
                             </p>
                             <ul className="text-sm text-muted-foreground space-y-1 mt-2">
                               <li className="flex items-start gap-2">
                                 <Check className="w-4 h-4 text-bronze mt-0.5 flex-shrink-0" />
-                                <span>Expert selection from over 20 botanical varieties</span>
+                                <span>Expert selection from current seasonal harvest</span>
                               </li>
                               <li className="flex items-start gap-2">
                                 <Check className="w-4 h-4 text-bronze mt-0.5 flex-shrink-0" />
-                                <span>Peak-season specimens for maximum detail</span>
+                                <span>You'll receive photos for approval before casting</span>
                               </li>
                               <li className="flex items-start gap-2">
                                 <Check className="w-4 h-4 text-bronze mt-0.5 flex-shrink-0" />
@@ -276,7 +276,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                       
                       <div className="bg-muted/50 border border-border rounded-lg p-4">
                         <p className="text-xs text-muted-foreground italic">
-                          💡 Note: Custom specimen selection and "bring your own" options will be available for regular workshop bookings after the Founding 100 launch.
+                          💡 Note: Custom specimen selection and "bring your own" options will be available for regular workshop bookings after the Founding 100 launch. Workshop bookings do NOT include specimen approval.
                         </p>
                       </div>
                     </CardContent>
