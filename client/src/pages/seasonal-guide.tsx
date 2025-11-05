@@ -2,6 +2,7 @@ import { Link } from "wouter";
 import { Leaf, CalendarDays, Flower2, Sparkles, ArrowLeft, Camera, CheckCircle2, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import SpecimenShowcase from "@/components/SpecimenShowcase";
 
 export default function SeasonalGuide() {
   return (
@@ -194,6 +195,9 @@ export default function SeasonalGuide() {
             </div>
           </div>
         </section>
+
+        {/* Specimen Showcase with Hover Images */}
+        <SpecimenShowcase />
 
         {/* Founding 100 Note */}
         <section className="space-y-6">
