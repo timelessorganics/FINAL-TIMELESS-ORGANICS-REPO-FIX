@@ -29,16 +29,18 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 
 **Technical Implementations & Features:**
 - **Authentication:** Supabase Auth for user management (Google, GitHub, Email); backend verifies JWT tokens using service role key. Google OAuth uses `prompt: 'select_account'` to force account picker.
-- **Seat Sales:** Founder (R3,000) and Patron (R5,000) seats with live counters and PayFast integration.
+- **Seat Sales:** Founder (R3,000) and Patron (R5,000) seats with live counters and PayFast integration. Frontend fetches actual seat prices from `/api/seats/availability` to ensure accuracy.
 - **Promo Code System:** 10 FREE VIP Patron seats via promo codes (ONTOP of 50 paid seats). Admin generates codes, VIPs redeem at checkout (100% discount bypasses payment), dashboard shows "Complimentary VIP Seat" badge with Gift icon. Seat type matching enforced for security.
 - **Studio-Selected Specimens:** For Founding 100, David Junor curates and selects all botanical specimens from the current season's finest Cape Fynbos. No user choice required - simplified checkout flow.
+- **Mounting Option:** Optional bronze mounting service (+R1,000) added to checkout. When selected, `hasMounting` field stored in purchases table. Retail value messaging (R25-40K) highlights investment value.
+- **International Shipping:** Checkbox option at checkout for international delivery (R0 upfront). Manual DHL quotes sent later. `internationalShipping` boolean flag stored in purchases table. Admin panel displays shipping flags.
 - **Production Status Tracking:** Visual dashboard (Queued → Invested → Ready to Pour → Poured & Finishing → Complete).
 - **Code Generation:** Automated unique bronze claim, workshop voucher (50%/80% discount), and lifetime workshop codes (20%/30% discount), each with an `appliesTo` field.
 - **Certificate Generation:** Automated PDF certificates with aloe background.
 - **Email Notifications:** Seasonal messaging in confirmation and certificate emails.
 - **User Dashboard:** Displays purchases, production status, codes, and downloadable certificates.
-- **Admin Panel:** Provides analytics, seat tracking, purchase management, custom specimen approval, subscriber export, and promo code generation.
-- **Database Schema:** Key tables include `users`, `seats`, `purchases`, `codes`, `sculptures`, `promo_codes`, and `subscribers`. Legacy seasonal fields preserved for backward compatibility (30 existing purchases). New Founding 100 purchases use studio-selected approach.
+- **Admin Panel:** Provides analytics, seat tracking, purchase management, custom specimen approval, subscriber export, promo code generation, and displays mounting/international shipping flags for each purchase.
+- **Database Schema:** Key tables include `users`, `seats`, `purchases` (with `hasMounting` and `internationalShipping` booleans), `codes`, `sculptures`, `promo_codes`, and `subscribers`. Legacy seasonal fields preserved for backward compatibility (30 existing purchases). New Founding 100 purchases use studio-selected approach.
 - **API Endpoints:** Public for registration/seat availability; protected for purchases, sculpture selection, user dashboards, promo validation; admin for data management, specimen approval, and promo code management.
 - **Payment Processing:** Secure PayFast Onsite Payments integration for in-house checkout. Critical: Requires production credentials; sandbox mode not supported for onsite.
 - **Session Management:** Currently memory-based; aiming to restore PostgreSQL session storage.
