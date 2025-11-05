@@ -1,216 +1,126 @@
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { Card } from "@/components/ui/card";
+import { Link } from "wouter";
+import { ArrowLeft, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
-import Header from "@/components/header";
-import Footer from "@/components/footer";
-import { SmokeFireBackground } from "@/components/SmokeFireBackground";
-import type { Sculpture, Purchase } from "@shared/schema";
-import { useState } from "react";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import pincushionImg1 from "@assets/Leucospermum-prostratum-6-1_1762380839587.jpg";
+import pincushionImg2 from "@assets/Comparison-of-Leucospermum-gracile-and-prostratum-8-1_1762380839588.jpg";
 
 interface SculptureGalleryProps {
   purchaseId?: string;
 }
 
+// Specimen examples - these are reference images showing the quality and style
+const specimenExamples = [
+  {
+    id: 1,
+    name: "Pincushion (Leucospermum)",
+    latinName: "Leucospermum prostratum",
+    description: "Compact rosette formation with layered feathery bracts. Perfect detail retention in the delicate needle-like leaves.",
+    season: "Winter-Spring",
+    image: pincushionImg1,
+  },
+  {
+    id: 2,
+    name: "Pincushion Bloom",
+    latinName: "Leucospermum gracile",
+    description: "Spherical flower heads with distinctive spiky styles. Creates stunning sculptural forms when cast in bronze.",
+    season: "Late Winter-Spring",
+    image: pincushionImg2,
+  },
+];
+
 export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) {
-  const { toast } = useToast();
-  const queryClient = useQueryClient();
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-
-  const { data: sculptures, isLoading } = useQuery<Sculpture[]>({
-    queryKey: ["/api/sculptures"],
-  });
-
-  const { data: purchase } = useQuery<Purchase>({
-    queryKey: ["/api/purchase", purchaseId],
-  });
-
-  const selectionMutation = useMutation({
-    mutationFn: async (sculptureId: string) => {
-      return await apiRequest("POST", "/api/sculpture-selection", {
-        purchaseId,
-        sculptureId,
-      });
-    },
-    onSuccess: () => {
-      toast({
-        title: "Selection Confirmed",
-        description: "Your sculpture choice has been saved!",
-      });
-      queryClient.invalidateQueries({ queryKey: ["/api/purchase", purchaseId] });
-    },
-    onError: (error: Error) => {
-      toast({
-        title: "Selection Failed",
-        description: error.message || "Please try again",
-        variant: "destructive",
-      });
-    },
-  });
-
-  const handleSelection = () => {
-    if (selectedId) {
-      selectionMutation.mutate(selectedId);
-    }
-  };
-
-  // Filter sculptures based on seat type
-  const availableSculptures = sculptures?.filter(
-    (s) => !s.availableFor || s.availableFor === purchase?.seatType
-  );
-
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="spinner" />
-      </div>
-    );
-  }
-
   return (
-    <>
-      <div className="bg-aloe" />
-      <SmokeFireBackground />
-      <Header />
-      <div className="relative z-50 min-h-screen">
-        <div className="max-w-[1100px] mx-auto px-7 py-12">
-          {/* Important Notice - Sample Specimens */}
-          <div className="mb-8 bg-accent-gold/10 border border-accent-gold/30 rounded-lg p-6">
-            <h3 className="font-serif text-xl font-bold text-foreground mb-3 flex items-center gap-2">
-              <span>🌿</span> Sample Specimens Only
-            </h3>
-            <p className="text-muted-foreground mb-2">
-              <strong className="text-foreground">These images are reference examples.</strong> Your actual botanical specimen will be hand-selected by David Junor from the current season's finest Cape Fynbos harvests.
-            </p>
-            <p className="text-sm text-muted-foreground">
-              Each Founding 100 piece is unique and subject to seasonal availability. After your purchase, you'll receive photos of your personally selected specimen for approval before casting begins.
-            </p>
-          </div>
+    <div className="min-h-screen bg-background">
+      <div className="max-w-5xl mx-auto px-4 py-12 space-y-12">
+        
+        {/* Back Navigation */}
+        <div>
+          <Link href="/">
+            <Button variant="ghost" className="gap-2" data-testid="button-back-home">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Home
+            </Button>
+          </Link>
+        </div>
 
-          {/* Header */}
-          <div className="text-center mb-12">
-            <div className="kicker mb-3">FOUNDING 100 SPECIMENS</div>
-            <h1 className="font-serif text-4xl md:text-5xl font-bold mb-4">
-              Botanical <span className="moving-fill">Artistry</span>
-            </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              David personally curates each specimen from this season's harvest. 
-              These images showcase the style and caliber—your actual piece will be even more exceptional.
-            </p>
-          </div>
+        {/* Hero Section */}
+        <header className="text-center space-y-4">
+          <h1 className="font-serif text-5xl font-bold text-bronze">
+            Founding 100 Specimen Examples
+          </h1>
+          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+            Reference images showing the caliber and style of specimens David selects. 
+            Your actual piece will be hand-selected from the current season's finest harvests.
+          </p>
+        </header>
 
-          {/* Onboarding Explanation */}
-          <Card className="mb-12 p-8 bg-card/50 backdrop-blur-sm">
-            <div className="max-w-3xl mx-auto space-y-4">
-              <h2 className="font-serif text-2xl font-bold text-foreground mb-4">
-                How This Works
-              </h2>
-              
-              <div className="space-y-3 text-muted-foreground">
-                <p>
-                  <strong className="text-foreground">Step 1: Choose Your Cutting</strong> — Select one botanical specimen from our curated gallery below. These are aloe cuttings handpicked by David Junor for their exceptional detail and artistic merit.
-                </p>
-                
-                <p>
-                  <strong className="text-foreground">Step 2: Immediate Ceramic Encasement</strong> — Once selected, your cutting will be encased in ceramic within days. This preserves every detail: spines, texture, serrations—exactly as nature created it.
-                </p>
-                
-                <p>
-                  <strong className="text-foreground">Step 3: Lost-Wax Casting</strong> — The ceramic mold is fired in a kiln (burning away the organic material), then filled with molten bronze at 1,100°C. After cooling and finishing, you receive a perfect bronze replica of your chosen cutting.
-                </p>
-                
-                <p>
-                  <strong className="text-foreground">Timeline:</strong> We're aiming for Christmas delivery, though timelines can vary. The complete process (ceramic work, kiln firing, bronze pouring, finishing) typically takes several weeks. You'll receive updates via email and can claim your finished piece with your bronze claim code.
-                </p>
-
-                <div className="bg-accent-gold/10 border border-accent-gold/30 rounded-lg p-4 mt-4">
-                  <p className="text-foreground font-semibold mb-2">
-                    🌿 Nature Works on Her Own Schedule
-                  </p>
-                  <p className="text-sm">
-                    Plants and flowers are seasonal—different species bloom and flourish at different times of year. Summer brings different specimens than winter, just as spring differs from autumn. This natural rhythm creates unique workshop experiences throughout the year, each season offering its own botanical treasures. This is why we recommend booking workshops across all four seasons to experience the full diversity of South African flora!
-                  </p>
-                </div>
-
-                <p className="text-sm text-muted-foreground/70 pt-3 border-t border-border">
-                  While you can request changes if absolutely necessary, we encourage you to choose carefully—this is the TIMELESS piece you'll treasure for life.
-                </p>
-              </div>
+        {/* Important Notice */}
+        <Card className="bg-accent-gold/10 border-accent-gold/30">
+          <CardHeader>
+            <div className="flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-accent-gold" />
+              <CardTitle className="text-lg">Studio-Selected Specimens</CardTitle>
             </div>
-          </Card>
+          </CardHeader>
+          <CardContent className="space-y-3 text-sm text-muted-foreground">
+            <p>
+              <strong className="text-foreground">For the Founding 100 launch:</strong> David personally curates each botanical specimen from this season's finest Cape Fynbos. No selection required—every piece is hand-picked for optimal detail retention and sculptural beauty.
+            </p>
+            <p>
+              You'll receive photos of your personally selected specimen for approval before casting begins. Each piece is one-of-a-kind, signed and numbered (1 of 100).
+            </p>
+          </CardContent>
+        </Card>
 
-          {/* Image Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 mb-12">
-            {availableSculptures?.map((sculpture) => (
-              <div
-                key={sculpture.id}
-                className={`${sculpture.isBronze ? "bronze-piece" : ""} cursor-pointer`}
-                onClick={() => setSelectedId(sculpture.id)}
-                data-testid={`sculpture-${sculpture.id}`}
-              >
-                <Card
-                  className={`overflow-hidden transition-all duration-300 ${
-                    selectedId === sculpture.id
-                      ? "ring-2 ring-bronze ring-offset-2 ring-offset-background"
-                      : "hover-elevate"
-                  }`}
-                >
-                  <img
-                    src={sculpture.imageUrl || `https://placehold.co/400x300/2d3436/a67c52?text=${encodeURIComponent(sculpture.name)}`}
-                    alt={sculpture.name}
-                    className="w-full h-48 object-cover bg-card"
-                    onError={(e) => {
-                      const target = e.target as HTMLImageElement;
-                      target.src = `https://placehold.co/400x300/2d3436/a67c52?text=${encodeURIComponent(sculpture.name)}`;
-                    }}
+        {/* Specimen Examples Gallery */}
+        <section className="space-y-6">
+          <div className="text-center">
+            <h2 className="font-serif text-3xl font-bold mb-2">Example Specimens</h2>
+            <p className="text-muted-foreground">
+              These images showcase the quality and detail you can expect
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {specimenExamples.map((specimen) => (
+              <Card key={specimen.id} className="hover-elevate overflow-hidden" data-testid={`card-specimen-${specimen.id}`}>
+                <div className="aspect-square bg-muted/20 overflow-hidden">
+                  <img 
+                    src={specimen.image} 
+                    alt={specimen.name}
+                    className="w-full h-full object-cover"
                   />
-                  <div className="p-4">
-                    <h3 className="font-serif font-bold text-lg mb-1 text-foreground">
-                      {sculpture.name}
-                    </h3>
-                    {sculpture.description && (
-                      <p className="text-xs text-muted-foreground line-clamp-2">
-                        {sculpture.description}
-                      </p>
-                    )}
-                    {sculpture.isBronze && (
-                      <div className="mt-2">
-                        <span className="text-xs font-semibold text-bronze uppercase tracking-wide">
-                          Premium Bronze
-                        </span>
-                      </div>
-                    )}
+                </div>
+                <CardHeader>
+                  <CardTitle className="text-bronze">{specimen.name}</CardTitle>
+                  <CardDescription className="italic">{specimen.latinName}</CardDescription>
+                </CardHeader>
+                <CardContent className="space-y-3">
+                  <p className="text-sm text-muted-foreground">
+                    {specimen.description}
+                  </p>
+                  <div className="flex items-center gap-2 text-xs text-bronze/70">
+                    <span className="font-semibold">Peak Season:</span>
+                    <span>{specimen.season}</span>
                   </div>
-                </Card>
-              </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
+        </section>
 
-          {/* Confirm Selection - Only show for authenticated users with a purchase */}
-          {purchaseId && (
-            <div className="flex justify-center">
-              <Button
-                onClick={handleSelection}
-                disabled={!selectedId || selectionMutation.isPending}
-                className="btn-bronze font-bold px-12 py-6 text-lg"
-                data-testid="button-confirm-selection"
-              >
-                {selectionMutation.isPending ? (
-                  <div className="flex items-center gap-2">
-                    <div className="spinner w-5 h-5 border-2" />
-                    <span>Confirming...</span>
-                  </div>
-                ) : (
-                  <span className="moving-fill">Confirm Selection</span>
-                )}
-              </Button>
-            </div>
-          )}
+        {/* View Full Seasonal Guide */}
+        <div className="text-center pt-8">
+          <Link href="/seasonal-guide">
+            <Button variant="outline" size="lg" className="gap-2" data-testid="button-view-seasonal-guide">
+              View Full Seasonal Guide
+              <ArrowLeft className="w-4 h-4 rotate-180" />
+            </Button>
+          </Link>
         </div>
+
       </div>
-      
-      <Footer />
-    </>
+    </div>
   );
 }
