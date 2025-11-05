@@ -44,16 +44,7 @@ export function InterestForm() {
 
   const registerMutation = useMutation({
     mutationFn: async (data: InterestFormValues) => {
-      const response = await fetch("/api/subscribers", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) {
-        const error = await response.json();
-        throw new Error(error.message || "Failed to register");
-      }
-      return response.json();
+      return await apiRequest("POST", "/api/subscribers", data);
     },
     onSuccess: () => {
       setIsSuccess(true);

@@ -202,6 +202,21 @@ export default function MainLaunch() {
                 )}
               </div>
             )}
+
+            {/* Invest Now CTA */}
+            <div className="flex justify-center mt-12">
+              <Button
+                asChild
+                size="lg"
+                className="btn-bronze font-bold px-12 py-6 text-lg"
+                data-testid="button-invest-cta"
+              >
+                <a href="#seats">
+                  <span className="moving-fill">Invest Now</span>
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </a>
+              </Button>
+            </div>
           </section>
 
           {/* Founding 100 Specimen Options */}
