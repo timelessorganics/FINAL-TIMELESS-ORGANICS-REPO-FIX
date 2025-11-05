@@ -32,6 +32,8 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   const { toast } = useToast();
   
   const [hasPatina, setHasPatina] = useState(false);
+  const [hasMounting, setHasMounting] = useState(false);
+  const [internationalShipping, setInternationalShipping] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [validatedPromo, setValidatedPromo] = useState<{valid: boolean; discount?: number; seatType?: string} | null>(null);
   const [isValidatingPromo, setIsValidatingPromo] = useState(false);
@@ -52,6 +54,8 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
       const response = await apiRequest("POST", "/api/purchase/initiate", {
         seatType,
         hasPatina,
+        hasMounting,
+        internationalShipping,
         deliveryName: data.deliveryName,
         deliveryPhone: data.deliveryPhone,
         deliveryAddress: data.deliveryAddress,
@@ -118,6 +122,8 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
         deliveryPhone: data.deliveryPhone,
         deliveryAddress: data.deliveryAddress,
         hasPatina,
+        hasMounting,
+        internationalShipping,
       });
     },
     onSuccess: () => {
@@ -196,11 +202,13 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
     }
   };
 
-  // Price calculation - R10 for testing
+  // Price calculation - R10 for testing base price
   const basePrice = 10;
   const patinaPrice = hasPatina ? 10 : 0;
-  const discount = validatedPromo?.valid ? ((basePrice + patinaPrice) * (validatedPromo.discount! / 100)) : 0;
-  const totalPrice = basePrice + patinaPrice - discount;
+  const mountingPrice = hasMounting ? 1000 : 0;
+  const subtotal = basePrice + patinaPrice + mountingPrice;
+  const discount = validatedPromo?.valid ? (subtotal * (validatedPromo.discount! / 100)) : 0;
+  const totalPrice = subtotal - discount;
 
   const seatLabel = seatType === "founder" ? "Founder Pass" : "Patron Pass";
 
@@ -307,6 +315,68 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                           </label>
                           <p className="text-sm text-muted-foreground">
                             A chemical process that creates a distinctive green-blue oxidation on the bronze surface, reminiscent of aged copper. This traditional finish adds depth and character to your casting.
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Mounting Option */}
+                  <Card data-testid="card-mounting-option">
+                    <CardHeader>
+                      <CardTitle className="text-bronze">Professional Mounting</CardTitle>
+                      <CardDescription>
+                        Museum-quality mounting for display (+R1,000)
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-start space-x-3">
+                        <Checkbox
+                          id="mounting"
+                          checked={hasMounting}
+                          onCheckedChange={(checked) => setHasMounting(checked as boolean)}
+                          data-testid="checkbox-mounting"
+                        />
+                        <div className="grid gap-1.5 leading-none">
+                          <label
+                            htmlFor="mounting"
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                          >
+                            Add Professional Mounting
+                          </label>
+                          <p className="text-sm text-muted-foreground">
+                            Your bronze casting will be professionally mounted on a custom base, ready for display. These pieces typically sell for R25,000-R40,000 when mounted and patinated - exceptional value for Founding 100 investors.
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* International Shipping Option */}
+                  <Card data-testid="card-international-shipping">
+                    <CardHeader>
+                      <CardTitle className="text-bronze">International Shipping</CardTitle>
+                      <CardDescription>
+                        We'll arrange DHL Express shipping and provide a quote
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-start space-x-3">
+                        <Checkbox
+                          id="internationalShipping"
+                          checked={internationalShipping}
+                          onCheckedChange={(checked) => setInternationalShipping(checked as boolean)}
+                          data-testid="checkbox-international-shipping"
+                        />
+                        <div className="grid gap-1.5 leading-none">
+                          <label
+                            htmlFor="internationalShipping"
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                          >
+                            I need international shipping
+                          </label>
+                          <p className="text-sm text-muted-foreground">
+                            We ship worldwide via DHL Express (typically 3-6 working days). Courier costs will be quoted separately and invoiced once we have your destination address and final package weight. Import duties/taxes may apply at your destination.
                           </p>
                         </div>
                       </div>
@@ -432,6 +502,20 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Patina Finish</span>
                         <span className="font-semibold text-patina">+R10</span>
+                      </div>
+                    )}
+
+                    {hasMounting && (
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">Professional Mounting</span>
+                        <span className="font-semibold text-bronze">+R1,000</span>
+                      </div>
+                    )}
+
+                    {internationalShipping && (
+                      <div className="flex justify-between">
+                        <span className="text-muted-foreground">International Shipping</span>
+                        <span className="text-xs text-muted-foreground italic">Quoted separately</span>
                       </div>
                     )}
 

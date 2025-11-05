@@ -140,7 +140,9 @@ export const purchases = pgTable("purchases", {
   specimenId: varchar("specimen_id").references(() => sculptures.id),
   
   // Add-ons and delivery (collected during checkout)
-  hasPatina: boolean("has_patina").default(false).notNull(), // +R1000 add-on
+  hasPatina: boolean("has_patina").default(false).notNull(), // +R10 add-on (testing price)
+  hasMounting: boolean("has_mounting").default(false).notNull(), // +R1000 professional mounting
+  internationalShipping: boolean("international_shipping").default(false).notNull(), // Flag for manual DHL quote
   deliveryName: varchar("delivery_name"),
   deliveryPhone: varchar("delivery_phone"),
   deliveryAddress: text("delivery_address"),
@@ -154,6 +156,8 @@ export const insertPurchaseSchema = createInsertSchema(purchases).pick({
   seatType: true,
   amount: true,
   hasPatina: true,
+  hasMounting: true,
+  internationalShipping: true,
   deliveryName: true,
   deliveryPhone: true,
   deliveryAddress: true,

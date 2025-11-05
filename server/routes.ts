@@ -79,8 +79,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       console.log('[Purchase] User initiating purchase:', userId, userEmail);
 
-      // Calculate amount based on seat type + patina
-      const { seatType, hasPatina, deliveryName, deliveryPhone, deliveryAddress } = req.body;
+      // Calculate amount based on seat type + add-ons
+      const { seatType, hasPatina, hasMounting, internationalShipping, deliveryName, deliveryPhone, deliveryAddress } = req.body;
       const seat = await storage.getSeatByType(seatType);
       if (!seat) {
         return res.status(404).json({ message: "Seat type not found" });
@@ -91,8 +91,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(409).json({ message: `All ${seatType} seats are sold out` });
       }
 
-      // Calculate total: base price + patina (R10 = 1000 cents for testing)
-      const amount = seat.price + (hasPatina ? 1000 : 0);
+      // Calculate total: base price + patina (R10 testing) + mounting (R1000)
+      const amount = seat.price + (hasPatina ? 1000 : 0) + (hasMounting ? 100000 : 0);
 
       // Validate delivery information
       if (!deliveryName || !deliveryPhone || !deliveryAddress) {
@@ -107,6 +107,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         seatType,
         amount,
         hasPatina: hasPatina || false,
+        hasMounting: hasMounting || false,
+        internationalShipping: internationalShipping || false,
         deliveryName,
         deliveryPhone,
         deliveryAddress,
@@ -914,7 +916,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/promo-code/redeem", isAuthenticated, async (req: any, res: Response) => {
     try {
       const userId = req.user.id;
-      const { code, specimenId, hasPatina, deliveryName, deliveryPhone, deliveryAddress } = req.body;
+      const { code, specimenId, hasPatina, hasMounting, internationalShipping, deliveryName, deliveryPhone, deliveryAddress } = req.body;
 
       // Validate code
       const promoCode = await storage.getPromoCodeByCode(code.toUpperCase());
@@ -942,6 +944,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         seatType: promoCode.seatType,
         amount: 0, // Free!
         hasPatina: hasPatina || false,
+        hasMounting: hasMounting || false,
+        internationalShipping: internationalShipping || false,
         deliveryName,
         deliveryPhone,
         deliveryAddress,
