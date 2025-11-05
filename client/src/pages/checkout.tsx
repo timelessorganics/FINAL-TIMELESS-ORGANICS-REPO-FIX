@@ -38,6 +38,15 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   const [validatedPromo, setValidatedPromo] = useState<{valid: boolean; discount?: number; seatType?: string} | null>(null);
   const [isValidatingPromo, setIsValidatingPromo] = useState(false);
 
+  // Fetch seat pricing
+  const { data: seats, isLoading: loadingSeats } = useQuery<any[]>({
+    queryKey: ['/api/seats/availability'],
+  });
+
+  const currentSeat = seats?.find((s) => s.type === seatType);
+  const basePriceCents = currentSeat?.price || 0;
+  const basePrice = basePriceCents / 100; // Convert cents to Rand
+
   // Form setup
   const form = useForm<CheckoutForm>({
     resolver: zodResolver(checkoutFormSchema),
@@ -202,10 +211,9 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
     }
   };
 
-  // Price calculation - R10 for testing base price
-  const basePrice = 10;
-  const patinaPrice = hasPatina ? 10 : 0;
-  const mountingPrice = hasMounting ? 1000 : 0;
+  // Price calculation - fetch real seat price from backend
+  const patinaPrice = hasPatina ? 10 : 0; // R10 for testing
+  const mountingPrice = hasMounting ? 1000 : 0; // R1,000 for mounting
   const subtotal = basePrice + patinaPrice + mountingPrice;
   const discount = validatedPromo?.valid ? (subtotal * (validatedPromo.discount! / 100)) : 0;
   const totalPrice = subtotal - discount;
