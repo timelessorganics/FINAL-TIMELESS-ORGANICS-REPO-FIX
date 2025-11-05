@@ -107,6 +107,26 @@ export default function AdminPanel() {
     },
   });
 
+  const syncToMailchimp = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest("POST", "/api/admin/mailchimp/sync", {});
+      return await response.json();
+    },
+    onSuccess: (data) => {
+      toast({
+        title: "Mailchimp Sync Complete!",
+        description: `Synced ${data.totalContacts} contacts (${data.subscribers} subscribers, ${data.purchasers} purchasers). Success: ${data.success}, Failed: ${data.failed}`,
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        variant: "destructive",
+        title: "Mailchimp Sync Failed",
+        description: error.message || "Could not sync to Mailchimp. Check if API credentials are configured.",
+      });
+    },
+  });
+
   const copyToClipboard = (code: string) => {
     navigator.clipboard.writeText(code);
     toast({
@@ -138,6 +158,16 @@ export default function AdminPanel() {
               </p>
             </div>
             <div className="flex gap-3">
+              <Button
+                variant="outline"
+                className="gap-2"
+                data-testid="button-sync-mailchimp"
+                onClick={() => syncToMailchimp.mutate()}
+                disabled={syncToMailchimp.isPending}
+              >
+                <Upload className="w-4 h-4" />
+                {syncToMailchimp.isPending ? "Syncing..." : "Sync to Mailchimp"}
+              </Button>
               <Button
                 variant="outline"
                 className="gap-2"

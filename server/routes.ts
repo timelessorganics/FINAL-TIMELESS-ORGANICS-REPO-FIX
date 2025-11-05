@@ -25,6 +25,7 @@ import { generateCertificate } from "./utils/certificateGenerator";
 import { generateCodeSlips } from "./utils/codeSlipsGenerator";
 import { sendCertificateEmail, sendPurchaseConfirmationEmail } from "./utils/emailService";
 import { generatePromoCode } from "./utils/promoCodeGenerator";
+import { addSubscriberToMailchimp } from "./mailchimp";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
@@ -397,6 +398,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
             codeSlipsUrl
           ).catch(console.error);
         }
+
+        // Add to Mailchimp (async, best effort)
+        if (userEmail) {
+          const nameParts = userName.split(" ");
+          addSubscriberToMailchimp({
+            email: userEmail,
+            firstName: nameParts[0] || undefined,
+            lastName: nameParts.slice(1).join(" ") || undefined,
+            tags: ["Founding 100 Investor", purchase.seatType],
+          }).catch(err => console.error("[Mailchimp] Failed to sync purchaser:", err));
+        }
       } else if (paymentStatus === "FAILED" || paymentStatus === "CANCELLED") {
         await storage.updatePurchaseStatus(purchaseId, "failed", pfData.pf_payment_id, undefined);
       }
@@ -714,6 +726,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const subscriber = await storage.createSubscriber(result.data);
+      
+      // Add to Mailchimp (async, best effort)
+      addSubscriberToMailchimp({
+        email: subscriber.email,
+        firstName: subscriber.name,
+        phone: subscriber.phone || undefined,
+        tags: ["Pre-Launch Subscriber"],
+      }).catch(err => console.error("[Mailchimp] Failed to sync subscriber:", err));
+      
       res.status(201).json({ message: "Thank you for your interest! We'll be in touch soon." });
     } catch (error: any) {
       console.error("Subscriber registration error:", error);
@@ -736,6 +757,87 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error("Get subscribers error:", error);
       res.status(500).json({ message: error.message || "Failed to fetch subscribers" });
+    }
+  });
+
+  // Admin: Sync subscribers and purchasers to Mailchimp
+  app.post("/api/admin/mailchimp/sync", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = req.user.id;
+      const user = await storage.getUser(userId);
+      
+      if (!user?.isAdmin) {
+        return res.status(403).json({ message: "Admin access required" });
+      }
+
+      const { bulkSyncToMailchimp } = await import("./mailchimp");
+      
+      // Get all subscribers
+      const subscribers = await storage.getSubscribers();
+      const subscriberData = subscribers.map(s => ({
+        email: s.email,
+        firstName: s.name,
+        phone: s.phone || undefined,
+        tags: ["Pre-Launch Subscriber"],
+      }));
+
+      // Get all completed purchases with user info
+      const purchases = await storage.getAllPurchases();
+      const completedPurchases = purchases.filter(p => p.status === "completed");
+      
+      const purchaserData = await Promise.all(
+        completedPurchases.map(async (p) => {
+          const purchaseUser = await storage.getUser(p.userId);
+          if (!purchaseUser?.email) return null;
+          
+          const userName = purchaseUser.firstName && purchaseUser.lastName
+            ? `${purchaseUser.firstName} ${purchaseUser.lastName}`
+            : purchaseUser.firstName || "";
+          const nameParts = userName.split(" ");
+          
+          const isVIP = p.paymentReference?.startsWith("PROMO-");
+          const tags = isVIP 
+            ? ["Founding 100 Investor", "VIP Complimentary", p.seatType]
+            : ["Founding 100 Investor", p.seatType];
+          
+          return {
+            email: purchaseUser.email,
+            firstName: nameParts[0] || undefined,
+            lastName: nameParts.slice(1).join(" ") || undefined,
+            tags,
+          };
+        })
+      );
+
+      const validPurchasers = purchaserData.filter(p => p !== null);
+      
+      // Combine and deduplicate by email
+      const allContacts = [...subscriberData, ...validPurchasers];
+      const uniqueContacts = allContacts.reduce((acc, contact) => {
+        const existing = acc.find(c => c.email === contact.email);
+        if (existing) {
+          // Merge tags
+          const combinedTags = [...existing.tags, ...contact.tags];
+          existing.tags = Array.from(new Set(combinedTags));
+        } else {
+          acc.push(contact);
+        }
+        return acc;
+      }, [] as Array<{email: string; firstName?: string; lastName?: string; phone?: string; tags: string[]}>);
+
+      // Bulk sync to Mailchimp
+      const result = await bulkSyncToMailchimp(uniqueContacts);
+      
+      res.json({
+        message: "Mailchimp sync complete",
+        totalContacts: uniqueContacts.length,
+        subscribers: subscriberData.length,
+        purchasers: validPurchasers.length,
+        ...result,
+      });
+    } catch (error: any) {
+      console.error("Mailchimp sync error:", error);
+      res.status(500).json({ message: error.message || "Failed to sync to Mailchimp" });
     }
   });
 
@@ -933,6 +1035,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } catch (emailError) {
         console.error("Email sending failed:", emailError);
         // Don't fail the redemption if email fails
+      }
+
+      // Add to Mailchimp (async, best effort)
+      if (userEmail) {
+        const nameParts = userName.split(" ");
+        addSubscriberToMailchimp({
+          email: userEmail,
+          firstName: nameParts[0] || undefined,
+          lastName: nameParts.slice(1).join(" ") || undefined,
+          tags: ["Founding 100 Investor", "VIP Complimentary", purchase.seatType],
+        }).catch(err => console.error("[Mailchimp] Failed to sync VIP purchaser:", err));
       }
 
       console.log("Promo code redeemed successfully:", code, purchase.id);
