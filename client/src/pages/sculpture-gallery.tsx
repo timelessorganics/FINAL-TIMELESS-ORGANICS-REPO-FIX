@@ -121,7 +121,7 @@ export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) 
                 </div>
 
                 <p className="text-sm text-muted-foreground/70 pt-3 border-t border-border">
-                  Your selection is permanent once confirmed. Choose carefully—this is the piece you'll treasure for life.
+                  While you can request changes if absolutely necessary, we encourage you to choose carefully—this is the TIMELESS piece you'll treasure for life.
                 </p>
               </div>
             </div>
@@ -174,24 +174,26 @@ export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) 
             ))}
           </div>
 
-          {/* Confirm Selection */}
-          <div className="flex justify-center">
-            <Button
-              onClick={handleSelection}
-              disabled={!selectedId || selectionMutation.isPending}
-              className="btn-bronze font-bold px-12 py-6 text-lg"
-              data-testid="button-confirm-selection"
-            >
-              {selectionMutation.isPending ? (
-                <div className="flex items-center gap-2">
-                  <div className="spinner w-5 h-5 border-2" />
-                  <span>Confirming...</span>
-                </div>
-              ) : (
-                <span className="moving-fill">Confirm Selection</span>
-              )}
-            </Button>
-          </div>
+          {/* Confirm Selection - Only show for authenticated users with a purchase */}
+          {purchaseId && (
+            <div className="flex justify-center">
+              <Button
+                onClick={handleSelection}
+                disabled={!selectedId || selectionMutation.isPending}
+                className="btn-bronze font-bold px-12 py-6 text-lg"
+                data-testid="button-confirm-selection"
+              >
+                {selectionMutation.isPending ? (
+                  <div className="flex items-center gap-2">
+                    <div className="spinner w-5 h-5 border-2" />
+                    <span>Confirming...</span>
+                  </div>
+                ) : (
+                  <span className="moving-fill">Confirm Selection</span>
+                )}
+              </Button>
+            </div>
+          )}
         </div>
       </div>
       
