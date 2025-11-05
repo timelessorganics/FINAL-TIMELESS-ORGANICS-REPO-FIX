@@ -212,8 +212,8 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   };
 
   // Price calculation - fetch real seat price from backend
-  const patinaPrice = hasPatina ? 10 : 0; // R10 for testing
-  const mountingPrice = hasMounting ? 1000 : 0; // R1,000 for mounting
+  const patinaPrice = hasPatina ? 10 : 0; // R10 for patina
+  const mountingPrice = hasMounting ? 10 : 0; // R10 for mounting (style chosen later)
   const subtotal = basePrice + patinaPrice + mountingPrice;
   const discount = validatedPromo?.valid ? (subtotal * (validatedPromo.discount! / 100)) : 0;
   const totalPrice = subtotal - discount;
@@ -334,7 +334,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                     <CardHeader>
                       <CardTitle className="text-bronze">Professional Mounting</CardTitle>
                       <CardDescription>
-                        Museum-quality mounting for display (+R1,000)
+                        Choose your mounting style later (+R10)
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -353,7 +353,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                             Add Professional Mounting
                           </label>
                           <p className="text-sm text-muted-foreground">
-                            Your bronze casting will be professionally mounted on a custom base, ready for display. These pieces typically sell for R25,000-R40,000 when mounted and patinated - exceptional value for Founding 100 investors.
+                            Your bronze casting will be professionally mounted according to your chosen style (wall mount, base, or custom). You'll select your preferred mounting option during production. These pieces typically sell for R25,000-R40,000 when mounted and patinated - exceptional value for Founding 100 investors.
                           </p>
                         </div>
                       </div>
@@ -516,7 +516,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                     {hasMounting && (
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Professional Mounting</span>
-                        <span className="font-semibold text-bronze">+R1,000</span>
+                        <span className="font-semibold text-bronze">+R10</span>
                       </div>
                     )}
 

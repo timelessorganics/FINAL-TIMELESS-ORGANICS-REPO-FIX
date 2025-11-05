@@ -32,7 +32,7 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Seat Sales:** Founder (R3,000) and Patron (R5,000) seats with live counters and PayFast integration. Frontend fetches actual seat prices from `/api/seats/availability` to ensure accuracy.
 - **Promo Code System:** 10 FREE VIP Patron seats via promo codes (ONTOP of 50 paid seats). Admin generates codes, VIPs redeem at checkout (100% discount bypasses payment), dashboard shows "Complimentary VIP Seat" badge with Gift icon. Seat type matching enforced for security.
 - **Studio-Selected Specimens:** For Founding 100, David Junor curates and selects all botanical specimens from the current season's finest Cape Fynbos. No user choice required - simplified checkout flow.
-- **Mounting Option:** Optional bronze mounting service (+R1,000) added to checkout. When selected, `hasMounting` field stored in purchases table. Retail value messaging (R25-40K) highlights investment value.
+- **Mounting Option:** Optional bronze mounting service (+R10) added to checkout. Mounting style (wall mount, base, custom) chosen during production. When selected, `hasMounting` field stored in purchases table. Retail value messaging (R25-40K) highlights investment value.
 - **International Shipping:** Checkbox option at checkout for international delivery (R0 upfront). Manual DHL quotes sent later. `internationalShipping` boolean flag stored in purchases table. Admin panel displays shipping flags.
 - **Production Status Tracking:** Visual dashboard (Queued → Invested → Ready to Pour → Poured & Finishing → Complete).
 - **Code Generation:** Automated unique bronze claim, workshop voucher (50%/80% discount), and lifetime workshop codes (20%/30% discount), each with an `appliesTo` field.
