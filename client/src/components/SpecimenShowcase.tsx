@@ -117,14 +117,14 @@ export default function SpecimenShowcase() {
                 {specimen.description}
               </p>
 
-              {/* Hover Thumbnail Gallery */}
+              {/* Hover Thumbnail Gallery - Larger Size */}
               {specimen.images && specimen.images.length > 0 && (
-                <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="flex gap-2 overflow-x-auto">
+                <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <div className="flex gap-3 overflow-x-auto pb-2">
                     {specimen.images.map((img, imgIndex) => (
                       <div 
                         key={imgIndex}
-                        className="flex-shrink-0 w-20 h-20 rounded overflow-hidden border border-bronze/20"
+                        className="flex-shrink-0 w-36 h-36 rounded-md overflow-hidden border-2 border-bronze/30 hover:border-bronze hover:scale-105 transition-all duration-200 cursor-pointer"
                       >
                         <img 
                           src={img} 
@@ -134,7 +134,7 @@ export default function SpecimenShowcase() {
                       </div>
                     ))}
                   </div>
-                  <p className="text-xs text-bronze/70 mt-1">Example specimens</p>
+                  <p className="text-xs text-bronze/70 mt-2 font-medium">Example specimens (hover to highlight)</p>
                 </div>
               )}
             </CardContent>
