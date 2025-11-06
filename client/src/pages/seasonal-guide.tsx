@@ -328,32 +328,6 @@ export default function SeasonalGuide() {
           </div>
         </section>
 
-        {/* Specimen Styles */}
-        <section className="space-y-6">
-          <h2 className="font-serif text-3xl font-bold">Specimen Styles</h2>
-          <p className="text-muted-foreground">
-            Instead of naming exact species, we group botanicals by their visual form. This gives 
-            you creative freedom while ensuring we can source A-grade material when the season opens.
-          </p>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {specimenStyles.map((style) => (
-              <Card key={style.id} className="hover-elevate">
-                <CardHeader className="space-y-2">
-                  <CardTitle className="text-lg">{style.name}</CardTitle>
-                  <div className="flex items-center gap-2 text-sm text-bronze">
-                    <CalendarDays className="w-4 h-4" />
-                    <span>{style.season}</span>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-sm text-muted-foreground">{style.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </section>
-
         {/* Seasonal Calendar */}
         <section className="space-y-6">
           <h2 className="font-serif text-3xl font-bold">The Fynbos Year</h2>
@@ -404,82 +378,6 @@ export default function SeasonalGuide() {
     </div>
   );
 }
-
-// Specimen styles data
-const specimenStyles = [
-  {
-    id: "protea_head",
-    name: "Protea Head",
-    season: "Winter–Spring",
-    description: "Single flower head (king/queen types). Peak June–October."
-  },
-  {
-    id: "pincushion_bloom",
-    name: "Pincushion Bloom",
-    season: "Late Winter–Spring",
-    description: "Leucospermum flower. Peak July–December."
-  },
-  {
-    id: "cone_bracts",
-    name: "Cone + Bracts",
-    season: "Autumn–Spring",
-    description: "Leucadendron cone with coloured bracts. April/May–November."
-  },
-  {
-    id: "aloe_inflorescence",
-    name: "Aloe Inflorescence",
-    season: "Winter",
-    description: "Segment of flower spike. Peak May–August."
-  },
-  {
-    id: "erica_spray",
-    name: "Erica Spray",
-    season: "Winter–Spring",
-    description: "Fine heather-like cluster. Year-round diversity, many winter–spring."
-  },
-  {
-    id: "restio_seedheads",
-    name: "Restio Seedheads",
-    season: "Autumn–Winter",
-    description: "Architectural reed panicles. Textural interest year-round."
-  },
-  {
-    id: "bulb_spike",
-    name: "Bulb Spike",
-    season: "Spring–Early Summer",
-    description: "Watsonia/ixia/gladiolus section. Peak August–December."
-  },
-  {
-    id: "pelargonium_leaf",
-    name: "Pelargonium Leaf/Flower",
-    season: "Spring",
-    description: "Scented leaf cluster (sometimes with blooms). September–October."
-  },
-  {
-    id: "woody_branch",
-    name: "Woody Branch + Leaves",
-    season: "Year-round",
-    description: "Sculptural twig with foliage (non-sappy). Availability varies."
-  },
-  {
-    id: "cone_seedpod",
-    name: "Cone/Seed Pod",
-    season: "Autumn–Spring",
-    description: "Serruria/cone/seedpod composition. Woody structures."
-  },
-  {
-    id: "succulent_rosette",
-    name: "Succulent Rosette",
-    season: "Year-round",
-    description: "Compact echeveria/aloe rosette. Pre-drying needed."
-  },
-  {
-    id: "miniature_mix",
-    name: "Miniature Mix",
-    season: "All Seasons",
-    description: "Small curated cluster (buds, pods, grasses). Studio-curated."
-  },
-];
 
 // Seasonal calendar data
 const seasonalCalendar = [
