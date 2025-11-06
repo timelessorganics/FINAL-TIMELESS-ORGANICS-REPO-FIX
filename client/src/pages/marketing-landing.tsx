@@ -484,16 +484,17 @@ export default function MarketingLanding() {
                 <p className="text-base text-muted-foreground leading-relaxed">
                   My foundation in <span className="text-foreground font-semibold">25 years of technical precision casting</span> began 
                   with 15 years in high-end London dental laboratories, including 3 years owning my own 
-                  Harley Street lab. This work—focusing on metallurgy, investment casting techniques, 
-                  and assembly—provided the technical mastery required for flawless results.
+                  West End/Harley Street lab—the pinnacle of dentistry and medical excellence. This work—focusing 
+                  on metallurgy, investment casting techniques, and assembly—provided the technical mastery required 
+                  for flawless results.
                 </p>
 
                 <p className="text-base text-muted-foreground leading-relaxed">
-                  Returning to Cape Town, I leveraged my specialist technical background, which led me 
-                  to connect with a <span className="text-patina font-semibold">globally recognized bronze artist</span>. I became the primary 
-                  technical fabricator for their botanical bronze collection. In this role, I successfully 
-                  cast hundreds of botanical bronzes that sold internationally, proving my technical skills 
-                  at the highest level of the art world.
+                  Returning to Cape Town, I became the <span className="text-patina font-semibold">principal technical fabricator</span>, start to finish, 
+                  of hundreds of exquisite botanical sculptures for a globally recognized bronze artist. My overseeing 
+                  of production and quality of these botanical bronze collections—combined with my skills in photography 
+                  and web design/development—has given me the complete mastery needed to launch Timeless Organics as an 
+                  independent artistic force.
                 </p>
 
                 <p className="text-lg text-foreground/90 font-medium italic leading-relaxed pt-3 border-t border-border">
