@@ -187,7 +187,7 @@ export default function MarketingLanding() {
           </p>
 
           {/* Call to Action Buttons */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
+          <div className="flex flex-wrap justify-center gap-4 mt-24 mb-12">
             <Button 
               variant="outline" 
               size="lg"
