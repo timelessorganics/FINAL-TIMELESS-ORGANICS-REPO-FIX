@@ -100,7 +100,7 @@ export default function SpecimenShowcase() {
         {specimenTypes.map((specimen, index) => (
           <Card 
             key={index} 
-            className="group relative hover-elevate transition-all duration-300"
+            className="group relative hover-elevate transition-all duration-300 overflow-visible"
             data-testid={`card-specimen-${index}`}
           >
             <CardHeader className="pb-3">
@@ -127,7 +127,7 @@ export default function SpecimenShowcase() {
                         className="group/img relative flex-shrink-0"
                       >
                         {/* Small thumbnail - always visible */}
-                        <div className="w-20 h-20 rounded overflow-hidden border border-bronze/20 group-hover/img:opacity-0 transition-opacity duration-200">
+                        <div className="w-20 h-20 rounded overflow-hidden border border-bronze/20 cursor-pointer hover:border-bronze/40 transition-all">
                           <img 
                             src={img} 
                             alt={`${specimen.name} example ${imgIndex + 1}`}
@@ -135,9 +135,9 @@ export default function SpecimenShowcase() {
                           />
                         </div>
                         
-                        {/* Large preview on hover - positioned absolutely */}
-                        <div className="absolute bottom-0 left-0 opacity-0 group-hover/img:opacity-100 pointer-events-none group-hover/img:pointer-events-auto transition-all duration-200 z-50">
-                          <div className="w-64 h-64 rounded-lg overflow-hidden border-4 border-bronze shadow-2xl">
+                        {/* Large preview on hover - floats above everything */}
+                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 opacity-0 group-hover/img:opacity-100 pointer-events-none group-hover/img:pointer-events-auto transition-all duration-200 z-[100]">
+                          <div className="w-72 h-72 rounded-lg overflow-hidden border-4 border-bronze shadow-2xl bg-background">
                             <img 
                               src={img} 
                               alt={`${specimen.name} enlarged`}
