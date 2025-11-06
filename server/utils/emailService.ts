@@ -211,22 +211,10 @@ export async function sendCertificateEmail(
       
       <h2>Your Specimen Selection</h2>
       
-      ${purchase.purchaseChoice === 'cast_now' ? `
-      <p><strong>Cast Now:</strong> You've chosen to have our studio select the best in-season botanical specimen. Your bronze will be cast from our current collection for fastest turnaround (6-12 weeks).</p>
-      ` : purchase.purchaseChoice === 'wait_till_season' ? `
-      <p><strong>Wait Till Season:</strong> You've chosen to wait for peak seasonal quality. We'll cast your ${purchase.specimenStyle ? purchase.specimenStyle.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()) : 'selected'} specimen when it reaches its finest form in nature.</p>
-      <p style="color: #999; font-size: 14px;">You'll receive an email notification when your seasonal batch enters production.</p>
-      ` : purchase.purchaseChoice === 'provide_your_own' ? `
-      <p><strong>Custom Specimen:</strong> You've submitted a custom botanical photo for approval. Our studio will review it within 48-72 hours for cast-ability.</p>
-      ${purchase.customSpecimenApprovalStatus === 'approved' ? `
-      <p style="color: #6f8f79; font-weight: bold;">✓ Your specimen has been approved for casting!</p>
-      ${purchase.customSpecimenNotes ? `<p style="color: #999; font-size: 14px;">Studio Notes: ${purchase.customSpecimenNotes}</p>` : ''}
-      ` : purchase.customSpecimenApprovalStatus === 'rejected' ? `
-      <p style="color: #d8c3a5;">Your specimen was reviewed but is not viable for lost-wax casting. Please log in to select an alternative path.</p>
-      ${purchase.customSpecimenNotes ? `<p style="color: #999; font-size: 14px;">Studio Notes: ${purchase.customSpecimenNotes}</p>` : ''}
-      ` : `
-      <p style="color: #999; font-size: 14px;">Status: Under Review - We'll email you once the studio completes the assessment.</p>
-      `}
+      ${purchase.specimenStyle ? `
+      <p><strong>Your Chosen Style:</strong> ${purchase.specimenStyle.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}</p>
+      <p>David will personally select the finest specimen of your chosen style from the current or upcoming seasonal harvest. If your style is currently in peak season, we'll begin casting immediately. Otherwise, we'll immortalize it when it reaches its prime - worth the wait for perfection!</p>
+      <p style="color: #999; font-size: 14px;">You'll receive updates as your bronze moves through production status changes.</p>
       ` : ''}
       
       <h2>Next Steps</h2>
@@ -346,13 +334,10 @@ export async function sendPurchaseConfirmationEmail(
       
       <h2 style="color: #d8c3a5; font-size: 20px; margin-top: 30px;">Your Specimen Selection</h2>
       
-      ${purchase.purchaseChoice === 'cast_now' ? `
-      <p><strong>Cast Now:</strong> You've chosen to have our studio select the best in-season botanical specimen. Your bronze will be cast from our current collection for fastest turnaround (6-12 weeks).</p>
-      ` : purchase.purchaseChoice === 'wait_till_season' ? `
-      <p><strong>Wait Till Season:</strong> You've chosen to wait for peak seasonal quality. We'll cast your ${purchase.specimenStyle ? purchase.specimenStyle.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase()) : 'selected'} specimen when it reaches its finest form in nature.</p>
-      <p style="color: #999; font-size: 14px;">You'll receive an email notification when your seasonal batch enters production.</p>
-      ` : purchase.purchaseChoice === 'provide_your_own' ? `
-      <p><strong>Custom Specimen:</strong> You've submitted a custom botanical photo for approval. Our studio will review it within 48-72 hours for cast-ability and email you with the decision.</p>
+      ${purchase.specimenStyle ? `
+      <p><strong>Your Chosen Style:</strong> ${purchase.specimenStyle.replace(/_/g, ' ').replace(/\b\w/g, (l: string) => l.toUpperCase())}</p>
+      <p>David will personally select the finest specimen of your chosen style from the current or upcoming seasonal harvest. If your style is currently in peak season, we'll begin casting immediately. Otherwise, we'll immortalize it when it reaches its prime - worth the wait for perfection!</p>
+      <p style="color: #999; font-size: 14px;">You'll receive updates as your bronze moves through production: Investment → Ready to Pour → Poured & Finishing → Complete.</p>
       ` : ''}
       
       <p>Your certificate and exclusive codes are being generated. You'll receive another email shortly with:</p>
