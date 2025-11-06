@@ -209,14 +209,14 @@ export default function SeasonalGuide() {
           <Card className="border-bronze/30">
             <CardContent className="p-6 space-y-4">
               <p className="text-lg font-medium text-foreground">
-                Studio-Selected Specimens Only
+                Choose Your Specimen Style
               </p>
               <p className="text-muted-foreground">
-                For this exclusive launch, David Junor personally curates and selects each botanical specimen from the current season's finest Cape Fynbos. Your bronze will be one-of-a-kind, chosen for optimal detail retention and sculptural beauty. No specimen selection required—just complete your checkout and we'll handle the rest.
+                Select from 12 Cape Fynbos styles during checkout. David will personally curate the finest specimen of your chosen style from the current or upcoming seasonal harvest. If your style is in peak season, we'll begin casting immediately. Otherwise, we'll immortalize it when it reaches its prime - worth the wait for perfection!
               </p>
               <div className="bg-muted/50 border border-border rounded-lg p-4 mt-4">
                 <p className="text-xs text-muted-foreground italic">
-                  💡 Note: Custom specimen selection and "bring your own" options will be available for regular workshop bookings after the Founding 100 launch.
+                  💡 Note: Use the seasonal chart above to see when each style reaches peak beauty. Some styles (like Woody Branch and Succulent Rosette) are available year-round.
                 </p>
               </div>
             </CardContent>
@@ -361,8 +361,8 @@ export default function SeasonalGuide() {
         <section className="text-center space-y-6 py-12">
           <h3 className="font-serif text-3xl font-bold">Ready to Invest?</h3>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Join the Founding 100 and secure your bronze casting. Choose your path—Cast Now, 
-            Wait Till Season, or Provide Your Own—and we'll create something timeless.
+            Join the Founding 100 and secure your bronze casting. Choose your specimen style during checkout, 
+            and we'll immortalize it at peak seasonal beauty.
           </p>
           <Link href="/founding100">
             <Button 
