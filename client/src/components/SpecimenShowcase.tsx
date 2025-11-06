@@ -1,7 +1,53 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "lucide-react";
-import pincushionImg1 from "../assets/Leucospermum-prostratum-6-1_1762380839587.jpg";
-import pincushionImg2 from "../assets/Comparison-of-Leucospermum-gracile-and-prostratum-8-1_1762380839588.jpg";
+import pincushion1 from "../assets/specimens/pincushion-1.jpg";
+import pincushion2 from "../assets/specimens/pincushion-2.jpg";
+import pincushion3 from "../assets/specimens/pincushion-3.jpg";
+import pincushion4 from "../assets/specimens/pincushion-4.jpg";
+import pincushion5 from "../assets/specimens/pincushion-5.jpg";
+import pincushion6 from "../assets/specimens/pincushion-6.jpg";
+import proteaHead1 from "../assets/specimens/protea-head-1.jpg";
+import proteaHead2 from "../assets/specimens/protea-head-2.jpg";
+import proteaHead3 from "../assets/specimens/protea-head-3.jpg";
+import proteaHead4 from "../assets/specimens/protea-head-4.jpg";
+import proteaHead5 from "../assets/specimens/protea-head-5.jpg";
+import proteaHead6 from "../assets/specimens/protea-head-6.jpg";
+import coneBracts1 from "../assets/specimens/cone-bracts-1.jpg";
+import coneBracts2 from "../assets/specimens/cone-bracts-2.jpg";
+import coneBracts3 from "../assets/specimens/cone-bracts-3.jpg";
+import coneBracts4 from "../assets/specimens/cone-bracts-4.jpg";
+import coneBracts5 from "../assets/specimens/cone-bracts-5.jpg";
+import coneBracts6 from "../assets/specimens/cone-bracts-6.jpg";
+import aloe1 from "../assets/specimens/aloe-1.jpg";
+import aloe2 from "../assets/specimens/aloe-2.jpg";
+import aloe3 from "../assets/specimens/aloe-3.jpg";
+import aloe4 from "../assets/specimens/aloe-4.jpg";
+import aloe5 from "../assets/specimens/aloe-5.jpg";
+import erica1 from "../assets/specimens/erica-1.jpg";
+import erica2 from "../assets/specimens/erica-2.jpg";
+import restio1 from "../assets/specimens/restio-1.jpg";
+import restio2 from "../assets/specimens/restio-2.jpg";
+import restio3 from "../assets/specimens/restio-3.jpg";
+import bulbSpike1 from "../assets/specimens/bulb-spike-1.jpg";
+import bulbSpike2 from "../assets/specimens/bulb-spike-2.jpg";
+import bulbSpike3 from "../assets/specimens/bulb-spike-3.jpg";
+import bulbSpike4 from "../assets/specimens/bulb-spike-4.jpg";
+import bulbSpike5 from "../assets/specimens/bulb-spike-5.jpg";
+import pelargonium1 from "../assets/specimens/pelargonium-1.jpg";
+import pelargonium2 from "../assets/specimens/pelargonium-2.jpg";
+import woodyBranch1 from "../assets/specimens/woody-branch-1.jpg";
+import woodyBranch2 from "../assets/specimens/woody-branch-2.jpg";
+import woodyBranch3 from "../assets/specimens/woody-branch-3.jpg";
+import woodyBranch4 from "../assets/specimens/woody-branch-4.jpg";
+import coneSeed1 from "../assets/specimens/cone-seed-1.jpg";
+import coneSeed2 from "../assets/specimens/cone-seed-2.jpg";
+import coneSeed3 from "../assets/specimens/cone-seed-3.jpg";
+import succulent1 from "../assets/specimens/succulent-1.jpg";
+import succulent2 from "../assets/specimens/succulent-2.jpg";
+import succulent3 from "../assets/specimens/succulent-3.jpg";
+import succulent4 from "../assets/specimens/succulent-4.jpg";
+import succulent5 from "../assets/specimens/succulent-5.jpg";
+import miniatureMix1 from "../assets/specimens/miniature-mix-1.jpg";
 
 interface SpecimenType {
   name: string;
@@ -15,73 +61,73 @@ const specimenTypes: SpecimenType[] = [
     name: "Protea Head",
     season: "Winter-Spring",
     description: "Single flower head (Sunguineum types). Peak June-October.",
-    images: [],
+    images: [proteaHead1, proteaHead2, proteaHead3, proteaHead4, proteaHead5, proteaHead6],
   },
   {
     name: "Pincushion Bloom",
     season: "Late Winter-Spring",
     description: "Leucospermum flower. Peak July-December.",
-    images: [pincushionImg1, pincushionImg2],
+    images: [pincushion1, pincushion2, pincushion3, pincushion4, pincushion5, pincushion6],
   },
   {
     name: "Cone + Bracts",
     season: "Autumn-Spring",
     description: "Leucadendron cone with coloured bracts. April/May-November.",
-    images: [],
+    images: [coneBracts1, coneBracts2, coneBracts3, coneBracts4, coneBracts5, coneBracts6],
   },
   {
     name: "Aloe Inflorescence",
     season: "Winter",
     description: "Segment of flower spike. Peak May-August.",
-    images: [],
+    images: [aloe1, aloe2, aloe3, aloe4, aloe5],
   },
   {
     name: "Erica Spray",
     season: "Winter-Spring",
     description: "Fine heather-like cluster. Year-round diversity, many winter-spring.",
-    images: [],
+    images: [erica1, erica2],
   },
   {
     name: "Restio Seedheads",
     season: "Autumn-Winter",
     description: "Architectural reed panicles. Textural interest year-round.",
-    images: [],
+    images: [restio1, restio2, restio3],
   },
   {
     name: "Bulb Spike",
     season: "Spring-Early Summer",
     description: "Watsonia/Nivikia/Gladiolus section. Peak August-December.",
-    images: [],
+    images: [bulbSpike1, bulbSpike2, bulbSpike3, bulbSpike4, bulbSpike5],
   },
   {
     name: "Pelargonium Leaf/Flower",
     season: "Spring",
     description: "Scented leaf cluster (sometimes with blooms). September-October.",
-    images: [],
+    images: [pelargonium1, pelargonium2],
   },
   {
     name: "Woody Branch + Leaves",
     season: "Year-round",
     description: "Sculptural twig with foliage (non-sappy). Availability varies.",
-    images: [],
+    images: [woodyBranch1, woodyBranch2, woodyBranch3, woodyBranch4],
   },
   {
     name: "Cone/Seed Pod",
     season: "Autumn-Spring",
     description: "Serruria/cone/seedpod composition. Woody structures.",
-    images: [],
+    images: [coneSeed1, coneSeed2, coneSeed3],
   },
   {
     name: "Succulent Rosette",
     season: "Year-round",
     description: "Compact echeveria/aloe rosette. Pre-drying needed.",
-    images: [],
+    images: [succulent1, succulent2, succulent3, succulent4, succulent5],
   },
   {
     name: "Miniature Mix",
     season: "All Seasons",
     description: "Small curated cluster (buds, pods, grasses). Studio-curated.",
-    images: [],
+    images: [miniatureMix1],
   },
 ];
 
