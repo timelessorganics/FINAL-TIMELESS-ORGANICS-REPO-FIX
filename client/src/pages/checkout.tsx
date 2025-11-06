@@ -12,10 +12,28 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { Check, Sparkles, Gift, AlertCircle } from "lucide-react";
+import { Check, Sparkles, Gift, AlertCircle, Leaf } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+// Specimen style options with display names
+const SPECIMEN_STYLES = [
+  { value: "protea_head", label: "Protea Head" },
+  { value: "pincushion_bloom", label: "Pincushion Bloom" },
+  { value: "cone_bracts", label: "Cone + Bracts" },
+  { value: "aloe_inflorescence", label: "Aloe Inflorescence" },
+  { value: "erica_spray", label: "Erica Spray" },
+  { value: "restio_seedheads", label: "Restio Seedheads" },
+  { value: "bulb_spike", label: "Bulb Spike (Watsonia)" },
+  { value: "pelargonium_leaf", label: "Pelargonium Leaf/Flower" },
+  { value: "woody_branch", label: "Woody Branch + Leaves" },
+  { value: "cone_seedpod", label: "Cone/Seed Pod" },
+  { value: "succulent_rosette", label: "Succulent Rosette" },
+  { value: "miniature_mix", label: "Miniature Mix" },
+] as const;
 
 const checkoutFormSchema = z.object({
+  specimenStyle: z.string().min(1, "Please select a specimen style"),
   deliveryName: z.string().min(2, "Name must be at least 2 characters"),
   deliveryPhone: z.string().min(10, "Please enter a valid phone number"),
   deliveryAddress: z.string().min(10, "Please enter your full delivery address"),
@@ -51,6 +69,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   const form = useForm<CheckoutForm>({
     resolver: zodResolver(checkoutFormSchema),
     defaultValues: {
+      specimenStyle: "",
       deliveryName: "",
       deliveryPhone: "",
       deliveryAddress: "",
@@ -62,6 +81,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
     mutationFn: async (data: CheckoutForm) => {
       const response = await apiRequest("POST", "/api/purchase/initiate", {
         seatType,
+        specimenStyle: data.specimenStyle,
         hasPatina,
         hasMounting,
         internationalShipping,
@@ -127,6 +147,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
     mutationFn: async (data: CheckoutForm & { promoCode: string }) => {
       return await apiRequest("POST", "/api/promo-code/redeem", {
         code: data.promoCode,
+        specimenStyle: data.specimenStyle,
         deliveryName: data.deliveryName,
         deliveryPhone: data.deliveryPhone,
         deliveryAddress: data.deliveryAddress,
@@ -255,31 +276,59 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
               <Form {...form}>
                 <form onSubmit={form.handleSubmit(handleCheckout)} className="space-y-8">
                   
-                  {/* Studio Selection Information */}
-                  <Card data-testid="card-studio-selection">
+                  {/* Specimen Style Selection */}
+                  <Card data-testid="card-specimen-selection">
                     <CardHeader>
-                      <CardTitle className="text-bronze">Studio-Selected Specimen</CardTitle>
+                      <CardTitle className="flex items-center gap-2">
+                        <Leaf className="w-5 h-5 text-bronze" />
+                        Choose Your Specimen Style
+                      </CardTitle>
                       <CardDescription>
-                        For the Founding 100 launch, David personally curates each botanical specimen from this season's finest harvests
+                        Select from 12 Cape Fynbos styles. If out of season, we'll cast it when it reaches peak beauty.
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
+                      <FormField
+                        control={form.control}
+                        name="specimenStyle"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Specimen Style *</FormLabel>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger data-testid="select-specimen-style">
+                                  <SelectValue placeholder="Select a specimen style..." />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {SPECIMEN_STYLES.map((style) => (
+                                  <SelectItem key={style.value} value={style.value}>
+                                    {style.label}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                            <FormMessage />
+                          </FormItem>
+                        )}
+                      />
+                      
                       <div className="bg-bronze/10 border border-bronze/30 rounded-lg p-5">
                         <div className="flex items-start gap-3">
                           <Sparkles className="w-5 h-5 text-bronze mt-0.5 flex-shrink-0" />
                           <div className="space-y-2">
-                            <h4 className="font-semibold text-foreground">Hand-Selected by David Junor</h4>
+                            <h4 className="font-semibold text-foreground">Seasonal Casting</h4>
                             <p className="text-sm text-muted-foreground">
-                              Each Founding 100 member receives a unique botanical specimen personally selected by David from the current season's finest Cape Fynbos. Your casting will be one-of-a-kind, chosen for optimal detail retention and sculptural beauty.
+                              David will personally select the finest specimen of your chosen style from the current or upcoming seasonal harvest. If your style is out of season, we'll immortalize it when it reaches its peak - worth the wait for perfection!
                             </p>
                             <ul className="text-sm text-muted-foreground space-y-1 mt-2">
                               <li className="flex items-start gap-2">
                                 <Check className="w-4 h-4 text-bronze mt-0.5 flex-shrink-0" />
-                                <span>Expert selection from current seasonal harvest</span>
+                                <span>Hand-selected for optimal detail and beauty</span>
                               </li>
                               <li className="flex items-start gap-2">
                                 <Check className="w-4 h-4 text-bronze mt-0.5 flex-shrink-0" />
-                                <span>You'll receive photos for approval before casting</span>
+                                <span>Cast at peak seasonal quality</span>
                               </li>
                               <li className="flex items-start gap-2">
                                 <Check className="w-4 h-4 text-bronze mt-0.5 flex-shrink-0" />
@@ -291,8 +340,8 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                       </div>
                       
                       <div className="bg-muted/50 border border-border rounded-lg p-4">
-                        <p className="text-xs text-muted-foreground italic">
-                          💡 Note: Custom specimen selection and "bring your own" options will be available for regular workshop bookings after the Founding 100 launch. Workshop bookings do NOT include specimen approval.
+                        <p className="text-xs text-muted-foreground">
+                          💡 View the <Link href="/seasonal-guide"><span className="text-bronze hover:underline cursor-pointer">Seasonal Guide</span></Link> to see peak seasons for each style. Some styles (like Woody Branch and Succulent Rosette) are available year-round.
                         </p>
                       </div>
                     </CardContent>

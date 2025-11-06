@@ -80,7 +80,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log('[Purchase] User initiating purchase:', userId, userEmail);
 
       // Calculate amount based on seat type + add-ons
-      const { seatType, hasPatina, hasMounting, internationalShipping, deliveryName, deliveryPhone, deliveryAddress } = req.body;
+      const { seatType, specimenStyle, hasPatina, hasMounting, internationalShipping, deliveryName, deliveryPhone, deliveryAddress } = req.body;
       const seat = await storage.getSeatByType(seatType);
       if (!seat) {
         return res.status(404).json({ message: "Seat type not found" });
@@ -91,8 +91,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(409).json({ message: `All ${seatType} seats are sold out` });
       }
 
-      // Calculate total: base price + patina (R10 testing) + mounting (R1000)
-      const amount = seat.price + (hasPatina ? 1000 : 0) + (hasMounting ? 100000 : 0);
+      // Validate specimen style selection
+      if (!specimenStyle) {
+        return res.status(400).json({ 
+          message: "Please select a specimen style" 
+        });
+      }
+
+      // Calculate total: base price + patina (R10 testing) + mounting (R10 testing)
+      const amount = seat.price + (hasPatina ? 1000 : 0) + (hasMounting ? 1000 : 0);
 
       // Validate delivery information
       if (!deliveryName || !deliveryPhone || !deliveryAddress) {
@@ -101,11 +108,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Create purchase record (studio selects specimen - no user choice)
+      // Create purchase record with user's chosen specimen style
       const purchase = await storage.createPurchase({
         userId,
         seatType,
         amount,
+        specimenStyle,
         hasPatina: hasPatina || false,
         hasMounting: hasMounting || false,
         internationalShipping: internationalShipping || false,
@@ -916,7 +924,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/promo-code/redeem", isAuthenticated, async (req: any, res: Response) => {
     try {
       const userId = req.user.id;
-      const { code, specimenId, hasPatina, hasMounting, internationalShipping, deliveryName, deliveryPhone, deliveryAddress } = req.body;
+      const { code, specimenStyle, hasPatina, hasMounting, internationalShipping, deliveryName, deliveryPhone, deliveryAddress } = req.body;
 
       // Validate code
       const promoCode = await storage.getPromoCodeByCode(code.toUpperCase());
@@ -938,11 +946,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(409).json({ message: "No seats available for this type" });
       }
 
-      // Create free purchase (R0) - studio will select specimen
+      // Validate specimen style selection
+      if (!specimenStyle) {
+        return res.status(400).json({ 
+          message: "Please select a specimen style" 
+        });
+      }
+
+      // Create free purchase (R0) with user's chosen specimen style
       const purchase = await storage.createPurchase({
         userId,
         seatType: promoCode.seatType,
         amount: 0, // Free!
+        specimenStyle,
         hasPatina: hasPatina || false,
         hasMounting: hasMounting || false,
         internationalShipping: internationalShipping || false,

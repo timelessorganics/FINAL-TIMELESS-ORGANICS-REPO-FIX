@@ -155,6 +155,7 @@ export const insertPurchaseSchema = createInsertSchema(purchases).pick({
   userId: true,
   seatType: true,
   amount: true,
+  specimenStyle: true,
   hasPatina: true,
   hasMounting: true,
   internationalShipping: true,
