@@ -117,38 +117,24 @@ export default function SpecimenShowcase() {
                 {specimen.description}
               </p>
 
-              {/* Image Gallery - Always Visible, Enlarges on Hover */}
+              {/* Example Images - Simple Display */}
               {specimen.images && specimen.images.length > 0 && (
-                <div className="mt-4 border-t border-bronze/10 pt-3">
-                  <div className="flex gap-2 overflow-x-auto pb-2">
+                <div className="mt-4 border-t border-bronze/10 pt-3 space-y-2">
+                  <p className="text-xs text-bronze/70 font-medium">Example specimens:</p>
+                  <div className="grid grid-cols-2 gap-2">
                     {specimen.images.map((img, imgIndex) => (
                       <div 
                         key={imgIndex}
-                        className="group/img relative flex-shrink-0"
+                        className="aspect-square rounded overflow-hidden border border-bronze/20"
                       >
-                        {/* Small thumbnail - always visible */}
-                        <div className="w-20 h-20 rounded overflow-hidden border border-bronze/20 cursor-pointer hover:border-bronze/40 transition-all">
-                          <img 
-                            src={img} 
-                            alt={`${specimen.name} example ${imgIndex + 1}`}
-                            className="w-full h-full object-cover"
-                          />
-                        </div>
-                        
-                        {/* Large preview on hover - floats above everything */}
-                        <div className="absolute -top-4 left-1/2 -translate-x-1/2 opacity-0 group-hover/img:opacity-100 pointer-events-none group-hover/img:pointer-events-auto transition-all duration-200 z-[100]">
-                          <div className="w-72 h-72 rounded-lg overflow-hidden border-4 border-bronze shadow-2xl bg-background">
-                            <img 
-                              src={img} 
-                              alt={`${specimen.name} enlarged`}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                        </div>
+                        <img 
+                          src={img} 
+                          alt={`${specimen.name} example ${imgIndex + 1}`}
+                          className="w-full h-full object-cover"
+                        />
                       </div>
                     ))}
                   </div>
-                  <p className="text-xs text-bronze/60 mt-1">Hover images to enlarge</p>
                 </div>
               )}
             </CardContent>
