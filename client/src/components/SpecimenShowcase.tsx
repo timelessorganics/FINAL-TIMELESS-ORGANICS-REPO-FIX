@@ -117,24 +117,38 @@ export default function SpecimenShowcase() {
                 {specimen.description}
               </p>
 
-              {/* Hover Thumbnail Gallery - Larger Size */}
+              {/* Image Gallery - Always Visible, Enlarges on Hover */}
               {specimen.images && specimen.images.length > 0 && (
-                <div className="mt-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <div className="flex gap-3 overflow-x-auto pb-2">
+                <div className="mt-4 border-t border-bronze/10 pt-3">
+                  <div className="flex gap-2 overflow-x-auto pb-2">
                     {specimen.images.map((img, imgIndex) => (
                       <div 
                         key={imgIndex}
-                        className="flex-shrink-0 w-36 h-36 rounded-md overflow-hidden border-2 border-bronze/30 hover:border-bronze hover:scale-105 transition-all duration-200 cursor-pointer"
+                        className="group/img relative flex-shrink-0"
                       >
-                        <img 
-                          src={img} 
-                          alt={`${specimen.name} example ${imgIndex + 1}`}
-                          className="w-full h-full object-cover"
-                        />
+                        {/* Small thumbnail - always visible */}
+                        <div className="w-20 h-20 rounded overflow-hidden border border-bronze/20 group-hover/img:opacity-0 transition-opacity duration-200">
+                          <img 
+                            src={img} 
+                            alt={`${specimen.name} example ${imgIndex + 1}`}
+                            className="w-full h-full object-cover"
+                          />
+                        </div>
+                        
+                        {/* Large preview on hover - positioned absolutely */}
+                        <div className="absolute bottom-0 left-0 opacity-0 group-hover/img:opacity-100 pointer-events-none group-hover/img:pointer-events-auto transition-all duration-200 z-50">
+                          <div className="w-64 h-64 rounded-lg overflow-hidden border-4 border-bronze shadow-2xl">
+                            <img 
+                              src={img} 
+                              alt={`${specimen.name} enlarged`}
+                              className="w-full h-full object-cover"
+                            />
+                          </div>
+                        </div>
                       </div>
                     ))}
                   </div>
-                  <p className="text-xs text-bronze/70 mt-2 font-medium">Example specimens (hover to highlight)</p>
+                  <p className="text-xs text-bronze/60 mt-1">Hover images to enlarge</p>
                 </div>
               )}
             </CardContent>
