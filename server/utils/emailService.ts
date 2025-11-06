@@ -74,8 +74,9 @@ export async function sendCertificateEmail(
     const workshopCode = codes.find((c) => c.type === "workshop_voucher");
     const lifetimeWorkshopCode = codes.find((c) => c.type === "lifetime_workshop");
 
-    // Build full certificate URL
-    const fullCertificateUrl = `${process.env.REPLIT_DEV_DOMAIN || 'https://timeless-organics.replit.app'}${certificateUrl}`;
+    // Build full certificate URL - use production URL if available
+    const baseUrl = process.env.VITE_API_URL || process.env.REPLIT_DEV_DOMAIN || 'https://timeless-organics-fouding-100-production.up.railway.app';
+    const fullCertificateUrl = `${baseUrl}${certificateUrl}`;
 
     const htmlContent = `
 <!DOCTYPE html>
@@ -200,7 +201,7 @@ export async function sendCertificateEmail(
           Beautiful printable gift cards containing your workshop voucher codes. Print and cut along the dotted lines — perfect for gifting to friends and family.
         </div>
         <div style="text-align: center;">
-          <a href="${process.env.REPLIT_DEV_DOMAIN || 'https://timeless-organics.replit.app'}${codeSlipsUrl}" class="cta-button" style="display: inline-block; font-size: 14px; padding: 12px 24px; background: linear-gradient(135deg, #6f8f79 0%, #5a7563 100%);">Download Code Slips</a>
+          <a href="${baseUrl}${codeSlipsUrl}" class="cta-button" style="display: inline-block; font-size: 14px; padding: 12px 24px; background: linear-gradient(135deg, #6f8f79 0%, #5a7563 100%);">Download Code Slips</a>
         </div>
       </div>
       ` : ''}
