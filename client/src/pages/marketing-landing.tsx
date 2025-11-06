@@ -523,8 +523,8 @@ export default function MarketingLanding() {
                 <div>
                   <h4 className="font-semibold text-bronze mb-2">Casting Process</h4>
                   <p className="text-sm text-muted-foreground">
-                    Direct casting from real plant matter, silicon bronze pour, sand/glass 
-                    bead-blast finish. Each piece a perfect botanical replica.
+                    Direct casting from real plant matter, silicon bronze pour, patination expertise, 
+                    glass bead-sand blasting finish. Each piece a perfect botanical replica.
                   </p>
                 </div>
 
