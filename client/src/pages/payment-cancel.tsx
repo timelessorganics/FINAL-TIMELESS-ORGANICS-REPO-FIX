@@ -34,11 +34,11 @@ export default function PaymentCancel() {
               If you experienced any issues during checkout or have questions about the Founding 100 program, 
               please contact us at{" "}
               <a 
-                href="mailto:support@timeless.organic" 
+                href="mailto:studio@timeless.organic" 
                 className="text-patina hover:text-patina/80 underline"
                 data-testid="link-support"
               >
-                support@timeless.organic
+                studio@timeless.organic
               </a>
             </p>
           </div>

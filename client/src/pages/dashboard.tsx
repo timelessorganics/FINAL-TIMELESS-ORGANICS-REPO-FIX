@@ -359,10 +359,10 @@ export default function Dashboard() {
                 For questions about your codes, cutting selection, or bronze castings,
                 please contact us at{" "}
                 <a
-                  href="mailto:support@timelessorganics.com"
+                  href="mailto:studio@timeless.organic"
                   className="text-accent-gold hover:underline"
                 >
-                  support@timelessorganics.com
+                  studio@timeless.organic
                 </a>
               </p>
               <p className="text-sm text-muted-foreground italic">

@@ -74,7 +74,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/purchase/initiate", isAuthenticated, async (req: any, res: Response) => {
     try {
       const userId = req.user.id;
-      const userEmail = req.user.email || 'noreply@timelessorganics.com';
+      const userEmail = req.user.email || 'studio@timeless.organic';
       const userFirstName = req.user.user_metadata?.first_name || 'Investor';
 
       console.log('[Purchase] User initiating purchase:', userId, userEmail);
@@ -168,7 +168,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         purchase.id,
         purchase.amount,
         purchase.seatType,
-        req.user.email || 'noreply@timelessorganics.com',
+        req.user.email || 'studio@timeless.organic',
         req.user.firstName || 'Investor'
       );
 
