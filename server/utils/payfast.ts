@@ -24,17 +24,33 @@ interface PaymentData {
 }
 
 export function getPayFastConfig(): PayFastConfig {
-  const mode = (process.env.PAYFAST_MODE as 'sandbox' | 'production') || 'sandbox';
+  // CRITICAL: PayFast Onsite Payments require production mode and credentials
+  // Sandbox mode is NOT supported for onsite payments
+  const mode = (process.env.PAYFAST_MODE as 'sandbox' | 'production');
+  const merchantId = process.env.PAYFAST_MERCHANT_ID;
+  const merchantKey = process.env.PAYFAST_MERCHANT_KEY;
+  const passphrase = process.env.PAYFAST_PASSPHRASE;
   
-  // Use the credentials from environment secrets
+  // Enforce required configuration
+  if (!merchantId || !merchantKey || !passphrase || !mode) {
+    throw new Error(
+      'PayFast configuration missing. Required: PAYFAST_MERCHANT_ID, PAYFAST_MERCHANT_KEY, PAYFAST_PASSPHRASE, PAYFAST_MODE'
+    );
+  }
+  
+  if (mode === 'sandbox') {
+    console.warn('[PayFast Config] WARNING: Sandbox mode does not support Onsite Payments!');
+    console.warn('[PayFast Config] Set PAYFAST_MODE=production for real transactions.');
+  }
+  
   const config: PayFastConfig = {
-    merchantId: process.env.PAYFAST_MERCHANT_ID || '10043126',
-    merchantKey: process.env.PAYFAST_MERCHANT_KEY || 'tqjx0xk2w4hqe',
-    passphrase: process.env.PAYFAST_PASSPHRASE || 'DavidjunorTimeorg123',
+    merchantId,
+    merchantKey,
+    passphrase,
     mode,
   };
   
-  console.log(`[PayFast Config] Mode: ${config.mode}, Merchant ID: ${config.merchantId}`);
+  console.log(`[PayFast Config] Mode: ${config.mode}, Merchant ID: ${config.merchantId.substring(0, 4)}****`);
   
   return config;
 }
