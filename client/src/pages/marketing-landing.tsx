@@ -571,7 +571,7 @@ export default function MarketingLanding() {
 
               <p className="text-lg text-muted-foreground leading-relaxed">
                 The Founding 100 isn't crowdfunding — it's co-creation. You invest capital in our final fit-out. 
-                We <span className="text-accent-gold font-semibold">invest</span> (encase in ceramic) your chosen botanical specimen <span className="font-semibold">immediately</span>, 
+                We <span className="text-accent-gold font-semibold">invest</span> (encase in investment material) your chosen botanical specimen <span className="font-semibold">immediately</span>, 
                 guaranteeing you a flawless bronze casting plus <span className="text-patina font-semibold">lifetime workshop access</span> at the ancient craft of lost-wax casting.
               </p>
 
