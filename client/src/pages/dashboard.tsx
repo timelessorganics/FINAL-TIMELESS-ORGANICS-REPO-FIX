@@ -117,63 +117,22 @@ export default function Dashboard() {
                   {/* Purchase Choice & Production Status */}
                   {purchase.status === 'completed' && (
                     <div className="mb-6 space-y-4">
-                      {/* Purchase Choice */}
+                      {/* Specimen Selection */}
                       <div className="p-4 bg-background/50 rounded-lg border border-border">
                         <div className="flex items-center gap-3 mb-3">
-                          {purchase.purchaseChoice === 'cast_now' && (
-                            <>
-                              <Sparkles className="w-5 h-5 text-bronze" />
-                              <h3 className="font-semibold text-foreground">Cast Now Selection</h3>
-                            </>
-                          )}
-                          {purchase.purchaseChoice === 'wait_till_season' && (
-                            <>
-                              <CalendarDays className="w-5 h-5 text-patina" />
-                              <h3 className="font-semibold text-foreground">Waiting for Peak Season</h3>
-                            </>
-                          )}
-                          {purchase.purchaseChoice === 'provide_your_own' && (
-                            <>
-                              <Upload className="w-5 h-5 text-accent" />
-                              <h3 className="font-semibold text-foreground">Custom Specimen</h3>
-                            </>
-                          )}
+                          <Leaf className="w-5 h-5 text-bronze" />
+                          <h3 className="font-semibold text-foreground">Your Specimen Selection</h3>
                         </div>
                         
-                        {/* Specimen Style (for Wait Till Season) */}
                         {purchase.specimenStyle && (
-                          <div className="text-sm text-muted-foreground mb-2">
-                            <span className="font-medium">Chosen Style:</span> {purchase.specimenStyle.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                          </div>
-                        )}
-                        
-                        {/* Seasonal Batch Window */}
-                        {purchase.seasonalBatchWindow && (
-                          <div className="text-sm text-muted-foreground mb-2">
-                            <span className="font-medium">Batch Window:</span> {purchase.seasonalBatchWindow}
-                          </div>
-                        )}
-                        
-                        {/* Custom Specimen Approval Status */}
-                        {purchase.purchaseChoice === 'provide_your_own' && purchase.customSpecimenApprovalStatus && (
-                          <div className="mt-3">
-                            <Badge className={
-                              purchase.customSpecimenApprovalStatus === 'approved' 
-                                ? "bg-patina/20 text-patina border-patina/30"
-                                : purchase.customSpecimenApprovalStatus === 'pending'
-                                ? "bg-bronze/20 text-bronze border-bronze/30"
-                                : "bg-destructive/20 text-destructive border-destructive/30"
-                            }>
-                              {purchase.customSpecimenApprovalStatus === 'approved' && '✓ Approved for Casting'}
-                              {purchase.customSpecimenApprovalStatus === 'pending' && '⏳ Under Review'}
-                              {purchase.customSpecimenApprovalStatus === 'rejected' && '✗ Not Viable for Casting'}
-                            </Badge>
-                            {purchase.customSpecimenNotes && (
-                              <p className="text-sm text-muted-foreground mt-2">
-                                <span className="font-medium">Studio Notes:</span> {purchase.customSpecimenNotes}
-                              </p>
-                            )}
-                          </div>
+                          <>
+                            <div className="text-sm text-muted-foreground mb-2">
+                              <span className="font-medium text-foreground">Chosen Style:</span> {purchase.specimenStyle.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+                            </div>
+                            <p className="text-xs text-muted-foreground">
+                              David will personally select the finest specimen of your chosen style from the current or upcoming seasonal harvest.
+                            </p>
+                          </>
                         )}
                       </div>
 
