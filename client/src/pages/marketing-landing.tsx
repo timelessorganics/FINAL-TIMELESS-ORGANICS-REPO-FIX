@@ -339,7 +339,7 @@ export default function MarketingLanding() {
                       <span className="text-bronze">🔥</span> Our Technical Investment
                     </h4>
                     <p className="text-sm">
-                      We <span className="font-semibold text-accent-gold">invest</span> your chosen botanical cutting — encasing it in a ceramic shell 
+                      We <span className="font-semibold text-accent-gold">invest</span> your chosen botanical cutting — immortalizing it in an investment material 
                       (a powder/water mix) using the ancient lost-wax method. This "investment" creates the mold for your bronze.
                     </p>
                   </div>
