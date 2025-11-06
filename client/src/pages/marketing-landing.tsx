@@ -181,7 +181,7 @@ export default function MarketingLanding() {
           </h1>
           
           <p className="text-xl md:text-2xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
-            Your investment funds our foundry's final fit-out. In return, we <span className="text-accent-gold font-semibold">invest</span> (encase) 
+            Your investment funds our foundry's final fit-out. In return, we <span className="text-accent-gold font-semibold">invest</span> (immortalize) 
             your chosen botanical specimen now — guaranteeing you a flawless bronze casting, 
             lifetime workshop discounts, and exclusive access to the ancient art of lost-wax casting.
           </p>
@@ -571,7 +571,7 @@ export default function MarketingLanding() {
 
               <p className="text-lg text-muted-foreground leading-relaxed">
                 The Founding 100 isn't crowdfunding — it's co-creation. You invest capital in our final fit-out. 
-                We <span className="text-accent-gold font-semibold">invest</span> (encase in investment material) your chosen botanical specimen <span className="font-semibold">immediately</span>, 
+                We <span className="text-accent-gold font-semibold">invest</span> (immortalize in investment material) your chosen botanical specimen <span className="font-semibold">immediately</span>, 
                 guaranteeing you a flawless bronze casting plus <span className="text-patina font-semibold">lifetime workshop access</span> at the ancient craft of lost-wax casting.
               </p>
 
