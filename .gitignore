@@ -5,5 +5,25 @@ server/public
 vite.config.ts.*
 *.tar.gz
 
+# Build cache and temp files
+.cache
+.next
+.turbo
+*.log
+*.tgz
+
 # Large assets folder - don't commit to Git (too large for GitHub)
 attached_assets/
+
+# Deployment/testing scripts (don't need in production)
+push-*.js
+upload-*.js
+consolidate-*.js
+create-fresh-*.js
+clean-github-*.js
+force-reset-*.js
+FRESH-START-*.md
+
+# Replit files (local only)
+.replit
+replit.nix
