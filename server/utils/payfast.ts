@@ -115,12 +115,17 @@ export function createPaymentData(
   firstName: string
 ): PaymentData {
   const config = getPayFastConfig();
-  // Use BACKEND_URL for production (Railway), REPLIT_DOMAINS for Replit dev, fallback to localhost
-  const baseUrl = process.env.BACKEND_URL
+  
+  // Frontend URL for user redirects (return/cancel)
+  const frontendUrl = process.env.FRONTEND_URL || 'https://www.timeless.organic';
+  
+  // Backend URL for PayFast webhook notifications
+  const backendUrl = process.env.BACKEND_URL
     || (process.env.REPLIT_DOMAINS ? `https://${process.env.REPLIT_DOMAINS.split(',')[0]}` : null)
     || 'http://localhost:5000';
   
-  console.log('[PayFast] Using base URL:', baseUrl);
+  console.log('[PayFast] Frontend URL (return/cancel):', frontendUrl);
+  console.log('[PayFast] Backend URL (notify webhook):', backendUrl);
 
   // CRITICAL: Order of properties MUST match PayFast documentation exactly
   // This order is used for signature generation - DO NOT REORDER!
@@ -128,9 +133,9 @@ export function createPaymentData(
   const data: PaymentData = {
     merchant_id: config.merchantId,
     merchant_key: config.merchantKey,
-    return_url: `${baseUrl}/payment/success`,
-    cancel_url: `${baseUrl}/payment/cancel`,
-    notify_url: `${baseUrl}/api/payment/notify`,
+    return_url: `${frontendUrl}/payment/success`,
+    cancel_url: `${frontendUrl}/payment/cancel`,
+    notify_url: `${backendUrl}/api/payment/notify`,
     name_first: firstName,
     email_address: email,
     m_payment_id: purchaseId,
