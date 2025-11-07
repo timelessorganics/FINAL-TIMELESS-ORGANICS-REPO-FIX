@@ -127,6 +127,14 @@ export function createPaymentData(
   console.log('[PayFast] Frontend URL (return/cancel):', frontendUrl);
   console.log('[PayFast] Backend URL (notify webhook):', backendUrl);
 
+  // CRITICAL: PayFast m_payment_id has 32-character limit
+  // Strip hyphens from UUID (36 chars → 32 chars)
+  const paymentRef = purchaseId.replace(/-/g, '');
+  
+  if (paymentRef.length > 32) {
+    throw new Error(`PayFast m_payment_id too long: ${paymentRef.length} chars (max 32)`);
+  }
+
   // CRITICAL: Order of properties MUST match PayFast documentation exactly
   // This order is used for signature generation - DO NOT REORDER!
   // Reference: https://developers.payfast.co.za/docs#step_2_signature
@@ -138,7 +146,7 @@ export function createPaymentData(
     notify_url: `${backendUrl}/api/payment/notify`,
     name_first: firstName,
     email_address: email,
-    m_payment_id: purchaseId,
+    m_payment_id: paymentRef,
     amount: (amount / 100).toFixed(2), // Convert cents to rands
     item_name: seatType === 'founder' ? 'Founders Pass' : 'Patron Gift Card',
     item_description: `Timeless Organics ${seatType === 'founder' ? 'Founder' : 'Patron'} Seat`,
