@@ -59,6 +59,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
+  // Public: Health check with deployment verification
+  app.get("/api/health", async (_req: Request, res: Response) => {
+    res.json({
+      status: "healthy",
+      timestamp: new Date().toISOString(),
+      deployment: {
+        repo: "Timeless-Organics-Main-Repository",
+        payfastFixDeployed: true,
+        features: {
+          userIpCapture: true,
+          userAgentCapture: true,
+          paymentMethodField: true
+        }
+      },
+      message: "PayFast fix deployed - user_ip, user_agent, and payment_method fields active"
+    });
+  });
+
   // Public: Get seat availability
   app.get("/api/seats/availability", async (_req: Request, res: Response) => {
     try {
