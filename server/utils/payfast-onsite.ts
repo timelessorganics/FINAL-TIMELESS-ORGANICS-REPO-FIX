@@ -67,22 +67,22 @@ export async function generatePaymentIdentifier(
     console.log('[PayFast Onsite] Signature (first 20 chars):', signature.substring(0, 20) + '...');
     console.log('[PayFast Onsite] Full request body:', params.toString().substring(0, 200) + '...');
 
-    // Configure HTTPS agent to handle SSL certificates
-    // Railway environments may have certificate verification issues with PayFast
-    const httpsAgent = new https.Agent({
-      rejectUnauthorized: false, // Required for Railway/some hosting environments
-    });
+    // Configure axios with custom HTTPS agent to handle SSL
+    // Some hosting environments (Railway, Heroku) have SSL cert verification issues
+    const axiosConfig = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      httpsAgent: new https.Agent({
+        rejectUnauthorized: false,
+      }),
+      timeout: 10000,
+    };
 
     const response = await axios.post(
       onsiteUrl,
       params.toString(),
-      {
-        headers: {
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        httpsAgent,
-        timeout: 10000, // 10 second timeout
-      }
+      axiosConfig
     );
 
     // PayFast returns the UUID as text or in response.data.uuid
