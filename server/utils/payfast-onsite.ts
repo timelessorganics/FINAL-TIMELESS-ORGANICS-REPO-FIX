@@ -8,13 +8,18 @@ process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 /**
  * Generate PayFast Payment Identifier (UUID) for Onsite Payments
  * This UUID is used to open the PayFast modal on the client side
+ * 
+ * @param userIp - User's IP address (REQUIRED by PayFast Onsite API)
+ * @param userAgent - User's browser user-agent (REQUIRED by PayFast Onsite API)
  */
 export async function generatePaymentIdentifier(
   purchaseId: string,
   amount: number,
   seatType: 'founder' | 'patron',
   email: string,
-  firstName: string
+  firstName: string,
+  userIp: string,
+  userAgent: string
 ): Promise<string> {
   const config = getPayFastConfig();
   
@@ -27,7 +32,7 @@ export async function generatePaymentIdentifier(
     firstName
   );
 
-  // Convert PaymentData to Record<string, string> for signature generation
+  // Convert PaymentData to Record<string, string> and ADD user context BEFORE signing
   const dataForSignature: Record<string, string> = {};
   Object.keys(paymentData).forEach(key => {
     const value = paymentData[key as keyof typeof paymentData];
@@ -35,18 +40,24 @@ export async function generatePaymentIdentifier(
       dataForSignature[key] = value;
     }
   });
+  
+  // ADD PayFast Onsite REQUIRED fields to signature payload
+  dataForSignature['user_ip'] = userIp;
+  dataForSignature['user_agent'] = userAgent;
+  dataForSignature['payment_method'] = 'card';
 
-  // Generate signature
+  // Generate signature with ALL fields (including user context)
   const signature = generateSignature(dataForSignature, config.passphrase);
 
-  // Add signature to payment data
+  // Final payload with signature
   const dataWithSignature = {
-    ...paymentData,
+    ...dataForSignature,
     signature,
   };
 
   console.log('[PayFast Onsite] Generating payment identifier for purchase:', purchaseId);
   console.log('[PayFast Onsite] Amount:', amount, 'Seat Type:', seatType);
+  console.log('[PayFast Onsite] User context:', { ip: userIp, agent: userAgent.substring(0, 50) });
 
   try {
     // Convert to URL-encoded format

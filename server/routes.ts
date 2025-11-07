@@ -124,6 +124,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       console.log('[Purchase] Created purchase record:', purchase.id, purchase.seatType, purchase.amount);
 
+      // Capture user context for PayFast Onsite Payments (REQUIRED)
+      const userIp = (req.headers['x-forwarded-for'] as string)?.split(',')[0]?.trim() 
+        || req.socket.remoteAddress 
+        || '127.0.0.1';
+      const userAgent = req.headers['user-agent'] || 'Unknown';
+      
+      // Normalize IPv6 localhost to IPv4
+      const normalizedIp = userIp === '::1' || userIp === '::ffff:127.0.0.1' ? '127.0.0.1' : userIp;
+
+      console.log('[Purchase] User context:', { ip: normalizedIp, userAgent: userAgent.substring(0, 50) });
+
       // Generate PayFast Onsite Payment Identifier (UUID)
       try {
         const uuid = await generatePaymentIdentifier(
@@ -131,7 +142,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
           purchase.amount,
           purchase.seatType,
           userEmail,
-          userFirstName
+          userFirstName,
+          normalizedIp,
+          userAgent
         );
 
         console.log('[Purchase] Generated PayFast UUID for purchase:', purchase.id);
