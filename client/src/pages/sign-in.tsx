@@ -84,7 +84,7 @@ export default function SignIn() {
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-background via-background to-bronze/5">
-      {/* <SmokeFireBackground /> TEMPORARILY DISABLED - causing too many WebMediaPlayer instances */}
+      <SmokeFireBackground />
       <Card className="w-full max-w-md p-8 bg-card/80 backdrop-blur-md border-bronze/30 relative z-50">
         <div className="text-center mb-8">
           <h1 className="font-serif text-4xl font-bold mb-2 bg-gradient-to-r from-bronze via-accent-gold to-patina bg-clip-text text-transparent">

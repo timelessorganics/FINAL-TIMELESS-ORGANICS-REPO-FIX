@@ -14,81 +14,43 @@ interface SmokeFireBackgroundProps {
 
 export function SmokeFireBackground({ intensity = 'full' }: SmokeFireBackgroundProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [nextIndex, setNextIndex] = useState(1);
-  const [showCurrent, setShowCurrent] = useState(true);
-  
-  const currentVideoRef = useRef<HTMLVideoElement>(null);
-  const nextVideoRef = useRef<HTMLVideoElement>(null);
-  
+  const videoRef = useRef<HTMLVideoElement>(null);
   const videoOpacity = intensity === 'full' ? 0.55 : 0.15;
 
-  // Handle video transitions
   useEffect(() => {
-    const currentVideo = currentVideoRef.current;
-    const nextVideo = nextVideoRef.current;
-    
-    if (!currentVideo || !nextVideo) return;
-
-    let isTransitioning = false;
+    const video = videoRef.current;
+    if (!video) return;
 
     const handleEnded = () => {
-      // When current video ends, immediately show next and start playing
-      if (!isTransitioning) {
-        isTransitioning = true;
-        
-        // Start next video
-        nextVideo.currentTime = 0;
-        nextVideo.play().catch(() => {});
-        
-        // Crossfade
-        setShowCurrent(false);
-        
-        // After fade completes, swap videos
-        setTimeout(() => {
-          setShowCurrent(true);
-          setCurrentIndex(nextIndex);
-          setNextIndex((nextIndex + 1) % videos.length);
-          isTransitioning = false;
-        }, 1500);
-      }
+      const nextIndex = (currentIndex + 1) % videos.length;
+      video.src = videos[nextIndex];
+      video.load();
+      video.play().catch(() => {});
+      setCurrentIndex(nextIndex);
     };
 
-    // Use 'ended' event for clean transitions
-    currentVideo.addEventListener('ended', handleEnded);
+    video.addEventListener('ended', handleEnded);
     
     return () => {
-      currentVideo.removeEventListener('ended', handleEnded);
+      video.removeEventListener('ended', handleEnded);
+      video.pause();
+      video.src = '';
     };
-  }, [currentIndex, nextIndex]);
+  }, [currentIndex]);
 
   return (
     <div className="fixed inset-0 z-40 overflow-hidden pointer-events-none">
       <video
-        ref={currentVideoRef}
+        ref={videoRef}
         src={videos[currentIndex]}
         autoPlay
         muted
         playsInline
-        preload="auto"
+        preload="metadata"
         className="absolute inset-0 w-full h-full object-cover"
         style={{ 
-          opacity: showCurrent ? videoOpacity : 0,
-          mixBlendMode: 'screen',
-          transition: 'opacity 1.5s ease-in-out'
-        }}
-      />
-      
-      <video
-        ref={nextVideoRef}
-        src={videos[nextIndex]}
-        muted
-        playsInline
-        preload="auto"
-        className="absolute inset-0 w-full h-full object-cover"
-        style={{ 
-          opacity: showCurrent ? 0 : videoOpacity,
-          mixBlendMode: 'screen',
-          transition: 'opacity 1.5s ease-in-out'
+          opacity: videoOpacity,
+          mixBlendMode: 'screen'
         }}
       />
       
