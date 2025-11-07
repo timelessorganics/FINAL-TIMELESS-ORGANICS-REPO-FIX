@@ -2,6 +2,9 @@ import axios from "axios";
 import https from "https";
 import { getPayFastConfig, generateSignature, createPaymentData } from "./payfast.js";
 
+// Force SSL bypass for PayFast in production environments
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 /**
  * Generate PayFast Payment Identifier (UUID) for Onsite Payments
  * This UUID is used to open the PayFast modal on the client side
