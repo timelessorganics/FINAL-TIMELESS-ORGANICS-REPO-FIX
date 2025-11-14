@@ -222,11 +222,11 @@ export const insertMountingOptionSchema = createInsertSchema(mountingOptions).pi
 export type InsertMountingOption = z.infer<typeof insertMountingOptionSchema>;
 export type MountingOption = typeof mountingOptions.$inferSelect;
 
-// Code types enum - removed 'bronze_claim' as users select specimen during checkout
-export const codeTypeEnum = pgEnum('code_type', ['workshop_voucher', 'lifetime_workshop']);
+// Code types enum - includes bronze_claim for sculpture redemption codes
+export const codeTypeEnum = pgEnum('code_type', ['bronze_claim', 'workshop_voucher', 'lifetime_workshop']);
 
-// Code applies to enum (workshop-only, seat purchases, or any)
-export const codeAppliesToEnum = pgEnum('code_applies_to', ['workshop', 'seat', 'any']);
+// Code applies to enum (bronze claim, workshop-only, seat purchases, or any)
+export const codeAppliesToEnum = pgEnum('code_applies_to', ['bronze_claim', 'workshop', 'seat', 'any']);
 
 // Unique codes generated for purchases
 export const codes = pgTable("codes", {

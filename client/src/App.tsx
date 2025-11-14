@@ -109,7 +109,9 @@ function Router() {
       <Route path="/seasonal-guide" component={SeasonalGuide} />
       
       {/* Sculpture/Cutting Gallery - Can view without purchase */}
-      <Route path="/sculptures" component={SculptureGallery} />
+      <Route path="/sculptures">
+        {() => <SculptureGallery />}
+      </Route>
       
       {isAuthenticated && (
         <>

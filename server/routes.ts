@@ -459,7 +459,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Update seat count
         await storage.updateSeatSold(purchase.seatType, 1);
 
-        // Generate workshop codes only (specimen selected during checkout)
+        // Generate all 3 codes: bronze claim + workshop vouchers
+        const bronzeClaimCode = await storage.createCode({
+          purchaseId: purchase.id,
+          type: "bronze_claim",
+          code: generateBronzeClaimCode(),
+          discount: 0,
+          transferable: false,
+          maxRedemptions: 1,
+          appliesTo: 'bronze_claim',
+        });
+
         const workshopCode = await storage.createCode({
           purchaseId: purchase.id,
           type: "workshop_voucher",
@@ -492,13 +502,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         try {
           certificateUrl = await generateCertificate(
             purchase,
-            [workshopCode, lifetimeWorkshopCode],
+            [bronzeClaimCode, workshopCode, lifetimeWorkshopCode],
             userName
           );
 
           codeSlipsUrl = await generateCodeSlips(
             purchase,
-            [workshopCode, lifetimeWorkshopCode],
+            [bronzeClaimCode, workshopCode, lifetimeWorkshopCode],
             userName
           );
 
@@ -526,7 +536,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             userEmail,
             userName,
             purchase,
-            [workshopCode, lifetimeWorkshopCode],
+            [bronzeClaimCode, workshopCode, lifetimeWorkshopCode],
             certificateUrl,
             codeSlipsUrl
           ).catch(console.error);
@@ -1115,7 +1125,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Update seat count
       await storage.updateSeatSold(promoCode.seatType, 1);
 
-      // Generate workshop codes (same as paid purchases)
+      // Generate all 3 codes: bronze claim + workshop vouchers (same as paid purchases)
+      const bronzeClaimCode = await storage.createCode({
+        purchaseId: purchase.id,
+        type: "bronze_claim",
+        code: generateBronzeClaimCode(),
+        discount: 0,
+        transferable: false,
+        maxRedemptions: 1,
+        appliesTo: 'bronze_claim',
+      });
+
       const workshopCode = await storage.createCode({
         purchaseId: purchase.id,
         type: "workshop_voucher",
@@ -1149,13 +1169,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       try {
         certificateUrl = await generateCertificate(
           purchase,
-          [workshopCode, lifetimeWorkshopCode],
+          [bronzeClaimCode, workshopCode, lifetimeWorkshopCode],
           userName
         );
 
         codeSlipsUrl = await generateCodeSlips(
           purchase,
-          [workshopCode, lifetimeWorkshopCode],
+          [bronzeClaimCode, workshopCode, lifetimeWorkshopCode],
           userName
         );
 
@@ -1185,7 +1205,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               userEmail,
               userName,
               purchase,
-              [workshopCode, lifetimeWorkshopCode],
+              [bronzeClaimCode, workshopCode, lifetimeWorkshopCode],
               certificateUrl,
               codeSlipsUrl
             );
