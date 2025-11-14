@@ -92,6 +92,164 @@ export default function MainLaunch() {
             </div>
           </section>
 
+          {/* Seat Selection Section - MOVED TO TOP */}
+          <section id="seats" className="mb-20 py-12" data-testid="section-seats">
+            <div className="text-center mb-12">
+              <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
+                <span className="text-accent-gold">Secure Your Seat</span> Now
+              </h2>
+              <p className="text-muted-foreground text-lg">
+                Only 100 seats available. Choose your investment level.
+              </p>
+            </div>
+
+            {isLoading ? (
+              <div className="flex justify-center items-center py-20">
+                <div className="spinner" />
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+                {founderSeat && (
+                  <SeatCard
+                    seat={founderSeat}
+                    title="Founders Pass"
+                    subtitle="R3,000"
+                    description="One bronze casting included of a Studio-Guaranteed Cutting"
+                    benefits={[
+                      "Your name permanently engraved on our Founders & Patrons Leaf Wall",
+                      "50% off first workshop (Transferable, single-use, never expires)",
+                      "20% lifetime discount code (Unlimited uses, transferable & giftable)",
+                      "Both codes for workshops only — not redeemable for Founding 100 seats",
+                    ]}
+                  />
+                )}
+                {patronSeat && (
+                  <SeatCard
+                    seat={patronSeat}
+                    title="Patron Gift Card"
+                    subtitle="R5,000"
+                    description="One bronze casting included of a Studio-Guaranteed Cutting"
+                    benefits={[
+                      "Your name permanently engraved on our Founders & Patrons Leaf Wall",
+                      "80% off first workshop (Transferable, single-use, never expires)",
+                      "30% lifetime discount code (Unlimited uses, transferable & giftable)",
+                      "Both codes for workshops only — not redeemable for Founding 100 seats",
+                    ]}
+                    featured
+                  />
+                )}
+              </div>
+            )}
+          </section>
+
+          {/* The Vision - Honest & Vulnerable */}
+          <section className="mb-20 py-12 bg-card/20" data-testid="section-vision">
+            <div className="max-w-4xl mx-auto px-7">
+              <div className="text-center mb-12">
+                <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                  The Vision
+                </h2>
+              </div>
+
+              <div className="prose prose-invert prose-lg max-w-none space-y-6">
+                <p className="text-lg text-foreground/90 leading-relaxed">
+                  I'll be honest with you. Recent events and unforeseen circumstances left us in a difficult position. 
+                  The foundry we've been building — the dream I've nurtured for years — suddenly needed immediate capital 
+                  to complete the final fit-out.
+                </p>
+
+                <p className="text-muted-foreground leading-relaxed">
+                  But here's the thing about hardship: it forces you to get creative. And in that creative struggle, 
+                  I realized this challenge opened a door to something I've <em>always</em> wanted to do — share this 
+                  ancient craft with people who genuinely care about art, craftsmanship, and preservation.
+                </p>
+
+                <p className="text-muted-foreground leading-relaxed">
+                  Yes, we need to keep the lights on. Yes, we need capital to finish the foundry. But this isn't 
+                  crowdfunding where you donate and hope for the best. Instead, we've created something different — 
+                  a <strong className="text-accent-gold">returnable investment for life</strong>.
+                </p>
+
+                <div className="bg-bronze/10 border-l-4 border-bronze rounded-r-lg p-6 my-8">
+                  <p className="text-foreground/90 font-medium mb-3">
+                    Your investment funds our infrastructure. That infrastructure creates <em>your</em> bronze art. 
+                    And you gain lifetime access to the knowledge, the craft, and the community we're building.
+                  </p>
+                  <p className="text-muted-foreground text-sm">
+                    Out of hardship comes opportunity. This is ours. And yours.
+                  </p>
+                </div>
+
+                <p className="text-muted-foreground leading-relaxed">
+                  The Founding 100 program is my way of turning crisis into collaboration. You're not just funding 
+                  a business — you're becoming part of our origin story. Your name will be engraved on our Wall of Leaves. 
+                  Your investment will be immortalized in bronze. And together, we'll preserve an ancient art form for 
+                  future generations.
+                </p>
+
+                <p className="text-center text-xl text-foreground/90 font-medium pt-6 border-t border-border">
+                  Thank you for believing in what we're building. <span className="text-patina">— David Junor</span>
+                </p>
+              </div>
+            </div>
+          </section>
+
+          {/* David Junor Bio Section */}
+          <section className="mb-20 py-12" data-testid="section-david-bio">
+            <div className="max-w-4xl mx-auto">
+              <div className="text-center mb-12">
+                <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                  Meet <span className="text-bronze">David Junor</span>
+                </h2>
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  The artist and craftsman behind Timeless Organics
+                </p>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div className="md:col-span-1">
+                  <Card className="p-6 bg-card/50 border-card-border h-full flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-32 h-32 mx-auto mb-4 rounded-full bg-bronze/20 border-2 border-bronze flex items-center justify-center">
+                        <span className="text-5xl font-serif text-bronze">DJ</span>
+                      </div>
+                      <p className="text-sm text-muted-foreground">Founder & Bronze Artist</p>
+                    </div>
+                  </Card>
+                </div>
+
+                <div className="md:col-span-2">
+                  <div className="prose prose-invert max-w-none space-y-4 text-muted-foreground">
+                    <p className="text-foreground/90 leading-relaxed">
+                      David Junor is a South African bronze artist and craftsman specializing in lost-wax casting 
+                      of Cape Fynbos botanical specimens. Based in Kommetjie, he combines traditional metalworking 
+                      techniques with contemporary artistic vision.
+                    </p>
+                    
+                    <p className="leading-relaxed">
+                      His work preserves the intricate beauty of indigenous South African flora — proteas, aloes, 
+                      restios, and succulents — transforming ephemeral botanical specimens into permanent bronze sculptures. 
+                      Each piece captures the exact detail of the original plant material, down to the smallest leaf vein 
+                      and petal texture.
+                    </p>
+                    
+                    <p className="leading-relaxed">
+                      Through Timeless Organics, David is building more than a foundry. He's creating a space where 
+                      ancient bronze-casting traditions meet modern artistic practice, where knowledge is shared through 
+                      hands-on workshops, and where South Africa's unique botanical heritage is preserved in metal for 
+                      generations to come.
+                    </p>
+
+                    <p className="text-foreground/90 font-medium italic pt-4 border-t border-border">
+                      "Bronze casting isn't just about creating art — it's about preserving moments in time, 
+                      teaching forgotten skills, and building a community around craft."
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+
           {/* How the Founding 100 Works */}
           <section className="mb-20 py-12" data-testid="section-how-it-works">
             <div className="max-w-4xl mx-auto">
@@ -275,71 +433,6 @@ export default function MainLaunch() {
                   </ul>
                 </Card>
               </div>
-            </div>
-          </section>
-
-          {/* Seat Selection Section */}
-          <section id="seats" className="mb-16" data-testid="section-seats">
-            <div className="text-center mb-12">
-              <h2 className="font-serif text-3xl md:text-4xl font-bold mb-4">
-                <span className="text-accent-gold">Ready to Join?</span> Secure Your Seat
-              </h2>
-              <p className="text-muted-foreground text-lg">
-                Choose your pass and become part of our founding community
-              </p>
-            </div>
-
-            {isLoading ? (
-              <div className="flex justify-center items-center py-20">
-                <div className="spinner" />
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
-                {founderSeat && (
-                  <SeatCard
-                    seat={founderSeat}
-                    title="Founders Pass"
-                    subtitle="R10"
-                    description="One bronze casting included of a Studio-Guaranteed Cutting"
-                    benefits={[
-                      "Your name permanently engraved on our Founders & Patrons Leaf Wall",
-                      "50% off first workshop (Transferable, single-use, never expires)",
-                      "20% lifetime discount code (Unlimited uses, transferable & giftable)",
-                      "Both codes for workshops only — not redeemable for Founding 100 seats",
-                    ]}
-                  />
-                )}
-                {patronSeat && (
-                  <SeatCard
-                    seat={patronSeat}
-                    title="Patron Gift Card"
-                    subtitle="R10"
-                    description="One bronze casting included of a Studio-Guaranteed Cutting"
-                    benefits={[
-                      "Your name permanently engraved on our Founders & Patrons Leaf Wall",
-                      "80% off first workshop (Transferable, single-use, never expires)",
-                      "30% lifetime discount code (Unlimited uses, transferable & giftable)",
-                      "Both codes for workshops only — not redeemable for Founding 100 seats",
-                    ]}
-                    featured
-                  />
-                )}
-              </div>
-            )}
-
-            {/* Invest Now CTA */}
-            <div className="flex justify-center mt-12">
-              <Button
-                asChild
-                size="lg"
-                className="btn-bronze font-bold px-12 py-6 text-lg"
-                data-testid="button-invest-cta"
-              >
-                <a href="#seats">
-                  <span className="moving-fill">Invest Now</span>
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </a>
-              </Button>
             </div>
           </section>
 
