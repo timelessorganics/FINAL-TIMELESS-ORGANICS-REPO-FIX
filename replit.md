@@ -20,12 +20,22 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Database:** PostgreSQL on Supabase
 - **Authentication:** Supabase Auth with OAuth (Google, GitHub, Apple) and Email. Frontend communicates with backend via `VITE_API_URL` environment variable.
 
+**Site Structure:**
+- **Unified Navigation:** Single site with consistent Header/Footer components across all pages
+- **Home Page:** Hero section with Founding 100 launch message, seat cards, brand introduction sections
+- **Brand Pages:** Workshops (coming Q2 2025), Commission (custom bronze services), About (David's story)
+- **Conversion CTAs:** Each brand page includes "Secure Your Seat" CTA linking back to /#seats anchor
+- **Checkout Flow:** Dedicated checkout page with variant Header (hides navigation, shows back button) and Footer for trust/consistency
+- **Navigation Flow:** Home → Brand Pages → Back to Seats → Checkout → Dashboard
+
 **UI/UX Decisions:**
 - **Color Scheme:** Dark theme with Bronze (#a67c52), Patina (#6f8f79), and Accent Gold (#d8c3a5).
 - **Typography:** Playfair Display (headings), Inter (body).
 - **Animations:** Slow-moving gradient text (10-16s cycles) and crossfading smoke/fire video backgrounds (1.5s transitions) on sign-in.
 - **Background:** Fixed aloe sculpture image with radial gradient overlays.
 - **Buttons:** Glassy bronze with `backdrop-blur` and animated gradient overlays.
+- **Header Component:** Supports checkout variant (props: variant, showNav, backHref, backLabel, context); sticky positioning with backdrop blur
+- **Footer Component:** 4-column layout (Company Info, Explore Links, Legal, Newsletter Signup via InterestForm)
 
 **Technical Implementations & Features:**
 - **Authentication:** Supabase Auth for user management (Google, GitHub, Email); backend verifies JWT tokens using service role key. Google OAuth uses `prompt: 'select_account'` to force account picker.
