@@ -4,7 +4,7 @@ import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Calendar, Sparkles, Award } from "lucide-react";
-import aloeImage from "@assets/aloe-certificate-background.png";
+import aloeImage from "@assets/Bronze Aloe Sculpture in Resin Block 2_1763150497628.jpg";
 
 export default function HomePage() {
   return (
@@ -16,7 +16,7 @@ export default function HomePage() {
         
         {/* Hero Section - Timeless Organics Brand */}
         <section 
-          className="min-h-[70vh] flex items-center justify-center px-6 py-20 relative overflow-hidden" 
+          className="min-h-[85vh] flex items-center justify-center px-6 py-24 relative overflow-hidden" 
           data-testid="section-hero"
           style={{
             backgroundImage: `url(${aloeImage})`,
@@ -25,26 +25,25 @@ export default function HomePage() {
           }}
         >
           {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/70 to-background/85" />
           
           <div className="max-w-4xl mx-auto text-center relative z-10">
-            <div className="mb-4 text-sm tracking-widest text-bronze uppercase opacity-80">
+            <div className="mb-6 text-sm tracking-[0.3em] text-accent-gold/90 uppercase font-medium">
               Bronze • Patina • Organic Casting
             </div>
             
-            <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight">
-              <span className="text-foreground">Timeless </span>
-              <span className="text-accent-gold">Organics</span>
+            <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1]">
+              <span className="moving-fill">Timeless Organics</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-foreground max-w-2xl mx-auto mb-8 leading-relaxed font-light">
+            <p className="text-xl md:text-2xl text-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
               One-of-a-kind castings from organic matter.<br />
               Nature's originals, held forever in bronze.
             </p>
 
-            <div className="flex flex-wrap justify-center gap-4 mb-12">
+            <div className="flex flex-wrap justify-center gap-4">
               <Link href="/founding-100">
-                <Button size="lg" className="btn-bronze text-lg px-8 py-6" data-testid="button-founding-100">
+                <Button size="lg" className="btn-bronze text-base px-8 py-6 min-h-14" data-testid="button-founding-100">
                   Limited Seats - Founding 100
                 </Button>
               </Link>
@@ -52,10 +51,10 @@ export default function HomePage() {
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="text-lg px-8 py-6 bg-background/30 backdrop-blur-sm border-bronze/50 hover:border-bronze" 
-                  data-testid="button-explore-future"
+                  className="text-base px-8 py-6 min-h-14 bg-background/30 backdrop-blur-sm border-foreground/20 hover:border-foreground/40" 
+                  data-testid="button-explore-workshops"
                 >
-                  Explore The Future Website
+                  Explore Workshops
                 </Button>
               </Link>
             </div>
@@ -63,29 +62,29 @@ export default function HomePage() {
         </section>
 
         {/* Value Proposition Cards */}
-        <section className="py-20 px-6 bg-card/20">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              <Card className="p-8 bg-card/80 border-card-border text-center hover-elevate">
-                <div className="text-sm uppercase tracking-wide text-muted-foreground mb-2">From Nature</div>
-                <h3 className="font-serif text-2xl font-bold mb-3">Organic<br />Matter</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+        <section className="py-24 px-6">
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+              <Card className="p-10 bg-background/40 border-border/50 text-left hover-elevate backdrop-blur-sm">
+                <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3 font-medium">From Nature</div>
+                <h3 className="font-serif text-2xl font-bold mb-4 leading-tight">Organic<br />Matter</h3>
+                <p className="text-sm text-muted-foreground/80 leading-relaxed">
                   Cape Fynbos botanical specimens selected at peak seasonal beauty
                 </p>
               </Card>
 
-              <Card className="p-8 bg-card/80 border-card-border text-center hover-elevate">
-                <div className="text-sm uppercase tracking-wide text-muted-foreground mb-2">Finish</div>
-                <h3 className="font-serif text-2xl font-bold mb-3">Patina<br />Bronze</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+              <Card className="p-10 bg-background/40 border-border/50 text-left hover-elevate backdrop-blur-sm">
+                <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3 font-medium">Finish</div>
+                <h3 className="font-serif text-2xl font-bold mb-4 leading-tight">Patina<br />Bronze</h3>
+                <p className="text-sm text-muted-foreground/80 leading-relaxed">
                   Lost-wax casting with museum-grade bronze finishing techniques
                 </p>
               </Card>
 
-              <Card className="p-8 bg-card/80 border-card-border text-center hover-elevate">
-                <div className="text-sm uppercase tracking-wide text-muted-foreground mb-2">Edition</div>
-                <h3 className="font-serif text-2xl font-bold mb-3">One-of-<br />One</h3>
-                <p className="text-sm text-muted-foreground leading-relaxed">
+              <Card className="p-10 bg-background/40 border-border/50 text-left hover-elevate backdrop-blur-sm">
+                <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3 font-medium">Edition</div>
+                <h3 className="font-serif text-2xl font-bold mb-4 leading-tight">One-of-<br />One</h3>
+                <p className="text-sm text-muted-foreground/80 leading-relaxed">
                   Each botanical specimen is unique — no two castings are identical
                 </p>
               </Card>
@@ -94,9 +93,9 @@ export default function HomePage() {
         </section>
 
         {/* Founding 100 Launch Callout */}
-        <section className="py-20 px-6">
+        <section className="py-24 px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-accent-gold/20 border border-accent-gold/50 rounded-full px-6 py-2 mb-6">
+            <div className="inline-flex items-center gap-2 bg-accent-gold/20 border border-accent-gold/50 rounded-full px-6 py-2 mb-8">
               <Sparkles className="w-4 h-4 text-accent-gold" />
               <span className="text-accent-gold font-bold text-sm uppercase tracking-wide">Limited Time Offer</span>
             </div>
@@ -105,12 +104,12 @@ export default function HomePage() {
               Join the <span className="text-accent-gold">Founding 100</span>
             </h2>
             
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
               Fund our Kommetjie foundry's final fit-out. We invest (encase) your chosen botanical specimen now — 
               guaranteeing you a bronze casting when the studio opens (estimated Jan 2026).
             </p>
 
-            <div className="flex flex-wrap justify-center gap-6 mb-8">
+            <div className="flex flex-wrap justify-center gap-8 mb-10">
               <div className="text-center">
                 <div className="text-4xl font-bold text-accent-gold mb-1">100</div>
                 <div className="text-sm text-muted-foreground">Limited Seats</div>
@@ -126,7 +125,7 @@ export default function HomePage() {
             </div>
 
             <Link href="/founding-100">
-              <Button size="lg" className="btn-bronze text-lg px-8 py-6" data-testid="button-view-founding-seats">
+              <Button size="lg" className="btn-bronze text-base px-8 py-6 min-h-14" data-testid="button-view-founding-seats">
                 View Founder &amp; Patron Seats
               </Button>
             </Link>
