@@ -126,7 +126,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log('[Purchase] User initiating purchase:', userId, userEmail);
 
       // Calculate amount based on seat type + add-ons
-      const { seatType, specimenStyle, hasPatina, mountingType, internationalShipping, deliveryName, deliveryPhone, deliveryAddress } = req.body;
+      const { 
+        seatType, specimenStyle, hasPatina, mountingType, internationalShipping, purchaseMode,
+        isGift, giftRecipientEmail, giftRecipientName, giftMessage,
+        deliveryName, deliveryPhone, deliveryAddress 
+      } = req.body;
       const seat = await storage.getSeatByType(seatType);
       if (!seat) {
         return res.status(404).json({ message: "Seat type not found" });
@@ -167,6 +171,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         mountingType: mountingType || 'none',
         mountingPriceCents: mountingPriceCents || 0,
         internationalShipping: internationalShipping || false,
+        purchaseMode: purchaseMode || 'cast_now',
+        isGift: isGift || false,
+        giftRecipientEmail: isGift ? giftRecipientEmail : null,
+        giftRecipientName: isGift ? giftRecipientName : null,
+        giftMessage: isGift ? giftMessage : null,
         deliveryName,
         deliveryPhone,
         deliveryAddress,
@@ -987,7 +996,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/promo-code/redeem", isAuthenticated, async (req: any, res: Response) => {
     try {
       const userId = getUserId(req);
-      const { code, specimenStyle, hasPatina, mountingType, internationalShipping, deliveryName, deliveryPhone, deliveryAddress } = req.body;
+      const { 
+        code, specimenStyle, hasPatina, mountingType, internationalShipping, purchaseMode,
+        isGift, giftRecipientEmail, giftRecipientName, giftMessage,
+        deliveryName, deliveryPhone, deliveryAddress 
+      } = req.body;
 
       // Validate code
       const promoCode = await storage.getPromoCodeByCode(code.toUpperCase());
@@ -1029,6 +1042,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         mountingType: mountingType || 'none',
         mountingPriceCents, // Always free for promo redemptions
         internationalShipping: internationalShipping || false,
+        purchaseMode: purchaseMode || 'cast_now',
+        isGift: isGift || false,
+        giftRecipientEmail: isGift ? giftRecipientEmail : null,
+        giftRecipientName: isGift ? giftRecipientName : null,
+        giftMessage: isGift ? giftMessage : null,
         deliveryName,
         deliveryPhone,
         deliveryAddress,
