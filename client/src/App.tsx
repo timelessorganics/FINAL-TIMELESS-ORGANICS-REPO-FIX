@@ -27,6 +27,7 @@ import WallOfLeaves from "@/pages/wall-of-leaves";
 import SeasonalGuide from "@/pages/seasonal-guide";
 import SignIn from "@/pages/sign-in";
 import AuthCallback from "@/pages/auth-callback";
+import ClaimGiftPage from "@/pages/claim-gift";
 
 
 function Router() {
@@ -92,6 +93,9 @@ function Router() {
       
       {/* Promo Code Redemption - PUBLIC */}
       <Route path="/redeem" component={RedeemCodePage} />
+      
+      {/* Gift Claim - PUBLIC (redirects to login if needed) */}
+      <Route path="/claim-gift" component={ClaimGiftPage} />
       
       {/* Legal Pages - PUBLIC */}
       <Route path="/terms" component={Terms} />

@@ -23,7 +23,7 @@ import {
 import { generatePaymentIdentifier } from "./utils/payfast-onsite";
 import { generateCertificate } from "./utils/certificateGenerator";
 import { generateCodeSlips } from "./utils/codeSlipsGenerator";
-import { sendCertificateEmail, sendPurchaseConfirmationEmail } from "./utils/emailService";
+import { sendCertificateEmail, sendPurchaseConfirmationEmail, sendGiftNotificationEmail } from "./utils/emailService";
 import { generatePromoCode } from "./utils/promoCodeGenerator";
 import { addSubscriberToMailchimp } from "./mailchimp";
 
@@ -36,6 +36,54 @@ function getMountingPrice(mountingType: string): number {
     'custom': 2500, // R25
   };
   return prices[mountingType] || 0;
+}
+
+// Centralized post-completion handler for gift notifications
+async function handlePurchaseCompletion(purchaseId: string): Promise<void> {
+  try {
+    // Reload purchase to get complete data (including isGift, recipient details, etc.)
+    const purchase = await storage.getPurchase(purchaseId);
+    if (!purchase) {
+      console.error(`[Gift] Purchase ${purchaseId} not found for completion handling`);
+      return;
+    }
+
+    // Check if this is a gift that needs notification
+    if (!purchase.isGift || !purchase.giftRecipientEmail || !purchase.giftRecipientName) {
+      return; // Not a gift or missing recipient info
+    }
+
+    // Check if notification already sent (idempotency)
+    if (purchase.giftStatus !== 'pending') {
+      console.log(`[Gift] Purchase ${purchaseId} gift notification already sent (status: ${purchase.giftStatus})`);
+      return;
+    }
+
+    // Get sender's name from user
+    const user = await storage.getUser(purchase.userId);
+    const senderName = user?.firstName && user?.lastName 
+      ? `${user.firstName} ${user.lastName}`
+      : 'A Timeless Organics Investor';
+
+    // Send gift notification email
+    const emailSent = await sendGiftNotificationEmail(
+      purchase.giftRecipientEmail,
+      purchase.giftRecipientName,
+      senderName,
+      purchase.seatType,
+      purchase.giftMessage || '',
+      purchaseId
+    );
+
+    if (emailSent) {
+      console.log(`[Gift] Notification email sent to ${purchase.giftRecipientEmail} for purchase ${purchaseId}`);
+    } else {
+      console.warn(`[Gift] Failed to send notification email for purchase ${purchaseId} (email service may be unconfigured)`);
+    }
+  } catch (error: any) {
+    // Log error but don't block purchase completion flow
+    console.error(`[Gift] Error handling purchase completion for ${purchaseId}:`, error);
+  }
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -404,6 +452,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         // Now safe to proceed - only one notification won the race
         console.log("Processing purchase completion:", purchaseId);
+
+        // Send gift notification if this is a gift purchase
+        await handlePurchaseCompletion(purchase.id);
 
         // Update seat count
         await storage.updateSeatSold(purchase.seatType, 1);
@@ -1055,6 +1106,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Mark purchase as completed immediately (no payment needed)
       await storage.updatePurchaseStatus(purchase.id, "completed", `PROMO-${code}`, undefined);
 
+      // Send gift notification if this is a gift purchase
+      await handlePurchaseCompletion(purchase.id);
+
       // Mark code as used
       await storage.markPromoCodeAsUsed(promoCode.id, userId, purchase.id);
 
@@ -1163,6 +1217,74 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error: any) {
       console.error("Promo code redemption error:", error);
       res.status(500).json({ message: error.message || "Failed to redeem code" });
+    }
+  });
+
+  // Public: Get gift purchase details (for claim page)
+  app.get("/api/gift/details/:id", async (req: Request, res: Response) => {
+    try {
+      const purchaseId = req.params.id;
+      const purchase = await storage.getPurchase(purchaseId);
+
+      if (!purchase) {
+        return res.status(404).json({ message: "Gift not found" });
+      }
+
+      // Only return gift purchases
+      if (!purchase.isGift) {
+        return res.status(404).json({ message: "This is not a gift purchase" });
+      }
+
+      // Return limited details for security (don't expose user ID, payment details, etc.)
+      res.json({
+        id: purchase.id,
+        seatType: purchase.seatType,
+        specimenStyle: purchase.specimenStyle,
+        giftMessage: purchase.giftMessage,
+        giftStatus: purchase.giftStatus,
+        claimedByUserId: purchase.claimedByUserId,
+        giftRecipientName: purchase.giftRecipientName,
+      });
+    } catch (error: any) {
+      console.error("Get gift details error:", error);
+      res.status(500).json({ message: error.message || "Failed to get gift details" });
+    }
+  });
+
+  // Protected: Claim a gift purchase
+  app.post("/api/gift/claim/:id", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = getUserId(req);
+      const purchaseId = req.params.id;
+
+      const purchase = await storage.getPurchase(purchaseId);
+
+      if (!purchase) {
+        return res.status(404).json({ message: "Gift not found" });
+      }
+
+      // Validate this is a gift purchase
+      if (!purchase.isGift) {
+        return res.status(400).json({ message: "This is not a gift purchase" });
+      }
+
+      // Check if already claimed
+      if (purchase.giftStatus === "claimed") {
+        if (purchase.claimedByUserId === userId) {
+          return res.json({ message: "You have already claimed this gift" });
+        }
+        return res.status(409).json({ message: "This gift has already been claimed by another user" });
+      }
+
+      // Claim the gift by updating claimedByUserId and giftStatus
+      await storage.claimGiftPurchase(purchaseId, userId);
+
+      console.log(`[Gift] Purchase ${purchaseId} claimed by user ${userId}`);
+
+      res.json({ message: "Gift claimed successfully" });
+    } catch (error: any) {
+      console.error("Claim gift error:", error);
+      res.status(500).json({ message: error.message || "Failed to claim gift" });
     }
   });
 

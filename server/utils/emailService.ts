@@ -53,6 +53,126 @@ function getTransporter(): Transporter | null {
   return transporter;
 }
 
+export async function sendGiftNotificationEmail(
+  recipientEmail: string,
+  recipientName: string,
+  senderName: string,
+  seatType: string,
+  message: string,
+  purchaseId: string
+): Promise<boolean> {
+  const transport = getTransporter();
+  
+  if (!transport) {
+    console.log("Email service not configured. Skipping gift notification email.");
+    return false;
+  }
+
+  try {
+    const seatName = seatType === "founder" ? "Founder" : "Patron";
+    const apiUrl = process.env.VITE_API_URL || 'https://timeless-organics-fouding-100-production.up.railway.app';
+    const claimUrl = `${apiUrl.replace('/api', '')}/claim-gift?id=${purchaseId}`;
+
+    const subject = `${senderName} has gifted you a Timeless Organics ${seatName} Seat`;
+
+    const text = `
+Dear ${recipientName},
+
+You've received an incredible gift from ${senderName}!
+
+${message ? `Their message to you:\n"${message}"\n` : ''}
+You've been gifted a ${seatName} seat in the exclusive Founding 100 of Timeless Organics. This is a lifetime investment in artisanal bronze sculpture, featuring a hand-selected Cape Fynbos specimen cast in bronze by David van Heerden.
+
+Your ${seatName} seat includes:
+- One bespoke bronze Cape Fynbos sculpture
+- Certificate of authenticity
+- Exclusive workshop vouchers
+- Lifetime workshop discounts
+
+To claim your gift and select your specimen style, visit:
+${claimUrl}
+
+This is a limited-time invitation. The Founding 100 is closing soon, and your seat is reserved.
+
+With gratitude,
+David van Heerden
+Timeless Organics
+    `.trim();
+
+    const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: 'Inter', -apple-system, sans-serif; line-height: 1.6; color: #1a1a1a; max-width: 600px; margin: 0 auto; padding: 20px; }
+    .header { background: linear-gradient(135deg, #a67c52 0%, #6f8f79 100%); padding: 40px 20px; text-align: center; border-radius: 8px 8px 0 0; }
+    .header h1 { color: white; margin: 0; font-size: 28px; font-weight: 600; }
+    .content { background: white; padding: 40px 30px; border: 1px solid #e0e0e0; border-top: none; border-radius: 0 0 8px 8px; }
+    .message-box { background: #f8f5f0; border-left: 4px solid #a67c52; padding: 20px; margin: 25px 0; border-radius: 4px; font-style: italic; }
+    .benefits { background: #fafafa; padding: 20px; border-radius: 8px; margin: 25px 0; }
+    .benefits h3 { margin-top: 0; color: #a67c52; }
+    .benefits ul { margin: 0; padding-left: 20px; }
+    .benefits li { margin: 8px 0; }
+    .cta-button { display: inline-block; background: linear-gradient(135deg, #a67c52 0%, #8b6847 100%); color: white; padding: 16px 32px; text-decoration: none; border-radius: 6px; font-weight: 600; margin: 25px 0; }
+    .cta-button:hover { background: linear-gradient(135deg, #8b6847 0%, #a67c52 100%); }
+    .footer { text-align: center; margin-top: 30px; padding-top: 30px; border-top: 1px solid #e0e0e0; color: #666; font-size: 14px; }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>🎁 You've Received a Gift</h1>
+  </div>
+  
+  <div class="content">
+    <p>Dear ${recipientName},</p>
+    
+    <p><strong>${senderName}</strong> has gifted you something extraordinary.</p>
+    
+    ${message ? `<div class="message-box">"${message}"</div>` : ''}
+    
+    <p>You've been gifted a <strong>${seatName} seat</strong> in the exclusive <strong>Founding 100</strong> of Timeless Organics. This is a lifetime investment in artisanal bronze sculpture, featuring a hand-selected Cape Fynbos specimen cast in bronze by master craftsman David van Heerden.</p>
+    
+    <div class="benefits">
+      <h3>Your ${seatName} Seat Includes:</h3>
+      <ul>
+        <li>One bespoke bronze Cape Fynbos sculpture (your choice of 12 specimen styles)</li>
+        <li>Certificate of authenticity signed by David</li>
+        <li>Exclusive workshop vouchers (${seatType === 'founder' ? '80%' : '50%'} off first workshop)</li>
+        <li>Lifetime workshop discounts (${seatType === 'founder' ? '30%' : '20%'} off all future workshops)</li>
+      </ul>
+    </div>
+    
+    <center>
+      <a href="${claimUrl}" class="cta-button">Claim Your Gift & Choose Specimen</a>
+    </center>
+    
+    <p style="color: #d8704d; font-weight: 600; text-align: center;">⏰ The Founding 100 is closing soon. Claim your seat today.</p>
+    
+    <div class="footer">
+      <p>With gratitude,<br><strong>David van Heerden</strong><br>Timeless Organics</p>
+    </div>
+  </div>
+</body>
+</html>
+    `.trim();
+
+    await transport.sendMail({
+      from: '"Timeless Organics" <studio@timeless.organic>',
+      to: recipientEmail,
+      subject,
+      text,
+      html,
+    });
+
+    console.log(`Gift notification email sent to ${recipientEmail} for purchase ${purchaseId}`);
+    return true;
+  } catch (error: any) {
+    console.error("Failed to send gift notification email:", error);
+    return false;
+  }
+}
+
 // Send certificate email to user with both certificate and code slips
 export async function sendCertificateEmail(
   userEmail: string,

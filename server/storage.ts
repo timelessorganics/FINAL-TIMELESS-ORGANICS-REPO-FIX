@@ -47,6 +47,7 @@ export interface IStorage {
   getAllPurchases(): Promise<Purchase[]>;
   updatePurchaseStatus(id: string, status: 'pending' | 'completed' | 'failed', paymentReference?: string, certificateUrl?: string): Promise<boolean>;
   updatePurchase(id: string, updates: Partial<Purchase>): Promise<void>;
+  claimGiftPurchase(purchaseId: string, userId: string): Promise<void>;
   
   // Code operations
   createCode(code: InsertCode): Promise<Code>;
@@ -190,6 +191,17 @@ export class DatabaseStorage implements IStorage {
       .update(purchases)
       .set(updates)
       .where(eq(purchases.id, id));
+  }
+
+  async claimGiftPurchase(purchaseId: string, userId: string): Promise<void> {
+    await db
+      .update(purchases)
+      .set({
+        giftStatus: 'claimed' as any,
+        claimedByUserId: userId,
+        giftClaimedAt: new Date(),
+      })
+      .where(eq(purchases.id, purchaseId));
   }
 
   // Code operations
