@@ -1,10 +1,24 @@
 import { useAuth } from "@/hooks/useAuth";
 import { Button } from "@/components/ui/button";
-import { LogOut, LayoutDashboard, ShieldCheck, LogIn } from "lucide-react";
+import { LogOut, LayoutDashboard, ShieldCheck, LogIn, ArrowLeft } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import { signOut, redirectToSignIn } from "@/lib/auth-helpers";
 
-export default function Header() {
+interface HeaderProps {
+  variant?: "default" | "checkout";
+  showNav?: boolean;
+  backHref?: string;
+  backLabel?: string;
+  context?: string;
+}
+
+export default function Header({ 
+  variant = "default", 
+  showNav = true, 
+  backHref, 
+  backLabel = "Back",
+  context 
+}: HeaderProps) {
   const { user, isAuthenticated } = useAuth();
   const [location] = useLocation();
 
@@ -15,31 +29,47 @@ export default function Header() {
     { href: "/about", label: "About" },
   ];
 
+  const isCheckoutVariant = variant === "checkout";
+
   return (
     <header className="sticky top-0 z-[100] border-b border-border bg-background/80 backdrop-blur-md">
       <div className="max-w-[1400px] mx-auto px-6 lg:px-8 py-4">
         <div className="flex items-center justify-between gap-6">
           <Link href="/" className="font-serif text-xl font-bold" data-testid="link-home">
-            <span className="moving-fill">Timeless Organics</span>
+            <div>
+              <span className="moving-fill">Timeless Organics</span>
+              {context && (
+                <p className="text-xs text-muted-foreground font-normal">{context}</p>
+              )}
+            </div>
           </Link>
 
-          <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href}>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  className={location === link.href ? "text-accent-gold" : ""}
-                  data-testid={`link-nav-${link.label.toLowerCase()}`}
-                >
-                  {link.label}
-                </Button>
-              </Link>
-            ))}
-          </nav>
+          {!isCheckoutVariant && showNav && (
+            <nav className="hidden md:flex items-center gap-1">
+              {navLinks.map((link) => (
+                <Link key={link.href} href={link.href}>
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    className={location === link.href ? "text-accent-gold" : ""}
+                    data-testid={`link-nav-${link.label.toLowerCase()}`}
+                  >
+                    {link.label}
+                  </Button>
+                </Link>
+              ))}
+            </nav>
+          )}
 
           <div className="flex items-center gap-2">
-            {isAuthenticated ? (
+            {isCheckoutVariant && backHref ? (
+              <Link href={backHref}>
+                <Button variant="ghost" size="sm" className="gap-2" data-testid="button-back">
+                  <ArrowLeft className="w-4 h-4" />
+                  {backLabel}
+                </Button>
+              </Link>
+            ) : isAuthenticated ? (
               <>
                 <Link href="/dashboard">
                   <Button variant="ghost" size="sm" className="gap-2" data-testid="link-dashboard">
@@ -84,20 +114,22 @@ export default function Header() {
         </div>
 
         {/* Mobile Navigation */}
-        <nav className="md:hidden flex items-center gap-1 mt-3 overflow-x-auto">
-          {navLinks.map((link) => (
-            <Link key={link.href} href={link.href}>
-              <Button
-                variant="ghost"
-                size="sm"
-                className={location === link.href ? "text-accent-gold" : ""}
-                data-testid={`link-nav-mobile-${link.label.toLowerCase()}`}
-              >
-                {link.label}
-              </Button>
-            </Link>
-          ))}
-        </nav>
+        {!isCheckoutVariant && showNav && (
+          <nav className="md:hidden flex items-center gap-1 mt-3 overflow-x-auto">
+            {navLinks.map((link) => (
+              <Link key={link.href} href={link.href}>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  className={location === link.href ? "text-accent-gold" : ""}
+                  data-testid={`link-nav-mobile-${link.label.toLowerCase()}`}
+                >
+                  {link.label}
+                </Button>
+              </Link>
+            ))}
+          </nav>
+        )}
       </div>
     </header>
   );

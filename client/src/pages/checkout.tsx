@@ -15,6 +15,8 @@ import { apiRequest } from "@/lib/queryClient";
 import { Check, Sparkles, Gift, AlertCircle, Leaf } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 
 // Specimen style options with display names
 const SPECIMEN_STYLES = [
@@ -242,27 +244,17 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   const seatLabel = seatType === "founder" ? "Founder Pass" : "Patron Pass";
 
   return (
-    <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-2xl font-serif text-bronze">Timeless Organics</h1>
-              <p className="text-sm text-muted-foreground">Founding 100 Checkout</p>
-            </div>
-            <Button
-              variant="ghost"
-              onClick={() => setLocation("/founding100")}
-              data-testid="button-back"
-            >
-              Back to Founding 100
-            </Button>
-          </div>
-        </div>
-      </header>
-
-      <div className="container mx-auto px-4 py-16">
+    <>
+      <div className="bg-aloe" />
+      <Header 
+        variant="checkout" 
+        backHref="/#seats" 
+        backLabel="Back to Seats" 
+        context="Founding 100 Checkout" 
+      />
+      
+      <main className="relative z-50 min-h-screen">
+        <div className="container mx-auto px-4 py-16">
         <div className="max-w-6xl mx-auto">
           {/* Page Title */}
           <div className="text-center mb-12">
@@ -622,7 +614,10 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
             </div>
           </div>
         </div>
-      </div>
-    </div>
+        </div>
+      </main>
+      
+      <Footer />
+    </>
   );
 }
