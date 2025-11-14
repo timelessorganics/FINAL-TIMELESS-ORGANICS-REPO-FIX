@@ -7,7 +7,10 @@ import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import MainLaunch from "@/pages/main-launch";
-import MarketingLanding from "@/pages/marketing-landing";
+import HomePage from "@/pages/home";
+import WorkshopsPage from "@/pages/workshops";
+import CommissionPage from "@/pages/commission";
+import AboutPage from "@/pages/about";
 import SculptureGallery from "@/pages/sculpture-gallery";
 import Dashboard from "@/pages/dashboard";
 import AdminPanel from "@/pages/admin-panel";
@@ -63,8 +66,13 @@ function Router() {
       <Route path="/payment/success" component={PaymentSuccess} />
       <Route path="/payment/cancel" component={PaymentCancel} />
       
-      {/* Marketing Landing Page - Root */}
-      <Route path="/" component={MarketingLanding} />
+      {/* Home Page - Root */}
+      <Route path="/" component={HomePage} />
+      
+      {/* Brand Pages - PUBLIC */}
+      <Route path="/workshops" component={WorkshopsPage} />
+      <Route path="/commission" component={CommissionPage} />
+      <Route path="/about" component={AboutPage} />
       
       {/* Founding 100 Launch Page - PUBLIC */}
       <Route path="/founding100" component={MainLaunch} />
