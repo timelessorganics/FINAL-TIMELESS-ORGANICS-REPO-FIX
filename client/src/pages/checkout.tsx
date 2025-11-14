@@ -7,12 +7,12 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { Check, Sparkles, Gift, AlertCircle, Leaf } from "lucide-react";
+import { Check, Sparkles, Gift, AlertCircle, Leaf, CheckCircle2, Circle } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -37,9 +37,21 @@ const SPECIMEN_STYLES = [
 
 const checkoutFormSchema = z.object({
   specimenStyle: z.string().min(1, "Please select a specimen style"),
+  isGift: z.boolean().default(false),
+  giftRecipientEmail: z.string().email().optional().or(z.literal("")),
+  giftRecipientName: z.string().optional().or(z.literal("")),
+  giftMessage: z.string().optional().or(z.literal("")),
   deliveryName: z.string().min(2, "Name must be at least 2 characters"),
   deliveryPhone: z.string().min(10, "Please enter a valid phone number"),
   deliveryAddress: z.string().min(10, "Please enter your full delivery address"),
+}).refine((data) => {
+  if (data.isGift) {
+    return data.giftRecipientEmail && data.giftRecipientEmail.length > 0 && data.giftRecipientName && data.giftRecipientName.length > 0;
+  }
+  return true;
+}, {
+  message: "Recipient email and name are required for gift purchases",
+  path: ["giftRecipientEmail"],
 });
 
 type CheckoutForm = z.infer<typeof checkoutFormSchema>;
@@ -56,6 +68,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   const [mountingType, setMountingType] = useState("none");
   const [mountingPriceCents, setMountingPriceCents] = useState(0);
   const [internationalShipping, setInternationalShipping] = useState(false);
+  const [purchaseMode, setPurchaseMode] = useState<"cast_now" | "wait_for_season">("cast_now");
   const [promoCode, setPromoCode] = useState("");
   const [validatedPromo, setValidatedPromo] = useState<{valid: boolean; discount?: number; seatType?: string} | null>(null);
   const [isValidatingPromo, setIsValidatingPromo] = useState(false);
@@ -74,6 +87,10 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
     resolver: zodResolver(checkoutFormSchema),
     defaultValues: {
       specimenStyle: "",
+      isGift: false,
+      giftRecipientEmail: "",
+      giftRecipientName: "",
+      giftMessage: "",
       deliveryName: "",
       deliveryPhone: "",
       deliveryAddress: "",
@@ -88,8 +105,12 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
         specimenStyle: data.specimenStyle,
         hasPatina,
         mountingType,
-        mountingPriceCents,
         internationalShipping,
+        purchaseMode,
+        isGift: data.isGift,
+        giftRecipientEmail: data.isGift ? data.giftRecipientEmail : undefined,
+        giftRecipientName: data.isGift ? data.giftRecipientName : undefined,
+        giftMessage: data.isGift ? data.giftMessage : undefined,
         deliveryName: data.deliveryName,
         deliveryPhone: data.deliveryPhone,
         deliveryAddress: data.deliveryAddress,
@@ -158,8 +179,12 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
         deliveryAddress: data.deliveryAddress,
         hasPatina,
         mountingType,
-        mountingPriceCents,
         internationalShipping,
+        purchaseMode,
+        isGift: data.isGift,
+        giftRecipientEmail: data.isGift ? data.giftRecipientEmail : undefined,
+        giftRecipientName: data.isGift ? data.giftRecipientName : undefined,
+        giftMessage: data.isGift ? data.giftMessage : undefined,
       });
     },
     onSuccess: () => {
@@ -335,6 +360,172 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                         <p className="text-xs text-muted-foreground">
                           💡 View the <Link href="/seasonal-guide"><span className="text-bronze hover:underline cursor-pointer">Seasonal Guide</span></Link> to see peak seasons for each style. Some styles (like Woody Branch and Succulent Rosette) are available year-round.
                         </p>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Gift Purchase Option */}
+                  <Card data-testid="card-gift-option">
+                    <CardHeader>
+                      <CardTitle className="text-accent-gold flex items-center gap-2">
+                        <Gift className="w-5 h-5" />
+                        Gift This Seat
+                      </CardTitle>
+                      <CardDescription>
+                        Purchase a Founding 100 seat as a gift for someone special
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <FormField
+                        control={form.control}
+                        name="isGift"
+                        render={({ field }) => (
+                          <FormItem className="flex flex-row items-start space-x-3 space-y-0 mb-4">
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value}
+                                onCheckedChange={field.onChange}
+                                data-testid="checkbox-is-gift"
+                              />
+                            </FormControl>
+                            <div className="space-y-1 leading-none">
+                              <FormLabel className="cursor-pointer">
+                                This is a gift purchase
+                              </FormLabel>
+                              <FormDescription>
+                                They'll receive an email notification to claim their seat and complete their profile
+                              </FormDescription>
+                            </div>
+                          </FormItem>
+                        )}
+                      />
+
+                      {form.watch("isGift") && (
+                        <div className="space-y-4 pl-8 border-l-2 border-accent-gold/30">
+                          <FormField
+                            control={form.control}
+                            name="giftRecipientName"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Recipient's Full Name</FormLabel>
+                                <FormControl>
+                                  <Input 
+                                    {...field} 
+                                    placeholder="e.g., Sarah Smith"
+                                    data-testid="input-gift-recipient-name"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+
+                          <FormField
+                            control={form.control}
+                            name="giftRecipientEmail"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Recipient's Email</FormLabel>
+                                <FormControl>
+                                  <Input 
+                                    {...field} 
+                                    type="email" 
+                                    placeholder="e.g., sarah@example.com"
+                                    data-testid="input-gift-recipient-email"
+                                  />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+
+                          <FormField
+                            control={form.control}
+                            name="giftMessage"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel>Personal Message (Optional)</FormLabel>
+                                <FormControl>
+                                  <Textarea 
+                                    {...field} 
+                                    placeholder="Write a personal message to include with your gift..."
+                                    className="min-h-24"
+                                    data-testid="textarea-gift-message"
+                                  />
+                                </FormControl>
+                                <FormDescription>
+                                  This message will be included in the gift notification email
+                                </FormDescription>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      )}
+                    </CardContent>
+                  </Card>
+
+                  {/* Purchase Mode: Cast Now vs Wait for Season */}
+                  <Card data-testid="card-purchase-mode">
+                    <CardHeader>
+                      <CardTitle className="text-bronze">Casting Timeline</CardTitle>
+                      <CardDescription>
+                        Choose when you'd like your specimen cast
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3">
+                        <div 
+                          className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                            purchaseMode === "cast_now" 
+                              ? "border-bronze bg-bronze/5" 
+                              : "border-border hover-elevate"
+                          }`}
+                          onClick={() => setPurchaseMode("cast_now")}
+                          data-testid="option-cast-now"
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className="mt-0.5">
+                              {purchaseMode === "cast_now" ? (
+                                <CheckCircle2 className="w-5 h-5 text-bronze" />
+                              ) : (
+                                <Circle className="w-5 h-5 text-muted-foreground" />
+                              )}
+                            </div>
+                            <div>
+                              <h4 className="font-semibold text-foreground mb-1">Cast Immediately</h4>
+                              <p className="text-sm text-muted-foreground">
+                                David will select the finest available specimen of your chosen style and begin casting soon. If your style is currently out of season, it will be cast when it reaches peak seasonal quality.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div 
+                          className={`border-2 rounded-lg p-4 cursor-pointer transition-all ${
+                            purchaseMode === "wait_for_season" 
+                              ? "border-bronze bg-bronze/5" 
+                              : "border-border hover-elevate"
+                          }`}
+                          onClick={() => setPurchaseMode("wait_for_season")}
+                          data-testid="option-wait-for-season"
+                        >
+                          <div className="flex items-start gap-3">
+                            <div className="mt-0.5">
+                              {purchaseMode === "wait_for_season" ? (
+                                <CheckCircle2 className="w-5 h-5 text-bronze" />
+                              ) : (
+                                <Circle className="w-5 h-5 text-muted-foreground" />
+                              )}
+                            </div>
+                            <div>
+                              <h4 className="font-semibold text-foreground mb-1">Wait for Peak Season</h4>
+                              <p className="text-sm text-muted-foreground">
+                                Reserve your seat now, and we'll cast your specimen when it reaches absolute peak seasonal perfection. Worth the wait for the finest possible detail and beauty.
+                              </p>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </CardContent>
                   </Card>
