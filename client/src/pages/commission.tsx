@@ -164,6 +164,28 @@ export default function CommissionPage() {
             </Card>
           </section>
 
+          <section className="mt-16 max-w-3xl mx-auto">
+            <Card className="p-8 bg-gradient-to-br from-bronze/10 to-accent-gold/10 border-accent-gold/30">
+              <div className="text-center">
+                <div className="inline-block px-3 py-1 bg-accent-gold/20 rounded-full text-xs font-medium text-accent-gold mb-3">
+                  LIMITED OPPORTUNITY
+                </div>
+                <h3 className="font-serif text-2xl md:text-3xl font-bold mb-3">
+                  Join the Founding 100
+                </h3>
+                <p className="text-muted-foreground mb-6 leading-relaxed">
+                  Secure a museum-quality bronze casting now. Founding investors receive a custom Cape Fynbos sculpture, 
+                  lifetime workshop discounts, and exclusive access to future opportunities.
+                </p>
+                <Link href="/#seats">
+                  <Button className="btn-bronze gap-2" data-testid="button-founding-cta">
+                    Explore Founding 100 Seats <ArrowRight className="w-4 h-4" />
+                  </Button>
+                </Link>
+              </div>
+            </Card>
+          </section>
+
         </div>
       </main>
 
