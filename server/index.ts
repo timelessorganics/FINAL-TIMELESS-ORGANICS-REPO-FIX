@@ -1,3 +1,13 @@
+// CRITICAL: Remove Replit's built-in database PG* variables before any database imports
+// These override DATABASE_URL and cause authentication failures with Supabase
+const replitDbVars = ['PGHOST', 'PGPORT', 'PGUSER', 'PGPASSWORD', 'PGDATABASE'];
+for (const key of replitDbVars) {
+  if (process.env[key]) {
+    console.log(`[Startup] Removing conflicting ${key} variable (Replit built-in database)`);
+    delete process.env[key];
+  }
+}
+
 import express, { type Request, Response, NextFunction } from "express";
 import cors from "cors";
 import { registerRoutes } from "./routes";
