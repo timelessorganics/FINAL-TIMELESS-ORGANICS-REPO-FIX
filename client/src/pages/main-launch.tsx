@@ -27,45 +27,69 @@ export default function MainLaunch() {
           <section className="text-center mb-16 pt-8" data-testid="section-hero">
             <div className="kicker mb-3">FOUNDING 100 INVESTOR LAUNCH</div>
             <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
-              <span className="moving-fill">Founding 100</span> — Your Investment is Our Investment.
+              Where <span className="moving-fill">Ancient Craft</span><br />
+              Meets Modern Investment
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
-              Your investment funds our foundry's final fit-out. In return, we invest (encase) your chosen botanical specimen now — 
-              guaranteeing you a flawless bronze casting when Timeless Organics studio is{" "}
-              <span className="text-accent-gold font-semibold">"workshop experience" ready & testing of all infrastructure 
-              and equipment signed off</span> (estimated Jan 2026). We store your molds securely until then and they are the first to ever become timeless!
+            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-10 leading-relaxed">
+              Your investment funds our foundry's final fit-out. In return, we invest (immortalize) your chosen botanical specimen now — 
+              guaranteeing you a flawless bronze casting, lifetime workshop discounts, and exclusive access to the ancient art of lost-wax casting.
             </p>
 
-            <div className="flex flex-wrap justify-center gap-4 text-sm text-muted-foreground mb-8">
-              <div className="flex items-center gap-2">
-                <span className="text-patina">•</span>
-                <span>Studio-approved specimens</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-patina">•</span>
-                <span>Guaranteed bronze casting</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-patina">•</span>
-                <span>Workshop discounts</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="text-patina">•</span>
-                <span>Lifetime benefits</span>
-              </div>
+            {/* Three Action Buttons */}
+            <div className="flex flex-wrap justify-center gap-4 mb-12">
+              <Button 
+                variant="outline" 
+                size="lg"
+                asChild
+                className="bg-background/30 backdrop-blur-sm border-bronze/50 hover:border-bronze"
+                data-testid="button-view-specimens"
+              >
+                <a href="/sculptures">
+                  View Botanical Specimens
+                </a>
+              </Button>
+              
+              <Button 
+                variant="outline" 
+                size="lg"
+                asChild
+                className="bg-background/30 backdrop-blur-sm border-bronze/50 hover:border-bronze"
+                data-testid="button-seasonal-guide"
+              >
+                <a href="/seasonal-guide">
+                  Seasonal Guide
+                </a>
+              </Button>
+              
+              <Button 
+                size="lg"
+                asChild
+                className="btn-bronze"
+                data-testid="button-explore-founding"
+              >
+                <a href="#seats">
+                  Explore Founding 100
+                </a>
+              </Button>
             </div>
 
-            <Button 
-              variant="outline" 
-              size="lg"
-              asChild
-              className="bg-background/30 backdrop-blur-sm border-bronze/50 hover:border-bronze"
-              data-testid="button-preview-specimens"
-            >
-              <a href="/sculptures">
-                Preview Botanical Specimens <ArrowRight className="ml-2 h-4 w-4" />
-              </a>
-            </Button>
+            {/* Three Stat Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <Card className="p-6 bg-card/50 border-card-border">
+                <div className="text-5xl font-bold font-serif text-bronze mb-2">100</div>
+                <div className="text-muted-foreground">Limited Seats</div>
+              </Card>
+              
+              <Card className="p-6 bg-card/50 border-card-border">
+                <div className="text-5xl font-bold font-serif text-accent-gold mb-2">1</div>
+                <div className="text-muted-foreground">Bronze Casting</div>
+              </Card>
+              
+              <Card className="p-6 bg-card/50 border-card-border">
+                <div className="text-5xl font-bold font-serif text-patina mb-2">∞</div>
+                <div className="text-muted-foreground">Lifetime Benefits</div>
+              </Card>
+            </div>
           </section>
 
           {/* Why This Exists - The Story Section */}
