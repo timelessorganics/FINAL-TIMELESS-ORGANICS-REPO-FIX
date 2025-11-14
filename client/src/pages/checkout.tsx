@@ -14,9 +14,10 @@ import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Check, Sparkles, Gift, AlertCircle, Leaf } from "lucide-react";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import { VisualSpecimenSelector } from "@/components/visual-specimen-selector";
+import { MountingOptionsSelector } from "@/components/mounting-options-selector";
 
 // Specimen style options with display names
 const SPECIMEN_STYLES = [
@@ -52,7 +53,8 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   const { toast } = useToast();
   
   const [hasPatina, setHasPatina] = useState(false);
-  const [hasMounting, setHasMounting] = useState(false);
+  const [mountingType, setMountingType] = useState("none");
+  const [mountingPriceCents, setMountingPriceCents] = useState(0);
   const [internationalShipping, setInternationalShipping] = useState(false);
   const [promoCode, setPromoCode] = useState("");
   const [validatedPromo, setValidatedPromo] = useState<{valid: boolean; discount?: number; seatType?: string} | null>(null);
@@ -85,7 +87,8 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
         seatType,
         specimenStyle: data.specimenStyle,
         hasPatina,
-        hasMounting,
+        mountingType,
+        mountingPriceCents,
         internationalShipping,
         deliveryName: data.deliveryName,
         deliveryPhone: data.deliveryPhone,
@@ -154,7 +157,8 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
         deliveryPhone: data.deliveryPhone,
         deliveryAddress: data.deliveryAddress,
         hasPatina,
-        hasMounting,
+        mountingType,
+        mountingPriceCents,
         internationalShipping,
       });
     },
@@ -235,8 +239,8 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   };
 
   // Price calculation - fetch real seat price from backend
-  const patinaPrice = hasPatina ? 10 : 0; // R10 for patina
-  const mountingPrice = hasMounting ? 10 : 0; // R10 for mounting (style chosen later)
+  const patinaPrice = hasPatina ? 10 : 0; // R10 for patina add-on (testing price)
+  const mountingPrice = mountingPriceCents / 100; // Convert cents to Rand
   const subtotal = basePrice + patinaPrice + mountingPrice;
   const discount = validatedPromo?.valid ? (subtotal * (validatedPromo.discount! / 100)) : 0;
   const totalPrice = subtotal - discount;
@@ -285,22 +289,18 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                         name="specimenStyle"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel>Specimen Style *</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
-                              <FormControl>
-                                <SelectTrigger data-testid="select-specimen-style">
-                                  <SelectValue placeholder="Select a specimen style..." />
-                                </SelectTrigger>
-                              </FormControl>
-                              <SelectContent>
-                                {SPECIMEN_STYLES.map((style) => (
-                                  <SelectItem key={style.value} value={style.value}>
-                                    {style.label}
-                                  </SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                            <FormMessage />
+                            <FormLabel className="text-lg font-semibold mb-4 block">Choose Your Specimen Style *</FormLabel>
+                            <FormControl>
+                              <VisualSpecimenSelector
+                                value={field.value}
+                                onChange={field.onChange}
+                                options={SPECIMEN_STYLES.map(style => ({
+                                  value: style.value,
+                                  label: style.label,
+                                }))}
+                                error={form.formState.errors.specimenStyle?.message}
+                              />
+                            </FormControl>
                           </FormItem>
                         )}
                       />
@@ -370,34 +370,22 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                     </CardContent>
                   </Card>
 
-                  {/* Mounting Option */}
+                  {/* Mounting Options */}
                   <Card data-testid="card-mounting-option">
                     <CardHeader>
-                      <CardTitle className="text-bronze">Professional Mounting</CardTitle>
+                      <CardTitle className="text-patina">Mounting Service</CardTitle>
                       <CardDescription>
-                        Choose your mounting style later (+R10)
+                        Choose how you'd like your bronze mounted (optional add-on)
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <div className="flex items-start space-x-3">
-                        <Checkbox
-                          id="mounting"
-                          checked={hasMounting}
-                          onCheckedChange={(checked) => setHasMounting(checked as boolean)}
-                          data-testid="checkbox-mounting"
-                        />
-                        <div className="grid gap-1.5 leading-none">
-                          <label
-                            htmlFor="mounting"
-                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
-                          >
-                            Add Professional Mounting
-                          </label>
-                          <p className="text-sm text-muted-foreground">
-                            Your bronze casting will be professionally mounted according to your chosen style (wall mount, base, or custom). You'll select your preferred mounting option during production. These pieces typically sell for R25,000-R40,000 when mounted and patinated - exceptional value for Founding 100 investors.
-                          </p>
-                        </div>
-                      </div>
+                      <MountingOptionsSelector
+                        value={mountingType}
+                        onChange={(optionId, priceCents) => {
+                          setMountingType(optionId);
+                          setMountingPriceCents(priceCents);
+                        }}
+                      />
                     </CardContent>
                   </Card>
 
@@ -554,10 +542,10 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                       </div>
                     )}
 
-                    {hasMounting && (
+                    {mountingType !== "none" && (
                       <div className="flex justify-between">
                         <span className="text-muted-foreground">Professional Mounting</span>
-                        <span className="font-semibold text-bronze">+R10</span>
+                        <span className="font-semibold text-patina">+R{mountingPrice.toFixed(0)}</span>
                       </div>
                     )}
 

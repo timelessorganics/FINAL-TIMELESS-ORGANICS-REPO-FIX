@@ -27,6 +27,17 @@ import { sendCertificateEmail, sendPurchaseConfirmationEmail } from "./utils/ema
 import { generatePromoCode } from "./utils/promoCodeGenerator";
 import { addSubscriberToMailchimp } from "./mailchimp";
 
+// Server-side mounting price lookup (source of truth - NEVER trust client prices!)
+function getMountingPrice(mountingType: string): number {
+  const prices: Record<string, number> = {
+    'none': 0,
+    'wall': 1000,  // R10
+    'base': 1500,  // R15
+    'custom': 2500, // R25
+  };
+  return prices[mountingType] || 0;
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
@@ -115,7 +126,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       console.log('[Purchase] User initiating purchase:', userId, userEmail);
 
       // Calculate amount based on seat type + add-ons
-      const { seatType, specimenStyle, hasPatina, hasMounting, internationalShipping, deliveryName, deliveryPhone, deliveryAddress } = req.body;
+      const { seatType, specimenStyle, hasPatina, mountingType, internationalShipping, deliveryName, deliveryPhone, deliveryAddress } = req.body;
       const seat = await storage.getSeatByType(seatType);
       if (!seat) {
         return res.status(404).json({ message: "Seat type not found" });
@@ -133,8 +144,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Calculate total: base price + patina (R10 testing) + mounting (R10 testing)
-      const amount = seat.price + (hasPatina ? 1000 : 0) + (hasMounting ? 1000 : 0);
+      // Calculate mounting price server-side (NEVER trust client prices!)
+      const mountingPriceCents = getMountingPrice(mountingType || 'none');
+
+      // Calculate total: base price + patina (R10 testing) + mounting (server-validated)
+      const amount = seat.price + (hasPatina ? 1000 : 0) + mountingPriceCents;
 
       // Validate delivery information
       if (!deliveryName || !deliveryPhone || !deliveryAddress) {
@@ -150,7 +164,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         amount,
         specimenStyle,
         hasPatina: hasPatina || false,
-        hasMounting: hasMounting || false,
+        mountingType: mountingType || 'none',
+        mountingPriceCents: mountingPriceCents || 0,
         internationalShipping: internationalShipping || false,
         deliveryName,
         deliveryPhone,
@@ -972,7 +987,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/promo-code/redeem", isAuthenticated, async (req: any, res: Response) => {
     try {
       const userId = getUserId(req);
-      const { code, specimenStyle, hasPatina, hasMounting, internationalShipping, deliveryName, deliveryPhone, deliveryAddress } = req.body;
+      const { code, specimenStyle, hasPatina, mountingType, internationalShipping, deliveryName, deliveryPhone, deliveryAddress } = req.body;
 
       // Validate code
       const promoCode = await storage.getPromoCodeByCode(code.toUpperCase());
@@ -1001,6 +1016,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
+      // For promo redemptions: mounting is free (VIP benefit)
+      const mountingPriceCents = 0;
+
       // Create free purchase (R0) with user's chosen specimen style
       const purchase = await storage.createPurchase({
         userId,
@@ -1008,7 +1026,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         amount: 0, // Free!
         specimenStyle,
         hasPatina: hasPatina || false,
-        hasMounting: hasMounting || false,
+        mountingType: mountingType || 'none',
+        mountingPriceCents, // Always free for promo redemptions
         internationalShipping: internationalShipping || false,
         deliveryName,
         deliveryPhone,

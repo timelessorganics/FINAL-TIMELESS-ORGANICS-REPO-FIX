@@ -117,6 +117,15 @@ export const purchaseChoiceEnum = pgEnum('purchase_choice', ['cast_now', 'wait_t
 // Custom specimen approval status - LEGACY for existing purchases
 export const approvalStatusEnum = pgEnum('approval_status', ['pending', 'approved', 'rejected']);
 
+// Purchase mode enum - Simplified casting timeline options
+export const purchaseModeEnum = pgEnum('purchase_mode', ['cast_now', 'wait_for_season']);
+
+// Mounting type enum - Bronze mounting service options
+export const mountingTypeEnum = pgEnum('mounting_type', ['none', 'wall', 'base', 'custom']);
+
+// Gift status enum - Tracking gift purchase claims
+export const giftStatusEnum = pgEnum('gift_status', ['pending', 'claimed', 'cancelled']);
+
 // Purchases made by users
 export const purchases = pgTable("purchases", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -141,11 +150,25 @@ export const purchases = pgTable("purchases", {
   
   // Add-ons and delivery (collected during checkout)
   hasPatina: boolean("has_patina").default(false).notNull(), // +R10 add-on (testing price)
-  hasMounting: boolean("has_mounting").default(false).notNull(), // +R1000 professional mounting
+  hasMounting: boolean("has_mounting").default(false).notNull(), // LEGACY: Replaced by mountingType/mountingPriceCents
+  mountingType: mountingTypeEnum("mounting_type").default('none').notNull(), // Mounting service type
+  mountingPriceCents: integer("mounting_price_cents").default(0).notNull(), // Price paid for mounting (in cents)
   internationalShipping: boolean("international_shipping").default(false).notNull(), // Flag for manual DHL quote
   deliveryName: varchar("delivery_name"),
   deliveryPhone: varchar("delivery_phone"),
   deliveryAddress: text("delivery_address"),
+  
+  // Purchase mode - Simplified casting timeline
+  purchaseMode: purchaseModeEnum("purchase_mode").default('cast_now').notNull(),
+  
+  // Gift purchasing fields
+  isGift: boolean("is_gift").default(false).notNull(),
+  giftRecipientEmail: varchar("gift_recipient_email"),
+  giftRecipientName: varchar("gift_recipient_name"),
+  giftMessage: text("gift_message"),
+  giftStatus: giftStatusEnum("gift_status").default('pending'),
+  claimedByUserId: varchar("claimed_by_user_id").references(() => users.id),
+  giftClaimedAt: timestamp("gift_claimed_at"),
   
   createdAt: timestamp("created_at").defaultNow(),
   completedAt: timestamp("completed_at"),
@@ -157,15 +180,46 @@ export const insertPurchaseSchema = createInsertSchema(purchases).pick({
   amount: true,
   specimenStyle: true,
   hasPatina: true,
-  hasMounting: true,
+  mountingType: true,
+  mountingPriceCents: true,
   internationalShipping: true,
   deliveryName: true,
   deliveryPhone: true,
   deliveryAddress: true,
+  purchaseMode: true,
+  isGift: true,
+  giftRecipientEmail: true,
+  giftRecipientName: true,
+  giftMessage: true,
 });
 
 export type InsertPurchase = z.infer<typeof insertPurchaseSchema>;
 export type Purchase = typeof purchases.$inferSelect;
+
+// Mounting options lookup table - Configurable mounting service offerings
+export const mountingOptions = pgTable("mounting_options", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  key: varchar("key").notNull().unique(), // e.g., 'wall', 'base', 'custom'
+  label: varchar("label").notNull(), // Display name e.g., "Wall Mount"
+  description: text("description"), // Details about this mounting type
+  priceCents: integer("price_cents").notNull(), // Current price in cents
+  isActive: boolean("is_active").default(true).notNull(),
+  displayOrder: integer("display_order").default(0),
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertMountingOptionSchema = createInsertSchema(mountingOptions).pick({
+  key: true,
+  label: true,
+  description: true,
+  priceCents: true,
+  isActive: true,
+  displayOrder: true,
+});
+
+export type InsertMountingOption = z.infer<typeof insertMountingOptionSchema>;
+export type MountingOption = typeof mountingOptions.$inferSelect;
 
 // Code types enum - removed 'bronze_claim' as users select specimen during checkout
 export const codeTypeEnum = pgEnum('code_type', ['workshop_voucher', 'lifetime_workshop']);
