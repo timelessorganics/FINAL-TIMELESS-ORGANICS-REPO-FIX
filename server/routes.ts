@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import express from "express";
 import path from "path";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated } from "./supabaseAuth";
+import { setupAuth, isAuthenticated, getSessionUser, getUserId } from "./replitAuth";
 import { insertPurchaseSchema, insertSculptureSchema, insertSculptureSelectionSchema, insertSubscriberSchema, insertPromoCodeSchema } from "@shared/schema";
 import { fromError } from "zod-validation-error";
 import { 
@@ -31,30 +31,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
 
-  // Auth route
+  // Auth route - Get authenticated user profile (resilient to storage failures)
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {
-      const userId = req.user.id;
-      const supabaseUser = req.user;
-      
-      // Try to get existing user from database
-      let user = await storage.getUser(userId);
-      
-      // If user doesn't exist, create them (first time OAuth login)
-      if (!user) {
-        console.log('[Auth] Creating new user from OAuth:', userId, supabaseUser.email);
-        user = await storage.upsertUser({
-          id: userId,
-          email: supabaseUser.email || '',
-          firstName: supabaseUser.user_metadata?.first_name || supabaseUser.user_metadata?.full_name?.split(' ')[0] || null,
-          lastName: supabaseUser.user_metadata?.last_name || supabaseUser.user_metadata?.full_name?.split(' ').slice(1).join(' ') || null,
-          isAdmin: false,
-        });
+      // Always return session-cached user first
+      const sessionUser = getSessionUser(req);
+      if (sessionUser) {
+        return res.json(sessionUser);
       }
       
-      res.json(user);
+      // Fallback: use normalized claims (should always exist after verify())
+      const userId = req.user.normalizedClaims?.sub || req.user.claims?.sub;
+      if (!userId) {
+        console.error('[Auth] No user ID in session');
+        return res.status(500).json({ message: "Invalid session" });
+      }
+      
+      console.warn('[Auth] User not in session cache, fetching from storage:', userId);
+      
+      try {
+        const user = await storage.getUser(userId);
+        if (user) {
+          // Cache for next request
+          req.user.dbUser = user;
+          return res.json(user);
+        }
+      } catch (storageError) {
+        console.error('[Auth] Storage fetch failed:', storageError);
+      }
+      
+      // If all else fails but session is valid, return minimal user from normalized claims
+      console.warn('[Auth] Returning minimal user from normalized claims');
+      return res.json({
+        id: userId,
+        email: req.user.normalizedClaims?.email || null,
+        firstName: req.user.normalizedClaims?.first_name || null,
+        lastName: req.user.normalizedClaims?.last_name || null,
+        profileImageUrl: req.user.normalizedClaims?.profile_image_url || null,
+        isAdmin: false,
+      });
     } catch (error) {
-      console.error("Error fetching user:", error);
+      console.error("Error in /api/auth/user:", error);
       res.status(500).json({ message: "Failed to fetch user" });
     }
   });
@@ -91,9 +108,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Initiate purchase with PayFast
   app.post("/api/purchase/initiate", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
-      const userEmail = req.user.email || 'studio@timeless.organic';
-      const userFirstName = req.user.user_metadata?.first_name || 'Investor';
+      const userId = getUserId(req);
+      const userEmail = req.user.normalizedClaims?.email || req.user.claims.email || 'studio@timeless.organic';
+      const userFirstName = req.user.normalizedClaims?.first_name || 'Investor';
 
       console.log('[Purchase] User initiating purchase:', userId, userEmail);
 
@@ -190,7 +207,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/purchase/:id/redirect", isAuthenticated, async (req: any, res: Response) => {
     try {
       const purchaseId = req.params.id;
-      const userId = req.user.id;
+      const userId = getUserId(req);
 
       // Get purchase and verify ownership
       const purchase = await storage.getPurchase(purchaseId);
@@ -207,8 +224,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         purchase.id,
         purchase.amount,
         purchase.seatType,
-        req.user.email || 'studio@timeless.organic',
-        req.user.firstName || 'Investor'
+        req.user.normalizedClaims?.email || req.user.claims.email || 'studio@timeless.organic',
+        req.user.normalizedClaims?.first_name || 'Investor'
       );
 
       // Add passphrase and generate signature
@@ -473,7 +490,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Create sculpture selection
   app.post("/api/sculpture-selection", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
 
       const result = insertSculptureSelectionSchema.safeParse(req.body);
       
@@ -506,7 +523,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Get user's dashboard data
   app.get("/api/dashboard", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
 
       const purchases = await storage.getPurchasesByUserId(userId);
       
@@ -528,7 +545,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Get specific purchase
   app.get("/api/purchase/:id", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
 
       const purchase = await storage.getPurchase(req.params.id);
       if (!purchase) {
@@ -549,7 +566,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get all seats (admin only)
   app.get("/api/admin/seats", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -567,7 +584,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get all purchases (admin only)
   app.get("/api/admin/purchases", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -585,7 +602,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get all codes (admin only)
   app.get("/api/admin/codes", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -604,7 +621,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Redeem code
   app.post("/api/codes/redeem", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
       const user = await storage.getUser(userId);
       const { code: codeString } = req.body;
 
@@ -659,7 +676,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Get referral analytics for a code by ID
   app.get("/api/referrals/code/:codeId", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
       const { codeId } = req.params;
 
       // Fetch code by ID
@@ -696,7 +713,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Export subscribers CSV
   app.get("/api/admin/export/subscribers", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -786,7 +803,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get all subscribers
   app.get("/api/admin/subscribers", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -804,7 +821,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Sync subscribers and purchasers to Mailchimp
   app.post("/api/admin/mailchimp/sync", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -885,7 +902,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Export subscribers as CSV
   app.get("/api/admin/subscribers/export", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -954,7 +971,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Redeem promo code (creates free purchase)
   app.post("/api/promo-code/redeem", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
       const { code, specimenStyle, hasPatina, hasMounting, internationalShipping, deliveryName, deliveryPhone, deliveryAddress } = req.body;
 
       // Validate code
@@ -1115,7 +1132,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get all promo codes
   app.get("/api/admin/promo-codes", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -1133,7 +1150,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Generate promo codes (batch)
   app.post("/api/admin/promo-codes/generate", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {
@@ -1164,7 +1181,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Create sculpture (admin only)
   app.post("/api/admin/sculptures", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = req.user.id;
+      const userId = getUserId(req);
       const user = await storage.getUser(userId);
       
       if (!user?.isAdmin) {

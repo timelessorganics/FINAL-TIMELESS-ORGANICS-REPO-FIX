@@ -6,8 +6,34 @@ import passport from "passport";
 import session from "express-session";
 import type { Express, RequestHandler } from "express";
 import memoize from "memoizee";
+import connectPg from "connect-pg-simple";
 import createMemoryStore from "memorystore";
 import { storage } from "./storage";
+import type { User } from "@shared/schema";
+
+// Normalize OIDC claims to app-specific fields
+function normalizeClaims(claims: any) {
+  return {
+    sub: claims.sub,
+    email: claims.email || null,
+    first_name: claims.given_name || claims.first_name || null,
+    last_name: claims.family_name || claims.last_name || null,
+    profile_image_url: claims.profile_image_url || claims.picture || null,
+  };
+}
+
+// Helper to get session user for downstream routes
+export function getSessionUser(req: any): User | null {
+  if (!req.user || !req.user.dbUser) {
+    return null;
+  }
+  return req.user.dbUser;
+}
+
+// Helper to get user ID from session (normalized claims preferred)
+export function getUserId(req: any): string {
+  return req.user.normalizedClaims?.sub || req.user.claims?.sub || req.user.dbUser?.id;
+}
 
 const getOidcConfig = memoize(
   async () => {
@@ -21,21 +47,97 @@ const getOidcConfig = memoize(
 
 export function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
-  const MemoryStore = createMemoryStore(session);
-  const sessionStore = new MemoryStore({
-    checkPeriod: sessionTtl,
-  });
-  return session({
-    secret: process.env.SESSION_SECRET!,
-    store: sessionStore,
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-      httpOnly: true,
-      secure: true,
-      maxAge: sessionTtl,
-    },
-  });
+  
+  // Validate DATABASE_URL
+  if (!process.env.DATABASE_URL) {
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('DATABASE_URL is required in production');
+    }
+    console.warn('[Replit Auth] DATABASE_URL not set, using MemoryStore for sessions (NOT suitable for production)');
+    const MemoryStore = createMemoryStore(session);
+    const memStore = new MemoryStore({ checkPeriod: sessionTtl });
+    return session({
+      secret: process.env.SESSION_SECRET!,
+      store: memStore,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: sessionTtl,
+      },
+    });
+  }
+
+  // Validate DATABASE_URL format
+  try {
+    const dbUrl = new URL(process.env.DATABASE_URL);
+    if (dbUrl.protocol !== 'postgres:' && dbUrl.protocol !== 'postgresql:') {
+      throw new Error(`Invalid DATABASE_URL protocol: ${dbUrl.protocol}`);
+    }
+    console.log('[Replit Auth] Database URL validated:', dbUrl.protocol + '//' + dbUrl.hostname);
+  } catch (urlError: any) {
+    console.error('[Replit Auth] Invalid DATABASE_URL format:', urlError.message);
+    if (process.env.NODE_ENV === 'production') {
+      throw new Error('Invalid DATABASE_URL in production');
+    }
+    console.warn('[Replit Auth] Falling back to MemoryStore in development');
+    const MemoryStore = createMemoryStore(session);
+    const memStore = new MemoryStore({ checkPeriod: sessionTtl });
+    return session({
+      secret: process.env.SESSION_SECRET!,
+      store: memStore,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: sessionTtl,
+      },
+    });
+  }
+
+  // Try to create PostgreSQL store
+  try {
+    const pgStore = connectPg(session);
+    const sessionStore = new pgStore({
+      conString: process.env.DATABASE_URL,
+      createTableIfMissing: true,
+      ttl: sessionTtl,
+      tableName: "sessions",
+    });
+    console.log('[Replit Auth] Using PostgreSQL session storage');
+    return session({
+      secret: process.env.SESSION_SECRET!,
+      store: sessionStore,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: sessionTtl,
+      },
+    });
+  } catch (error) {
+    console.error('[Replit Auth] Failed to initialize PostgreSQL session store:', error);
+    if (process.env.NODE_ENV === 'production') {
+      throw error;
+    }
+    console.warn('[Replit Auth] Falling back to MemoryStore in development');
+    const MemoryStore = createMemoryStore(session);
+    const memStore = new MemoryStore({ checkPeriod: sessionTtl });
+    return session({
+      secret: process.env.SESSION_SECRET!,
+      store: memStore,
+      resave: false,
+      saveUninitialized: false,
+      cookie: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        maxAge: sessionTtl,
+      },
+    });
+  }
 }
 
 function updateUserSession(
@@ -48,16 +150,21 @@ function updateUserSession(
   user.expires_at = user.claims?.exp;
 }
 
-async function upsertUser(
-  claims: any,
-) {
-  await storage.upsertUser({
-    id: claims["sub"],
-    email: claims["email"],
-    firstName: claims["first_name"],
-    lastName: claims["last_name"],
-    profileImageUrl: claims["profile_image_url"],
-  });
+async function upsertUser(normalizedClaims: ReturnType<typeof normalizeClaims>) {
+  try {
+    const user = await storage.upsertUser({
+      id: normalizedClaims.sub,
+      email: normalizedClaims.email,
+      firstName: normalizedClaims.first_name,
+      lastName: normalizedClaims.last_name,
+      profileImageUrl: normalizedClaims.profile_image_url,
+    });
+    console.log('[Replit Auth] User upserted:', user.id, user.email);
+    return user;
+  } catch (error) {
+    console.error('[Replit Auth] Failed to upsert user:', error);
+    throw error;
+  }
 }
 
 export async function setupAuth(app: Express) {
@@ -72,16 +179,22 @@ export async function setupAuth(app: Express) {
     tokens: client.TokenEndpointResponse & client.TokenEndpointResponseHelpers,
     verified: passport.AuthenticateCallback
   ) => {
-    const user = {};
+    const user: any = {};
     updateUserSession(user, tokens);
-    await upsertUser(tokens.claims());
+    
+    // Normalize OIDC claims to app-specific fields
+    const normalized = normalizeClaims(tokens.claims());
+    user.normalizedClaims = normalized;
+    
+    // Upsert user and cache in session
+    const dbUser = await upsertUser(normalized);
+    user.dbUser = dbUser;
+    
     verified(null, user);
   };
 
-  // Keep track of registered strategies
   const registeredStrategies = new Set<string>();
 
-  // Helper function to ensure strategy exists for a domain
   const ensureStrategy = (domain: string) => {
     const strategyName = `replitauth:${domain}`;
     if (!registeredStrategies.has(strategyName)) {
@@ -96,7 +209,6 @@ export async function setupAuth(app: Express) {
       );
       passport.use(strategy);
       registeredStrategies.add(strategyName);
-      console.log(`[Auth] Registered strategy for domain: ${domain}`);
     }
   };
 
@@ -129,6 +241,9 @@ export async function setupAuth(app: Express) {
       );
     });
   });
+  
+  console.log('[Replit Auth] Authentication configured - Google, GitHub, X, Apple, Email supported');
+  console.log('[Replit Auth] Session storage: PostgreSQL');
 }
 
 export const isAuthenticated: RequestHandler = async (req, res, next) => {

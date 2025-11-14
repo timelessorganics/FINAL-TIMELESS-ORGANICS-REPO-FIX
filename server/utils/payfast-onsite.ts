@@ -2,8 +2,8 @@ import axios from "axios";
 import https from "https";
 import { getPayFastConfig, generateSignature, createPaymentData } from "./payfast.js";
 
-// Force SSL bypass for PayFast in production environments
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+// NOTE: TLS verification bypass is scoped to PayFast axios agent only (see httpsAgent config below)
+// We do NOT set NODE_TLS_REJECT_UNAUTHORIZED globally as that would affect all HTTPS traffic
 
 /**
  * Generate PayFast Payment Identifier (UUID) for Onsite Payments
@@ -82,16 +82,22 @@ export async function generatePaymentIdentifier(
     console.log('[PayFast Onsite] Full request body:', params.toString().substring(0, 200) + '...');
 
     // Configure axios with custom HTTPS agent to handle SSL
-    // Some hosting environments (Railway, Heroku) have SSL cert verification issues
+    // PayFast's SSL certificates can cause issues in some hosting environments
+    // IMPORTANT: This TLS bypass is SCOPED to this specific request only (not global)
+    // Only enabled explicitly via PAYFAST_ALLOW_INSECURE_TLS env var
     const axiosConfig = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
       httpsAgent: new https.Agent({
-        rejectUnauthorized: false,
+        rejectUnauthorized: process.env.PAYFAST_ALLOW_INSECURE_TLS !== 'true',
       }),
       timeout: 10000,
     };
+    
+    if (process.env.PAYFAST_ALLOW_INSECURE_TLS === 'true') {
+      console.warn('[PayFast] INSECURE: TLS verification disabled for this request (PAYFAST_ALLOW_INSECURE_TLS=true)');
+    }
 
     const response = await axios.post(
       onsiteUrl,
