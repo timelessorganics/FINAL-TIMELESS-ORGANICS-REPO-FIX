@@ -1122,8 +1122,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Mark code as used
       await storage.markPromoCodeAsUsed(promoCode.id, userId, purchase.id);
 
-      // Update seat count
-      await storage.updateSeatSold(promoCode.seatType, 1);
+      // NOTE: FREE VIP promo codes do NOT reduce available seat count
+      // These are BONUS seats on top of the 50 Founder + 50 Patron = 100 paid seats
+      // (no seat count update here - only paid purchases reduce available seats)
 
       // Generate all 3 codes: bronze claim + workshop vouchers (same as paid purchases)
       const bronzeClaimCode = await storage.createCode({
