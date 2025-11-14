@@ -25,7 +25,9 @@ export default function Header({
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/workshops", label: "Workshops" },
-    { href: "/commission", label: "Commission" },
+    { href: "/sculptures", label: "Gallery" },
+    { href: "/shop", label: "Shop" },
+    { href: "/auctions", label: "Auctions" },
     { href: "/about", label: "About" },
   ];
 
@@ -62,6 +64,14 @@ export default function Header({
           )}
 
           <div className="flex items-center gap-2">
+            {!isCheckoutVariant && (
+              <Link href="/founding-100">
+                <Button size="sm" className="btn-bronze hidden lg:inline-flex" data-testid="button-header-founding-100">
+                  Founding 100
+                </Button>
+              </Link>
+            )}
+            
             {isCheckoutVariant && backHref ? (
               <Link href={backHref}>
                 <Button variant="ghost" size="sm" className="gap-2" data-testid="button-back">

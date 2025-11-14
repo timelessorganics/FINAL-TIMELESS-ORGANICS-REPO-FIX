@@ -11,6 +11,8 @@ import HomePage from "@/pages/home";
 import WorkshopsPage from "@/pages/workshops";
 import CommissionPage from "@/pages/commission";
 import AboutPage from "@/pages/about";
+import ShopPage from "@/pages/shop";
+import AuctionsPage from "@/pages/auctions";
 import SculptureGallery from "@/pages/sculpture-gallery";
 import Dashboard from "@/pages/dashboard";
 import AdminPanel from "@/pages/admin-panel";
@@ -72,9 +74,12 @@ function Router() {
       {/* Brand Pages - PUBLIC */}
       <Route path="/workshops" component={WorkshopsPage} />
       <Route path="/commission" component={CommissionPage} />
+      <Route path="/shop" component={ShopPage} />
+      <Route path="/auctions" component={AuctionsPage} />
       <Route path="/about" component={AboutPage} />
       
       {/* Founding 100 Launch Page - PUBLIC */}
+      <Route path="/founding-100" component={MainLaunch} />
       <Route path="/founding100" component={MainLaunch} />
       
       {/* Checkout Pages - PUBLIC */}
