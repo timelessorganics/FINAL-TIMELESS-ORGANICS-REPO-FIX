@@ -27,21 +27,24 @@ export default function AboutPage() {
           <section className="prose prose-invert prose-lg max-w-none mb-16">
             <div className="space-y-6 text-muted-foreground leading-relaxed">
               <p className="text-xl text-foreground/90 font-light first-letter:text-5xl first-letter:font-serif first-letter:text-accent-gold first-letter:mr-1 first-letter:float-left first-letter:leading-none">
-                Timeless Organics was born from a convergence of hardship and artistic calling. 
-                After years as a professional sculptor, I found myself rebuilding from scratch — 
-                studio lost, tools gone, starting over in Kommetjie with nothing but skill and determination.
+                Timeless Organics represents 25 years of precision casting expertise, refined through 
+                mastery of the most exacting metalwork discipline: dental technology. For 15 years in 
+                London's prestigious West End, I crafted microscopic prosthetics for the top echelon of 
+                medicine and dentistry — work where a fraction of a millimeter determines success or failure.
               </p>
 
               <p>
-                Rather than recreate what was, I chose to build something rare. A foundry dedicated to 
-                lost-wax bronze casting — one of humanity's oldest metalworking techniques, largely 
-                disappeared from South African fine art practice.
+                I owned my own laboratory for three years, serving an elite clientele who demanded perfection. 
+                That precision — the ability to capture and reproduce organic forms with absolute accuracy — 
+                became the foundation for bronze sculpture. I spent years making botanical castings for an 
+                established artist, learning the ancient lost-wax process while perfecting modern techniques.
               </p>
 
               <p>
-                The vision crystallized around Cape Fynbos — the extraordinary botanical kingdom unique to 
-                this corner of the world. Proteas. Ericas. Restios. Succulents. Plants found nowhere else, 
-                evolved over millions of years, now threatened by climate change and development.
+                Now, I'm building something of my own: a foundry dedicated to preserving South Africa's 
+                extraordinary Cape Fynbos kingdom in permanent bronze. Proteas. Ericas. Restios. Succulents. 
+                Plants found nowhere else on Earth, evolved over millions of years, now threatened by climate 
+                change and development.
               </p>
 
               <p>
@@ -51,8 +54,10 @@ export default function AboutPage() {
               </p>
 
               <p className="text-foreground/90 font-medium">
-                This is craft as conservation. Art as archive. Bronze as a love letter to the fragile, 
-                beautiful things we're in danger of losing.
+                But this isn't about hiding knowledge — it's about sharing it. My passion has always been 
+                teaching. While others guard their techniques, I believe in empowering people with these skills. 
+                The Founding 100 workshops will give you hands-on access to 25 years of expertise. This is 
+                craft as conservation, art as archive, and knowledge as a gift passed forward.
               </p>
             </div>
           </section>
@@ -137,15 +142,19 @@ export default function AboutPage() {
               </div>
               <div className="prose prose-invert max-w-none text-muted-foreground">
                 <p>
-                  Trained in traditional bronze casting and contemporary sculpture, I've spent two decades 
-                  working with metal, stone, and organic materials. After losing my previous studio, 
-                  I'm building Timeless Organics in Kommetjie — a space dedicated to preserving South Africa's 
-                  botanical heritage through permanent bronze sculpture.
+                  25 years of precision metalwork. 15 years as a dental technologist in London's West End, 
+                  serving the top tier of medical professionals. 3 years running my own laboratory. Years more 
+                  creating bronze botanical sculptures, mastering the lost-wax process through hands-on practice.
+                </p>
+                <p>
+                  Now I'm building Timeless Organics in Kommetjie — a foundry and workshop space dedicated to 
+                  preserving South Africa's botanical heritage in permanent bronze, and sharing this rare craft 
+                  with others who want to learn.
                 </p>
                 <p className="mb-0">
                   This work is personal. It's about holding onto beauty in uncertain times. It's about craft 
-                  that matters, art that endures, and a deep love for the wild, strange plants that make this 
-                  place unlike anywhere else on Earth.
+                  that matters, art that endures, knowledge freely shared, and a deep love for the wild, strange 
+                  plants that make this place unlike anywhere else on Earth.
                 </p>
               </div>
             </Card>

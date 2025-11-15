@@ -149,10 +149,11 @@ export const purchases = pgTable("purchases", {
   specimenId: varchar("specimen_id").references(() => sculptures.id),
   
   // Add-ons and delivery (collected during checkout)
-  hasPatina: boolean("has_patina").default(false).notNull(), // +R10 add-on (testing price)
+  hasPatina: boolean("has_patina").default(false).notNull(), // +R1,000 patina service
   hasMounting: boolean("has_mounting").default(false).notNull(), // LEGACY: Replaced by mountingType/mountingPriceCents
-  mountingType: mountingTypeEnum("mounting_type").default('none').notNull(), // Mounting service type
-  mountingPriceCents: integer("mounting_price_cents").default(0).notNull(), // Price paid for mounting (in cents)
+  mountingType: mountingTypeEnum("mounting_type").default('none').notNull(), // Mounting service type (wall/base/custom)
+  mountingPriceCents: integer("mounting_price_cents").default(0).notNull(), // R1,000 deposit paid for mounting (in cents)
+  commissionVoucher: boolean("commission_voucher").default(false).notNull(), // +R1,500 commission voucher (40%/60% off)
   internationalShipping: boolean("international_shipping").default(false).notNull(), // Flag for manual DHL quote
   deliveryName: varchar("delivery_name"),
   deliveryPhone: varchar("delivery_phone"),
@@ -182,6 +183,7 @@ export const insertPurchaseSchema = createInsertSchema(purchases).pick({
   hasPatina: true,
   mountingType: true,
   mountingPriceCents: true,
+  commissionVoucher: true,
   internationalShipping: true,
   deliveryName: true,
   deliveryPhone: true,
@@ -222,11 +224,11 @@ export const insertMountingOptionSchema = createInsertSchema(mountingOptions).pi
 export type InsertMountingOption = z.infer<typeof insertMountingOptionSchema>;
 export type MountingOption = typeof mountingOptions.$inferSelect;
 
-// Code types enum - includes bronze_claim for sculpture redemption codes
-export const codeTypeEnum = pgEnum('code_type', ['bronze_claim', 'workshop_voucher', 'lifetime_workshop']);
+// Code types enum - includes bronze_claim for sculpture redemption codes and commission_voucher
+export const codeTypeEnum = pgEnum('code_type', ['bronze_claim', 'workshop_voucher', 'lifetime_workshop', 'commission_voucher']);
 
-// Code applies to enum (bronze claim, workshop-only, seat purchases, or any)
-export const codeAppliesToEnum = pgEnum('code_applies_to', ['bronze_claim', 'workshop', 'seat', 'any']);
+// Code applies to enum (bronze claim, workshop-only, commission-only, seat purchases, or any)
+export const codeAppliesToEnum = pgEnum('code_applies_to', ['bronze_claim', 'workshop', 'commission', 'seat', 'any']);
 
 // Unique codes generated for purchases
 export const codes = pgTable("codes", {
