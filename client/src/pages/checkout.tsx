@@ -266,10 +266,15 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
     }
   };
 
-  // Price calculation - fetch real seat price from backend
-  const patinaPrice = hasPatina ? 1000 : 0; // R1,000 for patina service
-  const mountingPrice = mountingPriceCents / 100; // Convert cents to Rand (R1,000 deposit)
-  const commissionVoucherPrice = commissionVoucher ? (seatType === "founder" ? 1500 : 1500) : 0; // R1,500 for commission voucher
+  // Price calculation - all prices in cents from backend, converted to Rand for display
+  const patinaPriceCents = hasPatina ? 100000 : 0; // R1,000 for patina service (100000 cents)
+  const commissionVoucherPriceCents = commissionVoucher ? 150000 : 0; // R1,500 for commission voucher (150000 cents)
+  
+  // Convert all prices from cents to Rand
+  const patinaPrice = patinaPriceCents / 100;
+  const mountingPrice = mountingPriceCents / 100;
+  const commissionVoucherPrice = commissionVoucherPriceCents / 100;
+  
   const subtotal = basePrice + patinaPrice + mountingPrice + commissionVoucherPrice;
   const discount = validatedPromo?.valid ? (subtotal * (validatedPromo.discount! / 100)) : 0;
   const totalPrice = subtotal - discount;

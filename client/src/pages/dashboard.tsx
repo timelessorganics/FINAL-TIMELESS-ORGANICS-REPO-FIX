@@ -211,37 +211,55 @@ export default function Dashboard() {
                         Your Lifetime Codes:
                       </h3>
                       <div className="grid gap-3">
-                        {purchase.codes.map((code) => (
-                          <div
-                            key={code.id}
-                            className="flex flex-wrap justify-between items-center gap-4 p-4 bg-background/50 rounded-lg border border-border"
-                            data-testid={`code-${code.type}`}
-                          >
-                            <div className="flex-1">
-                              <div className="text-xs text-patina font-semibold uppercase mb-1">
-                                {code.type === "workshop_voucher"
-                                  ? `Workshop Voucher (${code.discount}% Off)`
-                                  : "Lifetime Workshop Code (Referral)"}
-                              </div>
-                              <div className="font-mono text-lg font-bold text-accent-gold">
-                                {code.code}
-                              </div>
-                              {code.transferable && (
-                                <div className="text-xs text-muted-foreground mt-1">
-                                  Transferable • Lifetime Use
-                                </div>
-                              )}
-                            </div>
-                            <Button
-                              variant="outline"
-                              size="sm"
-                              onClick={() => navigator.clipboard.writeText(code.code)}
-                              data-testid={`button-copy-${code.type}`}
+                        {purchase.codes.map((code) => {
+                          // Determine code type label
+                          let codeLabel = "";
+                          let codeColor = "text-patina";
+                          
+                          if (code.type === "bronze_claim") {
+                            codeLabel = "Bronze Claim Code (Free Workshop Casting)";
+                            codeColor = "text-bronze";
+                          } else if (code.type === "workshop_voucher") {
+                            codeLabel = `Workshop Voucher (${code.discount}% Off ONE Workshop)`;
+                            codeColor = "text-patina";
+                          } else if (code.type === "lifetime_workshop") {
+                            codeLabel = `Lifetime Workshop Code (${code.discount}% Off ALL Workshops)`;
+                            codeColor = "text-accent-gold";
+                          } else if (code.type === "commission_voucher") {
+                            codeLabel = `Commission Voucher (${code.discount}% Off ONE Commission)`;
+                            codeColor = "text-accent-gold";
+                          }
+                          
+                          return (
+                            <div
+                              key={code.id}
+                              className="flex flex-wrap justify-between items-center gap-4 p-4 bg-background/50 rounded-lg border border-border"
+                              data-testid={`code-${code.type}`}
                             >
-                              Copy Code
-                            </Button>
-                          </div>
-                        ))}
+                              <div className="flex-1">
+                                <div className={`text-xs ${codeColor} font-semibold uppercase mb-1`}>
+                                  {codeLabel}
+                                </div>
+                                <div className="font-mono text-lg font-bold text-accent-gold">
+                                  {code.code}
+                                </div>
+                                {code.transferable && (
+                                  <div className="text-xs text-muted-foreground mt-1">
+                                    Transferable • {code.type === "lifetime_workshop" ? "Lifetime Use" : "Single Use"}
+                                  </div>
+                                )}
+                              </div>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                onClick={() => navigator.clipboard.writeText(code.code)}
+                                data-testid={`button-copy-${code.type}`}
+                              >
+                                Copy Code
+                              </Button>
+                            </div>
+                          );
+                        })}
                       </div>
                     </div>
                   )}

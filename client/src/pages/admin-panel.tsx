@@ -566,12 +566,17 @@ export default function AdminPanel() {
                               Mounting
                             </Badge>
                           )}
+                          {purchase.commissionVoucher && (
+                            <Badge variant="outline" className="text-xs w-fit bg-accent-gold/10 text-accent-gold border-accent-gold/30">
+                              Comm. Voucher
+                            </Badge>
+                          )}
                           {purchase.internationalShipping && (
                             <Badge variant="outline" className="text-xs w-fit bg-accent-gold/10 text-accent-gold border-accent-gold/30">
                               Int'l Ship
                             </Badge>
                           )}
-                          {!purchase.hasPatina && !purchase.hasMounting && !purchase.internationalShipping && (
+                          {!purchase.hasPatina && !purchase.hasMounting && !purchase.commissionVoucher && !purchase.internationalShipping && (
                             <span className="text-xs text-muted-foreground">—</span>
                           )}
                         </div>
