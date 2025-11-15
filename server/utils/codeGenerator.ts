@@ -44,3 +44,16 @@ export function getLifetimeWorkshopDiscount(seatType: 'founder' | 'patron'): num
   // Lifetime workshop discounts
   return seatType === 'founder' ? 20 : 30;
 }
+
+export function generateCommissionVoucherCode(seatType: 'founder' | 'patron'): string {
+  // Format: CF-40-XXXX-XXXX (Founder 40%) or CP-60-XXXX-XXXX (Patron 60%)
+  const prefix = seatType === 'founder' ? 'CF-40' : 'CP-60';
+  const part1 = generateRandomCode(4);
+  const part2 = generateRandomCode(4);
+  return `${prefix}-${part1}-${part2}`;
+}
+
+export function getCommissionVoucherDiscount(seatType: 'founder' | 'patron'): number {
+  // Commission voucher discounts (one-time use for future commissions)
+  return seatType === 'founder' ? 40 : 60;
+}

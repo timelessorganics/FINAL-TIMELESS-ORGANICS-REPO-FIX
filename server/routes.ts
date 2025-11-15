@@ -10,8 +10,10 @@ import {
   generateBronzeClaimCode, 
   generateWorkshopVoucherCode, 
   generateLifetimeWorkshopCode,
+  generateCommissionVoucherCode,
   getWorkshopVoucherDiscount,
-  getLifetimeWorkshopDiscount
+  getLifetimeWorkshopDiscount,
+  getCommissionVoucherDiscount
 } from "./utils/codeGenerator";
 import { 
   createPaymentData, 
@@ -27,15 +29,23 @@ import { sendCertificateEmail, sendPurchaseConfirmationEmail, sendGiftNotificati
 import { generatePromoCode } from "./utils/promoCodeGenerator";
 import { addSubscriberToMailchimp } from "./mailchimp";
 
-// Server-side mounting price lookup (source of truth - NEVER trust client prices!)
+// Server-side pricing functions (source of truth - NEVER trust client prices!)
+
+// Mounting deposit: R1,000 for all types (deducted from final quote)
+// Final prices vary: slate R1,500, wood R1,000+, resin R2,500+ (size dependent)
 function getMountingPrice(mountingType: string): number {
-  const prices: Record<string, number> = {
-    'none': 0,
-    'wall': 1000,  // R10
-    'base': 1500,  // R15
-    'custom': 2500, // R25
-  };
-  return prices[mountingType] || 0;
+  if (mountingType === 'none') return 0;
+  return 100000; // R1,000 deposit for all mounting types (wall/base/custom)
+}
+
+// Patina service: R1,000
+function getPatinaPrice(): number {
+  return 100000; // R1,000
+}
+
+// Commission voucher: R1,500 (generates 40%/60% discount code)
+function getCommissionVoucherPrice(): number {
+  return 150000; // R1,500
 }
 
 // Centralized post-completion handler for gift notifications
@@ -175,7 +185,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Calculate amount based on seat type + add-ons
       const { 
-        seatType, specimenStyle, hasPatina, mountingType, internationalShipping, purchaseMode,
+        seatType, specimenStyle, hasPatina, mountingType, commissionVoucher, 
+        internationalShipping, purchaseMode,
         isGift, giftRecipientEmail, giftRecipientName, giftMessage,
         deliveryName, deliveryPhone, deliveryAddress 
       } = req.body;
@@ -196,11 +207,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Calculate mounting price server-side (NEVER trust client prices!)
+      // Calculate add-on prices server-side (NEVER trust client prices!)
       const mountingPriceCents = getMountingPrice(mountingType || 'none');
+      const patinaPriceCents = hasPatina ? getPatinaPrice() : 0;
+      const commissionVoucherPriceCents = commissionVoucher ? getCommissionVoucherPrice() : 0;
 
-      // Calculate total: base price + patina (R10 testing) + mounting (server-validated)
-      const amount = seat.price + (hasPatina ? 1000 : 0) + mountingPriceCents;
+      // Calculate total: base seat price + patina (R1K) + mounting deposit (R1K) + commission voucher (R1.5K)
+      const amount = seat.price + patinaPriceCents + mountingPriceCents + commissionVoucherPriceCents;
 
       // Validate delivery information
       if (!deliveryName || !deliveryPhone || !deliveryAddress) {
@@ -209,7 +222,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Create purchase record with user's chosen specimen style
+      // Create purchase record with user's chosen specimen style and add-ons
       const purchase = await storage.createPurchase({
         userId,
         seatType,
@@ -218,6 +231,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         hasPatina: hasPatina || false,
         mountingType: mountingType || 'none',
         mountingPriceCents: mountingPriceCents || 0,
+        commissionVoucher: commissionVoucher || false,
         internationalShipping: internationalShipping || false,
         purchaseMode: purchaseMode || 'cast_now',
         isGift: isGift || false,
@@ -459,7 +473,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Update seat count
         await storage.updateSeatSold(purchase.seatType, 1);
 
-        // Generate all 3 codes: bronze claim + workshop vouchers
+        // Generate codes: bronze claim + workshop vouchers (always) + commission voucher (if purchased)
         const bronzeClaimCode = await storage.createCode({
           purchaseId: purchase.id,
           type: "bronze_claim",
@@ -490,11 +504,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
           appliesTo: 'workshop',
         });
 
+        // Generate commission voucher code if purchased
+        let commissionVoucherCode = null;
+        if (purchase.commissionVoucher) {
+          commissionVoucherCode = await storage.createCode({
+            purchaseId: purchase.id,
+            type: "commission_voucher",
+            code: generateCommissionVoucherCode(purchase.seatType),
+            discount: getCommissionVoucherDiscount(purchase.seatType),
+            transferable: true,
+            maxRedemptions: 1,
+            appliesTo: 'commission',
+          });
+        }
+
         // Get user info for certificate
         const user = await storage.getUser(purchase.userId);
         const userName = user?.firstName && user?.lastName 
           ? `${user.firstName} ${user.lastName}` 
           : user?.firstName || "Valued Investor";
+
+        // Build codes array for certificate and emails (3 or 4 codes depending on commission voucher)
+        const allCodes = [bronzeClaimCode, workshopCode, lifetimeWorkshopCode];
+        if (commissionVoucherCode) {
+          allCodes.push(commissionVoucherCode);
+        }
 
         // Generate certificate and code slips (can fail without breaking completion)
         let certificateUrl = "";
@@ -502,13 +536,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         try {
           certificateUrl = await generateCertificate(
             purchase,
-            [bronzeClaimCode, workshopCode, lifetimeWorkshopCode],
+            allCodes,
             userName
           );
 
           codeSlipsUrl = await generateCodeSlips(
             purchase,
-            [bronzeClaimCode, workshopCode, lifetimeWorkshopCode],
+            allCodes,
             userName
           );
 
@@ -536,7 +570,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             userEmail,
             userName,
             purchase,
-            [bronzeClaimCode, workshopCode, lifetimeWorkshopCode],
+            allCodes,
             certificateUrl,
             codeSlipsUrl
           ).catch(console.error);
@@ -1058,7 +1092,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = getUserId(req);
       const { 
-        code, specimenStyle, hasPatina, mountingType, internationalShipping, purchaseMode,
+        code, specimenStyle, hasPatina, mountingType, commissionVoucher,
+        internationalShipping, purchaseMode,
         isGift, giftRecipientEmail, giftRecipientName, giftMessage,
         deliveryName, deliveryPhone, deliveryAddress 
       } = req.body;
@@ -1070,19 +1105,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Invalid or already used promo code" });
       }
 
-      // Check seat availability BEFORE creating purchase
-      const seats = await storage.getSeats();
-      const seat = seats.find((s) => s.type === promoCode.seatType);
-      
-      if (!seat) {
-        return res.status(400).json({ message: "Invalid seat type" });
-      }
-
-      const available = seat.totalAvailable - seat.sold;
-      if (available <= 0) {
-        return res.status(409).json({ message: "No seats available for this type" });
-      }
-
       // Validate specimen style selection
       if (!specimenStyle) {
         return res.status(400).json({ 
@@ -1090,18 +1112,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // For promo redemptions: mounting is free (VIP benefit)
+      // Validate delivery information (same as paid purchases)
+      if (!deliveryName || !deliveryPhone || !deliveryAddress) {
+        return res.status(400).json({ 
+          message: "Delivery information is required (name, phone, address)" 
+        });
+      }
+
+      // For FREE VIP promo redemptions: ALL add-ons are included at no cost (VIP benefit)
+      // They still get to choose add-ons, but prices are R0
       const mountingPriceCents = 0;
 
-      // Create free purchase (R0) with user's chosen specimen style
+      // Create free purchase (R0) with user's chosen specimen style and add-ons
       const purchase = await storage.createPurchase({
         userId,
         seatType: promoCode.seatType,
-        amount: 0, // Free!
+        amount: 0, // FREE VIP seat!
         specimenStyle,
         hasPatina: hasPatina || false,
         mountingType: mountingType || 'none',
-        mountingPriceCents, // Always free for promo redemptions
+        mountingPriceCents, // Free for VIP
+        commissionVoucher: commissionVoucher || false,
         internationalShipping: internationalShipping || false,
         purchaseMode: purchaseMode || 'cast_now',
         isGift: isGift || false,
@@ -1126,7 +1157,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // These are BONUS seats on top of the 50 Founder + 50 Patron = 100 paid seats
       // (no seat count update here - only paid purchases reduce available seats)
 
-      // Generate all 3 codes: bronze claim + workshop vouchers (same as paid purchases)
+      // Generate codes: bronze claim + workshop vouchers (always) + commission voucher (if selected)
       const bronzeClaimCode = await storage.createCode({
         purchaseId: purchase.id,
         type: "bronze_claim",
@@ -1157,6 +1188,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
         appliesTo: 'workshop',
       });
 
+      // Generate commission voucher code if selected (FREE for VIP)
+      let commissionVoucherCodePromo = null;
+      if (purchase.commissionVoucher) {
+        commissionVoucherCodePromo = await storage.createCode({
+          purchaseId: purchase.id,
+          type: "commission_voucher",
+          code: generateCommissionVoucherCode(promoCode.seatType),
+          discount: getCommissionVoucherDiscount(promoCode.seatType),
+          transferable: true,
+          maxRedemptions: 1,
+          appliesTo: 'commission',
+        });
+      }
+
       // Get user info for certificate and emails
       const user = await storage.getUser(userId);
       const userName = user?.firstName && user?.lastName 
@@ -1164,19 +1209,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
         : user?.firstName || "Valued Investor";
       const userEmail = user?.email || "";
 
+      // Build codes array for certificate and emails (3 or 4 codes depending on commission voucher)
+      const allCodesPromo = [bronzeClaimCode, workshopCode, lifetimeWorkshopCode];
+      if (commissionVoucherCodePromo) {
+        allCodesPromo.push(commissionVoucherCodePromo);
+      }
+
       // Generate certificate and code slips (same as paid purchases)
       let certificateUrl = "";
       let codeSlipsUrl = "";
       try {
         certificateUrl = await generateCertificate(
           purchase,
-          [bronzeClaimCode, workshopCode, lifetimeWorkshopCode],
+          allCodesPromo,
           userName
         );
 
         codeSlipsUrl = await generateCodeSlips(
           purchase,
-          [bronzeClaimCode, workshopCode, lifetimeWorkshopCode],
+          allCodesPromo,
           userName
         );
 
@@ -1206,7 +1257,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               userEmail,
               userName,
               purchase,
-              [bronzeClaimCode, workshopCode, lifetimeWorkshopCode],
+              allCodesPromo,
               certificateUrl,
               codeSlipsUrl
             );
