@@ -68,6 +68,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   const [mountingType, setMountingType] = useState("none");
   const [mountingPriceCents, setMountingPriceCents] = useState(0);
   const [internationalShipping, setInternationalShipping] = useState(false);
+  const [commissionVoucher, setCommissionVoucher] = useState(false);
   const [purchaseMode, setPurchaseMode] = useState<"cast_now" | "wait_for_season">("cast_now");
   const [promoCode, setPromoCode] = useState("");
   const [validatedPromo, setValidatedPromo] = useState<{valid: boolean; discount?: number; seatType?: string} | null>(null);
@@ -106,6 +107,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
         hasPatina,
         mountingType,
         internationalShipping,
+        commissionVoucher,
         purchaseMode,
         isGift: data.isGift,
         giftRecipientEmail: data.isGift ? data.giftRecipientEmail : undefined,
@@ -180,6 +182,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
         hasPatina,
         mountingType,
         internationalShipping,
+        commissionVoucher,
         purchaseMode,
         isGift: data.isGift,
         giftRecipientEmail: data.isGift ? data.giftRecipientEmail : undefined,
@@ -264,9 +267,10 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   };
 
   // Price calculation - fetch real seat price from backend
-  const patinaPrice = hasPatina ? 10 : 0; // R10 for patina add-on (testing price)
-  const mountingPrice = mountingPriceCents / 100; // Convert cents to Rand
-  const subtotal = basePrice + patinaPrice + mountingPrice;
+  const patinaPrice = hasPatina ? 1000 : 0; // R1,000 for patina service
+  const mountingPrice = mountingPriceCents / 100; // Convert cents to Rand (R1,000 deposit)
+  const commissionVoucherPrice = commissionVoucher ? (seatType === "founder" ? 1500 : 1500) : 0; // R1,500 for commission voucher
+  const subtotal = basePrice + patinaPrice + mountingPrice + commissionVoucherPrice;
   const discount = validatedPromo?.valid ? (subtotal * (validatedPromo.discount! / 100)) : 0;
   const totalPrice = subtotal - discount;
 
@@ -535,7 +539,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                     <CardHeader>
                       <CardTitle className="text-patina">Add Patina Finish</CardTitle>
                       <CardDescription>
-                        Enhance your bronze with a natural green patina finish (+R10)
+                        Professional green-blue oxidation patina (+R1,000)
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
@@ -551,10 +555,10 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                             htmlFor="patina"
                             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
                           >
-                            Add Patina Finish
+                            Add Patina Finish (+R1,000)
                           </label>
                           <p className="text-sm text-muted-foreground">
-                            A chemical process that creates a distinctive green-blue oxidation on the bronze surface, reminiscent of aged copper. This traditional finish adds depth and character to your casting.
+                            A chemical process that creates a distinctive green-blue oxidation on the bronze surface, reminiscent of aged copper. This traditional finish adds depth and character to your casting, creating the classic "aged bronze" aesthetic.
                           </p>
                         </div>
                       </div>
@@ -606,6 +610,58 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                           <p className="text-sm text-muted-foreground">
                             We ship worldwide via DHL Express (typically 3-6 working days). Courier costs will be quoted separately and invoiced once we have your destination address and final package weight. Import duties/taxes may apply at your destination.
                           </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Commission Voucher Option */}
+                  <Card data-testid="card-commission-voucher" className="border-accent-gold/30">
+                    <CardHeader>
+                      <CardTitle className="text-accent-gold">Commission Voucher</CardTitle>
+                      <CardDescription>
+                        Add a commission voucher for future custom bronze work (+R1,500)
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="flex items-start space-x-3">
+                        <Checkbox
+                          id="commissionVoucher"
+                          checked={commissionVoucher}
+                          onCheckedChange={(checked) => setCommissionVoucher(checked as boolean)}
+                          data-testid="checkbox-commission-voucher"
+                        />
+                        <div className="grid gap-1.5 leading-none">
+                          <label
+                            htmlFor="commissionVoucher"
+                            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70 cursor-pointer"
+                          >
+                            Add Commission Voucher (+R1,500)
+                          </label>
+                          <p className="text-sm text-muted-foreground mb-3">
+                            Secure a discount voucher for future commissioned bronze sculptures. This generates a unique code 
+                            redeemable for {seatType === "founder" ? "40%" : "60%"} off ONE future commission service.
+                          </p>
+                          <div className="bg-accent-gold/10 border border-accent-gold/20 rounded-lg p-3 text-xs space-y-1">
+                            <div className="flex items-start gap-2">
+                              <Sparkles className="w-3.5 h-3.5 text-accent-gold mt-0.5 flex-shrink-0" />
+                              <span className="text-muted-foreground">
+                                <strong className="text-foreground">{seatType === "founder" ? "Founder" : "Patron"} Benefit:</strong> {seatType === "founder" ? "40%" : "60%"} discount on any future commission (portrait, pet memorial, custom sculpture, etc.)
+                              </span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <Check className="w-3.5 h-3.5 text-accent-gold mt-0.5 flex-shrink-0" />
+                              <span className="text-muted-foreground">
+                                Voucher code delivered with your purchase confirmation
+                              </span>
+                            </div>
+                            <div className="flex items-start gap-2">
+                              <Check className="w-3.5 h-3.5 text-accent-gold mt-0.5 flex-shrink-0" />
+                              <span className="text-muted-foreground">
+                                Transferable gift - can be used by anyone
+                              </span>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </CardContent>

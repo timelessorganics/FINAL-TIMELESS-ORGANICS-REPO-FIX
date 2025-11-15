@@ -25,22 +25,22 @@ export const DEFAULT_MOUNTING_OPTIONS: MountingOption[] = [
   {
     id: "wall",
     label: "Wall Mount",
-    description: "Professional wall mounting system",
-    priceCents: 1000, // R10 for testing
+    description: "Slate/metal mounting (R1,000 deposit deducted from final quote)",
+    priceCents: 100000, // R1,000 deposit
     isAvailable: true,
   },
   {
     id: "base",
     label: "Display Base",
-    description: "Wood or stone display base",
-    priceCents: 1500, // R15 for testing
+    description: "Wood/stone/resin base (R1,000 deposit deducted from final quote)",
+    priceCents: 100000, // R1,000 deposit
     isAvailable: true,
   },
   {
     id: "custom",
     label: "Custom Mounting",
-    description: "Bespoke mounting solution",
-    priceCents: 2500, // R25 for testing
+    description: "Bespoke mounting solution (R1,000 deposit deducted from final quote)",
+    priceCents: 100000, // R1,000 deposit
     isAvailable: true,
   },
 ];
