@@ -104,9 +104,14 @@ export default function HomePage() {
               Join the <span className="text-accent-gold">Founding 100</span>
             </h2>
             
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-10 leading-relaxed">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
               Fund our Kommetjie foundry's final fit-out. We invest (encase) your chosen botanical specimen now — 
               guaranteeing you a bronze casting when the studio opens (estimated Jan 2026).
+            </p>
+
+            <p className="text-base text-muted-foreground/70 max-w-xl mx-auto mb-10 leading-relaxed italic border-l-2 border-accent-gold/50 pl-4">
+              Each Founding 100 casting is a one-of-a-kind botanical sculpture with an established market value of 
+              <span className="text-foreground font-semibold"> R25,000+</span> when mounted and patinated.
             </p>
 
             <div className="flex flex-wrap justify-center gap-8 mb-10">
