@@ -11,6 +11,10 @@ import createMemoryStore from "memorystore";
 import { storage } from "./storage";
 import type { User } from "@shared/schema";
 
+// Turn Replit OIDC on only when REPL_ID exists (i.e. when actually running on Replit)
+const REPLIT_OIDC_ENABLED = !!process.env.REPL_ID;
+
+
 // Normalize OIDC claims to app-specific fields
 function normalizeClaims(claims: any) {
   return {
@@ -37,13 +41,18 @@ export function getUserId(req: any): string {
 
 const getOidcConfig = memoize(
   async () => {
+    if (!REPLIT_OIDC_ENABLED) {
+      throw new Error('[Replit Auth] REPL_ID not set – Replit OIDC disabled in this environment');
+    }
+
     return await client.discovery(
       new URL(process.env.ISSUER_URL ?? "https://replit.com/oidc"),
-      process.env.REPL_ID!
+      process.env.REPL_ID as string
     );
   },
   { maxAge: 3600 * 1000 }
 );
+
 
 export function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
@@ -168,12 +177,21 @@ async function upsertUser(normalizedClaims: ReturnType<typeof normalizeClaims>) 
 }
 
 export async function setupAuth(app: Express) {
+  if (!REPLIT_OIDC_ENABLED) {
+    console.log('[Auth] Replit OIDC disabled (no REPL_ID). Skipping Replit auth setup – assuming Supabase/front-end auth.');
+    return;
+  }
+
   app.set("trust proxy", 1);
   app.use(getSession());
   app.use(passport.initialize());
   app.use(passport.session());
 
   const config = await getOidcConfig();
+
+  // ... rest of setupAuth unchanged ...
+}
+
 
   const verify: VerifyFunction = async (
     tokens: client.TokenEndpointResponse & client.TokenEndpointResponseHelpers,
