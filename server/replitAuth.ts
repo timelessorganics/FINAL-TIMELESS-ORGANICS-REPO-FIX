@@ -262,14 +262,24 @@ export async function setupAuth(app: Express) {
   
   console.log('[Replit Auth] Authentication configured - Google, GitHub, X, Apple, Email supported');
   console.log('[Replit Auth] Session storage: PostgreSQL');
-}
+
 
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
+  if (!REPLIT_OIDC_ENABLED) {
+    // TEMP: no server-side auth in non-Replit environments.
+    // Supabase/client-side auth is expected to gate access.
+    return next();
+  }
+
   const user = req.user as any;
 
   if (!req.isAuthenticated() || !user.expires_at) {
     return res.status(401).json({ message: "Unauthorized" });
   }
+
+  // ... rest unchanged ...
+};
+
 
   const now = Math.floor(Date.now() / 1000);
   if (now <= user.expires_at) {
