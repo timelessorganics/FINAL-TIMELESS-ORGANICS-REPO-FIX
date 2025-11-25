@@ -249,7 +249,17 @@ export class DatabaseStorage implements IStorage {
 
   // Sculpture operations
   async createSculpture(sculpture: InsertSculpture): Promise<Sculpture> {
-    const [s] = await db.insert(sculptures).values(sculpture).returning();
+    const [s] = await db
+  .insert(sculptures)
+  .values({
+    ...sculpture,
+    // Force peakSeasons into a plain string[] (what Drizzle expects)
+    peakSeasons: sculpture.peakSeasons
+      ? Array.from(sculpture.peakSeasons as string[])
+      : null,
+  })
+  .returning();
+
     return s;
   }
 

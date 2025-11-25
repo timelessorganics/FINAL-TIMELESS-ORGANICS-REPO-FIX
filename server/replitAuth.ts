@@ -1,19 +1,18 @@
-// From javascript_log_in_with_replit blueprint
+// From javascript_log_in_with_replit blueprint, adapted for Railway/Supabase
 import * as client from "openid-client";
 import { Strategy, type VerifyFunction } from "openid-client/passport";
 
 import passport from "passport";
 import session from "express-session";
-import type { Express, RequestHandler } from "express";
+import type { Express, Request, RequestHandler } from "express";
 import memoize from "memoizee";
 import connectPg from "connect-pg-simple";
 import createMemoryStore from "memorystore";
 import { storage } from "./storage";
 import type { User } from "@shared/schema";
 
-// Turn Replit OIDC on only when REPL_ID exists (i.e. when actually running on Replit)
-const REPLIT_OIDC_ENABLED = !!process.env.REPL_ID;
-
+// Replit OIDC is only enabled when running on Replit
+export const REPLIT_OIDC_ENABLED = !!process.env.REPL_ID;
 
 // Normalize OIDC claims to app-specific fields
 function normalizeClaims(claims: any) {
@@ -31,48 +30,69 @@ export function getSessionUser(req: any): User | null {
   if (!req.user || !req.user.dbUser) {
     return null;
   }
-  return req.user.dbUser;
+  return req.user.dbUser as User;
 }
 
-// Helper to get user ID from session (normalized claims preferred)
-export function getUserId(req: any): string {
-  return req.user.normalizedClaims?.sub || req.user.claims?.sub || req.user.dbUser?.id;
+// Helper to get user ID from session (with fallbacks for non-Replit envs)
+export function getUserId(req: Request & { user?: any }): string {
+  // Preferred: DB user id from Replit session
+  if (req.user?.dbUser?.id) return req.user.dbUser.id as string;
+
+  // Fallbacks from OIDC claims
+  if (req.user?.normalizedClaims?.sub) return req.user.normalizedClaims.sub as string;
+  if (req.user?.claims?.sub) return req.user.claims.sub as string;
+
+  // Non-Replit / Supabase environment:
+  // allow the frontend to pass a user id header if we add that later
+  const headerId =
+    (req.headers["x-user-id"] as string | string[] | undefined) ??
+    (req.headers["x-supabase-user-id"] as string | string[] | undefined);
+
+  if (Array.isArray(headerId)) {
+    if (headerId[0] && headerId[0].trim()) return headerId[0].trim();
+  } else if (typeof headerId === "string" && headerId.trim()) {
+    return headerId.trim();
+  }
+
+  // Last-resort dev fallback so the app can run without auth wiring
+  return "anonymous-dev-user";
 }
 
 const getOidcConfig = memoize(
   async () => {
     if (!REPLIT_OIDC_ENABLED) {
-      throw new Error('[Replit Auth] REPL_ID not set – Replit OIDC disabled in this environment');
+      throw new Error("[Replit Auth] OIDC config requested but REPL_ID is not set");
     }
 
-    return await client.discovery(
-      new URL(process.env.ISSUER_URL ?? "https://replit.com/oidc"),
-      process.env.REPL_ID as string
-    );
+    const issuerUrl = new URL(process.env.ISSUER_URL ?? "https://replit.com/oidc");
+    const clientId = process.env.REPL_ID!;
+
+    return await client.discovery(issuerUrl, clientId);
   },
   { maxAge: 3600 * 1000 }
 );
 
-
 export function getSession() {
   const sessionTtl = 7 * 24 * 60 * 60 * 1000; // 1 week
-  
+
   // Validate DATABASE_URL
   if (!process.env.DATABASE_URL) {
-    if (process.env.NODE_ENV === 'production') {
-      throw new Error('DATABASE_URL is required in production');
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("DATABASE_URL is required in production");
     }
-    console.warn('[Replit Auth] DATABASE_URL not set, using MemoryStore for sessions (NOT suitable for production)');
+    console.warn(
+      "[Replit Auth] DATABASE_URL not set, using MemoryStore for sessions (NOT suitable for production)"
+    );
     const MemoryStore = createMemoryStore(session);
     const memStore = new MemoryStore({ checkPeriod: sessionTtl });
     return session({
-      secret: process.env.SESSION_SECRET!,
+      secret: process.env.SESSION_SECRET || "dev-session-secret",
       store: memStore,
       resave: false,
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: process.env.NODE_ENV === "production",
         maxAge: sessionTtl,
       },
     });
@@ -81,26 +101,29 @@ export function getSession() {
   // Validate DATABASE_URL format
   try {
     const dbUrl = new URL(process.env.DATABASE_URL);
-    if (dbUrl.protocol !== 'postgres:' && dbUrl.protocol !== 'postgresql:') {
+    if (dbUrl.protocol !== "postgres:" && dbUrl.protocol !== "postgresql:") {
       throw new Error(`Invalid DATABASE_URL protocol: ${dbUrl.protocol}`);
     }
-    console.log('[Replit Auth] Database URL validated:', dbUrl.protocol + '//' + dbUrl.hostname);
+    console.log(
+      "[Replit Auth] Database URL validated:",
+      dbUrl.protocol + "//" + dbUrl.hostname
+    );
   } catch (urlError: any) {
-    console.error('[Replit Auth] Invalid DATABASE_URL format:', urlError.message);
-    if (process.env.NODE_ENV === 'production') {
-      throw new Error('Invalid DATABASE_URL in production');
+    console.error("[Replit Auth] Invalid DATABASE_URL format:", urlError.message);
+    if (process.env.NODE_ENV === "production") {
+      throw new Error("Invalid DATABASE_URL in production");
     }
-    console.warn('[Replit Auth] Falling back to MemoryStore in development');
+    console.warn("[Replit Auth] Falling back to MemoryStore in development");
     const MemoryStore = createMemoryStore(session);
     const memStore = new MemoryStore({ checkPeriod: sessionTtl });
     return session({
-      secret: process.env.SESSION_SECRET!,
+      secret: process.env.SESSION_SECRET || "dev-session-secret",
       store: memStore,
       resave: false,
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: process.env.NODE_ENV === "production",
         maxAge: sessionTtl,
       },
     });
@@ -108,41 +131,44 @@ export function getSession() {
 
   // Try to create PostgreSQL store
   try {
-    const pgStore = connectPg(session);
-    const sessionStore = new pgStore({
+    const PgStore = connectPg(session);
+    const sessionStore = new PgStore({
       conString: process.env.DATABASE_URL,
       createTableIfMissing: true,
       ttl: sessionTtl,
       tableName: "sessions",
     });
-    console.log('[Replit Auth] Using PostgreSQL session storage');
+    console.log("[Replit Auth] Using PostgreSQL session storage");
     return session({
-      secret: process.env.SESSION_SECRET!,
+      secret: process.env.SESSION_SECRET || "dev-session-secret",
       store: sessionStore,
       resave: false,
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: process.env.NODE_ENV === "production",
         maxAge: sessionTtl,
       },
     });
   } catch (error) {
-    console.error('[Replit Auth] Failed to initialize PostgreSQL session store:', error);
-    if (process.env.NODE_ENV === 'production') {
+    console.error(
+      "[Replit Auth] Failed to initialize PostgreSQL session store:",
+      error
+    );
+    if (process.env.NODE_ENV === "production") {
       throw error;
     }
-    console.warn('[Replit Auth] Falling back to MemoryStore in development');
+    console.warn("[Replit Auth] Falling back to MemoryStore in development");
     const MemoryStore = createMemoryStore(session);
     const memStore = new MemoryStore({ checkPeriod: sessionTtl });
     return session({
-      secret: process.env.SESSION_SECRET!,
+      secret: process.env.SESSION_SECRET || "dev-session-secret",
       store: memStore,
       resave: false,
       saveUninitialized: false,
       cookie: {
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: process.env.NODE_ENV === "production",
         maxAge: sessionTtl,
       },
     });
@@ -168,17 +194,19 @@ async function upsertUser(normalizedClaims: ReturnType<typeof normalizeClaims>) 
       lastName: normalizedClaims.last_name,
       profileImageUrl: normalizedClaims.profile_image_url,
     });
-    console.log('[Replit Auth] User upserted:', user.id, user.email);
+    console.log("[Replit Auth] User upserted:", user.id, user.email);
     return user;
   } catch (error) {
-    console.error('[Replit Auth] Failed to upsert user:', error);
+    console.error("[Replit Auth] Failed to upsert user:", error);
     throw error;
   }
 }
 
 export async function setupAuth(app: Express) {
   if (!REPLIT_OIDC_ENABLED) {
-    console.log('[Auth] Replit OIDC disabled (no REPL_ID). Skipping Replit auth setup – assuming Supabase/front-end auth.');
+    console.log(
+      "[Auth] Replit OIDC disabled (no REPL_ID). Skipping Replit auth setup – assuming Supabase/client-side auth."
+    );
     return;
   }
 
@@ -189,25 +217,21 @@ export async function setupAuth(app: Express) {
 
   const config = await getOidcConfig();
 
-  // ... rest of setupAuth unchanged ...
-}
-
-
   const verify: VerifyFunction = async (
     tokens: client.TokenEndpointResponse & client.TokenEndpointResponseHelpers,
     verified: passport.AuthenticateCallback
   ) => {
     const user: any = {};
     updateUserSession(user, tokens);
-    
+
     // Normalize OIDC claims to app-specific fields
     const normalized = normalizeClaims(tokens.claims());
     user.normalizedClaims = normalized;
-    
+
     // Upsert user and cache in session
     const dbUser = await upsertUser(normalized);
     user.dbUser = dbUser;
-    
+
     verified(null, user);
   };
 
@@ -223,7 +247,7 @@ export async function setupAuth(app: Express) {
           scope: "openid email profile offline_access",
           callbackURL: `https://${domain}/api/callback`,
         },
-        verify,
+        verify
       );
       passport.use(strategy);
       registeredStrategies.add(strategyName);
@@ -259,27 +283,26 @@ export async function setupAuth(app: Express) {
       );
     });
   });
-  
-  console.log('[Replit Auth] Authentication configured - Google, GitHub, X, Apple, Email supported');
-  console.log('[Replit Auth] Session storage: PostgreSQL');
 
+  console.log(
+    "[Replit Auth] Authentication configured - Google, GitHub, X, Apple, Email supported"
+  );
+  console.log("[Replit Auth] Session storage: PostgreSQL");
+}
 
+// Auth guard middleware
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
   if (!REPLIT_OIDC_ENABLED) {
-    // TEMP: no server-side auth in non-Replit environments.
-    // Supabase/client-side auth is expected to gate access.
+    // In Railway/Supabase environments we don't have Replit sessions wired.
+    // For now, allow through and rely on client-side/Supabase auth.
     return next();
   }
 
   const user = req.user as any;
 
-  if (!req.isAuthenticated() || !user.expires_at) {
+  if (!req.isAuthenticated || !req.isAuthenticated() || !user?.expires_at) {
     return res.status(401).json({ message: "Unauthorized" });
   }
-
-  // ... rest unchanged ...
-};
-
 
   const now = Math.floor(Date.now() / 1000);
   if (now <= user.expires_at) {
