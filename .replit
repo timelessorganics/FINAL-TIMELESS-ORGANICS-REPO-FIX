@@ -7,9 +7,12 @@ channel = "stable-25_05"
 packages = ["ffmpeg"]
 
 [deployment]
-deploymentTarget = "autoscale"
-build = ["npm", "run", "build"]
-run = ["npm", "run", "start"]
+run = ["sh", "-c", "npm run start"]
+
+[env]
+PORT = "5000"
+VITE_SUPABASE_URL = "https://rcillyhlieikmzeuaghc.supabase.co"
+VITE_SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJjaWxseWhsaWVpa216ZXVhZ2hjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjEyODI4MTgsImV4cCI6MjA3Njg1ODgxOH0.QMF0kDlrWiL8WRIIe8FgU4QEDYYoHb0v4CjtllwF_dE"
 
 [[ports]]
 localPort = 5000
@@ -74,9 +77,6 @@ externalPort = 8008
 [[ports]]
 localPort = 46411
 externalPort = 6000
-
-[env]
-PORT = "5000"
 
 [workflows]
 runButton = "Project"
