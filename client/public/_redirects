@@ -1,1 +1,5 @@
-/*    /index.html   200
+# Redirect API requests to the Railway Backend
+/api/* https://final-timeless-organics-repo-fix-production.up.railway.app/api/:splat  200
+
+# Handle React Routing (Keep this line!)
+/* /index.html  200
