@@ -1,7 +1,10 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+// FORCE RELATIVE PATH: Use empty string.
+// This ensures requests go to the same domain (Netlify),
+// which then uses _redirects to proxy to Railway.
+const API_BASE_URL = ""; 
 
 // Helper to get auth headers from Supabase session
 async function getAuthHeaders(): Promise<HeadersInit> {
@@ -28,7 +31,9 @@ export async function apiRequest(
   url: string,
   data?: unknown | undefined,
 ): Promise<Response> {
-  const fullUrl = API_BASE_URL + url;
+  // Ensure url starts with / and handle the empty base url correctly
+  const path = url.startsWith('/') ? url : `/${url}`;
+  const fullUrl = API_BASE_URL + path;
   const authHeaders = await getAuthHeaders();
   
   const res = await fetch(fullUrl, {
@@ -51,7 +56,9 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
-    const fullUrl = API_BASE_URL + queryKey.join("/");
+    // Join query key segments and ensure leading slash
+    const path = queryKey.join("/");
+    const fullUrl = API_BASE_URL + (path.startsWith('/') ? path : `/${path}`);
     const authHeaders = await getAuthHeaders();
     
     const res = await fetch(fullUrl, {
