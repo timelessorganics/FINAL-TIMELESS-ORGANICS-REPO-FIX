@@ -1,9 +1,4 @@
-Redirect API requests to the Railway Backend
 
-This URL comes from your "final-timeless-organics-repo-fix" project in Railway
+/api/* https://final-timeless-organics-repo-fix-production.up.railway.app//api/:splat  200
 
-/api/* https://www.google.com/search?q=https://final-timeless-organics-repo-fix-production.up.railway.app/api/:splat 200
-
-Handle React Routing
-
-/* /index.html 200
+/* /index.html  200
