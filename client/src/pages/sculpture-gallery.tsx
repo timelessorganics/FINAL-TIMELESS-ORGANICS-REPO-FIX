@@ -3,6 +3,7 @@ import { ArrowLeft, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import SpecimenShowcase from "@/components/SpecimenShowcase";
+import { FlowerTimelapseBackground } from "@/components/FlowerTimelapseBackground";
 
 interface SculptureGalleryProps {
   purchaseId?: string;
@@ -10,7 +11,9 @@ interface SculptureGalleryProps {
 
 export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) {
   return (
-    <div className="min-h-screen bg-background">
+    <>
+      <FlowerTimelapseBackground intensity="subtle" />
+      <div className="min-h-screen bg-background relative z-50">
       <div className="max-w-5xl mx-auto px-4 py-12 space-y-12">
         
         {/* Back Navigation */}
@@ -64,5 +67,6 @@ export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) 
 
       </div>
     </div>
+    </>
   );
 }

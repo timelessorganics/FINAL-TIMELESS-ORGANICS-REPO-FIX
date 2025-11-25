@@ -3,6 +3,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Card } from "@/components/ui/card";
 import { SmokeFireBackground } from "@/components/SmokeFireBackground";
+import { FlowerTimelapseBackground } from "@/components/FlowerTimelapseBackground";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Leaf } from "lucide-react";
 
@@ -25,7 +26,7 @@ export default function WallOfLeaves() {
   return (
     <>
       <div className="bg-aloe" />
-      <SmokeFireBackground />
+      <FlowerTimelapseBackground />
       <Header />
       <div className="relative z-50 min-h-screen">
         <div className="max-w-7xl mx-auto px-6 py-12">
@@ -75,7 +76,7 @@ export default function WallOfLeaves() {
                     {founders.length} / 50
                   </span>
                 </div>
-                
+
                 {founders.length === 0 ? (
                   <p className="text-muted-foreground text-center py-8 italic">
                     Be the first Founder to claim your place on this wall
@@ -119,7 +120,7 @@ export default function WallOfLeaves() {
                     {patrons.length} / 50
                   </span>
                 </div>
-                
+
                 {patrons.length === 0 ? (
                   <p className="text-muted-foreground text-center py-8 italic">
                     Be the first Patron to claim your place on this wall

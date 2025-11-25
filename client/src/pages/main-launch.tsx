@@ -5,6 +5,7 @@ import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { SmokeFireBackground } from "@/components/SmokeFireBackground";
+import { FlowerTimelapseBackground } from "@/components/FlowerTimelapseBackground";
 import { ArrowRight } from "lucide-react";
 import type { Seat } from "@shared/schema";
 
@@ -19,7 +20,7 @@ export default function MainLaunch() {
   return (
     <>
       <div className="bg-aloe" />
-      <SmokeFireBackground />
+      <FlowerTimelapseBackground intensity="medium" />
       <Header />
       <div className="relative z-50 min-h-screen" id="top">
         <div className="max-w-[1100px] mx-auto px-7 py-12">
