@@ -4,7 +4,7 @@ import express from "express";
 import path from "path";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated, getSessionUser, getUserId } from "./replitAuth";
-import { insertPurchaseSchema, insertSculptureSchema, insertSculptureSelectionSchema, insertSubscriberSchema, insertPromoCodeSchema } from "@shared/schema";
+import { insertPurchaseSchema, insertSculptureSchema, insertSculptureSelectionSchema, insertSubscriberSchema, insertPromoCodeSchema, insertReservationSchema } from "@shared/schema";
 import { fromError } from "zod-validation-error";
 import { 
   generateBronzeClaimCode, 
@@ -163,14 +163,87 @@ export async function registerRoutes(app: Express): Promise<Server> {
     });
   });
 
-  // Public: Get seat availability
+  // Public: Get seat availability (accounts for active reservations)
   app.get("/api/seats/availability", async (_req: Request, res: Response) => {
     try {
+      // Expire any old reservations first
+      await storage.expireOldReservations();
+      
       const seats = await storage.getSeats();
-      res.json(seats);
+      
+      // Get active reservation counts for each seat type
+      const founderReservations = await storage.getActiveReservationsCount('founder');
+      const patronReservations = await storage.getActiveReservationsCount('patron');
+      
+      // Adjust available count based on reservations
+      const seatsWithReservations = seats.map(seat => ({
+        ...seat,
+        reserved: seat.type === 'founder' ? founderReservations : patronReservations,
+        available: seat.totalAvailable - seat.sold - (seat.type === 'founder' ? founderReservations : patronReservations),
+      }));
+      
+      res.json(seatsWithReservations);
     } catch (error: any) {
       console.error("Get seats error:", error);
       res.status(500).json({ message: error.message || "Failed to fetch seats" });
+    }
+  });
+
+  // Protected: Create a 24-hour seat reservation
+  app.post("/api/reservations", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = getUserId(req);
+      const { seatType } = req.body;
+      
+      if (!seatType || !['founder', 'patron'].includes(seatType)) {
+        return res.status(400).json({ message: "Invalid seat type" });
+      }
+      
+      // Check if user already has an active reservation for this seat type
+      const existing = await storage.getActiveReservation(userId, seatType);
+      if (existing) {
+        return res.status(409).json({ 
+          message: "You already have an active reservation for this seat type",
+          reservation: existing
+        });
+      }
+      
+      // Check seat availability
+      await storage.expireOldReservations();
+      const seat = await storage.getSeatByType(seatType);
+      if (!seat) {
+        return res.status(404).json({ message: "Seat type not found" });
+      }
+      
+      const activeReservations = await storage.getActiveReservationsCount(seatType);
+      const available = seat.totalAvailable - seat.sold - activeReservations;
+      
+      if (available <= 0) {
+        return res.status(409).json({ message: `All ${seatType} seats are sold out` });
+      }
+      
+      // Create the reservation
+      const reservation = await storage.createReservation(userId, seatType);
+      res.status(201).json(reservation);
+    } catch (error: any) {
+      console.error("Create reservation error:", error);
+      res.status(500).json({ message: error.message || "Failed to create reservation" });
+    }
+  });
+
+  // Protected: Get user's active reservations
+  app.get("/api/reservations/user", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = getUserId(req);
+      
+      // Expire old reservations for this user
+      await storage.expireOldReservations();
+      
+      const reservations = await storage.getUserActiveReservations(userId);
+      res.json(reservations);
+    } catch (error: any) {
+      console.error("Get user reservations error:", error);
+      res.status(500).json({ message: error.message || "Failed to fetch reservations" });
     }
   });
 
