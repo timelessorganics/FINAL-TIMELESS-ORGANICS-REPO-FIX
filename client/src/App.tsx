@@ -29,7 +29,6 @@ import SignIn from "@/pages/sign-in";
 import AuthCallback from "@/pages/auth-callback";
 import ClaimGiftPage from "@/pages/claim-gift";
 
-
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
   const [location] = useLocation();
@@ -113,21 +112,21 @@ function Router() {
         {() => <SculptureGallery />}
       </Route>
       
+      {/* Sculpture Selection with Purchase ID */}
       {isAuthenticated && (
-        <>
-          {/* Sculpture Selection with Purchase ID */}
-          <Route path="/sculpture-selection/:purchaseId">
-            {(params: { purchaseId?: string }) => <SculptureGallery purchaseId={params.purchaseId} />}
-          </Route>
+        <Route path="/sculpture-selection/:purchaseId">
+          {(params: { purchaseId?: string }) => <SculptureGallery purchaseId={params.purchaseId} />}
+        </Route>
+      )}
+
+      {/* --- DASHBOARD IS NOW ACCESSIBLE --- */}
+      <Route path="/dashboard" component={Dashboard} />
           
-          {/* User Dashboard */}
-          <Route path="/dashboard" component={Dashboard} />
-          
-          {/* Admin Panel - Protected for admins only */}
-          <Route path="/admin">
-            {user?.isAdmin ? <AdminPanel /> : <NotFound />}
-          </Route>
-        </>
+      {/* Admin Panel - Protected for admins only */}
+      {isAuthenticated && (
+        <Route path="/admin">
+          {user?.isAdmin ? <AdminPanel /> : <NotFound />}
+        </Route>
       )}
       
       {/* Fallback to 404 */}
