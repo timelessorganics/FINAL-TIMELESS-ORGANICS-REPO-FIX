@@ -1,4 +1,9 @@
 // From javascript_log_in_with_replit blueprint, adapted for Railway/Supabase
+
+// CRITICAL: Import db FIRST to ensure PG* environment variables are set
+// before connect-pg-simple imports pg
+import { pool } from "./db";
+
 import * as client from "openid-client";
 import { Strategy, type VerifyFunction } from "openid-client/passport";
 
@@ -9,7 +14,6 @@ import memoize from "memoizee";
 import connectPg from "connect-pg-simple";
 import createMemoryStore from "memorystore";
 import { storage } from "./storage";
-import { pool } from "./db";
 import type { User } from "@shared/schema";
 
 // Replit OIDC is only enabled when running on Replit
