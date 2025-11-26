@@ -355,6 +355,107 @@ export class DatabaseStorage implements IStorage {
       })
       .where(eq(promoCodes.id, id));
   }
+
+  // Reservation operations
+  async createReservation(userId: string, seatType: 'founder' | 'patron'): Promise<Reservation> {
+    const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000); // 24 hours from now
+    const [reservation] = await db
+      .insert(reservations)
+      .values({
+        userId,
+        seatType,
+        expiresAt,
+        status: 'active',
+      })
+      .returning();
+    return reservation;
+  }
+
+  async getActiveReservation(userId: string, seatType: 'founder' | 'patron'): Promise<Reservation | undefined> {
+    const [reservation] = await db
+      .select()
+      .from(reservations)
+      .where(
+        and(
+          eq(reservations.userId, userId),
+          eq(reservations.seatType, seatType),
+          eq(reservations.status, 'active'),
+          gt(reservations.expiresAt, new Date())
+        )
+      );
+    return reservation;
+  }
+
+  async getActiveReservationsByType(seatType: 'founder' | 'patron'): Promise<Reservation[]> {
+    return await db
+      .select()
+      .from(reservations)
+      .where(
+        and(
+          eq(reservations.seatType, seatType),
+          eq(reservations.status, 'active'),
+          gt(reservations.expiresAt, new Date())
+        )
+      );
+  }
+
+  async getActiveReservationsCount(seatType: 'founder' | 'patron'): Promise<number> {
+    const result = await db
+      .select({ count: sql<number>`count(*)` })
+      .from(reservations)
+      .where(
+        and(
+          eq(reservations.seatType, seatType),
+          eq(reservations.status, 'active'),
+          gt(reservations.expiresAt, new Date())
+        )
+      );
+    return result[0]?.count || 0;
+  }
+
+  async expireOldReservations(): Promise<number> {
+    const result = await db
+      .update(reservations)
+      .set({ status: 'expired' })
+      .where(
+        and(
+          eq(reservations.status, 'active'),
+          lt(reservations.expiresAt, new Date())
+        )
+      )
+      .returning();
+    return result.length;
+  }
+
+  async cancelReservation(reservationId: string): Promise<void> {
+    await db
+      .update(reservations)
+      .set({ status: 'cancelled' })
+      .where(eq(reservations.id, reservationId));
+  }
+
+  async convertReservationToPurchase(reservationId: string, purchaseId: string): Promise<void> {
+    await db
+      .update(reservations)
+      .set({ 
+        status: 'converted',
+        convertedToPurchaseId: purchaseId,
+      })
+      .where(eq(reservations.id, reservationId));
+  }
+
+  async getUserActiveReservations(userId: string): Promise<Reservation[]> {
+    return await db
+      .select()
+      .from(reservations)
+      .where(
+        and(
+          eq(reservations.userId, userId),
+          eq(reservations.status, 'active'),
+          gt(reservations.expiresAt, new Date())
+        )
+      );
+  }
 }
 
 export const storage = new DatabaseStorage();
