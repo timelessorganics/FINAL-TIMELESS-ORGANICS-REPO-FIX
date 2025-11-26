@@ -17,15 +17,24 @@ let db: ReturnType<typeof drizzlePg> | ReturnType<typeof drizzleNeon>;
 if (process.env.DATABASE_URL) {
   connectionString = process.env.DATABASE_URL;
   
-  // Check if it's a Supabase connection string
-  if (connectionString.includes('supabase.co')) {
+  // Check if it's a Supabase connection string (includes supabase.co or pooler.supabase.com)
+  if (connectionString.includes('supabase.co') || connectionString.includes('pooler.supabase.com')) {
     // Use standard PostgreSQL driver for Supabase with SSL
-    pool = new PgPool({ 
-      connectionString,
-      ssl: { rejectUnauthorized: false }
-    });
+    // Pooler connections may or may not need SSL depending on configuration
+    const poolConfig: any = { connectionString };
+    
+    // For pooler connections, try without SSL first, or with minimal SSL
+    if (connectionString.includes('pooler.supabase.com')) {
+      // Supabase pooler - typically requires SSL but might need different settings
+      poolConfig.ssl = false; // Try without SSL first
+    } else {
+      // Direct Supabase connection - requires SSL
+      poolConfig.ssl = { rejectUnauthorized: false };
+    }
+    
+    pool = new PgPool(poolConfig);
     db = drizzlePg(pool, { schema });
-    console.log('Using Supabase database via DATABASE_URL');
+    console.log('Using Supabase database via DATABASE_URL (pooler mode)' + (connectionString.includes('pooler') ? ' - Pooler' : ''));
   } else {
     // Use Neon serverless driver for Neon databases
     pool = new NeonPool({ connectionString });
