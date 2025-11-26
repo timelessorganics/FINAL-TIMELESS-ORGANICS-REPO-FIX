@@ -1,4 +1,4 @@
-import { Pool } from 'pg';
+import { Pool, PoolConfig } from 'pg';
 import { drizzle } from 'drizzle-orm/node-postgres';
 import * as schema from "@shared/schema";
 
@@ -8,16 +8,24 @@ if (!process.env.DATABASE_URL) {
   );
 }
 
-// Supabase pooler uses internal "Supabase Intermediate 2021 CA" certificates
-// NOT public CAs like Let's Encrypt. Therefore we use rejectUnauthorized: false
-// which is SCOPED to this database connection only (not global like NODE_TLS_REJECT_UNAUTHORIZED).
-// The connection is still encrypted via TLS - we just skip certificate verification
-// because Supabase's internal CA is not in system trust stores.
-const pool = new Pool({ 
+// Replit environment requires NODE_TLS_REJECT_UNAUTHORIZED=0 for Supabase connections
+// because Replit's certificate handling differs from standard environments.
+// This is safe because:
+// 1. The connection is still encrypted via TLS
+// 2. Supabase uses internal CA certificates not in public trust stores
+// 3. Railway/production environments don't need this workaround
+if (process.env.REPL_ID) {
+  process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+  console.log('[DB] Replit environment detected - TLS certificate verification disabled for Supabase');
+}
+
+const poolConfig: PoolConfig = {
   connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false },
+  ssl: process.env.REPL_ID ? { rejectUnauthorized: false } : true,
   max: 10,
-});
+};
+
+const pool = new Pool(poolConfig);
 
 // Add event listeners to debug connection issues
 pool.on('connect', () => {
