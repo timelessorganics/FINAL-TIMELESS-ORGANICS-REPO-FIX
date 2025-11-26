@@ -9,6 +9,7 @@ import memoize from "memoizee";
 import connectPg from "connect-pg-simple";
 import createMemoryStore from "memorystore";
 import { storage } from "./storage";
+import { pool } from "./db";
 import type { User } from "@shared/schema";
 
 // Replit OIDC is only enabled when running on Replit
@@ -132,8 +133,9 @@ export function getSession() {
   // Try to create PostgreSQL store
   try {
     const PgStore = connectPg(session);
+    // Use the pool from db.ts which has proper SSL configuration
     const sessionStore = new PgStore({
-      conString: process.env.DATABASE_URL,
+      pool: pool as any,
       createTableIfMissing: true,
       ttl: sessionTtl,
       tableName: "sessions",

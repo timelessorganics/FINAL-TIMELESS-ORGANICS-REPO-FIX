@@ -19,18 +19,17 @@ if (process.env.DATABASE_URL) {
   
   // Check if it's a Supabase connection string (includes supabase.co or pooler.supabase.com)
   if (connectionString.includes('supabase.co') || connectionString.includes('pooler.supabase.com')) {
-    // Use standard PostgreSQL driver for Supabase with SSL
-    // Pooler connections may or may not need SSL depending on configuration
-    const poolConfig: any = { connectionString };
-    
-    // For pooler connections, try without SSL first, or with minimal SSL
-    if (connectionString.includes('pooler.supabase.com')) {
-      // Supabase pooler - typically requires SSL but might need different settings
-      poolConfig.ssl = false; // Try without SSL first
-    } else {
-      // Direct Supabase connection - requires SSL
-      poolConfig.ssl = { rejectUnauthorized: false };
+    // Append sslmode=require if not already present in the connection string
+    if (!connectionString.includes('sslmode=')) {
+      const separator = connectionString.includes('?') ? '&' : '?';
+      connectionString = connectionString + separator + 'sslmode=require';
     }
+    
+    // Use standard PostgreSQL driver for Supabase with SSL
+    const poolConfig: any = { 
+      connectionString,
+      ssl: { rejectUnauthorized: false }
+    };
     
     pool = new PgPool(poolConfig);
     db = drizzlePg(pool, { schema });
