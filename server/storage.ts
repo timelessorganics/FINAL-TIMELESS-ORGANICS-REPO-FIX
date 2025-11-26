@@ -8,6 +8,7 @@ import {
   referrals,
   subscribers,
   promoCodes,
+  reservations,
   type User,
   type UpsertUser,
   type Seat,
@@ -25,9 +26,11 @@ import {
   type InsertSubscriber,
   type PromoCode,
   type InsertPromoCode,
+  type Reservation,
+  type InsertReservation,
 } from "@shared/schema";
 import { db } from "./db";
-import { eq, desc, sql } from "drizzle-orm";
+import { eq, desc, sql, and, gt, lt } from "drizzle-orm";
 
 // Interface for storage operations
 export interface IStorage {
@@ -82,6 +85,16 @@ export interface IStorage {
   getPromoCodeByCode(code: string): Promise<PromoCode | undefined>;
   getAllPromoCodes(): Promise<PromoCode[]>;
   markPromoCodeAsUsed(id: string, userId: string, purchaseId: string): Promise<void>;
+  
+  // Reservation operations (24-hour seat holds)
+  createReservation(userId: string, seatType: 'founder' | 'patron'): Promise<Reservation>;
+  getActiveReservation(userId: string, seatType: 'founder' | 'patron'): Promise<Reservation | undefined>;
+  getActiveReservationsByType(seatType: 'founder' | 'patron'): Promise<Reservation[]>;
+  getActiveReservationsCount(seatType: 'founder' | 'patron'): Promise<number>;
+  expireOldReservations(): Promise<number>; // Returns count of expired
+  cancelReservation(reservationId: string): Promise<void>;
+  convertReservationToPurchase(reservationId: string, purchaseId: string): Promise<void>;
+  getUserActiveReservations(userId: string): Promise<Reservation[]>;
 }
 
 export class DatabaseStorage implements IStorage {

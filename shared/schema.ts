@@ -313,6 +313,32 @@ export const insertSculptureSelectionSchema = createInsertSchema(sculptureSelect
 export type InsertSculptureSelection = z.infer<typeof insertSculptureSelectionSchema>;
 export type SculptureSelection = typeof sculptureSelections.$inferSelect;
 
+// Reservation status enum - for 24-hour seat holds
+export const reservationStatusEnum = pgEnum('reservation_status', ['active', 'converted', 'expired', 'cancelled']);
+
+// Seat reservations - 24-hour holds before purchase
+export const reservations = pgTable("reservations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => users.id).notNull(),
+  seatType: seatTypeEnum("seat_type").notNull(),
+  status: reservationStatusEnum("status").default('active').notNull(),
+  expiresAt: timestamp("expires_at").notNull(), // 24 hours from creation
+  convertedToPurchaseId: varchar("converted_to_purchase_id").references(() => purchases.id),
+  createdAt: timestamp("created_at").defaultNow(),
+}, (table) => [
+  index("IDX_reservations_expires").on(table.expiresAt),
+  index("IDX_reservations_user_seat").on(table.userId, table.seatType),
+]);
+
+export const insertReservationSchema = createInsertSchema(reservations).pick({
+  userId: true,
+  seatType: true,
+  expiresAt: true,
+});
+
+export type InsertReservation = z.infer<typeof insertReservationSchema>;
+export type Reservation = typeof reservations.$inferSelect;
+
 // Promo codes for free seats (e.g., for friends/family supporters)
 export const promoCodes = pgTable("promo_codes", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -392,4 +418,16 @@ export const sculptureSelectionsRelations = relations(sculptureSelections, ({ on
 
 export const usersRelations = relations(users, ({ many }) => ({
   purchases: many(purchases),
+  reservations: many(reservations),
+}));
+
+export const reservationsRelations = relations(reservations, ({ one }) => ({
+  user: one(users, {
+    fields: [reservations.userId],
+    references: [users.id],
+  }),
+  convertedPurchase: one(purchases, {
+    fields: [reservations.convertedToPurchaseId],
+    references: [purchases.id],
+  }),
 }));
