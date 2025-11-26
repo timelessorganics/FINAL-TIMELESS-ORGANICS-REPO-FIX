@@ -8,6 +8,14 @@ if (!process.env.DATABASE_URL) {
   );
 }
 
+// Debug: Log the database URL format (without password)
+try {
+  const dbUrl = new URL(process.env.DATABASE_URL);
+  console.log('[DB] Connecting to:', dbUrl.hostname, 'as user:', dbUrl.username, 'port:', dbUrl.port);
+} catch (e) {
+  console.log('[DB] DATABASE_URL format issue:', e);
+}
+
 // Replit environment requires NODE_TLS_REJECT_UNAUTHORIZED=0 for Supabase connections
 // because Replit's certificate handling differs from standard environments.
 // This is safe because:
