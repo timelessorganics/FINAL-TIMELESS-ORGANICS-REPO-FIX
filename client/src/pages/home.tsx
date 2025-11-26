@@ -1,12 +1,30 @@
 import { Link } from "wouter";
+import { useRef, useEffect } from "react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Calendar, Sparkles, Award } from "lucide-react";
-import aloeImage from "@assets/Bronze Aloe Sculpture in Resin Block 2_1763150497628.jpg";
+
+// Video for hero background
+import heroVideo from "@assets/Fade_out_then Bronze appear Need wording202511102156_3bglw_1764171397367.mp4";
+
+// BACKUP: Original aloe image import (uncomment to revert)
+// import aloeImage from "@assets/Bronze Aloe Sculpture in Resin Block 2_1763150497628.jpg";
 
 export default function HomePage() {
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    // Play video once and pause at the end
+    const video = videoRef.current;
+    if (video) {
+      video.play().catch(() => {
+        // Autoplay might be blocked, that's ok
+      });
+    }
+  }, []);
+
   return (
     <>
       <div className="bg-aloe" />
@@ -14,18 +32,27 @@ export default function HomePage() {
       
       <main className="relative z-50">
         
-        {/* Hero Section - Timeless Organics Brand */}
+        {/* Hero Section with VIDEO Background */}
         <section 
           className="min-h-[85vh] flex items-center justify-center px-6 py-24 relative overflow-hidden" 
           data-testid="section-hero"
-          style={{
-            backgroundImage: `url(${aloeImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
         >
+          {/* Video Background - plays once and pauses at end */}
+          <video
+            ref={videoRef}
+            className="absolute inset-0 w-full h-full object-cover"
+            muted
+            playsInline
+            onEnded={(e) => {
+              // Pause at the last frame when video ends
+              e.currentTarget.pause();
+            }}
+          >
+            <source src={heroVideo} type="video/mp4" />
+          </video>
+          
           {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/70 to-background/85" />
+          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background/80" />
           
           <div className="max-w-4xl mx-auto text-center relative z-10">
             <div className="mb-6 text-sm tracking-[0.3em] text-accent-gold/90 uppercase font-medium">
@@ -61,36 +88,52 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* Value Proposition Cards */}
-        <section className="py-24 px-6">
-          <div className="max-w-6xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card className="p-10 bg-background/40 border-border/50 text-left hover-elevate backdrop-blur-sm">
-                <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3 font-medium">From Nature</div>
-                <h3 className="font-serif text-2xl font-bold mb-4 leading-tight">Organic<br />Matter</h3>
-                <p className="text-sm text-muted-foreground/80 leading-relaxed">
-                  Cape Fynbos botanical specimens selected at peak seasonal beauty
-                </p>
-              </Card>
+        {/* BACKUP: Original Hero Section with Aloe Image (uncomment to revert)
+        <section 
+          className="min-h-[85vh] flex items-center justify-center px-6 py-24 relative overflow-hidden" 
+          data-testid="section-hero"
+          style={{
+            backgroundImage: `url(${aloeImage})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/70 to-background/85" />
+          
+          <div className="max-w-4xl mx-auto text-center relative z-10">
+            <div className="mb-6 text-sm tracking-[0.3em] text-accent-gold/90 uppercase font-medium">
+              Bronze • Patina • Organic Casting
+            </div>
+            
+            <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1]">
+              <span className="moving-fill">Timeless Organics</span>
+            </h1>
+            
+            <p className="text-xl md:text-2xl text-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
+              One-of-a-kind castings from organic matter.<br />
+              Nature's originals, held forever in bronze.
+            </p>
 
-              <Card className="p-10 bg-background/40 border-border/50 text-left hover-elevate backdrop-blur-sm">
-                <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3 font-medium">Finish</div>
-                <h3 className="font-serif text-2xl font-bold mb-4 leading-tight">Patina<br />Bronze</h3>
-                <p className="text-sm text-muted-foreground/80 leading-relaxed">
-                  Lost-wax casting with museum-grade bronze finishing techniques
-                </p>
-              </Card>
-
-              <Card className="p-10 bg-background/40 border-border/50 text-left hover-elevate backdrop-blur-sm">
-                <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground mb-3 font-medium">Edition</div>
-                <h3 className="font-serif text-2xl font-bold mb-4 leading-tight">One-of-<br />One</h3>
-                <p className="text-sm text-muted-foreground/80 leading-relaxed">
-                  Each botanical specimen is unique — no two castings are identical
-                </p>
-              </Card>
+            <div className="flex flex-wrap justify-center gap-4">
+              <Link href="/founding-100">
+                <Button size="lg" className="btn-bronze text-base px-8 py-6 min-h-14" data-testid="button-founding-100">
+                  Limited Seats - Founding 100
+                </Button>
+              </Link>
+              <Link href="/workshops">
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="text-base px-8 py-6 min-h-14 bg-background/30 backdrop-blur-sm border-foreground/20 hover:border-foreground/40" 
+                  data-testid="button-explore-workshops"
+                >
+                  Explore Workshops
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
+        */}
 
         {/* Founding 100 Launch Callout */}
         <section className="py-24 px-6">
@@ -103,6 +146,18 @@ export default function HomePage() {
             <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">
               Join the <span className="text-accent-gold">Founding 100</span>
             </h2>
+
+            {/* Clear Distinction: 50 Founder + 50 Patron */}
+            <div className="flex flex-wrap justify-center gap-6 mb-8">
+              <div className="bg-bronze/20 border border-bronze/40 rounded-lg px-6 py-4">
+                <div className="text-2xl font-bold text-bronze">50 Founder Seats</div>
+                <div className="text-lg text-foreground">R3,000 each</div>
+              </div>
+              <div className="bg-accent-gold/20 border border-accent-gold/40 rounded-lg px-6 py-4">
+                <div className="text-2xl font-bold text-accent-gold">50 Patron Seats</div>
+                <div className="text-lg text-foreground">R5,000 each</div>
+              </div>
+            </div>
             
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
               Fund our Kommetjie foundry's final fit-out. We invest (encase) your chosen botanical specimen now — 
@@ -234,8 +289,12 @@ export default function HomePage() {
                   Preserve a botanical specimen that holds meaning for you. Choose from 12 Cape Fynbos styles. 
                   Each commission is a unique collaboration between your vision and our craft.
                 </p>
-                <p className="text-muted-foreground leading-relaxed mb-8">
-                  <strong>Coming Soon</strong> — Pricing from R8,500. Includes specimen selection, casting, finishing, and certificate.
+                <p className="text-muted-foreground leading-relaxed mb-4">
+                  <strong>Coming Soon</strong> — Commissions can range from <span className="text-accent-gold font-bold">R8,500 to MILLIONS</span> depending on scope, 
+                  size, and complexity of the piece.
+                </p>
+                <p className="text-sm text-foreground/70 mb-8">
+                  Founding 100 members receive <strong className="text-accent-gold">50-80% off</strong> all commissions with their lifetime discount codes.
                 </p>
                 <Link href="/commission">
                   <Button variant="outline" className="gap-2" data-testid="button-view-commission">
