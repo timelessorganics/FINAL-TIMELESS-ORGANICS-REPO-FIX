@@ -115,19 +115,23 @@ export default function SeatCard({
         </ul>
       </div>
 
-      {/* CTA Button */}
+      {/* CTA Button - Updated for 24hr Reservation */}
       <Button
         onClick={handlePurchase}
         disabled={available <= 0}
-        className={`w-full btn-bronze font-bold py-6 ${
-          available <= 0 ? "opacity-50 cursor-not-allowed" : ""
+        className={`w-full font-bold py-6 ${
+          available <= 0 
+            ? "opacity-50 cursor-not-allowed btn-bronze" 
+            : "bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background"
         }`}
         data-testid={`button-purchase-${seat.type}`}
       >
         {available <= 0 ? (
           "SOLD OUT"
         ) : (
-          <span className="moving-fill">Invest Now</span>
+          <>
+            <span className="font-bold">RESERVE SEAT FOR 24HRS</span>
+          </>
         )}
       </Button>
     </Card>

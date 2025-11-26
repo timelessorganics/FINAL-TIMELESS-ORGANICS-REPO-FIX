@@ -44,41 +44,61 @@ export default function MainLaunch() {
               Where <span className="moving-fill">Ancient Craft</span><br />
               Meets Modern Investment
             </h1>
+            
+            {/* CLEAR 50/50 SPLIT - RIGHT UPFRONT */}
+            <div className="flex flex-wrap justify-center gap-4 mb-6">
+              <div className="bg-bronze/20 border border-bronze/50 rounded-lg px-5 py-3">
+                <div className="text-xl font-bold text-bronze">50 Founder Seats</div>
+                <div className="text-foreground">R3,000 each</div>
+              </div>
+              <div className="bg-accent-gold/20 border border-accent-gold/50 rounded-lg px-5 py-3">
+                <div className="text-xl font-bold text-accent-gold">50 Patron Seats</div>
+                <div className="text-foreground">R5,000 each</div>
+              </div>
+            </div>
+            
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
               Your investment funds our foundry's final fit-out. In return, we invest (immortalize) your chosen botanical specimen now — 
-              guaranteeing you a flawless bronze casting, lifetime workshop discounts, and exclusive access to the ancient art of lost-wax casting.
+              guaranteeing you a flawless bronze casting, lifetime discount codes for <strong className="text-foreground">shop sales, commissions, AND workshops</strong>, 
+              and exclusive access to the ancient art of lost-wax casting.
             </p>
 
-            {/* PRIMARY CTA - BIG AND PROMINENT */}
-            <div className="mb-10">
+            {/* 24-HOUR RESERVATION CTA - GORGEOUS ANIMATED BUTTON */}
+            <div className="mb-8">
               <Button 
                 size="lg"
                 onClick={scrollToSeats}
-                className="btn-bronze text-xl px-12 py-8 font-bold shadow-lg shadow-bronze/30"
-                data-testid="button-secure-seat-hero"
+                className="relative overflow-hidden text-xl px-12 py-8 font-bold shadow-lg bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background hover:shadow-bronze/50"
+                data-testid="button-reserve-seat-hero"
               >
-                <Flame className="w-6 h-6 mr-3" />
-                SECURE YOUR SEAT NOW
+                <Sparkles className="w-6 h-6 mr-3" />
+                RESERVE A SEAT INSTANTLY FOR 24HRS
                 <ArrowRight className="w-6 h-6 ml-3" />
               </Button>
-              <p className="text-sm text-muted-foreground mt-3">Only 100 seats available. Limited time offer.</p>
+              <p className="text-sm text-accent-gold mt-3 font-medium">
+                Reserved seats held for 24 hours — unpurchased seats return to pool. Subscribers notified first.
+              </p>
+              <p className="text-xs text-muted-foreground mt-1">Only 100 seats total. Once gone, gone forever.</p>
             </div>
 
-            {/* Three Stat Cards */}
+            {/* Three Stat Cards - Updated Value Messaging */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
               <Card className="p-6 bg-card/50 border-card-border">
                 <div className="text-5xl font-bold font-serif text-bronze mb-2">100</div>
                 <div className="text-muted-foreground">Limited Seats</div>
+                <div className="text-xs text-foreground/60 mt-1">50 Founder + 50 Patron</div>
               </Card>
               
               <Card className="p-6 bg-card/50 border-card-border">
                 <div className="text-5xl font-bold font-serif text-accent-gold mb-2">R25K+</div>
-                <div className="text-muted-foreground">Sculpture Value</div>
+                <div className="text-muted-foreground">IF Mounted & Patinated</div>
+                <div className="text-xs text-foreground/60 mt-1">Optional services available later</div>
               </Card>
               
               <Card className="p-6 bg-card/50 border-card-border">
                 <div className="text-5xl font-bold font-serif text-patina mb-2">LIFE</div>
                 <div className="text-muted-foreground">time Benefits</div>
+                <div className="text-xs text-foreground/60 mt-1">Shop, Commissions & Workshops</div>
               </Card>
             </div>
           </section>
@@ -109,8 +129,8 @@ export default function MainLaunch() {
                     benefits={[
                       "Your name permanently engraved on our Founders & Patrons Leaf Wall",
                       "50% off first workshop (Transferable, single-use, never expires)",
-                      "20% lifetime discount code (Unlimited uses, transferable & giftable)",
-                      "Both codes for workshops only — not redeemable for Founding 100 seats",
+                      "20% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
+                      "24hr seat reservation — held for you while you decide",
                     ]}
                   />
                 )}
@@ -123,8 +143,8 @@ export default function MainLaunch() {
                     benefits={[
                       "Your name permanently engraved on our Founders & Patrons Leaf Wall",
                       "80% off first workshop (Transferable, single-use, never expires)",
-                      "30% lifetime discount code (Unlimited uses, transferable & giftable)",
-                      "Both codes for workshops only — not redeemable for Founding 100 seats",
+                      "30% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
+                      "24hr seat reservation — held for you while you decide",
                     ]}
                     featured
                   />
@@ -149,7 +169,7 @@ export default function MainLaunch() {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
-                {/* Bronze Sculpture Value */}
+                {/* Bronze Sculpture Value - UPDATED: Clarify IF mounted & patinated */}
                 <Card className="p-8 bg-card/80 border-bronze/30">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-12 h-12 rounded-full bg-bronze/20 flex items-center justify-center">
@@ -157,41 +177,44 @@ export default function MainLaunch() {
                     </div>
                     <div>
                       <h3 className="font-serif text-2xl font-bold text-foreground">Bronze Sculpture</h3>
-                      <div className="text-accent-gold font-bold text-xl">Worth R25,000+</div>
+                      <div className="text-accent-gold font-bold text-xl">Worth R25,000+ IF Finished</div>
                     </div>
                   </div>
                   <p className="text-muted-foreground leading-relaxed mb-4">
-                    A mounted cutting of a plant cast in bronze has an <strong className="text-foreground">established market value averaging R25,000</strong>. 
-                    Bigger full sculptures like aloes can fetch R100,000 to R1,000,000.
+                    A cutting cast in bronze has established market value of <strong className="text-foreground">R25,000+ when mounted AND patinated</strong>. 
+                    These are <strong className="text-accent-gold">optional services</strong> you can add later through our shop.
                   </p>
-                  <p className="text-sm text-foreground/80">
-                    These castings have been sold and exhibited all over the world. They are literally <span className="text-accent-gold font-semibold">ONE OF A KIND</span> — 
-                    you will not find the same one anywhere on the planet.
+                  <p className="text-sm text-foreground/80 mb-2">
+                    Your Founding 100 seat includes the raw bronze casting. Mounting and patina finishing are available as shop products — 
+                    and your <span className="text-accent-gold font-semibold">lifetime discount code</span> applies to them.
+                  </p>
+                  <p className="text-xs text-muted-foreground">
+                    Bigger sculptures (full aloes, commissions) can fetch R100K to <strong className="text-foreground">MILLIONS</strong>.
                   </p>
                 </Card>
 
-                {/* Workshop Discount Value */}
+                {/* Lifetime Discount Codes - UPDATED: Shop, Commissions, AND Workshops */}
                 <Card className="p-8 bg-card/80 border-bronze/30">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-12 h-12 rounded-full bg-patina/20 flex items-center justify-center">
                       <Gift className="w-6 h-6 text-patina" />
                     </div>
                     <div>
-                      <h3 className="font-serif text-2xl font-bold text-foreground">Workshop Discounts</h3>
-                      <div className="text-patina font-bold text-xl">50-80% Off + Lifetime Code</div>
+                      <h3 className="font-serif text-2xl font-bold text-foreground">Lifetime Discount Codes</h3>
+                      <div className="text-patina font-bold text-xl">Shop + Commissions + Workshops</div>
                     </div>
                   </div>
                   <p className="text-muted-foreground leading-relaxed mb-4">
-                    Your first 2-day workshop is massively discounted: <strong className="text-foreground">50% off for Founders, 80% off for Patrons</strong>. 
-                    These vouchers are transferable and giftable.
+                    <strong className="text-foreground">20% (Founders) / 30% (Patrons) off EVERYTHING:</strong> Shop products, custom commissions, AND all future workshops. 
+                    <span className="text-patina"> Unlimited uses, transferable, giftable — forever.</span>
                   </p>
                   <p className="text-sm text-foreground/80">
-                    Plus a <span className="text-patina font-semibold">LIFETIME discount code</span> (20% Founders / 30% Patrons) for unlimited future workshops — 
-                    gift it to friends and family forever.
+                    PLUS a <span className="text-accent-gold font-semibold">one-time voucher</span> for 50-80% off your first workshop. 
+                    These codes work site-wide on all products and services.
                   </p>
                 </Card>
 
-                {/* Commission Discount */}
+                {/* Commission Opportunity - UPDATED: Can go into MILLIONS */}
                 <Card className="p-8 bg-card/80 border-bronze/30">
                   <div className="flex items-center gap-3 mb-4">
                     <div className="w-12 h-12 rounded-full bg-accent-gold/20 flex items-center justify-center">
@@ -199,16 +222,16 @@ export default function MainLaunch() {
                     </div>
                     <div>
                       <h3 className="font-serif text-2xl font-bold text-foreground">Commission Opportunity</h3>
-                      <div className="text-accent-gold font-bold text-xl">50%+ Off Custom Pieces</div>
+                      <div className="text-accent-gold font-bold text-xl">R8,500 to MILLIONS</div>
                     </div>
                   </div>
                   <p className="text-muted-foreground leading-relaxed mb-4">
-                    Founding members get <strong className="text-foreground">minimum 50% off</strong> any commissioned sculpture. 
-                    Want a full aloe or custom installation? You get it at half price or more.
+                    Commissions range from simple pieces at R8,500 to monumental installations that can go into the <strong className="text-accent-gold">MILLIONS</strong> 
+                    depending on scale, complexity, and artistic scope.
                   </p>
                   <p className="text-sm text-foreground/80">
-                    Commissions range from simple tiny pieces to advanced installations worth R100K - R500K. 
-                    Your founding discount makes the extraordinary <span className="text-accent-gold font-semibold">accessible</span>.
+                    Your founding <span className="text-patina font-semibold">lifetime discount (20-30%)</span> applies to ALL commissions. 
+                    A R1M piece becomes R700K-800K for you. Forever.
                   </p>
                 </Card>
 
@@ -234,28 +257,35 @@ export default function MainLaunch() {
                 </Card>
               </div>
 
-              {/* Summary Value Block */}
+              {/* Summary Value Block - UPDATED */}
               <Card className="p-8 bg-gradient-to-r from-bronze/20 to-accent-gold/20 border-bronze/50">
                 <div className="text-center">
                   <h3 className="font-serif text-3xl font-bold mb-4 text-foreground">
                     You Pay: <span className="text-bronze">R3,000</span> or <span className="text-accent-gold">R5,000</span>
                   </h3>
-                  <h3 className="font-serif text-3xl font-bold mb-6 text-foreground">
-                    You Receive: <span className="text-patina">R25,000+ Value</span> + Lifetime Benefits
+                  <h3 className="font-serif text-3xl font-bold mb-4 text-foreground">
+                    You Receive: Bronze Casting + <span className="text-patina">Lifetime Benefits</span>
                   </h3>
-                  <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
+                  <p className="text-lg text-accent-gold mb-2">
+                    R25,000+ market value when mounted and patinated (optional add-ons)
+                  </p>
+                  <p className="text-muted-foreground mb-6 max-w-2xl mx-auto">
                     This is not crowdfunding. This is a <strong className="text-foreground">returnable investment for life</strong>. 
-                    You invest in our infrastructure, and you receive incredible value in return.
+                    Your lifetime discount codes work on shop products, commissions, AND workshops — forever.
                   </p>
                   <Button 
                     size="lg"
                     onClick={scrollToSeats}
-                    className="btn-bronze text-lg px-10 py-6 font-bold"
-                    data-testid="button-secure-seat-value"
+                    className="relative overflow-hidden text-lg px-10 py-6 font-bold bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background"
+                    data-testid="button-reserve-seat-value"
                   >
-                    SECURE YOUR SEAT NOW
+                    <Sparkles className="w-5 h-5 mr-2" />
+                    RESERVE YOUR SEAT FOR 24HRS
                     <ArrowRight className="w-5 h-5 ml-2" />
                   </Button>
+                  <p className="text-xs text-muted-foreground mt-3">
+                    Seats reserved for 24 hours. Unpurchased seats return to pool — subscribers notified first.
+                  </p>
                 </div>
               </Card>
             </div>
@@ -673,33 +703,36 @@ export default function MainLaunch() {
               <Card className="bg-card border-card-border p-6">
                 <h3 className="font-semibold text-foreground mb-2">What exactly do I get for R3,000 / R5,000?</h3>
                 <p className="text-muted-foreground text-sm">
-                  A guaranteed bronze sculpture (worth R25,000+) of a studio-approved botanical specimen, your name on the Founders Wall, 
-                  50-80% off your first workshop, and a lifetime discount code for all future workshops. Plus founding member certificate.
+                  A guaranteed bronze casting of a studio-approved botanical specimen (worth R25,000+ when mounted and patinated — optional add-ons), 
+                  your name on the Founders Wall, 50-80% off your first workshop, and a lifetime discount code (20-30% off) for 
+                  <strong className="text-foreground"> shop products, commissions, AND all future workshops</strong>. Plus founding member certificate.
                 </p>
               </Card>
 
               <Card className="bg-card border-card-border p-6">
-                <h3 className="font-semibold text-foreground mb-2">When will I receive my bronze sculpture?</h3>
+                <h3 className="font-semibold text-foreground mb-2">What about mounting and patina finishing?</h3>
                 <p className="text-muted-foreground text-sm">
-                  Your bronze will be cast once the foundry fit-out is complete (funded by the Founding 100 investments). 
-                  Estimated delivery is within 3-6 months of purchase. We'll keep you updated throughout the process.
+                  Your Founding 100 seat includes the raw bronze casting. Mounting (wall/base) and patina finishing are 
+                  <strong className="text-foreground"> optional services available in our shop</strong>. Your lifetime discount code 
+                  applies to these add-ons! This is how your casting reaches the R25,000+ market value.
                 </p>
               </Card>
 
               <Card className="bg-card border-card-border p-6">
-                <h3 className="font-semibold text-foreground mb-2">Can I gift a seat to someone else?</h3>
+                <h3 className="font-semibold text-foreground mb-2">How does the 24-hour seat reservation work?</h3>
                 <p className="text-muted-foreground text-sm">
-                  Yes! You can purchase a seat and enter your friend/family member's email address. They'll receive a gift notification 
-                  and can claim their seat, choose their specimen, and receive their bronze.
+                  When you reserve a seat, it's held for you for 24 hours while you decide. If you don't complete your purchase, 
+                  the seat automatically returns to the pool. Subscribers get <strong className="text-foreground">first notification</strong> when 
+                  reserved seats become available again.
                 </p>
               </Card>
 
               <Card className="bg-card border-card-border p-6">
-                <h3 className="font-semibold text-foreground mb-2">How do the workshop vouchers work?</h3>
+                <h3 className="font-semibold text-foreground mb-2">How do the lifetime discount codes work?</h3>
                 <p className="text-muted-foreground text-sm">
                   You receive two codes: (1) A single-use voucher for 50-80% off your first 2-day workshop (transferable, never expires). 
-                  (2) A lifetime discount code for 20-30% off all future workshops (unlimited uses, giftable forever). 
-                  These cannot be used to purchase Founding 100 seats.
+                  (2) A lifetime discount code (20% Founders / 30% Patrons) for <strong className="text-foreground">shop products, 
+                  custom commissions, AND all future workshops</strong>. Unlimited uses, giftable forever. Works site-wide!
                 </p>
               </Card>
 
