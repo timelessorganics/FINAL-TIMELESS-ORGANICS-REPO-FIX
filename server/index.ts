@@ -1,3 +1,7 @@
+// CRITICAL: Disable SSL certificate validation for Supabase connection
+// This must be set BEFORE any database imports
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
+
 // CRITICAL: Remove Replit's built-in database PG* variables before any database imports
 // These override DATABASE_URL and cause authentication failures with Supabase
 const replitDbVars = ['PGHOST', 'PGPORT', 'PGUSER', 'PGPASSWORD', 'PGDATABASE'];
