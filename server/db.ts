@@ -8,14 +8,15 @@ if (!process.env.DATABASE_URL) {
   );
 }
 
-// Create a standard PostgreSQL pool
-// We explicitly enable SSL with rejectUnauthorized: false to fix Replit connection issues
+// Supabase pooler uses internal "Supabase Intermediate 2021 CA" certificates
+// NOT public CAs like Let's Encrypt. Therefore we use rejectUnauthorized: false
+// which is SCOPED to this database connection only (not global like NODE_TLS_REJECT_UNAUTHORIZED).
+// The connection is still encrypted via TLS - we just skip certificate verification
+// because Supabase's internal CA is not in system trust stores.
 const pool = new Pool({ 
   connectionString: process.env.DATABASE_URL,
-  ssl: { 
-    rejectUnauthorized: false 
-  },
-  max: 10, // Optimize connection count
+  ssl: { rejectUnauthorized: false },
+  max: 10,
 });
 
 // Add event listeners to debug connection issues
