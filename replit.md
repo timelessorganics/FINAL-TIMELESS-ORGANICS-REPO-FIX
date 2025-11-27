@@ -18,7 +18,7 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Frontend:** Netlify (`www.timeless.organic`)
 - **Backend:** Railway (`timeless-organics-fouding-100-production.up.railway.app`)
 - **Database:** PostgreSQL on Supabase
-- **Authentication:** Supabase Auth with OAuth (Google, GitHub, Apple) and Email. Frontend communicates with backend via `VITE_API_URL` environment variable.
+- **Authentication:** Supabase Auth with OAuth (Google, GitHub, Apple) and Email. Frontend communicates with backend via `VITE_API_URL` environment variable. Backend accepts Supabase JWT tokens via Bearer authorization header.
 
 **Site Structure:**
 - **Unified Navigation:** Single site with consistent Header/Footer components across all pages
@@ -38,8 +38,15 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Footer Component:** 4-column layout (Company Info, Explore Links, Legal, Newsletter Signup via InterestForm)
 
 **Technical Implementations & Features:**
-- **Authentication:** Supabase Auth for user management (Google, GitHub, Email); backend verifies JWT tokens using service role key. Google OAuth uses `prompt: 'select_account'` to force account picker.
+- **Authentication:** Supabase Auth for user management (Google, GitHub, Email); backend verifies Supabase JWT tokens via Bearer header. Google OAuth uses `prompt: 'select_account'` to force account picker. Backend supports both Replit OIDC (production) and Supabase JWT tokens (dev/Railway).
 - **Seat Sales:** Founder (R3,000) and Patron (R5,000) seats with live counters and PayFast integration. Frontend fetches actual seat prices from `/api/seats/availability` to ensure accuracy.
+- **24-Hour Seat Reservation System (NEW):** Users can reserve seats for 24 hours before purchase. Backend tracks active reservations in dedicated `reservations` table. Available seat count automatically adjusts to account for active reservations. Old reservations auto-expire and release seats back to pool. Subscribers notified when reserved seats become available.
+  - **API Endpoints:**
+    - `POST /api/reservations` - Create 24-hour reservation for a seat type
+    - `GET /api/reservations/user` - Get user's active reservations  
+    - `GET /api/seats/availability` - Get seat availability accounting for active reservations
+  - **Database:** `reservations` table with id, user_id, seat_type, status (active/converted/expired/cancelled), expires_at (24hrs), converted_to_purchase_id, created_at. Indexed on expires_at and (user_id, seat_type) for performance.
+  - **Storage Methods:** createReservation, getActiveReservation, getActiveReservationsByType, getActiveReservationsCount, expireOldReservations, cancelReservation, convertReservationToPurchase, getUserActiveReservations.
 - **Promo Code System:** 10 FREE VIP seats via promo codes (bonus seats ON TOP of 100 paid seats, don't reduce available count). Admin generates codes, VIPs redeem at checkout (100% discount bypasses payment), dashboard shows "Complimentary VIP Seat" badge with Gift icon. Seat type matching enforced for security. FREE seats do NOT reduce the 100 paid seat inventory.
 - **Specimen Style Selection:** Users choose from 12 Cape Fynbos specimen styles at checkout (Protea Head, Pincushion Bloom, Cone + Bracts, Aloe Inflorescence, Erica Spray, Restio Seedheads, Bulb Spike, Pelargonium Leaf/Flower, Woody Branch, Cone/Seed Pod, Succulent Rosette, Miniature Mix). David personally selects the finest specimen of the chosen style from current or upcoming seasonal harvest. Castings occur when specimens reach peak seasonal beauty. Required field stored in `specimenStyle` column of purchases table.
 - **Mounting Option:** Optional bronze mounting service (+R10) added to checkout. Mounting style (wall mount, base, custom) chosen during production. When selected, `hasMounting` field stored in purchases table. Retail value messaging (R25-40K) highlights investment value.
@@ -52,10 +59,10 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Email Notifications:** Seasonal messaging in confirmation and certificate emails.
 - **User Dashboard:** Displays purchases, production status, codes, and downloadable certificates.
 - **Admin Panel:** Provides analytics, seat tracking, purchase management, custom specimen approval, subscriber export, promo code generation, and displays mounting/international shipping flags for each purchase.
-- **Database Schema:** Key tables include `users`, `seats`, `purchases` (with `hasMounting` and `internationalShipping` booleans), `codes`, `sculptures`, `promo_codes`, and `subscribers`. Legacy seasonal fields preserved for backward compatibility (30 existing purchases). New Founding 100 purchases use studio-selected approach.
+- **Database Schema:** Key tables include `users`, `seats`, `purchases` (with `hasMounting` and `internationalShipping` booleans), `codes`, `sculptures`, `promo_codes`, `reservations`, and `subscribers`. Legacy seasonal fields preserved for backward compatibility (30 existing purchases). New Founding 100 purchases use studio-selected approach.
 - **API Endpoints:** Public for registration/seat availability; protected for purchases, sculpture selection, user dashboards, promo validation; admin for data management, specimen approval, and promo code management.
 - **Payment Processing:** Secure PayFast Onsite Payments integration for in-house checkout. Critical: Requires production credentials; sandbox mode not supported for onsite.
-- **Session Management:** Currently memory-based; aiming to restore PostgreSQL session storage.
+- **Session Management:** PostgreSQL session storage for prod. Replit dev uses Supabase connection with proper SSL configuration.
 - **Subscriber System:** API endpoints for managing pre-launch interest (name, email, phone).
 - **Mailchimp Integration:** Automated email list sync. Pre-launch subscribers tagged "Pre-Launch Subscriber"; purchasers tagged "Founding 100 Investor" + seat type; VIP promo redemptions tagged "VIP Complimentary". Admin panel includes "Sync to Mailchimp" button for bulk-syncing existing contacts. Requires `MAILCHIMP_API_KEY`, `MAILCHIMP_SERVER`, and `MAILCHIMP_LIST_ID` environment variables.
 - **Seasonal Guide:** Educational page showcasing all 12 specimen styles with seasonal availability chart. Includes updated "Future Workshop Options" section explaining date-based booking system, studio selection vs. bring-your-own options, safety net (free second casting), commission fallback options, and future bespoke/casting services.
@@ -68,3 +75,18 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Railway:** Backend API hosting.
 - **Nodemailer:** Email delivery.
 - **PDFKit:** Server-side PDF certificate generation.
+
+## Recent Changes (Session Nov 27, 2025)
+- **Fixed Supabase Connection:** Updated drizzle.config.ts to add SSL mode (`?sslmode=require`). User password reset on Supabase resolved connection issues.
+- **Added 24-Hour Reservation System:**
+  - Created `reservations` table with status tracking (active/converted/expired/cancelled), 24-hour expiry tracking, and indexes for performance
+  - Implemented 8 storage methods for all reservation CRUD operations
+  - Added 3 new API endpoints: POST /api/reservations (create), GET /api/reservations/user (list), updated GET /api/seats/availability (now accounts for active reservations)
+  - Seat availability calculation: `available = totalAvailable - sold - activeReservations`
+  - Auto-expiry logic runs on every seat availability check
+- **Fixed Backend Auth for Supabase:**
+  - Updated `isAuthenticated` middleware in server/replitAuth.ts to accept Supabase JWT tokens via Bearer authorization header
+  - Decodes and validates JWT tokens locally (expiration check) when running outside Replit
+  - Maintains backward compatibility with Replit OIDC sessions in production
+  - Now properly routes authenticated requests in development environment
+- **Status:** All code changes complete. Ready for: `git push` → Railway auto-deploy → `npm run db:push` (creates reservations table) → Test on production.
