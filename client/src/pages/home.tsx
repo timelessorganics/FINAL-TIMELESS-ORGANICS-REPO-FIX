@@ -345,6 +345,17 @@ export default function HomePage() {
                     20% lifetime discount
                   </li>
                 </ul>
+                <div className="mb-4 p-3 rounded-lg bg-background/50 border border-border/50">
+                  <label className="text-xs text-muted-foreground font-medium mb-2 block">How many seats?</label>
+                  <select 
+                    className="w-full px-3 py-2 rounded-md border border-border/50 bg-background text-foreground text-sm font-medium"
+                    defaultValue="1"
+                    data-testid="select-quantity-founder"
+                  >
+                    {[1,2,3,4,5,6,7,8,9,10].map(n => <option key={n} value={n}>{n} {n === 1 ? 'seat' : 'seats'}</option>)}
+                    <option value="11+">10+</option>
+                  </select>
+                </div>
                 <Link href="/checkout/founder">
                   <Button className="w-full btn-bronze min-h-12 text-base" data-testid="button-checkout-founder">
                     Reserve Now
@@ -377,6 +388,17 @@ export default function HomePage() {
                     30% lifetime discount
                   </li>
                 </ul>
+                <div className="mb-4 p-3 rounded-lg bg-background/50 border border-border/50">
+                  <label className="text-xs text-muted-foreground font-medium mb-2 block">How many seats?</label>
+                  <select 
+                    className="w-full px-3 py-2 rounded-md border border-border/50 bg-background text-foreground text-sm font-medium"
+                    defaultValue="1"
+                    data-testid="select-quantity-patron"
+                  >
+                    {[1,2,3,4,5,6,7,8,9,10].map(n => <option key={n} value={n}>{n} {n === 1 ? 'seat' : 'seats'}</option>)}
+                    <option value="11+">10+</option>
+                  </select>
+                </div>
                 <Link href="/checkout/patron">
                   <Button className="w-full btn-bronze min-h-12 text-base" data-testid="button-checkout-patron">
                     Reserve Now

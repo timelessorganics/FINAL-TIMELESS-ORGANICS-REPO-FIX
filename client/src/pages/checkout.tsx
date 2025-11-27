@@ -20,6 +20,10 @@ const checkoutFormSchema = z.object({
   email: z.string().email("Please enter a valid email"),
   phone: z.string().min(10, "Please enter a valid phone number"),
   address: z.string().min(10, "Please enter your delivery address"),
+  isGift: z.boolean().default(false),
+  giftRecipientEmail: z.string().email().optional(),
+  giftRecipientName: z.string().optional(),
+  giftMessage: z.string().optional(),
 });
 
 type CheckoutForm = z.infer<typeof checkoutFormSchema>;
@@ -35,6 +39,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   const [promoCode, setPromoCode] = useState("");
   const [validatedPromo, setValidatedPromo] = useState<{valid: boolean; discount?: number; seatType?: string} | null>(null);
   const [isValidatingPromo, setIsValidatingPromo] = useState(false);
+  const [isGift, setIsGift] = useState(false);
 
   const { data: seats, isLoading: loadingSeats } = useQuery<any[]>({
     queryKey: ['/api/seats/availability'],
@@ -51,6 +56,10 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
       email: "",
       phone: "",
       address: "",
+      isGift: false,
+      giftRecipientEmail: "",
+      giftRecipientName: "",
+      giftMessage: "",
     },
   });
 
@@ -361,6 +370,84 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                           </p>
                         </div>
                       </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Gift Purchasing Option */}
+                  <Card className="border-border/50">
+                    <CardHeader className="pb-4">
+                      <CardTitle className="text-lg font-medium">Purchasing for Someone Else?</CardTitle>
+                      <CardDescription className="text-sm">Give them their own Founding seat as a gift</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div 
+                        className={`flex items-center gap-3 p-4 rounded-lg cursor-pointer transition-all border ${
+                          isGift 
+                            ? `border-${seatColor}/60 bg-${seatColor}/5` 
+                            : "border-border/50 hover:border-border"
+                        }`}
+                        onClick={() => {
+                          setIsGift(!isGift);
+                          if (isGift) {
+                            form.setValue("giftRecipientEmail", "");
+                            form.setValue("giftRecipientName", "");
+                            form.setValue("giftMessage", "");
+                          }
+                        }}
+                        data-testid="toggle-gift-purchase"
+                      >
+                        <input type="checkbox" checked={isGift} readOnly className="w-5 h-5 cursor-pointer" />
+                        <div>
+                          <div className="font-medium text-sm">Yes, this is a gift</div>
+                          <p className="text-xs text-muted-foreground">
+                            Recipient will receive email to claim their seat
+                          </p>
+                        </div>
+                      </div>
+
+                      {isGift && (
+                        <div className="space-y-3 p-4 bg-background/50 rounded-lg border border-border">
+                          <FormField
+                            control={form.control}
+                            name="giftRecipientName"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="text-sm font-normal text-muted-foreground">Their Name</FormLabel>
+                                <FormControl>
+                                  <Input {...field} placeholder="Jane Doe" data-testid="input-gift-name" />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="giftRecipientEmail"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="text-sm font-normal text-muted-foreground">Their Email</FormLabel>
+                                <FormControl>
+                                  <Input {...field} type="email" placeholder="jane@example.com" data-testid="input-gift-email" />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                          <FormField
+                            control={form.control}
+                            name="giftMessage"
+                            render={({ field }) => (
+                              <FormItem>
+                                <FormLabel className="text-sm font-normal text-muted-foreground">Personal Message (Optional)</FormLabel>
+                                <FormControl>
+                                  <Textarea {...field} placeholder="Add a personal note..." data-testid="textarea-gift-message" className="min-h-20 text-sm" />
+                                </FormControl>
+                                <FormMessage />
+                              </FormItem>
+                            )}
+                          />
+                        </div>
+                      )}
                     </CardContent>
                   </Card>
 

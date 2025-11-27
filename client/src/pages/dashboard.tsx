@@ -136,6 +136,60 @@ export default function Dashboard() {
                         )}
                       </div>
 
+                      {/* Customize Extras Section */}
+                      <div className="p-4 bg-background/50 rounded-lg border border-border">
+                        <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
+                          <Sparkles className="w-5 h-5 text-accent-gold" />
+                          Customize Your Extras
+                        </h3>
+                        
+                        <div className="space-y-4">
+                          {/* Patina Finish */}
+                          <div className="p-3 rounded bg-background border border-border/50">
+                            <div className="font-medium text-sm text-foreground mb-2">Patina Finish</div>
+                            <p className="text-xs text-muted-foreground mb-3">Choose how your bronze will age and patina</p>
+                            <div className="grid grid-cols-2 gap-2">
+                              <button className="text-xs p-2 rounded border border-border/50 hover:border-bronze/50 text-muted-foreground hover:text-foreground transition-all">
+                                Natural Bronze
+                              </button>
+                              <button className="text-xs p-2 rounded border border-border/50 hover:border-bronze/50 text-muted-foreground hover:text-foreground transition-all">
+                                Antique Copper
+                              </button>
+                              <button className="text-xs p-2 rounded border border-border/50 hover:border-bronze/50 text-muted-foreground hover:text-foreground transition-all">
+                                Verdigris Green
+                              </button>
+                              <button className="text-xs p-2 rounded border border-border/50 hover:border-bronze/50 text-muted-foreground hover:text-foreground transition-all">
+                                Custom Aging
+                              </button>
+                            </div>
+                          </div>
+
+                          {/* Mounting Option */}
+                          <div className="p-3 rounded bg-background border border-border/50">
+                            <div className="font-medium text-sm text-foreground mb-2">Mounting Option</div>
+                            <p className="text-xs text-muted-foreground mb-3">R1,000 deposit • How do you want to display it?</p>
+                            <div className="space-y-2">
+                              <label className="flex items-center gap-2 text-sm cursor-pointer">
+                                <input type="radio" name="mounting" value="none" defaultChecked className="w-4 h-4" />
+                                <span>No mounting (display on shelf)</span>
+                              </label>
+                              <label className="flex items-center gap-2 text-sm cursor-pointer">
+                                <input type="radio" name="mounting" value="wall" className="w-4 h-4" />
+                                <span>Wall mount (stainless hardware)</span>
+                              </label>
+                              <label className="flex items-center gap-2 text-sm cursor-pointer">
+                                <input type="radio" name="mounting" value="base" className="w-4 h-4" />
+                                <span>Display base (wood or slate)</span>
+                              </label>
+                              <label className="flex items-center gap-2 text-sm cursor-pointer">
+                                <input type="radio" name="mounting" value="custom" className="w-4 h-4" />
+                                <span>Custom installation (discuss with David)</span>
+                              </label>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
                       {/* Production Status Tracker */}
                       <div className="p-4 bg-background/50 rounded-lg border border-border">
                         <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
