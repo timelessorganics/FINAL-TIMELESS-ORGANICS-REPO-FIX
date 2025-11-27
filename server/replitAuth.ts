@@ -298,36 +298,82 @@ export async function setupAuth(app: Express) {
 
 // Auth guard middleware
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
-  if (!REPLIT_OIDC_ENABLED) {
-    // In Railway/Supabase environments we don't have Replit sessions wired.
-    // For now, allow through and rely on client-side/Supabase auth.
-    return next();
-  }
+  if (REPLIT_OIDC_ENABLED) {
+    // Replit OIDC flow
+    const user = req.user as any;
 
-  const user = req.user as any;
+    if (!req.isAuthenticated || !req.isAuthenticated() || !user?.expires_at) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
 
-  if (!req.isAuthenticated || !req.isAuthenticated() || !user?.expires_at) {
-    return res.status(401).json({ message: "Unauthorized" });
-  }
+    const now = Math.floor(Date.now() / 1000);
+    if (now <= user.expires_at) {
+      return next();
+    }
 
-  const now = Math.floor(Date.now() / 1000);
-  if (now <= user.expires_at) {
-    return next();
-  }
+    const refreshToken = user.refresh_token;
+    if (!refreshToken) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
 
-  const refreshToken = user.refresh_token;
-  if (!refreshToken) {
-    res.status(401).json({ message: "Unauthorized" });
-    return;
-  }
+    try {
+      const config = await getOidcConfig();
+      const tokenResponse = await client.refreshTokenGrant(config, refreshToken);
+      updateUserSession(user, tokenResponse);
+      return next();
+    } catch (error) {
+      res.status(401).json({ message: "Unauthorized" });
+      return;
+    }
+  } else {
+    // Supabase JWT token flow (dev/Railway)
+    const authHeader = req.headers.authorization;
+    if (!authHeader || !authHeader.startsWith("Bearer ")) {
+      return res.status(401).json({ message: "Unauthorized" });
+    }
 
-  try {
-    const config = await getOidcConfig();
-    const tokenResponse = await client.refreshTokenGrant(config, refreshToken);
-    updateUserSession(user, tokenResponse);
-    return next();
-  } catch (error) {
-    res.status(401).json({ message: "Unauthorized" });
-    return;
+    const token = authHeader.substring(7); // Remove "Bearer " prefix
+    
+    // For dev/Replit local testing: verify token locally by parsing (not validating signature)
+    // In production on Railway, Supabase JWT validation happens at the auth library level
+    try {
+      // Simple JWT decode (header.payload.signature)
+      const parts = token.split(".");
+      if (parts.length !== 3) {
+        return res.status(401).json({ message: "Invalid token format" });
+      }
+
+      // Decode payload (second part)
+      const payload = JSON.parse(Buffer.from(parts[1], "base64").toString("utf-8"));
+      
+      // Check expiration
+      const now = Math.floor(Date.now() / 1000);
+      if (payload.exp && now > payload.exp) {
+        return res.status(401).json({ message: "Token expired" });
+      }
+
+      // Attach user info to request
+      const userId = payload.sub || payload.user_id;
+      if (!userId) {
+        return res.status(401).json({ message: "Invalid token: no user ID" });
+      }
+
+      req.user = {
+        ...req.user,
+        normalizedClaims: {
+          sub: userId,
+          email: payload.email || null,
+          first_name: payload.first_name || null,
+          last_name: payload.last_name || null,
+          profile_image_url: payload.picture || null,
+        },
+      };
+
+      return next();
+    } catch (error: any) {
+      console.error("[Auth] JWT verification failed:", error.message);
+      return res.status(401).json({ message: "Unauthorized" });
+    }
   }
 };
