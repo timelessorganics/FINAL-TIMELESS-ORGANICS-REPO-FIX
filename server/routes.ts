@@ -836,6 +836,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
           (sub.notes || "").replace(/\n/g, " "),
           sub.createdAt?.toISOString() || "",
         ].map(field => `"${field.replace(/"/g, '""')}"`).join(",");
+        
+        csvRows.push(row);
+      }
+
+      const csvContent = csvRows.join("\n");
 
       res.setHeader("Content-Type", "text/csv");
       res.setHeader("Content-Disposition", "attachment; filename=interested-subscribers.csv");
