@@ -34,55 +34,62 @@ export default function HomePage() {
       
       <main className="relative z-50">
         
-        {/* HERO: Bronze emerging from darkness */}
+        {/* HERO: Bronze emerging from darkness - FULL BLEED */}
         <section 
           className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#050505]" 
           data-testid="section-hero"
         >
-          {/* Hero image with slow fade-from-darkness */}
-          <div className="absolute inset-0 flex items-center justify-center hero-image-reveal">
+          {/* Full-bleed hero image with slow fade-from-darkness */}
+          <div className="absolute inset-0 hero-image-reveal">
             <img 
               src={heroImage} 
               alt="Wall-mounted bronze botanical sculpture on slate" 
-              className="w-full h-full object-contain max-w-4xl bronze-warmth-subtle"
+              className="w-full h-full object-cover bronze-warmth-subtle"
             />
           </div>
           
-          {/* Subtle gradient overlay */}
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]/60" />
+          {/* Dark vignette overlay for text readability */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-[#050505]/40 to-[#050505]/70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#050505]/60 via-transparent to-[#050505]/60" />
           
           {/* Hero content with staggered reveal */}
           <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
             
             {/* Kicker */}
             <div className="hero-text-reveal hero-text-reveal-delay-1">
-              <span className="inline-block text-xs tracking-[0.4em] text-bronze/80 uppercase font-light mb-6">
+              <span className="inline-block text-xs tracking-[0.4em] text-bronze/90 uppercase font-light mb-6">
                 Founding 100 Launch
               </span>
             </div>
             
             {/* Main title with glassy effect */}
-            <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-5xl md:text-7xl lg:text-8xl font-light mb-8 leading-[1.05] tracking-tight">
+            <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-5xl md:text-7xl lg:text-8xl font-light mb-6 leading-[1.05] tracking-tight">
               <span className="hero-glass-text">Timeless Organics</span>
             </h1>
             
             {/* Tagline */}
-            <p className="hero-text-reveal hero-text-reveal-delay-3 text-lg md:text-xl text-foreground/70 font-light max-w-xl mx-auto mb-10 leading-relaxed">
+            <p className="hero-text-reveal hero-text-reveal-delay-3 text-lg md:text-xl text-white/80 font-light max-w-xl mx-auto mb-8 leading-relaxed">
               Nature's originals, immortalized in bronze.
             </p>
 
-            {/* CTA */}
-            <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4">
+            {/* CTA - Mobile-first with urgency */}
+            <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col items-center gap-4">
               <Link href="#seats">
-                <Button size="lg" className="btn-bronze text-sm px-8 py-6 min-h-12 gap-2" data-testid="button-secure-seat">
-                  Secure Your Seat
+                <Button size="lg" className="btn-bronze text-base px-10 py-6 min-h-14 gap-2" data-testid="button-secure-seat">
+                  Reserve Your Seat
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
               {totalRemaining > 0 && (
-                <span className="text-sm text-muted-foreground">
-                  {totalRemaining} of 100 seats remaining
-                </span>
+                <div className="flex flex-col items-center gap-1">
+                  <span className="text-lg font-light text-white/90">
+                    {totalRemaining} of 100 seats left
+                  </span>
+                  <span className="text-xs text-bronze/70 flex items-center gap-1.5">
+                    <Clock className="w-3 h-3" />
+                    Reserve now, pay within 24 hours
+                  </span>
+                </div>
               )}
             </div>
           </div>
@@ -134,15 +141,17 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Seat Cards */}
-            <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+            {/* Seat Cards - Mobile-optimized */}
+            <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
               
               {/* Founder Seat */}
-              <div className="relative border border-bronze/40 rounded-lg p-8 bg-gradient-to-b from-bronze/5 to-transparent">
-                <div className="absolute top-4 right-4 text-xs text-bronze/60 uppercase tracking-wider">
-                  {founderSeats?.remaining || 50} left
+              <div className="relative border border-bronze/40 rounded-lg p-6 md:p-8 bg-gradient-to-b from-bronze/5 to-transparent">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="font-serif text-2xl text-bronze">Founder</h3>
+                  <span className="text-xs text-bronze bg-bronze/10 px-2 py-1 rounded-full">
+                    {founderSeats?.remaining || 50} left
+                  </span>
                 </div>
-                <h3 className="font-serif text-2xl text-bronze mb-2">Founder</h3>
                 <div className="text-4xl font-light mb-4">
                   R{((founderSeats?.price || 300000) / 100).toLocaleString()}
                 </div>
@@ -161,18 +170,20 @@ export default function HomePage() {
                   </li>
                 </ul>
                 <Link href="/checkout/founder">
-                  <Button className="w-full btn-bronze" data-testid="button-checkout-founder">
-                    Select Founder
+                  <Button className="w-full btn-bronze min-h-12 text-base" data-testid="button-checkout-founder">
+                    Reserve Now
                   </Button>
                 </Link>
               </div>
 
               {/* Patron Seat */}
-              <div className="relative border border-accent-gold/40 rounded-lg p-8 bg-gradient-to-b from-accent-gold/5 to-transparent">
-                <div className="absolute top-4 right-4 text-xs text-accent-gold/60 uppercase tracking-wider">
-                  {patronSeats?.remaining || 50} left
+              <div className="relative border border-accent-gold/40 rounded-lg p-6 md:p-8 bg-gradient-to-b from-accent-gold/5 to-transparent">
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="font-serif text-2xl text-accent-gold">Patron</h3>
+                  <span className="text-xs text-accent-gold bg-accent-gold/10 px-2 py-1 rounded-full">
+                    {patronSeats?.remaining || 50} left
+                  </span>
                 </div>
-                <h3 className="font-serif text-2xl text-accent-gold mb-2">Patron</h3>
                 <div className="text-4xl font-light mb-4">
                   R{((patronSeats?.price || 500000) / 100).toLocaleString()}
                 </div>
@@ -191,17 +202,23 @@ export default function HomePage() {
                   </li>
                 </ul>
                 <Link href="/checkout/patron">
-                  <Button className="w-full btn-bronze" data-testid="button-checkout-patron">
-                    Select Patron
+                  <Button className="w-full btn-bronze min-h-12 text-base" data-testid="button-checkout-patron">
+                    Reserve Now
                   </Button>
                 </Link>
               </div>
             </div>
 
-            {/* Trust note */}
-            <p className="text-center text-xs text-muted-foreground/60 mt-8 font-light">
-              Secure payment via PayFast. Seats reserved for 24 hours.
-            </p>
+            {/* Trust note - Mobile-friendly */}
+            <div className="text-center mt-8 space-y-2">
+              <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
+                <Clock className="w-4 h-4 text-bronze" />
+                24-hour reservation holds your seat
+              </p>
+              <p className="text-xs text-muted-foreground/60">
+                Complete payment anytime within 24 hours. Secure checkout via PayFast.
+              </p>
+            </div>
           </div>
         </section>
 
