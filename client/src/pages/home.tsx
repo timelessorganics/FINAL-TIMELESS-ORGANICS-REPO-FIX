@@ -3,13 +3,16 @@ import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
 import { Clock, Sparkles, Shield, Award, ArrowRight, Flame, Users, Leaf, Calendar } from "lucide-react";
 
 import heroImage from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764248900779.png";
 import bronzeImage1 from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764170102466.png";
 import bronzeImage2 from "@assets/Gemini_Generated_Image_rl9enarl9enarl9e_1764170102466.png";
 import bronzeImage3 from "@assets/Gemini_Generated_Image_o0oi1oo0oi1oo0oi_1764170102464.png";
+
+import smokeVideo from "@assets/3 SMOKE HOVERS TINY SPARKS7_1761435915770.mp4";
+import flowerBloomVideo from "@assets/Yellow-Lily-Opening-On-Black-Background-4K-2025-08-29-08-44-48-Utc_1764103216693.mp4";
+import burntMetalVideo from "@assets/Burnt-Metal-2025-08-29-06-20-21-Utc_1764160699730.mp4";
 
 interface SeatAvailability {
   type: string;
@@ -106,8 +109,22 @@ export default function HomePage() {
         </section>
 
         {/* YOUR INVESTMENT IS OUR INVESTMENT - The Key Message */}
-        <section className="py-24 px-6 bg-gradient-to-b from-[#050505] to-background" data-testid="section-investment-meaning">
-          <div className="max-w-4xl mx-auto">
+        <section className="py-24 px-6 bg-gradient-to-b from-[#050505] to-background relative overflow-hidden" data-testid="section-investment-meaning">
+          {/* Faded smoke video background */}
+          <div className="absolute inset-0 opacity-[0.08]">
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full h-full object-cover"
+            >
+              <source src={smokeVideo} type="video/mp4" />
+            </video>
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/80 via-transparent to-background" />
+          
+          <div className="max-w-4xl mx-auto relative z-10">
             
             {/* The hook - big and clear */}
             <div className="text-center mb-16">
@@ -119,30 +136,30 @@ export default function HomePage() {
               </p>
             </div>
 
-            {/* The double meaning - crystal clear */}
-            <div className="grid md:grid-cols-2 gap-8 mb-16">
-              <Card className="p-8 bg-card/50 border-bronze/30">
-                <div className="flex items-center gap-3 mb-4">
-                  <Users className="w-8 h-8 text-accent-gold" />
-                  <h3 className="font-serif text-2xl font-medium text-foreground">Your Financial Investment</h3>
+            {/* The double meaning - NO cards, just elegant text */}
+            <div className="grid md:grid-cols-2 gap-12 mb-16">
+              <div className="text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
+                  <Users className="w-6 h-6 text-accent-gold" />
+                  <h3 className="font-serif text-xl font-medium text-foreground">Your Financial Investment</h3>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
                   You invest capital (R3,000 or R5,000) to fund our foundry's final fit-out — 
                   the kilns, crucibles, and equipment that make Timeless Organics possible.
                 </p>
-              </Card>
+              </div>
 
-              <Card className="p-8 bg-card/50 border-bronze/30">
-                <div className="flex items-center gap-3 mb-4">
-                  <Flame className="w-8 h-8 text-bronze" />
-                  <h3 className="font-serif text-2xl font-medium text-foreground">Our Technical Investment</h3>
+              <div className="text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
+                  <Flame className="w-6 h-6 text-bronze" />
+                  <h3 className="font-serif text-xl font-medium text-foreground">Our Technical Investment</h3>
                 </div>
                 <p className="text-muted-foreground leading-relaxed">
                   We <span className="text-bronze font-medium">invest</span> your botanical specimen — 
                   that's the actual term for encasing it in a special plite/powder mix inside a flask 
                   that withstands 700°C. This "investment" creates the mold for your bronze.
                 </p>
-              </Card>
+              </div>
             </div>
 
             {/* The punchline */}
@@ -423,8 +440,22 @@ export default function HomePage() {
         </section>
 
         {/* CHOOSE YOUR MOMENT - Seasonal Choice */}
-        <section className="py-24 px-6 bg-card/10" data-testid="section-seasonal-choice">
-          <div className="max-w-4xl mx-auto">
+        <section className="py-24 px-6 bg-card/10 relative overflow-hidden" data-testid="section-seasonal-choice">
+          {/* Faded flower bloom video background */}
+          <div className="absolute inset-0 opacity-[0.06]">
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full h-full object-cover"
+            >
+              <source src={flowerBloomVideo} type="video/mp4" />
+            </video>
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-background/60 via-transparent to-background/60" />
+          
+          <div className="max-w-4xl mx-auto relative z-10">
             
             <div className="text-center mb-12">
               <span className="text-xs tracking-[0.3em] text-patina uppercase font-light mb-4 block">
@@ -438,44 +469,45 @@ export default function HomePage() {
               </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            {/* NO cards - just elegant text columns */}
+            <div className="grid md:grid-cols-2 gap-12">
               
               {/* Cast Now Option */}
-              <Card className="p-8 bg-card/50 border-bronze/30 relative overflow-visible">
-                <div className="flex items-center gap-3 mb-4">
-                  <Flame className="w-8 h-8 text-bronze" />
-                  <h3 className="font-serif text-2xl font-medium text-foreground">Cast This Season</h3>
+              <div className="text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
+                  <Flame className="w-6 h-6 text-bronze" />
+                  <h3 className="font-serif text-xl font-medium text-foreground">Cast This Season</h3>
                 </div>
                 <p className="text-muted-foreground leading-relaxed mb-4">
                   We select a specimen from whatever's in peak bloom right now — proteas in winter, 
                   aloes in spring, restios in summer. David personally chooses the finest specimen 
                   of your preferred style.
                 </p>
-                <div className="flex items-center gap-2 text-sm text-bronze">
+                <div className="flex items-center justify-center md:justify-start gap-2 text-sm text-bronze">
                   <Sparkles className="w-4 h-4" />
                   <span>Fastest turnaround</span>
                 </div>
-              </Card>
+              </div>
 
               {/* Wait for Season Option */}
-              <Card className="p-8 bg-card/50 border-patina/30 relative overflow-visible">
-                <div className="flex items-center gap-3 mb-4">
-                  <Calendar className="w-8 h-8 text-patina" />
-                  <h3 className="font-serif text-2xl font-medium text-foreground">Wait for Bloom</h3>
+              <div className="text-center md:text-left">
+                <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
+                  <Calendar className="w-6 h-6 text-patina" />
+                  <h3 className="font-serif text-xl font-medium text-foreground">Wait for Bloom</h3>
                 </div>
                 <p className="text-muted-foreground leading-relaxed mb-4">
                   Have your heart set on a specific botanical? Wait until it's at peak beauty. 
                   We'll notify you when your chosen specimen type is in full bloom and ready 
                   to become forever bronze.
                 </p>
-                <div className="flex items-center gap-2 text-sm text-patina">
+                <div className="flex items-center justify-center md:justify-start gap-2 text-sm text-patina">
                   <Leaf className="w-4 h-4" />
                   <span>Perfect timing, perfect piece</span>
                 </div>
-              </Card>
+              </div>
             </div>
 
-            <p className="text-center text-sm text-muted-foreground mt-8">
+            <p className="text-center text-sm text-muted-foreground mt-10">
               You'll choose your casting preference at checkout. Change your mind anytime via your dashboard.
             </p>
           </div>
@@ -609,8 +641,22 @@ export default function HomePage() {
         </section>
 
         {/* FINAL CTA - Scarcity */}
-        <section className="py-24 px-6 bg-gradient-to-b from-[#050505] to-background" data-testid="section-final-cta">
-          <div className="max-w-3xl mx-auto text-center">
+        <section className="py-24 px-6 bg-gradient-to-b from-[#050505] to-background relative overflow-hidden" data-testid="section-final-cta">
+          {/* Faded burnt metal video background */}
+          <div className="absolute inset-0 opacity-[0.10]">
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full h-full object-cover"
+            >
+              <source src={burntMetalVideo} type="video/mp4" />
+            </video>
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/70 via-transparent to-background" />
+          
+          <div className="max-w-3xl mx-auto text-center relative z-10">
             
             {/* Scarcity counter */}
             {totalRemaining > 0 && (
