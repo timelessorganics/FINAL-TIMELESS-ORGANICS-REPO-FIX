@@ -77,32 +77,33 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **PDFKit:** Server-side PDF certificate generation.
 
 ## Recent Changes (Session Nov 27, 2025)
-- **Home Page Complete Redesign (Mobile-First):**
-  - Full-bleed hero image edge-to-edge with soft radial vignette overlay
-  - New tagline: "One-Of-A-Kind Castings From Organic Matter"
-  - Dual CTAs: "Reserve for 24 Hours" and "Buy Now" buttons
-  - Scroll indicator at bottom of hero
-  - New content sections in order:
-    1. "What Is This All About?" - explains the foundry investment concept
-    2. David's Story - personal quote about unforeseen hardship, sharing knowledge
-    3. "What You Get" - showcase of bronze sculpture + 6 lifetime benefits (workshop vouchers, shop discounts, commission priority, auction first dibs, giftable for life, founding member status)
-    4. Seat Cards - Founder/Patron with "Reserve Now" buttons
-    5. "What Are The Workshops?" - 2-day intensive explanation, Day 1/Day 2 breakdown, stats (6 max, R8K value, 50-80% discount)
-    6. Gallery showcase with large feature image + grid
-- **Luxury Design Details:**
-  - Glassy translucent text with slow-moving bronze/gold/patina gradient (10s cycle)
-  - Staggered text reveal animations with 2-4s delays
-  - Soft radial vignette instead of hard rectangular overlay
-  - Hairline borders (1px rgba) with bronze tint throughout
-  - Bronze warmth image filter with brightness boost
-- **Checkout Simplification:**
-  - Streamlined to: name, email, phone, delivery address, cast timing choice
-  - "Cast Now" vs "Wait for Season" toggle
-  - All specimen/mounting options deferred to post-purchase dashboard
-  - PayFast integration preserved with proper payload structure
-- **Previous Session:**
-  - Fixed Supabase Connection with SSL mode
-  - Added 24-Hour Reservation System
-  - Fixed Backend Auth for Supabase JWT tokens
+- **Home Page Complete Redesign - Investment Messaging Focus:**
+  - **NEW: "Your Investment Is Our Investment" section** - Crystal clear explanation of the double meaning:
+    - Your Financial Investment: Capital (R3,000-5,000) funds foundry fit-out
+    - Our Technical Investment: "Invest" = technical term for encasing specimen in powder/plaster mix in a flask that withstands 700°C
+    - Punchline: "Both investments happen simultaneously. You invest in our future. We invest your cutting."
+  - **NEW: Heartfelt Founder Story** - "Three Decades in Metal, Finally Shared"
+    - 30 years precision metalwork, 15 in London's West End
+    - "These skills were never meant to be hidden - they were meant to be shared"
+    - "This art form will blow your mind wide open. The value I'm offering is 20 times what you'll pay."
+  - **NEW: "Choose Your Moment" seasonal section** - Cast Now vs Wait for Bloom cards explaining timing options
+  - **Enhanced Scarcity CTA** - Big "100 seats remaining" counter at bottom with "Once They're Gone, This Chapter Closes"
+  - Hero with bronze image emerging from darkness, dual CTAs (Reserve 24hrs / Buy Now)
+  - Enhanced gallery with larger feature image (21:9 aspect), fade-in animations
+- **Content Flow:**
+  1. Hero - "One-Of-A-Kind Castings From Organic Matter"
+  2. Your Investment Is Our Investment (double meaning explained)
+  3. Three Decades in Metal (David's story)
+  4. What You Get (bronze + 6 lifetime benefits)
+  5. What Are The Workshops (2-day intensive)
+  6. Choose Your Moment (seasonal casting choice)
+  7. Gallery showcase
+  8. Final CTA with scarcity counter
+- **Design Details:**
+  - Glassy gradient text animations (10s cycle)
+  - Image fade-in animations (2s ease-out)
+  - Section fade-in animations for scroll reveals
+  - Bronze warmth image filters
+- **Checkout:** Streamlined to essentials, all customization deferred to dashboard
 - **Database Note:** Seat prices in dev DB are test values (R10). Production should have R3,000 (Founder) and R5,000 (Patron).
-- **Status:** Home page redesign complete. Ready for your feedback and changes list!
+- **Status:** Home page messaging complete with "investment" double meaning. Ready for your feedback!
