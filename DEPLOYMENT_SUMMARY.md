@@ -23,7 +23,7 @@
                       ↓
 ┌─────────────────────────────────────────────────────────────┐
 │                   SOURCE CONTROL (GitHub)                    │
-│  • Repository: Timeless-Organics-Main-Repository             │
+│  • Repository: FINAL-TIMELESS-ORGANICS-REPO-FIX              │
 │  • Branch: main                                              │
 │  • Triggers: Auto-deploy to Railway & Netlify                │
 └─────────────┬───────────────────────────────────────────┬───┘

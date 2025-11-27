@@ -25,14 +25,14 @@
 git remote -v
 
 # If remote is missing, add it
-git remote add origin https://github.com/timelessorganics/Timeless-Organics-Main-Repository.git
+git remote add origin https://github.com/timelessorganics/FINAL-TIMELESS-ORGANICS-REPO-FIX.git
 
 # Set up GitHub authentication
 git config --global user.name "Your Name"
 git config --global user.email "your-email@example.com"
 
 # Use GitHub token for authentication
-git remote set-url origin https://YOUR_GITHUB_TOKEN@github.com/timelessorganics/Timeless-Organics-Main-Repository.git
+git remote set-url origin https://YOUR_GITHUB_TOKEN@github.com/timelessorganics/FINAL-TIMELESS-ORGANICS-REPO-FIX.git
 
 # Force push if needed (CAUTION: only if you're sure)
 git push -u origin main --force

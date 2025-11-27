@@ -37,18 +37,18 @@ git add -A
 git commit -m "Initial commit: Timeless Organics Founding 100 launch site"
 
 # Set the remote URL with your token (REPLACE YOUR_TOKEN)
-git remote set-url origin https://YOUR_TOKEN@github.com/timelessorganics/Timeless-Organics-Fouding-100.git
+git remote set-url origin https://YOUR_TOKEN@github.com/timelessorganics/FINAL-TIMELESS-ORGANICS-REPO-FIX.git
 
 # Push to GitHub
 git branch -M main
 git push -u origin main --force
 
 # Clean up - remove token from remote URL for security
-git remote set-url origin https://github.com/timelessorganics/Timeless-Organics-Fouding-100.git
+git remote set-url origin https://github.com/timelessorganics/FINAL-TIMELESS-ORGANICS-REPO-FIX.git
 ```
 
 ## Step 3: Verify on GitHub
-Go to https://github.com/timelessorganics/Timeless-Organics-Fouding-100 and you should see all your code!
+Go to https://github.com/timelessorganics/FINAL-TIMELESS-ORGANICS-REPO-FIX and you should see all your code!
 
 ## Step 4: Connect to Netlify
 Once the code is pushed:
@@ -56,7 +56,7 @@ Once the code is pushed:
 1. Go to Netlify: https://app.netlify.com
 2. Click "Add new site" → "Import an existing project"
 3. Choose "GitHub" 
-4. Select the repository: `timelessorganics/Timeless-Organics-Fouding-100`
+4. Select the repository: `timelessorganics/FINAL-TIMELESS-ORGANICS-REPO-FIX`
 5. Configure build settings:
    - **Build command**: `npm run build`
    - **Publish directory**: `dist`
@@ -78,6 +78,6 @@ Once the code is pushed:
 
 ## Notes
 - The GitHub connection is to your **timelessorganics** organization account (not personal)
-- Your code will be at: https://github.com/timelessorganics/Timeless-Organics-Fouding-100
+- Your code will be at: https://github.com/timelessorganics/FINAL-TIMELESS-ORGANICS-REPO-FIX
 - This will NOT overwrite your main timeless.organic site - this is a separate repository
 - After deployment, your launch site will be at www.timeless.organic/founding100
