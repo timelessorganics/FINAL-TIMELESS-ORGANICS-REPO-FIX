@@ -1,0 +1,5 @@
+[[redirects]]
+from = "/api/*"
+to   = "https://final-timeless-organics-repo-fix-production.up.railway.app/:splat"
+status = 200
+force  = true
