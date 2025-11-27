@@ -25,6 +25,7 @@ export default function Header({
   const navLinks = [
     { href: "/", label: "Home" },
     { href: "/workshops", label: "Workshops" },
+    { href: "/workshop-calendar", label: "Book Workshop" },
     { href: "/sculptures", label: "Gallery" },
     { href: "/shop", label: "Shop" },
     { href: "/auctions", label: "Auctions" },

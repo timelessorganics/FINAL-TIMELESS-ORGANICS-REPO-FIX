@@ -27,7 +27,7 @@ export const sessions = pgTable(
 );
 
 // User storage table - Required for Replit Auth
-export const users = pgTable("users", {
+export const usersTable = pgTable("users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   email: varchar("email").unique(),
   firstName: varchar("first_name"),
@@ -38,8 +38,8 @@ export const users = pgTable("users", {
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
-export type UpsertUser = typeof users.$inferInsert;
-export type User = typeof users.$inferSelect;
+export type UpsertUser = typeof usersTable.$inferInsert;
+export type User = typeof usersTable.$inferSelect;
 
 // DEPRECATED: Email registrations table (replaced by Replit Auth)
 // Kept in schema to avoid destructive migrations, but no longer used
@@ -129,16 +129,16 @@ export const giftStatusEnum = pgEnum('gift_status', ['pending', 'claimed', 'canc
 // Purchases made by users
 export const purchases = pgTable("purchases", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  userId: varchar("user_id").references(() => users.id).notNull(),
+  userId: varchar("user_id").references(() => usersTable.id).notNull(),
   seatType: seatTypeEnum("seat_type").notNull(),
   amount: integer("amount").notNull(), // In cents
   status: purchaseStatusEnum("status").default('pending').notNull(),
   paymentReference: varchar("payment_reference"), // PayFast payment ID
   certificateUrl: varchar("certificate_url"), // URL to PDF certificate
-  
+
   // Production status tracking (Queued → Invested → Ready to Pour → Poured & Finishing → Complete)
   productionStatus: productionStatusEnum("production_status").default('queued').notNull(),
-  
+
   // LEGACY FIELDS - Preserved for existing purchases, not used in Founding 100 checkout
   purchaseChoice: purchaseChoiceEnum("purchase_choice").default('cast_now'),
   seasonalBatchWindow: varchar("seasonal_batch_window"),
@@ -147,7 +147,7 @@ export const purchases = pgTable("purchases", {
   customSpecimenApprovalStatus: approvalStatusEnum("custom_specimen_approval_status"),
   customSpecimenNotes: text("custom_specimen_notes"),
   specimenId: varchar("specimen_id").references(() => sculptures.id),
-  
+
   // Add-ons and delivery (collected during checkout)
   hasPatina: boolean("has_patina").default(false).notNull(), // +R1,000 patina service
   hasMounting: boolean("has_mounting").default(false).notNull(), // LEGACY: Replaced by mountingType/mountingPriceCents
@@ -158,19 +158,19 @@ export const purchases = pgTable("purchases", {
   deliveryName: varchar("delivery_name"),
   deliveryPhone: varchar("delivery_phone"),
   deliveryAddress: text("delivery_address"),
-  
+
   // Purchase mode - Simplified casting timeline
   purchaseMode: purchaseModeEnum("purchase_mode").default('cast_now').notNull(),
-  
+
   // Gift purchasing fields
   isGift: boolean("is_gift").default(false).notNull(),
   giftRecipientEmail: varchar("gift_recipient_email"),
   giftRecipientName: varchar("gift_recipient_name"),
   giftMessage: text("gift_message"),
   giftStatus: giftStatusEnum("gift_status").default('pending'),
-  claimedByUserId: varchar("claimed_by_user_id").references(() => users.id),
+  claimedByUserId: varchar("claimed_by_user_id").references(() => usersTable.id),
   giftClaimedAt: timestamp("gift_claimed_at"),
-  
+
   createdAt: timestamp("created_at").defaultNow(),
   completedAt: timestamp("completed_at"),
 });
@@ -267,12 +267,12 @@ export const sculptures = pgTable("sculptures", {
   name: varchar("name").notNull(),
   description: text("description"),
   imageUrl: varchar("image_url").notNull(),
-  
+
   // Specimen categorization
   specimenStyle: specimenStyleEnum("specimen_style"), // Category of botanical form
   seasonWindow: seasonWindowEnum("season_window").default('year_round').notNull(), // Primary season
   peakSeasons: jsonb("peak_seasons").$type<string[]>().default([]), // Array of peak season names
-  
+
   // Legacy fields
   availableFor: seatTypeEnum("available_for"), // null = both, or specific to founder/patron
   isBronze: boolean("is_bronze").default(false), // Special treatment for bronze pieces
@@ -319,7 +319,7 @@ export const reservationStatusEnum = pgEnum('reservation_status', ['active', 'co
 // Seat reservations - 24-hour holds before purchase
 export const reservations = pgTable("reservations", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  userId: varchar("user_id").references(() => users.id).notNull(),
+  userId: varchar("user_id").references(() => usersTable.id).notNull(),
   seatType: seatTypeEnum("seat_type").notNull(),
   status: reservationStatusEnum("status").default('active').notNull(),
   expiresAt: timestamp("expires_at").notNull(), // 24 hours from creation
@@ -346,18 +346,20 @@ export const promoCodes = pgTable("promo_codes", {
   seatType: seatTypeEnum("seat_type").notNull(), // Which seat type this code grants
   discount: integer("discount").notNull().default(100), // Percentage discount (100 = free)
   used: boolean("used").default(false).notNull(),
-  redeemedBy: varchar("redeemed_by").references(() => users.id), // User who redeemed it
+  redeemedBy: varchar("redeemed_by").references(() => usersTable.id), // User who redeemed it
   purchaseId: varchar("purchase_id").references(() => purchases.id), // Resulting purchase
   redeemedAt: timestamp("redeemed_at"),
   createdAt: timestamp("created_at").defaultNow(),
-  createdBy: varchar("created_by").references(() => users.id), // Admin who generated it
+  createdBy: varchar("created_by").references(() => usersTable.id), // Admin who generated it
 });
 
-export const insertPromoCodeSchema = createInsertSchema(promoCodes).pick({
-  code: true,
-  seatType: true,
-  discount: true,
-  createdBy: true,
+export const insertPromoCodeSchema = createInsertSchema(promoCodes).omit({
+  id: true,
+  createdAt: true,
+  used: true,
+  redeemedBy: true,
+  redeemedAt: true,
+  purchaseId: true,
 });
 
 export type InsertPromoCode = z.infer<typeof insertPromoCodeSchema>;
@@ -367,7 +369,7 @@ export type PromoCode = typeof promoCodes.$inferSelect;
 export const referrals = pgTable("referrals", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   referralCodeId: varchar("referral_code_id").references(() => codes.id).notNull(),
-  referredUserId: varchar("referred_user_id").references(() => users.id),
+  referredUserId: varchar("referred_user_id").references(() => usersTable.id),
   purchaseId: varchar("purchase_id").references(() => purchases.id),
   discountApplied: integer("discount_applied"), // Percentage or amount
   status: varchar("status").default("pending").notNull(), // pending, completed, cancelled
@@ -385,11 +387,61 @@ export const insertReferralSchema = createInsertSchema(referrals).pick({
 export type InsertReferral = z.infer<typeof insertReferralSchema>;
 export type Referral = typeof referrals.$inferSelect;
 
+// Workshop Calendar Tables
+export const workshopDatesTable = pgTable("workshop_dates", {
+  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
+  date: timestamp("date").notNull(),
+  startTime: text("start_time").notNull(),
+  endTime: text("end_time").notNull(),
+  maxParticipants: integer("max_participants").notNull().default(6),
+  currentParticipants: integer("current_participants").notNull().default(0),
+  depositAmount: integer("deposit_amount").notNull(),
+  location: text("location").notNull(),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const workshopBookingsTable = pgTable("workshop_bookings", {
+  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: text("user_id").notNull().references(() => usersTable.id),
+  workshopDateId: text("workshop_date_id").notNull().references(() => workshopDatesTable.id),
+  phone: text("phone").notNull(),
+  emergencyContact: text("emergency_contact").notNull(),
+  dietaryRestrictions: text("dietary_restrictions"),
+  depositAmount: integer("deposit_amount").notNull(),
+  depositPaid: boolean("deposit_paid").notNull().default(false),
+  fullPaymentAmount: integer("full_payment_amount"),
+  fullPaymentPaid: boolean("full_payment_paid").notNull().default(false),
+  status: text("status").notNull().default("pending_deposit"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const workshopWaitlistTable = pgTable("workshop_waitlist", {
+  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: text("user_id").notNull().references(() => usersTable.id),
+  workshopDateId: text("workshop_date_id").notNull().references(() => workshopDatesTable.id),
+  notified: boolean("notified").notNull().default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertWorkshopDateSchema = workshopDatesTable.omit({
+  id: true,
+  createdAt: true,
+  currentParticipants: true,
+});
+
+export const insertWorkshopBookingSchema = workshopBookingsTable.omit({
+  id: true,
+  createdAt: true,
+  depositPaid: true,
+  fullPaymentAmount: true,
+  fullPaymentPaid: true,
+});
+
 // Relations
 export const purchasesRelations = relations(purchases, ({ one, many }) => ({
-  user: one(users, {
+  user: one(usersTable, {
     fields: [purchases.userId],
-    references: [users.id],
+    references: [usersTable.id],
   }),
   codes: many(codes),
   sculptureSelection: one(sculptureSelections, {
@@ -416,18 +468,46 @@ export const sculptureSelectionsRelations = relations(sculptureSelections, ({ on
   }),
 }));
 
-export const usersRelations = relations(users, ({ many }) => ({
+export const usersRelations = relations(usersTable, ({ many }) => ({
   purchases: many(purchases),
   reservations: many(reservations),
 }));
 
 export const reservationsRelations = relations(reservations, ({ one }) => ({
-  user: one(users, {
+  user: one(usersTable, {
     fields: [reservations.userId],
-    references: [users.id],
+    references: [usersTable.id],
   }),
   convertedPurchase: one(purchases, {
     fields: [reservations.convertedToPurchaseId],
     references: [purchases.id],
+  }),
+}));
+
+// Workshop relations
+export const workshopDateRelations = relations(workshopDatesTable, ({ many }) => ({
+  bookings: many(workshopBookingsTable),
+  waitlist: many(workshopWaitlistTable),
+}));
+
+export const workshopBookingRelations = relations(workshopBookingsTable, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [workshopBookingsTable.userId],
+    references: [usersTable.id],
+  }),
+  workshopDate: one(workshopDatesTable, {
+    fields: [workshopBookingsTable.workshopDateId],
+    references: [workshopDatesTable.id],
+  }),
+}));
+
+export const workshopWaitlistRelations = relations(workshopWaitlistTable, ({ one }) => ({
+  user: one(usersTable, {
+    fields: [workshopWaitlistTable.userId],
+    references: [usersTable.id],
+  }),
+  workshopDate: one(workshopDatesTable, {
+    fields: [workshopWaitlistTable.workshopDateId],
+    references: [workshopDatesTable.id],
   }),
 }));

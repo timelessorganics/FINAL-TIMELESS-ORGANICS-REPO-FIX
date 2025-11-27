@@ -9,6 +9,7 @@ import NotFound from "@/pages/not-found";
 import MainLaunch from "@/pages/main-launch";
 import HomePage from "@/pages/home";
 import WorkshopsPage from "@/pages/workshops";
+import WorkshopCalendarPage from "@/pages/workshop-calendar";
 import CommissionPage from "@/pages/commission";
 import AboutPage from "@/pages/about";
 import ShopPage from "@/pages/shop";
@@ -32,11 +33,11 @@ import ClaimGiftPage from "@/pages/claim-gift";
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
   const [location] = useLocation();
-  
+
   // Scroll to top on route change, or to hash anchor if present
   useEffect(() => {
     const hash = window.location.hash.slice(1); // Remove # from hash
-    
+
     if (hash) {
       // Delay to ensure DOM is ready
       setTimeout(() => {
@@ -63,25 +64,26 @@ function Router() {
       {/* Auth Routes */}
       <Route path="/sign-in" component={SignIn} />
       <Route path="/auth/callback" component={AuthCallback} />
-      
+
       {/* Payment result pages - accessible without authentication */}
       <Route path="/payment/success" component={PaymentSuccess} />
       <Route path="/payment/cancel" component={PaymentCancel} />
-      
+
       {/* Home Page - Root */}
       <Route path="/" component={HomePage} />
-      
+
       {/* Brand Pages - PUBLIC */}
       <Route path="/workshops" component={WorkshopsPage} />
+      <Route path="/workshop-calendar" component={WorkshopCalendarPage} />
       <Route path="/commission" component={CommissionPage} />
       <Route path="/shop" component={ShopPage} />
       <Route path="/auctions" component={AuctionsPage} />
       <Route path="/about" component={AboutPage} />
-      
+
       {/* Founding 100 Launch Page - PUBLIC */}
       <Route path="/founding-100" component={MainLaunch} />
       <Route path="/founding100" component={MainLaunch} />
-      
+
       {/* Checkout Pages - PUBLIC */}
       <Route path="/checkout/founder">
         {() => <CheckoutPage seatType="founder" />}
@@ -89,29 +91,29 @@ function Router() {
       <Route path="/checkout/patron">
         {() => <CheckoutPage seatType="patron" />}
       </Route>
-      
+
       {/* Promo Code Redemption - PUBLIC */}
       <Route path="/redeem" component={RedeemCodePage} />
-      
+
       {/* Gift Claim - PUBLIC (redirects to login if needed) */}
       <Route path="/claim-gift" component={ClaimGiftPage} />
-      
+
       {/* Legal Pages - PUBLIC */}
       <Route path="/terms" component={Terms} />
       <Route path="/privacy" component={Privacy} />
       <Route path="/waiver" component={Waiver} />
-      
+
       {/* Wall of Leaves - PUBLIC */}
       <Route path="/wall-of-leaves" component={WallOfLeaves} />
-      
+
       {/* Seasonal Guide - PUBLIC */}
       <Route path="/seasonal-guide" component={SeasonalGuide} />
-      
+
       {/* Sculpture/Cutting Gallery - Can view without purchase */}
       <Route path="/sculptures">
         {() => <SculptureGallery />}
       </Route>
-      
+
       {/* Sculpture Selection with Purchase ID */}
       {isAuthenticated && (
         <Route path="/sculpture-selection/:purchaseId">
@@ -121,14 +123,14 @@ function Router() {
 
       {/* --- DASHBOARD IS NOW ACCESSIBLE --- */}
       <Route path="/dashboard" component={Dashboard} />
-          
+
       {/* Admin Panel - Protected for admins only */}
       {isAuthenticated && (
         <Route path="/admin">
           {user?.isAdmin ? <AdminPanel /> : <NotFound />}
         </Route>
       )}
-      
+
       {/* Fallback to 404 */}
       <Route component={NotFound} />
     </Switch>

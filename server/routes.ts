@@ -39,6 +39,7 @@ import {
 } from "./utils/emailService";
 import { generatePromoCode } from "./utils/promoCodeGenerator";
 import { addSubscriberToMailchimp } from "./mailchimp";
+import { registerWorkshopRoutes } from "./routes/workshop-calendar";
 
 // Server-side pricing functions (source of truth - NEVER trust client prices!)
 
@@ -149,6 +150,9 @@ async function getUserIdFromToken(req: any): Promise<string | null> {
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
+
+  // Register workshop calendar routes
+  registerWorkshopRoutes(app);
 
   // Get authenticated user info (Supabase Auth)
   app.get("/api/auth/user", async (req: any, res) => {

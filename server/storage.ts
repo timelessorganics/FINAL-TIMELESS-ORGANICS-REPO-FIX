@@ -9,6 +9,9 @@ import {
   subscribers,
   promoCodes,
   reservations,
+  workshopDatesTable,
+  workshopBookingsTable,
+  workshopWaitlistTable,
   type User,
   type UpsertUser,
   type Seat,
@@ -39,12 +42,12 @@ export interface IStorage {
   getUserByEmail(email: string): Promise<User | undefined>;
   createUser(userData: { email: string; firstName?: string; lastName?: string; isAdmin?: boolean }): Promise<User>;
   upsertUser(user: UpsertUser): Promise<User>;
-  
+
   // Seat operations
   getSeats(): Promise<Seat[]>;
   getSeatByType(type: 'founder' | 'patron'): Promise<Seat | undefined>;
   updateSeatSold(type: 'founder' | 'patron', increment: number): Promise<void>;
-  
+
   // Purchase operations
   createPurchase(purchase: InsertPurchase): Promise<Purchase>;
   getPurchase(id: string): Promise<Purchase | undefined>;
@@ -53,41 +56,41 @@ export interface IStorage {
   updatePurchaseStatus(id: string, status: 'pending' | 'completed' | 'failed', paymentReference?: string, certificateUrl?: string): Promise<boolean>;
   updatePurchase(id: string, updates: Partial<Purchase>): Promise<void>;
   claimGiftPurchase(purchaseId: string, userId: string): Promise<void>;
-  
+
   // Code operations
   createCode(code: InsertCode): Promise<Code>;
   getCodesByPurchaseId(purchaseId: string): Promise<Code[]>;
   getAllCodes(): Promise<Code[]>;
-  getCodeByCode(code: string): Promise<Code | undefined>;
+  getCodeByCode(codeString: string): Promise<Code | undefined>;
   getCodeById(codeId: string): Promise<Code | undefined>;
   redeemCode(codeId: string, redeemedBy: string): Promise<void>;
-  
+
   // Sculpture operations
   createSculpture(sculpture: InsertSculpture): Promise<Sculpture>;
   getSculptures(): Promise<Sculpture[]>;
   getSculpture(id: string): Promise<Sculpture | undefined>;
-  
+
   // Sculpture selection operations
   createSculptureSelection(selection: InsertSculptureSelection): Promise<SculptureSelection>;
   getSculptureSelectionByPurchaseId(purchaseId: string): Promise<SculptureSelection | undefined>;
-  
+
   // Referral operations
   createReferral(referral: InsertReferral): Promise<Referral>;
   getReferralsByCodeId(codeId: string): Promise<Referral[]>;
   getReferralsByUserId(userId: string): Promise<Referral[]>;
   getAllReferrals(): Promise<Referral[]>;
-  
+
   // Subscriber operations (pre-launch interest capture)
   createSubscriber(subscriber: InsertSubscriber): Promise<Subscriber>;
   getSubscribers(): Promise<Subscriber[]>;
   getSubscriberByEmail(email: string): Promise<Subscriber | undefined>;
-  
+
   // Promo code operations (for free passes)
   createPromoCode(promoCode: InsertPromoCode): Promise<PromoCode>;
   getPromoCodeByCode(code: string): Promise<PromoCode | undefined>;
   getAllPromoCodes(): Promise<PromoCode[]>;
   markPromoCodeAsUsed(id: string, userId: string, purchaseId: string): Promise<void>;
-  
+
   // Reservation operations (24-hour seat holds)
   createReservation(userId: string, seatType: 'founder' | 'patron'): Promise<Reservation>;
   getActiveReservation(userId: string, seatType: 'founder' | 'patron'): Promise<Reservation | undefined>;
@@ -97,6 +100,16 @@ export interface IStorage {
   cancelReservation(reservationId: string): Promise<void>;
   convertReservationToPurchase(reservationId: string, purchaseId: string): Promise<void>;
   getUserActiveReservations(userId: string): Promise<Reservation[]>;
+
+  // Workshop Calendar Methods
+  getWorkshopDates(): Promise<Array<any>>;
+  getWorkshopDate(id: string): Promise<any | undefined>;
+  createWorkshopDate(data: any): Promise<any>;
+  getWorkshopBooking(userId: string, workshopDateId: string): Promise<any | undefined>;
+  createWorkshopBooking(data: any): Promise<any>;
+  getWaitlistEntry(userId: string, workshopDateId: string): Promise<any | undefined>;
+  addToWaitlist(data: { userId: string; workshopDateId: string }): Promise<any>;
+  getWaitlistForWorkshop(workshopDateId: string): Promise<Array<any>>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -214,7 +227,7 @@ export class DatabaseStorage implements IStorage {
           : eq(purchases.id, id)
       )
       .returning();
-    
+
     // Return true if a row was updated, false if already completed
     return result.length > 0;
   }
@@ -268,7 +281,7 @@ export class DatabaseStorage implements IStorage {
     }
 
     const currentRedeemedBy = (code.redeemedBy as string[]) || [];
-    
+
     await db
       .update(codes)
       .set({
@@ -475,6 +488,74 @@ export class DatabaseStorage implements IStorage {
           gt(reservations.expiresAt, new Date())
         )
       );
+  }
+
+  // Workshop Calendar Methods
+  async getWorkshopDates() {
+    const dates = await db.select().from(workshopDatesTable).orderBy(workshopDatesTable.date);
+
+    return dates.map(date => {
+      const spotsLeft = date.maxParticipants - date.currentParticipants;
+      let status: "available" | "filling_fast" | "sold_out" = "available";
+
+      if (spotsLeft === 0) {
+        status = "sold_out";
+      } else if (spotsLeft <= 2) {
+        status = "filling_fast";
+      }
+
+      return { ...date, status };
+    });
+  }
+
+  async getWorkshopDate(id: string) {
+    const [workshopDate] = await db.select().from(workshopDatesTable).where(eq(workshopDatesTable.id, id));
+    return workshopDate;
+  }
+
+  async createWorkshopDate(data: any) {
+    const [workshopDate] = await db.insert(workshopDatesTable).values(data).returning();
+    return workshopDate;
+  }
+
+  async getWorkshopBooking(userId: string, workshopDateId: string) {
+    const [booking] = await db.select().from(workshopBookingsTable)
+      .where(and(
+        eq(workshopBookingsTable.userId, userId),
+        eq(workshopBookingsTable.workshopDateId, workshopDateId)
+      ));
+    return booking;
+  }
+
+  async createWorkshopBooking(data: any) {
+    const [booking] = await db.insert(workshopBookingsTable).values(data).returning();
+
+    // Increment current participants
+    await db.update(workshopDatesTable)
+      .set({ currentParticipants: sql`${workshopDatesTable.currentParticipants} + 1` })
+      .where(eq(workshopDatesTable.id, data.workshopDateId));
+
+    return booking;
+  }
+
+  async getWaitlistEntry(userId: string, workshopDateId: string) {
+    const [entry] = await db.select().from(workshopWaitlistTable)
+      .where(and(
+        eq(workshopWaitlistTable.userId, userId),
+        eq(workshopWaitlistTable.workshopDateId, workshopDateId)
+      ));
+    return entry;
+  }
+
+  async addToWaitlist(data: { userId: string; workshopDateId: string }) {
+    const [entry] = await db.insert(workshopWaitlistTable).values(data).returning();
+    return entry;
+  }
+
+  async getWaitlistForWorkshop(workshopDateId: string) {
+    return await db.select().from(workshopWaitlistTable)
+      .where(eq(workshopWaitlistTable.workshopDateId, workshopDateId))
+      .orderBy(workshopWaitlistTable.createdAt);
   }
 }
 
