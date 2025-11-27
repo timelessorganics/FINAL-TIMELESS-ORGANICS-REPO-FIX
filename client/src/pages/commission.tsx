@@ -3,7 +3,7 @@ import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from "wouter";
-import { ArrowRight, Leaf, Flower, TreePine, Shell } from "lucide-react";
+import { ArrowRight, ArrowLeft, Leaf, Flower, TreePine, Shell } from "lucide-react";
 
 const specimenStyles = [
   { name: "Protea Head", icon: Flower, description: "King Protea or Sugarbush blooms", season: "Winter-Spring" },
@@ -28,6 +28,15 @@ export default function CommissionPage() {
       
       <main className="relative z-50 min-h-screen">
         <div className="max-w-[1100px] mx-auto px-6 lg:px-8 py-16">
+          
+          <div className="mb-8">
+            <Link href="/">
+              <Button variant="ghost" className="gap-2" data-testid="button-back-home">
+                <ArrowLeft className="w-4 h-4" />
+                Back to Home
+              </Button>
+            </Link>
+          </div>
           
           <section className="text-center mb-20 pt-8" data-testid="section-hero">
             <div className="kicker mb-4">BESPOKE BRONZE</div>

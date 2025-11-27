@@ -3,7 +3,7 @@ import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Link } from "wouter";
-import { Flame, Hammer, Leaf, ArrowRight } from "lucide-react";
+import { Flame, Hammer, Leaf, ArrowRight, ArrowLeft } from "lucide-react";
 
 export default function AboutPage() {
   return (
@@ -13,6 +13,15 @@ export default function AboutPage() {
       
       <main className="relative z-50 min-h-screen">
         <div className="max-w-[900px] mx-auto px-6 lg:px-8 py-16">
+          
+          <div className="mb-8">
+            <Link href="/">
+              <Button variant="ghost" className="gap-2" data-testid="button-back-home">
+                <ArrowLeft className="w-4 h-4" />
+                Back to Home
+              </Button>
+            </Link>
+          </div>
           
           <section className="text-center mb-16 pt-8" data-testid="section-hero">
             <div className="kicker mb-4">OUR STORY</div>
