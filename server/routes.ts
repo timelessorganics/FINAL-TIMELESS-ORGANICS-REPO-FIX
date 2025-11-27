@@ -30,15 +30,20 @@ import { generatePromoCode } from "./utils/promoCodeGenerator";
 import { addSubscriberToMailchimp } from "./mailchimp";
 
 // Server-side pricing functions (source of truth - NEVER trust client prices!)
+
+// Mounting deposit: R1,000 for all types (deducted from final quote)
+// Final prices vary: slate R1,500, wood R1,000+, resin R2,500+ (size dependent)
 function getMountingPrice(mountingType: string): number {
   if (mountingType === 'none') return 0;
   return 100000; // R1,000 deposit for all mounting types (wall/base/custom)
 }
 
+// Patina service: R1,000
 function getPatinaPrice(): number {
   return 100000; // R1,000
 }
 
+// Commission voucher: R1,500 (generates 40%/60% discount code)
 function getCommissionVoucherPrice(): number {
   return 150000; // R1,500
 }
@@ -95,16 +100,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
 
-  // --- CRITICAL PATCH: Fixes Auth Loop Crash ---
-  // This is the correct, safe function that prevents the server crash.
+  // --- CRITICAL PATCH: Fixes Auth Loop Crash (This is the only modified function) ---
   app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
     try {
-      // 1. Get the authenticated user ID. 
+      // 1. Get the authenticated user ID (using the robust getUserId helper)
       const userId = getUserId(req);
-      
-      // If userId is 'anonymous-dev-user' or empty (meaning auth failed), return 401.
+
+      // If userId is 'anonymous-dev-user' or empty, the session is invalid.
       if (!userId || userId === 'anonymous-dev-user') {
-        // CRITICAL: Returns 401 instead of crashing with 500. This breaks the loop.
+        // CRITICAL: Return 401 instead of crashing with a 500 error. 
+        // This breaks the frontend redirect loop.
         return res.status(401).json({ message: "No active session found" });
       }
 
@@ -112,9 +117,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const user = await storage.getUser(userId);
 
       if (!user) {
+        // User found in token but not in storage (shouldn't happen, but safe check)
         return res.status(404).json({ message: "User not found in storage" });
       }
-      
+
       // Success: Return the full user object
       return res.json(user);
 
@@ -593,7 +599,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = getUserId(req);
 
       const result = insertSculptureSelectionSchema.safeParse(req.body);
-      
+
       if (!result.success) {
         return res.status(400).json({ 
           message: fromError(result.error).toString() 
@@ -626,7 +632,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const userId = getUserId(req);
 
       const purchases = await storage.getPurchasesByUserId(userId);
-      
+
       // Fetch codes for each purchase
       const purchasesWithCodes = await Promise.all(
         purchases.map(async (purchase) => {
@@ -664,7 +670,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = getUserId(req);
       const user = await storage.getUser(userId);
-      
+
       if (!user?.isAdmin) {
         return res.status(403).json({ message: "Admin access required" });
       }
@@ -682,7 +688,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = getUserId(req);
       const user = await storage.getUser(userId);
-      
+
       if (!user?.isAdmin) {
         return res.status(403).json({ message: "Admin access required" });
       }
@@ -700,7 +706,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = getUserId(req);
       const user = await storage.getUser(userId);
-      
+
       if (!user?.isAdmin) {
         return res.status(403).json({ message: "Admin access required" });
       }
@@ -830,11 +836,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
           (sub.notes || "").replace(/\n/g, " "),
           sub.createdAt?.toISOString() || "",
         ].map(field => `"${field.replace(/"/g, '""')}"`).join(",");
-        
-        csvRows.push(row);
-      }
-
-      const csvContent = csvRows.join("\n");
 
       res.setHeader("Content-Type", "text/csv");
       res.setHeader("Content-Disposition", "attachment; filename=interested-subscribers.csv");
@@ -1369,7 +1370,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin: Create sculpture (admin only)
+// Admin: Create sculpture (admin only)
   app.post("/api/admin/sculptures", isAuthenticated, async (req: any, res: Response) => {
     try {
       const userId = getUserId(req);
