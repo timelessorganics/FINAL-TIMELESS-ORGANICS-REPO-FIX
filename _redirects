@@ -1,5 +1,0 @@
-# API requests go to Railway backend
-/api/*  https://final-timeless-organics-repo-fix-production.up.railway.app/:splat  200
-
-# Everything else goes to the SPA index
-/*      /index.html  200
