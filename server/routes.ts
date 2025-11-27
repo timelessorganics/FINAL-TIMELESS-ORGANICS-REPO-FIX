@@ -3,7 +3,7 @@ import { createServer } from "http";
 import express from "express";
 import path from "path";
 import { storage } from "./storage";
-import { setupAuth, isAuthenticated, getSessionUser, getUserId } from "./replitAuth";
+import { setupAuth, isAuthenticated } from "./supabaseAuth";
 import { insertPurchaseSchema, insertSculptureSchema, insertSculptureSelectionSchema, insertSubscriberSchema, insertPromoCodeSchema } from "@shared/schema";
 import { fromError } from "zod-validation-error";
 import { 
@@ -96,41 +96,70 @@ async function handlePurchaseCompletion(purchaseId: string): Promise<void> {
   }
 }
 
+// Helper to get user ID from authenticated request
+async function getUserIdFromToken(req: any): Promise<string | null> {
+  const authHeader = req.headers.authorization;
+  if (!authHeader || !authHeader.startsWith('Bearer ')) {
+    return null;
+  }
+
+  const token = authHeader.replace('Bearer ', '');
+  const { supabaseAdmin } = await import('./supabaseAuth');
+  const { data: { user }, error } = await supabaseAdmin.auth.getUser(token);
+
+  if (error || !user || !user.email) {
+    return null;
+  }
+
+  // Get user from our database by email
+  const dbUser = await storage.getUserByEmail(user.email);
+  return dbUser?.id || null;
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Auth middleware
   await setupAuth(app);
 
-  // --- CRITICAL PATCH: Fixes Auth Loop Crash (This is the only modified function) ---
-  app.get('/api/auth/user', isAuthenticated, async (req: any, res) => {
+  // Get authenticated user info (Supabase Auth)
+  app.get('/api/auth/user', async (req: any, res) => {
     try {
-      // 1. Get the authenticated user ID (using the robust getUserId helper)
-      const userId = getUserId(req);
-
-      // If userId is 'anonymous-dev-user' or empty, the session is invalid.
-      if (!userId || userId === 'anonymous-dev-user') {
-        // CRITICAL: Return 401 instead of crashing with a 500 error. 
-        // This breaks the frontend redirect loop.
+      const authHeader = req.headers.authorization;
+      
+      if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(401).json({ message: "No active session found" });
       }
 
-      // 2. Fetch the full user from storage (this is the desired outcome for the dashboard)
-      const user = await storage.getUser(userId);
+      const token = authHeader.replace('Bearer ', '');
 
-      if (!user) {
-        // User found in token but not in storage (shouldn't happen, but safe check)
-        return res.status(404).json({ message: "User not found in storage" });
+      // Verify token with Supabase
+      const { supabaseAdmin } = await import('./supabaseAuth');
+      const { data: { user: supabaseUser }, error } = await supabaseAdmin.auth.getUser(token);
+
+      if (error || !supabaseUser) {
+        return res.status(401).json({ message: "Invalid session" });
       }
 
-      // Success: Return the full user object
+      // Get or create user in our database
+      let user = await storage.getUserByEmail(supabaseUser.email!);
+      
+      if (!user) {
+        // Create user if doesn't exist
+        const nameParts = supabaseUser.user_metadata?.full_name?.split(' ') || [];
+        user = await storage.createUser({
+          email: supabaseUser.email!,
+          firstName: nameParts[0] || supabaseUser.user_metadata?.name || 'User',
+          lastName: nameParts.slice(1).join(' ') || '',
+          isAdmin: false,
+        });
+      }
+
       return res.json(user);
 
     } catch (error) {
-      // This catches the original TypeError from the old code and prevents the 500 crash.
       console.error("Error in /api/auth/user:", error);
       res.status(401).json({ message: "Session validation failed" });
     }
   });
-  // ----------------------------------------------------
 
   // Public: Health check with deployment verification
   app.get("/api/health", async (_req: Request, res: Response) => {
@@ -164,9 +193,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Initiate purchase with PayFast
   app.post("/api/purchase/initiate", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
-      const userEmail = (req as any).user?.email || 'studio@timeless.organic';
-      const userFirstName = (req as any).user?.firstName || 'Investor';
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+
+      const user = await storage.getUser(userId);
+      const userEmail = user?.email || 'studio@timeless.organic';
+      const userFirstName = user?.firstName || 'Investor';
 
       console.log('[Purchase] User initiating purchase:', userId, userEmail);
 
