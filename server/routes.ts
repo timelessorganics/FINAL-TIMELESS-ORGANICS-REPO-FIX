@@ -1,4 +1,5 @@
-import type { Express, Request, Response, RequestHandler, Server } from "express";
+import type { Express, Request, Response, RequestHandler } from "express";
+import type { Server } from "http";
 import { createServer } from "http";
 import express from "express";
 import path from "path";
@@ -314,7 +315,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/purchase/:id/redirect", isAuthenticated, async (req: any, res: Response) => {
     try {
       const purchaseId = req.params.id;
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
 
       // Get purchase and verify ownership
       const purchase = await storage.getPurchase(purchaseId);
@@ -630,7 +634,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Create sculpture selection
   app.post("/api/sculpture-selection", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
 
       const result = insertSculptureSelectionSchema.safeParse(req.body);
 
@@ -663,7 +670,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Get user's dashboard data
   app.get("/api/dashboard", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
 
       const purchases = await storage.getPurchasesByUserId(userId);
 
@@ -685,7 +695,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Get specific purchase
   app.get("/api/purchase/:id", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
 
       const purchase = await storage.getPurchase(req.params.id);
       if (!purchase || purchase.userId !== userId) {
@@ -702,7 +715,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get all seats (admin only)
   app.get("/api/admin/seats", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const user = await storage.getUser(userId);
 
       if (!user?.isAdmin) {
@@ -720,7 +736,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get all purchases (admin only)
   app.get("/api/admin/purchases", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const user = await storage.getUser(userId);
 
       if (!user?.isAdmin) {
@@ -738,7 +757,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get all codes (admin only)
   app.get("/api/admin/codes", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const user = await storage.getUser(userId);
 
       if (!user?.isAdmin) {
@@ -757,7 +779,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Redeem code
   app.post("/api/codes/redeem", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const user = await storage.getUser(userId);
       const { code: codeString } = req.body;
 
@@ -812,7 +837,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Get referral analytics for a code by ID
   app.get("/api/referrals/code/:codeId", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const { codeId } = req.params;
 
       // Fetch code by ID
@@ -849,7 +877,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Export subscribers CSV
   app.get("/api/admin/export/subscribers", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const user = await storage.getUser(userId);
 
       if (!user?.isAdmin) {
@@ -922,7 +953,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get all subscribers
   app.get("/api/admin/subscribers", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const user = await storage.getUser(userId);
 
       if (!user?.isAdmin) {
@@ -940,7 +974,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Sync subscribers and purchasers to Mailchimp
   app.post("/api/admin/mailchimp/sync", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const user = await storage.getUser(userId);
 
       if (!user?.isAdmin) {
@@ -1021,7 +1058,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Export subscribers as CSV
   app.get("/api/admin/subscribers/export", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const user = await storage.getUser(userId);
 
       if (!user?.isAdmin) {
@@ -1066,7 +1106,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ valid: false, message: "Promo code is required" });
       }
 
-      const promoCode = await storage.getCodeByCode(code.toUpperCase());
+      const promoCode = await storage.getPromoCodeByCode(code.toUpperCase());
 
       if (!promoCode) {
         return res.status(200).json({ valid: false, message: "Invalid promo code" });
@@ -1090,7 +1130,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Redeem promo code (creates free purchase)
   app.post("/api/promo-code/redeem", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
+      
       const { 
         code, specimenStyle, hasPatina, mountingType, commissionVoucher,
         internationalShipping, purchaseMode,
@@ -1099,7 +1143,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } = req.body;
 
       // Validate code
-      const promoCode = await storage.getCodeByCode(code.toUpperCase());
+      const promoCode = await storage.getPromoCodeByCode(code.toUpperCase());
 
       if (!promoCode || promoCode.used) {
         return res.status(400).json({ message: "Invalid or already used promo code" });
@@ -1326,7 +1370,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Protected: Claim a gift purchase
   app.post("/api/gift/claim/:id", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const purchaseId = req.params.id;
 
       const purchase = await storage.getPurchase(purchaseId);
@@ -1363,7 +1410,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get all promo codes
   app.get("/api/admin/promo-codes", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const user = await storage.getUser(userId);
 
       if (!user?.isAdmin) {
@@ -1381,7 +1431,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Generate promo codes (batch)
   app.post("/api/admin/promo-codes/generate", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const user = await storage.getUser(userId);
 
       if (!user?.isAdmin) {
@@ -1412,7 +1465,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 // Admin: Create sculpture (admin only)
   app.post("/api/admin/sculptures", isAuthenticated, async (req: any, res: Response) => {
     try {
-      const userId = getUserId(req);
+      const userId = await getUserIdFromToken(req);
+      if (!userId) {
+        return res.status(401).json({ message: "Unauthorized" });
+      }
       const user = await storage.getUser(userId);
 
       if (!user?.isAdmin) {
