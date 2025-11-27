@@ -1,0 +1,104 @@
+Customer Experience Enhancements
+1. Virtual Bronze Preview Tool
+
+Allow users to upload a photo of their specimen and see an AI-generated preview of what it might look like in bronze
+Show different patina finishes and mounting options overlaid on their space
+2. Specimen Seasonality Calendar
+
+Interactive calendar showing which botanicals are in season when
+Notifications when user's preferred specimens are blooming
+"Reserve for Next Season" option with deposit system
+3. Progress Tracking Dashboard
+
+Visual timeline showing casting stages: Investment → Burnout → Pour → Finishing
+Photo updates from the foundry at each stage
+Estimated completion dates
+4. Community Gallery
+
+User-submitted photos of their finished bronzes in their homes
+Voting/favoriting system
+Filter by specimen type, patina, or mounting style
+Revenue & Engagement
+5. Bronze Subscription Box
+
+Monthly/quarterly subscription for collectors
+Each shipment includes a smaller casting (leaf, seed pod, etc.)
+Builds a complete collection over time
+6. Gift Registry System
+
+Wedding/anniversary registry for bronze castings
+Multiple people can contribute toward a larger piece
+Gift message engraving option
+7. Tiered Membership Levels
+
+Beyond Founding 100: Silver, Gold, Platinum tiers
+Benefits: priority booking, exclusive specimens, studio visits
+Annual renewal with increasing perks
+8. Commission Matching Service
+
+Users submit their dream specimen/idea
+Platform matches them with appropriate pricing tier
+Approval process with mockups before commitment
+Educational & Community
+9. Virtual Workshop Streaming
+
+Live-stream bronze pours for remote participants
+Q&A during the process
+Certificate of participation + small bronze by mail
+10. Foundry Webcam
+
+24/7 stream of the foundry (when active)
+Time-lapse compilation of each casting process
+Behind-the-scenes content library
+11. Bronze Care & Maintenance Hub
+
+Video tutorials on patina maintenance
+Troubleshooting guide for oxidation issues
+Annual re-patina service booking
+12. Apprenticeship Program
+
+Extended multi-week intensive courses
+Certification as bronze casting practitioner
+Pathway to become a foundry assistant
+Technical Platform Features
+13. Augmented Reality Try-Before-You-Buy
+
+AR feature to visualize bronze in your space
+See scale/size accurately before purchase
+Share AR placements on social media
+14. Referral Rewards System
+
+Give R500 credit, get R500 credit
+Track referrals in dashboard
+Special bonuses for multiple successful referrals
+15. Installment Payment Plans
+
+Split R25,000+ commissions into monthly payments
+Auto-billing with progress milestones
+Early completion discounts
+16. Specimen Identification Tool
+
+Upload a photo of a botanical
+AI identifies species and casting suitability
+Instant quote for custom casting
+Business Operations
+17. Workshop Calendar with Auto-Booking
+
+Public calendar showing available workshop dates
+Automated scheduling with deposit payment
+Waitlist management for sold-out dates
+18. Bulk/Corporate Orders Portal
+
+Special pricing for companies ordering 10+ pieces
+Custom branding options (discrete logos on bases)
+Corporate gifting packages
+19. Sculpture Insurance Add-On
+
+Partner with insurance provider
+One-click insurance purchase at checkout
+Coverage for shipping, damage, theft
+20. Limited Edition Drops
+
+Quarterly "Artist's Choice" specimens
+Only 10-20 castings made
+Numbered certificates, higher collectibility

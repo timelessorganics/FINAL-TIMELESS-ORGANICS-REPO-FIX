@@ -423,13 +423,13 @@ export const workshopWaitlistTable = pgTable("workshop_waitlist", {
   createdAt: timestamp("created_at").defaultNow(),
 });
 
-export const insertWorkshopDateSchema = workshopDatesTable.omit({
+export const insertWorkshopDateSchema = createInsertSchema(workshopDatesTable).omit({
   id: true,
   createdAt: true,
   currentParticipants: true,
 });
 
-export const insertWorkshopBookingSchema = workshopBookingsTable.omit({
+export const insertWorkshopBookingSchema = createInsertSchema(workshopBookingsTable).omit({
   id: true,
   createdAt: true,
   depositPaid: true,

@@ -1,5 +1,5 @@
 import {
-  users,
+  usersTable,
   seats,
   purchases,
   codes,
