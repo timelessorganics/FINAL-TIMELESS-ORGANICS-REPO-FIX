@@ -51,7 +51,7 @@ async function pushToGitHub() {
     console.log('✅ GitHub authenticated successfully!');
 
     const owner = 'timelessorganics';
-    const repo = 'Timeless-Organics-Fouding-100';
+    const repo = 'FINAL-TIMELESS-ORGANICS-REPO-FIX';
     
     console.log('\n📝 Configuring git...');
     
