@@ -106,4 +106,11 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
   - Bronze warmth image filters
 - **Checkout:** Streamlined to essentials, all customization deferred to dashboard
 - **Database Note:** Seat prices in dev DB are test values (R10). Production should have R3,000 (Founder) and R5,000 (Patron).
-- **Status:** Home page messaging complete with "investment" double meaning. Ready for your feedback!
+- **Design Refinements (Latest):**
+  - Removed glassy rectangular Card blocks from secondary headings on home page
+  - Added faded time-lapse video backgrounds (6-10% opacity) behind key sections:
+    - Smoke/sparks video behind "Investment" section
+    - Flower bloom video behind "Choose Your Moment" section  
+    - Burnt metal video behind final CTA section
+  - Videos loop silently with dark gradient overlays for text readability
+- **Status:** Home page messaging complete with refined design. Ready for your feedback!
