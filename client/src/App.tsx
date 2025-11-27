@@ -8,6 +8,7 @@ import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import MainLaunch from "@/pages/main-launch";
 import HomePage from "@/pages/home";
+import Founding100ExplainedPage from "@/pages/founding-100-explained";
 import WorkshopsPage from "@/pages/workshops";
 import CommissionPage from "@/pages/commission";
 import AboutPage from "@/pages/about";
@@ -70,6 +71,9 @@ function Router() {
 
       {/* Home Page - Root */}
       <Route path="/" component={HomePage} />
+
+      {/* Founding 100 Explanation */}
+      <Route path="/founding-100-explained" component={Founding100ExplainedPage} />
 
       {/* Brand Pages - PUBLIC */}
       <Route path="/workshops" component={WorkshopsPage} />

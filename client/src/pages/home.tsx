@@ -59,9 +59,9 @@ export default function HomePage() {
           {/* Hero content with staggered reveal */}
           <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
             
-            {/* Kicker - subtle */}
-            <div className="hero-text-reveal hero-text-reveal-delay-1">
-              <span className="inline-block text-xs tracking-[0.3em] text-bronze/70 uppercase font-light mb-6">
+            {/* Kicker - bold with background */}
+            <div className="hero-text-reveal hero-text-reveal-delay-1 mb-6">
+              <span className="inline-block text-sm tracking-[0.3em] text-white/90 uppercase font-medium px-4 py-2 rounded-full border border-bronze/50 bg-bronze/10 backdrop-blur-sm">
                 Founding 100 Investment Launch
               </span>
             </div>
@@ -77,7 +77,7 @@ export default function HomePage() {
             </p>
 
             {/* Dual CTA - Reserve OR Buy Now */}
-            <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+            <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
               <Link href="#seats">
                 <Button size="lg" className="btn-bronze text-base px-8 py-6 min-h-14 gap-2" data-testid="button-reserve-seat">
                   <Clock className="w-4 h-4" />
@@ -90,6 +90,23 @@ export default function HomePage() {
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
+            </div>
+
+            {/* Learn More button */}
+            <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6">
+              <Link href="/founding-100-explained">
+                <Button size="lg" variant="ghost" className="text-base px-8 py-6 min-h-14 text-white/70 hover:text-white/90" data-testid="button-learn-more">
+                  Learn More
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
+
+            {/* Reserve explanation */}
+            <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6">
+              <p className="text-sm text-white/60 font-light max-w-2xl mx-auto">
+                <span className="text-white/80 font-medium">Reserve as many as you like.</span> Most investors are on mobile. We're giving everyone a fair chance before they're all gone. Once they're gone, they're gone.
+              </p>
             </div>
             
             {/* Seat counter */}
@@ -111,7 +128,7 @@ export default function HomePage() {
         {/* YOUR INVESTMENT IS OUR INVESTMENT - The Key Message */}
         <section className="py-24 px-6 bg-gradient-to-b from-[#050505] to-background relative overflow-hidden" data-testid="section-investment-meaning">
           {/* Faded smoke video background */}
-          <div className="absolute inset-0 opacity-[0.22]">
+          <div className="absolute inset-0 opacity-[0.38]">
             <video 
               autoPlay 
               loop 
@@ -442,7 +459,7 @@ export default function HomePage() {
         {/* CHOOSE YOUR MOMENT - Seasonal Choice */}
         <section className="py-24 px-6 bg-card/10 relative overflow-hidden" data-testid="section-seasonal-choice">
           {/* Faded flower bloom video background */}
-          <div className="absolute inset-0 opacity-[0.20]">
+          <div className="absolute inset-0 opacity-[0.37]">
             <video 
               autoPlay 
               loop 
@@ -643,7 +660,7 @@ export default function HomePage() {
         {/* FINAL CTA - Scarcity */}
         <section className="py-24 px-6 bg-gradient-to-b from-[#050505] to-background relative overflow-hidden" data-testid="section-final-cta">
           {/* Faded burnt metal video background */}
-          <div className="absolute inset-0 opacity-[0.25]">
+          <div className="absolute inset-0 opacity-[0.40]">
             <video 
               autoPlay 
               loop 
