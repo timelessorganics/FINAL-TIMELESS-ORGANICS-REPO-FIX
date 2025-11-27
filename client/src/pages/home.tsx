@@ -111,7 +111,7 @@ export default function HomePage() {
         {/* YOUR INVESTMENT IS OUR INVESTMENT - The Key Message */}
         <section className="py-24 px-6 bg-gradient-to-b from-[#050505] to-background relative overflow-hidden" data-testid="section-investment-meaning">
           {/* Faded smoke video background */}
-          <div className="absolute inset-0 opacity-[0.08]">
+          <div className="absolute inset-0 opacity-[0.22]">
             <video 
               autoPlay 
               loop 
@@ -442,7 +442,7 @@ export default function HomePage() {
         {/* CHOOSE YOUR MOMENT - Seasonal Choice */}
         <section className="py-24 px-6 bg-card/10 relative overflow-hidden" data-testid="section-seasonal-choice">
           {/* Faded flower bloom video background */}
-          <div className="absolute inset-0 opacity-[0.06]">
+          <div className="absolute inset-0 opacity-[0.20]">
             <video 
               autoPlay 
               loop 
@@ -643,7 +643,7 @@ export default function HomePage() {
         {/* FINAL CTA - Scarcity */}
         <section className="py-24 px-6 bg-gradient-to-b from-[#050505] to-background relative overflow-hidden" data-testid="section-final-cta">
           {/* Faded burnt metal video background */}
-          <div className="absolute inset-0 opacity-[0.10]">
+          <div className="absolute inset-0 opacity-[0.25]">
             <video 
               autoPlay 
               loop 
