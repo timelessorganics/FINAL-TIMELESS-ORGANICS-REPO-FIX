@@ -77,16 +77,24 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **PDFKit:** Server-side PDF certificate generation.
 
 ## Recent Changes (Session Nov 27, 2025)
-- **Fixed Supabase Connection:** Updated drizzle.config.ts to add SSL mode (`?sslmode=require`). User password reset on Supabase resolved connection issues.
-- **Added 24-Hour Reservation System:**
-  - Created `reservations` table with status tracking (active/converted/expired/cancelled), 24-hour expiry tracking, and indexes for performance
-  - Implemented 8 storage methods for all reservation CRUD operations
-  - Added 3 new API endpoints: POST /api/reservations (create), GET /api/reservations/user (list), updated GET /api/seats/availability (now accounts for active reservations)
-  - Seat availability calculation: `available = totalAvailable - sold - activeReservations`
-  - Auto-expiry logic runs on every seat availability check
-- **Fixed Backend Auth for Supabase:**
-  - Updated `isAuthenticated` middleware in server/replitAuth.ts to accept Supabase JWT tokens via Bearer authorization header
-  - Decodes and validates JWT tokens locally (expiration check) when running outside Replit
-  - Maintains backward compatibility with Replit OIDC sessions in production
-  - Now properly routes authenticated requests in development environment
-- **Status:** All code changes complete. Ready for: `git push` → Railway auto-deploy → `npm run db:push` (creates reservations table) → Test on production.
+- **Luxury Design Overhaul:**
+  - New hero section with bronze image emerging slowly from pure darkness (#050505) over 5 seconds
+  - Glassy translucent text with slow-moving bronze/gold/patina gradient (10s animation cycle)
+  - Staggered text reveal animations with 2-4 second delays for dramatic effect
+  - Hairline borders (1px rgba) throughout with bronze tint
+  - Bronze warmth image filter with 12% brightness boost
+- **Checkout Simplification:**
+  - Streamlined to essentials: name, email, phone, delivery address, cast timing choice only
+  - "Cast Now" vs "Wait for Season" toggle for casting timeline preference
+  - Removed specimen selection, mounting options, patina options (deferred to post-purchase dashboard)
+  - Clean summary sidebar showing seat benefits and "After Purchase" customization note
+  - Address field added back to satisfy API validation requirements
+- **Header Component Updates:**
+  - Global navigation header with refined typography across all pages
+  - Checkout variant header with "Founding 100" context and back button
+- **Previous Session:**
+  - Fixed Supabase Connection: Updated drizzle.config.ts to add SSL mode (`?sslmode=require`)
+  - Added 24-Hour Reservation System with auto-expiry
+  - Fixed Backend Auth for Supabase JWT tokens
+- **Database Note:** Seat prices in dev DB are test values (R10). Production should have R3,000 (Founder) and R5,000 (Patron).
+- **Status:** All UI changes complete. PayFast integration preserved with proper payload structure.

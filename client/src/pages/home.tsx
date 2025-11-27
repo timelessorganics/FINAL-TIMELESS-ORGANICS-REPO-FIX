@@ -1,308 +1,337 @@
 import { Link } from "wouter";
-import { useRef, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import { Calendar, Sparkles, Award } from "lucide-react";
+import { Clock, Sparkles, Shield, Award, ArrowRight } from "lucide-react";
 
-// Video for hero background
-import heroVideo from "@assets/Fade_out_then Bronze appear Need wording202511102156_3bglw_1764171397367.mp4";
+import heroImage from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764248900779.png";
+import bronzeImage1 from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764170102466.png";
+import bronzeImage2 from "@assets/Gemini_Generated_Image_rl9enarl9enarl9e_1764170102466.png";
+import bronzeImage3 from "@assets/Gemini_Generated_Image_o0oi1oo0oi1oo0oi_1764170102464.png";
 
-// BACKUP: Original aloe image import (uncomment to revert)
-// import aloeImage from "@assets/Bronze Aloe Sculpture in Resin Block 2_1763150497628.jpg";
+interface SeatAvailability {
+  type: string;
+  name: string;
+  price: number;
+  totalAvailable: number;
+  sold: number;
+  remaining: number;
+}
 
 export default function HomePage() {
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const { data: seats } = useQuery<SeatAvailability[]>({
+    queryKey: ['/api/seats/availability'],
+  });
 
-  useEffect(() => {
-    // Play video once and pause at the end
-    const video = videoRef.current;
-    if (video) {
-      video.play().catch(() => {
-        // Autoplay might be blocked, that's ok
-      });
-    }
-  }, []);
+  const founderSeats = seats?.find(s => s.type === 'founder');
+  const patronSeats = seats?.find(s => s.type === 'patron');
+  const totalRemaining = (founderSeats?.remaining || 0) + (patronSeats?.remaining || 0);
 
   return (
     <>
-      <div className="bg-aloe" />
       <Header />
       
       <main className="relative z-50">
         
-        {/* Hero Section with VIDEO Background */}
+        {/* HERO: Bronze emerging from darkness */}
         <section 
-          className="min-h-[85vh] flex items-center justify-center px-6 py-24 relative overflow-hidden" 
+          className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#050505]" 
           data-testid="section-hero"
         >
-          {/* Video Background - plays once and pauses at end */}
-          <video
-            ref={videoRef}
-            className="absolute inset-0 w-full h-full object-cover"
-            muted
-            playsInline
-            onEnded={(e) => {
-              // Pause at the last frame when video ends
-              e.currentTarget.pause();
-            }}
-          >
-            <source src={heroVideo} type="video/mp4" />
-          </video>
+          {/* Hero image with slow fade-from-darkness */}
+          <div className="absolute inset-0 flex items-center justify-center hero-image-reveal">
+            <img 
+              src={heroImage} 
+              alt="Wall-mounted bronze botanical sculpture on slate" 
+              className="w-full h-full object-contain max-w-4xl bronze-warmth-subtle"
+            />
+          </div>
           
-          {/* Dark overlay for text readability */}
-          <div className="absolute inset-0 bg-gradient-to-b from-background/70 via-background/50 to-background/80" />
+          {/* Subtle gradient overlay */}
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-[#050505]/60" />
           
-          <div className="max-w-4xl mx-auto text-center relative z-10">
-            <div className="mb-6 text-sm tracking-[0.3em] text-accent-gold/90 uppercase font-medium">
-              Bronze • Patina • Organic Casting
+          {/* Hero content with staggered reveal */}
+          <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+            
+            {/* Kicker */}
+            <div className="hero-text-reveal hero-text-reveal-delay-1">
+              <span className="inline-block text-xs tracking-[0.4em] text-bronze/80 uppercase font-light mb-6">
+                Founding 100 Launch
+              </span>
             </div>
             
-            <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1]">
-              <span className="moving-fill">Timeless Organics</span>
+            {/* Main title with glassy effect */}
+            <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-5xl md:text-7xl lg:text-8xl font-light mb-8 leading-[1.05] tracking-tight">
+              <span className="hero-glass-text">Timeless Organics</span>
             </h1>
             
-            <p className="text-xl md:text-2xl text-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-              One-of-a-kind castings from organic matter.<br />
-              Nature's originals, held forever in bronze.
+            {/* Tagline */}
+            <p className="hero-text-reveal hero-text-reveal-delay-3 text-lg md:text-xl text-foreground/70 font-light max-w-xl mx-auto mb-10 leading-relaxed">
+              Nature's originals, immortalized in bronze.
             </p>
 
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/founding-100">
-                <Button size="lg" className="btn-bronze text-base px-8 py-6 min-h-14" data-testid="button-founding-100">
-                  Limited Seats - Founding 100
+            {/* CTA */}
+            <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Link href="#seats">
+                <Button size="lg" className="btn-bronze text-sm px-8 py-6 min-h-12 gap-2" data-testid="button-secure-seat">
+                  Secure Your Seat
+                  <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
-              <Link href="/workshops">
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="text-base px-8 py-6 min-h-14 bg-background/30 backdrop-blur-sm border-foreground/20 hover:border-foreground/40" 
-                  data-testid="button-explore-workshops"
-                >
-                  Explore Workshops
-                </Button>
-              </Link>
+              {totalRemaining > 0 && (
+                <span className="text-sm text-muted-foreground">
+                  {totalRemaining} of 100 seats remaining
+                </span>
+              )}
             </div>
           </div>
         </section>
 
-        {/* BACKUP: Original Hero Section with Aloe Image (uncomment to revert)
-        <section 
-          className="min-h-[85vh] flex items-center justify-center px-6 py-24 relative overflow-hidden" 
-          data-testid="section-hero"
-          style={{
-            backgroundImage: `url(${aloeImage})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-          }}
-        >
-          <div className="absolute inset-0 bg-gradient-to-b from-background/85 via-background/70 to-background/85" />
-          
-          <div className="max-w-4xl mx-auto text-center relative z-10">
-            <div className="mb-6 text-sm tracking-[0.3em] text-accent-gold/90 uppercase font-medium">
-              Bronze • Patina • Organic Casting
+        {/* FOUNDING 100 LAUNCH - Clear Value Proposition */}
+        <section id="seats" className="py-24 px-6 bg-gradient-to-b from-background to-card/30">
+          <div className="max-w-5xl mx-auto">
+            
+            {/* Section header */}
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 border border-bronze/30 rounded-full px-5 py-2 mb-6">
+                <Clock className="w-4 h-4 text-bronze" />
+                <span className="text-bronze text-xs uppercase tracking-wider font-medium">24-Hour Seat Reservation</span>
+              </div>
+              
+              <h2 className="font-serif text-4xl md:text-5xl font-light mb-4 tracking-tight">
+                <span className="hero-glass-text">Founding 100</span>
+              </h2>
+              
+              <p className="text-muted-foreground text-lg max-w-2xl mx-auto font-light leading-relaxed">
+                Invest in our Kommetjie foundry. Receive a guaranteed bronze casting 
+                and lifetime benefits.
+              </p>
             </div>
-            
-            <h1 className="font-serif text-6xl md:text-7xl lg:text-8xl font-bold mb-8 leading-[1.1]">
-              <span className="moving-fill">Timeless Organics</span>
-            </h1>
-            
-            <p className="text-xl md:text-2xl text-foreground max-w-2xl mx-auto mb-12 leading-relaxed">
-              One-of-a-kind castings from organic matter.<br />
-              Nature's originals, held forever in bronze.
-            </p>
 
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/founding-100">
-                <Button size="lg" className="btn-bronze text-base px-8 py-6 min-h-14" data-testid="button-founding-100">
-                  Limited Seats - Founding 100
-                </Button>
-              </Link>
-              <Link href="/workshops">
-                <Button 
-                  variant="outline" 
-                  size="lg" 
-                  className="text-base px-8 py-6 min-h-14 bg-background/30 backdrop-blur-sm border-foreground/20 hover:border-foreground/40" 
-                  data-testid="button-explore-workshops"
-                >
-                  Explore Workshops
-                </Button>
-              </Link>
+            {/* What You Get */}
+            <div className="grid md:grid-cols-3 gap-6 mb-16">
+              <div className="text-center p-6 border border-border/50 rounded-lg bg-card/30">
+                <Award className="w-8 h-8 text-bronze mx-auto mb-4" />
+                <h3 className="font-semibold mb-2">Bronze Sculpture</h3>
+                <p className="text-sm text-muted-foreground font-light">
+                  One-of-a-kind botanical casting. Retail value R25,000+
+                </p>
+              </div>
+              <div className="text-center p-6 border border-border/50 rounded-lg bg-card/30">
+                <Sparkles className="w-8 h-8 text-accent-gold mx-auto mb-4" />
+                <h3 className="font-semibold mb-2">Workshop Vouchers</h3>
+                <p className="text-sm text-muted-foreground font-light">
+                  50-80% off future 2-day bronze casting workshops
+                </p>
+              </div>
+              <div className="text-center p-6 border border-border/50 rounded-lg bg-card/30">
+                <Shield className="w-8 h-8 text-patina mx-auto mb-4" />
+                <h3 className="font-semibold mb-2">Lifetime Discounts</h3>
+                <p className="text-sm text-muted-foreground font-light">
+                  20-30% off all future commissions and purchases
+                </p>
+              </div>
             </div>
+
+            {/* Seat Cards */}
+            <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+              
+              {/* Founder Seat */}
+              <div className="relative border border-bronze/40 rounded-lg p-8 bg-gradient-to-b from-bronze/5 to-transparent">
+                <div className="absolute top-4 right-4 text-xs text-bronze/60 uppercase tracking-wider">
+                  {founderSeats?.remaining || 50} left
+                </div>
+                <h3 className="font-serif text-2xl text-bronze mb-2">Founder</h3>
+                <div className="text-4xl font-light mb-4">
+                  R{((founderSeats?.price || 300000) / 100).toLocaleString()}
+                </div>
+                <ul className="space-y-2 mb-6 text-sm text-muted-foreground">
+                  <li className="flex items-center gap-2">
+                    <span className="w-1 h-1 bg-bronze rounded-full" />
+                    Guaranteed bronze casting
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1 h-1 bg-bronze rounded-full" />
+                    50% off one workshop
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1 h-1 bg-bronze rounded-full" />
+                    20% lifetime discount
+                  </li>
+                </ul>
+                <Link href="/checkout/founder">
+                  <Button className="w-full btn-bronze" data-testid="button-checkout-founder">
+                    Select Founder
+                  </Button>
+                </Link>
+              </div>
+
+              {/* Patron Seat */}
+              <div className="relative border border-accent-gold/40 rounded-lg p-8 bg-gradient-to-b from-accent-gold/5 to-transparent">
+                <div className="absolute top-4 right-4 text-xs text-accent-gold/60 uppercase tracking-wider">
+                  {patronSeats?.remaining || 50} left
+                </div>
+                <h3 className="font-serif text-2xl text-accent-gold mb-2">Patron</h3>
+                <div className="text-4xl font-light mb-4">
+                  R{((patronSeats?.price || 500000) / 100).toLocaleString()}
+                </div>
+                <ul className="space-y-2 mb-6 text-sm text-muted-foreground">
+                  <li className="flex items-center gap-2">
+                    <span className="w-1 h-1 bg-accent-gold rounded-full" />
+                    Guaranteed bronze casting
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1 h-1 bg-accent-gold rounded-full" />
+                    80% off one workshop
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <span className="w-1 h-1 bg-accent-gold rounded-full" />
+                    30% lifetime discount
+                  </li>
+                </ul>
+                <Link href="/checkout/patron">
+                  <Button className="w-full btn-bronze" data-testid="button-checkout-patron">
+                    Select Patron
+                  </Button>
+                </Link>
+              </div>
+            </div>
+
+            {/* Trust note */}
+            <p className="text-center text-xs text-muted-foreground/60 mt-8 font-light">
+              Secure payment via PayFast. Seats reserved for 24 hours.
+            </p>
           </div>
         </section>
-        */}
 
-        {/* Founding 100 Launch Callout */}
+        {/* BRONZE GALLERY - Beautiful Examples */}
         <section className="py-24 px-6">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="inline-flex items-center gap-2 bg-accent-gold/20 border border-accent-gold/50 rounded-full px-6 py-2 mb-8">
-              <Sparkles className="w-4 h-4 text-accent-gold" />
-              <span className="text-accent-gold font-bold text-sm uppercase tracking-wide">Limited Time Offer</span>
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-12">
+              <h2 className="font-serif text-3xl font-light mb-3 tracking-tight">
+                Wall-Mounted Bronzes
+              </h2>
+              <p className="text-muted-foreground font-light">
+                Each piece is a unique botanical specimen, immortalized in bronze.
+              </p>
             </div>
-            
-            <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">
-              Join the <span className="text-accent-gold">Founding 100</span>
+
+            <div className="grid md:grid-cols-3 gap-6">
+              <div className="aspect-[4/5] rounded-lg overflow-hidden border border-border/30 bg-card/20">
+                <img 
+                  src={bronzeImage1} 
+                  alt="Bronze botanical sculpture" 
+                  className="w-full h-full object-cover bronze-warmth"
+                />
+              </div>
+              <div className="aspect-[4/5] rounded-lg overflow-hidden border border-border/30 bg-card/20">
+                <img 
+                  src={bronzeImage2} 
+                  alt="Bronze botanical sculpture" 
+                  className="w-full h-full object-cover bronze-warmth"
+                />
+              </div>
+              <div className="aspect-[4/5] rounded-lg overflow-hidden border border-border/30 bg-card/20">
+                <img 
+                  src={bronzeImage3} 
+                  alt="Bronze botanical sculpture" 
+                  className="w-full h-full object-cover bronze-warmth"
+                />
+              </div>
+            </div>
+
+            <div className="text-center mt-10">
+              <Link href="/sculptures">
+                <Button variant="outline" className="gap-2 border-bronze/30 text-bronze" data-testid="button-view-gallery">
+                  View Full Gallery
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* ABOUT / VISION - Brief */}
+        <section className="py-24 px-6 bg-card/20">
+          <div className="max-w-3xl mx-auto text-center">
+            <h2 className="font-serif text-3xl font-light mb-6 tracking-tight">
+              The Vision
             </h2>
-
-            {/* Clear Distinction: 50 Founder + 50 Patron */}
-            <div className="flex flex-wrap justify-center gap-6 mb-8">
-              <div className="bg-bronze/20 border border-bronze/40 rounded-lg px-6 py-4">
-                <div className="text-2xl font-bold text-bronze">50 Founder Seats</div>
-                <div className="text-lg text-foreground">R3,000 each</div>
-              </div>
-              <div className="bg-accent-gold/20 border border-accent-gold/40 rounded-lg px-6 py-4">
-                <div className="text-2xl font-bold text-accent-gold">50 Patron Seats</div>
-                <div className="text-lg text-foreground">R5,000 each</div>
-              </div>
-            </div>
-            
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto mb-8 leading-relaxed">
-              Fund our Kommetjie foundry's final fit-out. We invest (encase) your chosen botanical specimen now — 
-              guaranteeing you a bronze casting when the studio opens (estimated Jan 2026).
+            <p className="text-muted-foreground font-light leading-relaxed mb-8">
+              Timeless Organics preserves the fleeting beauty of Cape Fynbos botanicals 
+              through the ancient art of lost-wax bronze casting. Each sculpture captures 
+              a moment in nature's cycle — a bloom at its peak, a seedhead ready to release, 
+              a leaf perfectly curved by the sun.
             </p>
-
-            <p className="text-base text-muted-foreground/70 max-w-xl mx-auto mb-10 leading-relaxed italic border-l-2 border-accent-gold/50 pl-4">
-              Each Founding 100 casting is a one-of-a-kind botanical sculpture with an established market value of 
-              <span className="text-foreground font-semibold"> R25,000+</span> when mounted and patinated.
+            <p className="text-muted-foreground font-light leading-relaxed mb-10">
+              Founded by sculptor David Junor, our Kommetjie studio combines traditional 
+              foundry techniques with a deep respect for South Africa's unique botanical heritage.
             </p>
-
-            <div className="flex flex-wrap justify-center gap-8 mb-10">
-              <div className="text-center">
-                <div className="text-4xl font-bold text-accent-gold mb-1">100</div>
-                <div className="text-sm text-muted-foreground">Limited Seats</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-bronze mb-1">1</div>
-                <div className="text-sm text-muted-foreground">Bronze Casting</div>
-              </div>
-              <div className="text-center">
-                <div className="text-4xl font-bold text-patina mb-1">∞</div>
-                <div className="text-sm text-muted-foreground">Lifetime Benefits</div>
-              </div>
-            </div>
-
-            <Link href="/founding-100">
-              <Button size="lg" className="btn-bronze text-base px-8 py-6 min-h-14" data-testid="button-view-founding-seats">
-                View Founder &amp; Patron Seats
+            <Link href="/about">
+              <Button variant="ghost" className="text-bronze" data-testid="button-about">
+                Meet David
+                <ArrowRight className="w-4 h-4 ml-2" />
               </Button>
             </Link>
           </div>
         </section>
 
-        {/* Workshops Preview */}
-        <section className="py-20 px-6 bg-card/20">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        {/* WORKSHOPS PREVIEW */}
+        <section className="py-24 px-6">
+          <div className="max-w-4xl mx-auto">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
-                <div className="inline-flex items-center gap-2 bg-patina/20 border border-patina/50 rounded-full px-4 py-1 mb-4">
-                  <Calendar className="w-3 h-3 text-patina" />
-                  <span className="text-patina font-semibold text-xs uppercase tracking-wide">Coming Q2 2025</span>
-                </div>
-                
-                <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">
-                  2-Day Bronze Casting <span className="text-accent-gold">Workshops</span>
+                <span className="text-xs tracking-[0.3em] text-patina uppercase font-light mb-4 block">
+                  Coming Q2 2025
+                </span>
+                <h2 className="font-serif text-3xl font-light mb-4 tracking-tight">
+                  2-Day Bronze Workshops
                 </h2>
-                
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  Learn the ancient art of lost-wax bronze casting in intimate, hands-on workshops. 
-                  Maximum 6 participants. Guided by master sculptor David Junor in our Kommetjie foundry.
+                <p className="text-muted-foreground font-light leading-relaxed mb-6">
+                  Learn the ancient art of lost-wax casting. Maximum 6 participants. 
+                  Take home your own bronze sculpture.
                 </p>
-                
                 <Link href="/workshops">
-                  <Button variant="outline" className="gap-2" data-testid="button-learn-workshops">
+                  <Button variant="outline" className="gap-2" data-testid="button-workshops">
                     Learn More
+                    <ArrowRight className="w-4 h-4" />
                   </Button>
                 </Link>
               </div>
-
-              <Card className="p-8 bg-card/80 border-card-border">
-                <div className="space-y-6">
-                  <div>
-                    <div className="font-semibold mb-2">Day 1: Creation</div>
-                    <p className="text-sm text-muted-foreground">
-                      Specimen selection, mold making, investment preparation
-                    </p>
-                  </div>
-                  <div>
-                    <div className="font-semibold mb-2">Overnight: Burnout</div>
-                    <p className="text-sm text-muted-foreground">
-                      700°C kiln firing transforms organic matter into bronze-ready cavity
-                    </p>
-                  </div>
-                  <div>
-                    <div className="font-semibold mb-2">Day 2: Reveal</div>
-                    <p className="text-sm text-muted-foreground">
-                      Bronze pour, cool down, reveal, finishing, take home your sculpture
-                    </p>
-                  </div>
+              <div className="border border-border/30 rounded-lg p-6 bg-card/30 space-y-4">
+                <div>
+                  <div className="text-sm font-medium mb-1">Day 1</div>
+                  <p className="text-xs text-muted-foreground">Specimen selection, mold making, investment</p>
                 </div>
-              </Card>
+                <div>
+                  <div className="text-sm font-medium mb-1">Overnight</div>
+                  <p className="text-xs text-muted-foreground">700°C kiln burnout</p>
+                </div>
+                <div>
+                  <div className="text-sm font-medium mb-1">Day 2</div>
+                  <p className="text-xs text-muted-foreground">Bronze pour, reveal, finishing</p>
+                </div>
+              </div>
             </div>
           </div>
         </section>
 
-        {/* Commission Work */}
-        <section className="py-20 px-6">
-          <div className="max-w-5xl mx-auto">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-              <Card className="p-8 bg-card/80 border-card-border order-2 md:order-1">
-                <div className="space-y-4">
-                  <div>
-                    <div className="font-semibold mb-1 flex items-center gap-2">
-                      <Award className="w-4 h-4 text-bronze" />
-                      Consultation
-                    </div>
-                    <p className="text-sm text-muted-foreground">
-                      Discuss your vision, specimen style, sizing, and seasonal timing
-                    </p>
-                  </div>
-                  <div>
-                    <div className="font-semibold mb-1">Specimen Selection</div>
-                    <p className="text-sm text-muted-foreground">
-                      David selects the perfect specimen at peak seasonal beauty
-                    </p>
-                  </div>
-                  <div>
-                    <div className="font-semibold mb-1">Casting Process</div>
-                    <p className="text-sm text-muted-foreground">
-                      2-4 weeks for investment, burnout, pour, and finishing
-                    </p>
-                  </div>
-                  <div>
-                    <div className="font-semibold mb-1">Delivery</div>
-                    <p className="text-sm text-muted-foreground">
-                      Secure packaging with Certificate of Authenticity
-                    </p>
-                  </div>
-                </div>
-              </Card>
-
-              <div className="order-1 md:order-2">
-                <div className="kicker mb-3">Bespoke Bronze</div>
-                <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">
-                  Commission a <span className="text-accent-gold">Custom Casting</span>
-                </h2>
-                <p className="text-muted-foreground leading-relaxed mb-6">
-                  Preserve a botanical specimen that holds meaning for you. Choose from 12 Cape Fynbos styles. 
-                  Each commission is a unique collaboration between your vision and our craft.
-                </p>
-                <p className="text-muted-foreground leading-relaxed mb-4">
-                  <strong>Coming Soon</strong> — Commissions can range from <span className="text-accent-gold font-bold">R8,500 to MILLIONS</span> depending on scope, 
-                  size, and complexity of the piece.
-                </p>
-                <p className="text-sm text-foreground/70 mb-8">
-                  Founding 100 members receive <strong className="text-accent-gold">50-80% off</strong> all commissions with their lifetime discount codes.
-                </p>
-                <Link href="/commission">
-                  <Button variant="outline" className="gap-2" data-testid="button-view-commission">
-                    Learn More
-                  </Button>
-                </Link>
-              </div>
-            </div>
+        {/* FINAL CTA */}
+        <section className="py-20 px-6 bg-gradient-to-b from-transparent to-bronze/5">
+          <div className="max-w-2xl mx-auto text-center">
+            <h2 className="font-serif text-3xl font-light mb-4 tracking-tight">
+              <span className="hero-glass-text">Join the Founding 100</span>
+            </h2>
+            <p className="text-muted-foreground font-light mb-8">
+              Limited seats. Lifetime benefits. Your investment supports the studio.
+            </p>
+            <Link href="#seats">
+              <Button size="lg" className="btn-bronze gap-2" data-testid="button-final-cta">
+                Secure Your Seat
+                <ArrowRight className="w-4 h-4" />
+              </Button>
+            </Link>
           </div>
         </section>
 

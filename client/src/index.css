@@ -561,4 +561,164 @@
   .animate-shimmer {
     animation: shimmer 3s linear infinite;
   }
+
+  /* ═══════════════════════════════════════════════════════════════════════════
+     GLASSY HERO TEXT - Luxury crystalline text with slow-moving gradient colors
+     ═══════════════════════════════════════════════════════════════════════════ */
+  
+  .hero-glass-text {
+    position: relative;
+    background: linear-gradient(
+      135deg,
+      #a67c52 0%,      /* Bronze */
+      #d8c3a5 25%,     /* Gold */
+      #6f8f79 50%,     /* Patina */
+      #d8c3a5 75%,     /* Gold */
+      #a67c52 100%     /* Bronze */
+    );
+    background-size: 400% 400%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+    animation: heroGradientShift 14s ease-in-out infinite;
+    filter: brightness(1.15) saturate(1.1);
+    text-shadow: 
+      0 0 40px rgba(166, 124, 82, 0.15),
+      0 0 80px rgba(216, 195, 165, 0.08);
+    will-change: background-position;
+  }
+
+  /* Glassy sheen overlay */
+  .hero-glass-text::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      120deg,
+      transparent 30%,
+      rgba(255, 255, 255, 0.08) 50%,
+      transparent 70%
+    );
+    background-size: 200% 100%;
+    animation: glassSheen 8s ease-in-out infinite;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+
+  @keyframes heroGradientShift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes glassSheen {
+    0%, 100% {
+      background-position: -200% 0;
+    }
+    50% {
+      background-position: 200% 0;
+    }
+  }
+
+  /* Hero fade-from-darkness animation */
+  @keyframes fadeFromDarkness {
+    0% {
+      opacity: 0;
+      filter: brightness(0);
+    }
+    50% {
+      opacity: 0.6;
+      filter: brightness(0.5);
+    }
+    100% {
+      opacity: 1;
+      filter: brightness(1);
+    }
+  }
+
+  @keyframes textReveal {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+      filter: blur(4px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  .hero-image-reveal {
+    animation: fadeFromDarkness 5s ease-out forwards;
+  }
+
+  .hero-text-reveal {
+    opacity: 0;
+    animation: textReveal 1.5s ease-out forwards;
+  }
+
+  .hero-text-reveal-delay-1 {
+    animation-delay: 2s;
+  }
+
+  .hero-text-reveal-delay-2 {
+    animation-delay: 2.8s;
+  }
+
+  .hero-text-reveal-delay-3 {
+    animation-delay: 3.5s;
+  }
+
+  /* Reduced motion preference */
+  @media (prefers-reduced-motion: reduce) {
+    .hero-glass-text {
+      animation: none;
+      background-position: 0% 50%;
+    }
+    .hero-glass-text::after {
+      animation: none;
+    }
+    .hero-image-reveal {
+      animation: none;
+      opacity: 1;
+      filter: brightness(1);
+    }
+    .hero-text-reveal {
+      animation: none;
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
+
+  /* Elegant thin borders utility */
+  .border-hairline {
+    border-width: 1px;
+    border-color: rgba(166, 124, 82, 0.18);
+  }
+
+  .border-hairline-light {
+    border-width: 1px;
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  /* Bronze image warmth filter */
+  .bronze-warmth {
+    filter: saturate(1.1) contrast(1.05) brightness(1.12);
+  }
+
+  .bronze-warmth-subtle {
+    filter: saturate(1.05) brightness(1.08);
+  }
+
+  /* Dimmed video overlay */
+  .video-dimmed {
+    opacity: 0.25;
+    filter: brightness(0.6) saturate(0.8);
+  }
 }
