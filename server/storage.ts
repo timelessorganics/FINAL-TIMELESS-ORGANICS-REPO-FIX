@@ -115,18 +115,18 @@ export interface IStorage {
 export class DatabaseStorage implements IStorage {
   // User operations
   async getUser(id: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.id, id));
+    const [user] = await db.select().from(usersTable).where(eq(usersTable.id, id));
     return user;
   }
 
   async getUserByEmail(email: string): Promise<User | undefined> {
-    const [user] = await db.select().from(users).where(eq(users.email, email));
+    const [user] = await db.select().from(usersTable).where(eq(usersTable.email, email));
     return user;
   }
 
   async createUser(userData: { email: string; firstName?: string; lastName?: string; isAdmin?: boolean }): Promise<User> {
     const [user] = await db
-      .insert(users)
+      .insert(usersTable)
       .values({
         email: userData.email,
         firstName: userData.firstName || null,
@@ -141,10 +141,10 @@ export class DatabaseStorage implements IStorage {
     // Exclude id from update to avoid breaking foreign key constraints
     const { id, ...updateData } = userData;
     const [user] = await db
-      .insert(users)
+      .insert(usersTable)
       .values(userData)
       .onConflictDoUpdate({
-        target: users.email,
+        target: usersTable.email,
         set: {
           ...updateData,
           updatedAt: new Date(),

@@ -9,7 +9,6 @@ import NotFound from "@/pages/not-found";
 import MainLaunch from "@/pages/main-launch";
 import HomePage from "@/pages/home";
 import WorkshopsPage from "@/pages/workshops";
-import WorkshopCalendarPage from "@/pages/workshop-calendar";
 import CommissionPage from "@/pages/commission";
 import AboutPage from "@/pages/about";
 import ShopPage from "@/pages/shop";
@@ -74,7 +73,6 @@ function Router() {
 
       {/* Brand Pages - PUBLIC */}
       <Route path="/workshops" component={WorkshopsPage} />
-      <Route path="/workshop-calendar" component={WorkshopCalendarPage} />
       <Route path="/commission" component={CommissionPage} />
       <Route path="/shop" component={ShopPage} />
       <Route path="/auctions" component={AuctionsPage} />
