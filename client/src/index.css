@@ -721,4 +721,36 @@
     opacity: 0.25;
     filter: brightness(0.6) saturate(0.8);
   }
+
+  /* Image fade-in on scroll (uses intersection observer) */
+  .image-fade-in {
+    animation: imageFadeIn 2s ease-out forwards;
+  }
+
+  @keyframes imageFadeIn {
+    0% {
+      opacity: 0;
+      filter: brightness(0.3);
+    }
+    100% {
+      opacity: 1;
+      filter: brightness(1);
+    }
+  }
+
+  /* Slower section reveal */
+  .section-fade-in {
+    animation: sectionFadeIn 1.5s ease-out forwards;
+  }
+
+  @keyframes sectionFadeIn {
+    0% {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
 }
