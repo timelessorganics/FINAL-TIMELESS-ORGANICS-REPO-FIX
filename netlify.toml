@@ -1,6 +1,6 @@
 [[redirects]]
 from = "/api/*"
-to = "https://timeless-organics-production.up.railway.app/api/:splat"
+to = "https://final-timeless-organics-repo-fix-production.up.railway.app/api/:splat"
 status = 200
 force = true
 

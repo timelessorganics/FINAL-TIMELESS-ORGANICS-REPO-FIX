@@ -16,7 +16,7 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 
 **Deployment Architecture:**
 - **Frontend:** Netlify (`www.timeless.organic`)
-- **Backend:** Railway (`timeless-organics-fouding-100-production.up.railway.app`)
+- **Backend:** Railway (`final-timeless-organics-repo-fix-production.up.railway.app`)
 - **Database:** PostgreSQL on Supabase
 - **Authentication:** Supabase Auth with OAuth (Google, GitHub, Apple) and Email. Frontend communicates with backend via `VITE_API_URL` environment variable. Backend accepts Supabase JWT tokens via Bearer authorization header.
 
