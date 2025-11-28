@@ -2485,7 +2485,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!process.env.PAYFAST_MERCHANT_ID) diagnostics.issues.push('PAYFAST_MERCHANT_ID not set');
       if (!process.env.PAYFAST_MERCHANT_KEY) diagnostics.issues.push('PAYFAST_MERCHANT_KEY not set');
       if (!process.env.PAYFAST_PASSPHRASE) diagnostics.issues.push('PAYFAST_PASSPHRASE not set');
-      if (process.env.PAYFAST_MODE !== 'production') diagnostics.issues.push('PAYFAST_MODE should be "production" for onsite payments');
+      if (process.env.PAYFAST_MODE !== 'production' && process.env.PAYFAST_MODE !== 'live') diagnostics.issues.push('PAYFAST_MODE should be "production" or "live" for onsite payments');
       if (!process.env.SMTP_HOST) diagnostics.issues.push('SMTP_HOST not set - emails will not be sent');
       if (!process.env.SMTP_USER) diagnostics.issues.push('SMTP_USER not set - emails will not be sent');
       if (!process.env.BACKEND_URL) diagnostics.issues.push('BACKEND_URL not set - PayFast notify webhook may fail');

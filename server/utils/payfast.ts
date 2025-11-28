@@ -4,7 +4,7 @@ interface PayFastConfig {
   merchantId: string;
   merchantKey: string;
   passphrase: string;
-  mode: 'sandbox' | 'production';
+  mode: 'sandbox' | 'production' | 'live';
 }
 
 interface PaymentData {
@@ -24,9 +24,9 @@ interface PaymentData {
 }
 
 export function getPayFastConfig(): PayFastConfig {
-  // CRITICAL: PayFast Onsite Payments require production mode and credentials
+  // CRITICAL: PayFast Onsite Payments require production/live mode and credentials
   // Sandbox mode is NOT supported for onsite payments
-  const mode = (process.env.PAYFAST_MODE as 'sandbox' | 'production');
+  const mode = (process.env.PAYFAST_MODE as 'sandbox' | 'production' | 'live');
   const merchantId = process.env.PAYFAST_MERCHANT_ID;
   const merchantKey = process.env.PAYFAST_MERCHANT_KEY;
   const passphrase = process.env.PAYFAST_PASSPHRASE;
@@ -40,7 +40,7 @@ export function getPayFastConfig(): PayFastConfig {
   
   if (mode === 'sandbox') {
     console.warn('[PayFast Config] WARNING: Sandbox mode does not support Onsite Payments!');
-    console.warn('[PayFast Config] Set PAYFAST_MODE=production for real transactions.');
+    console.warn('[PayFast Config] Set PAYFAST_MODE=production or PAYFAST_MODE=live for real transactions.');
   }
   
   const config: PayFastConfig = {
@@ -59,7 +59,7 @@ export function generatePayFastUrl(): string {
   const config = getPayFastConfig();
   return config.mode === 'sandbox'
     ? 'https://sandbox.payfast.co.za/eng/process'
-    : 'https://www.payfast.co.za/eng/process';
+    : 'https://www.payfast.co.za/eng/process'; // production and live both use live endpoint
 }
 
 export function generateSignature(data: Record<string, string>, passphrase?: string, skipEmptyFields: boolean = true): string {
