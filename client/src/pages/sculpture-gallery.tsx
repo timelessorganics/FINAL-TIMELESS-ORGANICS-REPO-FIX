@@ -1,3 +1,5 @@
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { Link } from "wouter";
 import { ArrowLeft, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,6 +14,7 @@ interface SculptureGalleryProps {
 export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) {
   return (
     <>
+      <Header />
       <FlowerTimelapseBackground intensity="subtle" />
       <div className="min-h-screen bg-background relative z-50">
       <div className="max-w-5xl mx-auto px-4 py-12 space-y-12">
@@ -28,7 +31,7 @@ export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) 
 
         {/* Hero Section */}
         <header className="text-center space-y-4">
-          <h1 className="font-serif text-5xl font-bold text-bronze">
+          <h1 className="font-serif text-5xl font-bold moving-fill">
             Specimen Styles
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">

@@ -104,36 +104,39 @@ export default function HomePage() {
                 One-Of-A-Kind Castings From Organic Matter
               </p>
 
-              {/* Single CTA - Opens reservation modal */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col items-center justify-center gap-3 sm:gap-4 mb-6">
+              {/* Dual CTA Buttons - SECURE and RESERVE (will swap to RESERVE and BUY on Monday) */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+                <Link href="/founding-100-explained" className="w-full sm:w-auto">
+                  <Button 
+                    size="lg" 
+                    className="w-full btn-bronze text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold shadow-lg" 
+                    data-testid="button-secure-now"
+                  >
+                    SECURE
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </Button>
+                </Link>
+                
                 <Button 
                   size="lg" 
-                  className="btn-bronze text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold shadow-lg" 
+                  variant="outline"
+                  className="w-full sm:w-auto text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold border-white/30 text-white hover:bg-white/10" 
                   onClick={() => setIsReservationModalOpen(true)}
                   data-testid="button-reserve-seat"
                 >
-                  Secure Your Seat
-                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                  RESERVE
+                  <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
                 </Button>
+              </div>
                 
-                {/* Reservation counter - shows live reservations */}
-                {totalReserved > 0 && (
-                  <div className="flex items-center gap-2 text-sm text-white/70 bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
-                    <Sparkles className="w-4 h-4 text-bronze" />
-                    <span className="font-semibold text-white">{totalReserved}</span>
-                    <span>seats already reserved</span>
-                  </div>
-                )}
-              </div>
-
-              {/* Learn More - subtle */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-4 sm:mb-6">
-                <Link href="/founding-100-explained">
-                  <Button size="lg" variant="ghost" className="text-sm sm:text-base px-6 sm:px-8 py-4 sm:py-6 min-h-10 sm:min-h-14 text-white/60 hover:text-white/80" data-testid="button-learn-more">
-                    Learn More
-                  </Button>
-                </Link>
-              </div>
+              {/* Reservation counter - shows live reservations */}
+              {totalReserved > 0 && (
+                <div className="hero-text-reveal hero-text-reveal-delay-3 flex items-center gap-2 text-sm text-white/70 bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm justify-center">
+                  <Sparkles className="w-4 h-4 text-bronze" />
+                  <span className="font-semibold text-white">{totalReserved}</span>
+                  <span>seats already reserved</span>
+                </div>
+              )}
             </div>
             
             {/* Bottom area - seat counter and scroll hint */}
