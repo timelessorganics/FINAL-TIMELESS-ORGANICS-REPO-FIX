@@ -1,11 +1,155 @@
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import type { Purchase, Code, User } from "@shared/schema";
-import { Download, ExternalLink, User as UserIcon, Sparkles, CalendarDays, Upload, Clock, Leaf, Flame, Package, Gift } from "lucide-react";
+import { Download, ExternalLink, User as UserIcon, Sparkles, CalendarDays, Upload, Clock, Leaf, Flame, Package, Gift, Check, Loader2, Edit2 } from "lucide-react";
+import { queryClient, apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
+
+const PATINA_OPTIONS = [
+  { value: "natural", label: "Natural Bronze", description: "Classic golden-brown that develops over time" },
+  { value: "antique_copper", label: "Antique Copper", description: "Warm reddish-brown patina" },
+  { value: "verdigris", label: "Verdigris Green", description: "Blue-green oxidized finish" },
+  { value: "custom", label: "Custom Aging", description: "Discuss with David for unique finish" },
+];
+
+const MOUNTING_OPTIONS = [
+  { value: "none", label: "No mounting", description: "Display on shelf or mantle" },
+  { value: "wall", label: "Wall mount", description: "Stainless steel hardware (+R1,000 deposit)" },
+  { value: "base", label: "Display base", description: "Wood or slate base (+R1,000 deposit)" },
+  { value: "custom", label: "Custom installation", description: "Discuss with David (+R1,000 deposit)" },
+];
+
+function CustomizeExtras({ purchase }: { purchase: Purchase & { codes: Code[] } }) {
+  const { toast } = useToast();
+  const [selectedPatina, setSelectedPatina] = useState(purchase.hasPatina ? "natural" : "none");
+  const [selectedMounting, setSelectedMounting] = useState(purchase.mountingType || "none");
+  const [hasChanges, setHasChanges] = useState(false);
+
+  const updateMutation = useMutation({
+    mutationFn: async (updates: { mountingType?: string; hasPatina?: boolean }) => {
+      return apiRequest("PATCH", `/api/purchase/${purchase.id}/preferences`, updates);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/dashboard"] });
+      toast({
+        title: "Preferences Updated",
+        description: "Your customization choices have been saved.",
+      });
+      setHasChanges(false);
+    },
+    onError: (error: Error) => {
+      toast({
+        title: "Update Failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    },
+  });
+
+  const handleSave = () => {
+    updateMutation.mutate({
+      mountingType: selectedMounting,
+      hasPatina: selectedPatina !== "none",
+    });
+  };
+
+  const handlePatinaChange = (value: string) => {
+    setSelectedPatina(value);
+    setHasChanges(true);
+  };
+
+  const handleMountingChange = (value: string) => {
+    setSelectedMounting(value);
+    setHasChanges(true);
+  };
+
+  return (
+    <div className="p-4 bg-background/50 rounded-lg border border-border">
+      <div className="flex items-center justify-between mb-4">
+        <h3 className="font-semibold text-foreground flex items-center gap-2">
+          <Sparkles className="w-5 h-5 text-accent-gold" />
+          Customize Your Extras
+        </h3>
+        {hasChanges && (
+          <Button
+            size="sm"
+            onClick={handleSave}
+            disabled={updateMutation.isPending}
+            data-testid="btn-save-preferences"
+          >
+            {updateMutation.isPending ? (
+              <Loader2 className="w-4 h-4 animate-spin" />
+            ) : (
+              <Check className="w-4 h-4 mr-1" />
+            )}
+            Save Changes
+          </Button>
+        )}
+      </div>
+      
+      <div className="space-y-4">
+        {/* Patina Finish */}
+        <div className="p-3 rounded bg-background border border-border/50">
+          <div className="font-medium text-sm text-foreground mb-2">Patina Finish</div>
+          <p className="text-xs text-muted-foreground mb-3">Choose how your bronze will age and patina</p>
+          <div className="grid grid-cols-2 gap-2">
+            {PATINA_OPTIONS.map((option) => (
+              <button
+                key={option.value}
+                onClick={() => handlePatinaChange(option.value)}
+                className={`text-xs p-2 rounded border transition-all text-left ${
+                  selectedPatina === option.value
+                    ? "border-bronze bg-bronze/10 text-foreground"
+                    : "border-border/50 hover:border-bronze/50 text-muted-foreground hover:text-foreground"
+                }`}
+                data-testid={`btn-patina-${option.value}`}
+              >
+                <div className="font-medium">{option.label}</div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Mounting Option */}
+        <div className="p-3 rounded bg-background border border-border/50">
+          <div className="font-medium text-sm text-foreground mb-2">Mounting Option</div>
+          <p className="text-xs text-muted-foreground mb-3">How do you want to display your sculpture?</p>
+          <div className="space-y-2">
+            {MOUNTING_OPTIONS.map((option) => (
+              <label
+                key={option.value}
+                className={`flex items-start gap-3 p-2 rounded cursor-pointer transition-all ${
+                  selectedMounting === option.value
+                    ? "bg-bronze/10 border border-bronze"
+                    : "hover:bg-muted/30"
+                }`}
+              >
+                <input
+                  type="radio"
+                  name={`mounting-${purchase.id}`}
+                  value={option.value}
+                  checked={selectedMounting === option.value}
+                  onChange={() => handleMountingChange(option.value)}
+                  className="w-4 h-4 mt-0.5"
+                  data-testid={`radio-mounting-${option.value}`}
+                />
+                <div>
+                  <div className="text-sm font-medium text-foreground">{option.label}</div>
+                  <div className="text-xs text-muted-foreground">{option.description}</div>
+                </div>
+              </label>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Dashboard() {
   const { data: user } = useQuery<User>({
@@ -137,58 +281,7 @@ export default function Dashboard() {
                       </div>
 
                       {/* Customize Extras Section */}
-                      <div className="p-4 bg-background/50 rounded-lg border border-border">
-                        <h3 className="font-semibold text-foreground mb-4 flex items-center gap-2">
-                          <Sparkles className="w-5 h-5 text-accent-gold" />
-                          Customize Your Extras
-                        </h3>
-                        
-                        <div className="space-y-4">
-                          {/* Patina Finish */}
-                          <div className="p-3 rounded bg-background border border-border/50">
-                            <div className="font-medium text-sm text-foreground mb-2">Patina Finish</div>
-                            <p className="text-xs text-muted-foreground mb-3">Choose how your bronze will age and patina</p>
-                            <div className="grid grid-cols-2 gap-2">
-                              <button className="text-xs p-2 rounded border border-border/50 hover:border-bronze/50 text-muted-foreground hover:text-foreground transition-all">
-                                Natural Bronze
-                              </button>
-                              <button className="text-xs p-2 rounded border border-border/50 hover:border-bronze/50 text-muted-foreground hover:text-foreground transition-all">
-                                Antique Copper
-                              </button>
-                              <button className="text-xs p-2 rounded border border-border/50 hover:border-bronze/50 text-muted-foreground hover:text-foreground transition-all">
-                                Verdigris Green
-                              </button>
-                              <button className="text-xs p-2 rounded border border-border/50 hover:border-bronze/50 text-muted-foreground hover:text-foreground transition-all">
-                                Custom Aging
-                              </button>
-                            </div>
-                          </div>
-
-                          {/* Mounting Option */}
-                          <div className="p-3 rounded bg-background border border-border/50">
-                            <div className="font-medium text-sm text-foreground mb-2">Mounting Option</div>
-                            <p className="text-xs text-muted-foreground mb-3">R1,000 deposit • How do you want to display it?</p>
-                            <div className="space-y-2">
-                              <label className="flex items-center gap-2 text-sm cursor-pointer">
-                                <input type="radio" name="mounting" value="none" defaultChecked className="w-4 h-4" />
-                                <span>No mounting (display on shelf)</span>
-                              </label>
-                              <label className="flex items-center gap-2 text-sm cursor-pointer">
-                                <input type="radio" name="mounting" value="wall" className="w-4 h-4" />
-                                <span>Wall mount (stainless hardware)</span>
-                              </label>
-                              <label className="flex items-center gap-2 text-sm cursor-pointer">
-                                <input type="radio" name="mounting" value="base" className="w-4 h-4" />
-                                <span>Display base (wood or slate)</span>
-                              </label>
-                              <label className="flex items-center gap-2 text-sm cursor-pointer">
-                                <input type="radio" name="mounting" value="custom" className="w-4 h-4" />
-                                <span>Custom installation (discuss with David)</span>
-                              </label>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
+                      <CustomizeExtras purchase={purchase} />
 
                       {/* Production Status Tracker */}
                       <div className="p-4 bg-background/50 rounded-lg border border-border">

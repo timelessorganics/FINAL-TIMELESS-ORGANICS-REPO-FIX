@@ -11,6 +11,7 @@ import {
   insertSculptureSelectionSchema,
   insertSubscriberSchema,
   insertPromoCodeSchema,
+  type Purchase,
 } from "@shared/schema";
 import { fromError } from "zod-validation-error";
 import {
@@ -237,8 +238,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Public: Get seat availability
   app.get("/api/seats/availability", async (_req: Request, res: Response) => {
     try {
+      // Clean up expired reservations before returning availability
+      // This ensures seats are released back to pool after 24 hours
+      const expiredCount = await storage.expireOldReservations();
+      if (expiredCount > 0) {
+        console.log(`[Reservations] Expired ${expiredCount} old reservations, seats returned to pool`);
+      }
+      
       const seats = await storage.getSeats();
-      res.json(seats);
+      
+      // Get active reservation counts to adjust available seats
+      const founderReservations = await storage.getActiveReservationsCount("founder");
+      const patronReservations = await storage.getActiveReservationsCount("patron");
+      
+      // Adjust available counts by subtracting active reservations
+      const adjustedSeats = seats.map(seat => {
+        const currentAvailable = seat.totalAvailable - seat.sold;
+        const reservedForType = seat.type === "founder" ? founderReservations : patronReservations;
+        return {
+          ...seat,
+          available: Math.max(0, currentAvailable - reservedForType),
+          reservedCount: reservedForType
+        };
+      });
+      
+      res.json(adjustedSeats);
     } catch (error: any) {
       console.error("Get seats error:", error);
       res
@@ -1051,6 +1075,64 @@ export async function registerRoutes(app: Express): Promise<Server> {
           .json({
             message: error.message || "Failed to fetch referral analytics",
           });
+      }
+    },
+  );
+
+  // Protected: Update purchase preferences (specimen style, mounting, patina)
+  app.patch(
+    "/api/purchase/:id/preferences",
+    isAuthenticated,
+    async (req: any, res: Response) => {
+      try {
+        const userId = await getUserIdFromToken(req);
+        if (!userId) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+
+        const { id } = req.params;
+        const { specimenStyle, mountingType, hasPatina, patinaStyle } = req.body;
+
+        // Get the purchase to verify ownership
+        const purchase = await storage.getPurchase(id);
+        if (!purchase) {
+          return res.status(404).json({ message: "Purchase not found" });
+        }
+
+        // Verify ownership (allow admin override or owner access)
+        const user = await storage.getUser(userId);
+        if (purchase.userId !== userId && !user?.isAdmin) {
+          return res.status(403).json({ message: "You can only update your own purchases" });
+        }
+
+        // Only allow updates for completed purchases
+        if (purchase.status !== "completed") {
+          return res.status(400).json({ message: "Can only update preferences for completed purchases" });
+        }
+
+        // Build update object with only provided fields
+        const updates: Partial<Purchase> = {};
+        if (specimenStyle !== undefined) updates.specimenStyle = specimenStyle;
+        if (mountingType !== undefined) updates.mountingType = mountingType;
+        if (hasPatina !== undefined) updates.hasPatina = hasPatina;
+        // Note: patinaStyle could be stored in a notes field or extended schema
+
+        await storage.updatePurchase(id, updates);
+
+        // Fetch updated purchase
+        const updatedPurchase = await storage.getPurchase(id);
+
+        console.log(`[Purchase] Updated preferences for ${id}:`, updates);
+
+        res.json({
+          message: "Preferences updated successfully",
+          purchase: updatedPurchase,
+        });
+      } catch (error: any) {
+        console.error("Update purchase preferences error:", error);
+        res
+          .status(500)
+          .json({ message: error.message || "Failed to update preferences" });
       }
     },
   );
