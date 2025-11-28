@@ -61,7 +61,7 @@ export default function HomePage() {
             
             {/* Kicker - bold with background */}
             <div className="hero-text-reveal hero-text-reveal-delay-1 mb-8">
-              <span className="inline-block text-base md:text-lg tracking-[0.3em] text-white/95 uppercase font-bold px-6 py-3 rounded-full border border-bronze/70 bg-bronze/20 backdrop-blur-md">
+              <span className="inline-block text-base md:text-lg tracking-[0.3em] text-white/95 uppercase font-bold px-6 py-3 rounded-full border border-bronze/60 bg-bronze/35 backdrop-blur-md">
                 Founding 100 Investment Launch
               </span>
             </div>
