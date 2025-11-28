@@ -109,33 +109,33 @@ export default function HomePage() {
               </p>
 
               {/* Dual CTA Buttons - SECURE and RESERVE (will swap to RESERVE and BUY on Monday) */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-8 mb-8">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-4 sm:mb-8">
                 <div className="w-full sm:w-auto text-center">
                   <Button 
                     size="lg" 
-                    className="w-full btn-bronze text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold shadow-lg mb-2" 
+                    className="w-full btn-bronze text-xs sm:text-base px-6 sm:px-10 py-4 sm:py-6 min-h-11 sm:min-h-14 gap-2 font-bold shadow-lg mb-1 sm:mb-2" 
                     onClick={() => setIsReservationModalOpen(true)}
                     data-testid="button-secure-now"
                   >
                     RESERVE FOR 24HRS
-                    <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
+                    <Clock className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
                   </Button>
-                  <p className="text-xs text-white/60 font-light">24 hours — then released back to pool</p>
+                  <p className="text-xs text-white/60 font-light mt-1">24 hours — released Monday</p>
                 </div>
                 
                 <div className="w-full sm:w-auto text-center">
-                  <Link href="/checkout" className="block mb-2">
+                  <Link href="/checkout" className="block mb-1 sm:mb-2">
                     <Button 
                       size="lg" 
                       variant="outline"
-                      className="w-full text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold border-white/30 text-white hover:bg-white/10" 
+                      className="w-full text-xs sm:text-base px-6 sm:px-10 py-4 sm:py-6 min-h-11 sm:min-h-14 gap-2 font-bold border-white/30 text-white hover:bg-white/10" 
                       data-testid="button-buy-now"
                     >
                       BUY NOW
-                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                      <ArrowRight className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
                     </Button>
                   </Link>
-                  <p className="text-xs text-white/60 font-light">Complete your investment immediately</p>
+                  <p className="text-xs text-white/60 font-light mt-1">Complete immediately</p>
                 </div>
               </div>
                 
@@ -169,19 +169,19 @@ export default function HomePage() {
         </section>
 
         {/* WHY THIS EXISTS - The Opportunity */}
-        <section className="py-16 px-6" data-testid="section-why-this-exists">
+        <section className="py-8 sm:py-16 px-4 sm:px-6" data-testid="section-why-this-exists">
           <div className="max-w-5xl mx-auto">
             
-            <div className="text-center mb-12">
-              <span className="text-xs tracking-[0.3em] text-bronze/70 uppercase font-light mb-4 block">
+            <div className="text-center mb-8 sm:mb-12">
+              <span className="text-xs tracking-[0.3em] text-bronze/70 uppercase font-light mb-3 sm:mb-4 block">
                 Why This Exists
               </span>
-              <h2 className="font-serif text-4xl md:text-5xl font-light tracking-tight moving-fill">
+              <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl font-light tracking-tight moving-fill">
                 A Once-In-A-Lifetime Founding Opportunity
               </h2>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="grid md:grid-cols-2 gap-6 sm:gap-12 items-center">
               {/* Left: Image */}
               <div className="order-2 md:order-1">
                 <div className="aspect-[4/3] rounded-lg overflow-hidden border border-bronze/20">
@@ -221,21 +221,21 @@ export default function HomePage() {
         </section>
 
         {/* WHAT YOU GET - The Full Value */}
-        <section id="seats" className="py-16 px-6">
+        <section id="seats" className="py-8 sm:py-16 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
             
             {/* Section header */}
-            <div className="text-center mb-12">
-              <h2 className="font-serif text-4xl md:text-5xl font-light mb-4 tracking-tight moving-fill">
+            <div className="text-center mb-8 sm:mb-12">
+              <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl font-light mb-3 sm:mb-4 tracking-tight moving-fill">
                 What You Get
               </h2>
-              <p className="text-muted-foreground text-base max-w-2xl mx-auto font-light leading-relaxed">
+              <p className="text-muted-foreground text-sm sm:text-base max-w-2xl mx-auto font-light leading-relaxed">
                 Every Founding 100 seat includes your bronze sculpture plus lifetime benefits
               </p>
             </div>
 
             {/* The Bronze - Star of the show with IMAGES */}
-            <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+            <div className="grid md:grid-cols-2 gap-6 sm:gap-12 items-center mb-12 sm:mb-16">
               {/* Left: Bronze Images Gallery */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="aspect-square rounded-lg overflow-hidden border border-bronze/20">
@@ -284,13 +284,13 @@ export default function HomePage() {
             </div>
 
             {/* Lifetime Benefits Grid */}
-            <div className="mb-12">
-              <h3 className="font-serif text-2xl text-center mb-8 font-light">Plus Lifetime Benefits</h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="p-6 rounded-lg border border-bronze/10 bg-bronze/[0.02]">
-                  <Sparkles className="w-6 h-6 text-accent-gold mb-3" />
-                  <h4 className="font-light mb-2 text-base">Workshop Vouchers</h4>
-                  <p className="text-sm text-muted-foreground font-light">
+            <div className="mb-8 sm:mb-12">
+              <h3 className="font-serif text-xl sm:text-2xl text-center mb-6 sm:mb-8 font-light">Plus Lifetime Benefits</h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                <div className="p-4 sm:p-6 rounded-lg border border-bronze/10 bg-bronze/[0.02]">
+                  <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-accent-gold mb-2 sm:mb-3" />
+                  <h4 className="font-light mb-1 sm:mb-2 text-sm sm:text-base">Workshop Vouchers</h4>
+                  <p className="text-xs sm:text-sm text-muted-foreground font-light">
                     50-80% off future 2-day bronze casting workshops. Learn the ancient lost-wax process yourself.
                   </p>
                 </div>
