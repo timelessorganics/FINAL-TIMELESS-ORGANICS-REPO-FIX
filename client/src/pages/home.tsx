@@ -168,67 +168,64 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* WHY THIS EXISTS - Personal Story FIRST */}
-        <section className="py-12 px-6" data-testid="section-davids-story">
-          <div className="max-w-4xl mx-auto">
+        {/* WHY THIS EXISTS - The Opportunity */}
+        <section className="py-16 px-6" data-testid="section-why-this-exists">
+          <div className="max-w-5xl mx-auto">
             
             <div className="text-center mb-12">
               <span className="text-xs tracking-[0.3em] text-bronze/70 uppercase font-light mb-4 block">
                 Why This Exists
               </span>
               <h2 className="font-serif text-4xl md:text-5xl font-light tracking-tight moving-fill">
-                Three Decades in Metal, Finally Shared
+                A Once-In-A-Lifetime Founding Opportunity
               </h2>
             </div>
 
-            <div className="grid md:grid-cols-5 gap-10 items-center">
-              {/* Story text */}
-              <div className="md:col-span-3 space-y-6">
-                <p className="text-base text-foreground/90 font-light leading-relaxed">
-                  For 30 years I've worked in precision metalwork — dental prosthetics, jewelry, 
-                  fine castings. Fifteen of those years in London's West End, crafting pieces 
-                  measured in microns. I know what fire can do to metal, and what metal can 
-                  become in the right hands.
-                </p>
-                <p className="text-base text-muted-foreground font-light leading-relaxed">
-                  Life brought me back to South Africa. Unforeseen hardship accelerated a dream 
-                  I'd carried for years: to preserve the extraordinary Cape Fynbos botanicals 
-                  — proteas, aloes, restios — in permanent bronze before they fade away forever.
-                </p>
-                <p className="text-muted-foreground font-light leading-relaxed">
-                  But here's what I've realized: <span className="text-bronze font-medium">these skills were never meant to be hidden</span>. 
-                  The ancient lost-wax process, the alchemy of fire and bronze — once you experience it, you're hooked. You'll want to learn it yourself. And I want to teach you.
-                </p>
-                <p className="text-foreground/90 font-light leading-relaxed italic border-l-2 border-bronze/40 pl-6">
-                  "This art form will blow your mind wide open. The value I'm offering is 20 times 
-                  what you'll pay — and that's before you count the lifetime benefits. 
-                  100 seats. Once they're gone, this chapter closes."
-                </p>
-                <p className="text-foreground/80 font-medium mt-4">
-                  — David Junor
-                </p>
-              </div>
-              
-              {/* Image placeholder - sculptor at work */}
-              <div className="md:col-span-2">
-                <div className="aspect-[3/4] rounded-lg overflow-hidden border border-bronze/20 bg-gradient-to-b from-bronze/10 to-transparent">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              {/* Left: Image */}
+              <div className="order-2 md:order-1">
+                <div className="aspect-[4/3] rounded-lg overflow-hidden border border-bronze/20">
                   <img 
                     src={davidStoryImage} 
-                    alt="Bronze casting on wood mounting" 
+                    alt="Bronze botanical sculpture" 
                     className="w-full h-full object-cover bronze-warmth image-fade-in"
                   />
                 </div>
+              </div>
+              
+              {/* Right: Text */}
+              <div className="order-1 md:order-2 space-y-6">
+                <p className="text-lg text-foreground/90 font-light leading-relaxed">
+                  <span className="text-bronze font-medium">100 founding seats.</span> That's it. 
+                  This isn't a subscription. It's not a membership. It's a one-time investment 
+                  that gives you a handcrafted bronze sculpture worth R25,000+ and lifetime 
+                  benefits worth even more.
+                </p>
+                <p className="text-base text-muted-foreground font-light leading-relaxed">
+                  Your investment funds the foundry. The kilns. The crucibles. The equipment 
+                  that transforms organic matter into permanent bronze art. Without these 100 
+                  founding investors, none of this exists.
+                </p>
+                <p className="text-base text-foreground/90 font-light leading-relaxed">
+                  In return, you get first access to workshops, lifetime discounts on everything 
+                  we create, priority on custom commissions, and your name etched into our story 
+                  from day one.
+                </p>
+                <p className="text-xl text-bronze font-light italic border-l-2 border-bronze/40 pl-6">
+                  "The value I'm offering is 20 times what you'll pay. 
+                  Once these seats are gone, this chapter closes forever."
+                </p>
               </div>
             </div>
           </div>
         </section>
 
         {/* WHAT YOU GET - The Full Value */}
-        <section id="seats" className="py-12 px-6">
-          <div className="max-w-5xl mx-auto">
+        <section id="seats" className="py-16 px-6">
+          <div className="max-w-6xl mx-auto">
             
             {/* Section header */}
-            <div className="text-center mb-10">
+            <div className="text-center mb-12">
               <h2 className="font-serif text-4xl md:text-5xl font-light mb-4 tracking-tight moving-fill">
                 What You Get
               </h2>
@@ -237,60 +234,101 @@ export default function HomePage() {
               </p>
             </div>
 
-            {/* The Bronze - Star of the show */}
-            <div className="text-center mb-10 p-6">
-              <Award className="w-12 h-12 text-bronze mx-auto mb-4" />
-              <h3 className="font-serif text-2xl md:text-3xl mb-3">Your Bronze Sculpture</h3>
-              <p className="text-base text-muted-foreground font-light max-w-2xl mx-auto mb-4">
-                A one-of-a-kind casting from real organic matter — a protea, aloe, restio, or other 
-                Cape Fynbos specimen. The original burns away completely, leaving only its perfect 
-                impression in bronze. Retail value <span className="text-bronze font-medium">R25,000+</span>
-              </p>
+            {/* The Bronze - Star of the show with IMAGES */}
+            <div className="grid md:grid-cols-2 gap-12 items-center mb-16">
+              {/* Left: Bronze Images Gallery */}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="aspect-square rounded-lg overflow-hidden border border-bronze/20">
+                  <img 
+                    src={bronzeImage1} 
+                    alt="Bronze botanical sculpture" 
+                    className="w-full h-full object-cover bronze-warmth image-fade-in"
+                  />
+                </div>
+                <div className="aspect-square rounded-lg overflow-hidden border border-bronze/20">
+                  <img 
+                    src={bronzeImage2} 
+                    alt="Bronze protea casting" 
+                    className="w-full h-full object-cover bronze-warmth image-fade-in"
+                  />
+                </div>
+                <div className="col-span-2 aspect-[21/9] rounded-lg overflow-hidden border border-bronze/20">
+                  <img 
+                    src={bronzeImage3} 
+                    alt="Bronze aloe sculpture detail" 
+                    className="w-full h-full object-cover bronze-warmth image-fade-in"
+                  />
+                </div>
+              </div>
+              
+              {/* Right: Text description */}
+              <div className="space-y-6">
+                <div className="flex items-center gap-3">
+                  <Award className="w-10 h-10 text-bronze" />
+                  <h3 className="font-serif text-3xl md:text-4xl">Your Bronze Sculpture</h3>
+                </div>
+                <p className="text-lg text-foreground/90 font-light leading-relaxed">
+                  A one-of-a-kind casting from real organic matter — a protea, aloe, restio, or 
+                  other Cape Fynbos specimen. The original burns away completely at 700°C, 
+                  leaving only its perfect impression in permanent bronze.
+                </p>
+                <p className="text-base text-muted-foreground font-light leading-relaxed">
+                  Each piece captures every vein, every texture, every delicate detail of the 
+                  living specimen. No two castings are ever alike. Your bronze is truly one-of-a-kind.
+                </p>
+                <div className="flex items-center gap-4 pt-4 border-t border-bronze/20">
+                  <span className="text-3xl font-light text-bronze">R25,000+</span>
+                  <span className="text-sm text-muted-foreground font-light">Retail value</span>
+                </div>
+              </div>
             </div>
 
             {/* Lifetime Benefits Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
-              <div className="p-6">
-                <Sparkles className="w-6 h-6 text-accent-gold mb-3" />
-                <h4 className="font-medium mb-2 text-base">Workshop Vouchers</h4>
-                <p className="text-sm text-muted-foreground font-light">
-                  50-80% off future 2-day bronze casting workshops. Learn the ancient lost-wax process yourself.
-                </p>
-              </div>
-              <div className="p-6">
-                <Shield className="w-6 h-6 text-patina mb-3" />
-                <h4 className="font-medium mb-2">Lifetime Shop Discounts</h4>
-                <p className="text-sm text-muted-foreground font-light">
-                  20-30% off everything in our future shop — sculptures, limited editions, tools, materials.
-                </p>
-              </div>
-              <div className="p-6">
-                <Award className="w-6 h-6 text-bronze mb-3" />
-                <h4 className="font-medium mb-2">Commission Priority</h4>
-                <p className="text-sm text-muted-foreground font-light">
-                  First access to custom commissions. Your specimen, your vision, cast in bronze.
-                </p>
-              </div>
-              <div className="p-6">
-                <Clock className="w-6 h-6 text-bronze mb-3" />
-                <h4 className="font-medium mb-2">Auction First Dibs</h4>
-                <p className="text-sm text-muted-foreground font-light">
-                  Early access to future one-of-a-kind works before they go to public auction.
-                </p>
-              </div>
-              <div className="p-6">
-                <Sparkles className="w-6 h-6 text-accent-gold mb-3" />
-                <h4 className="font-medium mb-2">Giftable for Life</h4>
-                <p className="text-sm text-muted-foreground font-light">
-                  Transfer your benefits to family or friends. A gift that keeps giving for generations.
-                </p>
-              </div>
-              <div className="p-6">
-                <Shield className="w-6 h-6 text-patina mb-3" />
-                <h4 className="font-medium mb-2">Founding Member Status</h4>
-                <p className="text-sm text-muted-foreground font-light">
-                  Your name in our foundry. Part of the story from day one.
-                </p>
+            <div className="mb-12">
+              <h3 className="font-serif text-2xl text-center mb-8 font-light">Plus Lifetime Benefits</h3>
+              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div className="p-6 rounded-lg border border-bronze/10 bg-bronze/[0.02]">
+                  <Sparkles className="w-6 h-6 text-accent-gold mb-3" />
+                  <h4 className="font-medium mb-2 text-base">Workshop Vouchers</h4>
+                  <p className="text-sm text-muted-foreground font-light">
+                    50-80% off future 2-day bronze casting workshops. Learn the ancient lost-wax process yourself.
+                  </p>
+                </div>
+                <div className="p-6 rounded-lg border border-patina/10 bg-patina/[0.02]">
+                  <Shield className="w-6 h-6 text-patina mb-3" />
+                  <h4 className="font-medium mb-2">Lifetime Shop Discounts</h4>
+                  <p className="text-sm text-muted-foreground font-light">
+                    20-30% off everything in our future shop — sculptures, limited editions, tools, materials.
+                  </p>
+                </div>
+                <div className="p-6 rounded-lg border border-bronze/10 bg-bronze/[0.02]">
+                  <Award className="w-6 h-6 text-bronze mb-3" />
+                  <h4 className="font-medium mb-2">Commission Priority</h4>
+                  <p className="text-sm text-muted-foreground font-light">
+                    First access to custom commissions. Your specimen, your vision, cast in bronze.
+                  </p>
+                </div>
+                <div className="p-6 rounded-lg border border-bronze/10 bg-bronze/[0.02]">
+                  <Clock className="w-6 h-6 text-bronze mb-3" />
+                  <h4 className="font-medium mb-2">Auction First Dibs</h4>
+                  <p className="text-sm text-muted-foreground font-light">
+                    Early access to future one-of-a-kind works before they go to public auction.
+                  </p>
+                </div>
+                <div className="p-6 rounded-lg border border-accent-gold/10 bg-accent-gold/[0.02]">
+                  <Sparkles className="w-6 h-6 text-accent-gold mb-3" />
+                  <h4 className="font-medium mb-2">Giftable for Life</h4>
+                  <p className="text-sm text-muted-foreground font-light">
+                    Transfer your benefits to family or friends. A gift that keeps giving for generations.
+                  </p>
+                </div>
+                <div className="p-6 rounded-lg border border-patina/10 bg-patina/[0.02]">
+                  <Shield className="w-6 h-6 text-patina mb-3" />
+                  <h4 className="font-medium mb-2">Founding Member Status</h4>
+                  <p className="text-sm text-muted-foreground font-light">
+                    Your name in our foundry. Part of the story from day one.
+                  </p>
+                </div>
               </div>
             </div>
 
