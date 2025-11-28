@@ -68,6 +68,7 @@ export interface IStorage {
   getSeats(): Promise<Seat[]>;
   getSeatByType(type: 'founder' | 'patron'): Promise<Seat | undefined>;
   updateSeatSold(type: 'founder' | 'patron', increment: number): Promise<void>;
+  updateSeatPrice(type: 'founder' | 'patron', priceCents: number): Promise<void>;
 
   // Purchase operations
   createPurchase(purchase: InsertPurchase): Promise<Purchase>;
@@ -229,6 +230,16 @@ export class DatabaseStorage implements IStorage {
       .update(seats)
       .set({
         sold: sql`${seats.sold} + ${increment}`,
+        updatedAt: new Date(),
+      })
+      .where(eq(seats.type, type));
+  }
+
+  async updateSeatPrice(type: 'founder' | 'patron', priceCents: number): Promise<void> {
+    await db
+      .update(seats)
+      .set({
+        price: priceCents,
         updatedAt: new Date(),
       })
       .where(eq(seats.type, type));

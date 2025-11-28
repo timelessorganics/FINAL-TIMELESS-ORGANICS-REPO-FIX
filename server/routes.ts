@@ -2391,6 +2391,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin: Update seat pricing
+  app.patch("/api/admin/pricing", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const { founderPrice, patronPrice } = req.body;
+      
+      if (founderPrice !== undefined) {
+        await storage.updateSeatPrice("founder", founderPrice);
+      }
+      if (patronPrice !== undefined) {
+        await storage.updateSeatPrice("patron", patronPrice);
+      }
+
+      const seats = await storage.getSeats();
+      res.json(seats);
+    } catch (error: any) {
+      console.error("[Admin] Price update error:", error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+
   // Serve certificates statically
   app.use(
     "/certificates",

@@ -62,6 +62,26 @@ export default function AdminPanel() {
   });
 
   const [approvalNotes, setApprovalNotes] = useState<{[key: string]: string}>({});
+  const [editingPrice, setEditingPrice] = useState<{ founderPrice: string; patronPrice: string }>({ founderPrice: "", patronPrice: "" });
+  
+  // Update pricing mutation
+  const updatePricing = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest("PATCH", "/api/admin/pricing", {
+        founderPrice: editingPrice.founderPrice ? parseInt(editingPrice.founderPrice) * 100 : undefined,
+        patronPrice: editingPrice.patronPrice ? parseInt(editingPrice.patronPrice) * 100 : undefined,
+      });
+      return await response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/seats"] });
+      setEditingPrice({ founderPrice: "", patronPrice: "" });
+      toast({ title: "Pricing Updated!", description: "Seat prices have been updated." });
+    },
+    onError: (error: Error) => {
+      toast({ variant: "destructive", title: "Failed to update pricing", description: error.message });
+    },
+  });
   
   // Media upload dialog state
   const [showMediaDialog, setShowMediaDialog] = useState(false);
@@ -420,6 +440,24 @@ export default function AdminPanel() {
               <div className="text-sm text-muted-foreground">Codes Issued</div>
             </Card>
           </div>
+
+          {/* Pricing Management */}
+          <Card className="bg-card border-card-border p-7 mb-12">
+            <h2 className="font-serif text-2xl font-bold mb-6">Pricing Management</h2>
+            <div className="grid grid-cols-2 gap-4 mb-6">
+              <div className="space-y-2">
+                <Label htmlFor="founder-price">Founder Seat Price (R)</Label>
+                <Input id="founder-price" type="number" placeholder="3000" step="100" value={editingPrice.founderPrice} onChange={(e) => setEditingPrice({...editingPrice, founderPrice: e.target.value})} data-testid="input-founder-price" />
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="patron-price">Patron Seat Price (R)</Label>
+                <Input id="patron-price" type="number" placeholder="5000" step="100" value={editingPrice.patronPrice} onChange={(e) => setEditingPrice({...editingPrice, patronPrice: e.target.value})} data-testid="input-patron-price" />
+              </div>
+            </div>
+            <Button onClick={() => updatePricing.mutate()} disabled={updatePricing.isPending || (!editingPrice.founderPrice && !editingPrice.patronPrice)} className="bg-patina text-white" data-testid="button-update-pricing">
+              {updatePricing.isPending ? "Updating..." : "Update Pricing"}
+            </Button>
+          </Card>
 
           {/* Seat Breakdown */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-12">
