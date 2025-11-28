@@ -1264,10 +1264,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // PRE-LAUNCH RESERVATION SYSTEM
   // =============================================
   
-  // Public: Get pre-launch reservation stats
+  // Public: Get pre-launch reservation stats - ONLY count completed payments
   app.get("/api/prelaunch/stats", async (req: Request, res: Response) => {
     try {
-      // Simple stats - count from purchases and reservations tables
       const stats = {
         totalReserved: 0,
         founderDeposits: 0,
@@ -1277,26 +1276,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       };
       
       try {
-        // Try to count from reservations table
-        const activeReservations = await storage.getActiveReservationsByType('founder');
-        if (activeReservations && Array.isArray(activeReservations)) {
-          stats.founderHolds = activeReservations.length;
-        }
-        
-        const patronReservations = await storage.getActiveReservationsByType('patron');
-        if (patronReservations && Array.isArray(patronReservations)) {
-          stats.patronHolds = patronReservations.length;
-        }
-        
-        stats.totalReserved = stats.founderHolds + stats.patronHolds;
-      } catch (e) {
-        // Reservations table may not be fully synced yet, use purchases as fallback
+        // ONLY count purchases with 'completed' status = actually paid
         const allPurchases = await storage.getAllPurchases();
         if (allPurchases && Array.isArray(allPurchases)) {
-          stats.founderDeposits = allPurchases.filter(p => p.seatType === 'founder').length;
-          stats.patronDeposits = allPurchases.filter(p => p.seatType === 'patron').length;
+          const completedPurchases = allPurchases.filter(p => p.status === 'completed');
+          
+          stats.founderDeposits = completedPurchases.filter(p => p.seatType === 'founder').length;
+          stats.patronDeposits = completedPurchases.filter(p => p.seatType === 'patron').length;
           stats.totalReserved = stats.founderDeposits + stats.patronDeposits;
+          
+          // Also count active 24-hour holds if available
+          try {
+            const founderHolds = await storage.getActiveReservationsByType('founder');
+            if (founderHolds && Array.isArray(founderHolds)) {
+              stats.founderHolds = founderHolds.length;
+            }
+            
+            const patronHolds = await storage.getActiveReservationsByType('patron');
+            if (patronHolds && Array.isArray(patronHolds)) {
+              stats.patronHolds = patronHolds.length;
+            }
+          } catch (e) {
+            // Reservations table may not exist yet, that's OK
+          }
         }
+      } catch (e) {
+        console.error("Stats query error:", e);
       }
       
       res.json(stats);
