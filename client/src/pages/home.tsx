@@ -9,6 +9,7 @@ import heroImage from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_176424890
 import bronzeImage1 from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764170102466.png";
 import bronzeImage2 from "@assets/Gemini_Generated_Image_rl9enarl9enarl9e_1764170102466.png";
 import bronzeImage3 from "@assets/Gemini_Generated_Image_o0oi1oo0oi1oo0oi_1764170102464.png";
+import davidStoryImage from "@assets/Gemini_Generated_Image_pgo4cnpgo4cnpgo4_result_1764296343897.webp";
 
 import smokeVideo from "@assets/3 SMOKE HOVERS TINY SPARKS7_1761435915770.mp4";
 import flowerBloomVideo from "@assets/Yellow-Lily-Opening-On-Black-Background-4K-2025-08-29-08-44-48-Utc_1764103216693.mp4";
@@ -235,8 +236,8 @@ export default function HomePage() {
               <div className="md:col-span-2">
                 <div className="aspect-[3/4] rounded-lg overflow-hidden border border-bronze/20 bg-gradient-to-b from-bronze/10 to-transparent">
                   <img 
-                    src={bronzeImage1} 
-                    alt="Bronze botanical sculpture detail" 
+                    src={davidStoryImage} 
+                    alt="Bronze casting on wood mounting" 
                     className="w-full h-full object-cover bronze-warmth image-fade-in"
                   />
                 </div>
