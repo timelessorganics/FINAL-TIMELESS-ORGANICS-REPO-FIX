@@ -78,6 +78,14 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 
 ## Recent Changes (Session Nov 28, 2025)
 - **Hero Kicker Positioning:** "FOUNDING 100 INVESTMENT LAUNCH" text now positioned at the very top of the hero section on the dark background area, directly below the header
+- **"Why This Exists" Section Rewrite:** Changed focus from David's biography to the founding opportunity
+  - Now emphasizes: 100 founding seats, one-time investment, value proposition (R25,000+ sculpture + lifetime benefits)
+  - Explains what investor funds go toward (foundry, kilns, crucibles, equipment)
+  - David's personal story moved to About section where it belongs
+- **"What You Get" Section Enhanced with Images:** Added bronze gallery layout
+  - 2x2 grid of bronze images (2 square + 1 wide panoramic)
+  - Side-by-side layout: Images left, description right
+  - Benefits grid now has subtle colored borders for visual polish
 - **Image Lightbox Feature:** Click-to-enlarge lightbox added to specimen showcase images
   - Hover shows zoom icon and "Click to enlarge" prompt
   - Lightbox opens with Plant/Bronze toggle buttons
