@@ -78,8 +78,8 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-black/[0.15]" />
           <div className="absolute inset-0 border-b border-white/[0.05]" />
           
-          {/* Kicker on slate area - positioned on dark background of image */}
-          <div className="absolute top-1/3 left-0 right-0 z-10 px-4 sm:px-6">
+          {/* Kicker on BLACK space - positioned on dark area just above slate */}
+          <div className="absolute top-12 left-0 right-0 z-10 px-4 sm:px-6">
             <div className="max-w-4xl mx-auto text-center">
               <div className="hero-text-reveal hero-text-reveal-delay-1">
                 <span className="inline-block font-serif text-sm sm:text-base md:text-lg tracking-[0.15em] sm:tracking-[0.2em] uppercase moving-fill">
@@ -168,138 +168,15 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* KEEP THE FIRES BURNING + YOUR INVESTMENT IS OUR INVESTMENT - MERGED POWERHOUSE SECTION */}
-        <section className="py-12 px-6 bg-gradient-to-b from-[#050505] via-background to-background relative overflow-hidden" data-testid="section-fires-and-investment">
-          {/* Kiln/forge video background - faded */}
-          <div className="absolute inset-0 opacity-[0.25]">
-            <video 
-              autoPlay 
-              loop 
-              muted 
-              playsInline
-              className="w-full h-full object-cover"
-            >
-              <source src={burntMetalVideo} type="video/mp4" />
-            </video>
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/80 via-transparent to-background" />
-          
-          <div className="max-w-5xl mx-auto relative z-10 space-y-12">
-            
-            {/* PART 1: Keep The Fires Burning */}
-            <div className="text-center">
-              <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light mb-6 tracking-tight">
-                <span className="hero-glass-text">Keep The Fires Burning</span>
-              </h2>
-              
-              {/* Scarcity Counter - Prominent */}
-              {totalRemaining > 0 && (
-                <div className="mb-10">
-                  <span className="inline-block text-7xl md:text-8xl font-light text-bronze mb-2">
-                    {totalRemaining}
-                  </span>
-                  <p className="text-lg text-foreground/80 font-light">
-                    seats remaining of 100
-                  </p>
-                </div>
-              )}
-              
-              {/* Explanation */}
-              <div className="max-w-3xl mx-auto space-y-4">
-                <p className="text-lg text-foreground/90 font-light leading-relaxed">
-                  This foundry only exists because 100 people believed in something timeless. 
-                  Each seat funds the kilns, the crucibles, the equipment that makes this possible.
-                </p>
-                
-                <p className="text-base text-foreground/80 font-light leading-relaxed">
-                  The fires are burning. The casting beds are heating. But here's what happens when the last seat sells:
-                </p>
-                
-                <p className="text-xl text-bronze font-light italic py-6 border-t border-bronze/20 border-b border-bronze/20">
-                  "Once they're gone, this chapter closes. The kiln doors shut. 
-                  This founding group becomes the story — and you become part of it."
-                </p>
-              </div>
-            </div>
-
-            {/* DIVIDER */}
-            <div className="w-full h-px bg-gradient-to-r from-transparent via-bronze/30 to-transparent" />
-
-            {/* PART 2: Your Investment Is Our Investment */}
-            <div>
-              <div className="text-center mb-12">
-                <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light mb-6 tracking-tight">
-                  <span className="hero-glass-text">Your Investment Is Our Investment</span>
-                </h2>
-                <p className="text-base text-foreground/90 font-light max-w-3xl mx-auto leading-relaxed">
-                  This isn't crowdfunding. This is <span className="text-bronze font-medium">co-creation</span>.
-                </p>
-              </div>
-
-              {/* The triple meaning - Three types of investment */}
-              <div className="grid md:grid-cols-3 gap-8 mb-12">
-                <div className="text-center">
-                  <div className="flex items-center justify-center gap-3 mb-4">
-                    <Users className="w-6 h-6 text-accent-gold" />
-                  </div>
-                  <h3 className="font-serif text-xl font-medium text-foreground mb-3">Your Financial Investment</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">
-                    Capital (R3,000–R5,000) funds our foundry's final fit-out — the kilns, crucibles, and precision equipment.
-                  </p>
-                </div>
-
-                <div className="text-center">
-                  <div className="flex items-center justify-center gap-3 mb-4">
-                    <Flame className="w-6 h-6 text-bronze" />
-                  </div>
-                  <h3 className="font-serif text-xl font-medium text-foreground mb-3">Our Technical Investment</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">
-                    We <span className="text-bronze font-medium">invest</span> your specimen in a heat-resistant plaster mix at 700°C to create your bronze mold.
-                  </p>
-                </div>
-
-                <div className="text-center">
-                  <div className="flex items-center justify-center gap-3 mb-4">
-                    <Award className="w-6 h-6 text-patina" />
-                  </div>
-                  <h3 className="font-serif text-xl font-medium text-foreground mb-3">Your Bronze Asset</h3>
-                  <p className="text-muted-foreground leading-relaxed text-sm">
-                    A one-of-a-kind sculpture worth R25,000+ cast by a master craftsperson with 30 years of precision work.
-                  </p>
-                </div>
-              </div>
-
-              {/* The punchline */}
-              <div className="text-center border-t border-bronze/20 pt-10">
-                <p className="text-lg text-foreground/90 font-light max-w-3xl mx-auto leading-relaxed">
-                  Both investments happen <span className="text-bronze font-medium">simultaneously</span>. You invest in our future. 
-                  We invest your cutting. Together, we create something 
-                  <span className="text-bronze font-serif italic"> Timeless</span>.
-                </p>
-              </div>
-            </div>
-
-            {/* CTA */}
-            <div className="text-center pt-10">
-              <Link href="#seats">
-                <Button size="lg" className="btn-bronze gap-2 min-h-14 text-lg px-10" data-testid="button-merged-cta">
-                  Secure Your Seat Now
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* THE STORY - Three Decades in Metal */}
+        {/* WHY THIS EXISTS - Personal Story FIRST */}
         <section className="py-12 px-6" data-testid="section-davids-story">
           <div className="max-w-4xl mx-auto">
             
             <div className="text-center mb-12">
               <span className="text-xs tracking-[0.3em] text-bronze/70 uppercase font-light mb-4 block">
-                The Real Story
+                Why This Exists
               </span>
-              <h2 className="font-serif text-3xl md:text-4xl font-light tracking-tight moving-fill">
+              <h2 className="font-serif text-4xl md:text-5xl font-light tracking-tight moving-fill">
                 Three Decades in Metal, Finally Shared
               </h2>
             </div>
@@ -558,6 +435,104 @@ export default function HomePage() {
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* THE INVESTMENTS MERGED - ONE Unified Black Section */}
+        <section className="py-16 px-6 bg-[#050505] relative overflow-hidden" data-testid="section-investments-unified">
+          {/* Kiln/forge video background - faded */}
+          <div className="absolute inset-0 opacity-[0.12]">
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full h-full object-cover"
+            >
+              <source src={burntMetalVideo} type="video/mp4" />
+            </video>
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-[#050505]/95 to-[#050505]/80" />
+          
+          <div className="max-w-5xl mx-auto relative z-10 space-y-14">
+            
+            {/* Main heading + scarcity */}
+            <div className="text-center">
+              <h2 className="font-serif text-5xl md:text-6xl lg:text-7xl font-light mb-8 tracking-tight text-white">
+                <span className="hero-glass-text">Your Investment Is Our Investment</span>
+              </h2>
+              
+              {/* The 100 believers message */}
+              <p className="text-xl text-white/90 font-light max-w-3xl mx-auto mb-8 leading-relaxed">
+                This foundry will only exist and get finished because of the 100 people who believed in something special. 
+                <span className="text-bronze font-medium"> Not crowdfunding. Co-creation.</span>
+              </p>
+              
+              {/* Scarcity display */}
+              {totalRemaining > 0 && (
+                <div className="mb-12">
+                  <span className="inline-block text-8xl md:text-9xl font-light text-bronze mb-3">
+                    {totalRemaining}
+                  </span>
+                  <p className="text-lg text-white/60 font-light">
+                    seats remaining • then this chapter closes
+                  </p>
+                </div>
+              )}
+            </div>
+
+            {/* The triple meaning - Three types of investment */}
+            <div className="grid md:grid-cols-3 gap-10">
+              <div className="text-center border border-bronze/20 rounded-lg p-8 bg-white/[0.02] backdrop-blur-sm">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <Users className="w-8 h-8 text-accent-gold" />
+                </div>
+                <h3 className="font-serif text-2xl font-light text-white mb-3">Your Financial Investment</h3>
+                <p className="text-white/70 leading-relaxed text-base font-light">
+                  Capital (R3,000–R5,000) funds our foundry's final fit-out — the kilns, crucibles, and precision equipment that make this art possible.
+                </p>
+              </div>
+
+              <div className="text-center border border-bronze/30 rounded-lg p-8 bg-bronze/[0.05] backdrop-blur-sm">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <Flame className="w-8 h-8 text-bronze" />
+                </div>
+                <h3 className="font-serif text-2xl font-light text-white mb-3">Our Technical Investment</h3>
+                <p className="text-white/70 leading-relaxed text-base font-light">
+                  We <span className="text-bronze font-medium">invest</span> your specimen in a heat-resistant plaster mix, encasing it to withstand 700°C and create your bronze mold.
+                </p>
+              </div>
+
+              <div className="text-center border border-patina/20 rounded-lg p-8 bg-white/[0.02] backdrop-blur-sm">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <Award className="w-8 h-8 text-patina" />
+                </div>
+                <h3 className="font-serif text-2xl font-light text-white mb-3">Your Bronze Asset</h3>
+                <p className="text-white/70 leading-relaxed text-base font-light">
+                  A one-of-a-kind sculpture worth R25,000+ cast by a master craftsperson with 30 years of world-renowned precision work.
+                </p>
+              </div>
+            </div>
+
+            {/* The punchline */}
+            <div className="text-center border-t border-bronze/20 pt-10">
+              <p className="text-lg text-white/90 font-light max-w-3xl mx-auto leading-relaxed mb-6">
+                Both investments happen <span className="text-bronze font-medium">simultaneously</span>. You invest in our future. We invest your cutting. Together, we create something 
+                <span className="text-bronze font-serif italic"> Timeless</span>.
+              </p>
+              
+              <p className="text-xl text-bronze font-light italic mb-10 pb-10 border-b border-bronze/20">
+                "Once they're gone, this chapter closes. The kiln doors shut. 
+                This founding group becomes the story — and you become part of it."
+              </p>
+              
+              <Link href="#seats">
+                <Button size="lg" className="btn-bronze gap-2 min-h-14 text-lg px-10" data-testid="button-investments-cta">
+                  Secure Your Seat Now
+                  <ArrowRight className="w-5 h-5" />
+                </Button>
+              </Link>
             </div>
           </div>
         </section>
