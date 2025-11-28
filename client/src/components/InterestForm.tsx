@@ -120,6 +120,7 @@ export function InterestForm() {
                     placeholder="David Junor"
                     data-testid="input-name"
                     className="border-bronze/30 bg-background/80 focus:border-bronze"
+                    autoComplete="off"
                     {...field}
                   />
                 </FormControl>
@@ -140,6 +141,7 @@ export function InterestForm() {
                     placeholder="you@example.com"
                     data-testid="input-email"
                     className="border-bronze/30 bg-background/80 focus:border-bronze"
+                    autoComplete="off"
                     {...field}
                   />
                 </FormControl>
@@ -162,6 +164,7 @@ export function InterestForm() {
                     placeholder="+27 XX XXX XXXX"
                     data-testid="input-phone"
                     className="border-bronze/30 bg-background/80 focus:border-bronze"
+                    autoComplete="off"
                     {...field}
                   />
                 </FormControl>
