@@ -12,7 +12,7 @@ export default function Founding100ExplainedPage() {
         {/* Hero Section */}
         <section className="py-24 px-6 bg-gradient-to-b from-card/30 to-background">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-light mb-6 tracking-tight">
+            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-light mb-6 tracking-tight moving-fill">
               The Founding 100
             </h1>
             <p className="text-xl md:text-2xl text-foreground/90 font-light max-w-3xl mx-auto leading-relaxed">

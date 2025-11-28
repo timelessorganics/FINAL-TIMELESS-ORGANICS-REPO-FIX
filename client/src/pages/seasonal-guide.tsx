@@ -1,3 +1,5 @@
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { Link } from "wouter";
 import { Leaf, CalendarDays, Flower2, Sparkles, ArrowLeft, Camera, CheckCircle2, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -6,24 +8,26 @@ import SpecimenShowcase from "@/components/SpecimenShowcase";
 
 export default function SeasonalGuide() {
   return (
-    <div className="min-h-screen bg-background">
-      <div className="max-w-5xl mx-auto px-4 py-12 space-y-16">
-        
-        {/* Back Navigation */}
-        <div>
-          <Link href="/">
-            <Button variant="ghost" className="gap-2" data-testid="button-back-home">
-              <ArrowLeft className="w-4 h-4" />
-              Back to Home
-            </Button>
-          </Link>
-        </div>
+    <>
+      <Header />
+      <div className="min-h-screen bg-background">
+        <div className="max-w-5xl mx-auto px-4 py-12 space-y-16">
+          
+          {/* Back Navigation */}
+          <div>
+            <Link href="/">
+              <Button variant="ghost" className="gap-2" data-testid="button-back-home">
+                <ArrowLeft className="w-4 h-4" />
+                Back to Home
+              </Button>
+            </Link>
+          </div>
 
-        {/* Hero Section */}
-        <header className="text-center space-y-4">
-          <h1 className="font-serif text-5xl font-bold text-bronze">
-            The Seasonal Nature of Fynbos
-          </h1>
+          {/* Hero Section */}
+          <header className="text-center space-y-4">
+            <h1 className="font-serif text-5xl font-bold moving-fill">
+              The Seasonal Nature of Fynbos
+            </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             Cape Fynbos is a winter-rainfall ecosystem. Each botanical specimen has its own season 
             of peak beauty—when flowers bloom, bracts colour, and seedheads form. We cast nature 

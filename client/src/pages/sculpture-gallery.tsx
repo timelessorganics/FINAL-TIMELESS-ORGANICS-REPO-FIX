@@ -70,6 +70,7 @@ export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) 
 
       </div>
     </div>
+    <Footer />
     </>
   );
 }
