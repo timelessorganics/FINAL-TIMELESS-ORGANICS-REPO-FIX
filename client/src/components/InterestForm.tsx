@@ -22,7 +22,7 @@ import { Loader2, CheckCircle2 } from "lucide-react";
 const interestFormSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
   email: z.string().email("Please enter a valid email address"),
-  phone: z.string().optional(),
+  phone: z.string().min(10, "Phone number is required"),
   notes: z.string().optional(),
 });
 
@@ -31,6 +31,7 @@ type InterestFormValues = z.infer<typeof interestFormSchema>;
 export function InterestForm() {
   const { toast } = useToast();
   const [isSuccess, setIsSuccess] = useState(false);
+  const [countryCode, setCountryCode] = useState("+27");
 
   const form = useForm<InterestFormValues>({
     resolver: zodResolver(interestFormSchema),
