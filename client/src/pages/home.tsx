@@ -148,7 +148,7 @@ export default function HomePage() {
               <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl font-light mb-6 tracking-tight">
                 <span className="hero-glass-text">Your Investment Is Our Investment</span>
               </h2>
-              <p className="text-xl md:text-2xl text-foreground/90 font-light max-w-3xl mx-auto leading-relaxed">
+              <p className="text-base text-foreground/90 font-light max-w-3xl mx-auto leading-relaxed">
                 This isn't crowdfunding. This is <span className="text-bronze font-medium">co-creation</span>.
               </p>
             </div>
@@ -181,7 +181,7 @@ export default function HomePage() {
 
             {/* The punchline */}
             <div className="text-center border-t border-bronze/20 pt-10">
-              <p className="text-xl md:text-2xl text-foreground/90 font-light max-w-3xl mx-auto leading-relaxed">
+              <p className="text-base text-foreground/90 font-light max-w-3xl mx-auto leading-relaxed">
                 Both investments happen simultaneously. You invest in our future. 
                 We invest your cutting. Together, we create something 
                 <span className="text-bronze font-serif italic"> Timeless</span>.
@@ -206,21 +206,20 @@ export default function HomePage() {
             <div className="grid md:grid-cols-5 gap-10 items-center">
               {/* Story text */}
               <div className="md:col-span-3 space-y-6">
-                <p className="text-lg text-foreground/90 font-light leading-relaxed">
+                <p className="text-base text-foreground/90 font-light leading-relaxed">
                   For 30 years I've worked in precision metalwork — dental prosthetics, jewelry, 
                   fine castings. Fifteen of those years in London's West End, crafting pieces 
                   measured in microns. I know what fire can do to metal, and what metal can 
                   become in the right hands.
                 </p>
-                <p className="text-muted-foreground font-light leading-relaxed">
+                <p className="text-base text-muted-foreground font-light leading-relaxed">
                   Life brought me back to South Africa. Unforeseen hardship accelerated a dream 
                   I'd carried for years: to preserve the extraordinary Cape Fynbos botanicals 
                   — proteas, aloes, restios — in permanent bronze before they fade away forever.
                 </p>
                 <p className="text-muted-foreground font-light leading-relaxed">
                   But here's what I've realized: <span className="text-bronze font-medium">these skills were never meant to be hidden</span>. 
-                  The ancient lost-wax process, the alchemy of fire and bronze — once you experience 
-                  it, you're hooked. You'll want to learn it yourself. And I want to teach you.
+                  The ancient lost-wax process, the alchemy of fire and bronze — once you experience it, you're hooked. You'll want to learn it yourself. And I want to teach you.
                 </p>
                 <p className="text-foreground/90 font-light leading-relaxed italic border-l-2 border-bronze/40 pl-6">
                   "This art form will blow your mind wide open. The value I'm offering is 20 times 
@@ -264,7 +263,7 @@ export default function HomePage() {
             <div className="text-center mb-16 p-8">
               <Award className="w-12 h-12 text-bronze mx-auto mb-4" />
               <h3 className="font-serif text-2xl md:text-3xl mb-3">Your Bronze Sculpture</h3>
-              <p className="text-muted-foreground font-light max-w-2xl mx-auto mb-4">
+              <p className="text-base text-muted-foreground font-light max-w-2xl mx-auto mb-4">
                 A one-of-a-kind casting from real organic matter — a protea, aloe, restio, or other 
                 Cape Fynbos specimen. The original burns away completely, leaving only its perfect 
                 impression in bronze. Retail value <span className="text-bronze font-medium">R25,000+</span>
@@ -275,7 +274,7 @@ export default function HomePage() {
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
               <div className="p-6 border border-border/50 rounded-lg bg-card/30">
                 <Sparkles className="w-6 h-6 text-accent-gold mb-3" />
-                <h4 className="font-medium mb-2">Workshop Vouchers</h4>
+                <h4 className="font-medium mb-2 text-base">Workshop Vouchers</h4>
                 <p className="text-sm text-muted-foreground font-light">
                   50-80% off future 2-day bronze casting workshops. Learn the ancient lost-wax process yourself.
                 </p>
