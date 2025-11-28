@@ -111,31 +111,31 @@ export default function HomePage() {
               {/* Dual CTA Buttons - SECURE and RESERVE (will swap to RESERVE and BUY on Monday) */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-8 mb-8">
                 <div className="w-full sm:w-auto text-center">
-                  <Link href="/founding-100-explained" className="block mb-2">
-                    <Button 
-                      size="lg" 
-                      className="w-full btn-bronze text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold shadow-lg" 
-                      data-testid="button-secure-now"
-                    >
-                      SECURE YOUR SEAT
-                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                    </Button>
-                  </Link>
-                  <p className="text-xs text-white/60 font-light">Pay R1,000 to instantly reserve your seat</p>
-                </div>
-                
-                <div className="w-full sm:w-auto text-center">
                   <Button 
                     size="lg" 
-                    variant="outline"
-                    className="w-full text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold border-white/30 text-white hover:bg-white/10 mb-2" 
+                    className="w-full btn-bronze text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold shadow-lg mb-2" 
                     onClick={() => setIsReservationModalOpen(true)}
-                    data-testid="button-reserve-seat"
+                    data-testid="button-secure-now"
                   >
-                    RESERVE YOUR SEAT
+                    RESERVE FOR 24HRS
                     <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
                   </Button>
                   <p className="text-xs text-white/60 font-light">24 hours — then released back to pool</p>
+                </div>
+                
+                <div className="w-full sm:w-auto text-center">
+                  <Link href="/checkout" className="block mb-2">
+                    <Button 
+                      size="lg" 
+                      variant="outline"
+                      className="w-full text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold border-white/30 text-white hover:bg-white/10" 
+                      data-testid="button-buy-now"
+                    >
+                      BUY NOW
+                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </Button>
+                  </Link>
+                  <p className="text-xs text-white/60 font-light">Complete your investment immediately</p>
                 </div>
               </div>
                 
