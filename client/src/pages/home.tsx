@@ -53,8 +53,8 @@ export default function HomePage() {
           </div>
           
           {/* Soft radial vignette overlay - subtle, not harsh */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(5,5,5,0.7)_70%,rgba(5,5,5,0.95)_100%)]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(5,5,5,0.5)_70%,rgba(5,5,5,0.9)_100%)]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-70" />
           
           {/* Hero content with staggered reveal */}
           <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
@@ -73,21 +73,21 @@ export default function HomePage() {
             
             {/* Tagline - the hook */}
             <p className="hero-text-reveal hero-text-reveal-delay-3 text-xl md:text-2xl text-white/90 font-light max-w-2xl mx-auto mb-10 leading-relaxed">
-              One-Of-A-Kind Castings From Organic Matter
+              <span className="text-patina font-medium">One-Of-A-Kind</span> Castings From Organic Matter
             </p>
 
             {/* Dual CTA - Reserve OR Buy Now */}
             <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
               <Link href="#seats">
-                <Button size="lg" className="btn-bronze text-base px-8 py-6 min-h-14 gap-2 font-bold" data-testid="button-reserve-seat">
-                  <Clock className="w-4 h-4" />
+                <Button size="lg" className="btn-bronze text-base px-10 py-6 min-h-14 gap-2 font-bold shadow-lg" data-testid="button-reserve-seat">
+                  <Clock className="w-5 h-5" />
                   RESERVE
                 </Button>
               </Link>
               <Link href="#seats">
-                <Button size="lg" variant="outline" className="text-base px-8 py-6 min-h-14 gap-2 border-white/30 text-white/90 backdrop-blur-sm font-bold" data-testid="button-buy-now">
+                <Button size="lg" variant="outline" className="text-base px-10 py-6 min-h-14 gap-2 border-white/50 text-white font-bold backdrop-blur-md shadow-lg bg-white/10" data-testid="button-buy-now">
                   BUY NOW
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
             </div>
