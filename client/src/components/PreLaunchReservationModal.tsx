@@ -120,7 +120,7 @@ export default function PreLaunchReservationModal({
               </DialogDescription>
             </DialogHeader>
 
-            <form onSubmit={handleSubmit} className="space-y-6 mt-4 flex-1">
+            <form onSubmit={handleSubmit} className="space-y-6 mt-4 flex-1" autoComplete="off">
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Your Name</Label>
