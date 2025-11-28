@@ -83,9 +83,9 @@ export default function HomePage() {
             
             {/* Top spacer - pushes content to center-ish */}
             <div className="flex items-end justify-center pb-4">
-              {/* Kicker - animated gradient like the logo */}
+              {/* Kicker - animated gradient, Playfair font */}
               <div className="hero-text-reveal hero-text-reveal-delay-1">
-                <span className="inline-block text-xs sm:text-sm md:text-base tracking-[0.2em] sm:tracking-[0.3em] uppercase font-bold moving-fill">
+                <span className="inline-block font-serif text-sm sm:text-base md:text-lg tracking-[0.15em] sm:tracking-[0.2em] uppercase moving-fill">
                   Founding 100 Investment Launch
                 </span>
               </div>
@@ -99,9 +99,9 @@ export default function HomePage() {
                 <span className="hero-glass-text">Timeless Organics</span>
               </h1>
               
-              {/* Tagline - responsive */}
-              <p className="hero-text-reveal hero-text-reveal-delay-3 text-base sm:text-xl md:text-2xl lg:text-3xl text-white font-semibold max-w-2xl mx-auto mb-6 sm:mb-10 leading-relaxed tracking-wide px-2">
-                <span className="text-white">One-Of-A-Kind</span> Castings From Organic Matter
+              {/* Tagline - Playfair Display font, responsive */}
+              <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-base sm:text-xl md:text-2xl lg:text-3xl text-white/90 max-w-2xl mx-auto mb-6 sm:mb-10 leading-relaxed px-2">
+                One-Of-A-Kind Castings From Organic Matter
               </p>
 
               {/* Single CTA - Opens reservation modal */}
@@ -156,7 +156,7 @@ export default function HomePage() {
         </section>
 
         {/* YOUR INVESTMENT IS OUR INVESTMENT - The Key Message */}
-        <section className="py-16 px-6 bg-gradient-to-b from-[#050505] to-background relative overflow-hidden" data-testid="section-investment-meaning">
+        <section className="py-10 px-6 bg-gradient-to-b from-[#050505] to-background relative overflow-hidden" data-testid="section-investment-meaning">
           {/* Faded smoke video background */}
           <div className="absolute inset-0 opacity-[0.38]">
             <video 
@@ -221,7 +221,7 @@ export default function HomePage() {
         </section>
 
         {/* THE STORY - Three Decades in Metal */}
-        <section className="py-24 px-6" data-testid="section-davids-story">
+        <section className="py-12 px-6" data-testid="section-davids-story">
           <div className="max-w-4xl mx-auto">
             
             <div className="text-center mb-12">
@@ -276,11 +276,11 @@ export default function HomePage() {
         </section>
 
         {/* WHAT YOU GET - The Full Value */}
-        <section id="seats" className="py-24 px-6">
+        <section id="seats" className="py-12 px-6">
           <div className="max-w-5xl mx-auto">
             
             {/* Section header */}
-            <div className="text-center mb-16">
+            <div className="text-center mb-10">
               <h2 className="font-serif text-4xl md:text-5xl font-light mb-4 tracking-tight">
                 What You Get
               </h2>
@@ -290,7 +290,7 @@ export default function HomePage() {
             </div>
 
             {/* The Bronze - Star of the show */}
-            <div className="text-center mb-16 p-8">
+            <div className="text-center mb-10 p-6">
               <Award className="w-12 h-12 text-bronze mx-auto mb-4" />
               <h3 className="font-serif text-2xl md:text-3xl mb-3">Your Bronze Sculpture</h3>
               <p className="text-base text-muted-foreground font-light max-w-2xl mx-auto mb-4">
@@ -301,7 +301,7 @@ export default function HomePage() {
             </div>
 
             {/* Lifetime Benefits Grid */}
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mb-10">
               <div className="p-6">
                 <Sparkles className="w-6 h-6 text-accent-gold mb-3" />
                 <h4 className="font-medium mb-2 text-base">Workshop Vouchers</h4>
@@ -390,28 +390,30 @@ export default function HomePage() {
                     </li>
                   </ul>
 
-                  {/* Quantity Selector */}
-                  <div className="mb-6">
-                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Quantity</label>
-                    <select 
-                      className="w-full px-4 py-3 rounded-lg border border-bronze/30 bg-background/80 text-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-bronze/50"
-                      defaultValue="1"
-                      data-testid="select-quantity-founder"
-                    >
-                      {[1,2,3,4,5,6,7,8,9,10].map(n => <option key={n} value={n}>{n} {n === 1 ? 'seat' : 'seats'}</option>)}
-                      <option value="11+">10+</option>
-                    </select>
-                  </div>
-
-                  {/* Button */}
-                  <Link href="/checkout/founder" className="w-full">
+                  {/* Dual Buttons - Reserve + Buy Now */}
+                  <div className="space-y-3">
+                    <Link href="/checkout/founder" className="w-full">
+                      <Button 
+                        className="w-full min-h-11 text-sm font-semibold btn-bronze"
+                        data-testid="button-buy-founder"
+                      >
+                        Buy Now
+                      </Button>
+                    </Link>
+                    
                     <Button 
-                      className="w-full min-h-12 text-sm font-semibold btn-bronze"
-                      data-testid="button-buy-founder"
+                      variant="outline"
+                      className="w-full min-h-11 text-sm font-medium border-bronze/40 text-bronze hover:bg-bronze/10"
+                      onClick={() => setIsReservationModalOpen(true)}
+                      data-testid="button-reserve-founder"
                     >
-                      Secure Your Seat
+                      <Clock className="w-4 h-4 mr-2" />
+                      Reserve Seat
                     </Button>
-                  </Link>
+                    <p className="text-[10px] text-muted-foreground/70 text-center">
+                      24hr hold, then released back to pool
+                    </p>
+                  </div>
                 </div>
               </div>
 
@@ -459,28 +461,30 @@ export default function HomePage() {
                     </li>
                   </ul>
 
-                  {/* Quantity Selector */}
-                  <div className="mb-6">
-                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Quantity</label>
-                    <select 
-                      className="w-full px-4 py-3 rounded-lg border border-accent-gold/40 bg-background/80 text-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-accent-gold/50"
-                      defaultValue="1"
-                      data-testid="select-quantity-patron"
-                    >
-                      {[1,2,3,4,5,6,7,8,9,10].map(n => <option key={n} value={n}>{n} {n === 1 ? 'seat' : 'seats'}</option>)}
-                      <option value="11+">10+</option>
-                    </select>
-                  </div>
-
-                  {/* Button */}
-                  <Link href="/checkout/patron" className="w-full">
+                  {/* Dual Buttons - Reserve + Buy Now */}
+                  <div className="space-y-3">
+                    <Link href="/checkout/patron" className="w-full">
+                      <Button 
+                        className="w-full min-h-11 text-sm font-semibold bg-accent-gold text-background hover:bg-accent-gold/90"
+                        data-testid="button-buy-patron"
+                      >
+                        Buy Now
+                      </Button>
+                    </Link>
+                    
                     <Button 
-                      className="w-full min-h-12 text-sm font-semibold bg-accent-gold text-background hover:bg-accent-gold/90"
-                      data-testid="button-buy-patron"
+                      variant="outline"
+                      className="w-full min-h-11 text-sm font-medium border-accent-gold/40 text-accent-gold hover:bg-accent-gold/10"
+                      onClick={() => setIsReservationModalOpen(true)}
+                      data-testid="button-reserve-patron"
                     >
-                      Secure Your Seat
+                      <Clock className="w-4 h-4 mr-2" />
+                      Reserve Seat
                     </Button>
-                  </Link>
+                    <p className="text-[10px] text-muted-foreground/70 text-center">
+                      24hr hold, then released back to pool
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -496,7 +500,7 @@ export default function HomePage() {
         </section>
 
         {/* WHAT ARE THE WORKSHOPS? */}
-        <section className="py-24 px-6">
+        <section className="py-12 px-6">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="font-serif text-3xl md:text-4xl font-light mb-4 tracking-tight">
@@ -554,7 +558,7 @@ export default function HomePage() {
         </section>
 
         {/* CHOOSE YOUR MOMENT - Seasonal Choice */}
-        <section className="py-24 px-6 relative overflow-hidden" data-testid="section-seasonal-choice">
+        <section className="py-12 px-6 relative overflow-hidden" data-testid="section-seasonal-choice">
           {/* Faded flower bloom video background */}
           <div className="absolute inset-0 opacity-[0.37]">
             <video 
@@ -628,7 +632,7 @@ export default function HomePage() {
         </section>
 
         {/* BRONZE GALLERY - Spectacular Showcase */}
-        <section className="py-24 px-6 bg-gradient-to-b from-background to-[#050505]" data-testid="section-gallery">
+        <section className="py-12 px-6 bg-gradient-to-b from-background to-[#050505]" data-testid="section-gallery">
           <div className="max-w-6xl mx-auto">
             <div className="text-center mb-16">
               <span className="text-xs tracking-[0.3em] text-bronze/70 uppercase font-light mb-4 block">
@@ -690,7 +694,7 @@ export default function HomePage() {
         </section>
 
         {/* ABOUT / VISION - Brief */}
-        <section className="py-24 px-6">
+        <section className="py-12 px-6">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="font-serif text-3xl font-light mb-6 tracking-tight">
               The Vision
@@ -715,7 +719,7 @@ export default function HomePage() {
         </section>
 
         {/* WORKSHOPS PREVIEW */}
-        <section className="py-24 px-6">
+        <section className="py-12 px-6">
           <div className="max-w-4xl mx-auto">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <div>
@@ -755,7 +759,7 @@ export default function HomePage() {
         </section>
 
         {/* FINAL CTA - Scarcity */}
-        <section className="py-24 px-6 bg-gradient-to-b from-[#050505] to-background relative overflow-hidden" data-testid="section-final-cta">
+        <section className="py-12 px-6 bg-gradient-to-b from-[#050505] to-background relative overflow-hidden" data-testid="section-final-cta">
           {/* Faded burnt metal video background */}
           <div className="absolute inset-0 opacity-[0.40]">
             <video 

@@ -39,8 +39,8 @@ export default function Header({
         <div className="flex items-center justify-between gap-6">
           <Link href="/" className="font-serif text-xl font-bold" data-testid="link-home">
             <div>
+              <p className="text-[10px] font-bold tracking-[0.2em] -mb-0.5 moving-fill">DAVID JUNOR</p>
               <span className="moving-fill">Timeless Organics</span>
-              <p className="text-[10px] text-muted-foreground font-normal tracking-[0.15em] -mt-0.5">DAVID JUNOR</p>
               {context && (
                 <p className="text-xs text-muted-foreground font-normal">{context}</p>
               )}
