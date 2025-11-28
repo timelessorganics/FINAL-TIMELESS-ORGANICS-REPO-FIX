@@ -79,7 +79,7 @@ export default function HomePage() {
           <div className="absolute inset-0 border-b border-white/[0.05]" />
           
           {/* Kicker at top - on dark background */}
-          <div className="absolute top-0 left-0 right-0 z-10 pt-8 sm:pt-12 px-4 sm:px-6">
+          <div className="absolute top-0 left-0 right-0 z-10 pt-4 sm:pt-6 px-4 sm:px-6">
             <div className="max-w-4xl mx-auto text-center">
               <div className="hero-text-reveal hero-text-reveal-delay-1">
                 <span className="inline-block font-serif text-sm sm:text-base md:text-lg tracking-[0.15em] sm:tracking-[0.2em] uppercase moving-fill">
@@ -91,6 +91,9 @@ export default function HomePage() {
 
           {/* Layer 4: Content grid - stable positioning */}
           <div className="relative z-10 min-h-screen grid grid-rows-[1fr_auto_1fr] px-4 sm:px-6 py-12 sm:py-16">
+            
+            {/* Spacer - first row pushes content down */}
+            <div />
             
             {/* Center content - fixed height area */}
             <div className="text-center max-w-4xl mx-auto w-full">
