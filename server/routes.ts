@@ -1872,7 +1872,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
           return res.status(403).json({ message: "Admin access required" });
         }
 
-        const { count = 1 } = req.body;
+        const { count = 1, seatType = "patron" } = req.body;
+        
+        // Validate seat type
+        if (seatType !== "founder" && seatType !== "patron") {
+          return res.status(400).json({ message: "Invalid seat type. Must be 'founder' or 'patron'" });
+        }
+        
         const generatedCodes = [];
 
         for (let i = 0; i < Math.min(count, 20); i++) {
@@ -1880,7 +1886,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           const code = generatePromoCode();
           const promoCode = await storage.createPromoCode({
             code,
-            seatType: "patron",
+            seatType,
             discount: 100,
             createdBy: userId,
           });
