@@ -79,7 +79,7 @@ export default function HomePage() {
           <div className="absolute inset-0 border-b border-white/[0.05]" />
           
           {/* Kicker on BLACK space - positioned on dark area just above slate */}
-          <div className="absolute top-12 left-0 right-0 z-10 px-4 sm:px-6">
+          <div className="absolute top-6 sm:top-10 left-0 right-0 z-10 px-4 sm:px-6">
             <div className="max-w-4xl mx-auto text-center">
               <div className="hero-text-reveal hero-text-reveal-delay-1">
                 <span className="inline-block font-serif text-sm sm:text-base md:text-lg tracking-[0.15em] sm:tracking-[0.2em] uppercase moving-fill">
