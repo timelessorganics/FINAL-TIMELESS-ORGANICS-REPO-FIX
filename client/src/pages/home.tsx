@@ -78,8 +78,8 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-black/[0.15]" />
           <div className="absolute inset-0 border-b border-white/[0.05]" />
           
-          {/* Kicker at very top - on dark background, right below header */}
-          <div className="absolute top-2 left-0 right-0 z-10 px-4 sm:px-6">
+          {/* Kicker on slate area - positioned on dark background of image */}
+          <div className="absolute top-1/3 left-0 right-0 z-10 px-4 sm:px-6">
             <div className="max-w-4xl mx-auto text-center">
               <div className="hero-text-reveal hero-text-reveal-delay-1">
                 <span className="inline-block font-serif text-sm sm:text-base md:text-lg tracking-[0.15em] sm:tracking-[0.2em] uppercase moving-fill">
@@ -109,28 +109,34 @@ export default function HomePage() {
               </p>
 
               {/* Dual CTA Buttons - SECURE and RESERVE (will swap to RESERVE and BUY on Monday) */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
-                <Link href="/founding-100-explained" className="w-full sm:w-auto">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-8 mb-8">
+                <div className="w-full sm:w-auto text-center">
+                  <Link href="/founding-100-explained" className="block mb-2">
+                    <Button 
+                      size="lg" 
+                      className="w-full btn-bronze text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold shadow-lg" 
+                      data-testid="button-secure-now"
+                    >
+                      SECURE YOUR SEAT
+                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                    </Button>
+                  </Link>
+                  <p className="text-xs text-white/60 font-light">Pay R1,000 to instantly reserve your seat</p>
+                </div>
+                
+                <div className="w-full sm:w-auto text-center">
                   <Button 
                     size="lg" 
-                    className="w-full btn-bronze text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold shadow-lg" 
-                    data-testid="button-secure-now"
+                    variant="outline"
+                    className="w-full text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold border-white/30 text-white hover:bg-white/10 mb-2" 
+                    onClick={() => setIsReservationModalOpen(true)}
+                    data-testid="button-reserve-seat"
                   >
-                    SECURE
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                    RESERVE YOUR SEAT
+                    <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
                   </Button>
-                </Link>
-                
-                <Button 
-                  size="lg" 
-                  variant="outline"
-                  className="w-full sm:w-auto text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold border-white/30 text-white hover:bg-white/10" 
-                  onClick={() => setIsReservationModalOpen(true)}
-                  data-testid="button-reserve-seat"
-                >
-                  RESERVE
-                  <Clock className="w-4 h-4 sm:w-5 sm:h-5" />
-                </Button>
+                  <p className="text-xs text-white/60 font-light">24 hours — then released back to pool</p>
+                </div>
               </div>
                 
               {/* Reservation counter - shows live reservations */}
@@ -163,7 +169,7 @@ export default function HomePage() {
         </section>
 
         {/* KEEP THE FIRES BURNING + YOUR INVESTMENT IS OUR INVESTMENT - MERGED POWERHOUSE SECTION */}
-        <section className="py-20 px-6 bg-gradient-to-b from-[#050505] via-background to-background relative overflow-hidden" data-testid="section-fires-and-investment">
+        <section className="py-12 px-6 bg-gradient-to-b from-[#050505] via-background to-background relative overflow-hidden" data-testid="section-fires-and-investment">
           {/* Kiln/forge video background - faded */}
           <div className="absolute inset-0 opacity-[0.25]">
             <video 
@@ -178,7 +184,7 @@ export default function HomePage() {
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-[#050505]/80 via-transparent to-background" />
           
-          <div className="max-w-5xl mx-auto relative z-10 space-y-20">
+          <div className="max-w-5xl mx-auto relative z-10 space-y-12">
             
             {/* PART 1: Keep The Fires Burning */}
             <div className="text-center">

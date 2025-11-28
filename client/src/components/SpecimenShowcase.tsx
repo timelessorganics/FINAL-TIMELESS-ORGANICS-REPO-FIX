@@ -110,7 +110,7 @@ function HoverBronzeImage({ plant, bronze }: SpecimenImage) {
         <img
           src={plant}
           alt="Plant specimen"
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
             isHovered ? "opacity-0" : "opacity-100"
           }`}
         />
@@ -119,7 +119,7 @@ function HoverBronzeImage({ plant, bronze }: SpecimenImage) {
         <img
           src={bronze}
           alt="Bronze casting"
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
             isHovered ? "opacity-100" : "opacity-0"
           }`}
         />
