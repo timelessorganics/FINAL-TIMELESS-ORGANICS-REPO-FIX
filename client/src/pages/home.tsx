@@ -74,7 +74,7 @@ export default function HomePage() {
             
             {/* Tagline - the hook */}
             <p className="hero-text-reveal hero-text-reveal-delay-3 text-lg md:text-3xl text-white font-semibold max-w-2xl mx-auto mb-10 leading-relaxed tracking-wide">
-              <span className="text-patina">One-Of-A-Kind</span> Castings From Organic Matter
+              <span className="text-white">One-Of-A-Kind</span> Castings From Organic Matter
             </p>
 
             {/* Dual CTA - Reserve OR Buy Now */}
