@@ -1,9 +1,10 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 
-// Use direct API URL to Railway for authenticated requests
-// Netlify proxy strips Authorization headers, so we must call Railway directly
-const API_BASE_URL = import.meta.env.VITE_API_URL || "";
+// In development (Vite dev server), use relative paths - requests go to Express backend on same server
+// In production (Netlify), use direct Railway URL to bypass Netlify proxy (which strips auth headers)
+const isProduction = import.meta.env.PROD;
+const API_BASE_URL = isProduction ? (import.meta.env.VITE_API_URL || "") : "";
 
 // Helper to get auth headers from Supabase session
 async function getAuthHeaders(): Promise<HeadersInit> {

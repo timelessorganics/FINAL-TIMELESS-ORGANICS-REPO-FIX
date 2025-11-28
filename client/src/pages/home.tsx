@@ -39,12 +39,12 @@ export default function HomePage() {
       
       <main className="relative z-50">
         
-        {/* HERO: Bronze emerging from darkness - FULL BLEED */}
+        {/* HERO: Bronze emerging from darkness - STABLE GRID LAYOUT */}
         <section 
-          className="min-h-screen flex items-center justify-center relative overflow-hidden bg-[#050505]" 
+          className="relative min-h-screen overflow-hidden bg-[#050505]" 
           data-testid="section-hero"
         >
-          {/* Full-bleed hero image with slow fade-from-darkness */}
+          {/* Layer 1: Full-bleed hero image */}
           <div className="absolute inset-0 hero-image-reveal">
             <img 
               src={heroImage} 
@@ -53,76 +53,76 @@ export default function HomePage() {
             />
           </div>
           
-          {/* Soft radial vignette overlay - subtle, not harsh */}
+          {/* Layer 2: Soft radial vignette overlay */}
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(5,5,5,0.5)_70%,rgba(5,5,5,0.9)_100%)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-70" />
           
-          {/* Hero content with staggered reveal */}
-          <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
+          {/* Layer 3: FULL SECTION GLASS OVERLAY - extends over entire hero */}
+          <div className="absolute inset-0 backdrop-blur-[2px] bg-white/[0.03]" />
+          <div className="absolute inset-0 border-b border-white/[0.05]" />
+          
+          {/* Layer 4: Content grid - stable positioning */}
+          <div className="relative z-10 min-h-screen grid grid-rows-[1fr_auto_1fr] px-4 sm:px-6 py-12 sm:py-16">
             
-            {/* Kicker - bold with background */}
-            <div className="hero-text-reveal hero-text-reveal-delay-1 mb-8">
-              <span className="inline-block text-base md:text-lg tracking-[0.3em] text-white/95 uppercase font-bold px-6 py-3 rounded-full border border-bronze/60 bg-bronze/35 backdrop-blur-md">
-                Founding 100 Investment Launch
-              </span>
-            </div>
-            
-            {/* Main title with glassy effect */}
-            <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-5xl md:text-7xl lg:text-8xl font-light mb-6 leading-[1.05] tracking-tight">
-              <span className="hero-glass-text">Timeless Organics</span>
-            </h1>
-            
-            {/* Tagline - the hook */}
-            <p className="hero-text-reveal hero-text-reveal-delay-3 text-lg md:text-3xl text-white font-semibold max-w-2xl mx-auto mb-10 leading-relaxed tracking-wide">
-              <span className="text-white">One-Of-A-Kind</span> Castings From Organic Matter
-            </p>
-
-            {/* Dual CTA - Reserve OR Buy Now */}
-            <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
-              <Link href="#seats">
-                <Button size="lg" className="btn-bronze text-base px-10 py-6 min-h-14 gap-2 font-bold shadow-lg" data-testid="button-reserve-seat">
-                  <Clock className="w-5 h-5" />
-                  RESERVE
-                </Button>
-              </Link>
-              <Link href="#seats">
-                <Button size="lg" variant="outline" className="text-base px-10 py-6 min-h-14 gap-2 border-white/50 text-white font-bold backdrop-blur-md shadow-lg bg-white/10" data-testid="button-buy-now">
-                  BUY NOW
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </Link>
-            </div>
-
-            {/* Learn More button */}
-            <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6">
-              <Link href="/founding-100-explained">
-                <Button size="lg" variant="ghost" className="text-base px-8 py-6 min-h-14 text-white/70 hover:text-white/90" data-testid="button-learn-more">
-                  Learn More
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              </Link>
-            </div>
-
-            {/* Reserve explanation */}
-            <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6">
-              <p className="text-sm text-white/60 font-light max-w-2xl mx-auto">
-                <span className="text-white/80 font-medium">Reserve as many as you like.</span> Most investors are on mobile. We're giving everyone a fair chance before they're all gone. Once they're gone, they're gone.
-              </p>
-            </div>
-            
-            {/* Seat counter */}
-            {totalRemaining > 0 && (
-              <div className="hero-text-reveal hero-text-reveal-delay-3">
-                <span className="text-sm text-white/60 font-light">
-                  {totalRemaining} of 100 seats remaining
+            {/* Top spacer - pushes content to center-ish */}
+            <div className="flex items-end justify-center pb-4">
+              {/* Kicker - text only, no colored background */}
+              <div className="hero-text-reveal hero-text-reveal-delay-1">
+                <span className="inline-block text-xs sm:text-sm md:text-base tracking-[0.2em] sm:tracking-[0.3em] text-white/80 uppercase font-semibold">
+                  Founding 100 Investment Launch
                 </span>
               </div>
-            )}
-          </div>
-          
-          {/* Scroll indicator */}
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/40 animate-bounce">
-            <ArrowRight className="w-5 h-5 rotate-90" />
+            </div>
+            
+            {/* Center content - fixed height area */}
+            <div className="text-center max-w-4xl mx-auto w-full">
+              
+              {/* Main title with glassy effect - responsive sizing */}
+              <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-[clamp(2.5rem,8vw,6rem)] font-light mb-4 sm:mb-6 leading-[1.05] tracking-tight">
+                <span className="hero-glass-text">Timeless Organics</span>
+              </h1>
+              
+              {/* Tagline - responsive */}
+              <p className="hero-text-reveal hero-text-reveal-delay-3 text-base sm:text-xl md:text-2xl lg:text-3xl text-white font-semibold max-w-2xl mx-auto mb-6 sm:mb-10 leading-relaxed tracking-wide px-2">
+                <span className="text-white">One-Of-A-Kind</span> Castings From Organic Matter
+              </p>
+
+              {/* Single CTA - cleaner */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-6">
+                <Link href="#seats">
+                  <Button size="lg" className="btn-bronze text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold shadow-lg" data-testid="button-reserve-seat">
+                    Secure Your Seat
+                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                  </Button>
+                </Link>
+              </div>
+
+              {/* Learn More - subtle */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-4 sm:mb-6">
+                <Link href="/founding-100-explained">
+                  <Button size="lg" variant="ghost" className="text-sm sm:text-base px-6 sm:px-8 py-4 sm:py-6 min-h-10 sm:min-h-14 text-white/60 hover:text-white/80" data-testid="button-learn-more">
+                    Learn More
+                  </Button>
+                </Link>
+              </div>
+            </div>
+            
+            {/* Bottom area - seat counter and scroll hint */}
+            <div className="flex flex-col items-center justify-start pt-4 gap-4">
+              {/* Seat counter */}
+              {totalRemaining > 0 && (
+                <div className="hero-text-reveal hero-text-reveal-delay-3">
+                  <span className="text-xs sm:text-sm text-white/50 font-light">
+                    {totalRemaining} of 100 seats remaining
+                  </span>
+                </div>
+              )}
+              
+              {/* Scroll indicator */}
+              <div className="text-white/30 animate-bounce">
+                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 rotate-90" />
+              </div>
+            </div>
           </div>
         </section>
 
@@ -192,7 +192,7 @@ export default function HomePage() {
         </section>
 
         {/* THE STORY - Three Decades in Metal */}
-        <section className="py-24 px-6 bg-card/10" data-testid="section-davids-story">
+        <section className="py-24 px-6" data-testid="section-davids-story">
           <div className="max-w-4xl mx-auto">
             
             <div className="text-center mb-12">
@@ -247,7 +247,7 @@ export default function HomePage() {
         </section>
 
         {/* WHAT YOU GET - The Full Value */}
-        <section id="seats" className="py-24 px-6 bg-card/20">
+        <section id="seats" className="py-24 px-6">
           <div className="max-w-5xl mx-auto">
             
             {/* Section header */}
@@ -467,7 +467,7 @@ export default function HomePage() {
         </section>
 
         {/* WHAT ARE THE WORKSHOPS? */}
-        <section className="py-24 px-6 bg-gradient-to-b from-card/20 to-background">
+        <section className="py-24 px-6">
           <div className="max-w-4xl mx-auto">
             <div className="text-center mb-12">
               <h2 className="font-serif text-3xl md:text-4xl font-light mb-4 tracking-tight">
@@ -525,7 +525,7 @@ export default function HomePage() {
         </section>
 
         {/* CHOOSE YOUR MOMENT - Seasonal Choice */}
-        <section className="py-24 px-6 bg-card/10 relative overflow-hidden" data-testid="section-seasonal-choice">
+        <section className="py-24 px-6 relative overflow-hidden" data-testid="section-seasonal-choice">
           {/* Faded flower bloom video background */}
           <div className="absolute inset-0 opacity-[0.37]">
             <video 
@@ -661,7 +661,7 @@ export default function HomePage() {
         </section>
 
         {/* ABOUT / VISION - Brief */}
-        <section className="py-24 px-6 bg-card/20">
+        <section className="py-24 px-6">
           <div className="max-w-3xl mx-auto text-center">
             <h2 className="font-serif text-3xl font-light mb-6 tracking-tight">
               The Vision
