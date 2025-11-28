@@ -321,16 +321,17 @@ export default function HomePage() {
             <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
               
               {/* Founder Seat */}
-              <div className="relative p-6 md:p-8">
+              <div className="relative border border-bronze/40 rounded-lg p-6 md:p-8 bg-gradient-to-b from-bronze/5 to-transparent">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-serif text-2xl text-bronze">Founder</h3>
-                  <span className="text-xs text-bronze bg-bronze/10 px-2 py-1 rounded-full">
-                    {founderSeats?.remaining || 50} left
+                  <span className="text-xs text-bronze bg-bronze/20 px-3 py-1 rounded-full font-semibold">
+                    Best Value
                   </span>
                 </div>
-                <div className="text-4xl font-light mb-4">
+                <div className="text-4xl font-light mb-2">
                   R{((founderSeats?.price || 300000) / 100).toLocaleString()}
                 </div>
+                <p className="text-xs text-bronze/60 mb-4">{founderSeats?.remaining || 50} seats available</p>
                 <ul className="space-y-2 mb-6 text-sm text-muted-foreground">
                   <li className="flex items-center gap-2">
                     <span className="w-1 h-1 bg-bronze rounded-full" />
@@ -356,24 +357,32 @@ export default function HomePage() {
                     <option value="11+">10+</option>
                   </select>
                 </div>
-                <Link href="/checkout/founder">
-                  <Button className="w-full btn-bronze min-h-12 text-base" data-testid="button-checkout-founder">
-                    Reserve Now
-                  </Button>
-                </Link>
+                <div className="grid grid-cols-2 gap-2">
+                  <Link href="/checkout/founder" className="w-full">
+                    <Button className="w-full btn-bronze min-h-12 text-base" data-testid="button-checkout-founder">
+                      Reserve
+                    </Button>
+                  </Link>
+                  <Link href="/checkout/founder" className="w-full">
+                    <Button className="w-full btn-bronze min-h-12 text-base" data-testid="button-buy-founder">
+                      Buy Now
+                    </Button>
+                  </Link>
+                </div>
               </div>
 
               {/* Patron Seat */}
-              <div className="relative p-6 md:p-8">
+              <div className="relative border border-accent-gold/40 rounded-lg p-6 md:p-8 bg-gradient-to-b from-accent-gold/5 to-transparent">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-serif text-2xl text-accent-gold">Patron</h3>
-                  <span className="text-xs text-accent-gold bg-accent-gold/10 px-2 py-1 rounded-full">
-                    {patronSeats?.remaining || 50} left
+                  <span className="text-xs text-accent-gold bg-accent-gold/20 px-3 py-1 rounded-full font-semibold">
+                    Premium
                   </span>
                 </div>
-                <div className="text-4xl font-light mb-4">
+                <div className="text-4xl font-light mb-2">
                   R{((patronSeats?.price || 500000) / 100).toLocaleString()}
                 </div>
+                <p className="text-xs text-accent-gold/60 mb-4">{patronSeats?.remaining || 50} seats available</p>
                 <ul className="space-y-2 mb-6 text-sm text-muted-foreground">
                   <li className="flex items-center gap-2">
                     <span className="w-1 h-1 bg-accent-gold rounded-full" />
@@ -399,11 +408,18 @@ export default function HomePage() {
                     <option value="11+">10+</option>
                   </select>
                 </div>
-                <Link href="/checkout/patron">
-                  <Button className="w-full btn-bronze min-h-12 text-base" data-testid="button-checkout-patron">
-                    Reserve Now
-                  </Button>
-                </Link>
+                <div className="grid grid-cols-2 gap-2">
+                  <Link href="/checkout/patron" className="w-full">
+                    <Button className="w-full btn-bronze min-h-12 text-base" data-testid="button-checkout-patron">
+                      Reserve
+                    </Button>
+                  </Link>
+                  <Link href="/checkout/patron" className="w-full">
+                    <Button className="w-full btn-bronze min-h-12 text-base" data-testid="button-buy-patron">
+                      Buy Now
+                    </Button>
+                  </Link>
+                </div>
               </div>
             </div>
 
