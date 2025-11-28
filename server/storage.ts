@@ -12,6 +12,13 @@ import {
   workshopDatesTable,
   workshopBookingsTable,
   workshopWaitlistTable,
+  mediaAssets,
+  pageAssets,
+  products,
+  productImages,
+  auctions,
+  auctionImages,
+  auctionBids,
   type User,
   type UpsertUser,
   type Seat,
@@ -31,6 +38,20 @@ import {
   type InsertPromoCode,
   type Reservation,
   type InsertReservation,
+  type MediaAsset,
+  type InsertMediaAsset,
+  type PageAsset,
+  type InsertPageAsset,
+  type Product,
+  type InsertProduct,
+  type ProductImage,
+  type InsertProductImage,
+  type Auction,
+  type InsertAuction,
+  type AuctionImage,
+  type InsertAuctionImage,
+  type AuctionBid,
+  type InsertAuctionBid,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, sql, and, gt, lt } from "drizzle-orm";
@@ -110,6 +131,45 @@ export interface IStorage {
   getWaitlistEntry(userId: string, workshopDateId: string): Promise<any | undefined>;
   addToWaitlist(data: { userId: string; workshopDateId: string }): Promise<any>;
   getWaitlistForWorkshop(workshopDateId: string): Promise<Array<any>>;
+
+  // Admin Media Asset operations
+  createMediaAsset(asset: InsertMediaAsset): Promise<MediaAsset>;
+  getMediaAssets(): Promise<MediaAsset[]>;
+  getMediaAsset(id: string): Promise<MediaAsset | undefined>;
+  updateMediaAsset(id: string, updates: Partial<MediaAsset>): Promise<MediaAsset | undefined>;
+  deleteMediaAsset(id: string): Promise<boolean>;
+
+  // Admin Page Asset operations
+  getPageAssets(pageSlug?: string): Promise<PageAsset[]>;
+  setPageAsset(data: InsertPageAsset): Promise<PageAsset>;
+  deletePageAsset(pageSlug: string, slotKey: string): Promise<boolean>;
+
+  // Admin Product operations
+  createProduct(product: InsertProduct): Promise<Product>;
+  getProducts(): Promise<Product[]>;
+  getProduct(id: string): Promise<Product | undefined>;
+  getProductBySlug(slug: string): Promise<Product | undefined>;
+  updateProduct(id: string, updates: Partial<Product>): Promise<Product | undefined>;
+  deleteProduct(id: string): Promise<boolean>;
+  addProductImage(data: InsertProductImage): Promise<ProductImage>;
+  getProductImages(productId: string): Promise<ProductImage[]>;
+  deleteProductImage(id: string): Promise<boolean>;
+
+  // Admin Auction operations
+  createAuction(auction: InsertAuction): Promise<Auction>;
+  getAuctions(): Promise<Auction[]>;
+  getAuction(id: string): Promise<Auction | undefined>;
+  getAuctionBySlug(slug: string): Promise<Auction | undefined>;
+  updateAuction(id: string, updates: Partial<Auction>): Promise<Auction | undefined>;
+  deleteAuction(id: string): Promise<boolean>;
+  addAuctionImage(data: InsertAuctionImage): Promise<AuctionImage>;
+  getAuctionImages(auctionId: string): Promise<AuctionImage[]>;
+  deleteAuctionImage(id: string): Promise<boolean>;
+
+  // Auction Bid operations
+  placeBid(bid: InsertAuctionBid): Promise<AuctionBid>;
+  getAuctionBids(auctionId: string): Promise<AuctionBid[]>;
+  getHighestBid(auctionId: string): Promise<AuctionBid | undefined>;
 }
 
 export class DatabaseStorage implements IStorage {
@@ -556,6 +616,175 @@ export class DatabaseStorage implements IStorage {
     return await db.select().from(workshopWaitlistTable)
       .where(eq(workshopWaitlistTable.workshopDateId, workshopDateId))
       .orderBy(workshopWaitlistTable.createdAt);
+  }
+
+  // Admin Media Asset operations
+  async createMediaAsset(asset: InsertMediaAsset): Promise<MediaAsset> {
+    const [result] = await db.insert(mediaAssets).values(asset).returning();
+    return result;
+  }
+
+  async getMediaAssets(): Promise<MediaAsset[]> {
+    return await db.select().from(mediaAssets).orderBy(desc(mediaAssets.createdAt));
+  }
+
+  async getMediaAsset(id: string): Promise<MediaAsset | undefined> {
+    const [result] = await db.select().from(mediaAssets).where(eq(mediaAssets.id, id));
+    return result;
+  }
+
+  async updateMediaAsset(id: string, updates: Partial<MediaAsset>): Promise<MediaAsset | undefined> {
+    const [result] = await db.update(mediaAssets).set(updates).where(eq(mediaAssets.id, id)).returning();
+    return result;
+  }
+
+  async deleteMediaAsset(id: string): Promise<boolean> {
+    const result = await db.delete(mediaAssets).where(eq(mediaAssets.id, id));
+    return true;
+  }
+
+  // Admin Page Asset operations
+  async getPageAssets(pageSlug?: string): Promise<PageAsset[]> {
+    if (pageSlug) {
+      return await db.select().from(pageAssets).where(eq(pageAssets.pageSlug, pageSlug));
+    }
+    return await db.select().from(pageAssets);
+  }
+
+  async setPageAsset(data: InsertPageAsset): Promise<PageAsset> {
+    const [result] = await db
+      .insert(pageAssets)
+      .values(data)
+      .onConflictDoUpdate({
+        target: [pageAssets.pageSlug, pageAssets.slotKey],
+        set: { assetId: data.assetId, displayOrder: data.displayOrder, isActive: data.isActive, updatedAt: new Date() },
+      })
+      .returning();
+    return result;
+  }
+
+  async deletePageAsset(pageSlug: string, slotKey: string): Promise<boolean> {
+    await db.delete(pageAssets).where(and(eq(pageAssets.pageSlug, pageSlug), eq(pageAssets.slotKey, slotKey)));
+    return true;
+  }
+
+  // Admin Product operations
+  async createProduct(product: InsertProduct): Promise<Product> {
+    const [result] = await db.insert(products).values(product).returning();
+    return result;
+  }
+
+  async getProducts(): Promise<Product[]> {
+    return await db.select().from(products).orderBy(products.displayOrder);
+  }
+
+  async getProduct(id: string): Promise<Product | undefined> {
+    const [result] = await db.select().from(products).where(eq(products.id, id));
+    return result;
+  }
+
+  async getProductBySlug(slug: string): Promise<Product | undefined> {
+    const [result] = await db.select().from(products).where(eq(products.slug, slug));
+    return result;
+  }
+
+  async updateProduct(id: string, updates: Partial<Product>): Promise<Product | undefined> {
+    const [result] = await db.update(products).set({ ...updates, updatedAt: new Date() }).where(eq(products.id, id)).returning();
+    return result;
+  }
+
+  async deleteProduct(id: string): Promise<boolean> {
+    await db.delete(productImages).where(eq(productImages.productId, id));
+    await db.delete(products).where(eq(products.id, id));
+    return true;
+  }
+
+  async addProductImage(data: InsertProductImage): Promise<ProductImage> {
+    const [result] = await db.insert(productImages).values(data).returning();
+    return result;
+  }
+
+  async getProductImages(productId: string): Promise<ProductImage[]> {
+    return await db.select().from(productImages).where(eq(productImages.productId, productId)).orderBy(productImages.displayOrder);
+  }
+
+  async deleteProductImage(id: string): Promise<boolean> {
+    await db.delete(productImages).where(eq(productImages.id, id));
+    return true;
+  }
+
+  // Admin Auction operations
+  async createAuction(auction: InsertAuction): Promise<Auction> {
+    const [result] = await db.insert(auctions).values(auction).returning();
+    return result;
+  }
+
+  async getAuctions(): Promise<Auction[]> {
+    return await db.select().from(auctions).orderBy(desc(auctions.startAt));
+  }
+
+  async getAuction(id: string): Promise<Auction | undefined> {
+    const [result] = await db.select().from(auctions).where(eq(auctions.id, id));
+    return result;
+  }
+
+  async getAuctionBySlug(slug: string): Promise<Auction | undefined> {
+    const [result] = await db.select().from(auctions).where(eq(auctions.slug, slug));
+    return result;
+  }
+
+  async updateAuction(id: string, updates: Partial<Auction>): Promise<Auction | undefined> {
+    const [result] = await db.update(auctions).set({ ...updates, updatedAt: new Date() }).where(eq(auctions.id, id)).returning();
+    return result;
+  }
+
+  async deleteAuction(id: string): Promise<boolean> {
+    await db.delete(auctionBids).where(eq(auctionBids.auctionId, id));
+    await db.delete(auctionImages).where(eq(auctionImages.auctionId, id));
+    await db.delete(auctions).where(eq(auctions.id, id));
+    return true;
+  }
+
+  async addAuctionImage(data: InsertAuctionImage): Promise<AuctionImage> {
+    const [result] = await db.insert(auctionImages).values(data).returning();
+    return result;
+  }
+
+  async getAuctionImages(auctionId: string): Promise<AuctionImage[]> {
+    return await db.select().from(auctionImages).where(eq(auctionImages.auctionId, auctionId)).orderBy(auctionImages.displayOrder);
+  }
+
+  async deleteAuctionImage(id: string): Promise<boolean> {
+    await db.delete(auctionImages).where(eq(auctionImages.id, id));
+    return true;
+  }
+
+  // Auction Bid operations
+  async placeBid(bid: InsertAuctionBid): Promise<AuctionBid> {
+    // Mark all previous bids as not winning
+    await db.update(auctionBids).set({ isWinning: false }).where(eq(auctionBids.auctionId, bid.auctionId));
+    
+    // Insert new bid as winning
+    const [result] = await db.insert(auctionBids).values({ ...bid, isWinning: true }).returning();
+    
+    // Update auction's current bid
+    await db.update(auctions).set({ currentBidCents: bid.amountCents, updatedAt: new Date() }).where(eq(auctions.id, bid.auctionId));
+    
+    return result;
+  }
+
+  async getAuctionBids(auctionId: string): Promise<AuctionBid[]> {
+    return await db.select().from(auctionBids).where(eq(auctionBids.auctionId, auctionId)).orderBy(desc(auctionBids.amountCents));
+  }
+
+  async getHighestBid(auctionId: string): Promise<AuctionBid | undefined> {
+    const [result] = await db
+      .select()
+      .from(auctionBids)
+      .where(eq(auctionBids.auctionId, auctionId))
+      .orderBy(desc(auctionBids.amountCents))
+      .limit(1);
+    return result;
   }
 }
 

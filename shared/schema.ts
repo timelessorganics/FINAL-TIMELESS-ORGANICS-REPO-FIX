@@ -453,6 +453,174 @@ export const insertWorkshopBookingSchema = createInsertSchema(workshopBookingsTa
   fullPaymentPaid: true,
 });
 
+// ============================================
+// ADMIN MANAGEMENT TABLES
+// ============================================
+
+// Media Assets - Centralized image/file management
+export const mediaAssets = pgTable("media_assets", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  filename: varchar("filename").notNull(),
+  originalName: varchar("original_name").notNull(),
+  mimeType: varchar("mime_type").notNull(),
+  size: integer("size").notNull(), // bytes
+  url: varchar("url").notNull(), // Supabase storage URL or path
+  altText: varchar("alt_text"),
+  caption: text("caption"),
+  tags: text("tags").array(), // For filtering (e.g., ['hero', 'gallery', 'product'])
+  uploadedBy: varchar("uploaded_by").references(() => usersTable.id),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertMediaAssetSchema = createInsertSchema(mediaAssets).omit({
+  id: true,
+  createdAt: true,
+});
+
+export type InsertMediaAsset = z.infer<typeof insertMediaAssetSchema>;
+export type MediaAsset = typeof mediaAssets.$inferSelect;
+
+// Page Assets - Map media to specific page locations (hero, gallery slots, etc.)
+export const pageAssets = pgTable("page_assets", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  pageSlug: varchar("page_slug").notNull(), // 'home', 'about', 'gallery', etc.
+  slotKey: varchar("slot_key").notNull(), // 'hero', 'gallery-1', 'background', etc.
+  assetId: varchar("asset_id").references(() => mediaAssets.id).notNull(),
+  displayOrder: integer("display_order").default(0),
+  isActive: boolean("is_active").default(true),
+  updatedAt: timestamp("updated_at").defaultNow(),
+}, (table) => [
+  unique("unique_page_slot").on(table.pageSlug, table.slotKey),
+]);
+
+export const insertPageAssetSchema = createInsertSchema(pageAssets).omit({
+  id: true,
+  updatedAt: true,
+});
+
+export type InsertPageAsset = z.infer<typeof insertPageAssetSchema>;
+export type PageAsset = typeof pageAssets.$inferSelect;
+
+// Product status enum
+export const productStatusEnum = pgEnum('product_status', ['draft', 'active', 'sold_out', 'archived']);
+
+// Products - Shop items
+export const products = pgTable("products", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: varchar("name").notNull(),
+  slug: varchar("slug").notNull().unique(),
+  description: text("description"),
+  shortDescription: varchar("short_description"),
+  priceCents: integer("price_cents").notNull(), // Price in cents
+  comparePriceCents: integer("compare_price_cents"), // Original price for showing discount
+  status: productStatusEnum("status").default('draft').notNull(),
+  category: varchar("category"), // 'bronze', 'print', 'merchandise', etc.
+  sku: varchar("sku"),
+  stockQuantity: integer("stock_quantity").default(0),
+  featuredImageId: varchar("featured_image_id").references(() => mediaAssets.id),
+  displayOrder: integer("display_order").default(0),
+  metadata: jsonb("metadata"), // Flexible JSON for specs, dimensions, etc.
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertProductSchema = createInsertSchema(products).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type InsertProduct = z.infer<typeof insertProductSchema>;
+export type Product = typeof products.$inferSelect;
+
+// Product Images - Multiple images per product
+export const productImages = pgTable("product_images", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  productId: varchar("product_id").references(() => products.id).notNull(),
+  assetId: varchar("asset_id").references(() => mediaAssets.id).notNull(),
+  role: varchar("role").default('gallery'), // 'featured', 'gallery', 'detail'
+  displayOrder: integer("display_order").default(0),
+});
+
+export const insertProductImageSchema = createInsertSchema(productImages).omit({
+  id: true,
+});
+
+export type InsertProductImage = z.infer<typeof insertProductImageSchema>;
+export type ProductImage = typeof productImages.$inferSelect;
+
+// Auction status enum
+export const auctionStatusEnum = pgEnum('auction_status', ['draft', 'scheduled', 'active', 'ended', 'sold', 'cancelled']);
+
+// Auctions - Bronze piece auctions
+export const auctions = pgTable("auctions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  title: varchar("title").notNull(),
+  slug: varchar("slug").notNull().unique(),
+  description: text("description"),
+  startAt: timestamp("start_at").notNull(),
+  endAt: timestamp("end_at").notNull(),
+  reservePriceCents: integer("reserve_price_cents"), // Minimum acceptable price
+  startingBidCents: integer("starting_bid_cents").notNull(),
+  currentBidCents: integer("current_bid_cents"),
+  bidIncrementCents: integer("bid_increment_cents").default(10000), // Min bid increment (R100 default)
+  status: auctionStatusEnum("status").default('draft').notNull(),
+  featuredImageId: varchar("featured_image_id").references(() => mediaAssets.id),
+  winnerId: varchar("winner_id").references(() => usersTable.id),
+  metadata: jsonb("metadata"), // Dimensions, weight, provenance, etc.
+  createdAt: timestamp("created_at").defaultNow(),
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertAuctionSchema = createInsertSchema(auctions).omit({
+  id: true,
+  currentBidCents: true,
+  winnerId: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
+export type InsertAuction = z.infer<typeof insertAuctionSchema>;
+export type Auction = typeof auctions.$inferSelect;
+
+// Auction Images - Multiple images per auction
+export const auctionImages = pgTable("auction_images", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  auctionId: varchar("auction_id").references(() => auctions.id).notNull(),
+  assetId: varchar("asset_id").references(() => mediaAssets.id).notNull(),
+  role: varchar("role").default('gallery'), // 'featured', 'gallery', 'detail'
+  displayOrder: integer("display_order").default(0),
+});
+
+export const insertAuctionImageSchema = createInsertSchema(auctionImages).omit({
+  id: true,
+});
+
+export type InsertAuctionImage = z.infer<typeof insertAuctionImageSchema>;
+export type AuctionImage = typeof auctionImages.$inferSelect;
+
+// Auction Bids - Bid history
+export const auctionBids = pgTable("auction_bids", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  auctionId: varchar("auction_id").references(() => auctions.id).notNull(),
+  userId: varchar("user_id").references(() => usersTable.id).notNull(),
+  amountCents: integer("amount_cents").notNull(),
+  isWinning: boolean("is_winning").default(false),
+  placedAt: timestamp("placed_at").defaultNow(),
+}, (table) => [
+  index("IDX_auction_bids_auction").on(table.auctionId),
+  index("IDX_auction_bids_user").on(table.userId),
+]);
+
+export const insertAuctionBidSchema = createInsertSchema(auctionBids).omit({
+  id: true,
+  isWinning: true,
+  placedAt: true,
+});
+
+export type InsertAuctionBid = z.infer<typeof insertAuctionBidSchema>;
+export type AuctionBid = typeof auctionBids.$inferSelect;
+
 // Relations
 export const purchasesRelations = relations(purchases, ({ one, many }) => ({
   user: one(usersTable, {
@@ -525,5 +693,74 @@ export const workshopWaitlistRelations = relations(workshopWaitlistTable, ({ one
   workshopDate: one(workshopDatesTable, {
     fields: [workshopWaitlistTable.workshopDateId],
     references: [workshopDatesTable.id],
+  }),
+}));
+
+// Admin management relations
+export const productRelations = relations(products, ({ one, many }) => ({
+  featuredImage: one(mediaAssets, {
+    fields: [products.featuredImageId],
+    references: [mediaAssets.id],
+  }),
+  images: many(productImages),
+}));
+
+export const productImagesRelations = relations(productImages, ({ one }) => ({
+  product: one(products, {
+    fields: [productImages.productId],
+    references: [products.id],
+  }),
+  asset: one(mediaAssets, {
+    fields: [productImages.assetId],
+    references: [mediaAssets.id],
+  }),
+}));
+
+export const auctionRelations = relations(auctions, ({ one, many }) => ({
+  featuredImage: one(mediaAssets, {
+    fields: [auctions.featuredImageId],
+    references: [mediaAssets.id],
+  }),
+  images: many(auctionImages),
+  bids: many(auctionBids),
+  winner: one(usersTable, {
+    fields: [auctions.winnerId],
+    references: [usersTable.id],
+  }),
+}));
+
+export const auctionImagesRelations = relations(auctionImages, ({ one }) => ({
+  auction: one(auctions, {
+    fields: [auctionImages.auctionId],
+    references: [auctions.id],
+  }),
+  asset: one(mediaAssets, {
+    fields: [auctionImages.assetId],
+    references: [mediaAssets.id],
+  }),
+}));
+
+export const auctionBidsRelations = relations(auctionBids, ({ one }) => ({
+  auction: one(auctions, {
+    fields: [auctionBids.auctionId],
+    references: [auctions.id],
+  }),
+  user: one(usersTable, {
+    fields: [auctionBids.userId],
+    references: [usersTable.id],
+  }),
+}));
+
+export const mediaAssetsRelations = relations(mediaAssets, ({ one }) => ({
+  uploadedByUser: one(usersTable, {
+    fields: [mediaAssets.uploadedBy],
+    references: [usersTable.id],
+  }),
+}));
+
+export const pageAssetsRelations = relations(pageAssets, ({ one }) => ({
+  asset: one(mediaAssets, {
+    fields: [pageAssets.assetId],
+    references: [mediaAssets.id],
   }),
 }));
