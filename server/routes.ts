@@ -12,6 +12,7 @@ import {
   insertSubscriberSchema,
   insertPromoCodeSchema,
   type Purchase,
+  subscribers,
 } from "@shared/schema";
 import { fromError } from "zod-validation-error";
 import {
@@ -30,6 +31,7 @@ import {
   verifyPayFastSignature,
   getPayFastConfig,
 } from "./utils/payfast";
+import { eq, and, gt, lt } from "drizzle-orm";
 import { generatePaymentIdentifier } from "./utils/payfast-onsite";
 import { generateCertificate } from "./utils/certificateGenerator";
 import { generateCodeSlips } from "./utils/codeSlipsGenerator";
@@ -42,6 +44,7 @@ import {
 import { generatePromoCode } from "./utils/promoCodeGenerator";
 import { addSubscriberToMailchimp } from "./mailchimp";
 import { registerWorkshopRoutes } from "./routes/workshop-calendar";
+import { db } from "./db";
 
 // Server-side pricing functions (source of truth - NEVER trust client prices!)
 
@@ -267,6 +270,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       // Clean up expired reservations before returning availability
       // This ensures seats are released back to pool after 24 hours
+      // Also expires early bird holds that have passed their expiration time
       // Wrapped in try-catch to gracefully handle missing reservations table
       let founderReservations = 0;
       let patronReservations = 0;
@@ -277,9 +281,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
           console.log(`[Reservations] Expired ${expiredCount} old reservations, seats returned to pool`);
         }
         
+        // Expire early bird holds that have passed their hold expiration time
+        const expiredHolds = await db.update(subscribers)
+          .set({ holdStatus: 'expired' })
+          .where(
+            and(
+              eq(subscribers.holdStatus, 'active'),
+              lt(subscribers.holdExpiresAt, new Date())
+            )
+          )
+          .returning();
+        
+        if (expiredHolds.length > 0) {
+          console.log(`[Early Bird] Released ${expiredHolds.length} expired early bird holds`);
+        }
+        
         // Get active reservation counts to adjust available seats
         founderReservations = await storage.getActiveReservationsCount("founder");
         patronReservations = await storage.getActiveReservationsCount("patron");
+        
+        // Add active early bird holds to reservation count
+        const activeHolds = await db.select({ seatType: subscribers.seatType })
+          .from(subscribers)
+          .where(
+            and(
+              eq(subscribers.holdStatus, 'active'),
+              gt(subscribers.holdExpiresAt, new Date())
+            )
+          );
+        
+        const earlyBirdFounderHolds = activeHolds.filter(h => h.seatType === 'founder').length;
+        const earlyBirdPatronHolds = activeHolds.filter(h => h.seatType === 'patron').length;
+        founderReservations += earlyBirdFounderHolds;
+        patronReservations += earlyBirdPatronHolds;
+        
       } catch (reservationError: any) {
         // Reservations table may not exist - continue without reservation counts
         console.log(`[Reservations] Table not available, skipping reservation adjustments`);
@@ -1264,7 +1299,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   
-  // Public: Create pre-launch reservation
+  // Public: Create pre-launch reservation (early bird)
   app.post("/api/prelaunch/reserve", async (req: Request, res: Response) => {
     try {
       const { name, email, phone, seatType, reservationType } = req.body;
@@ -1273,33 +1308,57 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Missing required fields" });
       }
       
-      // Check if email already has a reservation
+      // Valid types: 'reserve' (free), 'secure' (R100), 'buy' (full price)
+      if (!['reserve', 'secure', 'buy'].includes(reservationType)) {
+        return res.status(400).json({ message: "Invalid reservation type" });
+      }
+      
+      // Check if email already has an active early bird hold
       const existing = await storage.getSubscriberByEmail(email.toLowerCase());
-      if (existing && existing.notes?.includes('[PRELAUNCH]')) {
-        return res.status(409).json({ message: "You already have a reservation with this email" });
+      if (existing && existing.holdStatus === 'active' && existing.holdExpiresAt && new Date(existing.holdExpiresAt) > new Date()) {
+        return res.status(409).json({ message: "You already have an active early bird hold with this email" });
       }
       
-      // Create reservation note
-      const reservationNote = `[PRELAUNCH] ${seatType} ${reservationType} - Reserved ${new Date().toISOString()}`;
+      // Calculate hold expiration: Monday, December 1, 2025 at midnight SA time (UTC+2)
+      // If today is already Monday or past, expires next Monday midnight
+      const getMondayMidnightSA = () => {
+        const now = new Date();
+        // Create a date in SA timezone (UTC+2)
+        const sa = new Date(now.toLocaleString('en-US', { timeZone: 'Africa/Johannesburg' }));
+        const dayOfWeek = sa.getDay();
+        const daysUntilMonday = dayOfWeek === 1 ? 7 : (1 - dayOfWeek + 7) % 7;
+        
+        const nextMonday = new Date(sa);
+        nextMonday.setDate(nextMonday.getDate() + (daysUntilMonday || 7));
+        nextMonday.setHours(0, 0, 0, 0);
+        return nextMonday;
+      };
       
-      if (existing) {
-        // Update existing subscriber with reservation note
-        // For now, we'll create a new entry with updated notes
-      }
+      const holdExpiresAt = getMondayMidnightSA();
       
-      // Create subscriber entry with reservation details
+      // Create or update subscriber with hold details
       const subscriber = await storage.createSubscriber({
         name,
         email: email.toLowerCase(),
         phone: phone || null,
-        notes: reservationNote,
+        notes: `[PRELAUNCH] ${seatType} ${reservationType} - Reserved ${new Date().toISOString()}`,
       });
       
-      // Add to Mailchimp with appropriate tags
+      // Update hold expiration in database
+      await db.update(subscribers).set({
+        reservationType,
+        seatType,
+        holdExpiresAt,
+        holdStatus: 'active',
+      }).where(eq(subscribers.id, subscriber.id));
+      
+      console.log(`[Early Bird] ${name} (${email}) reserved ${seatType} seat as "${reservationType}" - expires ${holdExpiresAt.toISOString()}`);
+      
+      // Add to Mailchimp
       const tags = [
         "Pre-Launch Reservation",
         seatType === 'founder' ? "Founder Interest" : "Patron Interest",
-        reservationType === 'deposit' ? "Deposit Paid" : "24hr Hold",
+        reservationType === 'reserve' ? "Early Bird Reserve" : (reservationType === 'secure' ? "Early Bird Secure" : "Early Bird Buy"),
       ];
       
       addSubscriberToMailchimp({
@@ -1309,36 +1368,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         tags,
       }).catch((err) => console.error("[Mailchimp] Failed to sync reservation:", err));
       
-      // Send confirmation email to the person who reserved (CC studio)
-      const seatTypeDisplay = seatType === 'founder' ? 'Founder' : 'Patron';
-      const reservationTypeDisplay = reservationType === 'deposit' ? 'Deposit' : '24-Hour Hold';
-      
-      // Send via sendCertificateToRecipient which already CCs studio@timeless.organic
+      // Send confirmation email
       sendCertificateToRecipient(
         subscriber.email,
         name,
         `/confirm-reservation?email=${encodeURIComponent(subscriber.email)}`,
         seatType
-      ).then(() => {
-        console.log(`[Reservation] Confirmation email sent to ${subscriber.email}`);
-      }).catch((err) => console.error("[Email] Failed to send reservation confirmation:", err));
+      ).catch((err) => console.error("[Email] Failed to send reservation confirmation:", err));
       
-      // For deposits, we would redirect to PayFast
-      // For now, just confirm the reservation
-      if (reservationType === 'deposit') {
-        // TODO: Implement PayFast deposit flow
-        // For now, just track it as a deposit interest
-        res.json({ 
-          success: true, 
-          message: "Deposit reservation noted. Payment integration coming soon!",
-          // paymentUrl: "/api/prelaunch/deposit-payment/..." 
-        });
-      } else {
-        res.json({ 
-          success: true, 
-          message: "Your 24-hour hold will activate on launch day!",
-        });
-      }
+      res.json({ 
+        success: true, 
+        message: `Your ${reservationType === 'reserve' ? 'reserve' : reservationType === 'secure' ? 'secure (R100)' : 'buy now'} hold is confirmed! Expires Monday midnight SA time.`,
+        expiresAt: holdExpiresAt.toISOString(),
+      });
     } catch (error: any) {
       console.error("Pre-launch reservation error:", error);
       if (error.message?.includes("duplicate")) {

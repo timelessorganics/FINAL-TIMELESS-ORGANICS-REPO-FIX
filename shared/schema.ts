@@ -58,6 +58,10 @@ export const subscribers = pgTable("subscribers", {
   email: varchar("email").notNull().unique(),
   phone: varchar("phone"),
   notes: text("notes"),
+  reservationType: varchar("reservation_type"), // 'reserve', 'secure', 'buy' for pre-launch
+  seatType: varchar("seat_type"), // 'founder' or 'patron'
+  holdExpiresAt: timestamp("hold_expires_at"), // When early bird hold expires (Monday midnight SA time)
+  holdStatus: varchar("hold_status").default('active'), // 'active', 'expired', 'purchased'
   createdAt: timestamp("created_at").defaultNow(),
 });
 
