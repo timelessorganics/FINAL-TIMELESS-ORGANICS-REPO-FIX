@@ -63,18 +63,27 @@ export function generatePayFastUrl(): string {
 }
 
 export function generateSignature(data: Record<string, string>, passphrase?: string, skipEmptyFields: boolean = true): string {
-  // CRITICAL: PayFast requires parameters to be sorted alphabetically by key name
+  // CRITICAL: PayFast CUSTOM INTEGRATION (simple form) uses FIELD ORDER, NOT alphabetical
   // Reference: https://developers.payfast.co.za/docs#step_2_signature
-  // For webhooks: skipEmptyFields=false (include all fields PayFast sends)
+  // Quote: "The pairs must be listed in the order in which they appear in the attributes description"
+  // Quote: "*Do not use the API signature format, which uses alphabetical ordering!*"
+  // For webhooks (ITN): skipEmptyFields=false (include all fields PayFast sends)
   // For payment forms: skipEmptyFields=true (skip empty/blank fields)
+  
+  // Preserve the correct field order from PayFast documentation (NOT alphabetical)
+  const fieldOrder = [
+    'merchant_id', 'merchant_key', 'return_url', 'cancel_url', 'notify_url',
+    'name_first', 'name_last', 'email_address', 'cell_number',
+    'm_payment_id', 'amount', 'item_name', 'item_description',
+    'custom_int1', 'custom_int2', 'custom_int3', 'custom_int4', 'custom_int5',
+    'custom_str1', 'custom_str2', 'custom_str3', 'custom_str4', 'custom_str5',
+    'email_confirmation', 'confirmation_address', 'payment_method'
+  ];
   
   let paramString = '';
   
-  // Sort keys alphabetically (REQUIRED by PayFast)
-  const sortedKeys = Object.keys(data).sort();
-  
-  // Build parameter string with sorted keys
-  for (const key of sortedKeys) {
+  // Build parameter string using PayFast field order
+  for (const key of fieldOrder) {
     const value = data[key];
     
     // Skip signature and passphrase fields (passphrase is appended separately at the end)
@@ -88,11 +97,20 @@ export function generateSignature(data: Record<string, string>, passphrase?: str
     paramString += `${key}=${encodedValue}&`;
   }
   
+  // Also add any extra fields not in the standard list (for future extensibility)
+  for (const key of Object.keys(data)) {
+    if (fieldOrder.includes(key) || key === 'signature' || key === 'passphrase') continue;
+    const value = data[key];
+    if (skipEmptyFields && (!value || value === '')) continue;
+    const encodedValue = encodeURIComponent((value || '').trim()).replace(/%20/g, '+');
+    paramString += `${key}=${encodedValue}&`;
+  }
+  
   // Remove trailing ampersand
   paramString = paramString.slice(0, -1);
   
   // SECURITY: Log BEFORE adding passphrase
-  console.log('[PayFast] Building signature for merchant:', data.merchant_id?.substring(0, 4) + '****');
+  console.log('[PayFast] Building signature using FIELD ORDER (not alphabetical) for merchant:', data.merchant_id?.substring(0, 4) + '****');
   console.log('[PayFast] Param string (first 100 chars):', paramString.substring(0, 100));
   
   // Append passphrase to end
