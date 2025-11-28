@@ -130,6 +130,7 @@ export default function PreLaunchReservationModal({
                     onChange={(e) => setName(e.target.value)}
                     placeholder="Enter your full name"
                     required
+                    autoComplete="off"
                     data-testid="input-reservation-name"
                   />
                 </div>
@@ -143,6 +144,7 @@ export default function PreLaunchReservationModal({
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="david@example.com"
                     required
+                    autoComplete="off"
                     data-testid="input-reservation-email"
                   />
                 </div>
@@ -155,6 +157,7 @@ export default function PreLaunchReservationModal({
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="+27 82 123 4567"
+                    autoComplete="off"
                     data-testid="input-reservation-phone"
                   />
                 </div>
