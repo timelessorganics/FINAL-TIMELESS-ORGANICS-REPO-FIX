@@ -53,6 +53,77 @@ function getTransporter(): Transporter | null {
   return transporter;
 }
 
+// Send certificate to gift recipient when they claim (or auto-send option)
+export async function sendCertificateToRecipient(
+  recipientEmail: string,
+  recipientName: string,
+  certificateUrl: string,
+  seatType: string
+): Promise<boolean> {
+  const transport = getTransporter();
+  
+  if (!transport) {
+    console.log("Email service not configured. Skipping certificate email to recipient.");
+    return false;
+  }
+
+  try {
+    const seatName = seatType === "founder" ? "Founder" : "Patron";
+    const baseUrl = process.env.VITE_API_URL || 'https://timeless-organics-fouding-100-production.up.railway.app';
+    const fullCertificateUrl = `${baseUrl}${certificateUrl}`;
+
+    const html = `
+<!DOCTYPE html>
+<html>
+<head>
+  <style>
+    body { font-family: 'Georgia', serif; background-color: #0a0a0a; color: #f5f5f5; margin: 0; padding: 20px; }
+    .container { max-width: 600px; margin: 0 auto; background: #1a1a1a; border: 2px solid #a67c52; border-radius: 8px; }
+    .header { background: linear-gradient(135deg, #a67c52 0%, #6f8f79 100%); padding: 40px 20px; text-align: center; }
+    .header h1 { color: white; font-size: 28px; margin: 0; }
+    .content { padding: 40px 30px; }
+    .cta-button { display: inline-block; background: linear-gradient(135deg, #a67c52 0%, #8a6542 100%); color: white; padding: 15px 30px; text-decoration: none; border-radius: 6px; font-weight: bold; margin: 20px 0; }
+    .footer { background: #0a0a0a; padding: 20px; text-align: center; color: #666; font-size: 14px; border-top: 1px solid #333; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🎁 Your Certificate is Ready</h1>
+    </div>
+    <div class="content">
+      <p>Dear ${recipientName},</p>
+      <p>Thank you for claiming your ${seatName} seat in the Timeless Organics Founding 100!</p>
+      <p>Your official certificate of investment is now ready for download. This beautiful document certifies your lifetime investment in artisanal bronze sculpture.</p>
+      <center>
+        <a href="${fullCertificateUrl}" class="cta-button">Download Your Certificate</a>
+      </center>
+      <p style="color: #999; font-size: 14px;">You can download your certificate anytime from your dashboard.</p>
+    </div>
+    <div class="footer">
+      <p>Timeless Organics<br>With gratitude,<br>David van Heerden</p>
+    </div>
+  </div>
+</body>
+</html>
+    `;
+
+    await transport.sendMail({
+      from: `"Timeless Organics" <${process.env.SMTP_USER}>`,
+      to: recipientEmail,
+      cc: 'studio@timeless.organic',
+      subject: `Your ${seatName} Certificate is Ready - Timeless Organics`,
+      html,
+    });
+
+    console.log(`Certificate sent to ${recipientEmail} (CC: studio@timeless.organic)`);
+    return true;
+  } catch (error: any) {
+    console.error("Failed to send certificate to recipient:", error);
+    return false;
+  }
+}
+
 export async function sendGiftNotificationEmail(
   recipientEmail: string,
   recipientName: string,
@@ -160,12 +231,13 @@ Timeless Organics
     await transport.sendMail({
       from: '"Timeless Organics" <studio@timeless.organic>',
       to: recipientEmail,
+      cc: 'studio@timeless.organic',
       subject,
       text,
       html,
     });
 
-    console.log(`Gift notification email sent to ${recipientEmail} for purchase ${purchaseId}`);
+    console.log(`Gift notification email sent to ${recipientEmail} (CC: studio@timeless.organic) for purchase ${purchaseId}`);
     return true;
   } catch (error: any) {
     console.error("Failed to send gift notification email:", error);
@@ -367,11 +439,12 @@ export async function sendCertificateEmail(
     const info = await transport.sendMail({
       from: `"Timeless Organics" <${process.env.SMTP_USER}>`,
       to: userEmail,
+      cc: 'studio@timeless.organic',
       subject: `Welcome to the Founding 100 - Your ${seatName} Certificate`,
       html: htmlContent,
     });
 
-    console.log("Certificate email sent successfully:", info.messageId);
+    console.log("Certificate email sent successfully to", userEmail, "and CC'd to studio@timeless.organic:", info.messageId);
     return true;
   } catch (error) {
     console.error("Failed to send certificate email:", error);
