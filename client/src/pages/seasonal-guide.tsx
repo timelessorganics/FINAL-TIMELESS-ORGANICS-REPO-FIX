@@ -76,7 +76,7 @@ export default function SeasonalGuide() {
           </div>
 
           <p className="text-muted-foreground">
-            All 12 specimen styles available for future workshop bookings, organized by peak season:
+            All 9 specimen styles available for future workshop bookings, organized by peak season:
           </p>
 
           {/* Seasonal Chart */}
@@ -93,84 +93,63 @@ export default function SeasonalGuide() {
               </thead>
               <tbody className="divide-y divide-border">
                 <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Protea Head</td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Pincushion Bloom</td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Cone + Bracts</td>
+                  <td className="p-4 font-medium">Cones / Bracts / Seedpods</td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
                 </tr>
                 <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Aloe Inflorescence</td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Erica Spray</td>
+                  <td className="p-4 font-medium">Protea / Pincushion Blooms / Heads</td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
                 </tr>
                 <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Restio Seedheads</td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Bulb Spike (Watsonia)</td>
+                  <td className="p-4 font-medium">Bulb Spikes</td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
                 </tr>
                 <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Pelargonium Leaf/Flower</td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Woody Branch + Leaves</td>
+                  <td className="p-4 font-medium">Branches + Leaves</td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
                 </tr>
                 <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Cone/Seed Pod</td>
+                  <td className="p-4 font-medium">Aloe Inflorescence Heads</td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="p-4 font-medium">Flower Heads</td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
                 </tr>
                 <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Succulent Rosette</td>
+                  <td className="p-4 font-medium">Erica Sprays</td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                </tr>
+                <tr className="hover-elevate">
+                  <td className="p-4 font-medium">Restios / Seedheads / Grasses</td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
+                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
                 </tr>
                 <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Miniature Mix</td>
+                  <td className="p-4 font-medium">Small Succulents</td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
                   <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
@@ -212,7 +191,7 @@ export default function SeasonalGuide() {
                 Choose Your Specimen Style
               </p>
               <p className="text-muted-foreground">
-                Select from 12 Cape Fynbos styles during checkout. David will personally curate the finest specimen of your chosen style from the current or upcoming seasonal harvest. If your style is in peak season, we'll begin casting immediately. Otherwise, we'll immortalize it when it reaches its prime - worth the wait for perfection!
+                Select from 9 Cape Fynbos styles during checkout. David will personally curate the finest specimen of your chosen style from the current or upcoming seasonal harvest. If your style is in peak season, we'll begin casting immediately. Otherwise, we'll immortalize it when it reaches its prime - worth the wait for perfection!
               </p>
               <div className="bg-muted/50 border border-border rounded-lg p-4 mt-4">
                 <p className="text-xs text-muted-foreground italic">

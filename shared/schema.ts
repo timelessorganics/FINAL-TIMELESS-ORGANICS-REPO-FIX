@@ -92,20 +92,17 @@ export const purchaseStatusEnum = pgEnum('purchase_status', ['pending', 'complet
 // Production status enum - batch fulfillment tracking
 export const productionStatusEnum = pgEnum('production_status', ['queued', 'invested', 'ready_to_pour', 'poured_finishing', 'complete']);
 
-// Specimen style enum - categories of botanical forms (for future workshop use)
+// Specimen style enum - 9 new Cape Fynbos specimen categories
 export const specimenStyleEnum = pgEnum('specimen_style', [
-  'protea_head',
-  'pincushion_bloom',
-  'cone_bracts',
-  'aloe_inflorescence',
-  'erica_spray',
-  'restio_seedheads',
-  'bulb_spike',
-  'pelargonium_leaf',
-  'woody_branch',
-  'cone_seedpod',
-  'succulent_rosette',
-  'miniature_mix'
+  'cones_bracts_seedpods',
+  'protea_pincushion_blooms_heads',
+  'bulb_spikes',
+  'branches_leaves',
+  'aloe_inflorescence_heads',
+  'flower_heads',
+  'erica_sprays',
+  'restios_seedheads_grasses',
+  'small_succulents'
 ]);
 
 // Season window enum (for future workshop use)

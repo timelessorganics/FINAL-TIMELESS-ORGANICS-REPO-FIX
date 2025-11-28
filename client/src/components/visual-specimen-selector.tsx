@@ -5,21 +5,18 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Sparkles, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 
-// AI Preview images mapped to specimen styles  
+// AI Preview images mapped to new 9 specimen styles  
 // These are AI-generated concept renders - the foundry fires haven't been lit yet!
 const SPECIMEN_IMAGES: Record<string, string> = {
-  protea_head: new URL("../../attached_assets/Gemini_Generated_Image_f90dtof90dtof90d_1761271985176.png", import.meta.url).href,
-  pincushion_bloom: new URL("../../attached_assets/Gemini_Generated_Image_9rrlvn9rrlvn9rrl (1)_1761271985174.png", import.meta.url).href,
-  cone_bracts: new URL("../../attached_assets/Gemini_Generated_Image_t5zvs6t5zvs6t5zv_1761271985175.png", import.meta.url).href,
-  aloe_inflorescence: new URL("../../attached_assets/Gemini_Generated_Image_an1l12an1l12an1l_1761271985175.png", import.meta.url).href,
-  erica_spray: new URL("../../attached_assets/Gemini_Generated_Image_daxzjqdaxzjqdaxz_1761271985176.png", import.meta.url).href,
-  restio_seedheads: new URL("../../attached_assets/Gemini_Generated_Image_qey8v1qey8v1qey8 (1)_1761271985177.png", import.meta.url).href,
-  bulb_spike: new URL("../../attached_assets/Gemini_Generated_Image_r45js4r45js4r45j_1761271985177.png", import.meta.url).href,
-  pelargonium_leaf: new URL("../../attached_assets/Gemini_Generated_Image_6r4xhh6r4xhh6r4x (1)_1761271985177.png", import.meta.url).href,
-  woody_branch: new URL("../../attached_assets/Gemini_Generated_Image_r7x3y8r7x3y8r7x3_1761271985178.png", import.meta.url).href,
-  cone_seedpod: new URL("../../attached_assets/Gemini_Generated_Image_c00ahvc00ahvc00a_1761271985178.png", import.meta.url).href,
-  succulent_rosette: new URL("../../attached_assets/Gemini_Generated_Image_9rrlvn9rrlvn9rrl_1761271985179.png", import.meta.url).href,
-  miniature_mix: new URL("../../attached_assets/Gemini_Generated_Image_qey8v1qey8v1qey8_1761271985179.png", import.meta.url).href,
+  cones_bracts_seedpods: new URL("../../attached_assets/Gemini_Generated_Image_t5zvs6t5zvs6t5zv_1761271985175.png", import.meta.url).href,
+  protea_pincushion_blooms_heads: new URL("../../attached_assets/Gemini_Generated_Image_f90dtof90dtof90d_1761271985176.png", import.meta.url).href,
+  bulb_spikes: new URL("../../attached_assets/Gemini_Generated_Image_r45js4r45js4r45j_1761271985177.png", import.meta.url).href,
+  branches_leaves: new URL("../../attached_assets/Gemini_Generated_Image_r7x3y8r7x3y8r7x3_1761271985178.png", import.meta.url).href,
+  aloe_inflorescence_heads: new URL("../../attached_assets/Gemini_Generated_Image_an1l12an1l12an1l_1761271985175.png", import.meta.url).href,
+  flower_heads: new URL("../../attached_assets/Gemini_Generated_Image_9rrlvn9rrlvn9rrl (1)_1761271985174.png", import.meta.url).href,
+  erica_sprays: new URL("../../attached_assets/Gemini_Generated_Image_daxzjqdaxzjqdaxz_1761271985176.png", import.meta.url).href,
+  restios_seedheads_grasses: new URL("../../attached_assets/Gemini_Generated_Image_qey8v1qey8v1qey8 (1)_1761271985177.png", import.meta.url).href,
+  small_succulents: new URL("../../attached_assets/Gemini_Generated_Image_9rrlvn9rrlvn9rrl_1761271985179.png", import.meta.url).href,
 };
 
 interface SpecimenOption {
