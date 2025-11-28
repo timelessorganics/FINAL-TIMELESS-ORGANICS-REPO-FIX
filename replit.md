@@ -56,7 +56,29 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Mailchimp Integration:** Automated email list synchronization with tagging.
 - **Seasonal Guide:** Educational page detailing specimen styles and future workshop options.
 
-## Recent Changes (November 28, 2025)
+## Recent Changes (November 28, 2025 - FINAL PUSH)
+
+### 3-TIER EARLY BIRD SYSTEM IMPLEMENTED ✅
+- **BUY NOW:** Full price instant checkout
+- **SECURE:** R1,000 non-refundable deposit, 48-hour deadline to pay balance
+- **RESERVE:** Free 24-hour hold (Sunday 9 AM SA time expires)
+- Code location: `server/routes.ts` lines 346-541 (payment logic), `shared/schema.ts` (database fields)
+- Deposit payment tracking automatically calculates 48-hour balance deadline
+- All three tiers lock seats immediately upon selection
+- Codes generate on payment completion as before
+
+### CRITICAL - DATABASE SCHEMA SYNC NEEDED ⚠️
+The 3-tier system added 4 columns to purchases table that need manual creation in Supabase:
+**Run this SQL in Supabase SQL Editor immediately:**
+```sql
+ALTER TABLE purchases ADD COLUMN IF NOT EXISTS is_deposit_only boolean DEFAULT false NOT NULL;
+ALTER TABLE purchases ADD COLUMN IF NOT EXISTS deposit_amount_cents integer DEFAULT 0 NOT NULL;
+ALTER TABLE purchases ADD COLUMN IF NOT EXISTS deposit_paid_at timestamp;
+ALTER TABLE purchases ADD COLUMN IF NOT EXISTS balance_due_at timestamp;
+```
+Without these columns, the app logs show "column does not exist" errors but the payment system is ready.
+
+### Earlier Changes (November 28, 2025)
 
 ### Database Schema Sync (CRITICAL FIX)
 - **Issue:** Supabase database was missing critical tables and columns that the code expected, causing 500 errors on admin pages and stats endpoints
