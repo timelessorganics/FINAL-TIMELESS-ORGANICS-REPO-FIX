@@ -138,13 +138,13 @@ export default function Founding100ExplainedPage() {
                 </div>
               </div>
 
-              <div className="p-6 rounded-lg border border-border/50 bg-card/50 flex gap-4">
+                <div className="p-6 rounded-lg border border-border/50 bg-card/50 flex gap-4">
                 <Sparkles className="w-6 h-6 text-accent-gold flex-shrink-0 mt-1" />
                 <div>
-                  <h3 className="font-medium text-foreground mb-2">Three Lifetime Voucher Codes</h3>
+                  <h3 className="font-medium text-foreground mb-2"> Timeless Voucher Codes - all fully giftable</h3>
                   <p className="text-sm text-foreground/80 font-light">
-                    (1) Free bronze casting slot in future workshops. (2) 50-80% off one workshop. (3) 20-30% off all future workshops. Learn the lost-wax process yourself.
-                  </p>
+                    On top of your included bronze casting you will get (1) 50-80% off your first hands on workshop. (2) 20-30% off all future workshops, gift them, spread the word. Share this extraordinary artform unique in every way.
+               </p>
                 </div>
               </div>
 
