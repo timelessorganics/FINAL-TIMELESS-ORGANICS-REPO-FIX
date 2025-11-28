@@ -195,8 +195,8 @@ export default function HomePage() {
               
               {/* Right: Text */}
               <div className="order-1 md:order-2 space-y-6">
-                <p className="text-lg text-foreground/90 font-light leading-relaxed">
-                  <span className="text-bronze font-medium">100 founding seats.</span> That's it. 
+                <p className="text-base text-foreground/90 font-light leading-relaxed">
+                  <span className="text-bronze font-light">100 founding seats.</span> That's it. 
                   This isn't a subscription. It's not a membership. It's a one-time investment 
                   that gives you a handcrafted bronze sculpture worth R25,000+ and lifetime 
                   benefits worth even more.
@@ -211,7 +211,7 @@ export default function HomePage() {
                   we create, priority on custom commissions, and your name etched into our story 
                   from day one.
                 </p>
-                <p className="text-xl text-bronze font-light italic border-l-2 border-bronze/40 pl-6">
+                <p className="text-base text-bronze font-light italic border-l-2 border-bronze/40 pl-6">
                   "The value I'm offering is 20 times what you'll pay. 
                   Once these seats are gone, this chapter closes forever."
                 </p>
@@ -229,7 +229,7 @@ export default function HomePage() {
               <h2 className="font-serif text-4xl md:text-5xl font-light mb-4 tracking-tight moving-fill">
                 What You Get
               </h2>
-              <p className="text-muted-foreground text-lg max-w-2xl mx-auto font-light leading-relaxed">
+              <p className="text-muted-foreground text-base max-w-2xl mx-auto font-light leading-relaxed">
                 Every Founding 100 seat includes your bronze sculpture plus lifetime benefits
               </p>
             </div>
@@ -267,7 +267,7 @@ export default function HomePage() {
                   <Award className="w-10 h-10 text-bronze" />
                   <h3 className="font-serif text-3xl md:text-4xl">Your Bronze Sculpture</h3>
                 </div>
-                <p className="text-lg text-foreground/90 font-light leading-relaxed">
+                <p className="text-base text-foreground/90 font-light leading-relaxed">
                   A one-of-a-kind casting from real organic matter — a protea, aloe, restio, or 
                   other Cape Fynbos specimen. The original burns away completely at 700°C, 
                   leaving only its perfect impression in permanent bronze.
@@ -289,42 +289,42 @@ export default function HomePage() {
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div className="p-6 rounded-lg border border-bronze/10 bg-bronze/[0.02]">
                   <Sparkles className="w-6 h-6 text-accent-gold mb-3" />
-                  <h4 className="font-medium mb-2 text-base">Workshop Vouchers</h4>
+                  <h4 className="font-light mb-2 text-base">Workshop Vouchers</h4>
                   <p className="text-sm text-muted-foreground font-light">
                     50-80% off future 2-day bronze casting workshops. Learn the ancient lost-wax process yourself.
                   </p>
                 </div>
                 <div className="p-6 rounded-lg border border-patina/10 bg-patina/[0.02]">
                   <Shield className="w-6 h-6 text-patina mb-3" />
-                  <h4 className="font-medium mb-2">Lifetime Shop Discounts</h4>
+                  <h4 className="font-light mb-2">Lifetime Shop Discounts</h4>
                   <p className="text-sm text-muted-foreground font-light">
                     20-30% off everything in our future shop — sculptures, limited editions, tools, materials.
                   </p>
                 </div>
                 <div className="p-6 rounded-lg border border-bronze/10 bg-bronze/[0.02]">
                   <Award className="w-6 h-6 text-bronze mb-3" />
-                  <h4 className="font-medium mb-2">Commission Priority</h4>
+                  <h4 className="font-light mb-2">Commission Priority</h4>
                   <p className="text-sm text-muted-foreground font-light">
                     First access to custom commissions. Your specimen, your vision, cast in bronze.
                   </p>
                 </div>
                 <div className="p-6 rounded-lg border border-bronze/10 bg-bronze/[0.02]">
                   <Clock className="w-6 h-6 text-bronze mb-3" />
-                  <h4 className="font-medium mb-2">Auction First Dibs</h4>
+                  <h4 className="font-light mb-2">Auction First Dibs</h4>
                   <p className="text-sm text-muted-foreground font-light">
                     Early access to future one-of-a-kind works before they go to public auction.
                   </p>
                 </div>
                 <div className="p-6 rounded-lg border border-accent-gold/10 bg-accent-gold/[0.02]">
                   <Sparkles className="w-6 h-6 text-accent-gold mb-3" />
-                  <h4 className="font-medium mb-2">Giftable for Life</h4>
+                  <h4 className="font-light mb-2">Giftable for Life</h4>
                   <p className="text-sm text-muted-foreground font-light">
                     Transfer your benefits to family or friends. A gift that keeps giving for generations.
                   </p>
                 </div>
                 <div className="p-6 rounded-lg border border-patina/10 bg-patina/[0.02]">
                   <Shield className="w-6 h-6 text-patina mb-3" />
-                  <h4 className="font-medium mb-2">Founding Member Status</h4>
+                  <h4 className="font-light mb-2">Founding Member Status</h4>
                   <p className="text-sm text-muted-foreground font-light">
                     Your name in our foundry. Part of the story from day one.
                   </p>
@@ -502,9 +502,9 @@ export default function HomePage() {
               </h2>
               
               {/* The 100 believers message */}
-              <p className="text-xl text-white/90 font-light max-w-3xl mx-auto mb-8 leading-relaxed">
+              <p className="text-base text-white/90 font-light max-w-3xl mx-auto mb-8 leading-relaxed">
                 This foundry will only exist and get finished because of the 100 people who believed in something special. 
-                <span className="text-bronze font-medium"> Not crowdfunding. Co-creation.</span>
+                <span className="text-bronze font-light"> Not crowdfunding. Co-creation.</span>
               </p>
               
               {/* Scarcity display */}
@@ -513,7 +513,7 @@ export default function HomePage() {
                   <span className="inline-block text-8xl md:text-9xl font-light text-bronze mb-3">
                     {totalRemaining}
                   </span>
-                  <p className="text-lg text-white/60 font-light">
+                  <p className="text-base text-white/60 font-light">
                     seats remaining • then this chapter closes
                   </p>
                 </div>
@@ -538,7 +538,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="font-serif text-2xl font-light text-white mb-3">Our Technical Investment</h3>
                 <p className="text-white/70 leading-relaxed text-base font-light">
-                  We <span className="text-bronze font-medium">invest</span> your specimen in a heat-resistant plaster mix, encasing it to withstand 700°C and create your bronze mold.
+                  We <span className="text-bronze font-light">invest</span> your specimen in a heat-resistant plaster mix, encasing it to withstand 700°C and create your bronze mold.
                 </p>
               </div>
 
