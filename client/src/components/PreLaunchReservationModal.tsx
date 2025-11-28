@@ -108,10 +108,10 @@ export default function PreLaunchReservationModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && handleClose()}>
-      <DialogContent className="sm:max-w-[500px] bg-background border-border">
+      <DialogContent className="sm:max-w-[500px] bg-background border-border max-h-[90vh] overflow-y-auto flex flex-col">
         {step === 'form' ? (
           <>
-            <DialogHeader>
+            <DialogHeader className="sticky top-0 bg-background z-10">
               <DialogTitle className="font-serif text-2xl">
                 <span className="moving-fill">Reserve Your Seat</span>
               </DialogTitle>
@@ -120,7 +120,7 @@ export default function PreLaunchReservationModal({
               </DialogDescription>
             </DialogHeader>
 
-            <form onSubmit={handleSubmit} className="space-y-6 mt-4">
+            <form onSubmit={handleSubmit} className="space-y-6 mt-4 flex-1">
               <div className="space-y-4">
                 <div className="space-y-2">
                   <Label htmlFor="name">Your Name</Label>
