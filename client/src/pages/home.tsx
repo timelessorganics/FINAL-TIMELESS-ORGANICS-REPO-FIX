@@ -78,8 +78,8 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-black/[0.15]" />
           <div className="absolute inset-0 border-b border-white/[0.05]" />
           
-          {/* Kicker at top - on dark background */}
-          <div className="absolute top-0 left-0 right-0 z-10 pt-4 sm:pt-6 px-4 sm:px-6">
+          {/* Kicker at very top - on dark background, right below header */}
+          <div className="absolute top-2 left-0 right-0 z-10 px-4 sm:px-6">
             <div className="max-w-4xl mx-auto text-center">
               <div className="hero-text-reveal hero-text-reveal-delay-1">
                 <span className="inline-block font-serif text-sm sm:text-base md:text-lg tracking-[0.15em] sm:tracking-[0.2em] uppercase moving-fill">

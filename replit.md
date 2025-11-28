@@ -76,7 +76,19 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Nodemailer:** Email delivery.
 - **PDFKit:** Server-side PDF certificate generation.
 
-## Recent Changes (Session Nov 27, 2025)
+## Recent Changes (Session Nov 28, 2025)
+- **Hero Kicker Positioning:** "FOUNDING 100 INVESTMENT LAUNCH" text now positioned at the very top of the hero section on the dark background area, directly below the header
+- **Image Lightbox Feature:** Click-to-enlarge lightbox added to specimen showcase images
+  - Hover shows zoom icon and "Click to enlarge" prompt
+  - Lightbox opens with Plant/Bronze toggle buttons
+  - Smooth transitions between plant and bronze images
+  - Caption describes each view
+- **Email Audit Trail:** All emails CC'd to studio@timeless.organic (purchase confirmations, certificates, gift notifications)
+- **Dual Button Flow:** SECURE + RESERVE buttons on homepage (pre-launch mode)
+  - SECURE links to /founding-100-explained
+  - RESERVE opens reservation modal
+
+## Previous Changes (Session Nov 27, 2025)
 - **Home Page Complete Redesign - Investment Messaging Focus:**
   - **NEW: "Your Investment Is Our Investment" section** - Crystal clear explanation of the double meaning:
     - Your Financial Investment: Capital (R3,000-5,000) funds foundry fit-out
