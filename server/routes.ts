@@ -62,6 +62,33 @@ function getCommissionVoucherPrice(): number {
   return 150000; // R1,500
 }
 
+// Admin pricing update endpoint
+async function updateSeatingPricing(req: any, res: Response): Promise<void> {
+  try {
+    const user = req.user;
+    if (!user?.isAdmin) {
+      res.status(403).json({ error: "Unauthorized" });
+      return;
+    }
+
+    const { founderPrice, patronPrice } = req.body;
+    
+    // Update in database
+    if (founderPrice !== undefined) {
+      await storage.updateSeatPrice("founder", founderPrice);
+    }
+    if (patronPrice !== undefined) {
+      await storage.updateSeatPrice("patron", patronPrice);
+    }
+
+    const seats = await storage.getSeats();
+    res.json(seats);
+  } catch (error: any) {
+    console.error("[Admin] Price update error:", error);
+    res.status(500).json({ error: error.message });
+  }
+}
+
 // Centralized post-completion handler for gift notifications
 async function handlePurchaseCompletion(purchaseId: string): Promise<void> {
   try {
