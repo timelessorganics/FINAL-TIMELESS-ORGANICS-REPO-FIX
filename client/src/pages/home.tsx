@@ -126,7 +126,7 @@ export default function HomePage() {
         </section>
 
         {/* YOUR INVESTMENT IS OUR INVESTMENT - The Key Message */}
-        <section className="py-24 px-6 bg-gradient-to-b from-[#050505] to-background relative overflow-hidden" data-testid="section-investment-meaning">
+        <section className="py-16 px-6 bg-gradient-to-b from-[#050505] to-background relative overflow-hidden" data-testid="section-investment-meaning">
           {/* Faded smoke video background */}
           <div className="absolute inset-0 opacity-[0.38]">
             <video 
@@ -154,7 +154,7 @@ export default function HomePage() {
             </div>
 
             {/* The double meaning - NO cards, just elegant text */}
-            <div className="grid md:grid-cols-2 gap-12 mb-16">
+            <div className="grid md:grid-cols-2 gap-8 mb-10">
               <div className="text-center md:text-left">
                 <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
                   <Users className="w-6 h-6 text-accent-gold" />
