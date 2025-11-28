@@ -85,7 +85,11 @@ export default function AdminPanel() {
   
   // Media upload dialog state
   const [showMediaDialog, setShowMediaDialog] = useState(false);
-  const [mediaForm, setMediaForm] = useState({ url: "", altText: "", caption: "", tags: "" });
+  const [mediaForm, setMediaForm] = useState({ url: "", file: null as File | null, altText: "", caption: "", tags: "" });
+  const [showContentEditor, setShowContentEditor] = useState(false);
+  const [contentForm, setContentForm] = useState({ 
+    heroTitle: "", heroSubtitle: "", aboutText: "", workshopsText: "" 
+  });
   
   // Product dialog state
   const [showProductDialog, setShowProductDialog] = useState(false);
@@ -200,14 +204,27 @@ export default function AdminPanel() {
 
   // Create media asset mutation
   const createMedia = useMutation({
-    mutationFn: async (data: { url: string; altText?: string; caption?: string; tags?: string[] }) => {
-      const filename = data.url.split('/').pop() || 'image';
+    mutationFn: async (data: { url?: string; file?: File; altText?: string; caption?: string; tags?: string[] }) => {
+      let mediaUrl = data.url;
+      let filename = "image";
+      
+      if (data.file) {
+        // Convert file to base64
+        const reader = new FileReader();
+        mediaUrl = await new Promise((resolve, reject) => {
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(data.file!);
+        });
+        filename = data.file.name;
+      }
+      
       const response = await apiRequest("POST", "/api/admin/media", {
         filename,
         originalName: filename,
-        mimeType: data.url.includes('.png') ? 'image/png' : data.url.includes('.webp') ? 'image/webp' : 'image/jpeg',
-        size: 0,
-        url: data.url,
+        mimeType: data.file?.type || (data.url?.includes('.png') ? 'image/png' : data.url?.includes('.webp') ? 'image/webp' : 'image/jpeg'),
+        size: data.file?.size || 0,
+        url: mediaUrl,
         altText: data.altText,
         caption: data.caption,
         tags: data.tags,
@@ -217,11 +234,26 @@ export default function AdminPanel() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/media"] });
       setShowMediaDialog(false);
-      setMediaForm({ url: "", altText: "", caption: "", tags: "" });
+      setMediaForm({ url: "", file: null, altText: "", caption: "", tags: "" });
       toast({ title: "Media Added!", description: "Image has been added to the library." });
     },
     onError: (error: Error) => {
       toast({ variant: "destructive", title: "Failed to add media", description: error.message });
+    },
+  });
+
+  // Update content mutation
+  const updateContent = useMutation({
+    mutationFn: async (data: any) => {
+      const response = await apiRequest("PATCH", "/api/admin/content", data);
+      return await response.json();
+    },
+    onSuccess: () => {
+      setShowContentEditor(false);
+      toast({ title: "Content Updated!", description: "Website content has been updated." });
+    },
+    onError: (error: Error) => {
+      toast({ variant: "destructive", title: "Failed to update content", description: error.message });
     },
   });
 
@@ -440,6 +472,52 @@ export default function AdminPanel() {
               <div className="text-sm text-muted-foreground">Codes Issued</div>
             </Card>
           </div>
+
+          {/* Content Management */}
+          <Card className="bg-card border-card-border p-7 mb-12">
+            <div className="flex items-center justify-between mb-6">
+              <h2 className="font-serif text-2xl font-bold">Website Content</h2>
+              <Dialog open={showContentEditor} onOpenChange={setShowContentEditor}>
+                <DialogTrigger asChild>
+                  <Button className="gap-2" data-testid="button-edit-content">
+                    <Edit className="w-4 h-4" />
+                    Edit Content
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl">
+                  <DialogHeader>
+                    <DialogTitle>Edit Website Content</DialogTitle>
+                    <DialogDescription>Update text displayed on your website</DialogDescription>
+                  </DialogHeader>
+                  <div className="space-y-4 max-h-[60vh] overflow-y-auto">
+                    <div className="space-y-2">
+                      <Label htmlFor="hero-title">Hero Title</Label>
+                      <Input id="hero-title" placeholder="FOUNDING 100 INVESTMENT LAUNCH" value={contentForm.heroTitle} onChange={(e) => setContentForm({...contentForm, heroTitle: e.target.value})} data-testid="input-hero-title" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="hero-subtitle">Hero Subtitle</Label>
+                      <Textarea id="hero-subtitle" placeholder="Founding opportunity text..." value={contentForm.heroSubtitle} onChange={(e) => setContentForm({...contentForm, heroSubtitle: e.target.value})} data-testid="input-hero-subtitle" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="about-text">About Section</Label>
+                      <Textarea id="about-text" placeholder="About text..." value={contentForm.aboutText} onChange={(e) => setContentForm({...contentForm, aboutText: e.target.value})} data-testid="input-about-text" className="min-h-[100px]" />
+                    </div>
+                    <div className="space-y-2">
+                      <Label htmlFor="workshops-text">Workshops Section</Label>
+                      <Textarea id="workshops-text" placeholder="Workshops text..." value={contentForm.workshopsText} onChange={(e) => setContentForm({...contentForm, workshopsText: e.target.value})} data-testid="input-workshops-text" className="min-h-[100px]" />
+                    </div>
+                  </div>
+                  <DialogFooter>
+                    <Button variant="outline" onClick={() => setShowContentEditor(false)}>Cancel</Button>
+                    <Button onClick={() => updateContent.mutate(contentForm)} disabled={updateContent.isPending} data-testid="button-save-content">
+                      {updateContent.isPending ? "Saving..." : "Save Content"}
+                    </Button>
+                  </DialogFooter>
+                </DialogContent>
+              </Dialog>
+            </div>
+            <p className="text-sm text-muted-foreground">Manage hero titles, descriptions, and section text directly from your admin panel</p>
+          </Card>
 
           {/* Pricing Management */}
           <Card className="bg-card border-card-border p-7 mb-12">
@@ -838,11 +916,16 @@ export default function AdminPanel() {
                   <DialogContent>
                     <DialogHeader>
                       <DialogTitle>Add Media Asset</DialogTitle>
-                      <DialogDescription>Enter the image URL and details</DialogDescription>
+                      <DialogDescription>Upload a file or enter image URL</DialogDescription>
                     </DialogHeader>
                     <div className="space-y-4">
                       <div className="space-y-2">
-                        <Label htmlFor="media-url">Image URL</Label>
+                        <Label htmlFor="media-file">Upload Image or Video</Label>
+                        <Input id="media-file" type="file" accept="image/*,video/*" onChange={(e) => setMediaForm({...mediaForm, file: e.target.files?.[0] || null})} data-testid="input-media-file" />
+                        <p className="text-xs text-muted-foreground">Or enter URL below</p>
+                      </div>
+                      <div className="space-y-2">
+                        <Label htmlFor="media-url">Image/Video URL</Label>
                         <Input id="media-url" placeholder="https://..." value={mediaForm.url} onChange={(e) => setMediaForm({...mediaForm, url: e.target.value})} data-testid="input-media-url" />
                       </div>
                       <div className="space-y-2">
@@ -860,8 +943,8 @@ export default function AdminPanel() {
                     </div>
                     <DialogFooter>
                       <Button variant="outline" onClick={() => setShowMediaDialog(false)}>Cancel</Button>
-                      <Button onClick={() => createMedia.mutate({ url: mediaForm.url, altText: mediaForm.altText, caption: mediaForm.caption, tags: mediaForm.tags ? mediaForm.tags.split(',').map(t => t.trim()) : undefined })} disabled={createMedia.isPending} data-testid="button-save-media">
-                        {createMedia.isPending ? "Adding..." : "Add Image"}
+                      <Button onClick={() => createMedia.mutate({ url: mediaForm.url || undefined, file: mediaForm.file || undefined, altText: mediaForm.altText, caption: mediaForm.caption, tags: mediaForm.tags ? mediaForm.tags.split(',').map(t => t.trim()) : undefined })} disabled={createMedia.isPending || (!mediaForm.file && !mediaForm.url)} data-testid="button-save-media">
+                        {createMedia.isPending ? "Uploading..." : "Add Media"}
                       </Button>
                     </DialogFooter>
                   </DialogContent>

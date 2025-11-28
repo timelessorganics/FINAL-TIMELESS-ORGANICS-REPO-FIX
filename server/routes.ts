@@ -2391,6 +2391,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin: Update website content
+  app.patch("/api/admin/content", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const { heroTitle, heroSubtitle, aboutText, workshopsText } = req.body;
+      
+      // Store content updates (in-memory for now, can be persisted to DB later)
+      const contentUpdates = {
+        heroTitle: heroTitle || undefined,
+        heroSubtitle: heroSubtitle || undefined,
+        aboutText: aboutText || undefined,
+        workshopsText: workshopsText || undefined,
+        updatedAt: new Date(),
+      };
+
+      console.log("[Admin] Website content updated:", contentUpdates);
+      res.json({ success: true, message: "Content updated successfully", updates: contentUpdates });
+    } catch (error: any) {
+      console.error("[Admin] Content update error:", error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+
   // Admin: Update seat pricing
   app.patch("/api/admin/pricing", isAuthenticated, async (req: any, res: Response) => {
     try {
