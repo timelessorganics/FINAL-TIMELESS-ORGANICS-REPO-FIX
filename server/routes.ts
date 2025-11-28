@@ -36,6 +36,7 @@ import {
   sendCertificateEmail,
   sendPurchaseConfirmationEmail,
   sendGiftNotificationEmail,
+  sendCertificateToRecipient,
 } from "./utils/emailService";
 import { generatePromoCode } from "./utils/promoCodeGenerator";
 import { addSubscriberToMailchimp } from "./mailchimp";
@@ -1681,9 +1682,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Claim the gift by updating claimedByUserId and giftStatus
         await storage.claimGiftPurchase(purchaseId, userId);
 
-        console.log(`[Gift] Purchase ${purchaseId} claimed by user ${userId}`);
+        // Get the claiming user's email for records
+        const claimingUser = await storage.getUser(userId);
+        const claimerEmail = claimingUser?.email;
 
-        res.json({ message: "Gift claimed successfully" });
+        // Generate and send certificate to recipient
+        try {
+          const certificateUrl = `/certificates/certificate-${purchaseId}.pdf`;
+          if (claimerEmail) {
+            await sendCertificateToRecipient(
+              claimerEmail,
+              purchase.giftRecipientName || "Valued Patron",
+              certificateUrl,
+              purchase.seatType
+            );
+          }
+        } catch (certError) {
+          console.error("Failed to send certificate to gift recipient:", certError);
+          // Don't fail the claim if email fails
+        }
+
+        // Add recipient to Mailchimp (async, best effort)
+        if (claimerEmail) {
+          const nameParts = (purchase.giftRecipientName || "Patron").split(" ");
+          addSubscriberToMailchimp({
+            email: claimerEmail,
+            firstName: nameParts[0] || undefined,
+            lastName: nameParts.slice(1).join(" ") || undefined,
+            tags: ["Founding 100 Investor", "Gift Recipient", purchase.seatType],
+          }).catch((err) =>
+            console.error("[Mailchimp] Failed to sync gift recipient:", err),
+          );
+        }
+
+        console.log(`[Gift] Purchase ${purchaseId} claimed by user ${userId}. Certificate sent & Mailchimp updated.`);
+
+        res.json({ message: "Gift claimed successfully. Certificate sent to your email." });
       } catch (error: any) {
         console.error("Claim gift error:", error);
         res
