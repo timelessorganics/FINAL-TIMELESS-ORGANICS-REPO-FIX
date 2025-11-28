@@ -128,7 +128,7 @@ export default function PreLaunchReservationModal({
                     id="name"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                    placeholder="David Junor"
+                    placeholder="Enter your full name"
                     required
                     data-testid="input-reservation-name"
                   />
