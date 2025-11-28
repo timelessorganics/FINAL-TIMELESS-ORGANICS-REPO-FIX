@@ -172,6 +172,12 @@ export const purchases = pgTable("purchases", {
   claimedByUserId: varchar("claimed_by_user_id").references(() => usersTable.id),
   giftClaimedAt: timestamp("gift_claimed_at"),
 
+  // 3-day payment deadline system
+  isDepositOnly: boolean("is_deposit_only").default(false).notNull(), // True if this purchase is SECURE (R1K deposit) vs full payment
+  depositAmountCents: integer("deposit_amount_cents").default(0).notNull(), // Amount paid as deposit
+  depositPaidAt: timestamp("deposit_paid_at"), // When deposit was paid
+  balanceDueAt: timestamp("balance_due_at"), // When remaining balance is due (if applicable)
+
   createdAt: timestamp("created_at").defaultNow(),
   completedAt: timestamp("completed_at"),
 });
@@ -195,6 +201,8 @@ export const insertPurchaseSchema = createInsertSchema(purchases).pick({
   giftRecipientName: true,
   giftMessage: true,
   giftStatus: true,
+  isDepositOnly: true,
+  depositAmountCents: true,
 });
 
 export type InsertPurchase = z.infer<typeof insertPurchaseSchema>;
