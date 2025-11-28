@@ -2029,6 +2029,341 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   );
 
+  // ============================================
+  // ADMIN MANAGEMENT ROUTES
+  // ============================================
+
+  // Admin: Get all media assets
+  app.get("/api/admin/media", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const assets = await storage.getMediaAssets();
+      res.json(assets);
+    } catch (error: any) {
+      console.error("Get media assets error:", error);
+      res.status(500).json({ message: error.message || "Failed to fetch media assets" });
+    }
+  });
+
+  // Admin: Upload media asset (saves URL from Supabase Storage or external URL)
+  app.post("/api/admin/media", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const { filename, originalName, mimeType, size, url, altText, caption, tags } = req.body;
+      
+      if (!filename || !originalName || !mimeType || !url) {
+        return res.status(400).json({ message: "Missing required fields: filename, originalName, mimeType, url" });
+      }
+
+      const asset = await storage.createMediaAsset({
+        filename,
+        originalName,
+        mimeType,
+        size: size || 0,
+        url,
+        altText,
+        caption,
+        tags,
+        uploadedBy: userId,
+      });
+      res.status(201).json(asset);
+    } catch (error: any) {
+      console.error("Create media asset error:", error);
+      res.status(500).json({ message: error.message || "Failed to create media asset" });
+    }
+  });
+
+  // Admin: Update media asset
+  app.patch("/api/admin/media/:id", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const { id } = req.params;
+      const asset = await storage.updateMediaAsset(id, req.body);
+      if (!asset) return res.status(404).json({ message: "Asset not found" });
+      res.json(asset);
+    } catch (error: any) {
+      console.error("Update media asset error:", error);
+      res.status(500).json({ message: error.message || "Failed to update media asset" });
+    }
+  });
+
+  // Admin: Delete media asset
+  app.delete("/api/admin/media/:id", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      await storage.deleteMediaAsset(req.params.id);
+      res.json({ success: true });
+    } catch (error: any) {
+      console.error("Delete media asset error:", error);
+      res.status(500).json({ message: error.message || "Failed to delete media asset" });
+    }
+  });
+
+  // Admin: Get page assets
+  app.get("/api/admin/page-assets", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const pageSlug = req.query.page as string | undefined;
+      const assets = await storage.getPageAssets(pageSlug);
+      res.json(assets);
+    } catch (error: any) {
+      console.error("Get page assets error:", error);
+      res.status(500).json({ message: error.message || "Failed to fetch page assets" });
+    }
+  });
+
+  // Admin: Set page asset (create or update)
+  app.post("/api/admin/page-assets", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const { pageSlug, slotKey, assetId, displayOrder, isActive } = req.body;
+      if (!pageSlug || !slotKey || !assetId) {
+        return res.status(400).json({ message: "Missing required fields" });
+      }
+
+      const asset = await storage.setPageAsset({ pageSlug, slotKey, assetId, displayOrder, isActive });
+      res.json(asset);
+    } catch (error: any) {
+      console.error("Set page asset error:", error);
+      res.status(500).json({ message: error.message || "Failed to set page asset" });
+    }
+  });
+
+  // Admin: Get all products
+  app.get("/api/admin/products", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const productsList = await storage.getProducts();
+      res.json(productsList);
+    } catch (error: any) {
+      console.error("Get products error:", error);
+      res.status(500).json({ message: error.message || "Failed to fetch products" });
+    }
+  });
+
+  // Admin: Create product
+  app.post("/api/admin/products", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const { name, slug, description, shortDescription, priceCents, comparePriceCents, status, category, sku, stockQuantity, featuredImageId, displayOrder, metadata } = req.body;
+      
+      if (!name || !slug || !priceCents) {
+        return res.status(400).json({ message: "Missing required fields: name, slug, priceCents" });
+      }
+
+      const product = await storage.createProduct({
+        name, slug, description, shortDescription, priceCents, comparePriceCents, status, category, sku, stockQuantity, featuredImageId, displayOrder, metadata
+      });
+      res.status(201).json(product);
+    } catch (error: any) {
+      console.error("Create product error:", error);
+      res.status(500).json({ message: error.message || "Failed to create product" });
+    }
+  });
+
+  // Admin: Update product
+  app.patch("/api/admin/products/:id", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const product = await storage.updateProduct(req.params.id, req.body);
+      if (!product) return res.status(404).json({ message: "Product not found" });
+      res.json(product);
+    } catch (error: any) {
+      console.error("Update product error:", error);
+      res.status(500).json({ message: error.message || "Failed to update product" });
+    }
+  });
+
+  // Admin: Delete product
+  app.delete("/api/admin/products/:id", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      await storage.deleteProduct(req.params.id);
+      res.json({ success: true });
+    } catch (error: any) {
+      console.error("Delete product error:", error);
+      res.status(500).json({ message: error.message || "Failed to delete product" });
+    }
+  });
+
+  // Admin: Get all auctions
+  app.get("/api/admin/auctions", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const auctionsList = await storage.getAuctions();
+      res.json(auctionsList);
+    } catch (error: any) {
+      console.error("Get auctions error:", error);
+      res.status(500).json({ message: error.message || "Failed to fetch auctions" });
+    }
+  });
+
+  // Admin: Create auction
+  app.post("/api/admin/auctions", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const { title, slug, description, startAt, endAt, reservePriceCents, startingBidCents, bidIncrementCents, status, featuredImageId, metadata } = req.body;
+      
+      if (!title || !slug || !startAt || !endAt || !startingBidCents) {
+        return res.status(400).json({ message: "Missing required fields: title, slug, startAt, endAt, startingBidCents" });
+      }
+
+      const auction = await storage.createAuction({
+        title, slug, description, startAt: new Date(startAt), endAt: new Date(endAt), reservePriceCents, startingBidCents, bidIncrementCents, status, featuredImageId, metadata
+      });
+      res.status(201).json(auction);
+    } catch (error: any) {
+      console.error("Create auction error:", error);
+      res.status(500).json({ message: error.message || "Failed to create auction" });
+    }
+  });
+
+  // Admin: Update auction
+  app.patch("/api/admin/auctions/:id", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const updates = { ...req.body };
+      if (updates.startAt) updates.startAt = new Date(updates.startAt);
+      if (updates.endAt) updates.endAt = new Date(updates.endAt);
+
+      const auction = await storage.updateAuction(req.params.id, updates);
+      if (!auction) return res.status(404).json({ message: "Auction not found" });
+      res.json(auction);
+    } catch (error: any) {
+      console.error("Update auction error:", error);
+      res.status(500).json({ message: error.message || "Failed to update auction" });
+    }
+  });
+
+  // Admin: Delete auction
+  app.delete("/api/admin/auctions/:id", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      await storage.deleteAuction(req.params.id);
+      res.json({ success: true });
+    } catch (error: any) {
+      console.error("Delete auction error:", error);
+      res.status(500).json({ message: error.message || "Failed to delete auction" });
+    }
+  });
+
+  // Admin: Get auction bids
+  app.get("/api/admin/auctions/:id/bids", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const bids = await storage.getAuctionBids(req.params.id);
+      res.json(bids);
+    } catch (error: any) {
+      console.error("Get auction bids error:", error);
+      res.status(500).json({ message: error.message || "Failed to fetch auction bids" });
+    }
+  });
+
+  // Admin: Get workshop bookings summary
+  app.get("/api/admin/workshops", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const workshopDates = await storage.getWorkshopDates();
+      res.json(workshopDates);
+    } catch (error: any) {
+      console.error("Get workshop dates error:", error);
+      res.status(500).json({ message: error.message || "Failed to fetch workshop dates" });
+    }
+  });
+
+  // Admin: Create workshop date
+  app.post("/api/admin/workshops", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const { date, startTime, endTime, maxParticipants, depositAmount, location } = req.body;
+      
+      if (!date || !startTime || !endTime || !depositAmount || !location) {
+        return res.status(400).json({ message: "Missing required fields" });
+      }
+
+      const workshopDate = await storage.createWorkshopDate({
+        date: new Date(date),
+        startTime,
+        endTime,
+        maxParticipants: maxParticipants || 6,
+        depositAmount,
+        location,
+      });
+      res.status(201).json(workshopDate);
+    } catch (error: any) {
+      console.error("Create workshop date error:", error);
+      res.status(500).json({ message: error.message || "Failed to create workshop date" });
+    }
+  });
+
   // Serve certificates statically
   app.use(
     "/certificates",
