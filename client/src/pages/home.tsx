@@ -324,6 +324,8 @@ export default function HomePage() {
               <div className="group relative rounded-xl overflow-hidden border border-bronze/50 bg-gradient-to-br from-bronze/15 via-background to-background shadow-lg hover-elevate transition-all duration-300">
                 {/* Accent glow */}
                 <div className="absolute -top-40 -right-40 w-80 h-80 bg-bronze/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                {/* Subtle patina accent */}
+                <div className="absolute top-0 left-0 w-1 h-16 bg-gradient-to-b from-patina/40 to-transparent" />
                 
                 <div className="relative p-8 md:p-10">
                   {/* Badge */}
@@ -334,7 +336,7 @@ export default function HomePage() {
 
                   {/* Title & Price */}
                   <h3 className="font-serif text-3xl md:text-4xl text-bronze mb-1">Founder</h3>
-                  <div className="h-1 w-12 bg-gradient-to-r from-bronze to-bronze/30 mb-6 rounded-full" />
+                  <div className="h-1 w-12 bg-gradient-to-r from-bronze via-patina/20 to-bronze/30 mb-6 rounded-full" />
                   
                   <div className="mb-8">
                     <div className="text-5xl font-light text-bronze">R{((founderSeats?.price || 300000) / 100).toLocaleString()}</div>
@@ -396,12 +398,14 @@ export default function HomePage() {
               </div>
 
               {/* Patron Seat - PREMIUM */}
-              <div className="group relative rounded-xl overflow-hidden border border-accent-gold/60 bg-gradient-to-br from-accent-gold/20 via-background to-background shadow-xl hover-elevate transition-all duration-300 md:scale-105 md:origin-center">
+              <div className="group relative rounded-xl overflow-hidden border border-accent-gold/60 bg-gradient-to-br from-accent-gold/20 via-background to-background shadow-xl hover-elevate transition-all duration-300">
                 {/* Accent glow - more prominent */}
                 <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent-gold/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                 
                 {/* Premium indicator */}
                 <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-accent-gold/50 to-transparent" />
+                {/* Subtle patina accent */}
+                <div className="absolute top-0 right-0 w-1 h-16 bg-gradient-to-b from-patina/30 to-transparent" />
                 
                 <div className="relative p-8 md:p-10">
                   {/* Badge */}
