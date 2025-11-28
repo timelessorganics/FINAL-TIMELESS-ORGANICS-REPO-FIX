@@ -76,7 +76,10 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
         mountingType: "none",
         internationalShipping: false,
         commissionVoucher: false,
-        isGift: false,
+        isGift: data.isGift,
+        giftRecipientEmail: data.isGift ? data.giftRecipientEmail : undefined,
+        giftRecipientName: data.isGift ? data.giftRecipientName : undefined,
+        giftMessage: data.isGift ? data.giftMessage : undefined,
       });
       
       return await response.json();
@@ -141,7 +144,10 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
         internationalShipping: false,
         commissionVoucher: false,
         purchaseMode,
-        isGift: false,
+        isGift: data.isGift,
+        giftRecipientEmail: data.isGift ? data.giftRecipientEmail : undefined,
+        giftRecipientName: data.isGift ? data.giftRecipientName : undefined,
+        giftMessage: data.isGift ? data.giftMessage : undefined,
       });
     },
     onSuccess: () => {
@@ -388,6 +394,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                         }`}
                         onClick={() => {
                           setIsGift(!isGift);
+                          form.setValue("isGift", !isGift);
                           if (isGift) {
                             form.setValue("giftRecipientEmail", "");
                             form.setValue("giftRecipientName", "");
