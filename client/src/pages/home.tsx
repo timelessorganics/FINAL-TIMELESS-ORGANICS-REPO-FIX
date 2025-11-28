@@ -273,42 +273,42 @@ export default function HomePage() {
 
             {/* Lifetime Benefits Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-              <div className="p-6 border border-border/50 rounded-lg bg-card/30">
+              <div className="p-6">
                 <Sparkles className="w-6 h-6 text-accent-gold mb-3" />
                 <h4 className="font-medium mb-2 text-base">Workshop Vouchers</h4>
                 <p className="text-sm text-muted-foreground font-light">
                   50-80% off future 2-day bronze casting workshops. Learn the ancient lost-wax process yourself.
                 </p>
               </div>
-              <div className="p-6 border border-border/50 rounded-lg bg-card/30">
+              <div className="p-6">
                 <Shield className="w-6 h-6 text-patina mb-3" />
                 <h4 className="font-medium mb-2">Lifetime Shop Discounts</h4>
                 <p className="text-sm text-muted-foreground font-light">
                   20-30% off everything in our future shop — sculptures, limited editions, tools, materials.
                 </p>
               </div>
-              <div className="p-6 border border-border/50 rounded-lg bg-card/30">
+              <div className="p-6">
                 <Award className="w-6 h-6 text-bronze mb-3" />
                 <h4 className="font-medium mb-2">Commission Priority</h4>
                 <p className="text-sm text-muted-foreground font-light">
                   First access to custom commissions. Your specimen, your vision, cast in bronze.
                 </p>
               </div>
-              <div className="p-6 border border-border/50 rounded-lg bg-card/30">
+              <div className="p-6">
                 <Clock className="w-6 h-6 text-bronze mb-3" />
                 <h4 className="font-medium mb-2">Auction First Dibs</h4>
                 <p className="text-sm text-muted-foreground font-light">
                   Early access to future one-of-a-kind works before they go to public auction.
                 </p>
               </div>
-              <div className="p-6 border border-border/50 rounded-lg bg-card/30">
+              <div className="p-6">
                 <Sparkles className="w-6 h-6 text-accent-gold mb-3" />
                 <h4 className="font-medium mb-2">Giftable for Life</h4>
                 <p className="text-sm text-muted-foreground font-light">
                   Transfer your benefits to family or friends. A gift that keeps giving for generations.
                 </p>
               </div>
-              <div className="p-6 border border-border/50 rounded-lg bg-card/30">
+              <div className="p-6">
                 <Shield className="w-6 h-6 text-patina mb-3" />
                 <h4 className="font-medium mb-2">Founding Member Status</h4>
                 <p className="text-sm text-muted-foreground font-light">
@@ -677,7 +677,7 @@ export default function HomePage() {
                   </Button>
                 </Link>
               </div>
-              <div className="border border-border/30 rounded-lg p-6 bg-card/30 space-y-4">
+              <div className="p-6 space-y-4">
                 <div>
                   <div className="text-sm font-medium mb-1">Day 1</div>
                   <p className="text-xs text-muted-foreground">Specimen selection, mold making, investment</p>
