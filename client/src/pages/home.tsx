@@ -1,9 +1,11 @@
+import { useState } from "react";
 import { Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Clock, Sparkles, Shield, Award, ArrowRight, Flame, Users, Leaf, Calendar } from "lucide-react";
+import PreLaunchReservationModal from "@/components/PreLaunchReservationModal";
 
 import heroImage from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764248900779.png";
 import bronzeImage1 from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764170102466.png";
@@ -24,14 +26,29 @@ interface SeatAvailability {
   remaining: number;
 }
 
+interface PreLaunchStats {
+  totalReserved: number;
+  founderDeposits: number;
+  patronDeposits: number;
+  founderHolds: number;
+  patronHolds: number;
+}
+
 export default function HomePage() {
+  const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
+  
   const { data: seats } = useQuery<SeatAvailability[]>({
     queryKey: ['/api/seats/availability'],
+  });
+  
+  const { data: prelaunchStats } = useQuery<PreLaunchStats>({
+    queryKey: ['/api/prelaunch/stats'],
   });
 
   const founderSeats = seats?.find(s => s.type === 'founder');
   const patronSeats = seats?.find(s => s.type === 'patron');
   const totalRemaining = (founderSeats?.remaining || 0) + (patronSeats?.remaining || 0);
+  const totalReserved = prelaunchStats?.totalReserved || 0;
 
   return (
     <>
@@ -57,8 +74,8 @@ export default function HomePage() {
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(5,5,5,0.5)_70%,rgba(5,5,5,0.9)_100%)]" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-70" />
           
-          {/* Layer 3: FULL SECTION GLASS OVERLAY - extends over entire hero */}
-          <div className="absolute inset-0 backdrop-blur-[2px] bg-white/[0.03]" />
+          {/* Layer 3: Subtle overlay for text readability - NO BLUR for crystal clear image */}
+          <div className="absolute inset-0 bg-black/[0.15]" />
           <div className="absolute inset-0 border-b border-white/[0.05]" />
           
           {/* Layer 4: Content grid - stable positioning */}
@@ -66,9 +83,9 @@ export default function HomePage() {
             
             {/* Top spacer - pushes content to center-ish */}
             <div className="flex items-end justify-center pb-4">
-              {/* Kicker - text only, no colored background */}
+              {/* Kicker - animated gradient like the logo */}
               <div className="hero-text-reveal hero-text-reveal-delay-1">
-                <span className="inline-block text-xs sm:text-sm md:text-base tracking-[0.2em] sm:tracking-[0.3em] text-white/80 uppercase font-semibold">
+                <span className="inline-block text-xs sm:text-sm md:text-base tracking-[0.2em] sm:tracking-[0.3em] uppercase font-bold moving-fill">
                   Founding 100 Investment Launch
                 </span>
               </div>
@@ -87,14 +104,26 @@ export default function HomePage() {
                 <span className="text-white">One-Of-A-Kind</span> Castings From Organic Matter
               </p>
 
-              {/* Single CTA - cleaner */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-6">
-                <Link href="#seats">
-                  <Button size="lg" className="btn-bronze text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold shadow-lg" data-testid="button-reserve-seat">
-                    Secure Your Seat
-                    <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
-                  </Button>
-                </Link>
+              {/* Single CTA - Opens reservation modal */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col items-center justify-center gap-3 sm:gap-4 mb-6">
+                <Button 
+                  size="lg" 
+                  className="btn-bronze text-sm sm:text-base px-8 sm:px-10 py-5 sm:py-6 min-h-12 sm:min-h-14 gap-2 font-bold shadow-lg" 
+                  onClick={() => setIsReservationModalOpen(true)}
+                  data-testid="button-reserve-seat"
+                >
+                  Secure Your Seat
+                  <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5" />
+                </Button>
+                
+                {/* Reservation counter - shows live reservations */}
+                {totalReserved > 0 && (
+                  <div className="flex items-center gap-2 text-sm text-white/70 bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm">
+                    <Sparkles className="w-4 h-4 text-bronze" />
+                    <span className="font-semibold text-white">{totalReserved}</span>
+                    <span>seats already reserved</span>
+                  </div>
+                )}
               </div>
 
               {/* Learn More - subtle */}
@@ -780,6 +809,12 @@ export default function HomePage() {
       </main>
 
       <Footer />
+      
+      {/* Pre-Launch Reservation Modal */}
+      <PreLaunchReservationModal 
+        isOpen={isReservationModalOpen}
+        onClose={() => setIsReservationModalOpen(false)}
+      />
     </>
   );
 }

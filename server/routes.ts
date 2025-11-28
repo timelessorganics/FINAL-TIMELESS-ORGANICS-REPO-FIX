@@ -1106,6 +1106,116 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   );
 
+  // =============================================
+  // PRE-LAUNCH RESERVATION SYSTEM
+  // =============================================
+  
+  // Public: Get pre-launch reservation stats
+  app.get("/api/prelaunch/stats", async (req: Request, res: Response) => {
+    try {
+      const subscribers = await storage.getSubscribers();
+      
+      // Count reservations by type from notes field
+      const stats = {
+        totalReserved: 0,
+        founderDeposits: 0,
+        patronDeposits: 0,
+        founderHolds: 0,
+        patronHolds: 0,
+      };
+      
+      for (const sub of subscribers) {
+        if (sub.notes?.includes('[PRELAUNCH]')) {
+          stats.totalReserved++;
+          if (sub.notes.includes('founder') && sub.notes.includes('deposit')) {
+            stats.founderDeposits++;
+          } else if (sub.notes.includes('patron') && sub.notes.includes('deposit')) {
+            stats.patronDeposits++;
+          } else if (sub.notes.includes('founder') && sub.notes.includes('hold')) {
+            stats.founderHolds++;
+          } else if (sub.notes.includes('patron') && sub.notes.includes('hold')) {
+            stats.patronHolds++;
+          }
+        }
+      }
+      
+      res.json(stats);
+    } catch (error: any) {
+      console.error("Pre-launch stats error:", error);
+      res.status(500).json({ message: error.message || "Failed to get stats" });
+    }
+  });
+  
+  // Public: Create pre-launch reservation
+  app.post("/api/prelaunch/reserve", async (req: Request, res: Response) => {
+    try {
+      const { name, email, phone, seatType, reservationType } = req.body;
+      
+      if (!name || !email || !seatType || !reservationType) {
+        return res.status(400).json({ message: "Missing required fields" });
+      }
+      
+      // Check if email already has a reservation
+      const existing = await storage.getSubscriberByEmail(email.toLowerCase());
+      if (existing && existing.notes?.includes('[PRELAUNCH]')) {
+        return res.status(409).json({ message: "You already have a reservation with this email" });
+      }
+      
+      // Create reservation note
+      const reservationNote = `[PRELAUNCH] ${seatType} ${reservationType} - Reserved ${new Date().toISOString()}`;
+      
+      if (existing) {
+        // Update existing subscriber with reservation note
+        // For now, we'll create a new entry with updated notes
+      }
+      
+      // Create subscriber entry with reservation details
+      const subscriber = await storage.createSubscriber({
+        name,
+        email: email.toLowerCase(),
+        phone: phone || null,
+        notes: reservationNote,
+      });
+      
+      // Add to Mailchimp with appropriate tags
+      const tags = [
+        "Pre-Launch Reservation",
+        seatType === 'founder' ? "Founder Interest" : "Patron Interest",
+        reservationType === 'deposit' ? "Deposit Paid" : "24hr Hold",
+      ];
+      
+      addSubscriberToMailchimp({
+        email: subscriber.email,
+        firstName: name,
+        phone: phone || undefined,
+        tags,
+      }).catch((err) => console.error("[Mailchimp] Failed to sync reservation:", err));
+      
+      // For deposits, we would redirect to PayFast
+      // For now, just confirm the reservation
+      if (reservationType === 'deposit') {
+        // TODO: Implement PayFast deposit flow
+        // For now, just track it as a deposit interest
+        res.json({ 
+          success: true, 
+          message: "Deposit reservation noted. Payment integration coming soon!",
+          // paymentUrl: "/api/prelaunch/deposit-payment/..." 
+        });
+      } else {
+        res.json({ 
+          success: true, 
+          message: "Your 24-hour hold will activate on launch day!",
+        });
+      }
+    } catch (error: any) {
+      console.error("Pre-launch reservation error:", error);
+      if (error.message?.includes("duplicate")) {
+        return res.status(409).json({ message: "This email is already registered" });
+      }
+      res.status(500).json({ message: error.message || "Failed to create reservation" });
+    }
+  });
+
   // Public: Register interest (pre-launch subscriber)
   app.post("/api/subscribers", async (req: Request, res: Response) => {
     try {

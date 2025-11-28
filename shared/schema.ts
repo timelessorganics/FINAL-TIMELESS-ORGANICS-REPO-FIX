@@ -313,24 +313,43 @@ export type SculptureSelection = typeof sculptureSelections.$inferSelect;
 // Reservation status enum - for 24-hour seat holds
 export const reservationStatusEnum = pgEnum('reservation_status', ['active', 'converted', 'expired', 'cancelled']);
 
+// Reservation type enum - for pre-launch vs regular reservations
+export const reservationTypeEnum = pgEnum('reservation_type', ['prelaunch_deposit', 'prelaunch_hold', 'regular']);
+
 // Seat reservations - 24-hour holds before purchase
 export const reservations = pgTable("reservations", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  userId: varchar("user_id").references(() => usersTable.id).notNull(),
+  userId: varchar("user_id").references(() => usersTable.id), // Nullable for pre-launch (no account yet)
   seatType: seatTypeEnum("seat_type").notNull(),
   status: reservationStatusEnum("status").default('active').notNull(),
-  expiresAt: timestamp("expires_at").notNull(), // 24 hours from creation
+  expiresAt: timestamp("expires_at").notNull(), // 24 hours from creation or launch
   convertedToPurchaseId: varchar("converted_to_purchase_id").references(() => purchases.id),
   createdAt: timestamp("created_at").defaultNow(),
+  
+  // Pre-launch reservation fields
+  reservationType: reservationTypeEnum("reservation_type").default('regular').notNull(),
+  email: varchar("email"), // For pre-launch without account
+  name: varchar("name"), // Person's name
+  phone: varchar("phone"), // Optional phone number
+  depositAmountCents: integer("deposit_amount_cents").default(0), // R1000 = 100000 cents
+  depositPaidAt: timestamp("deposit_paid_at"),
+  depositPaymentRef: varchar("deposit_payment_ref"), // PayFast reference
+  balanceDueAt: timestamp("balance_due_at"), // 48hrs after launch for deposits
 }, (table) => [
   index("IDX_reservations_expires").on(table.expiresAt),
   index("IDX_reservations_user_seat").on(table.userId, table.seatType),
+  index("IDX_reservations_email").on(table.email),
 ]);
 
 export const insertReservationSchema = createInsertSchema(reservations).pick({
   userId: true,
   seatType: true,
   expiresAt: true,
+  reservationType: true,
+  email: true,
+  name: true,
+  phone: true,
+  depositAmountCents: true,
 });
 
 export type InsertReservation = z.infer<typeof insertReservationSchema>;
