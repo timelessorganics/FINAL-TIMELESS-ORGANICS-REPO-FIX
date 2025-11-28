@@ -3,6 +3,7 @@ from = "/api/*"
 to = "https://final-timeless-organics-repo-fix-production.up.railway.app/api/:splat"
 status = 200
 force = true
+headers = {Authorization = ":Authorization", Content-Type = ":Content-Type"}
 
 [[redirects]]
 from = "/*"

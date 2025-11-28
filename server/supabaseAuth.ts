@@ -46,25 +46,36 @@ export async function setupAuth(app: Express) {
 export const isAuthenticated: RequestHandler = async (req, res, next) => {
   const authHeader = req.headers.authorization;
   
+  console.log('[Auth] Checking authorization header:', authHeader ? `Bearer ${authHeader.substring(7, 20)}...` : 'MISSING');
+  
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    return res.status(401).json({ message: "Unauthorized" });
+    console.log('[Auth] No Bearer token found - returning 401');
+    return res.status(401).json({ message: "Unauthorized - No token" });
   }
 
   const token = authHeader.replace('Bearer ', '');
 
   try {
     // Verify the JWT token with Supabase
+    console.log('[Auth] Verifying token with Supabase...');
     const { data: { user }, error } = await supabaseAdmin.auth.getUser(token);
 
-    if (error || !user) {
-      return res.status(401).json({ message: "Unauthorized" });
+    if (error) {
+      console.log('[Auth] Supabase validation error:', error.message);
+      return res.status(401).json({ message: "Unauthorized - Token invalid" });
+    }
+    
+    if (!user) {
+      console.log('[Auth] No user returned from Supabase');
+      return res.status(401).json({ message: "Unauthorized - No user" });
     }
 
+    console.log('[Auth] User verified:', user.email);
     // Attach user to request object
     (req as any).user = user;
     next();
-  } catch (error) {
-    console.error('[Auth Error]', error);
-    res.status(401).json({ message: "Unauthorized" });
+  } catch (error: any) {
+    console.error('[Auth] Exception during verification:', error?.message || error);
+    res.status(401).json({ message: "Unauthorized - Verification failed" });
   }
 };

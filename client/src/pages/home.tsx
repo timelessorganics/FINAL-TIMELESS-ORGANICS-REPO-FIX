@@ -374,26 +374,15 @@ export default function HomePage() {
                     </select>
                   </div>
 
-                  {/* Buttons */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <Link href="/checkout/founder" className="w-full">
-                      <Button 
-                        variant="outline" 
-                        className="w-full min-h-11 text-sm font-medium border-bronze/50 text-bronze hover:bg-bronze/5" 
-                        data-testid="button-checkout-founder"
-                      >
-                        Reserve 24h
-                      </Button>
-                    </Link>
-                    <Link href="/checkout/founder" className="w-full">
-                      <Button 
-                        className="w-full min-h-11 text-sm font-medium btn-bronze"
-                        data-testid="button-buy-founder"
-                      >
-                        Buy Now
-                      </Button>
-                    </Link>
-                  </div>
+                  {/* Button */}
+                  <Link href="/checkout/founder" className="w-full">
+                    <Button 
+                      className="w-full min-h-12 text-sm font-semibold btn-bronze"
+                      data-testid="button-buy-founder"
+                    >
+                      Secure Your Seat
+                    </Button>
+                  </Link>
                 </div>
               </div>
 
@@ -454,26 +443,15 @@ export default function HomePage() {
                     </select>
                   </div>
 
-                  {/* Buttons */}
-                  <div className="grid grid-cols-2 gap-3">
-                    <Link href="/checkout/patron" className="w-full">
-                      <Button 
-                        variant="outline" 
-                        className="w-full min-h-11 text-sm font-medium border-accent-gold/50 text-accent-gold hover:bg-accent-gold/5" 
-                        data-testid="button-checkout-patron"
-                      >
-                        Reserve 24h
-                      </Button>
-                    </Link>
-                    <Link href="/checkout/patron" className="w-full">
-                      <Button 
-                        className="w-full min-h-11 text-sm font-medium bg-accent-gold text-background hover:bg-accent-gold/90"
-                        data-testid="button-buy-patron"
-                      >
-                        Buy Now
-                      </Button>
-                    </Link>
-                  </div>
+                  {/* Button */}
+                  <Link href="/checkout/patron" className="w-full">
+                    <Button 
+                      className="w-full min-h-12 text-sm font-semibold bg-accent-gold text-background hover:bg-accent-gold/90"
+                      data-testid="button-buy-patron"
+                    >
+                      Secure Your Seat
+                    </Button>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -481,11 +459,8 @@ export default function HomePage() {
             {/* Trust note - Mobile-friendly */}
             <div className="text-center mt-8 space-y-2">
               <p className="text-sm text-muted-foreground flex items-center justify-center gap-2">
-                <Clock className="w-4 h-4 text-bronze" />
-                24-hour reservation holds your seat
-              </p>
-              <p className="text-xs text-muted-foreground/60">
-                Complete payment anytime within 24 hours. Secure checkout via PayFast.
+                <Shield className="w-4 h-4 text-bronze" />
+                Secure checkout via PayFast
               </p>
             </div>
           </div>

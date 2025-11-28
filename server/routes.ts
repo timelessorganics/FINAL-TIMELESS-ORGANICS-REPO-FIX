@@ -293,12 +293,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             .json({ message: `All ${seatType} seats are sold out` });
         }
 
-        // Validate specimen style selection
-        if (!specimenStyle) {
-          return res.status(400).json({
-            message: "Please select a specimen style",
-          });
-        }
+        // Specimen style is optional at checkout - users choose from dashboard after purchase
+        // specimenStyle can be null
 
         // Calculate add-on prices server-side (NEVER trust client prices!)
         const mountingPriceCents = getMountingPrice(mountingType || "none");
@@ -1407,12 +1403,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             .json({ message: "Invalid or already used promo code" });
         }
 
-        // Validate specimen style selection
-        if (!specimenStyle) {
-          return res.status(400).json({
-            message: "Please select a specimen style",
-          });
-        }
+        // Specimen style is optional at checkout - users choose from dashboard after purchase
+        // specimenStyle can be null
 
         // Validate delivery information (same as paid purchases)
         if (!deliveryName || !deliveryPhone || !deliveryAddress) {

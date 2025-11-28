@@ -78,7 +78,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
         deliveryName: data.fullName,
         deliveryPhone: data.phone,
         deliveryAddress: data.address,
-        specimenStyle: "to_be_selected",
+        specimenStyle: null,
         hasPatina: false,
         mountingType: "none",
         internationalShipping: false,
@@ -142,7 +142,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
     mutationFn: async (data: CheckoutForm & { promoCode: string }) => {
       return await apiRequest("POST", "/api/promo-code/redeem", {
         code: data.promoCode,
-        specimenStyle: "to_be_selected",
+        specimenStyle: null,
         deliveryName: data.fullName,
         deliveryPhone: data.phone,
         deliveryAddress: data.address,

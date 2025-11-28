@@ -1,10 +1,9 @@
 import { QueryClient, QueryFunction } from "@tanstack/react-query";
 import { supabase } from "@/lib/supabase";
 
-// FORCE RELATIVE PATH: Use empty string.
-// This ensures requests go to the same domain (Netlify),
-// which then uses _redirects to proxy to Railway.
-const API_BASE_URL = ""; 
+// Use direct API URL to Railway for authenticated requests
+// Netlify proxy strips Authorization headers, so we must call Railway directly
+const API_BASE_URL = import.meta.env.VITE_API_URL || "";
 
 // Helper to get auth headers from Supabase session
 async function getAuthHeaders(): Promise<HeadersInit> {
