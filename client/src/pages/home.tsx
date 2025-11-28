@@ -60,8 +60,8 @@ export default function HomePage() {
           <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
             
             {/* Kicker - bold with background */}
-            <div className="hero-text-reveal hero-text-reveal-delay-1 mb-6">
-              <span className="inline-block text-sm tracking-[0.3em] text-white/90 uppercase font-medium px-4 py-2 rounded-full border border-bronze/50 bg-bronze/10 backdrop-blur-sm">
+            <div className="hero-text-reveal hero-text-reveal-delay-1 mb-8">
+              <span className="inline-block text-base md:text-lg tracking-[0.3em] text-white/95 uppercase font-bold px-6 py-3 rounded-full border border-bronze/70 bg-bronze/20 backdrop-blur-md">
                 Founding 100 Investment Launch
               </span>
             </div>
@@ -79,14 +79,14 @@ export default function HomePage() {
             {/* Dual CTA - Reserve OR Buy Now */}
             <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-4 mb-4">
               <Link href="#seats">
-                <Button size="lg" className="btn-bronze text-base px-8 py-6 min-h-14 gap-2" data-testid="button-reserve-seat">
+                <Button size="lg" className="btn-bronze text-base px-8 py-6 min-h-14 gap-2 font-bold" data-testid="button-reserve-seat">
                   <Clock className="w-4 h-4" />
-                  Reserve for 24 Hours
+                  RESERVE
                 </Button>
               </Link>
               <Link href="#seats">
-                <Button size="lg" variant="outline" className="text-base px-8 py-6 min-h-14 gap-2 border-white/30 text-white/90 backdrop-blur-sm" data-testid="button-buy-now">
-                  Buy Now
+                <Button size="lg" variant="outline" className="text-base px-8 py-6 min-h-14 gap-2 border-white/30 text-white/90 backdrop-blur-sm font-bold" data-testid="button-buy-now">
+                  BUY NOW
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>

@@ -282,7 +282,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                           <FormItem>
                             <FormLabel className="text-sm font-normal text-muted-foreground">Full Name</FormLabel>
                             <FormControl>
-                              <Input {...field} placeholder="David Junor" data-testid="input-full-name" className="border-border/50" />
+                              <Input {...field} placeholder="Your Full Name" data-testid="input-full-name" className="border-border/50" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
