@@ -261,7 +261,7 @@ export default function HomePage() {
             </div>
 
             {/* The Bronze - Star of the show */}
-            <div className="text-center mb-16 p-8 border border-bronze/30 rounded-lg bg-gradient-to-b from-bronze/5 to-transparent">
+            <div className="text-center mb-16 p-8">
               <Award className="w-12 h-12 text-bronze mx-auto mb-4" />
               <h3 className="font-serif text-2xl md:text-3xl mb-3">Your Bronze Sculpture</h3>
               <p className="text-muted-foreground font-light max-w-2xl mx-auto mb-4">
@@ -321,7 +321,7 @@ export default function HomePage() {
             <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
               
               {/* Founder Seat */}
-              <div className="relative border border-bronze/40 rounded-lg p-6 md:p-8 bg-gradient-to-b from-bronze/5 to-transparent">
+              <div className="relative p-6 md:p-8">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-serif text-2xl text-bronze">Founder</h3>
                   <span className="text-xs text-bronze bg-bronze/10 px-2 py-1 rounded-full">
@@ -364,7 +364,7 @@ export default function HomePage() {
               </div>
 
               {/* Patron Seat */}
-              <div className="relative border border-accent-gold/40 rounded-lg p-6 md:p-8 bg-gradient-to-b from-accent-gold/5 to-transparent">
+              <div className="relative p-6 md:p-8">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="font-serif text-2xl text-accent-gold">Patron</h3>
                   <span className="text-xs text-accent-gold bg-accent-gold/10 px-2 py-1 rounded-full">
@@ -433,7 +433,7 @@ export default function HomePage() {
             </div>
 
             <div className="space-y-8">
-              <div className="p-6 md:p-8 border border-accent-gold/30 rounded-lg bg-gradient-to-r from-accent-gold/5 to-transparent">
+              <div className="p-6 md:p-8">
                 <h3 className="font-serif text-xl md:text-2xl text-accent-gold mb-4">2-Day Bronze Casting Intensive</h3>
                 <div className="grid md:grid-cols-2 gap-6 text-muted-foreground font-light">
                   <div>
