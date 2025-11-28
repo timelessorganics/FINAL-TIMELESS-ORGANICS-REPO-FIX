@@ -1309,6 +1309,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
         tags,
       }).catch((err) => console.error("[Mailchimp] Failed to sync reservation:", err));
       
+      // Send confirmation email to the person who reserved (CC studio)
+      const seatTypeDisplay = seatType === 'founder' ? 'Founder' : 'Patron';
+      const reservationTypeDisplay = reservationType === 'deposit' ? 'Deposit' : '24-Hour Hold';
+      const emailSubject = `Timeless Organics: Your ${seatTypeDisplay} Seat ${reservationTypeDisplay} Confirmed`;
+      const emailBody = `Dear ${name},
+
+Thank you for your interest in Timeless Organics' Founding 100 investment program.
+
+Your ${reservationTypeDisplay} reservation has been confirmed:
+- Seat Type: ${seatTypeDisplay}
+- Reservation Type: ${reservationTypeDisplay}
+- Reserved on: ${new Date().toLocaleDateString()}
+
+${reservationType === 'deposit' 
+  ? `We're processing your deposit. You'll receive a payment link shortly.` 
+  : `Your 24-hour hold will be activated on launch day, allowing you priority access to secure your seat.`}
+
+If you have any questions, please don't hesitate to reach out.
+
+Best regards,
+Timeless Organics Studio
+`;
+
+      sendPurchaseConfirmationEmail(
+        subscriber.email,
+        name,
+        emailSubject,
+        emailBody
+      ).catch((err) => console.error("[Email] Failed to send reservation confirmation:", err));
+      
       // For deposits, we would redirect to PayFast
       // For now, just confirm the reservation
       if (reservationType === 'deposit') {
