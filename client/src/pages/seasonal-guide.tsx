@@ -359,6 +359,8 @@ export default function SeasonalGuide() {
         </section>
       </div>
     </div>
+    <Footer />
+    </>
   );
 }
 
