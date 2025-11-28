@@ -240,16 +240,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       // Clean up expired reservations before returning availability
       // This ensures seats are released back to pool after 24 hours
-      const expiredCount = await storage.expireOldReservations();
-      if (expiredCount > 0) {
-        console.log(`[Reservations] Expired ${expiredCount} old reservations, seats returned to pool`);
+      // Wrapped in try-catch to gracefully handle missing reservations table
+      let founderReservations = 0;
+      let patronReservations = 0;
+      
+      try {
+        const expiredCount = await storage.expireOldReservations();
+        if (expiredCount > 0) {
+          console.log(`[Reservations] Expired ${expiredCount} old reservations, seats returned to pool`);
+        }
+        
+        // Get active reservation counts to adjust available seats
+        founderReservations = await storage.getActiveReservationsCount("founder");
+        patronReservations = await storage.getActiveReservationsCount("patron");
+      } catch (reservationError: any) {
+        // Reservations table may not exist - continue without reservation counts
+        console.log(`[Reservations] Table not available, skipping reservation adjustments`);
       }
       
       const seats = await storage.getSeats();
-      
-      // Get active reservation counts to adjust available seats
-      const founderReservations = await storage.getActiveReservationsCount("founder");
-      const patronReservations = await storage.getActiveReservationsCount("patron");
       
       // Adjust available counts by subtracting active reservations
       const adjustedSeats = seats.map(seat => {

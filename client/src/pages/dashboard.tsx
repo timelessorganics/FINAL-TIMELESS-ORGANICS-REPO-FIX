@@ -10,6 +10,18 @@ import { Download, ExternalLink, User as UserIcon, Sparkles, CalendarDays, Uploa
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
+const SPECIMEN_OPTIONS = [
+  { value: "cones_bracts_seedpods", label: "Cones, Bracts & Seed Pods" },
+  { value: "protea_pincushion_blooms_heads", label: "Protea & Pincushion Blooms" },
+  { value: "bulb_spikes", label: "Bulb Spikes" },
+  { value: "branches_leaves", label: "Branches & Leaves" },
+  { value: "aloe_inflorescence_heads", label: "Aloe Inflorescence" },
+  { value: "flower_heads", label: "Flower Heads" },
+  { value: "erica_sprays", label: "Erica Sprays" },
+  { value: "restios_seedheads_grasses", label: "Restios & Grasses" },
+  { value: "small_succulents", label: "Small Succulents" },
+];
+
 const PATINA_OPTIONS = [
   { value: "natural", label: "Natural Bronze", description: "Classic golden-brown that develops over time" },
   { value: "antique_copper", label: "Antique Copper", description: "Warm reddish-brown patina" },
@@ -26,12 +38,14 @@ const MOUNTING_OPTIONS = [
 
 function CustomizeExtras({ purchase }: { purchase: Purchase & { codes: Code[] } }) {
   const { toast } = useToast();
+  const [selectedSpecimen, setSelectedSpecimen] = useState(purchase.specimenStyle || "");
   const [selectedPatina, setSelectedPatina] = useState(purchase.hasPatina ? "natural" : "none");
   const [selectedMounting, setSelectedMounting] = useState(purchase.mountingType || "none");
   const [hasChanges, setHasChanges] = useState(false);
+  const [editingSpecimen, setEditingSpecimen] = useState(false);
 
   const updateMutation = useMutation({
-    mutationFn: async (updates: { mountingType?: string; hasPatina?: boolean }) => {
+    mutationFn: async (updates: { specimenStyle?: string; mountingType?: string; hasPatina?: boolean }) => {
       return apiRequest("PATCH", `/api/purchase/${purchase.id}/preferences`, updates);
     },
     onSuccess: () => {
@@ -41,6 +55,7 @@ function CustomizeExtras({ purchase }: { purchase: Purchase & { codes: Code[] } 
         description: "Your customization choices have been saved.",
       });
       setHasChanges(false);
+      setEditingSpecimen(false);
     },
     onError: (error: Error) => {
       toast({
@@ -53,9 +68,15 @@ function CustomizeExtras({ purchase }: { purchase: Purchase & { codes: Code[] } 
 
   const handleSave = () => {
     updateMutation.mutate({
+      specimenStyle: selectedSpecimen,
       mountingType: selectedMounting,
       hasPatina: selectedPatina !== "none",
     });
+  };
+
+  const handleSpecimenChange = (value: string) => {
+    setSelectedSpecimen(value);
+    setHasChanges(true);
   };
 
   const handlePatinaChange = (value: string) => {
@@ -93,6 +114,53 @@ function CustomizeExtras({ purchase }: { purchase: Purchase & { codes: Code[] } 
       </div>
       
       <div className="space-y-4">
+        {/* Specimen Style Selection */}
+        <div className="p-3 rounded bg-background border border-border/50">
+          <div className="flex items-center justify-between mb-2">
+            <div className="font-medium text-sm text-foreground flex items-center gap-2">
+              <Leaf className="w-4 h-4 text-patina" />
+              Specimen Style
+            </div>
+            {!editingSpecimen && selectedSpecimen && (
+              <button
+                onClick={() => setEditingSpecimen(true)}
+                className="text-xs text-bronze hover:text-bronze/80 flex items-center gap-1"
+                data-testid="btn-change-specimen"
+              >
+                <Edit2 className="w-3 h-3" />
+                Change
+              </button>
+            )}
+          </div>
+          {!editingSpecimen && selectedSpecimen ? (
+            <div className="text-sm text-foreground">
+              {SPECIMEN_OPTIONS.find(s => s.value === selectedSpecimen)?.label || selectedSpecimen}
+            </div>
+          ) : (
+            <>
+              <p className="text-xs text-muted-foreground mb-3">
+                Choose your preferred botanical style for David to select
+              </p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {SPECIMEN_OPTIONS.map((option) => (
+                  <button
+                    key={option.value}
+                    onClick={() => handleSpecimenChange(option.value)}
+                    className={`text-xs p-2 rounded border transition-all text-left ${
+                      selectedSpecimen === option.value
+                        ? "border-patina bg-patina/10 text-foreground"
+                        : "border-border/50 hover:border-patina/50 text-muted-foreground hover:text-foreground"
+                    }`}
+                    data-testid={`btn-specimen-${option.value}`}
+                  >
+                    {option.label}
+                  </button>
+                ))}
+              </div>
+            </>
+          )}
+        </div>
+
         {/* Patina Finish */}
         <div className="p-3 rounded bg-background border border-border/50">
           <div className="font-medium text-sm text-foreground mb-2">Patina Finish</div>
@@ -261,26 +329,7 @@ export default function Dashboard() {
                   {/* Purchase Choice & Production Status */}
                   {purchase.status === 'completed' && (
                     <div className="mb-6 space-y-4">
-                      {/* Specimen Selection */}
-                      <div className="p-4 bg-background/50 rounded-lg border border-border">
-                        <div className="flex items-center gap-3 mb-3">
-                          <Leaf className="w-5 h-5 text-bronze" />
-                          <h3 className="font-semibold text-foreground">Your Specimen Selection</h3>
-                        </div>
-                        
-                        {purchase.specimenStyle && (
-                          <>
-                            <div className="text-sm text-muted-foreground mb-2">
-                              <span className="font-medium text-foreground">Chosen Style:</span> {purchase.specimenStyle.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
-                            </div>
-                            <p className="text-xs text-muted-foreground">
-                              David will personally select the finest specimen of your chosen style from the current or upcoming seasonal harvest.
-                            </p>
-                          </>
-                        )}
-                      </div>
-
-                      {/* Customize Extras Section */}
+                      {/* Customize Extras Section (includes specimen, patina, mounting) */}
                       <CustomizeExtras purchase={purchase} />
 
                       {/* Production Status Tracker */}
