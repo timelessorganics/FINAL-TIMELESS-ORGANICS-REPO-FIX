@@ -65,6 +65,13 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
 
   const initiatePurchase = useMutation({
     mutationFn: async (data: CheckoutForm) => {
+      // Validate gift fields if enabled
+      if (data.isGift) {
+        if (!data.giftRecipientEmail || !data.giftRecipientName) {
+          throw new Error("Recipient name and email are required for gifts");
+        }
+      }
+      
       const response = await apiRequest("POST", "/api/purchase/initiate", {
         seatType,
         purchaseMode,

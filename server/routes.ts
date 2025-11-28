@@ -73,6 +73,22 @@ async function handlePurchaseCompletion(purchaseId: string): Promise<void> {
     }
 
     // Check if this is a gift that needs notification
+    if (purchase.isGift && purchase.giftRecipientEmail && purchase.giftRecipientName) {
+      const buyer = await storage.getUser(purchase.userId);
+      const buyerName = buyer?.firstName ? buyer.firstName : "A Friend";
+      
+      await sendGiftNotificationEmail(
+        purchase.giftRecipientEmail,
+        purchase.giftRecipientName,
+        buyerName,
+        purchase.seatType,
+        purchase.giftMessage || "",
+        purchaseId
+      );
+      console.log(`[Gift] Notification sent to ${purchase.giftRecipientEmail}`);
+    }
+
+    // PLACEHOLDER - for next iteration: Check if this is a gift that needs notification
     if (
       !purchase.isGift ||
       !purchase.giftRecipientEmail ||
