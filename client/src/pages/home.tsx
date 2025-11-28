@@ -72,8 +72,8 @@ export default function HomePage() {
             </h1>
             
             {/* Tagline - the hook */}
-            <p className="hero-text-reveal hero-text-reveal-delay-3 text-xl md:text-2xl text-white/90 font-light max-w-2xl mx-auto mb-10 leading-relaxed">
-              <span className="text-patina font-medium">One-Of-A-Kind</span> Castings From Organic Matter
+            <p className="hero-text-reveal hero-text-reveal-delay-3 text-lg md:text-3xl text-white font-semibold max-w-2xl mx-auto mb-10 leading-relaxed tracking-wide">
+              <span className="text-patina">One-Of-A-Kind</span> Castings From Organic Matter
             </p>
 
             {/* Dual CTA - Reserve OR Buy Now */}
