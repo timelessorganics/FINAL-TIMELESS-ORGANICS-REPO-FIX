@@ -117,10 +117,38 @@ export async function generatePaymentIdentifier(
 
   } catch (error: any) {
     console.error('[PayFast Onsite] Error generating payment identifier:', error.message);
+    
+    // Enhanced error logging to capture the actual PayFast error response
+    let errorDetail = error.message;
     if (error.response) {
       console.error('[PayFast Onsite] Response status:', error.response.status);
-      console.error('[PayFast Onsite] Response data:', error.response.data);
+      console.error('[PayFast Onsite] Response headers:', JSON.stringify(error.response.headers));
+      console.error('[PayFast Onsite] Response data:', JSON.stringify(error.response.data));
+      
+      // Extract actual PayFast error message from response
+      const pfError = error.response.data;
+      if (typeof pfError === 'string') {
+        errorDetail = `PayFast error (${error.response.status}): ${pfError}`;
+      } else if (pfError && typeof pfError === 'object') {
+        errorDetail = `PayFast error (${error.response.status}): ${JSON.stringify(pfError)}`;
+      } else {
+        errorDetail = `PayFast rejected request with status ${error.response.status}`;
+      }
+      
+      // Common 400 error causes
+      if (error.response.status === 400) {
+        console.error('[PayFast Onsite] 400 Error - Common causes:');
+        console.error('  1. Passphrase mismatch (check PAYFAST_PASSPHRASE matches PayFast dashboard EXACTLY)');
+        console.error('  2. Invalid merchant credentials (PAYFAST_MERCHANT_ID, PAYFAST_MERCHANT_KEY)');
+        console.error('  3. Signature calculation error');
+        console.error('  4. Invalid return_url, cancel_url, or notify_url');
+      }
     }
-    throw new Error('Failed to generate PayFast payment identifier: ' + error.message);
+    
+    if (error.request) {
+      console.error('[PayFast Onsite] Request was made but no response received');
+    }
+    
+    throw new Error('Failed to generate PayFast payment identifier: ' + errorDetail);
   }
 }

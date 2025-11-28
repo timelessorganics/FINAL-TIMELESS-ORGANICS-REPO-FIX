@@ -20,11 +20,26 @@ function getEmailConfig(): EmailConfig | null {
   const user = process.env.SMTP_USER;
   const pass = process.env.SMTP_PASS;
 
+  console.log('[Email] Checking configuration...');
+  console.log('[Email] SMTP_HOST:', host ? `${host.substring(0, 10)}...` : 'NOT SET');
+  console.log('[Email] SMTP_PORT:', port || 'NOT SET');
+  console.log('[Email] SMTP_USER:', user ? `${user.substring(0, 5)}...` : 'NOT SET');
+  console.log('[Email] SMTP_PASS:', pass ? '***SET***' : 'NOT SET');
+
   if (!host || !port || !user || !pass) {
-    console.warn("Email configuration not complete. Emails will not be sent.");
+    console.error("[Email] CRITICAL: Email configuration not complete!");
+    console.error("[Email] Missing:", 
+      (!host ? 'SMTP_HOST ' : '') + 
+      (!port ? 'SMTP_PORT ' : '') + 
+      (!user ? 'SMTP_USER ' : '') + 
+      (!pass ? 'SMTP_PASS' : '')
+    );
+    console.error("[Email] Emails will NOT be sent until these are configured.");
     return null;
   }
 
+  console.log('[Email] Configuration complete - emails will be sent');
+  
   return {
     host,
     port: parseInt(port),
