@@ -317,108 +317,159 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Seat Cards - Mobile-optimized */}
-            <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            {/* Seat Cards - Luxe Premium Design */}
+            <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               
               {/* Founder Seat */}
-              <div className="relative border border-bronze/40 rounded-lg p-6 md:p-8 bg-gradient-to-b from-bronze/5 to-transparent">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-serif text-2xl text-bronze">Founder</h3>
-                  <span className="text-xs text-bronze bg-bronze/20 px-3 py-1 rounded-full font-semibold">
-                    Best Value
-                  </span>
-                </div>
-                <div className="text-4xl font-light mb-2">
-                  R{((founderSeats?.price || 300000) / 100).toLocaleString()}
-                </div>
-                <p className="text-xs text-bronze/60 mb-4">{founderSeats?.remaining || 50} seats available</p>
-                <ul className="space-y-2 mb-6 text-sm text-muted-foreground">
-                  <li className="flex items-center gap-2">
-                    <span className="w-1 h-1 bg-bronze rounded-full" />
-                    Guaranteed bronze casting
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1 h-1 bg-bronze rounded-full" />
-                    50% off one workshop
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1 h-1 bg-bronze rounded-full" />
-                    20% lifetime discount
-                  </li>
-                </ul>
-                <div className="mb-4 p-3 rounded-lg bg-background/50 border border-border/50">
-                  <label className="text-xs text-muted-foreground font-medium mb-2 block">How many seats?</label>
-                  <select 
-                    className="w-full px-3 py-2 rounded-md border border-border/50 bg-background text-foreground text-sm font-medium"
-                    defaultValue="1"
-                    data-testid="select-quantity-founder"
-                  >
-                    {[1,2,3,4,5,6,7,8,9,10].map(n => <option key={n} value={n}>{n} {n === 1 ? 'seat' : 'seats'}</option>)}
-                    <option value="11+">10+</option>
-                  </select>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <Link href="/checkout/founder" className="w-full">
-                    <Button className="w-full btn-bronze min-h-12 text-base" data-testid="button-checkout-founder">
-                      Reserve
-                    </Button>
-                  </Link>
-                  <Link href="/checkout/founder" className="w-full">
-                    <Button className="w-full btn-bronze min-h-12 text-base" data-testid="button-buy-founder">
-                      Buy Now
-                    </Button>
-                  </Link>
+              <div className="group relative rounded-xl overflow-hidden border border-bronze/50 bg-gradient-to-br from-bronze/15 via-background to-background shadow-lg hover-elevate transition-all duration-300">
+                {/* Accent glow */}
+                <div className="absolute -top-40 -right-40 w-80 h-80 bg-bronze/10 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                <div className="relative p-8 md:p-10">
+                  {/* Badge */}
+                  <div className="inline-flex items-center gap-2 mb-6">
+                    <div className="w-1.5 h-1.5 bg-bronze rounded-full" />
+                    <span className="text-xs font-semibold text-bronze uppercase tracking-wider">Best Value</span>
+                  </div>
+
+                  {/* Title & Price */}
+                  <h3 className="font-serif text-3xl md:text-4xl text-bronze mb-1">Founder</h3>
+                  <div className="h-1 w-12 bg-gradient-to-r from-bronze to-bronze/30 mb-6 rounded-full" />
+                  
+                  <div className="mb-8">
+                    <div className="text-5xl font-light text-bronze">R{((founderSeats?.price || 300000) / 100).toLocaleString()}</div>
+                    <p className="text-xs text-bronze/50 mt-2 font-light">
+                      {founderSeats?.remaining || 50} of 50 seats remaining
+                    </p>
+                  </div>
+
+                  {/* Benefits */}
+                  <ul className="space-y-3 mb-8">
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="w-1 h-1 bg-bronze rounded-full mt-2 flex-shrink-0" />
+                      <span className="text-foreground font-light">One-of-a-kind bronze casting from real specimen</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="w-1 h-1 bg-bronze rounded-full mt-2 flex-shrink-0" />
+                      <span className="text-foreground font-light">50% off future 2-day workshop</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="w-1 h-1 bg-bronze rounded-full mt-2 flex-shrink-0" />
+                      <span className="text-foreground font-light">20% lifetime discount on all future works</span>
+                    </li>
+                  </ul>
+
+                  {/* Quantity Selector */}
+                  <div className="mb-6">
+                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Quantity</label>
+                    <select 
+                      className="w-full px-4 py-3 rounded-lg border border-bronze/30 bg-background/80 text-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-bronze/50"
+                      defaultValue="1"
+                      data-testid="select-quantity-founder"
+                    >
+                      {[1,2,3,4,5,6,7,8,9,10].map(n => <option key={n} value={n}>{n} {n === 1 ? 'seat' : 'seats'}</option>)}
+                      <option value="11+">10+</option>
+                    </select>
+                  </div>
+
+                  {/* Buttons */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <Link href="/checkout/founder" className="w-full">
+                      <Button 
+                        variant="outline" 
+                        className="w-full min-h-11 text-sm font-medium border-bronze/50 text-bronze hover:bg-bronze/5" 
+                        data-testid="button-checkout-founder"
+                      >
+                        Reserve 24h
+                      </Button>
+                    </Link>
+                    <Link href="/checkout/founder" className="w-full">
+                      <Button 
+                        className="w-full min-h-11 text-sm font-medium btn-bronze"
+                        data-testid="button-buy-founder"
+                      >
+                        Buy Now
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
 
-              {/* Patron Seat */}
-              <div className="relative border border-accent-gold/40 rounded-lg p-6 md:p-8 bg-gradient-to-b from-accent-gold/5 to-transparent">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="font-serif text-2xl text-accent-gold">Patron</h3>
-                  <span className="text-xs text-accent-gold bg-accent-gold/20 px-3 py-1 rounded-full font-semibold">
-                    Premium
-                  </span>
-                </div>
-                <div className="text-4xl font-light mb-2">
-                  R{((patronSeats?.price || 500000) / 100).toLocaleString()}
-                </div>
-                <p className="text-xs text-accent-gold/60 mb-4">{patronSeats?.remaining || 50} seats available</p>
-                <ul className="space-y-2 mb-6 text-sm text-muted-foreground">
-                  <li className="flex items-center gap-2">
-                    <span className="w-1 h-1 bg-accent-gold rounded-full" />
-                    Guaranteed bronze casting
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1 h-1 bg-accent-gold rounded-full" />
-                    80% off one workshop
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <span className="w-1 h-1 bg-accent-gold rounded-full" />
-                    30% lifetime discount
-                  </li>
-                </ul>
-                <div className="mb-4 p-3 rounded-lg bg-background/50 border border-border/50">
-                  <label className="text-xs text-muted-foreground font-medium mb-2 block">How many seats?</label>
-                  <select 
-                    className="w-full px-3 py-2 rounded-md border border-border/50 bg-background text-foreground text-sm font-medium"
-                    defaultValue="1"
-                    data-testid="select-quantity-patron"
-                  >
-                    {[1,2,3,4,5,6,7,8,9,10].map(n => <option key={n} value={n}>{n} {n === 1 ? 'seat' : 'seats'}</option>)}
-                    <option value="11+">10+</option>
-                  </select>
-                </div>
-                <div className="grid grid-cols-2 gap-2">
-                  <Link href="/checkout/patron" className="w-full">
-                    <Button className="w-full btn-bronze min-h-12 text-base" data-testid="button-checkout-patron">
-                      Reserve
-                    </Button>
-                  </Link>
-                  <Link href="/checkout/patron" className="w-full">
-                    <Button className="w-full btn-bronze min-h-12 text-base" data-testid="button-buy-patron">
-                      Buy Now
-                    </Button>
-                  </Link>
+              {/* Patron Seat - PREMIUM */}
+              <div className="group relative rounded-xl overflow-hidden border border-accent-gold/60 bg-gradient-to-br from-accent-gold/20 via-background to-background shadow-xl hover-elevate transition-all duration-300 md:scale-105 md:origin-center">
+                {/* Accent glow - more prominent */}
+                <div className="absolute -top-40 -right-40 w-80 h-80 bg-accent-gold/15 rounded-full blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                
+                {/* Premium indicator */}
+                <div className="absolute top-0 left-0 right-0 h-0.5 bg-gradient-to-r from-transparent via-accent-gold/50 to-transparent" />
+                
+                <div className="relative p-8 md:p-10">
+                  {/* Badge */}
+                  <div className="inline-flex items-center gap-2 mb-6">
+                    <div className="w-1.5 h-1.5 bg-accent-gold rounded-full" />
+                    <span className="text-xs font-semibold text-accent-gold uppercase tracking-wider">Premium Choice</span>
+                  </div>
+
+                  {/* Title & Price */}
+                  <h3 className="font-serif text-3xl md:text-4xl text-accent-gold mb-1">Patron</h3>
+                  <div className="h-1 w-12 bg-gradient-to-r from-accent-gold to-accent-gold/30 mb-6 rounded-full" />
+                  
+                  <div className="mb-8">
+                    <div className="text-5xl font-light text-accent-gold">R{((patronSeats?.price || 500000) / 100).toLocaleString()}</div>
+                    <p className="text-xs text-accent-gold/50 mt-2 font-light">
+                      {patronSeats?.remaining || 50} of 50 seats remaining
+                    </p>
+                  </div>
+
+                  {/* Benefits */}
+                  <ul className="space-y-3 mb-8">
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="w-1 h-1 bg-accent-gold rounded-full mt-2 flex-shrink-0" />
+                      <span className="text-foreground font-light">One-of-a-kind bronze casting from real specimen</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="w-1 h-1 bg-accent-gold rounded-full mt-2 flex-shrink-0" />
+                      <span className="text-foreground font-light">80% off future 2-day workshop (almost free)</span>
+                    </li>
+                    <li className="flex items-start gap-3 text-sm">
+                      <span className="w-1 h-1 bg-accent-gold rounded-full mt-2 flex-shrink-0" />
+                      <span className="text-foreground font-light">30% lifetime discount on all future works</span>
+                    </li>
+                  </ul>
+
+                  {/* Quantity Selector */}
+                  <div className="mb-6">
+                    <label className="text-xs font-semibold text-muted-foreground uppercase tracking-wider mb-2 block">Quantity</label>
+                    <select 
+                      className="w-full px-4 py-3 rounded-lg border border-accent-gold/40 bg-background/80 text-foreground text-sm font-medium focus:outline-none focus:ring-2 focus:ring-accent-gold/50"
+                      defaultValue="1"
+                      data-testid="select-quantity-patron"
+                    >
+                      {[1,2,3,4,5,6,7,8,9,10].map(n => <option key={n} value={n}>{n} {n === 1 ? 'seat' : 'seats'}</option>)}
+                      <option value="11+">10+</option>
+                    </select>
+                  </div>
+
+                  {/* Buttons */}
+                  <div className="grid grid-cols-2 gap-3">
+                    <Link href="/checkout/patron" className="w-full">
+                      <Button 
+                        variant="outline" 
+                        className="w-full min-h-11 text-sm font-medium border-accent-gold/50 text-accent-gold hover:bg-accent-gold/5" 
+                        data-testid="button-checkout-patron"
+                      >
+                        Reserve 24h
+                      </Button>
+                    </Link>
+                    <Link href="/checkout/patron" className="w-full">
+                      <Button 
+                        className="w-full min-h-11 text-sm font-medium bg-accent-gold text-background hover:bg-accent-gold/90"
+                        data-testid="button-buy-patron"
+                      >
+                        Buy Now
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>
