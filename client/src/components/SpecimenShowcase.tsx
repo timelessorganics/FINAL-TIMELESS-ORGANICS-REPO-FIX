@@ -1,191 +1,195 @@
+import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Calendar } from "lucide-react";
-import pincushion1 from "../assets/specimens/pincushion-1.jpg";
-import pincushion2 from "../assets/specimens/pincushion-2.jpg";
-import pincushion3 from "../assets/specimens/pincushion-3.jpg";
-import pincushion4 from "../assets/specimens/pincushion-4.jpg";
-import pincushion5 from "../assets/specimens/pincushion-5.jpg";
-import pincushion6 from "../assets/specimens/pincushion-6.jpg";
-import proteaHead1 from "../assets/specimens/protea-head-1.jpg";
-import proteaHead2 from "../assets/specimens/protea-head-2.jpg";
-import proteaHead3 from "../assets/specimens/protea-head-3.jpg";
-import proteaHead4 from "../assets/specimens/protea-head-4.jpg";
-import proteaHead5 from "../assets/specimens/protea-head-5.jpg";
-import proteaHead6 from "../assets/specimens/protea-head-6.jpg";
-import coneBracts1 from "../assets/specimens/cone-bracts-1.jpg";
-import coneBracts2 from "../assets/specimens/cone-bracts-2.jpg";
-import coneBracts3 from "../assets/specimens/cone-bracts-3.jpg";
-import coneBracts4 from "../assets/specimens/cone-bracts-4.jpg";
-import coneBracts5 from "../assets/specimens/cone-bracts-5.jpg";
-import coneBracts6 from "../assets/specimens/cone-bracts-6.jpg";
-import aloe1 from "../assets/specimens/aloe-1.jpg";
-import aloe2 from "../assets/specimens/aloe-2.jpg";
-import aloe3 from "../assets/specimens/aloe-3.jpg";
-import aloe4 from "../assets/specimens/aloe-4.jpg";
-import aloe5 from "../assets/specimens/aloe-5.jpg";
-import erica1 from "../assets/specimens/erica-1.jpg";
-import erica2 from "../assets/specimens/erica-2.jpg";
-import restio1 from "../assets/specimens/restio-1.jpg";
-import restio2 from "../assets/specimens/restio-2.jpg";
-import restio3 from "../assets/specimens/restio-3.jpg";
-import bulbSpike1 from "../assets/specimens/bulb-spike-1.jpg";
-import bulbSpike2 from "../assets/specimens/bulb-spike-2.jpg";
-import bulbSpike3 from "../assets/specimens/bulb-spike-3.jpg";
-import bulbSpike4 from "../assets/specimens/bulb-spike-4.jpg";
-import bulbSpike5 from "../assets/specimens/bulb-spike-5.jpg";
-import pelargonium1 from "../assets/specimens/pelargonium-1.jpg";
-import pelargonium2 from "../assets/specimens/pelargonium-2.jpg";
-import woodyBranch1 from "../assets/specimens/woody-branch-1.jpg";
-import woodyBranch2 from "../assets/specimens/woody-branch-2.jpg";
-import woodyBranch3 from "../assets/specimens/woody-branch-3.jpg";
-import woodyBranch4 from "../assets/specimens/woody-branch-4.jpg";
-import coneSeed1 from "../assets/specimens/cone-seed-1.jpg";
-import coneSeed2 from "../assets/specimens/cone-seed-2.jpg";
-import coneSeed3 from "../assets/specimens/cone-seed-3.jpg";
-import succulent1 from "../assets/specimens/succulent-1.jpg";
-import succulent2 from "../assets/specimens/succulent-2.jpg";
-import succulent3 from "../assets/specimens/succulent-3.jpg";
-import succulent4 from "../assets/specimens/succulent-4.jpg";
-import succulent5 from "../assets/specimens/succulent-5.jpg";
-import miniatureMix1 from "../assets/specimens/miniature-mix-1.jpg";
+
+// Plant images (real specimens)
+import proteaPlant1 from "@assets/2d64bb2fe63096b1f16475d4cf59a842_result_1764290952462.jpg";
+import proteaPlant2 from "@assets/Carnival-Red-copy_result_1764291106963.jpg";
+import proteaPlant3 from "@assets/Comparison-of-Leucospermum-gracile-and-prostratum-8-1_result_1764291106964.jpg";
+
+// Bronze versions (cast specimens)
+import proteaBronze1 from "@assets/Gemini_Generated_Image_dx6keedx6keedx6k_result_1764291106964.webp";
+import proteaBronze2 from "@assets/Gemini_Generated_Image_qhu6lzqhu6lzqhu6_result_1764291106964.webp";
+import proteaBronze3 from "@assets/Gemini_Generated_Image_ie60w2ie60w2ie60_result_1764291291740.webp";
+
+interface SpecimenImage {
+  plant: string;
+  bronze: string;
+}
 
 interface SpecimenType {
   name: string;
   season: string;
   description: string;
-  images?: string[];
+  images: SpecimenImage[];
 }
 
 const specimenTypes: SpecimenType[] = [
   {
-    name: "Protea Head",
+    name: "Protea / Pincushion Blooms / Heads",
     season: "Winter-Spring",
-    description: "Single flower head (Sunguineum types). Peak June-October.",
-    images: [proteaHead1, proteaHead2, proteaHead3, proteaHead4, proteaHead5, proteaHead6],
+    description: "Single flower head (Sunguineum types) & Leucospermum flowers. Peak June-December.",
+    images: [
+      { plant: proteaPlant1, bronze: proteaBronze1 },
+      { plant: proteaPlant2, bronze: proteaBronze2 },
+      { plant: proteaPlant3, bronze: proteaBronze3 },
+    ],
   },
   {
-    name: "Pincushion Bloom",
-    season: "Late Winter-Spring",
-    description: "Leucospermum flower. Peak July-December.",
-    images: [pincushion1, pincushion2, pincushion3, pincushion4, pincushion5, pincushion6],
-  },
-  {
-    name: "Cone + Bracts",
+    name: "Cones / Bracts / Seedpods",
     season: "Autumn-Spring",
     description: "Leucadendron cone with coloured bracts. April/May-November.",
-    images: [coneBracts1, coneBracts2, coneBracts3, coneBracts4, coneBracts5, coneBracts6],
+    images: [],
   },
   {
-    name: "Aloe Inflorescence",
-    season: "Winter",
-    description: "Segment of flower spike. Peak May-August.",
-    images: [aloe1, aloe2, aloe3, aloe4, aloe5],
-  },
-  {
-    name: "Erica Spray",
-    season: "Winter-Spring",
-    description: "Fine heather-like cluster. Year-round diversity, many winter-spring.",
-    images: [erica1, erica2],
-  },
-  {
-    name: "Restio Seedheads",
-    season: "Autumn-Winter",
-    description: "Architectural reed panicles. Textural interest year-round.",
-    images: [restio1, restio2, restio3],
-  },
-  {
-    name: "Bulb Spike",
+    name: "Bulb Spikes",
     season: "Spring-Early Summer",
     description: "Watsonia/Nivikia/Gladiolus section. Peak August-December.",
-    images: [bulbSpike1, bulbSpike2, bulbSpike3, bulbSpike4, bulbSpike5],
+    images: [],
   },
   {
-    name: "Pelargonium Leaf/Flower",
-    season: "Spring",
-    description: "Scented leaf cluster (sometimes with blooms). September-October.",
-    images: [pelargonium1, pelargonium2],
-  },
-  {
-    name: "Woody Branch + Leaves",
+    name: "Branches + Leaves",
     season: "Year-round",
     description: "Sculptural twig with foliage (non-sappy). Availability varies.",
-    images: [woodyBranch1, woodyBranch2, woodyBranch3, woodyBranch4],
+    images: [],
   },
   {
-    name: "Cone/Seed Pod",
-    season: "Autumn-Spring",
-    description: "Serruria/cone/seedpod composition. Woody structures.",
-    images: [coneSeed1, coneSeed2, coneSeed3],
+    name: "Aloe Inflorescence Heads",
+    season: "Winter",
+    description: "Segment of flower spike. Peak May-August.",
+    images: [],
   },
   {
-    name: "Succulent Rosette",
+    name: "Flower Heads",
+    season: "Late Winter-Spring",
+    description: "Fine heather-like cluster & general bloom forms.",
+    images: [],
+  },
+  {
+    name: "Erica Sprays",
+    season: "Winter-Spring",
+    description: "Fine heather-like cluster. Year-round diversity, many winter-spring.",
+    images: [],
+  },
+  {
+    name: "Restios / Seedheads / Grasses",
+    season: "Autumn-Winter",
+    description: "Architectural reed panicles. Textural interest year-round.",
+    images: [],
+  },
+  {
+    name: "Small Succulents",
     season: "Year-round",
-    description: "Compact echeveria/aloe rosette. Pre-drying needed.",
-    images: [succulent1, succulent2, succulent3, succulent4, succulent5],
-  },
-  {
-    name: "Miniature Mix",
-    season: "All Seasons",
-    description: "Small curated cluster (buds, pods, grasses). Studio-curated.",
-    images: [miniatureMix1],
+    description: "Compact echeveria/aloe rosette & miniature forms. Pre-drying needed.",
+    images: [],
   },
 ];
 
+// Hover image component with fade effect
+function HoverBronzeImage({ plant, bronze }: SpecimenImage) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <div
+      className="relative w-full aspect-[4/3] overflow-hidden rounded-lg border border-bronze/20 bg-card"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      data-testid="specimen-hover-image"
+    >
+      {/* Plant image (base layer) */}
+      <img
+        src={plant}
+        alt="Plant specimen"
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          isHovered ? "opacity-0" : "opacity-100"
+        }`}
+      />
+
+      {/* Bronze image (overlay, fades in on hover) */}
+      <img
+        src={bronze}
+        alt="Bronze casting"
+        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          isHovered ? "opacity-100" : "opacity-0"
+        }`}
+      />
+
+      {/* Gradient fade overlay (like hero) for text readability */}
+      {isHovered && (
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 pointer-events-none" />
+      )}
+
+      {/* Hover label - fades in with bronze */}
+      {isHovered && (
+        <div className="absolute bottom-3 left-3 right-3 text-white text-xs font-medium opacity-100 transition-opacity duration-1000">
+          Bronze Casting
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function SpecimenShowcase() {
   return (
-    <section className="space-y-6">
+    <section className="space-y-8">
       <div className="text-center space-y-2">
-        <h2 className="font-serif text-3xl font-bold">Specimen Styles</h2>
+        <h2 className="font-serif text-3xl font-bold">See the Transformation</h2>
         <p className="text-muted-foreground max-w-2xl mx-auto">
-          Instead of naming exact species, we group botanicals by their visual form. 
-          This gives you creative freedom while ensuring we can source A-grade material when the season opens.
+          Hover over each specimen to see how we transform living botanical forms into timeless bronze sculptures.
+          The same delicate detail, preserved forever.
         </p>
       </div>
 
-      <div className="grid md:grid-cols-3 gap-4">
+      {/* Specimen Grid - Bigger cards */}
+      <div className="space-y-12">
         {specimenTypes.map((specimen, index) => (
-          <Card 
-            key={index} 
-            className="hover-elevate"
+          <Card
+            key={index}
+            className="border-bronze/30 hover-elevate overflow-hidden"
             data-testid={`card-specimen-${index}`}
           >
-            <CardHeader className="pb-3">
-              <CardTitle className="text-lg text-bronze flex items-center gap-2">
-                {specimen.name}
-              </CardTitle>
-              <CardDescription className="flex items-center gap-1 text-xs">
-                <Calendar className="w-3 h-3" />
-                {specimen.season}
+            <CardHeader className="pb-4">
+              <CardTitle className="text-2xl text-bronze">{specimen.name}</CardTitle>
+              <CardDescription className="flex items-center gap-2 text-sm mt-2">
+                <Calendar className="w-4 h-4" />
+                <span className="font-medium">{specimen.season}</span>
               </CardDescription>
             </CardHeader>
-            <CardContent>
-              <p className="text-sm text-muted-foreground">
-                {specimen.description}
-              </p>
 
-              {/* Example Images */}
-              {specimen.images && specimen.images.length > 0 && (
-                <div className="mt-4 border-t border-bronze/10 pt-3 space-y-2">
-                  <p className="text-xs text-bronze/70 font-medium">Example specimens:</p>
-                  <div className="grid grid-cols-2 gap-2">
-                    {specimen.images.map((img, imgIndex) => (
-                      <div 
-                        key={imgIndex}
-                        className="aspect-square rounded overflow-hidden border border-bronze/20"
-                      >
-                        <img 
-                          src={img} 
-                          alt={`${specimen.name} example ${imgIndex + 1}`}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                    ))}
-                  </div>
+            <CardContent className="space-y-4">
+              <p className="text-muted-foreground">{specimen.description}</p>
+
+              {/* Images - Much bigger, hover effect */}
+              {specimen.images && specimen.images.length > 0 ? (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                  {specimen.images.map((img, imgIndex) => (
+                    <HoverBronzeImage key={imgIndex} plant={img.plant} bronze={img.bronze} />
+                  ))}
+                </div>
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                  {[0, 1, 2].map((i) => (
+                    <div
+                      key={i}
+                      className="aspect-[4/3] rounded-lg border border-bronze/20 bg-muted flex items-center justify-center"
+                    >
+                      <span className="text-xs text-muted-foreground">Coming Soon</span>
+                    </div>
+                  ))}
                 </div>
               )}
             </CardContent>
           </Card>
         ))}
+      </div>
+
+      {/* Info box */}
+      <div className="bg-bronze/5 border border-bronze/20 rounded-lg p-6 text-center space-y-2">
+        <p className="text-sm text-muted-foreground">
+          <strong>Plant to Bronze Journey:</strong> Each specimen is carefully selected at peak seasonal beauty, 
+          then cast using our precision foundry process. The result is a one-of-a-kind sculpture that captures 
+          nature's intricate detail in permanent form.
+        </p>
       </div>
     </section>
   );
