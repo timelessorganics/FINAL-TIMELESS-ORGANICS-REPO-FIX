@@ -376,6 +376,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           deliveryName,
           deliveryPhone,
           deliveryAddress,
+          paymentType, // 'full' for BUY NOW, 'deposit' for SECURE (R1000), 'reserve' for free 24hr hold
         } = req.body;
         const seat = await storage.getSeatByType(seatType);
         if (!seat) {
@@ -392,19 +393,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Specimen style is optional at checkout - users choose from dashboard after purchase
         // specimenStyle can be null
 
-        // Calculate add-on prices server-side (NEVER trust client prices!)
-        const mountingPriceCents = getMountingPrice(mountingType || "none");
-        const patinaPriceCents = hasPatina ? getPatinaPrice() : 0;
-        const commissionVoucherPriceCents = commissionVoucher
-          ? getCommissionVoucherPrice()
-          : 0;
+        // 3-TIER EARLY BIRD SYSTEM
+        // paymentType: 'full' = BUY NOW (full price), 'deposit' = SECURE (R1,000 only), 'reserve' = FREE 24hr hold
+        const isDepositOnly = paymentType === 'deposit';
+        const isReserveOnly = paymentType === 'reserve';
 
-        // Calculate total: base seat price + patina (R1K) + mounting deposit (R1K) + commission voucher (R1.5K)
-        const amount =
-          seat.price +
-          patinaPriceCents +
-          mountingPriceCents +
-          commissionVoucherPriceCents;
+        let amount = 0;
+        let depositAmountCents = 0;
+
+        if (isReserveOnly) {
+          // RESERVE: Free 24-hour hold, no payment required
+          amount = 0;
+          depositAmountCents = 0;
+          console.log(`[Purchase] RESERVE seat: free 24hr hold for ${seatType}`);
+        } else if (isDepositOnly) {
+          // SECURE: R1,000 non-refundable deposit, 48hr to pay balance
+          amount = 100000; // R1,000 deposit only
+          depositAmountCents = 100000;
+          console.log(`[Purchase] SECURE seat: R1,000 deposit for ${seatType}`);
+        } else {
+          // BUY NOW: Full price + add-ons
+          const mountingPriceCents = getMountingPrice(mountingType || "none");
+          const patinaPriceCents = hasPatina ? getPatinaPrice() : 0;
+          const commissionVoucherPriceCents = commissionVoucher
+            ? getCommissionVoucherPrice()
+            : 0;
+          amount =
+            seat.price +
+            patinaPriceCents +
+            mountingPriceCents +
+            commissionVoucherPriceCents;
+          depositAmountCents = 0;
+          console.log(`[Purchase] BUY NOW: full price R${(amount / 100).toFixed(2)} for ${seatType}`);
+        }
 
         // Validate delivery information
         if (!deliveryName || !deliveryPhone || !deliveryAddress) {
@@ -413,7 +434,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
 
-        // Create purchase record with user's chosen specimen style and add-ons
+        // Create purchase record with payment type tracking
         const purchase = await storage.createPurchase({
           userId,
           seatType,
@@ -421,7 +442,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           specimenStyle,
           hasPatina: hasPatina || false,
           mountingType: mountingType || "none",
-          mountingPriceCents: mountingPriceCents || 0,
+          mountingPriceCents: getMountingPrice(mountingType || "none") || 0,
           commissionVoucher: commissionVoucher || false,
           internationalShipping: internationalShipping || false,
           purchaseMode: purchaseMode || "cast_now",
@@ -432,6 +453,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           deliveryName,
           deliveryPhone,
           deliveryAddress,
+          isDepositOnly,
+          depositAmountCents,
         });
 
         console.log(
@@ -459,7 +482,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
           userAgent: userAgent.substring(0, 50),
         });
 
-        // Generate PayFast Onsite Payment Identifier (UUID)
+        // Handle payment based on tier
+        if (isReserveOnly) {
+          // RESERVE: No payment needed, just return success
+          console.log("[Purchase] RESERVE hold created, seat locked for 24hrs:", purchase.id);
+          // Update seat count immediately since seat is locked
+          await storage.updateSeatSold(seatType, 1);
+          return res.json({
+            purchaseId: purchase.id,
+            paymentType: 'reserve',
+            message: 'Seat reserved for 24 hours. You have until tomorrow 9 AM SA time to decide.',
+            expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
+          });
+        }
+
+        // For SECURE (deposit) and BUY NOW: generate PayFast payment
+        if (purchase.amount === 0) {
+          return res.status(400).json({ message: "Invalid payment amount" });
+        }
+
         try {
           const uuid = await generatePaymentIdentifier(
             purchase.id,
@@ -474,12 +515,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
           console.log(
             "[Purchase] Generated PayFast UUID for purchase:",
             purchase.id,
+            `(${isDepositOnly ? 'SECURE R1000 deposit' : 'BUY NOW full price'})`
           );
 
           // Return UUID for onsite payment modal
           res.json({
             uuid,
             purchaseId: purchase.id,
+            paymentType: isDepositOnly ? 'deposit' : 'full',
+            amount: purchase.amount,
           });
         } catch (uuidError: any) {
           console.error(
@@ -699,6 +743,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         // Now safe to proceed - only one notification won the race
         console.log("Processing purchase completion:", purchaseId);
+
+        // Update deposit tracking if this is a deposit payment
+        if (purchase.isDepositOnly) {
+          const balanceDue = new Date();
+          balanceDue.setDate(balanceDue.getDate() + 2); // 48 hours to pay balance
+          await storage.updatePurchase(purchase.id, {
+            depositPaidAt: new Date(),
+            balanceDueAt: balanceDue,
+          });
+          console.log(`[SECURE] Deposit paid for ${purchaseId}, balance due ${balanceDue.toISOString()}`);
+        }
 
         // Send gift notification if this is a gift purchase
         await handlePurchaseCompletion(purchase.id);
