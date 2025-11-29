@@ -555,26 +555,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   );
 
-  // Protected: Server-side PayFast redirect - builds HTML form and auto-submits
+  // Public: Server-side PayFast redirect - builds HTML form and auto-submits
   app.get(
     "/api/purchase/:id/redirect",
-    isAuthenticated,
     async (req: any, res: Response) => {
       try {
         const purchaseId = req.params.id;
-        const userId = await getUserIdFromToken(req);
-        if (!userId) {
-          return res.status(401).json({ message: "Unauthorized" });
-        }
 
-        // Get purchase and verify ownership
+        // Get purchase (purchaseId is UUID-specific, safe to return payment form)
         const purchase = await storage.getPurchase(purchaseId);
         if (!purchase) {
           return res.status(404).send("Purchase not found");
-        }
-
-        if (purchase.userId !== userId) {
-          return res.status(403).send("Unauthorized");
         }
 
         // Create PayFast payment data
