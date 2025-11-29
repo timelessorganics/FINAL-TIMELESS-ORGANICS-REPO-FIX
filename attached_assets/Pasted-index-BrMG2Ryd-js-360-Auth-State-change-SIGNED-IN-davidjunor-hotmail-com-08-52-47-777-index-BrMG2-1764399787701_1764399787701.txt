@@ -1,0 +1,19 @@
+index-BrMG2Ryd.js:360 [Auth] State change: SIGNED_IN davidjunor@hotmail.com
+08:52:47.777 index-BrMG2Ryd.js:360 [Auth] State change: INITIAL_SESSION davidjunor@hotmail.com
+08:52:49.403 index-BrMG2Ryd.js:404 [Auth Callback] Session established: davidjunor@hotmail.com
+08:52:49.969 index-BrMG2Ryd.js:360 [Auth] State change: INITIAL_SESSION davidjunor@hotmail.com
+08:53:02.635 index-BrMG2Ryd.js:360 [Auth] State change: INITIAL_SESSION davidjunor@hotmail.com
+08:53:11.973 index-BrMG2Ryd.js:360 [Auth] State change: INITIAL_SESSION davidjunor@hotmail.com
+08:53:43.340 index-BrMG2Ryd.js:404 [Checkout] Form submitted with data: Objectaddress: "6 Riverside Drive\nKommetjie"email: "Davidjunor@hotmail.com"fullName: "David junor"giftMessage: ""giftRecipientEmail: ""giftRecipientName: ""isGift: falsephone: "0782361668"[[Prototype]]: Objectconstructor: ƒ Object()hasOwnProperty: ƒ hasOwnProperty()isPrototypeOf: ƒ isPrototypeOf()propertyIsEnumerable: ƒ propertyIsEnumerable()toLocaleString: ƒ toLocaleString()toString: ƒ toString()valueOf: ƒ valueOf()__defineGetter__: ƒ __defineGetter__()__defineSetter__: ƒ __defineSetter__()__lookupGetter__: ƒ __lookupGetter__()__lookupSetter__: ƒ __lookupSetter__()__proto__: (...)get __proto__: ƒ __proto__()set __proto__: ƒ __proto__()
+08:53:44.932 final-timeless-organics-repo-fix-production.up.railway.app/api/purchase/initiate:1  Failed to load resource: the server responded with a status of 500 ()Understand this error
+08:53:53.395 index-BrMG2Ryd.js:404 [Checkout] Form submitted with data: Object
+08:53:54.736 final-timeless-organics-repo-fix-production.up.railway.app/api/purchase/initiate:1  Failed to load resource: the server responded with a status of 500 ()Understand this error
+08:54:55.432 index-BrMG2Ryd.js:360 [Auth] State change: SIGNED_IN davidjunor@hotmail.com
+08:54:55.433 index-BrMG2Ryd.js:360 [Auth] State change: SIGNED_IN davidjunor@hotmail.com
+609:01:48.011 Fetch finished loading: GET "<URL>".
+08:55:53.747 index-BrMG2Ryd.js:360 [Auth] State change: SIGNED_IN davidjunor@hotmail.com
+08:55:53.749 index-BrMG2Ryd.js:360 [Auth] State change: SIGNED_IN davidjunor@hotmail.com
+09:01:45.661 index-BrMG2Ryd.js:360 [Auth] State change: SIGNED_IN davidjunor@hotmail.com
+09:01:45.662 index-BrMG2Ryd.js:360 [Auth] State change: SIGNED_IN davidjunor@hotmail.com
+09:02:52.732 index-BrMG2Ryd.js:360 [Auth] State change: SIGNED_IN davidjunor@hotmail.com
+09:02:52.733 index-BrMG2Ryd.js:360 [Auth] State change: SIGNED_IN davidjunor@hotmail.com

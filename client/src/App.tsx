@@ -91,7 +91,9 @@ function Router() {
       <Route path="/checkout/:seatType">
         {(params) => <CheckoutPage seatType={params.seatType} />}
       </Route>
-      <Route path="/checkout" component={CheckoutPage} />
+      <Route path="/checkout">
+        {() => <CheckoutPage />}
+      </Route>
 
       {/* Promo Code Redemption - PUBLIC */}
       <Route path="/redeem" component={RedeemCodePage} />
