@@ -44,6 +44,7 @@ export default function CheckoutPage() {
   const search = useSearch();
   const params = new URLSearchParams(search);
   const seatType = (params.get("seat") || "founder") as "founder" | "patron";
+  const urlPaymentType = (params.get("payment") || "full") as "full" | "deposit" | "reserve";
   const { toast } = useToast();
   const [purchaseMode, setPurchaseMode] = useState<"cast_now" | "wait_for_season">("cast_now");
   const [promoCode, setPromoCode] = useState("");
@@ -52,7 +53,7 @@ export default function CheckoutPage() {
   const [isGift, setIsGift] = useState(false);
   const [hasPatina, setHasPatina] = useState(false);
   const [mountingType, setMountingType] = useState("none");
-  const [paymentType, setPaymentType] = useState<"full" | "deposit" | "reserve">("full");
+  const [paymentType, setPaymentType] = useState<"full" | "deposit" | "reserve">(urlPaymentType);
 
   const { data: seats, isLoading: loadingSeats } = useQuery<any[]>({
     queryKey: ['/api/seats/availability'],
@@ -282,7 +283,7 @@ export default function CheckoutPage() {
   // Apply payment type adjustments
   let totalPrice = subtotal;
   if (paymentType === 'deposit') {
-    totalPrice = 10; // R1,000 = 100000 cents, but display as R1,000
+    totalPrice = 1; // R1,000 deposit only
   } else if (paymentType === 'reserve') {
     totalPrice = 0;
   }

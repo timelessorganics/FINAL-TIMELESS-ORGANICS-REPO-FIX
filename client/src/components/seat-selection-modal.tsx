@@ -15,12 +15,11 @@ export default function SeatSelectionModal({ open, onOpenChange, paymentType }: 
   const [, setLocation] = useLocation();
 
   const handleSelect = (seatType: 'founder' | 'patron') => {
-    let url = `/checkout/${seatType}`;
-    if (paymentType === 'deposit') {
-      url += '?mode=deposit';
-    }
+    const params = new URLSearchParams();
+    params.set('seat', seatType);
+    params.set('payment', paymentType);
     onOpenChange(false);
-    setLocation(url);
+    setLocation(`/checkout?${params.toString()}`);
   };
 
   const paymentLabel = paymentType === 'deposit' ? 'SECURE (R1,000 Deposit)' : 
