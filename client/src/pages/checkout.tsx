@@ -40,11 +40,26 @@ const checkoutFormSchema = z.object({
 type CheckoutForm = z.infer<typeof checkoutFormSchema>;
 
 export default function CheckoutPage() {
-  const [, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
   const search = useSearch();
   const params = new URLSearchParams(search);
-  const seatType = (params.get("seat") || "founder") as "founder" | "patron";
-  const urlPaymentType = (params.get("payment") || "full") as "full" | "deposit" | "reserve";
+  
+  // Support both /checkout?seat=founder AND /checkout/founder URL formats
+  let seatType: "founder" | "patron" = "founder";
+  if (params.get("seat")) {
+    seatType = params.get("seat") as "founder" | "patron";
+  } else if (location.includes("/founder")) {
+    seatType = "founder";
+  } else if (location.includes("/patron")) {
+    seatType = "patron";
+  }
+  
+  // Support both ?payment=deposit AND ?mode=deposit URL formats
+  let urlPaymentType: "full" | "deposit" = "full";
+  if (params.get("payment") === "deposit" || params.get("mode") === "deposit") {
+    urlPaymentType = "deposit";
+  }
+  
   const { toast } = useToast();
   const [purchaseMode, setPurchaseMode] = useState<"cast_now" | "wait_for_season">("cast_now");
   const [promoCode, setPromoCode] = useState("");
@@ -398,14 +413,13 @@ export default function CheckoutPage() {
                     </CardContent>
                   </Card>
 
-                  {/* 3-TIER EARLY BIRD PAYMENT OPTIONS */}
+                  {/* 2-TIER EARLY BIRD PAYMENT OPTIONS */}
                   <Card className="border-border/50 border-2 border-bronze/30">
                     <CardHeader className="pb-4">
                       <CardTitle className="text-lg font-medium flex items-center gap-2">
                         <Sparkles className="w-5 h-5 text-bronze" />
                         Choose Your Payment Option
                       </CardTitle>
-                      <CardDescription className="text-sm">Early bird special - limited time only</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-3">
                       <div 
@@ -454,31 +468,6 @@ export default function CheckoutPage() {
                           </div>
                           <p className="text-xs text-muted-foreground">
                             Non-refundable deposit, 48 hours to pay balance
-                          </p>
-                        </div>
-                      </div>
-
-                      <div 
-                        className={`flex items-center gap-3 p-4 rounded-lg cursor-pointer transition-all border ${
-                          paymentType === "reserve" 
-                            ? "border-bronze/60 bg-bronze/10" 
-                            : "border-border/50 hover:border-border"
-                        }`}
-                        onClick={() => setPaymentType("reserve")}
-                        data-testid="option-reserve"
-                      >
-                        {paymentType === "reserve" ? (
-                          <CheckCircle2 className="w-5 h-5 text-bronze" />
-                        ) : (
-                          <Circle className="w-5 h-5 text-muted-foreground" />
-                        )}
-                        <div className="flex-1">
-                          <div className="font-medium text-sm flex items-center justify-between">
-                            <span>RESERVE</span>
-                            <span className="text-patina">FREE</span>
-                          </div>
-                          <p className="text-xs text-muted-foreground">
-                            24-hour hold - no payment now, decide tomorrow
                           </p>
                         </div>
                       </div>

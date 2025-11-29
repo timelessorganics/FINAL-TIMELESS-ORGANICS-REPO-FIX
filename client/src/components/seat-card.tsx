@@ -13,7 +13,7 @@ interface SeatCardProps {
   description: string;
   benefits: string[];
   featured?: boolean;
-  onPaymentClick?: (paymentType: 'full' | 'deposit' | 'reserve') => void;
+  onPaymentClick?: (paymentType: 'full' | 'deposit') => void;
 }
 
 export default function SeatCard({
@@ -31,7 +31,7 @@ export default function SeatCard({
   const available = seat.totalAvailable - seat.sold;
   const percentageSold = (seat.sold / seat.totalAvailable) * 100;
 
-  const handlePaymentClick = (paymentType: 'full' | 'deposit' | 'reserve') => {
+  const handlePaymentClick = (paymentType: 'full' | 'deposit') => {
     if (!isAuthenticated) {
       toast({
         title: "Sign In Required",
@@ -115,7 +115,7 @@ export default function SeatCard({
         </ul>
       </div>
 
-      {/* 3-Tier Payment Options */}
+      {/* 2-Tier Payment Options */}
       <div className="space-y-2">
         {/* BUY NOW - Full Price */}
         <Button
@@ -138,18 +138,6 @@ export default function SeatCard({
         >
           <Shield className="w-4 h-4 mr-2" />
           SECURE R1K
-        </Button>
-
-        {/* RESERVE - Free 24hr Hold */}
-        <Button
-          onClick={() => handlePaymentClick('reserve')}
-          disabled={available <= 0}
-          variant="outline"
-          className="w-full font-bold py-5 border-white/30 text-white/80 hover:bg-white/10"
-          data-testid={`button-reserve-${seat.type}`}
-        >
-          <Clock className="w-4 h-4 mr-2" />
-          RESERVE FREE
         </Button>
       </div>
     </Card>

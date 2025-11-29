@@ -5,8 +5,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Clock, Sparkles, Shield, Award, ArrowRight, Flame, Users, Leaf, Calendar } from "lucide-react";
-import PreLaunchReservationModal from "@/components/PreLaunchReservationModal";
+import { Sparkles, Shield, Award, ArrowRight, Flame, Users, Leaf, Calendar } from "lucide-react";
 import SeatSelectionModal from "@/components/seat-selection-modal";
 
 import heroImage from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764248900779.png";
@@ -37,9 +36,8 @@ interface PreLaunchStats {
 }
 
 export default function HomePage() {
-  const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
   const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
-  const [checkoutPaymentType, setCheckoutPaymentType] = useState<'full' | 'deposit' | null>(null);
+  const [checkoutPaymentType, setCheckoutPaymentType] = useState<'full' | 'deposit'>('full');
   const [, setLocation] = useLocation();
   
   const { data: seats } = useQuery<SeatAvailability[]>({
@@ -122,21 +120,8 @@ export default function HomePage() {
                 One-Of-A-Kind Castings From Organic Matter
               </p>
 
-              {/* 3-Tier CTA Buttons: RESERVE, SECURE, BUY NOW */}
+              {/* 2-Tier CTA Buttons: SECURE, BUY NOW */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-8">
-                <div className="w-full sm:w-auto text-center">
-                  <Button 
-                    size="lg" 
-                    className="w-full btn-bronze text-xs sm:text-sm px-4 sm:px-6 py-3 sm:py-5 min-h-10 sm:min-h-12 gap-2 font-bold shadow-lg mb-1 sm:mb-2" 
-                    onClick={() => setIsReservationModalOpen(true)}
-                    data-testid="button-reserve-free"
-                  >
-                    RESERVE FREE
-                    <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  </Button>
-                  <p className="text-xs text-white/60 font-light mt-1">24 hours</p>
-                </div>
-
                 <div className="w-full sm:w-auto text-center">
                   <Button 
                     size="lg" 
@@ -336,7 +321,7 @@ export default function HomePage() {
                   </p>
                 </div>
                 <div className="p-6 rounded-lg border border-bronze/10 bg-bronze/[0.02]">
-                  <Clock className="w-6 h-6 text-bronze mb-3" />
+                  <Flame className="w-6 h-6 text-bronze mb-3" />
                   <h4 className="font-light mb-2">Auction First Dibs</h4>
                   <p className="text-sm text-muted-foreground font-light">
                     Early access to future one-of-a-kind works before they go to public auction.
@@ -403,27 +388,29 @@ export default function HomePage() {
                     </li>
                   </ul>
 
-                  {/* Dual Buttons - Reserve + Buy Now */}
+                  {/* 2-Tier Buttons: BUY NOW + SECURE */}
                   <div className="space-y-3">
                     <Button 
                       asChild
                       className="w-full min-h-11 text-sm font-semibold btn-bronze"
                       data-testid="button-buy-founder"
                     >
-                      <Link href="/checkout/founder">Buy Now</Link>
+                      <Link href="/checkout/founder">BUY NOW</Link>
                     </Button>
                     
                     <Button 
+                      asChild
                       variant="outline"
                       className="w-full min-h-11 text-sm font-medium border-bronze/40 text-bronze hover:bg-bronze/10"
-                      onClick={() => setIsReservationModalOpen(true)}
-                      data-testid="button-reserve-founder"
+                      data-testid="button-secure-founder"
                     >
-                      <Clock className="w-4 h-4 mr-2" />
-                      Reserve Seat
+                      <Link href="/checkout/founder?mode=deposit">
+                        <Shield className="w-4 h-4 mr-2" />
+                        SECURE R1K
+                      </Link>
                     </Button>
                     <p className="text-[10px] text-muted-foreground/70 text-center">
-                      24hr hold, then released back to pool
+                      48hr deadline to pay balance
                     </p>
                   </div>
                 </div>
@@ -473,27 +460,29 @@ export default function HomePage() {
                     </li>
                   </ul>
 
-                  {/* Dual Buttons - Reserve + Buy Now */}
+                  {/* 2-Tier Buttons: BUY NOW + SECURE */}
                   <div className="space-y-3">
                     <Button 
                       asChild
                       className="w-full min-h-11 text-sm font-semibold bg-accent-gold text-background hover:bg-accent-gold/90"
                       data-testid="button-buy-patron"
                     >
-                      <Link href="/checkout/patron">Buy Now</Link>
+                      <Link href="/checkout/patron">BUY NOW</Link>
                     </Button>
                     
                     <Button 
+                      asChild
                       variant="outline"
                       className="w-full min-h-11 text-sm font-medium border-accent-gold/40 text-accent-gold hover:bg-accent-gold/10"
-                      onClick={() => setIsReservationModalOpen(true)}
-                      data-testid="button-reserve-patron"
+                      data-testid="button-secure-patron"
                     >
-                      <Clock className="w-4 h-4 mr-2" />
-                      Reserve Seat
+                      <Link href="/checkout/patron?mode=deposit">
+                        <Shield className="w-4 h-4 mr-2" />
+                        SECURE R1K
+                      </Link>
                     </Button>
                     <p className="text-[10px] text-muted-foreground/70 text-center">
-                      24hr hold, then released back to pool
+                      48hr deadline to pay balance
                     </p>
                   </div>
                 </div>
@@ -644,17 +633,11 @@ export default function HomePage() {
 
       <Footer />
       
-      {/* Pre-Launch Reservation Modal */}
-      <PreLaunchReservationModal 
-        isOpen={isReservationModalOpen}
-        onClose={() => setIsReservationModalOpen(false)}
-      />
-
       {/* Seat Selection Modal */}
       <SeatSelectionModal 
         open={checkoutModalOpen}
         onOpenChange={setCheckoutModalOpen}
-        paymentType={checkoutPaymentType as 'full' | 'deposit' | 'reserve'}
+        paymentType={checkoutPaymentType}
       />
     </>
   );

@@ -87,7 +87,14 @@ function Router() {
       <Route path="/about" component={AboutPage} />
 
 
-      {/* Checkout Page - PUBLIC (seat type via URL param) */}
+      {/* Checkout Page - PUBLIC (seat type via URL param or path) */}
+      {/* More specific paths first */}
+      <Route path="/checkout/founder">
+        {() => <CheckoutPage />}
+      </Route>
+      <Route path="/checkout/patron">
+        {() => <CheckoutPage />}
+      </Route>
       <Route path="/checkout">
         {() => <CheckoutPage />}
       </Route>

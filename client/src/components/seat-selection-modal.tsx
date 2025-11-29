@@ -8,7 +8,7 @@ import { Award, Sparkles } from "lucide-react";
 interface SeatSelectionModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  paymentType: 'full' | 'deposit' | 'reserve';
+  paymentType: 'full' | 'deposit';
 }
 
 export default function SeatSelectionModal({ open, onOpenChange, paymentType }: SeatSelectionModalProps) {
@@ -22,9 +22,7 @@ export default function SeatSelectionModal({ open, onOpenChange, paymentType }: 
     setLocation(`/checkout?${params.toString()}`);
   };
 
-  const paymentLabel = paymentType === 'deposit' ? 'SECURE (R1,000 Deposit)' : 
-                      paymentType === 'reserve' ? 'RESERVE FREE (24hrs)' : 
-                      'BUY NOW (Full Price)';
+  const paymentLabel = paymentType === 'deposit' ? 'SECURE (R1,000 Deposit)' : 'BUY NOW (Full Price)';
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
