@@ -69,8 +69,8 @@ function Router() {
       <Route path="/payment/success" component={PaymentSuccess} />
       <Route path="/payment/cancel" component={PaymentCancel} />
 
-      {/* Home Page - Root */}
-      <Route path="/" component={HomePage} />
+      {/* Home Page - Root - Founding 100 Launch */}
+      <Route path="/" component={MainLaunch} />
 
       {/* Founding 100 Explanation */}
       <Route path="/founding-100-explained" component={Founding100ExplainedPage} />
