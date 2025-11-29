@@ -9,6 +9,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { Check, Clock, Sparkles, Shield, Award, ArrowLeft, CheckCircle2, Circle } from "lucide-react";
@@ -40,6 +41,8 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   const [validatedPromo, setValidatedPromo] = useState<{valid: boolean; discount?: number; seatType?: string} | null>(null);
   const [isValidatingPromo, setIsValidatingPromo] = useState(false);
   const [isGift, setIsGift] = useState(false);
+  const [hasPatina, setHasPatina] = useState(false);
+  const [mountingType, setMountingType] = useState("none");
 
   const { data: seats, isLoading: loadingSeats } = useQuery<any[]>({
     queryKey: ['/api/seats/availability'],
@@ -79,8 +82,8 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
         deliveryPhone: data.phone,
         deliveryAddress: data.address,
         specimenStyle: null,
-        hasPatina: false,
-        mountingType: "none",
+        hasPatina,
+        mountingType,
         internationalShipping: false,
         commissionVoucher: false,
         isGift: data.isGift,
@@ -146,8 +149,8 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
         deliveryName: data.fullName,
         deliveryPhone: data.phone,
         deliveryAddress: data.address,
-        hasPatina: false,
-        mountingType: "none",
+        hasPatina,
+        mountingType,
         internationalShipping: false,
         commissionVoucher: false,
         purchaseMode,
@@ -382,6 +385,61 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                             Hold until your preferred season
                           </p>
                         </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Patina & Mounting Options */}
+                  <Card className="border-border/50">
+                    <CardHeader className="pb-4">
+                      <CardTitle className="text-lg font-medium">Add-Ons & Finishes</CardTitle>
+                      <CardDescription className="text-sm">Customize your bronze sculpture</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      {/* Patina Finish */}
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <div>
+                            <label className="text-sm font-medium">Patina Finish</label>
+                            <p className="text-xs text-muted-foreground">Premium oxidized bronze surface</p>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setHasPatina(!hasPatina)}
+                            className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                              hasPatina
+                                ? `bg-${seatColor}/20 border border-${seatColor}/40 text-${seatColor}`
+                                : "bg-border/50 border border-border text-muted-foreground hover:bg-border"
+                            }`}
+                            data-testid="button-toggle-patina"
+                          >
+                            {hasPatina ? "Selected" : "Add"}
+                          </button>
+                        </div>
+                        {hasPatina && (
+                          <p className="text-xs text-foreground/70 bg-background/50 p-2 rounded border border-border/50">
+                            +R1,000 for patina oxidation service
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Mounting Type */}
+                      <div className="space-y-3">
+                        <label className="text-sm font-medium block">Mounting Service</label>
+                        <Select value={mountingType} onValueChange={setMountingType}>
+                          <SelectTrigger className="border-border/50" data-testid="select-mounting-type">
+                            <SelectValue />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="none">No Mounting</SelectItem>
+                            <SelectItem value="wall">Wall Mount (+R500)</SelectItem>
+                            <SelectItem value="base">Display Base (+R800)</SelectItem>
+                            <SelectItem value="custom">Custom Mount (+R1,200)</SelectItem>
+                          </SelectContent>
+                        </Select>
+                        <p className="text-xs text-muted-foreground">
+                          Select how you'd like your sculpture mounted or displayed
+                        </p>
                       </div>
                     </CardContent>
                   </Card>
