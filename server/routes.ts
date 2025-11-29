@@ -2634,58 +2634,75 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // TEST 2: Certificate Generation (mock purchase)
       try {
-        const mockPurchase: Purchase = {
+        const mockPurchase = {
           id: 'test-cert-' + Date.now(),
           userId: 'test-user',
-          seatType: 'founder',
+          seatType: 'founder' as const,
           amount: 300000,
-          status: 'completed',
+          status: 'completed' as const,
           paymentReference: null,
           mountingType: 'none',
           internationalShipping: false,
-          purchaseMode: 'cast_now',
+          purchaseMode: 'cast_now' as const,
           giftMessage: null,
           giftRecipientEmail: null,
           giftRecipientName: null,
           giftStatus: null,
           specimenStyle: 'cones_bracts_seedpods',
-          patternSelection: null,
           notes: 'Test certificate',
           createdAt: new Date(),
           completedAt: new Date()
         };
 
-        const mockCodes: Code[] = [
+        const mockCodes = [
           {
             id: 'test1',
             purchaseId: mockPurchase.id,
-            type: 'bronze_claim',
+            type: 'bronze_claim' as const,
             code: generateBronzeClaimCode(),
-            redeemedBy: null,
+            discount: null,
+            transferable: false,
+            appliesTo: 'any' as const,
+            usedAt: null,
+            redemptionCount: 0,
+            maxRedemptions: 1,
+            redeemedBy: [],
             lastRedeemedAt: null,
             createdAt: new Date()
           },
           {
             id: 'test2',
             purchaseId: mockPurchase.id,
-            type: 'workshop_voucher',
+            type: 'workshop_voucher' as const,
             code: generateWorkshopVoucherCode('founder'),
-            redeemedBy: null,
+            discount: 50,
+            transferable: false,
+            appliesTo: 'workshop' as const,
+            usedAt: null,
+            redemptionCount: 0,
+            maxRedemptions: 1,
+            redeemedBy: [],
             lastRedeemedAt: null,
             createdAt: new Date()
           },
           {
             id: 'test3',
             purchaseId: mockPurchase.id,
-            type: 'lifetime_workshop',
+            type: 'lifetime_workshop' as const,
             code: generateLifetimeWorkshopCode('founder'),
-            redeemedBy: null,
+            discount: 100,
+            transferable: false,
+            appliesTo: 'workshop' as const,
+            usedAt: null,
+            redemptionCount: 0,
+            maxRedemptions: null,
+            redeemedBy: [],
             lastRedeemedAt: null,
             createdAt: new Date()
           }
         ];
 
-        const certUrl = await generateCertificate(mockPurchase, mockCodes, 'Test User');
+        const certUrl = await generateCertificate(mockPurchase as any, mockCodes as any, 'Test User');
         results.tests.certificateGeneration = {
           status: 'PASS',
           certificatePath: certUrl,
