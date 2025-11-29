@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Clock, Sparkles, Shield, Award, ArrowRight, Flame, Users, Leaf, Calendar } from "lucide-react";
 import PreLaunchReservationModal from "@/components/PreLaunchReservationModal";
 
@@ -36,6 +37,9 @@ interface PreLaunchStats {
 
 export default function HomePage() {
   const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
+  const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
+  const [checkoutPaymentType, setCheckoutPaymentType] = useState<'full' | 'deposit' | null>(null);
+  const [, setLocation] = useLocation();
   
   const { data: seats } = useQuery<SeatAvailability[]>({
     queryKey: ['/api/seats/availability'],
@@ -44,6 +48,15 @@ export default function HomePage() {
   const { data: prelaunchStats } = useQuery<PreLaunchStats>({
     queryKey: ['/api/prelaunch/stats'],
   });
+
+  const handleSeatSelection = (seatType: 'founder' | 'patron') => {
+    let url = `/checkout/${seatType}`;
+    if (checkoutPaymentType === 'deposit') {
+      url += '?mode=deposit';
+    }
+    setCheckoutModalOpen(false);
+    setLocation(url);
+  };
 
   const founderSeats = seats?.find(s => s.type === 'founder');
   const patronSeats = seats?.find(s => s.type === 'patron');
