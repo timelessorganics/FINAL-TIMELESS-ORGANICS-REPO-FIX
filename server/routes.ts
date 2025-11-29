@@ -69,9 +69,17 @@ function getCommissionVoucherPrice(): number {
 // Admin pricing update endpoint
 async function updateSeatingPricing(req: any, res: Response): Promise<void> {
   try {
-    const user = req.user;
+    // Get user ID from Supabase token
+    const userId = await getUserIdFromToken(req);
+    if (!userId) {
+      res.status(401).json({ error: "Unauthorized" });
+      return;
+    }
+
+    // Check if user is admin
+    const user = await storage.getUser(userId);
     if (!user?.isAdmin) {
-      res.status(403).json({ error: "Unauthorized" });
+      res.status(403).json({ error: "Admin access required" });
       return;
     }
 
@@ -80,9 +88,11 @@ async function updateSeatingPricing(req: any, res: Response): Promise<void> {
     // Update in database
     if (founderPrice !== undefined) {
       await storage.updateSeatPrice("founder", founderPrice);
+      console.log(`[Admin] Updated founder price to ${founderPrice} cents (R${founderPrice/100})`);
     }
     if (patronPrice !== undefined) {
       await storage.updateSeatPrice("patron", patronPrice);
+      console.log(`[Admin] Updated patron price to ${patronPrice} cents (R${patronPrice/100})`);
     }
 
     const seats = await storage.getSeats();
