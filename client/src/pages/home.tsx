@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Clock, Sparkles, Shield, Award, ArrowRight, Flame, Users, Leaf, Calendar } from "lucide-react";
 import PreLaunchReservationModal from "@/components/PreLaunchReservationModal";
+import SeatSelectionModal from "@/components/seat-selection-modal";
 
 import heroImage from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764248900779.png";
 import bronzeImage1 from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764170102466.png";
@@ -138,32 +139,28 @@ export default function HomePage() {
 
                 <div className="w-full sm:w-auto text-center">
                   <Button 
-                    asChild
                     size="lg" 
                     variant="outline"
                     className="w-full text-xs sm:text-sm px-4 sm:px-6 py-3 sm:py-5 min-h-10 sm:min-h-12 gap-2 font-bold border-white/30 text-white hover:bg-white/10 mb-1 sm:mb-2" 
+                    onClick={() => { setCheckoutPaymentType('deposit'); setCheckoutModalOpen(true); }}
                     data-testid="button-secure-deposit"
                   >
-                    <Link href="/checkout/patron?mode=deposit">
-                      SECURE R1K
-                      <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </Link>
+                    SECURE R1K
+                    <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </Button>
                   <p className="text-xs text-white/60 font-light mt-1">48hr deadline</p>
                 </div>
                 
                 <div className="w-full sm:w-auto text-center">
                   <Button 
-                    asChild
                     size="lg" 
                     variant="outline"
                     className="w-full text-xs sm:text-sm px-4 sm:px-6 py-3 sm:py-5 min-h-10 sm:min-h-12 gap-2 font-bold border-white/30 text-white hover:bg-white/10 mb-1 sm:mb-2" 
+                    onClick={() => { setCheckoutPaymentType('full'); setCheckoutModalOpen(true); }}
                     data-testid="button-buy-now"
                   >
-                    <Link href="/checkout/patron">
-                      BUY NOW
-                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </Link>
+                    BUY NOW
+                    <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </Button>
                   <p className="text-xs text-white/60 font-light mt-1">Full price</p>
                 </div>
@@ -651,6 +648,13 @@ export default function HomePage() {
       <PreLaunchReservationModal 
         isOpen={isReservationModalOpen}
         onClose={() => setIsReservationModalOpen(false)}
+      />
+
+      {/* Seat Selection Modal */}
+      <SeatSelectionModal 
+        open={checkoutModalOpen}
+        onOpenChange={setCheckoutModalOpen}
+        paymentType={checkoutPaymentType as 'full' | 'deposit' | 'reserve'}
       />
     </>
   );
