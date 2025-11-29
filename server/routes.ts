@@ -868,19 +868,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log("Purchase completed successfully:", purchaseId);
 
         // Send email notifications (best effort, async)
+        // Try to get email from user record first, then from PayFast notification
         const userEmail = user?.email || pfData.email_address;
-        if (userEmail && certificateUrl) {
+        console.log("[Email] Sending notifications to:", userEmail, "| Certificate:", certificateUrl ? "generated" : "pending");
+        
+        if (userEmail) {
+          // Always send confirmation email - certificate can fail without blocking email
           sendPurchaseConfirmationEmail(userEmail, userName, purchase).catch(
-            console.error,
+            (err) => console.error("[Email] Confirmation failed:", err),
           );
-          sendCertificateEmail(
-            userEmail,
-            userName,
-            purchase,
-            allCodes,
-            certificateUrl,
-            codeSlipsUrl,
-          ).catch(console.error);
+          
+          // Send certificate email if we have the certificate
+          if (certificateUrl) {
+            sendCertificateEmail(
+              userEmail,
+              userName,
+              purchase,
+              allCodes,
+              certificateUrl,
+              codeSlipsUrl,
+            ).catch((err) => console.error("[Email] Certificate email failed:", err));
+          } else {
+            console.log("[Email] Certificate not yet ready for", purchaseId, "- will be sent when generated");
+          }
+        } else {
+          console.error("[Email] No email found for purchase", purchaseId, "- user:", user, "payfast data:", pfData.email_address);
         }
 
         // Add to Mailchimp (async, best effort)
