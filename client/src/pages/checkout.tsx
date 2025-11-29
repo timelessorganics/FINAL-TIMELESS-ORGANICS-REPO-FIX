@@ -43,6 +43,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   const [isGift, setIsGift] = useState(false);
   const [hasPatina, setHasPatina] = useState(false);
   const [mountingType, setMountingType] = useState("none");
+  const [paymentType, setPaymentType] = useState<"full" | "deposit" | "reserve">("full");
 
   const { data: seats, isLoading: loadingSeats } = useQuery<any[]>({
     queryKey: ['/api/seats/availability'],
@@ -78,6 +79,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
       const response = await apiRequest("POST", "/api/purchase/initiate", {
         seatType,
         purchaseMode,
+        paymentType,
         deliveryName: data.fullName,
         deliveryPhone: data.phone,
         deliveryAddress: data.address,
@@ -95,9 +97,20 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
       return await response.json();
     },
     onSuccess: (response: any) => {
+      if (response.paymentType === 'reserve') {
+        toast({
+          title: "Seat Reserved!",
+          description: "Your seat is held for 24 hours. Check your email for details.",
+        });
+        setTimeout(() => {
+          setLocation('/dashboard');
+        }, 2000);
+        return;
+      }
+
       toast({
         title: "Opening Payment",
-        description: "Secure payment modal loading...",
+        description: response.paymentType === 'deposit' ? "R1,000 deposit payment loading..." : "Secure payment modal loading...",
       });
 
       const payFastModal = (window as any).payfast_do_onsite_payment;
@@ -115,9 +128,12 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
         { uuid: response.uuid },
         function (result: boolean) {
           if (result === true) {
+            const successMsg = response.paymentType === 'deposit' 
+              ? "Deposit received! You have 48 hours to pay the balance."
+              : "Welcome to the Founding 100!";
             toast({
               title: "Payment Successful!",
-              description: "Welcome to the Founding 100! Redirecting...",
+              description: successMsg + " Redirecting...",
             });
             setTimeout(() => {
               setLocation('/payment/success');
@@ -333,6 +349,93 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                           </FormItem>
                         )}
                       />
+                    </CardContent>
+                  </Card>
+
+                  {/* 3-TIER EARLY BIRD PAYMENT OPTIONS */}
+                  <Card className="border-border/50 border-2 border-bronze/30">
+                    <CardHeader className="pb-4">
+                      <CardTitle className="text-lg font-medium flex items-center gap-2">
+                        <Sparkles className="w-5 h-5 text-bronze" />
+                        Choose Your Payment Option
+                      </CardTitle>
+                      <CardDescription className="text-sm">Early bird special - limited time only</CardDescription>
+                    </CardHeader>
+                    <CardContent className="space-y-3">
+                      <div 
+                        className={`flex items-center gap-3 p-4 rounded-lg cursor-pointer transition-all border ${
+                          paymentType === "full" 
+                            ? "border-bronze/60 bg-bronze/10" 
+                            : "border-border/50 hover:border-border"
+                        }`}
+                        onClick={() => setPaymentType("full")}
+                        data-testid="option-buy-now"
+                      >
+                        {paymentType === "full" ? (
+                          <CheckCircle2 className="w-5 h-5 text-bronze" />
+                        ) : (
+                          <Circle className="w-5 h-5 text-muted-foreground" />
+                        )}
+                        <div className="flex-1">
+                          <div className="font-medium text-sm flex items-center justify-between">
+                            <span>BUY NOW</span>
+                            <span className="text-bronze">R{basePrice.toLocaleString()}</span>
+                          </div>
+                          <p className="text-xs text-muted-foreground">
+                            Full payment - instant confirmation & codes
+                          </p>
+                        </div>
+                      </div>
+
+                      <div 
+                        className={`flex items-center gap-3 p-4 rounded-lg cursor-pointer transition-all border ${
+                          paymentType === "deposit" 
+                            ? "border-bronze/60 bg-bronze/10" 
+                            : "border-border/50 hover:border-border"
+                        }`}
+                        onClick={() => setPaymentType("deposit")}
+                        data-testid="option-secure"
+                      >
+                        {paymentType === "deposit" ? (
+                          <CheckCircle2 className="w-5 h-5 text-bronze" />
+                        ) : (
+                          <Circle className="w-5 h-5 text-muted-foreground" />
+                        )}
+                        <div className="flex-1">
+                          <div className="font-medium text-sm flex items-center justify-between">
+                            <span>SECURE</span>
+                            <span className="text-bronze">R1,000 deposit</span>
+                          </div>
+                          <p className="text-xs text-muted-foreground">
+                            Non-refundable deposit, 48 hours to pay balance
+                          </p>
+                        </div>
+                      </div>
+
+                      <div 
+                        className={`flex items-center gap-3 p-4 rounded-lg cursor-pointer transition-all border ${
+                          paymentType === "reserve" 
+                            ? "border-bronze/60 bg-bronze/10" 
+                            : "border-border/50 hover:border-border"
+                        }`}
+                        onClick={() => setPaymentType("reserve")}
+                        data-testid="option-reserve"
+                      >
+                        {paymentType === "reserve" ? (
+                          <CheckCircle2 className="w-5 h-5 text-bronze" />
+                        ) : (
+                          <Circle className="w-5 h-5 text-muted-foreground" />
+                        )}
+                        <div className="flex-1">
+                          <div className="font-medium text-sm flex items-center justify-between">
+                            <span>RESERVE</span>
+                            <span className="text-patina">FREE</span>
+                          </div>
+                          <p className="text-xs text-muted-foreground">
+                            24-hour hold - no payment now, decide tomorrow
+                          </p>
+                        </div>
+                      </div>
                     </CardContent>
                   </Card>
 
@@ -569,6 +672,10 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
                       "Processing..."
                     ) : validatedPromo?.valid && validatedPromo.discount === 100 ? (
                       "Claim Complimentary Seat"
+                    ) : paymentType === "reserve" ? (
+                      "Reserve My Seat (Free)"
+                    ) : paymentType === "deposit" ? (
+                      "Pay R1,000 Deposit"
                     ) : (
                       `Pay R${totalPrice.toLocaleString()}`
                     )}
