@@ -1,0 +1,873 @@
+2025-11-29T09:27:11.000000000Z [inf]  Starting Container
+2025-11-29T09:27:12.541209936Z [inf]  9:27:12 AM [express] serving on port 8080
+2025-11-29T09:27:12.541231424Z [inf]  [Mailchimp] Integration configured
+2025-11-29T09:27:12.541238513Z [inf]  [Supabase Auth] Authentication configured
+2025-11-29T09:30:22.842899159Z [inf]  9:30:17 AM [express] GET /api/prelaunch/stats 304 in 76ms :: {"totalReserved":0,"founderDeposits":0,…
+2025-11-29T09:30:22.842910676Z [inf]  9:30:17 AM [express] GET /api/seats/availability 304 in 178ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-11-29T09:30:22.842927438Z [inf]  [DB] Connected to Supabase successfully
+2025-11-29T09:30:22.842936073Z [inf]  9:30:12 AM [express] GET /api/auth/user 304 in 409ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0"…
+2025-11-29T09:30:22.842944382Z [inf]  9:30:13 AM [express] GET /api/auth/user 304 in 80ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:30:22.842951017Z [inf]  9:30:13 AM [express] GET /api/auth/user 304 in 77ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:30:22.842958517Z [inf]  9:30:13 AM [express] GET /api/auth/user 304 in 78ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:30:22.842966638Z [inf]  9:30:13 AM [express] GET /api/auth/user 304 in 76ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:30:22.842974080Z [inf]  9:30:13 AM [express] GET /api/auth/user 304 in 85ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:30:22.842982896Z [inf]  9:30:14 AM [express] GET /api/auth/user 304 in 74ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:30:22.842988168Z [inf]  [DB] Connected to Supabase successfully
+2025-11-29T09:30:22.842993648Z [inf]  9:30:14 AM [express] GET /api/seats/availability 304 in 180ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-11-29T09:30:22.842999887Z [inf]  9:30:14 AM [express] GET /api/prelaunch/stats 304 in 234ms :: {"totalReserved":0,"founderDeposits":0…
+2025-11-29T09:30:22.843004341Z [inf]  9:30:14 AM [express] GET /api/auth/user 304 in 73ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:30:22.843010065Z [inf]  9:30:15 AM [express] GET /api/auth/user 304 in 80ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:30:24.523230812Z [inf]  9:30:24 AM [express] GET /api/prelaunch/stats 304 in 78ms :: {"totalReserved":0,"founderDeposits":0,…
+2025-11-29T09:30:24.844163670Z [inf]  9:30:24 AM [express] GET /api/seats/availability 304 in 192ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-11-29T09:30:54.698491400Z [inf]  9:30:50 AM [express] GET /api/auth/user 304 in 83ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:30:54.698504196Z [inf]  9:30:51 AM [express] GET /api/auth/user 304 in 84ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:30:54.698511867Z [inf]  9:30:52 AM [express] GET /api/auth/user 304 in 78ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:30:54.698517677Z [inf]  9:30:53 AM [express] GET /api/auth/user 304 in 77ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:30:54.698523938Z [inf]  9:30:54 AM [express] GET /api/auth/user 304 in 77ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:30:54.698550474Z [inf]  [DB] Connected to Supabase successfully
+2025-11-29T09:30:54.698566252Z [inf]  9:30:46 AM [express] GET /api/auth/user 304 in 319ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0"…
+2025-11-29T09:30:54.698571215Z [inf]  9:30:47 AM [express] GET /api/auth/user 304 in 77ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:30:54.698576700Z [inf]  [DB] Connected to Supabase successfully
+2025-11-29T09:30:54.698582304Z [inf]  9:30:47 AM [express] GET /api/seats/availability 304 in 179ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-11-29T09:30:54.698601326Z [inf]  9:30:47 AM [express] GET /api/prelaunch/stats 304 in 226ms :: {"totalReserved":0,"founderDeposits":0…
+2025-11-29T09:30:54.698616806Z [inf]  9:30:47 AM [express] GET /api/auth/user 304 in 78ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:30:54.698665178Z [inf]  9:30:50 AM [express] GET /api/auth/user 304 in 83ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:31:34.711550096Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-11-29T09:31:34.711550388Z [inf]  [PayFast Config] Mode: production, Merchant ID: 3212****
+2025-11-29T09:31:34.711557819Z [inf]  [Auth] Verifying token with Supabase...
+2025-11-29T09:31:34.711560267Z [inf]  [PayFast Config] Mode: production, Merchant ID: 3212****
+2025-11-29T09:31:34.711564225Z [inf]  [Auth] User verified: davidj.helenaz.litigation@gmail.com
+2025-11-29T09:31:34.711567206Z [inf]  [PayFast] Frontend URL (return/cancel): https://www.timeless.organic
+2025-11-29T09:31:34.711572718Z [inf]  [DB] Connected to Supabase successfully
+2025-11-29T09:31:34.711575214Z [inf]  [PayFast] Backend URL (notify webhook): https://final-timeless-organics-repo-fix-production.up.railway.app
+2025-11-29T09:31:34.711579955Z [inf]  [Purchase] User initiating purchase: 085fa749-91b6-4e3b-abf7-b9de58033dd0 davidj.helenaz.litigation@gmail.com
+2025-11-29T09:31:34.711581786Z [inf]  [PayFast API Signature] Alphabetically sorted param string (first 100 chars): amount=10.00&cancel_url=https%3A%2F%2Fwww.timeless.organic%2Fpayment%2Fcancel&email_address=davidj.h
+2025-11-29T09:31:34.711586739Z [inf]  [Purchase] BUY NOW: full price R10.00 for patron
+2025-11-29T09:31:34.711588624Z [inf]  [PayFast API Signature] Generated MD5 signature: 81eb15e2e1a4a0ae61c5b49986aa1796
+2025-11-29T09:31:34.711593769Z [inf]  [Purchase] Created purchase record: d6701292-b36f-42ad-b6ef-8ab9e2f6f095 patron 1000
+2025-11-29T09:31:34.711595178Z [inf]  [PayFast Onsite] Generating payment identifier for purchase: d6701292-b36f-42ad-b6ef-8ab9e2f6f095
+2025-11-29T09:31:34.711601179Z [inf]  [PayFast Onsite] Amount: 1000 Seat Type: patron
+2025-11-29T09:31:34.711601366Z [inf]  [Purchase] User context: {
+2025-11-29T09:31:34.711606897Z [inf]    ip: '152.110.4.171',
+2025-11-29T09:31:34.711611221Z [inf]    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb'
+2025-11-29T09:31:34.711615595Z [inf]  }
+2025-11-29T09:31:34.713832363Z [inf]  [PayFast Onsite] User context: {
+2025-11-29T09:31:34.713832926Z [err]  [PayFast Onsite] Response status: 400
+2025-11-29T09:31:34.713838889Z [inf]    ip: '152.110.4.171',
+2025-11-29T09:31:34.713845079Z [inf]    agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb'
+2025-11-29T09:31:34.713849336Z [inf]  }
+2025-11-29T09:31:34.713853617Z [inf]  [PayFast Onsite] Making request to: https://www.payfast.co.za/onsite/process
+2025-11-29T09:31:34.713857605Z [inf]  [PayFast Onsite] Merchant ID: 32126679
+2025-11-29T09:31:34.713863228Z [inf]  [PayFast Onsite] Request body keys: [
+2025-11-29T09:31:34.713866997Z [inf]    'merchant_id',      'merchant_key',
+2025-11-29T09:31:34.713870833Z [inf]    'return_url',       'cancel_url',
+2025-11-29T09:31:34.713874987Z [inf]    'notify_url',       'name_first',
+2025-11-29T09:31:34.713879999Z [inf]    'email_address',    'm_payment_id',
+2025-11-29T09:31:34.713883712Z [inf]    'amount',           'item_name',
+2025-11-29T09:31:34.713887605Z [inf]    'item_description', 'user_ip',
+2025-11-29T09:31:34.713891440Z [inf]    'user_agent',       'payment_method',
+2025-11-29T09:31:34.713895789Z [inf]    'signature'
+2025-11-29T09:31:34.713900819Z [inf]  ]
+2025-11-29T09:31:34.713904674Z [err]  [PayFast Onsite] Error generating payment identifier: Request failed with status code 400
+2025-11-29T09:31:34.715263198Z [err]  [PayFast Onsite] Response data: "<!doctype html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\"\n          content=\"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n    <title>Payfast Payment Processor | Online Payments in South Africa</title>\n    <script src=\"https://kit.fontawesome.com/90ebafaa2a.js\" crossorigin=\"anonymous\"></script>\n    <style>\n    /* Fonts */\n    @font-face {\n        font-family: \"RocGrotesk\";\n        font-weight: 300;\n        font-style: normal;\n        src: url(/../eng/fonts/RocGroteskLight.eot);\n        src: local('RocGrotesk Light'), local('RocGrotesk-Light'), url(/../eng/fonts/RocGroteskLight.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskLight.woff2) format('woff2'), url(/../eng/fonts/RocGroteskLight.woff) format('woff'), url(/../eng/fonts/RocGroteskLight.ttf) format('truetype'), url(/../eng/fonts/RocGroteskLight.svg#RocGrotesk) format('svg');\n    }\n\n    @font-face {\n        font-family: \"RocGrotesk\";\n        font-weight: 400;\n        font-style: normal;\n        src: url(/../eng/fonts/RocGroteskRegular.eot);\n        src: local('RocGrotesk Regular'), local('RocGrotesk-Regular'), url(/../eng/fonts/RocGroteskRegular.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskRegular.woff2) format('woff2'), url(/../eng/fonts/RocGroteskRegular.woff) format('woff'), url(/../eng/fonts/RocGroteskRegular.ttf) format('truetype'), url(/../eng/fonts/RocGroteskRegular.svg#RocGrotesk) format('svg');\n    }\n\n    @font-face {\n        font-family: \"RocGrotesk\";\n        font-weight: 500;\n        font-style: normal;\n        src: url(/../eng/fonts/GroteskMedium.eot);\n        src: local('RocGrotesk Medium'), local('RocGrotesk-Medium'), url(/../eng/fonts/RocGroteskMedium.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskMedium.woff2) format('woff2'), url(/../eng/fonts/RocGroteskMedium.woff) format('woff'), url(/../eng/fonts/RocGroteskMedium.ttf) format('truetype'), url(/../eng/fonts/RocGroteskMedium.svg#RocGrotesk) format('svg');\n    }\n\n    @font-face {\n        font-family: \"RocGrotesk\";\n        font-weight: 600;\n        font-style: normal;\n        src: url(/../eng/fonts/RocGroteskBold.eot);\n        src: local('RocGrotesk Bold'), local('RocGrotesk-Bold'), url(/../eng/fonts/RocGroteskBold.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskBold.woff2) format('woff2'), url(/../eng/fonts/RocGroteskBold.woff) format('woff'), url(/../eng/fonts/RocGroteskBold.ttf) format('truetype'), url(/../eng/fonts/RocGroteskBold.svg#RocGrotesk) format('svg');\n    }\n\n    @font-face {\n        font-family: \"RocGrotesk\";\n        font-weight: 700;\n        font-style: normal;\n        src: url(/../eng/fonts/RocGroteskExtraBold.eot);\n        src: local('RocGrotesk ExtraBold'), local('RocGrotesk-ExtraBold'), url(/../eng/fonts/RocGroteskExtraBold.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskExtraBold.woff2) format('woff2'), url(/../eng/fonts/RocGroteskExtraBold.woff) format('woff'), url(/../eng/fonts/RocGroteskExtraBold.ttf) format('truetype'), url(/../eng/fonts/RocGroteskExtraBold.svg#RocGrotesk) format('svg');\n    }\n\n    @font-face {\n        font-family: \"FoundersGrotesk\";\n        font-weight: 400;\n        font-style: normal;\n        src: url(/../eng/fonts/FoundersGroteskRegular.eot);\n        src: local('FoundersGrotesk Regular'), local('FoundersGrotesk-Regular'), url(/../eng/fonts/FoundersGroteskRegular.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/FoundersGroteskRegular.woff2) format('woff2'), url(/../eng/fonts/FoundersGroteskRegular.woff) format('woff'), url(/../eng/fonts/FoundersGroteskRegular.ttf) format('truetype'), url(/../eng/fonts/FoundersGroteskRegular.svg#FoundersGrotesk) format('svg');\n    }\n\n    @font-face {\n        font-family: \"FoundersGrotesk\";\n        font-weight: 600;\n        font-style: normal;\n        src: url(/../eng/fonts/FoundersGroteskSemibold.eot);\n        src: local('FoundersGrotesk Semibold'), local('FoundersGrotesk-Semibold'), url(/../eng/fonts/FoundersGroteskSemibold.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/FoundersGroteskSemibold.woff2) format('woff2'), url(/../eng/fonts/FoundersGroteskSemibold.woff) format('woff'), url(/../eng/fonts/FoundersGroteskSemibold.ttf) format('truetype'), url(/../eng/fonts/FoundersGroteskSemibold.svg#FoundersGrotesk) format('svg');\n    }\n\n    /* Normalisation */\n    html, body {\n        height: 100%;\n    }\n\n    body {\n        margin: 0;\n        background-image: url(https://content.payfast.co.za/assets/images/error-pages/background-1.png), url(https://content.payfast.co.za/assets/images/error-pages/background-2.png), url(https://content.payfast.co.za/assets/images/error-pages/background-3.png), url(https://content.payfast.co.za/assets/images/error-pages/background-4.png), url(https://content.payfast.co.za/assets/images/error-pages/background-5.png), url(https://content.payfast.co.za/assets/images/error-pages/background-6.png), url(https://content.payfast.co.za/assets/images/error-pages/background-7.png), url(https://content.payfast.co.za/assets/images/error-pages/background-8.png), url(https://content.payfast.co.za/assets/images/error-pages/background-9.png), url(https://content.payfast.co.za/assets/images/error-pages/background-10.png), url(https://content.payfast.co.za/assets/images/error-pages/background-11.png);\n        background-position: right 80px bottom 260px, left 300px top 160px, left 296px bottom, left 75px bottom, right 284px bottom, left bottom 148px, right 134px bottom, right 237px bottom 150px, right top 336px, left 210px top 450px, right bottom 120px;\n        background-repeat: no-repeat;\n        background-color: white;\n    }\n\n    /* Responsiveness */\n    @media  only screen and (max-width: 1500px) {\n        body {\n            background-position: right 40px bottom 145px, left 240px top 170px, left 180px bottom, left 70px bottom, right 132px bottom, left bottom 75px, right 58px bottom, right 110px bottom 74px, right bottom 211px, left 160px top 420px, right bottom 75px;\n            background-size: 88px 75px, 98px 75px, 123px 95px, 113px 77px, 125px 82px, 129px 91px, 88px 115px, 114px 118px, 76px 125px, 74px 75px, 75px 75px;\n        }\n    }\n\n    @media  only screen and (max-width: 1100px) {\n        body {\n            background-position: right 40px bottom 145px, left 150px top 170px, left 180px bottom, left 70px bottom, right 132px bottom, left bottom 75px, right 58px bottom, right 110px bottom 74px, right bottom 211px, left 70px top 420px, right bottom 75px;\n            background-size: 88px 75px, 98px 75px, 123px 95px, 113px 77px, 125px 82px, 129px 91px, 88px 115px, 114px 118px, 76px 125px, 74px 75px, 75px 75px;\n        }\n\n        .error-block__number {\n            font-size: 160px !important;\n        }\n\n        .error-block__text {\n            font-size: 28px !important;\n        }\n\n        .error-block__message {\n            font-size: 20px !important;\n        }\n    }\n\n    @media  only screen and (max-width: 800px) {\n        body {\n            background-position: right 40px bottom 145px, left 80px top 170px, left 180px bottom, left 70px bottom, right 132px bottom, left bottom 75px, right 58px bottom, right 110px bottom 74px, right bottom 211px, left 20px top 420px, right bottom 75px;\n            background-size: 88px 75px, 98px 75px, 123px 95px, 113px 77px, 125px 82px, 129px 91px, 88px 115px, 114px 118px, 76px 125px, 74px 75px, 75px 75px;\n        }\n\n        .error-block__number {\n            font-size: 120px !important;\n        }\n\n        .error-block__text {\n            font-size: 24px !important;\n        }\n\n        .error-block__message {\n            font-size: 18px !important;\n        }\n    }\n\n    @media  only screen and (max-width: 650px) {\n        #header-contact__link {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            border: 1px solid #022D2D;\n            height: 42px;\n            width: 42px;\n            border-radius: 50%;\n        }\n\n        #header-contact__link span {\n            display: none;\n        }\n\n        #header-contact__link i {\n            margin-right: 0 !important;\n        }\n\n        body {\n            background-image: none;\n        }\n    }\n\n    @media  only screen and (max-height: 650px) {\n        .error-block__button {\n            margin-top: 48px !important;\n        }\n\n        .error-block__text {\n            margin-top: 24px !important;\n        }\n    }\n\n    @media  only screen and (max-height: 550px) {\n        .error-block__button {\n            margin-top: 36px !important;\n        }\n\n        .error-block__message {\n            margin-top: 0 !important;\n        }\n\n        body {\n            background-image: none;\n        }\n    }\n\n    @media  only screen and (max-height: 500px) {\n        .error-block__button {\n            margin-top: 24px !important;\n        }\n\n        .error-block__message {\n            margin-top: 0 !important;\n            max-width: 100% !important;\n        }\n\n        .error-block__number {\n            line-height: 80% !important;\n        }\n\n        .error-block__text {\n            margin-bottom: 12px !important\n        }\n\n        .error-block {\n            padding-top: 24px !important;\n        }\n    }\n\n    @media  only screen and (max-height: 450px) {\n        .error-block__button {\n            margin-top: 12px !important\n        }\n\n        .error-block__number {\n            line-height: 70% !important;\n        }\n\n        .error-block__text {\n            margin-bottom: 0 !important;\n        }\n\n        .error-block {\n            padding-top: 48px !important;\n        }\n    }\n\n    @media  only screen and (max-height: 400px) {\n        .error-block__number {\n            line-height: 60% !important\n        }\n    }\n\n    /* Header Styling */\n    #header_bar {\n        position: fixed;\n        width: 100%;\n        display: flex;\n        justify-content: space-between;\n        min-width: 320px;\n        padding: 16px 0;\n    }\n\n    #payfast_logo img {\n        height: 62px;\n        padding-left: 32px;\n    }\n\n    #header_contact {\n        margin: 24px 32px 0 0;\n        display: flex;\n        justify-content: space-between;\n    }\n\n    #header-contact__link {\n        font-family: \"RocGrotesk\", serif;\n        color: #022D2D;\n        font-size: 16px;\n        margin-left: 36px;\n        text-decoration: none;\n    }\n\n    #header-contact__link i {\n        color: #022D2D;\n        margin-right: 12px;\n    }\n\n    /* General Styling */\n    .error-block {\n        display: flex;\n        justify-content: center;\n        align-items: center;\n        flex-direction: column;\n        height: 100%;\n        color: #022D2D;\n        font-family: 'RocGrotesk', serif;\n    }\n\n    .error-block__number {\n        font-weight: 600;\n        font-size: 200px;\n        line-height: 100%;\n    }\n\n    .error-block__text {\n        font-weight: 500;\n        font-size: 38px;\n        margin-bottom: 42px;\n    }\n\n    .error-block__message {\n        font-weight: 300;\n        font-size: 28px;\n        text-align: center;\n        margin-top: 6px;\n        max-width: 600px;\n    }\n\n    .error-block__button {\n        background-color: #dee965;\n        border: 1px solid #dee965;\n        color: #022d2d;\n        padding: 8px 40px;\n        border-radius: 80px;\n        white-space: nowrap;\n        font-size: 16px;\n        font-family: 'FoundersGrotesk', serif;\n        line-height: 24px;\n        font-weight: 600;\n        margin-top: 96px;\n    }\n</style>\n</head>\n<body>\n    <div id=\"header_bar\">\n        <a href=\"https://payfast.io\" target=\"_blank\" rel=\"noopener\">\n            <div id=\"payfast_logo\">\n                <img src=\"https://content.payfast.io/assets/images/logos/ni_payfast_logo.png\"\n                     srcset=\"https://content.payfast.io/assets/images/logos/ni_payfast_logo@2.png 2x\" alt=\"payfast_logo\">\n            </div>\n        </a>\n        <div id=\"header_contact\">\n            <a id=\"header-contact__link\" href=\"tel:+27 21 300 4455\" target=\"_blank\">\n                <i class=\"fas fa-phone\"></i>\n                <span>+27 (021) 300 4455</span>\n            </a>\n            <a id=\"header-contact__link\" href=\"mailto: sales@payfast.help\" target=\"_blank\">\n                <i class=\"fas fa-envelope\"></i>\n                <span>sales@payfast.help</span>\n            </a>\n        </div>\n    </div>\n    <div class=\"error-block\">\n        <div class=\"error-block__number\">400</div>\n        <div class=\"error-block__text\">Bad Request</div>\n                                    <div class=\"error-block__message\">\n                    1. Generated signature does not match submitted signature.</br>\n                </div>\n                        <form>\n                <input type=\"button\" value=\"Return to home page\" onclick=\"history.back()\" class=\"error-block__button\">\n            </form>\n            </div>\n</body>\n</html>\n"
+2025-11-29T09:31:34.717186162Z [err]  [PayFast Onsite] 400 Error - Check:
+2025-11-29T09:31:34.717195635Z [err]    - PAYFAST_PASSPHRASE matches PayFast dashboard EXACTLY
+2025-11-29T09:31:34.717208135Z [err]    - PAYFAST_MERCHANT_ID and PAYFAST_MERCHANT_KEY are correct
+2025-11-29T09:31:34.717215595Z [err]    - Signature calculation (alphabetical sorting per API spec)
+2025-11-29T09:31:34.717222764Z [err]    - All required fields are present and properly formatted
+2025-11-29T09:31:34.717230711Z [err]  [Purchase] Failed to generate PayFast UUID: Error: Failed to generate PayFast payment identifier: PayFast error (400): <!doctype html>
+2025-11-29T09:31:34.717238150Z [err]  <html lang="en">
+2025-11-29T09:31:34.717245733Z [err]  <head>
+2025-11-29T09:31:34.717253894Z [err]      <meta charset="UTF-8">
+2025-11-29T09:31:34.717260860Z [err]      <meta name="viewport"
+2025-11-29T09:31:34.717268154Z [err]            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+2025-11-29T09:31:34.717275512Z [err]      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+2025-11-29T09:31:34.717282226Z [err]      <title>Payfast Payment Processor | Online Payments in South Africa</title>
+2025-11-29T09:31:34.717288627Z [err]      <script src="https://kit.fontawesome.com/90ebafaa2a.js" crossorigin="anonymous"></script>
+2025-11-29T09:31:34.717296415Z [err]      <style>
+2025-11-29T09:31:34.717303763Z [err]      /* Fonts */
+2025-11-29T09:31:34.717310530Z [err]      @font-face {
+2025-11-29T09:31:34.717317927Z [err]          font-family: "RocGrotesk";
+2025-11-29T09:31:34.717324728Z [err]          font-weight: 300;
+2025-11-29T09:31:34.717331762Z [err]          font-style: normal;
+2025-11-29T09:31:34.717338815Z [err]          src: url(/../eng/fonts/RocGroteskLight.eot);
+2025-11-29T09:31:34.717345938Z [err]          src: local('RocGrotesk Light'), local('RocGrotesk-Light'), url(/../eng/fonts/RocGroteskLight.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskLight.woff2) format('woff2'), url(/../eng/fonts/RocGroteskLight.woff) format('woff'), url(/../eng/fonts/RocGroteskLight.ttf) format('truetype'), url(/../eng/fonts/RocGroteskLight.svg#RocGrotesk) format('svg');
+2025-11-29T09:31:34.719331332Z [err]      @font-face {
+2025-11-29T09:31:34.719339007Z [err]          font-family: "RocGrotesk";
+2025-11-29T09:31:34.719348778Z [err]      }
+2025-11-29T09:31:34.719357256Z [err]  
+2025-11-29T09:31:34.719364209Z [err]      @font-face {
+2025-11-29T09:31:34.719370625Z [err]          font-family: "RocGrotesk";
+2025-11-29T09:31:34.719376721Z [err]          font-weight: 400;
+2025-11-29T09:31:34.719385085Z [err]          font-style: normal;
+2025-11-29T09:31:34.719391002Z [err]          src: url(/../eng/fonts/RocGroteskRegular.eot);
+2025-11-29T09:31:34.719396872Z [err]          src: local('RocGrotesk Regular'), local('RocGrotesk-Regular'), url(/../eng/fonts/RocGroteskRegular.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskRegular.woff2) format('woff2'), url(/../eng/fonts/RocGroteskRegular.woff) format('woff'), url(/../eng/fonts/RocGroteskRegular.ttf) format('truetype'), url(/../eng/fonts/RocGroteskRegular.svg#RocGrotesk) format('svg');
+2025-11-29T09:31:34.719402796Z [err]      }
+2025-11-29T09:31:34.719408725Z [err]  
+2025-11-29T09:31:34.719414376Z [err]      @font-face {
+2025-11-29T09:31:34.719420491Z [err]          font-family: "RocGrotesk";
+2025-11-29T09:31:34.719426581Z [err]          font-weight: 500;
+2025-11-29T09:31:34.719431940Z [err]          font-style: normal;
+2025-11-29T09:31:34.719438084Z [err]          src: url(/../eng/fonts/GroteskMedium.eot);
+2025-11-29T09:31:34.719444547Z [err]          src: local('RocGrotesk Medium'), local('RocGrotesk-Medium'), url(/../eng/fonts/RocGroteskMedium.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskMedium.woff2) format('woff2'), url(/../eng/fonts/RocGroteskMedium.woff) format('woff'), url(/../eng/fonts/RocGroteskMedium.ttf) format('truetype'), url(/../eng/fonts/RocGroteskMedium.svg#RocGrotesk) format('svg');
+2025-11-29T09:31:34.719450249Z [err]      }
+2025-11-29T09:31:34.719456278Z [err]  
+2025-11-29T09:31:34.721702640Z [err]          font-weight: 400;
+2025-11-29T09:31:34.721709752Z [err]          font-family: "RocGrotesk";
+2025-11-29T09:31:34.721711270Z [err]          font-weight: 600;
+2025-11-29T09:31:34.721713255Z [err]          font-style: normal;
+2025-11-29T09:31:34.721720541Z [err]          font-style: normal;
+2025-11-29T09:31:34.721723755Z [err]          src: url(/../eng/fonts/FoundersGroteskRegular.eot);
+2025-11-29T09:31:34.721726575Z [err]          font-weight: 700;
+2025-11-29T09:31:34.721731415Z [err]          src: url(/../eng/fonts/RocGroteskBold.eot);
+2025-11-29T09:31:34.721739500Z [err]          font-style: normal;
+2025-11-29T09:31:34.721742007Z [err]          src: local('RocGrotesk Bold'), local('RocGrotesk-Bold'), url(/../eng/fonts/RocGroteskBold.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskBold.woff2) format('woff2'), url(/../eng/fonts/RocGroteskBold.woff) format('woff'), url(/../eng/fonts/RocGroteskBold.ttf) format('truetype'), url(/../eng/fonts/RocGroteskBold.svg#RocGrotesk) format('svg');
+2025-11-29T09:31:34.721748132Z [err]          src: url(/../eng/fonts/RocGroteskExtraBold.eot);
+2025-11-29T09:31:34.721749867Z [err]      }
+2025-11-29T09:31:34.721752802Z [err]      }
+2025-11-29T09:31:34.721762269Z [err]          src: local('RocGrotesk ExtraBold'), local('RocGrotesk-ExtraBold'), url(/../eng/fonts/RocGroteskExtraBold.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskExtraBold.woff2) format('woff2'), url(/../eng/fonts/RocGroteskExtraBold.woff) format('woff'), url(/../eng/fonts/RocGroteskExtraBold.ttf) format('truetype'), url(/../eng/fonts/RocGroteskExtraBold.svg#RocGrotesk) format('svg');
+2025-11-29T09:31:34.721762440Z [err]  
+2025-11-29T09:31:34.721767033Z [err]  
+2025-11-29T09:31:34.721771012Z [err]      @font-face {
+2025-11-29T09:31:34.721776042Z [err]      @font-face {
+2025-11-29T09:31:34.721781435Z [err]          font-family: "FoundersGrotesk";
+2025-11-29T09:31:34.723617739Z [err]      /* Normalisation */
+2025-11-29T09:31:34.723628436Z [err]      html, body {
+2025-11-29T09:31:34.723635722Z [err]          height: 100%;
+2025-11-29T09:31:34.723642431Z [err]      }
+2025-11-29T09:31:34.723649823Z [err]  
+2025-11-29T09:31:34.723657854Z [err]      body {
+2025-11-29T09:31:34.723658152Z [err]          src: local('FoundersGrotesk Regular'), local('FoundersGrotesk-Regular'), url(/../eng/fonts/FoundersGroteskRegular.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/FoundersGroteskRegular.woff2) format('woff2'), url(/../eng/fonts/FoundersGroteskRegular.woff) format('woff'), url(/../eng/fonts/FoundersGroteskRegular.ttf) format('truetype'), url(/../eng/fonts/FoundersGroteskRegular.svg#FoundersGrotesk) format('svg');
+2025-11-29T09:31:34.723663045Z [err]      }
+2025-11-29T09:31:34.723667006Z [err]          margin: 0;
+2025-11-29T09:31:34.723669734Z [err]  
+2025-11-29T09:31:34.723674599Z [err]      @font-face {
+2025-11-29T09:31:34.723676076Z [err]          background-image: url(https://content.payfast.co.za/assets/images/error-pages/background-1.png), url(https://content.payfast.co.za/assets/images/error-pages/background-2.png), url(https://content.payfast.co.za/assets/images/error-pages/background-3.png), url(https://content.payfast.co.za/assets/images/error-pages/background-4.png), url(https://content.payfast.co.za/assets/images/error-pages/background-5.png), url(https://content.payfast.co.za/assets/images/error-pages/background-6.png), url(https://content.payfast.co.za/assets/images/error-pages/background-7.png), url(https://content.payfast.co.za/assets/images/error-pages/background-8.png), url(https://content.payfast.co.za/assets/images/error-pages/background-9.png), url(https://content.payfast.co.za/assets/images/error-pages/background-10.png), url(https://content.payfast.co.za/assets/images/error-pages/background-11.png);
+2025-11-29T09:31:34.723679298Z [err]          font-family: "FoundersGrotesk";
+2025-11-29T09:31:34.723683089Z [err]          font-weight: 600;
+2025-11-29T09:31:34.723687010Z [err]          font-style: normal;
+2025-11-29T09:31:34.723690477Z [err]          src: url(/../eng/fonts/FoundersGroteskSemibold.eot);
+2025-11-29T09:31:34.723696339Z [err]          src: local('FoundersGrotesk Semibold'), local('FoundersGrotesk-Semibold'), url(/../eng/fonts/FoundersGroteskSemibold.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/FoundersGroteskSemibold.woff2) format('woff2'), url(/../eng/fonts/FoundersGroteskSemibold.woff) format('woff'), url(/../eng/fonts/FoundersGroteskSemibold.ttf) format('truetype'), url(/../eng/fonts/FoundersGroteskSemibold.svg#FoundersGrotesk) format('svg');
+2025-11-29T09:31:34.723700130Z [err]      }
+2025-11-29T09:31:34.723704081Z [err]  
+2025-11-29T09:31:34.725453737Z [err]          background-position: right 80px bottom 260px, left 300px top 160px, left 296px bottom, left 75px bottom, right 284px bottom, left bottom 148px, right 134px bottom, right 237px bottom 150px, right top 336px, left 210px top 450px, right bottom 120px;
+2025-11-29T09:31:34.725459178Z [err]          background-repeat: no-repeat;
+2025-11-29T09:31:34.725464020Z [err]          background-color: white;
+2025-11-29T09:31:34.725468988Z [err]      }
+2025-11-29T09:31:34.725470774Z [err]              background-position: right 40px bottom 145px, left 150px top 170px, left 180px bottom, left 70px bottom, right 132px bottom, left bottom 75px, right 58px bottom, right 110px bottom 74px, right bottom 211px, left 70px top 420px, right bottom 75px;
+2025-11-29T09:31:34.725475284Z [err]  
+2025-11-29T09:31:34.725479546Z [err]              background-size: 88px 75px, 98px 75px, 123px 95px, 113px 77px, 125px 82px, 129px 91px, 88px 115px, 114px 118px, 76px 125px, 74px 75px, 75px 75px;
+2025-11-29T09:31:34.725480217Z [err]      @media  only screen and (max-width: 1100px) {
+2025-11-29T09:31:34.725485591Z [err]      /* Responsiveness */
+2025-11-29T09:31:34.725486387Z [err]          body {
+2025-11-29T09:31:34.725492516Z [err]      @media  only screen and (max-width: 1500px) {
+2025-11-29T09:31:34.725495660Z [err]      }
+2025-11-29T09:31:34.725496252Z [err]          body {
+2025-11-29T09:31:34.725508973Z [err]              background-position: right 40px bottom 145px, left 240px top 170px, left 180px bottom, left 70px bottom, right 132px bottom, left bottom 75px, right 58px bottom, right 110px bottom 74px, right bottom 211px, left 160px top 420px, right bottom 75px;
+2025-11-29T09:31:34.725509964Z [err]  
+2025-11-29T09:31:34.725517353Z [err]              background-size: 88px 75px, 98px 75px, 123px 95px, 113px 77px, 125px 82px, 129px 91px, 88px 115px, 114px 118px, 76px 125px, 74px 75px, 75px 75px;
+2025-11-29T09:31:34.725527932Z [err]          }
+2025-11-29T09:31:34.727867991Z [err]          }
+2025-11-29T09:31:34.727876996Z [err]          body {
+2025-11-29T09:31:34.727879025Z [err]  
+2025-11-29T09:31:34.727888766Z [err]          .error-block__number {
+2025-11-29T09:31:34.727892672Z [err]              background-position: right 40px bottom 145px, left 80px top 170px, left 180px bottom, left 70px bottom, right 132px bottom, left bottom 75px, right 58px bottom, right 110px bottom 74px, right bottom 211px, left 20px top 420px, right bottom 75px;
+2025-11-29T09:31:34.727904804Z [err]              background-size: 88px 75px, 98px 75px, 123px 95px, 113px 77px, 125px 82px, 129px 91px, 88px 115px, 114px 118px, 76px 125px, 74px 75px, 75px 75px;
+2025-11-29T09:31:34.727904888Z [err]              font-size: 160px !important;
+2025-11-29T09:31:34.727916899Z [err]          }
+2025-11-29T09:31:34.727917800Z [err]          }
+2025-11-29T09:31:34.727924972Z [err]  
+2025-11-29T09:31:34.727927151Z [err]  
+2025-11-29T09:31:34.727933331Z [err]          .error-block__number {
+2025-11-29T09:31:34.727936121Z [err]          .error-block__text {
+2025-11-29T09:31:34.727943805Z [err]              font-size: 120px !important;
+2025-11-29T09:31:34.727944981Z [err]              font-size: 28px !important;
+2025-11-29T09:31:34.727951310Z [err]          }
+2025-11-29T09:31:34.727952359Z [err]          }
+2025-11-29T09:31:34.727959660Z [err]  
+2025-11-29T09:31:34.727962716Z [err]  
+2025-11-29T09:31:34.727967889Z [err]          .error-block__text {
+2025-11-29T09:31:34.727971333Z [err]          .error-block__message {
+2025-11-29T09:31:34.727977399Z [err]              font-size: 24px !important;
+2025-11-29T09:31:34.727980159Z [err]              font-size: 20px !important;
+2025-11-29T09:31:34.727985183Z [err]          }
+2025-11-29T09:31:34.727990299Z [err]      }
+2025-11-29T09:31:34.727995924Z [err]  
+2025-11-29T09:31:34.728001695Z [err]      @media  only screen and (max-width: 800px) {
+2025-11-29T09:31:34.729937712Z [err]          }
+2025-11-29T09:31:34.729949578Z [err]  
+2025-11-29T09:31:34.729959296Z [err]          .error-block__message {
+2025-11-29T09:31:34.729967639Z [err]              font-size: 18px !important;
+2025-11-29T09:31:34.729976105Z [err]  
+2025-11-29T09:31:34.729981372Z [err]          }
+2025-11-29T09:31:34.729985772Z [err]          body {
+2025-11-29T09:31:34.729995230Z [err]      }
+2025-11-29T09:31:34.729995338Z [err]              background-image: none;
+2025-11-29T09:31:34.730010546Z [err]          }
+2025-11-29T09:31:34.730010829Z [err]  
+2025-11-29T09:31:34.730026318Z [err]      @media  only screen and (max-width: 650px) {
+2025-11-29T09:31:34.730026468Z [err]      }
+2025-11-29T09:31:34.730039052Z [err]  
+2025-11-29T09:31:34.730040932Z [err]          #header-contact__link {
+2025-11-29T09:31:34.730045984Z [err]      @media  only screen and (max-height: 650px) {
+2025-11-29T09:31:34.730051999Z [err]              display: flex;
+2025-11-29T09:31:34.730060364Z [err]              justify-content: center;
+2025-11-29T09:31:34.730067929Z [err]              align-items: center;
+2025-11-29T09:31:34.730075792Z [err]              border: 1px solid #022D2D;
+2025-11-29T09:31:34.730085770Z [err]              height: 42px;
+2025-11-29T09:31:34.730092958Z [err]              width: 42px;
+2025-11-29T09:31:34.730099860Z [err]              border-radius: 50%;
+2025-11-29T09:31:34.730106162Z [err]          }
+2025-11-29T09:31:34.730123516Z [err]  
+2025-11-29T09:31:34.730131105Z [err]          #header-contact__link span {
+2025-11-29T09:31:34.730138058Z [err]              display: none;
+2025-11-29T09:31:34.730144457Z [err]          }
+2025-11-29T09:31:34.730150807Z [err]  
+2025-11-29T09:31:34.730157526Z [err]          #header-contact__link i {
+2025-11-29T09:31:34.730163785Z [err]              margin-right: 0 !important;
+2025-11-29T09:31:34.730169600Z [err]          }
+2025-11-29T09:31:34.731794381Z [err]          .error-block__button {
+2025-11-29T09:31:34.731800157Z [err]              background-image: none;
+2025-11-29T09:31:34.731806945Z [err]              margin-top: 48px !important;
+2025-11-29T09:31:34.731814585Z [err]          }
+2025-11-29T09:31:34.731819346Z [err]          }
+2025-11-29T09:31:34.731827773Z [err]      }
+2025-11-29T09:31:34.731831638Z [err]  
+2025-11-29T09:31:34.731840726Z [err]  
+2025-11-29T09:31:34.731841876Z [err]          .error-block__text {
+2025-11-29T09:31:34.731863926Z [err]              margin-top: 24px !important;
+2025-11-29T09:31:34.731865682Z [err]      @media  only screen and (max-height: 500px) {
+2025-11-29T09:31:34.731873348Z [err]          }
+2025-11-29T09:31:34.731878023Z [err]          .error-block__button {
+2025-11-29T09:31:34.731882857Z [err]      }
+2025-11-29T09:31:34.731890369Z [err]              margin-top: 24px !important;
+2025-11-29T09:31:34.731893758Z [err]  
+2025-11-29T09:31:34.731902381Z [err]          }
+2025-11-29T09:31:34.731905020Z [err]      @media  only screen and (max-height: 550px) {
+2025-11-29T09:31:34.731915464Z [err]  
+2025-11-29T09:31:34.731915602Z [err]          .error-block__button {
+2025-11-29T09:31:34.731926838Z [err]          .error-block__message {
+2025-11-29T09:31:34.731931350Z [err]              margin-top: 36px !important;
+2025-11-29T09:31:34.731936149Z [err]              margin-top: 0 !important;
+2025-11-29T09:31:34.731940568Z [err]          }
+2025-11-29T09:31:34.731949607Z [err]              max-width: 100% !important;
+2025-11-29T09:31:34.731949841Z [err]  
+2025-11-29T09:31:34.731956556Z [err]          .error-block__message {
+2025-11-29T09:31:34.731961173Z [err]              margin-top: 0 !important;
+2025-11-29T09:31:34.731966192Z [err]          }
+2025-11-29T09:31:34.731970368Z [err]  
+2025-11-29T09:31:34.731976828Z [err]          body {
+2025-11-29T09:31:34.733818288Z [err]              padding-top: 48px !important;
+2025-11-29T09:31:34.733821969Z [err]          }
+2025-11-29T09:31:34.733827435Z [err]          }
+2025-11-29T09:31:34.733830790Z [err]  
+2025-11-29T09:31:34.733834972Z [err]      }
+2025-11-29T09:31:34.733837961Z [err]              margin-top: 12px !important
+2025-11-29T09:31:34.733841350Z [err]          .error-block__number {
+2025-11-29T09:31:34.733841959Z [err]  
+2025-11-29T09:31:34.733849418Z [err]              line-height: 80% !important;
+2025-11-29T09:31:34.733856495Z [err]          }
+2025-11-29T09:31:34.733858816Z [err]          }
+2025-11-29T09:31:34.733867923Z [err]  
+2025-11-29T09:31:34.733871358Z [err]  
+2025-11-29T09:31:34.733876092Z [err]          .error-block__text {
+2025-11-29T09:31:34.733883628Z [err]              margin-bottom: 12px !important
+2025-11-29T09:31:34.733887286Z [err]          .error-block__number {
+2025-11-29T09:31:34.733892395Z [err]          }
+2025-11-29T09:31:34.733900480Z [err]  
+2025-11-29T09:31:34.733902381Z [err]              line-height: 70% !important;
+2025-11-29T09:31:34.733907558Z [err]          .error-block {
+2025-11-29T09:31:34.733915637Z [err]          }
+2025-11-29T09:31:34.733917158Z [err]              padding-top: 24px !important;
+2025-11-29T09:31:34.733926666Z [err]          }
+2025-11-29T09:31:34.733930173Z [err]  
+2025-11-29T09:31:34.733934814Z [err]      }
+2025-11-29T09:31:34.733944372Z [err]  
+2025-11-29T09:31:34.733945132Z [err]          .error-block__text {
+2025-11-29T09:31:34.733958770Z [err]      @media  only screen and (max-height: 450px) {
+2025-11-29T09:31:34.733958925Z [err]              margin-bottom: 0 !important;
+2025-11-29T09:31:34.733969477Z [err]          .error-block__button {
+2025-11-29T09:31:34.733972900Z [err]          }
+2025-11-29T09:31:34.733980887Z [err]  
+2025-11-29T09:31:34.733987751Z [err]          .error-block {
+2025-11-29T09:31:34.736169665Z [err]          min-width: 320px;
+2025-11-29T09:31:34.736174010Z [err]          justify-content: space-between;
+2025-11-29T09:31:34.736177639Z [err]          padding: 16px 0;
+2025-11-29T09:31:34.736183121Z [err]      }
+2025-11-29T09:31:34.736185697Z [err]      }
+2025-11-29T09:31:34.736187251Z [err]      @media  only screen and (max-height: 400px) {
+2025-11-29T09:31:34.736192732Z [err]  
+2025-11-29T09:31:34.736193723Z [err]  
+2025-11-29T09:31:34.736204965Z [err]      #header-contact__link {
+2025-11-29T09:31:34.736206304Z [err]          .error-block__number {
+2025-11-29T09:31:34.736206562Z [err]      #payfast_logo img {
+2025-11-29T09:31:34.736212286Z [err]          font-family: "RocGrotesk", serif;
+2025-11-29T09:31:34.736216098Z [err]          height: 62px;
+2025-11-29T09:31:34.736222619Z [err]              line-height: 60% !important
+2025-11-29T09:31:34.736227096Z [err]          color: #022D2D;
+2025-11-29T09:31:34.736229506Z [err]          padding-left: 32px;
+2025-11-29T09:31:34.736238970Z [err]          }
+2025-11-29T09:31:34.736239124Z [err]      }
+2025-11-29T09:31:34.736240616Z [err]          font-size: 16px;
+2025-11-29T09:31:34.736252555Z [err]  
+2025-11-29T09:31:34.736252611Z [err]          margin-left: 36px;
+2025-11-29T09:31:34.736254164Z [err]      }
+2025-11-29T09:31:34.736268497Z [err]      #header_contact {
+2025-11-29T09:31:34.736269427Z [err]  
+2025-11-29T09:31:34.736278812Z [err]          margin: 24px 32px 0 0;
+2025-11-29T09:31:34.736284516Z [err]      /* Header Styling */
+2025-11-29T09:31:34.736286099Z [err]          display: flex;
+2025-11-29T09:31:34.736296725Z [err]      #header_bar {
+2025-11-29T09:31:34.736303174Z [err]          position: fixed;
+2025-11-29T09:31:34.736310428Z [err]          width: 100%;
+2025-11-29T09:31:34.736316895Z [err]          display: flex;
+2025-11-29T09:31:34.736324295Z [err]          justify-content: space-between;
+2025-11-29T09:31:34.738411054Z [err]          font-weight: 300;
+2025-11-29T09:31:34.738416988Z [err]          font-size: 200px;
+2025-11-29T09:31:34.738418679Z [err]          text-decoration: none;
+2025-11-29T09:31:34.738425768Z [err]      }
+2025-11-29T09:31:34.738426723Z [err]          line-height: 100%;
+2025-11-29T09:31:34.738439664Z [err]  
+2025-11-29T09:31:34.738440783Z [err]      }
+2025-11-29T09:31:34.738445186Z [err]      #header-contact__link i {
+2025-11-29T09:31:34.738449263Z [err]  
+2025-11-29T09:31:34.738450897Z [err]          color: #022D2D;
+2025-11-29T09:31:34.738456639Z [err]      .error-block__text {
+2025-11-29T09:31:34.738457496Z [err]          margin-right: 12px;
+2025-11-29T09:31:34.738463340Z [err]          font-weight: 500;
+2025-11-29T09:31:34.738463555Z [err]      }
+2025-11-29T09:31:34.738469840Z [err]          font-size: 38px;
+2025-11-29T09:31:34.738470389Z [err]  
+2025-11-29T09:31:34.738477204Z [err]      /* General Styling */
+2025-11-29T09:31:34.738478543Z [err]          margin-bottom: 42px;
+2025-11-29T09:31:34.738482767Z [err]      .error-block {
+2025-11-29T09:31:34.738485631Z [err]      }
+2025-11-29T09:31:34.738487986Z [err]          display: flex;
+2025-11-29T09:31:34.738493292Z [err]  
+2025-11-29T09:31:34.738494522Z [err]          justify-content: center;
+2025-11-29T09:31:34.738500555Z [err]          align-items: center;
+2025-11-29T09:31:34.738502954Z [err]      .error-block__message {
+2025-11-29T09:31:34.738506189Z [err]          flex-direction: column;
+2025-11-29T09:31:34.738510011Z [err]          height: 100%;
+2025-11-29T09:31:34.738514224Z [err]          color: #022D2D;
+2025-11-29T09:31:34.738518390Z [err]          font-family: 'RocGrotesk', serif;
+2025-11-29T09:31:34.738522634Z [err]      }
+2025-11-29T09:31:34.738526793Z [err]  
+2025-11-29T09:31:34.738530929Z [err]      .error-block__number {
+2025-11-29T09:31:34.738534764Z [err]          font-weight: 600;
+2025-11-29T09:31:34.740699212Z [err]          font-size: 28px;
+2025-11-29T09:31:34.740705258Z [err]          text-align: center;
+2025-11-29T09:31:34.740709265Z [err]          color: #022d2d;
+2025-11-29T09:31:34.740711330Z [err]          margin-top: 6px;
+2025-11-29T09:31:34.740715143Z [err]                       srcset="https://content.payfast.io/assets/images/logos/ni_payfast_logo@2.png 2x" alt="payfast_logo">
+2025-11-29T09:31:34.740718794Z [err]          padding: 8px 40px;
+2025-11-29T09:31:34.740721267Z [err]          max-width: 600px;
+2025-11-29T09:31:34.740721578Z [err]  </head>
+2025-11-29T09:31:34.740726908Z [err]              </div>
+2025-11-29T09:31:34.740729549Z [err]          border-radius: 80px;
+2025-11-29T09:31:34.740733513Z [err]      }
+2025-11-29T09:31:34.740737965Z [err]  <body>
+2025-11-29T09:31:34.740742395Z [err]          white-space: nowrap;
+2025-11-29T09:31:34.740746054Z [err]  
+2025-11-29T09:31:34.740755675Z [err]          font-size: 16px;
+2025-11-29T09:31:34.740756420Z [err]      <div id="header_bar">
+2025-11-29T09:31:34.740760158Z [err]      .error-block__button {
+2025-11-29T09:31:34.740769387Z [err]          font-family: 'FoundersGrotesk', serif;
+2025-11-29T09:31:34.740769726Z [err]          background-color: #dee965;
+2025-11-29T09:31:34.740771387Z [err]          <a href="https://payfast.io" target="_blank" rel="noopener">
+2025-11-29T09:31:34.740779128Z [err]          border: 1px solid #dee965;
+2025-11-29T09:31:34.740781459Z [err]          line-height: 24px;
+2025-11-29T09:31:34.740786195Z [err]              <div id="payfast_logo">
+2025-11-29T09:31:34.740792751Z [err]          font-weight: 600;
+2025-11-29T09:31:34.740798457Z [err]                  <img src="https://content.payfast.io/assets/images/logos/ni_payfast_logo.png"
+2025-11-29T09:31:34.740800751Z [err]          margin-top: 96px;
+2025-11-29T09:31:34.740805723Z [err]      }
+2025-11-29T09:31:34.740809819Z [err]  </style>
+2025-11-29T09:31:34.742336396Z [err]                          <form>
+2025-11-29T09:31:34.742338452Z [err]          </a>
+2025-11-29T09:31:34.742346361Z [err]                  <input type="button" value="Return to home page" onclick="history.back()" class="error-block__button">
+2025-11-29T09:31:34.742354984Z [err]          <div id="header_contact">
+2025-11-29T09:31:34.742356153Z [err]              </form>
+2025-11-29T09:31:34.742364771Z [err]              <a id="header-contact__link" href="tel:+27 21 300 4455" target="_blank">
+2025-11-29T09:31:34.742369727Z [err]              </div>
+2025-11-29T09:31:34.742374245Z [err]                  <i class="fas fa-phone"></i>
+2025-11-29T09:31:34.742377473Z [err]  </body>
+2025-11-29T09:31:34.742383099Z [err]                  <span>+27 (021) 300 4455</span>
+2025-11-29T09:31:34.742386621Z [err]  </html>
+2025-11-29T09:31:34.742390897Z [err]              </a>
+2025-11-29T09:31:34.742396494Z [err]              <a id="header-contact__link" href="mailto: sales@payfast.help" target="_blank">
+2025-11-29T09:31:34.742400876Z [err]                  <i class="fas fa-envelope"></i>
+2025-11-29T09:31:34.742404781Z [err]                  <span>sales@payfast.help</span>
+2025-11-29T09:31:34.742409137Z [err]              </a>
+2025-11-29T09:31:34.742413171Z [err]          </div>
+2025-11-29T09:31:34.742417631Z [err]      </div>
+2025-11-29T09:31:34.742421790Z [err]      <div class="error-block">
+2025-11-29T09:31:34.742426075Z [err]          <div class="error-block__number">400</div>
+2025-11-29T09:31:34.742430035Z [err]          <div class="error-block__text">Bad Request</div>
+2025-11-29T09:31:34.742443935Z [err]                                      <div class="error-block__message">
+2025-11-29T09:31:34.742449200Z [err]                      1. Generated signature does not match submitted signature.</br>
+2025-11-29T09:31:34.742453775Z [err]                  </div>
+2025-11-29T09:31:34.743697150Z [err]  
+2025-11-29T09:31:34.743701936Z [err]      at generatePaymentIdentifier (file:///app/dist/index.js:1670:11)
+2025-11-29T09:31:34.743706009Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-11-29T09:31:34.743709857Z [err]      at async file:///app/dist/index.js:2797:24
+2025-11-29T09:31:34.743713959Z [inf]  9:31:26 AM [express] POST /api/purchase/initiate 500 in 1293ms :: {"message":"Failed to initiate pay…
+2025-11-29T09:32:04.745133044Z [inf]  [Auth] Checking authorization header: MISSING
+2025-11-29T09:32:04.745139265Z [inf]  [Auth] No Bearer token found - returning 401
+2025-11-29T09:32:04.745144031Z [inf]  9:31:58 AM [express] GET /api/purchase/initiate 401 in 1ms :: {"message":"Unauthorized - No token"}
+2025-11-29T09:32:11.039761934Z [inf]  [DB] Connected to Supabase successfully
+2025-11-29T09:32:11.063978841Z [inf]  9:32:11 AM [express] GET /api/auth/user 304 in 314ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0"…
+2025-11-29T09:32:11.668047338Z [inf]  9:32:11 AM [express] GET /api/auth/user 304 in 78ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:12.426491882Z [inf]  9:32:12 AM [express] GET /api/auth/user 304 in 80ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:12.895092024Z [inf]  9:32:12 AM [express] GET /api/auth/user 304 in 79ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:13.501879980Z [inf]  9:32:13 AM [express] GET /api/auth/user 304 in 89ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:14.137121116Z [inf]  9:32:14 AM [express] GET /api/auth/user 304 in 109ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0"…
+2025-11-29T09:32:14.755316063Z [inf]  9:32:14 AM [express] GET /api/auth/user 304 in 76ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:15.448385419Z [inf]  9:32:15 AM [express] GET /api/auth/user 304 in 87ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:15.971198721Z [inf]  9:32:15 AM [express] GET /api/auth/user 304 in 82ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:16.578722871Z [inf]  9:32:16 AM [express] GET /api/auth/user 304 in 76ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:17.376400502Z [inf]  9:32:17 AM [express] GET /api/auth/user 304 in 83ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:17.800232483Z [inf]  9:32:17 AM [express] GET /api/auth/user 304 in 76ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:18.418500174Z [inf]  9:32:18 AM [express] GET /api/auth/user 304 in 76ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:19.015644357Z [inf]  9:32:19 AM [express] GET /api/auth/user 304 in 83ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:19.621646870Z [inf]  9:32:19 AM [express] GET /api/auth/user 304 in 85ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:20.440080988Z [inf]  9:32:20 AM [express] GET /api/auth/user 304 in 78ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:20.896259844Z [inf]  9:32:20 AM [express] GET /api/auth/user 304 in 79ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:21.443767120Z [inf]  9:32:21 AM [express] GET /api/auth/user 304 in 75ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:22.047926955Z [inf]  9:32:22 AM [express] GET /api/auth/user 304 in 80ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:22.652233253Z [inf]  9:32:22 AM [express] GET /api/auth/user 304 in 76ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:23.489441890Z [inf]  9:32:23 AM [express] GET /api/auth/user 304 in 85ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:23.889634355Z [inf]  9:32:23 AM [express] GET /api/auth/user 304 in 80ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:24.500122603Z [inf]  9:32:24 AM [express] GET /api/auth/user 304 in 89ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:25.094655999Z [inf]  9:32:25 AM [express] GET /api/auth/user 304 in 76ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:25.705480924Z [inf]  9:32:25 AM [express] GET /api/auth/user 304 in 82ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:26.501370842Z [inf]  9:32:26 AM [express] GET /api/auth/user 304 in 74ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:26.917388947Z [inf]  9:32:26 AM [express] GET /api/auth/user 304 in 84ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:27.521046132Z [inf]  9:32:27 AM [express] GET /api/auth/user 304 in 76ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:28.121666187Z [inf]  9:32:28 AM [express] GET /api/auth/user 304 in 74ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:28.764086050Z [inf]  9:32:28 AM [express] GET /api/auth/user 304 in 80ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:29.494485672Z [inf]  9:32:29 AM [express] GET /api/auth/user 304 in 75ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:29.943359000Z [inf]  9:32:29 AM [express] GET /api/auth/user 304 in 79ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:30.556472827Z [inf]  9:32:30 AM [express] GET /api/auth/user 304 in 83ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:31.149893959Z [inf]  9:32:31 AM [express] GET /api/auth/user 304 in 73ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:31.757916438Z [inf]  9:32:31 AM [express] GET /api/auth/user 304 in 75ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:32.581887497Z [inf]  9:32:32 AM [express] GET /api/auth/user 304 in 75ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:32.982860810Z [inf]  9:32:32 AM [express] GET /api/auth/user 304 in 97ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:33.697966505Z [inf]  9:32:33 AM [express] GET /api/auth/user 304 in 77ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:34.193173023Z [inf]  9:32:34 AM [express] GET /api/auth/user 304 in 80ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:34.835385410Z [inf]  9:32:34 AM [express] GET /api/auth/user 304 in 97ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:35.525816509Z [inf]  9:32:35 AM [express] GET /api/auth/user 304 in 85ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:36.035389632Z [inf]  9:32:36 AM [express] GET /api/auth/user 304 in 73ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:36.630555891Z [inf]  9:32:36 AM [express] GET /api/auth/user 304 in 73ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:37.245120673Z [inf]  9:32:37 AM [express] GET /api/auth/user 304 in 78ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:37.741889756Z [inf]  9:32:37 AM [express] GET /api/auth/user 200 in 76ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:37.905154276Z [inf]  9:32:37 AM [express] GET /api/auth/user 200 in 81ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:37.930782732Z [inf]  9:32:37 AM [express] GET /api/auth/user 200 in 93ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:38.044643261Z [inf]  9:32:38 AM [express] GET /api/auth/user 304 in 78ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:38.170025086Z [inf]  9:32:38 AM [express] GET /api/auth/user 200 in 74ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:38.213818131Z [inf]  9:32:38 AM [express] GET /api/auth/user 200 in 90ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:38.491816221Z [inf]  [DB] Connected to Supabase successfully
+2025-11-29T09:32:38.491820806Z [inf]  9:32:38 AM [express] GET /api/auth/user 200 in 235ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0"…
+2025-11-29T09:32:38.646665633Z [inf]  9:32:38 AM [express] GET /api/auth/user 304 in 76ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:39.250834078Z [inf]  9:32:39 AM [express] GET /api/auth/user 304 in 76ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:39.616639959Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-11-29T09:32:39.616647183Z [inf]  [Auth] Verifying token with Supabase...
+2025-11-29T09:32:39.616819148Z [inf]  [Auth] User verified: davidj.helenaz.litigation@gmail.com
+2025-11-29T09:32:39.696517967Z [inf]  9:32:39 AM [express] GET /api/auth/user 200 in 71ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:39.719108794Z [inf]  [Purchase] User initiating purchase: 085fa749-91b6-4e3b-abf7-b9de58033dd0 davidj.helenaz.litigation@gmail.com
+2025-11-29T09:32:39.741785141Z [inf]  [Purchase] BUY NOW: full price R10.00 for patron
+2025-11-29T09:32:39.774627928Z [inf]  [Purchase] Created purchase record: 7164494f-6106-4d34-a7d1-4057f61403fb patron 1000
+2025-11-29T09:32:39.774639578Z [inf]  [Purchase] User context: {
+2025-11-29T09:32:39.774645757Z [inf]    ip: '152.110.4.171',
+2025-11-29T09:32:39.774651305Z [inf]    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb'
+2025-11-29T09:32:39.774656440Z [inf]  }
+2025-11-29T09:32:39.774662644Z [inf]  [PayFast Config] Mode: production, Merchant ID: 3212****
+2025-11-29T09:32:39.775140970Z [inf]  [PayFast Config] Mode: production, Merchant ID: 3212****
+2025-11-29T09:32:39.775152726Z [inf]  [PayFast] Frontend URL (return/cancel): https://www.timeless.organic
+2025-11-29T09:32:39.775158274Z [inf]  [PayFast] Backend URL (notify webhook): https://final-timeless-organics-repo-fix-production.up.railway.app
+2025-11-29T09:32:39.775163580Z [inf]  [PayFast API Signature] Alphabetically sorted param string (first 100 chars): amount=10.00&cancel_url=https%3A%2F%2Fwww.timeless.organic%2Fpayment%2Fcancel&email_address=davidj.h
+2025-11-29T09:32:39.775168694Z [inf]  [PayFast API Signature] Generated MD5 signature: b13c54ac240a52280565946d07df5039
+2025-11-29T09:32:39.775173622Z [inf]  [PayFast Onsite] Generating payment identifier for purchase: 7164494f-6106-4d34-a7d1-4057f61403fb
+2025-11-29T09:32:39.775179116Z [inf]  [PayFast Onsite] Amount: 1000 Seat Type: patron
+2025-11-29T09:32:39.775184178Z [inf]  [PayFast Onsite] User context: {
+2025-11-29T09:32:39.775188643Z [inf]    ip: '152.110.4.171',
+2025-11-29T09:32:39.775192950Z [inf]    agent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb'
+2025-11-29T09:32:39.775197959Z [inf]  }
+2025-11-29T09:32:39.775203287Z [inf]  [PayFast Onsite] Making request to: https://www.payfast.co.za/onsite/process
+2025-11-29T09:32:39.775209161Z [inf]  [PayFast Onsite] Merchant ID: 32126679
+2025-11-29T09:32:39.775214593Z [inf]  [PayFast Onsite] Request body keys: [
+2025-11-29T09:32:39.776993224Z [inf]    'merchant_id',      'merchant_key',
+2025-11-29T09:32:39.777001926Z [inf]    'return_url',       'cancel_url',
+2025-11-29T09:32:39.777008924Z [inf]    'notify_url',       'name_first',
+2025-11-29T09:32:39.777014939Z [inf]    'email_address',    'm_payment_id',
+2025-11-29T09:32:39.777021198Z [inf]    'amount',           'item_name',
+2025-11-29T09:32:39.777026699Z [inf]    'item_description', 'user_ip',
+2025-11-29T09:32:39.777032137Z [inf]    'user_agent',       'payment_method',
+2025-11-29T09:32:39.777037722Z [inf]    'signature'
+2025-11-29T09:32:39.777043341Z [inf]  ]
+2025-11-29T09:32:39.990707234Z [inf]  9:32:39 AM [express] GET /api/auth/user 200 in 80ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:40.104966321Z [inf]  9:32:40 AM [express] GET /api/auth/user 200 in 77ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:40.111562283Z [inf]  9:32:40 AM [express] GET /api/auth/user 200 in 91ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:40.131431918Z [inf]  9:32:40 AM [express] GET /api/auth/user 200 in 99ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:40.193088188Z [inf]  9:32:40 AM [express] GET /api/auth/user 200 in 75ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:32:40.232877720Z [inf]  9:32:40 AM [express] GET /api/auth/user 200 in 154ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0"…
+2025-11-29T09:32:40.589876623Z [err]  [PayFast Onsite] Error generating payment identifier: Request failed with status code 400
+2025-11-29T09:32:40.589884558Z [err]  [PayFast Onsite] Response status: 400
+2025-11-29T09:32:40.591613371Z [err]  [PayFast Onsite] Response data: "<!doctype html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\"\n          content=\"width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"ie=edge\">\n    <title>Payfast Payment Processor | Online Payments in South Africa</title>\n    <script src=\"https://kit.fontawesome.com/90ebafaa2a.js\" crossorigin=\"anonymous\"></script>\n    <style>\n    /* Fonts */\n    @font-face {\n        font-family: \"RocGrotesk\";\n        font-weight: 300;\n        font-style: normal;\n        src: url(/../eng/fonts/RocGroteskLight.eot);\n        src: local('RocGrotesk Light'), local('RocGrotesk-Light'), url(/../eng/fonts/RocGroteskLight.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskLight.woff2) format('woff2'), url(/../eng/fonts/RocGroteskLight.woff) format('woff'), url(/../eng/fonts/RocGroteskLight.ttf) format('truetype'), url(/../eng/fonts/RocGroteskLight.svg#RocGrotesk) format('svg');\n    }\n\n    @font-face {\n        font-family: \"RocGrotesk\";\n        font-weight: 400;\n        font-style: normal;\n        src: url(/../eng/fonts/RocGroteskRegular.eot);\n        src: local('RocGrotesk Regular'), local('RocGrotesk-Regular'), url(/../eng/fonts/RocGroteskRegular.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskRegular.woff2) format('woff2'), url(/../eng/fonts/RocGroteskRegular.woff) format('woff'), url(/../eng/fonts/RocGroteskRegular.ttf) format('truetype'), url(/../eng/fonts/RocGroteskRegular.svg#RocGrotesk) format('svg');\n    }\n\n    @font-face {\n        font-family: \"RocGrotesk\";\n        font-weight: 500;\n        font-style: normal;\n        src: url(/../eng/fonts/GroteskMedium.eot);\n        src: local('RocGrotesk Medium'), local('RocGrotesk-Medium'), url(/../eng/fonts/RocGroteskMedium.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskMedium.woff2) format('woff2'), url(/../eng/fonts/RocGroteskMedium.woff) format('woff'), url(/../eng/fonts/RocGroteskMedium.ttf) format('truetype'), url(/../eng/fonts/RocGroteskMedium.svg#RocGrotesk) format('svg');\n    }\n\n    @font-face {\n        font-family: \"RocGrotesk\";\n        font-weight: 600;\n        font-style: normal;\n        src: url(/../eng/fonts/RocGroteskBold.eot);\n        src: local('RocGrotesk Bold'), local('RocGrotesk-Bold'), url(/../eng/fonts/RocGroteskBold.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskBold.woff2) format('woff2'), url(/../eng/fonts/RocGroteskBold.woff) format('woff'), url(/../eng/fonts/RocGroteskBold.ttf) format('truetype'), url(/../eng/fonts/RocGroteskBold.svg#RocGrotesk) format('svg');\n    }\n\n    @font-face {\n        font-family: \"RocGrotesk\";\n        font-weight: 700;\n        font-style: normal;\n        src: url(/../eng/fonts/RocGroteskExtraBold.eot);\n        src: local('RocGrotesk ExtraBold'), local('RocGrotesk-ExtraBold'), url(/../eng/fonts/RocGroteskExtraBold.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskExtraBold.woff2) format('woff2'), url(/../eng/fonts/RocGroteskExtraBold.woff) format('woff'), url(/../eng/fonts/RocGroteskExtraBold.ttf) format('truetype'), url(/../eng/fonts/RocGroteskExtraBold.svg#RocGrotesk) format('svg');\n    }\n\n    @font-face {\n        font-family: \"FoundersGrotesk\";\n        font-weight: 400;\n        font-style: normal;\n        src: url(/../eng/fonts/FoundersGroteskRegular.eot);\n        src: local('FoundersGrotesk Regular'), local('FoundersGrotesk-Regular'), url(/../eng/fonts/FoundersGroteskRegular.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/FoundersGroteskRegular.woff2) format('woff2'), url(/../eng/fonts/FoundersGroteskRegular.woff) format('woff'), url(/../eng/fonts/FoundersGroteskRegular.ttf) format('truetype'), url(/../eng/fonts/FoundersGroteskRegular.svg#FoundersGrotesk) format('svg');\n    }\n\n    @font-face {\n        font-family: \"FoundersGrotesk\";\n        font-weight: 600;\n        font-style: normal;\n        src: url(/../eng/fonts/FoundersGroteskSemibold.eot);\n        src: local('FoundersGrotesk Semibold'), local('FoundersGrotesk-Semibold'), url(/../eng/fonts/FoundersGroteskSemibold.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/FoundersGroteskSemibold.woff2) format('woff2'), url(/../eng/fonts/FoundersGroteskSemibold.woff) format('woff'), url(/../eng/fonts/FoundersGroteskSemibold.ttf) format('truetype'), url(/../eng/fonts/FoundersGroteskSemibold.svg#FoundersGrotesk) format('svg');\n    }\n\n    /* Normalisation */\n    html, body {\n        height: 100%;\n    }\n\n    body {\n        margin: 0;\n        background-image: url(https://content.payfast.co.za/assets/images/error-pages/background-1.png), url(https://content.payfast.co.za/assets/images/error-pages/background-2.png), url(https://content.payfast.co.za/assets/images/error-pages/background-3.png), url(https://content.payfast.co.za/assets/images/error-pages/background-4.png), url(https://content.payfast.co.za/assets/images/error-pages/background-5.png), url(https://content.payfast.co.za/assets/images/error-pages/background-6.png), url(https://content.payfast.co.za/assets/images/error-pages/background-7.png), url(https://content.payfast.co.za/assets/images/error-pages/background-8.png), url(https://content.payfast.co.za/assets/images/error-pages/background-9.png), url(https://content.payfast.co.za/assets/images/error-pages/background-10.png), url(https://content.payfast.co.za/assets/images/error-pages/background-11.png);\n        background-position: right 80px bottom 260px, left 300px top 160px, left 296px bottom, left 75px bottom, right 284px bottom, left bottom 148px, right 134px bottom, right 237px bottom 150px, right top 336px, left 210px top 450px, right bottom 120px;\n        background-repeat: no-repeat;\n        background-color: white;\n    }\n\n    /* Responsiveness */\n    @media  only screen and (max-width: 1500px) {\n        body {\n            background-position: right 40px bottom 145px, left 240px top 170px, left 180px bottom, left 70px bottom, right 132px bottom, left bottom 75px, right 58px bottom, right 110px bottom 74px, right bottom 211px, left 160px top 420px, right bottom 75px;\n            background-size: 88px 75px, 98px 75px, 123px 95px, 113px 77px, 125px 82px, 129px 91px, 88px 115px, 114px 118px, 76px 125px, 74px 75px, 75px 75px;\n        }\n    }\n\n    @media  only screen and (max-width: 1100px) {\n        body {\n            background-position: right 40px bottom 145px, left 150px top 170px, left 180px bottom, left 70px bottom, right 132px bottom, left bottom 75px, right 58px bottom, right 110px bottom 74px, right bottom 211px, left 70px top 420px, right bottom 75px;\n            background-size: 88px 75px, 98px 75px, 123px 95px, 113px 77px, 125px 82px, 129px 91px, 88px 115px, 114px 118px, 76px 125px, 74px 75px, 75px 75px;\n        }\n\n        .error-block__number {\n            font-size: 160px !important;\n        }\n\n        .error-block__text {\n            font-size: 28px !important;\n        }\n\n        .error-block__message {\n            font-size: 20px !important;\n        }\n    }\n\n    @media  only screen and (max-width: 800px) {\n        body {\n            background-position: right 40px bottom 145px, left 80px top 170px, left 180px bottom, left 70px bottom, right 132px bottom, left bottom 75px, right 58px bottom, right 110px bottom 74px, right bottom 211px, left 20px top 420px, right bottom 75px;\n            background-size: 88px 75px, 98px 75px, 123px 95px, 113px 77px, 125px 82px, 129px 91px, 88px 115px, 114px 118px, 76px 125px, 74px 75px, 75px 75px;\n        }\n\n        .error-block__number {\n            font-size: 120px !important;\n        }\n\n        .error-block__text {\n            font-size: 24px !important;\n        }\n\n        .error-block__message {\n            font-size: 18px !important;\n        }\n    }\n\n    @media  only screen and (max-width: 650px) {\n        #header-contact__link {\n            display: flex;\n            justify-content: center;\n            align-items: center;\n            border: 1px solid #022D2D;\n            height: 42px;\n            width: 42px;\n            border-radius: 50%;\n        }\n\n        #header-contact__link span {\n            display: none;\n        }\n\n        #header-contact__link i {\n            margin-right: 0 !important;\n        }\n\n        body {\n            background-image: none;\n        }\n    }\n\n    @media  only screen and (max-height: 650px) {\n        .error-block__button {\n            margin-top: 48px !important;\n        }\n\n        .error-block__text {\n            margin-top: 24px !important;\n        }\n    }\n\n    @media  only screen and (max-height: 550px) {\n        .error-block__button {\n            margin-top: 36px !important;\n        }\n\n        .error-block__message {\n            margin-top: 0 !important;\n        }\n\n        body {\n            background-image: none;\n        }\n    }\n\n    @media  only screen and (max-height: 500px) {\n        .error-block__button {\n            margin-top: 24px !important;\n        }\n\n        .error-block__message {\n            margin-top: 0 !important;\n            max-width: 100% !important;\n        }\n\n        .error-block__number {\n            line-height: 80% !important;\n        }\n\n        .error-block__text {\n            margin-bottom: 12px !important\n        }\n\n        .error-block {\n            padding-top: 24px !important;\n        }\n    }\n\n    @media  only screen and (max-height: 450px) {\n        .error-block__button {\n            margin-top: 12px !important\n        }\n\n        .error-block__number {\n            line-height: 70% !important;\n        }\n\n        .error-block__text {\n            margin-bottom: 0 !important;\n        }\n\n        .error-block {\n            padding-top: 48px !important;\n        }\n    }\n\n    @media  only screen and (max-height: 400px) {\n        .error-block__number {\n            line-height: 60% !important\n        }\n    }\n\n    /* Header Styling */\n    #header_bar {\n        position: fixed;\n        width: 100%;\n        display: flex;\n        justify-content: space-between;\n        min-width: 320px;\n        padding: 16px 0;\n    }\n\n    #payfast_logo img {\n        height: 62px;\n        padding-left: 32px;\n    }\n\n    #header_contact {\n        margin: 24px 32px 0 0;\n        display: flex;\n        justify-content: space-between;\n    }\n\n    #header-contact__link {\n        font-family: \"RocGrotesk\", serif;\n        color: #022D2D;\n        font-size: 16px;\n        margin-left: 36px;\n        text-decoration: none;\n    }\n\n    #header-contact__link i {\n        color: #022D2D;\n        margin-right: 12px;\n    }\n\n    /* General Styling */\n    .error-block {\n        display: flex;\n        justify-content: center;\n        align-items: center;\n        flex-direction: column;\n        height: 100%;\n        color: #022D2D;\n        font-family: 'RocGrotesk', serif;\n    }\n\n    .error-block__number {\n        font-weight: 600;\n        font-size: 200px;\n        line-height: 100%;\n    }\n\n    .error-block__text {\n        font-weight: 500;\n        font-size: 38px;\n        margin-bottom: 42px;\n    }\n\n    .error-block__message {\n        font-weight: 300;\n        font-size: 28px;\n        text-align: center;\n        margin-top: 6px;\n        max-width: 600px;\n    }\n\n    .error-block__button {\n        background-color: #dee965;\n        border: 1px solid #dee965;\n        color: #022d2d;\n        padding: 8px 40px;\n        border-radius: 80px;\n        white-space: nowrap;\n        font-size: 16px;\n        font-family: 'FoundersGrotesk', serif;\n        line-height: 24px;\n        font-weight: 600;\n        margin-top: 96px;\n    }\n</style>\n</head>\n<body>\n    <div id=\"header_bar\">\n        <a href=\"https://payfast.io\" target=\"_blank\" rel=\"noopener\">\n            <div id=\"payfast_logo\">\n                <img src=\"https://content.payfast.io/assets/images/logos/ni_payfast_logo.png\"\n                     srcset=\"https://content.payfast.io/assets/images/logos/ni_payfast_logo@2.png 2x\" alt=\"payfast_logo\">\n            </div>\n        </a>\n        <div id=\"header_contact\">\n            <a id=\"header-contact__link\" href=\"tel:+27 21 300 4455\" target=\"_blank\">\n                <i class=\"fas fa-phone\"></i>\n                <span>+27 (021) 300 4455</span>\n            </a>\n            <a id=\"header-contact__link\" href=\"mailto: sales@payfast.help\" target=\"_blank\">\n                <i class=\"fas fa-envelope\"></i>\n                <span>sales@payfast.help</span>\n            </a>\n        </div>\n    </div>\n    <div class=\"error-block\">\n        <div class=\"error-block__number\">400</div>\n        <div class=\"error-block__text\">Bad Request</div>\n                                    <div class=\"error-block__message\">\n                    1. Generated signature does not match submitted signature.</br>\n                </div>\n                        <form>\n                <input type=\"button\" value=\"Return to home page\" onclick=\"history.back()\" class=\"error-block__button\">\n            </form>\n            </div>\n</body>\n</html>\n"
+2025-11-29T09:32:40.593788603Z [err]  [PayFast Onsite] 400 Error - Check:
+2025-11-29T09:32:40.593795842Z [err]      /* Fonts */
+2025-11-29T09:32:40.593800667Z [err]    - PAYFAST_PASSPHRASE matches PayFast dashboard EXACTLY
+2025-11-29T09:32:40.593807745Z [err]      @font-face {
+2025-11-29T09:32:40.593809886Z [err]    - PAYFAST_MERCHANT_ID and PAYFAST_MERCHANT_KEY are correct
+2025-11-29T09:32:40.593818166Z [err]    - Signature calculation (alphabetical sorting per API spec)
+2025-11-29T09:32:40.593820137Z [err]          font-family: "RocGrotesk";
+2025-11-29T09:32:40.593826383Z [err]    - All required fields are present and properly formatted
+2025-11-29T09:32:40.593832308Z [err]          font-weight: 300;
+2025-11-29T09:32:40.593836362Z [err]  [Purchase] Failed to generate PayFast UUID: Error: Failed to generate PayFast payment identifier: PayFast error (400): <!doctype html>
+2025-11-29T09:32:40.593842499Z [err]          font-style: normal;
+2025-11-29T09:32:40.593846702Z [err]  <html lang="en">
+2025-11-29T09:32:40.593853371Z [err]          src: url(/../eng/fonts/RocGroteskLight.eot);
+2025-11-29T09:32:40.593857710Z [err]  <head>
+2025-11-29T09:32:40.593863276Z [err]          src: local('RocGrotesk Light'), local('RocGrotesk-Light'), url(/../eng/fonts/RocGroteskLight.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskLight.woff2) format('woff2'), url(/../eng/fonts/RocGroteskLight.woff) format('woff'), url(/../eng/fonts/RocGroteskLight.ttf) format('truetype'), url(/../eng/fonts/RocGroteskLight.svg#RocGrotesk) format('svg');
+2025-11-29T09:32:40.593870204Z [err]      <meta charset="UTF-8">
+2025-11-29T09:32:40.593874778Z [err]      <meta name="viewport"
+2025-11-29T09:32:40.593878974Z [err]            content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+2025-11-29T09:32:40.593883245Z [err]      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+2025-11-29T09:32:40.593887805Z [err]      <title>Payfast Payment Processor | Online Payments in South Africa</title>
+2025-11-29T09:32:40.593893079Z [err]      <script src="https://kit.fontawesome.com/90ebafaa2a.js" crossorigin="anonymous"></script>
+2025-11-29T09:32:40.593897221Z [err]      <style>
+2025-11-29T09:32:40.595182285Z [err]      }
+2025-11-29T09:32:40.595187240Z [err]          font-family: "RocGrotesk";
+2025-11-29T09:32:40.595188579Z [err]          src: local('RocGrotesk Medium'), local('RocGrotesk-Medium'), url(/../eng/fonts/RocGroteskMedium.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskMedium.woff2) format('woff2'), url(/../eng/fonts/RocGroteskMedium.woff) format('woff'), url(/../eng/fonts/RocGroteskMedium.ttf) format('truetype'), url(/../eng/fonts/RocGroteskMedium.svg#RocGrotesk) format('svg');
+2025-11-29T09:32:40.595194862Z [err]  
+2025-11-29T09:32:40.595203680Z [err]      }
+2025-11-29T09:32:40.595206432Z [err]      @font-face {
+2025-11-29T09:32:40.595210322Z [err]          src: local('RocGrotesk Regular'), local('RocGrotesk-Regular'), url(/../eng/fonts/RocGroteskRegular.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskRegular.woff2) format('woff2'), url(/../eng/fonts/RocGroteskRegular.woff) format('woff'), url(/../eng/fonts/RocGroteskRegular.ttf) format('truetype'), url(/../eng/fonts/RocGroteskRegular.svg#RocGrotesk) format('svg');
+2025-11-29T09:32:40.595216259Z [err]  
+2025-11-29T09:32:40.595221369Z [err]      }
+2025-11-29T09:32:40.595224647Z [err]      @font-face {
+2025-11-29T09:32:40.595226368Z [err]          font-family: "RocGrotesk";
+2025-11-29T09:32:40.595232387Z [err]  
+2025-11-29T09:32:40.595241126Z [err]      @font-face {
+2025-11-29T09:32:40.595244940Z [err]          font-weight: 400;
+2025-11-29T09:32:40.595249722Z [err]          font-family: "RocGrotesk";
+2025-11-29T09:32:40.595257038Z [err]          font-weight: 500;
+2025-11-29T09:32:40.595261593Z [err]          font-style: normal;
+2025-11-29T09:32:40.595265749Z [err]          src: url(/../eng/fonts/GroteskMedium.eot);
+2025-11-29T09:32:40.595277848Z [err]          font-style: normal;
+2025-11-29T09:32:40.595287163Z [err]          src: url(/../eng/fonts/RocGroteskRegular.eot);
+2025-11-29T09:32:40.596978986Z [err]          src: local('RocGrotesk ExtraBold'), local('RocGrotesk-ExtraBold'), url(/../eng/fonts/RocGroteskExtraBold.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskExtraBold.woff2) format('woff2'), url(/../eng/fonts/RocGroteskExtraBold.woff) format('woff'), url(/../eng/fonts/RocGroteskExtraBold.ttf) format('truetype'), url(/../eng/fonts/RocGroteskExtraBold.svg#RocGrotesk) format('svg');
+2025-11-29T09:32:40.596985896Z [err]      }
+2025-11-29T09:32:40.596991332Z [err]  
+2025-11-29T09:32:40.596996503Z [err]      @font-face {
+2025-11-29T09:32:40.597001924Z [err]          font-family: "FoundersGrotesk";
+2025-11-29T09:32:40.597008501Z [err]          font-weight: 600;
+2025-11-29T09:32:40.597008648Z [err]          font-weight: 400;
+2025-11-29T09:32:40.597014387Z [err]          font-style: normal;
+2025-11-29T09:32:40.597016171Z [err]          font-style: normal;
+2025-11-29T09:32:40.597019700Z [err]          src: url(/../eng/fonts/RocGroteskBold.eot);
+2025-11-29T09:32:40.597023180Z [err]          src: url(/../eng/fonts/FoundersGroteskRegular.eot);
+2025-11-29T09:32:40.597025229Z [err]          src: local('RocGrotesk Bold'), local('RocGrotesk-Bold'), url(/../eng/fonts/RocGroteskBold.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/RocGroteskBold.woff2) format('woff2'), url(/../eng/fonts/RocGroteskBold.woff) format('woff'), url(/../eng/fonts/RocGroteskBold.ttf) format('truetype'), url(/../eng/fonts/RocGroteskBold.svg#RocGrotesk) format('svg');
+2025-11-29T09:32:40.597030489Z [err]      }
+2025-11-29T09:32:40.597035626Z [err]  
+2025-11-29T09:32:40.597040966Z [err]      @font-face {
+2025-11-29T09:32:40.597047820Z [err]          font-family: "RocGrotesk";
+2025-11-29T09:32:40.597053247Z [err]          font-weight: 700;
+2025-11-29T09:32:40.597058634Z [err]          font-style: normal;
+2025-11-29T09:32:40.597063499Z [err]          src: url(/../eng/fonts/RocGroteskExtraBold.eot);
+2025-11-29T09:32:40.598779524Z [err]  
+2025-11-29T09:32:40.598783545Z [err]          src: local('FoundersGrotesk Regular'), local('FoundersGrotesk-Regular'), url(/../eng/fonts/FoundersGroteskRegular.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/FoundersGroteskRegular.woff2) format('woff2'), url(/../eng/fonts/FoundersGroteskRegular.woff) format('woff'), url(/../eng/fonts/FoundersGroteskRegular.ttf) format('truetype'), url(/../eng/fonts/FoundersGroteskRegular.svg#FoundersGrotesk) format('svg');
+2025-11-29T09:32:40.598790073Z [err]      }
+2025-11-29T09:32:40.598790755Z [err]      /* Normalisation */
+2025-11-29T09:32:40.598796204Z [err]  
+2025-11-29T09:32:40.598799504Z [err]      html, body {
+2025-11-29T09:32:40.598802461Z [err]      @font-face {
+2025-11-29T09:32:40.598807362Z [err]          height: 100%;
+2025-11-29T09:32:40.598807719Z [err]          font-family: "FoundersGrotesk";
+2025-11-29T09:32:40.598813453Z [err]          font-weight: 600;
+2025-11-29T09:32:40.598815575Z [err]      }
+2025-11-29T09:32:40.598819266Z [err]          font-style: normal;
+2025-11-29T09:32:40.598823962Z [err]  
+2025-11-29T09:32:40.598824670Z [err]          src: url(/../eng/fonts/FoundersGroteskSemibold.eot);
+2025-11-29T09:32:40.598830585Z [err]          src: local('FoundersGrotesk Semibold'), local('FoundersGrotesk-Semibold'), url(/../eng/fonts/FoundersGroteskSemibold.eot?#iefix) format('embedded-opentype'), url(/../eng/fonts/FoundersGroteskSemibold.woff2) format('woff2'), url(/../eng/fonts/FoundersGroteskSemibold.woff) format('woff'), url(/../eng/fonts/FoundersGroteskSemibold.ttf) format('truetype'), url(/../eng/fonts/FoundersGroteskSemibold.svg#FoundersGrotesk) format('svg');
+2025-11-29T09:32:40.598834123Z [err]      body {
+2025-11-29T09:32:40.598835733Z [err]      }
+2025-11-29T09:32:40.598843412Z [err]          margin: 0;
+2025-11-29T09:32:40.598849102Z [err]          background-image: url(https://content.payfast.co.za/assets/images/error-pages/background-1.png), url(https://content.payfast.co.za/assets/images/error-pages/background-2.png), url(https://content.payfast.co.za/assets/images/error-pages/background-3.png), url(https://content.payfast.co.za/assets/images/error-pages/background-4.png), url(https://content.payfast.co.za/assets/images/error-pages/background-5.png), url(https://content.payfast.co.za/assets/images/error-pages/background-6.png), url(https://content.payfast.co.za/assets/images/error-pages/background-7.png), url(https://content.payfast.co.za/assets/images/error-pages/background-8.png), url(https://content.payfast.co.za/assets/images/error-pages/background-9.png), url(https://content.payfast.co.za/assets/images/error-pages/background-10.png), url(https://content.payfast.co.za/assets/images/error-pages/background-11.png);
+2025-11-29T09:32:40.600831915Z [err]          background-position: right 80px bottom 260px, left 300px top 160px, left 296px bottom, left 75px bottom, right 284px bottom, left bottom 148px, right 134px bottom, right 237px bottom 150px, right top 336px, left 210px top 450px, right bottom 120px;
+2025-11-29T09:32:40.600835965Z [err]          background-repeat: no-repeat;
+2025-11-29T09:32:40.600840749Z [err]          background-color: white;
+2025-11-29T09:32:40.600844417Z [err]      }
+2025-11-29T09:32:40.600852361Z [err]  
+2025-11-29T09:32:40.600858105Z [err]      /* Responsiveness */
+2025-11-29T09:32:40.600861912Z [err]      @media  only screen and (max-width: 1500px) {
+2025-11-29T09:32:40.600866204Z [err]          body {
+2025-11-29T09:32:40.600869842Z [err]              background-position: right 40px bottom 145px, left 240px top 170px, left 180px bottom, left 70px bottom, right 132px bottom, left bottom 75px, right 58px bottom, right 110px bottom 74px, right bottom 211px, left 160px top 420px, right bottom 75px;
+2025-11-29T09:32:40.600874072Z [err]              background-size: 88px 75px, 98px 75px, 123px 95px, 113px 77px, 125px 82px, 129px 91px, 88px 115px, 114px 118px, 76px 125px, 74px 75px, 75px 75px;
+2025-11-29T09:32:40.600878060Z [err]          }
+2025-11-29T09:32:40.600881779Z [err]      }
+2025-11-29T09:32:40.600885482Z [err]  
+2025-11-29T09:32:40.600890097Z [err]      @media  only screen and (max-width: 1100px) {
+2025-11-29T09:32:40.600893731Z [err]          body {
+2025-11-29T09:32:40.600898259Z [err]              background-position: right 40px bottom 145px, left 150px top 170px, left 180px bottom, left 70px bottom, right 132px bottom, left bottom 75px, right 58px bottom, right 110px bottom 74px, right bottom 211px, left 70px top 420px, right bottom 75px;
+2025-11-29T09:32:40.600902189Z [err]              background-size: 88px 75px, 98px 75px, 123px 95px, 113px 77px, 125px 82px, 129px 91px, 88px 115px, 114px 118px, 76px 125px, 74px 75px, 75px 75px;
+2025-11-29T09:32:40.602959777Z [err]          .error-block__number {
+2025-11-29T09:32:40.602970139Z [err]              font-size: 120px !important;
+2025-11-29T09:32:40.602971515Z [err]          .error-block__message {
+2025-11-29T09:32:40.602978107Z [err]          }
+2025-11-29T09:32:40.602981838Z [err]              font-size: 20px !important;
+2025-11-29T09:32:40.602988228Z [err]  
+2025-11-29T09:32:40.602991705Z [err]          }
+2025-11-29T09:32:40.602998655Z [err]          }
+2025-11-29T09:32:40.602998690Z [err]          .error-block__text {
+2025-11-29T09:32:40.603002819Z [err]      }
+2025-11-29T09:32:40.603007150Z [err]  
+2025-11-29T09:32:40.603011643Z [err]              font-size: 24px !important;
+2025-11-29T09:32:40.603012783Z [err]  
+2025-11-29T09:32:40.603016398Z [err]          .error-block__number {
+2025-11-29T09:32:40.603023118Z [err]      @media  only screen and (max-width: 800px) {
+2025-11-29T09:32:40.603026262Z [err]              font-size: 160px !important;
+2025-11-29T09:32:40.603032618Z [err]          body {
+2025-11-29T09:32:40.603038189Z [err]          }
+2025-11-29T09:32:40.603046134Z [err]  
+2025-11-29T09:32:40.603050180Z [err]              background-position: right 40px bottom 145px, left 80px top 170px, left 180px bottom, left 70px bottom, right 132px bottom, left bottom 75px, right 58px bottom, right 110px bottom 74px, right bottom 211px, left 20px top 420px, right bottom 75px;
+2025-11-29T09:32:40.603054492Z [err]          .error-block__text {
+2025-11-29T09:32:40.603061529Z [err]              font-size: 28px !important;
+2025-11-29T09:32:40.603064503Z [err]              background-size: 88px 75px, 98px 75px, 123px 95px, 113px 77px, 125px 82px, 129px 91px, 88px 115px, 114px 118px, 76px 125px, 74px 75px, 75px 75px;
+2025-11-29T09:32:40.603069789Z [err]          }
+2025-11-29T09:32:40.603073818Z [err]          }
+2025-11-29T09:32:40.603078883Z [err]  
+2025-11-29T09:32:40.603084777Z [err]  
+2025-11-29T09:32:40.604767817Z [err]  
+2025-11-29T09:32:40.604774215Z [err]          }
+2025-11-29T09:32:40.604777481Z [err]      @media  only screen and (max-height: 650px) {
+2025-11-29T09:32:40.604784881Z [err]  
+2025-11-29T09:32:40.604786990Z [err]              background-image: none;
+2025-11-29T09:32:40.604795347Z [err]          #header-contact__link i {
+2025-11-29T09:32:40.604796116Z [err]          .error-block__message {
+2025-11-29T09:32:40.604798207Z [err]              border: 1px solid #022D2D;
+2025-11-29T09:32:40.604805794Z [err]          }
+2025-11-29T09:32:40.604808615Z [err]              font-size: 18px !important;
+2025-11-29T09:32:40.604809540Z [err]              margin-right: 0 !important;
+2025-11-29T09:32:40.604817842Z [err]              height: 42px;
+2025-11-29T09:32:40.604818663Z [err]      }
+2025-11-29T09:32:40.604824622Z [err]          }
+2025-11-29T09:32:40.604824672Z [err]          }
+2025-11-29T09:32:40.604828687Z [err]              width: 42px;
+2025-11-29T09:32:40.604836485Z [err]  
+2025-11-29T09:32:40.604837369Z [err]              border-radius: 50%;
+2025-11-29T09:32:40.604838799Z [err]      }
+2025-11-29T09:32:40.604849001Z [err]          }
+2025-11-29T09:32:40.604849056Z [err]  
+2025-11-29T09:32:40.604850268Z [err]          body {
+2025-11-29T09:32:40.604861663Z [err]  
+2025-11-29T09:32:40.604865489Z [err]      @media  only screen and (max-width: 650px) {
+2025-11-29T09:32:40.604872522Z [err]          #header-contact__link {
+2025-11-29T09:32:40.604875049Z [err]          #header-contact__link span {
+2025-11-29T09:32:40.604883658Z [err]              display: flex;
+2025-11-29T09:32:40.604884132Z [err]              display: none;
+2025-11-29T09:32:40.604892949Z [err]          }
+2025-11-29T09:32:40.604895275Z [err]              justify-content: center;
+2025-11-29T09:32:40.604902799Z [err]  
+2025-11-29T09:32:40.604906266Z [err]              align-items: center;
+2025-11-29T09:32:40.606597527Z [err]          .error-block__button {
+2025-11-29T09:32:40.606601779Z [err]          }
+2025-11-29T09:32:40.606604832Z [err]              margin-top: 48px !important;
+2025-11-29T09:32:40.606612232Z [err]          }
+2025-11-29T09:32:40.606618229Z [err]  
+2025-11-29T09:32:40.606623200Z [err]  
+2025-11-29T09:32:40.606627444Z [err]          .error-block__text {
+2025-11-29T09:32:40.606635833Z [err]          body {
+2025-11-29T09:32:40.606635887Z [err]              margin-top: 24px !important;
+2025-11-29T09:32:40.606642563Z [err]          }
+2025-11-29T09:32:40.606649160Z [err]              background-image: none;
+2025-11-29T09:32:40.606651276Z [err]      }
+2025-11-29T09:32:40.606659670Z [err]  
+2025-11-29T09:32:40.606664951Z [err]          }
+2025-11-29T09:32:40.606668173Z [err]      @media  only screen and (max-height: 550px) {
+2025-11-29T09:32:40.606673403Z [err]      }
+2025-11-29T09:32:40.606678801Z [err]          .error-block__button {
+2025-11-29T09:32:40.606682467Z [err]  
+2025-11-29T09:32:40.606688020Z [err]              margin-top: 36px !important;
+2025-11-29T09:32:40.606691717Z [err]      @media  only screen and (max-height: 500px) {
+2025-11-29T09:32:40.606697385Z [err]          }
+2025-11-29T09:32:40.606704006Z [err]          .error-block__button {
+2025-11-29T09:32:40.606706500Z [err]  
+2025-11-29T09:32:40.606713727Z [err]              margin-top: 24px !important;
+2025-11-29T09:32:40.606715675Z [err]          .error-block__message {
+2025-11-29T09:32:40.606724412Z [err]          }
+2025-11-29T09:32:40.606725900Z [err]              margin-top: 0 !important;
+2025-11-29T09:32:40.606733928Z [err]  
+2025-11-29T09:32:40.606740323Z [err]          .error-block__message {
+2025-11-29T09:32:40.606745362Z [err]              margin-top: 0 !important;
+2025-11-29T09:32:40.606751374Z [err]              max-width: 100% !important;
+2025-11-29T09:32:40.608572927Z [err]          }
+2025-11-29T09:32:40.608582905Z [err]  
+2025-11-29T09:32:40.608583270Z [err]          }
+2025-11-29T09:32:40.608584049Z [err]  
+2025-11-29T09:32:40.608593645Z [err]          .error-block__number {
+2025-11-29T09:32:40.608596893Z [err]  
+2025-11-29T09:32:40.608600717Z [err]          .error-block__button {
+2025-11-29T09:32:40.608602055Z [err]              line-height: 80% !important;
+2025-11-29T09:32:40.608608514Z [err]          .error-block {
+2025-11-29T09:32:40.608617156Z [err]          }
+2025-11-29T09:32:40.608620888Z [err]              margin-top: 12px !important
+2025-11-29T09:32:40.608620962Z [err]              padding-top: 48px !important;
+2025-11-29T09:32:40.608631057Z [err]  
+2025-11-29T09:32:40.608635215Z [err]          }
+2025-11-29T09:32:40.608637702Z [err]          }
+2025-11-29T09:32:40.608643835Z [err]          .error-block__text {
+2025-11-29T09:32:40.608648222Z [err]      }
+2025-11-29T09:32:40.608648774Z [err]  
+2025-11-29T09:32:40.608661537Z [err]              margin-bottom: 12px !important
+2025-11-29T09:32:40.608662487Z [err]          .error-block__number {
+2025-11-29T09:32:40.608668000Z [err]          }
+2025-11-29T09:32:40.608669822Z [err]              line-height: 70% !important;
+2025-11-29T09:32:40.608674324Z [err]  
+2025-11-29T09:32:40.608676224Z [err]          }
+2025-11-29T09:32:40.608680883Z [err]          .error-block {
+2025-11-29T09:32:40.608682716Z [err]  
+2025-11-29T09:32:40.608687233Z [err]              padding-top: 24px !important;
+2025-11-29T09:32:40.608689675Z [err]          .error-block__text {
+2025-11-29T09:32:40.608693455Z [err]          }
+2025-11-29T09:32:40.608699702Z [err]      }
+2025-11-29T09:32:40.608700880Z [err]              margin-bottom: 0 !important;
+2025-11-29T09:32:40.608707919Z [err]  
+2025-11-29T09:32:40.608712447Z [err]      @media  only screen and (max-height: 450px) {
+2025-11-29T09:32:40.610195833Z [err]      @media  only screen and (max-height: 400px) {
+2025-11-29T09:32:40.610204626Z [err]          .error-block__number {
+2025-11-29T09:32:40.610386773Z [err]              line-height: 60% !important
+2025-11-29T09:32:40.610389316Z [err]          font-family: "RocGrotesk", serif;
+2025-11-29T09:32:40.610395980Z [err]          }
+2025-11-29T09:32:40.610403684Z [err]      }
+2025-11-29T09:32:40.610407355Z [err]          color: #022D2D;
+2025-11-29T09:32:40.610411930Z [err]  
+2025-11-29T09:32:40.610419458Z [err]      /* Header Styling */
+2025-11-29T09:32:40.610422631Z [err]          font-size: 16px;
+2025-11-29T09:32:40.610427698Z [err]      #header_bar {
+2025-11-29T09:32:40.610435503Z [err]          position: fixed;
+2025-11-29T09:32:40.610438194Z [err]          margin-left: 36px;
+2025-11-29T09:32:40.610444541Z [err]          width: 100%;
+2025-11-29T09:32:40.610450139Z [err]          display: flex;
+2025-11-29T09:32:40.610455338Z [err]          justify-content: space-between;
+2025-11-29T09:32:40.610459613Z [err]          min-width: 320px;
+2025-11-29T09:32:40.610463563Z [err]          padding: 16px 0;
+2025-11-29T09:32:40.610467876Z [err]      }
+2025-11-29T09:32:40.610471849Z [err]  
+2025-11-29T09:32:40.610476251Z [err]      #payfast_logo img {
+2025-11-29T09:32:40.610480149Z [err]          height: 62px;
+2025-11-29T09:32:40.610485500Z [err]          padding-left: 32px;
+2025-11-29T09:32:40.610489639Z [err]      }
+2025-11-29T09:32:40.610493968Z [err]  
+2025-11-29T09:32:40.610497981Z [err]      #header_contact {
+2025-11-29T09:32:40.610502069Z [err]          margin: 24px 32px 0 0;
+2025-11-29T09:32:40.610506418Z [err]          display: flex;
+2025-11-29T09:32:40.610510743Z [err]          justify-content: space-between;
+2025-11-29T09:32:40.610514871Z [err]      }
+2025-11-29T09:32:40.610519026Z [err]  
+2025-11-29T09:32:40.610523152Z [err]      #header-contact__link {
+2025-11-29T09:32:40.612115385Z [err]      }
+2025-11-29T09:32:40.612121243Z [err]          font-weight: 600;
+2025-11-29T09:32:40.612122832Z [err]  
+2025-11-29T09:32:40.612129326Z [err]          font-size: 200px;
+2025-11-29T09:32:40.612130636Z [err]      .error-block__message {
+2025-11-29T09:32:40.612139095Z [err]          font-weight: 300;
+2025-11-29T09:32:40.612139294Z [err]          line-height: 100%;
+2025-11-29T09:32:40.612143755Z [err]          text-decoration: none;
+2025-11-29T09:32:40.612148840Z [err]      }
+2025-11-29T09:32:40.612155106Z [err]  
+2025-11-29T09:32:40.612161341Z [err]      }
+2025-11-29T09:32:40.612165527Z [err]      .error-block__text {
+2025-11-29T09:32:40.612172831Z [err]          font-weight: 500;
+2025-11-29T09:32:40.612177275Z [err]  
+2025-11-29T09:32:40.612182744Z [err]          font-size: 38px;
+2025-11-29T09:32:40.612190737Z [err]          margin-bottom: 42px;
+2025-11-29T09:32:40.612191526Z [err]      #header-contact__link i {
+2025-11-29T09:32:40.612200040Z [err]          color: #022D2D;
+2025-11-29T09:32:40.612208285Z [err]          margin-right: 12px;
+2025-11-29T09:32:40.612215515Z [err]      }
+2025-11-29T09:32:40.612225435Z [err]  
+2025-11-29T09:32:40.612233040Z [err]      /* General Styling */
+2025-11-29T09:32:40.612240855Z [err]      .error-block {
+2025-11-29T09:32:40.612247452Z [err]          display: flex;
+2025-11-29T09:32:40.612254046Z [err]          justify-content: center;
+2025-11-29T09:32:40.612261308Z [err]          align-items: center;
+2025-11-29T09:32:40.612268153Z [err]          flex-direction: column;
+2025-11-29T09:32:40.612275847Z [err]          height: 100%;
+2025-11-29T09:32:40.612282196Z [err]          color: #022D2D;
+2025-11-29T09:32:40.612288892Z [err]          font-family: 'RocGrotesk', serif;
+2025-11-29T09:32:40.612296393Z [err]      }
+2025-11-29T09:32:40.612303390Z [err]  
+2025-11-29T09:32:40.612310772Z [err]      .error-block__number {
+2025-11-29T09:32:40.614152727Z [err]          font-size: 28px;
+2025-11-29T09:32:40.614157287Z [err]          text-align: center;
+2025-11-29T09:32:40.614161457Z [err]          margin-top: 6px;
+2025-11-29T09:32:40.614165511Z [err]          max-width: 600px;
+2025-11-29T09:32:40.614170182Z [err]      }
+2025-11-29T09:32:40.614174483Z [err]  
+2025-11-29T09:32:40.614178251Z [err]      .error-block__button {
+2025-11-29T09:32:40.614183287Z [err]          background-color: #dee965;
+2025-11-29T09:32:40.614189642Z [err]          border: 1px solid #dee965;
+2025-11-29T09:32:40.614194155Z [err]          color: #022d2d;
+2025-11-29T09:32:40.614198313Z [err]          padding: 8px 40px;
+2025-11-29T09:32:40.614202299Z [err]          border-radius: 80px;
+2025-11-29T09:32:40.614205941Z [err]          white-space: nowrap;
+2025-11-29T09:32:40.614209599Z [err]          font-size: 16px;
+2025-11-29T09:32:40.614213659Z [err]          font-family: 'FoundersGrotesk', serif;
+2025-11-29T09:32:40.614217690Z [err]          line-height: 24px;
+2025-11-29T09:32:40.614221475Z [err]          font-weight: 600;
+2025-11-29T09:32:40.614225324Z [err]          margin-top: 96px;
+2025-11-29T09:32:40.614229180Z [err]      }
+2025-11-29T09:32:40.614233049Z [err]  </style>
+2025-11-29T09:32:40.614237382Z [err]  </head>
+2025-11-29T09:32:40.614241058Z [err]  <body>
+2025-11-29T09:32:40.614244703Z [err]      <div id="header_bar">
+2025-11-29T09:32:40.614249447Z [err]          <a href="https://payfast.io" target="_blank" rel="noopener">
+2025-11-29T09:32:40.614253267Z [err]              <div id="payfast_logo">
+2025-11-29T09:32:40.614259752Z [err]                  <img src="https://content.payfast.io/assets/images/logos/ni_payfast_logo.png"
+2025-11-29T09:32:40.614263634Z [err]                       srcset="https://content.payfast.io/assets/images/logos/ni_payfast_logo@2.png 2x" alt="payfast_logo">
+2025-11-29T09:32:40.614267299Z [err]              </div>
+2025-11-29T09:32:40.616684395Z [err]  </body>
+2025-11-29T09:32:40.616685751Z [err]          <div class="error-block__number">400</div>
+2025-11-29T09:32:40.616691394Z [err]  </html>
+2025-11-29T09:32:40.616701477Z [err]          <div class="error-block__text">Bad Request</div>
+2025-11-29T09:32:40.616703543Z [err]              </form>
+2025-11-29T09:32:40.616704854Z [err]                  </div>
+2025-11-29T09:32:40.616711678Z [err]                                      <div class="error-block__message">
+2025-11-29T09:32:40.616715047Z [err]              </div>
+2025-11-29T09:32:40.616722291Z [err]                          <form>
+2025-11-29T09:32:40.616722498Z [err]                      1. Generated signature does not match submitted signature.</br>
+2025-11-29T09:32:40.616734878Z [err]                  <input type="button" value="Return to home page" onclick="history.back()" class="error-block__button">
+2025-11-29T09:32:40.616783521Z [err]          </a>
+2025-11-29T09:32:40.616788658Z [err]          <div id="header_contact">
+2025-11-29T09:32:40.616793776Z [err]              <a id="header-contact__link" href="tel:+27 21 300 4455" target="_blank">
+2025-11-29T09:32:40.616798912Z [err]                  <i class="fas fa-phone"></i>
+2025-11-29T09:32:40.616803543Z [err]                  <span>+27 (021) 300 4455</span>
+2025-11-29T09:32:40.616808856Z [err]              </a>
+2025-11-29T09:32:40.616813339Z [err]              <a id="header-contact__link" href="mailto: sales@payfast.help" target="_blank">
+2025-11-29T09:32:40.616818221Z [err]                  <i class="fas fa-envelope"></i>
+2025-11-29T09:32:40.616823304Z [err]                  <span>sales@payfast.help</span>
+2025-11-29T09:32:40.616829469Z [err]              </a>
+2025-11-29T09:32:40.616834083Z [err]          </div>
+2025-11-29T09:32:40.616838599Z [err]      </div>
+2025-11-29T09:32:40.616842944Z [err]      <div class="error-block">
+2025-11-29T09:32:40.617649746Z [err]  
+2025-11-29T09:32:40.617654746Z [err]      at generatePaymentIdentifier (file:///app/dist/index.js:1670:11)
+2025-11-29T09:32:40.617658912Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-11-29T09:32:40.617662421Z [err]      at async file:///app/dist/index.js:2797:24
+2025-11-29T09:32:40.634101282Z [inf]  9:32:40 AM [express] POST /api/purchase/initiate 500 in 1071ms :: {"message":"Failed to initiate pay…
+2025-11-29T09:34:31.230328860Z [inf]  [DB] Connected to Supabase successfully
+2025-11-29T09:34:31.230333692Z [inf]  9:34:25 AM [express] GET /api/auth/user 304 in 296ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0"…
+2025-11-29T09:34:31.230338684Z [inf]  9:34:26 AM [express] GET /api/auth/user 304 in 81ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:34:31.230343397Z [inf]  9:34:27 AM [express] GET /api/auth/user 304 in 76ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:34:31.230347382Z [inf]  9:34:27 AM [express] GET /api/auth/user 304 in 73ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:34:31.230354595Z [inf]  9:34:28 AM [express] GET /api/auth/user 304 in 84ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:34:31.230361662Z [inf]  9:34:29 AM [express] GET /api/auth/user 304 in 96ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:34:31.230366338Z [inf]  9:34:29 AM [express] GET /api/auth/user 304 in 85ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:34:31.230370590Z [inf]  9:34:30 AM [express] GET /api/auth/user 304 in 73ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:34:31.230375045Z [inf]  9:34:30 AM [express] GET /api/auth/user 304 in 80ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0",…
+2025-11-29T09:34:31.580708219Z [inf]  9:34:31 AM [express] GET /api/auth/user 304 in 111ms :: {"id":"085fa749-91b6-4e3b-abf7-b9de58033dd0"…
+2025-11-29T09:38:42.805978912Z [inf]  [DB] Connected to Supabase successfully
+2025-11-29T09:38:42.805985407Z [inf]  [DB] Connected to Supabase successfully
+2025-11-29T09:38:42.805991468Z [inf]  9:38:42 AM [express] GET /api/prelaunch/stats 200 in 253ms :: {"totalReserved":0,"founderDeposits":0…
+2025-11-29T09:38:42.883769409Z [inf]  9:38:42 AM [express] GET /api/seats/availability 200 in 378ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
