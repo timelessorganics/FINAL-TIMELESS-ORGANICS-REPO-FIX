@@ -434,6 +434,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
 
+        // Map payment type to reservation type
+        let reservationType = 'regular';
+        if (isReserveOnly) {
+          reservationType = 'prelaunch_hold';
+        } else if (isDepositOnly) {
+          reservationType = 'prelaunch_deposit';
+        }
+
         // Create purchase record with payment type tracking
         const purchase = await storage.createPurchase({
           userId,
@@ -455,6 +463,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           deliveryAddress,
           isDepositOnly,
           depositAmountCents,
+          reservationType,
         });
 
         console.log(
