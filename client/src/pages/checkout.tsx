@@ -195,6 +195,7 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
   });
 
   const handleCheckout = (data: CheckoutForm) => {
+    console.log("[Checkout] Form submitted with data:", data);
     if (validatedPromo?.valid && validatedPromo.discount === 100) {
       if (validatedPromo.seatType !== seatType) {
         toast({
@@ -209,6 +210,12 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
       initiatePurchase.mutate(data);
     }
   };
+
+  // Log form errors when validation fails
+  const formErrors = form.formState.errors;
+  if (Object.keys(formErrors).length > 0) {
+    console.log("[Checkout] Form validation errors:", formErrors);
+  }
 
   const validatePromoCode = async () => {
     if (!promoCode.trim()) {
@@ -286,7 +293,17 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
             {/* Left: Form */}
             <div className="lg:col-span-3">
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(handleCheckout)} className="space-y-6">
+                <form onSubmit={form.handleSubmit(handleCheckout, (errors) => {
+                  console.log("[Checkout] Validation failed:", errors);
+                  const firstError = Object.values(errors)[0];
+                  if (firstError?.message) {
+                    toast({
+                      variant: "destructive",
+                      title: "Please complete all fields",
+                      description: String(firstError.message),
+                    });
+                  }
+                })} className="space-y-6">
                   
                   {/* Contact Details */}
                   <Card className="border-border/50">
