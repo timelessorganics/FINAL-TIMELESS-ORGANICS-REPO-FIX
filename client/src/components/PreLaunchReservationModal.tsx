@@ -39,7 +39,7 @@ export default function PreLaunchReservationModal({
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [seatType, setSeatType] = useState<'founder' | 'patron'>(defaultSeatType);
-  const [reservationType, setReservationType] = useState<'deposit' | 'hold'>('hold');
+  const [reservationType, setReservationType] = useState<'reserve' | 'secure' | 'buy'>('reserve');
   const [step, setStep] = useState<'form' | 'success'>('form');
   
   const { toast } = useToast();
@@ -59,7 +59,7 @@ export default function PreLaunchReservationModal({
     },
     onSuccess: (data: { success: boolean; paymentUrl?: string }) => {
       queryClient.invalidateQueries({ queryKey: ['/api/prelaunch/stats'] });
-      if (reservationType === 'deposit' && data.paymentUrl) {
+      if (reservationType === 'secure' && data.paymentUrl) {
         window.location.href = data.paymentUrl;
       } else {
         setStep('success');
