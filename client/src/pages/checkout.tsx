@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useLocation, Link } from "wouter";
+import { useLocation, Link, useSearch } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -39,12 +39,11 @@ const checkoutFormSchema = z.object({
 
 type CheckoutForm = z.infer<typeof checkoutFormSchema>;
 
-interface CheckoutPageProps {
-  seatType: "founder" | "patron";
-}
-
-export default function CheckoutPage({ seatType }: CheckoutPageProps) {
+export default function CheckoutPage() {
   const [, setLocation] = useLocation();
+  const search = useSearch();
+  const params = new URLSearchParams(search);
+  const seatType = (params.get("seat") || "founder") as "founder" | "patron";
   const { toast } = useToast();
   const [purchaseMode, setPurchaseMode] = useState<"cast_now" | "wait_for_season">("cast_now");
   const [promoCode, setPromoCode] = useState("");
