@@ -124,7 +124,7 @@ export default function HomePage() {
                 </div>
                 
                 <div className="w-full sm:w-auto text-center">
-                  <Link href="/checkout" className="block mb-1 sm:mb-2">
+                  <Link href="/checkout/patron" className="block mb-1 sm:mb-2">
                     <Button 
                       size="lg" 
                       variant="outline"
