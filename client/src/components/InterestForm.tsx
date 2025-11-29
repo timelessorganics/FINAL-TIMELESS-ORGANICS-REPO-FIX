@@ -118,7 +118,7 @@ export function InterestForm() {
                 <FormLabel className="text-bronze/90">Full Name</FormLabel>
                 <FormControl>
                   <Input
-                    placeholder="David Junor"
+                    placeholder="Full Name"
                     data-testid="input-name"
                     className="border-bronze/30 bg-background/80 focus:border-bronze"
                     autoComplete="off"
