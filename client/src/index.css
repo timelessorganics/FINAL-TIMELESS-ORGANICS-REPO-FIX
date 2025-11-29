@@ -125,6 +125,29 @@
   --destructive-border: hsl(from hsl(var(--destructive)) h s calc(l + var(--opaque-button-border-intensity)) / alpha);
 }
 
+/* ELEGANT TYPOGRAPHY - Fine, thin weight */
+body {
+  font-weight: 300 !important;
+  letter-spacing: 0.3px;
+}
+
+p, span, div, li {
+  font-weight: 300;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+.font-serif {
+  font-weight: 400;
+}
+
+button, [role="button"] {
+  font-weight: 400;
+}
+
 .dark {
   --button-outline: rgba(255,255,255, .10);
   --badge-outline: rgba(255,255,255, .05);

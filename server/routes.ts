@@ -49,6 +49,23 @@ import { registerWorkshopRoutes } from "./routes/workshop-calendar";
 import { db } from "./db";
 
 // Server-side pricing functions (source of truth - NEVER trust client prices!)
+// FIRE SALE PRICES (24hrs from launch):
+// Founder: R2,000 (normally R3,500) 
+// Patron: R3,500 (normally R5,500)
+// After 24hrs, reverts to normal prices
+
+// Get current seat price considering fire sale
+async function getSeatingPrice(seatType: 'founder' | 'patron'): Promise<number> {
+  const seats = await storage.getSeats();
+  const seat = seats.find(s => s.type === seatType);
+  if (!seat) throw new Error(`Seat type ${seatType} not found`);
+  
+  // Check if fire sale is active
+  if (seat.fireSalePrice && seat.fireSaleEndsAt && new Date() < new Date(seat.fireSaleEndsAt)) {
+    return seat.fireSalePrice;
+  }
+  return seat.price;
+}
 
 // Mounting deposit: R1,000 for all types (deducted from final quote)
 // Final prices vary: slate R1,500, wood R1,000+, resin R2,500+ (size dependent)

@@ -85,6 +85,8 @@ export const seats = pgTable("seats", {
   price: integer("price").notNull(), // In cents (R3000 = 300000, R5000 = 500000)
   totalAvailable: integer("total_available").notNull(), // 50 for each type
   sold: integer("sold").default(0).notNull(),
+  fireSalePrice: integer("fire_sale_price"), // Fire sale price in cents (active for 24hrs from launch)
+  fireSaleEndsAt: timestamp("fire_sale_ends_at"), // When fire sale pricing expires
   updatedAt: timestamp("updated_at").defaultNow(),
 });
 
