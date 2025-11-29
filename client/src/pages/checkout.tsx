@@ -22,9 +22,19 @@ const checkoutFormSchema = z.object({
   phone: z.string().min(10, "Please enter a valid phone number"),
   address: z.string().min(10, "Please enter your delivery address"),
   isGift: z.boolean().default(false),
-  giftRecipientEmail: z.string().email().optional(),
+  giftRecipientEmail: z.string().optional(),
   giftRecipientName: z.string().optional(),
   giftMessage: z.string().optional(),
+}).refine((data) => {
+  // Only validate gift fields if isGift is true
+  if (!data.isGift) return true;
+  if (!data.giftRecipientEmail) return false;
+  if (!data.giftRecipientName) return false;
+  // Validate email format only if required
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.giftRecipientEmail);
+}, {
+  message: "Recipient email and name are required for gifts",
+  path: ["giftRecipientEmail"],
 });
 
 type CheckoutForm = z.infer<typeof checkoutFormSchema>;
