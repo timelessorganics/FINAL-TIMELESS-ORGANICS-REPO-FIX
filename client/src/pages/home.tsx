@@ -124,32 +124,34 @@ export default function HomePage() {
                 </div>
 
                 <div className="w-full sm:w-auto text-center">
-                  <Link href="/checkout/patron?mode=deposit" className="block mb-1 sm:mb-2">
-                    <Button 
-                      size="lg" 
-                      variant="outline"
-                      className="w-full text-xs sm:text-sm px-4 sm:px-6 py-3 sm:py-5 min-h-10 sm:min-h-12 gap-2 font-bold border-white/30 text-white hover:bg-white/10" 
-                      data-testid="button-secure-deposit"
-                    >
+                  <Button 
+                    asChild
+                    size="lg" 
+                    variant="outline"
+                    className="w-full text-xs sm:text-sm px-4 sm:px-6 py-3 sm:py-5 min-h-10 sm:min-h-12 gap-2 font-bold border-white/30 text-white hover:bg-white/10 mb-1 sm:mb-2" 
+                    data-testid="button-secure-deposit"
+                  >
+                    <Link href="/checkout/patron?mode=deposit">
                       SECURE R1K
                       <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </Button>
-                  </Link>
+                    </Link>
+                  </Button>
                   <p className="text-xs text-white/60 font-light mt-1">48hr deadline</p>
                 </div>
                 
                 <div className="w-full sm:w-auto text-center">
-                  <Link href="/checkout/patron" className="block mb-1 sm:mb-2">
-                    <Button 
-                      size="lg" 
-                      variant="outline"
-                      className="w-full text-xs sm:text-sm px-4 sm:px-6 py-3 sm:py-5 min-h-10 sm:min-h-12 gap-2 font-bold border-white/30 text-white hover:bg-white/10" 
-                      data-testid="button-buy-now"
-                    >
+                  <Button 
+                    asChild
+                    size="lg" 
+                    variant="outline"
+                    className="w-full text-xs sm:text-sm px-4 sm:px-6 py-3 sm:py-5 min-h-10 sm:min-h-12 gap-2 font-bold border-white/30 text-white hover:bg-white/10 mb-1 sm:mb-2" 
+                    data-testid="button-buy-now"
+                  >
+                    <Link href="/checkout/patron">
                       BUY NOW
                       <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    </Button>
-                  </Link>
+                    </Link>
+                  </Button>
                   <p className="text-xs text-white/60 font-light mt-1">Full price</p>
                 </div>
               </div>
@@ -393,14 +395,13 @@ export default function HomePage() {
 
                   {/* Dual Buttons - Reserve + Buy Now */}
                   <div className="space-y-3">
-                    <Link href="/checkout/founder" className="w-full">
-                      <Button 
-                        className="w-full min-h-11 text-sm font-semibold btn-bronze"
-                        data-testid="button-buy-founder"
-                      >
-                        Buy Now
-                      </Button>
-                    </Link>
+                    <Button 
+                      asChild
+                      className="w-full min-h-11 text-sm font-semibold btn-bronze"
+                      data-testid="button-buy-founder"
+                    >
+                      <Link href="/checkout/founder">Buy Now</Link>
+                    </Button>
                     
                     <Button 
                       variant="outline"
@@ -464,14 +465,13 @@ export default function HomePage() {
 
                   {/* Dual Buttons - Reserve + Buy Now */}
                   <div className="space-y-3">
-                    <Link href="/checkout/patron" className="w-full">
-                      <Button 
-                        className="w-full min-h-11 text-sm font-semibold bg-accent-gold text-background hover:bg-accent-gold/90"
-                        data-testid="button-buy-patron"
-                      >
-                        Buy Now
-                      </Button>
-                    </Link>
+                    <Button 
+                      asChild
+                      className="w-full min-h-11 text-sm font-semibold bg-accent-gold text-background hover:bg-accent-gold/90"
+                      data-testid="button-buy-patron"
+                    >
+                      <Link href="/checkout/patron">Buy Now</Link>
+                    </Button>
                     
                     <Button 
                       variant="outline"
@@ -580,12 +580,12 @@ export default function HomePage() {
                 This founding group becomes the story — and you become part of it."
               </p>
               
-              <Link href="#seats">
-                <Button size="lg" className="btn-bronze gap-2 min-h-14 text-lg px-10" data-testid="button-investments-cta">
+              <Button asChild size="lg" className="btn-bronze gap-2 min-h-14 text-lg px-10" data-testid="button-investments-cta">
+                <Link href="#seats">
                   Secure Your Seat Now
                   <ArrowRight className="w-5 h-5" />
-                </Button>
-              </Link>
+                </Link>
+              </Button>
             </div>
           </div>
         </section>
@@ -605,12 +605,12 @@ export default function HomePage() {
                   Learn the ancient art of lost-wax casting. Maximum 6 participants. 
                   Take home your own bronze sculpture.
                 </p>
-                <Link href="/workshops">
-                  <Button variant="outline" className="gap-2" data-testid="button-workshops">
+                <Button asChild variant="outline" className="gap-2" data-testid="button-workshops">
+                  <Link href="/workshops">
                     Learn More
                     <ArrowRight className="w-4 h-4" />
-                  </Button>
-                </Link>
+                  </Link>
+                </Button>
               </div>
               <div className="p-6 space-y-4">
                 <div>
