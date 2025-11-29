@@ -79,7 +79,11 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
   // Normalize seatType to lowercase for matching
   const normalizedSeatType = seatType.toLowerCase();
   const currentSeat = seats?.find((s) => s.type.toLowerCase() === normalizedSeatType);
-  const basePriceCents = currentSeat?.price || (normalizedSeatType === "founder" ? 300000 : 500000);
+  // Use fallback prices if database price is missing or wrong (less than R1000)
+  const dbPrice = currentSeat?.price;
+  const basePriceCents = (dbPrice && dbPrice > 100000) 
+    ? dbPrice 
+    : (normalizedSeatType === "founder" ? 300000 : 500000);
   const basePrice = basePriceCents / 100;
 
   const form = useForm<CheckoutForm>({

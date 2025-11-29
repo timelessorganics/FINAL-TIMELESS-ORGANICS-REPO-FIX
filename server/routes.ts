@@ -14,6 +14,7 @@ import {
   type Purchase,
   type Code,
   subscribers,
+  purchases,
 } from "@shared/schema";
 import { fromError } from "zod-validation-error";
 import {
@@ -290,6 +291,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const expiredCount = await storage.expireOldReservations();
         if (expiredCount > 0) {
           console.log(`[Reservations] Expired ${expiredCount} old reservations, seats returned to pool`);
+        }
+        
+        // Expire SECURE deposits where balance deadline has passed
+        const expiredDeposits = await db.update(purchases)
+          .set({ status: 'failed' })
+          .where(
+            and(
+              eq(purchases.isDepositOnly, true),
+              eq(purchases.status, 'pending'),
+              lt(purchases.balanceDueAt, new Date())
+            )
+          )
+          .returning();
+        
+        if (expiredDeposits.length > 0) {
+          console.log(`[SECURE] Released ${expiredDeposits.length} expired deposit holds - seats returned to pool`);
         }
         
         // Expire early bird holds that have passed their hold expiration time

@@ -1,14 +1,112 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import type { Purchase, Code, User } from "@shared/schema";
-import { Download, ExternalLink, User as UserIcon, Sparkles, CalendarDays, Upload, Clock, Leaf, Flame, Package, Gift, Check, Loader2, Edit2 } from "lucide-react";
+import { Download, ExternalLink, User as UserIcon, Sparkles, CalendarDays, Upload, Clock, Leaf, Flame, Package, Gift, Check, Loader2, Edit2, AlertTriangle } from "lucide-react";
 import { queryClient, apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+
+function DepositCountdown({ balanceDueAt, purchaseId, seatType, depositAmount }: { 
+  balanceDueAt: string; 
+  purchaseId: string; 
+  seatType: string;
+  depositAmount: number;
+}) {
+  const [timeLeft, setTimeLeft] = useState<{ hours: number; minutes: number; seconds: number; expired: boolean }>({ 
+    hours: 0, minutes: 0, seconds: 0, expired: false 
+  });
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const deadline = new Date(balanceDueAt).getTime();
+      const now = Date.now();
+      const diff = deadline - now;
+
+      if (diff <= 0) {
+        return { hours: 0, minutes: 0, seconds: 0, expired: true };
+      }
+
+      const hours = Math.floor(diff / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      return { hours, minutes, seconds, expired: false };
+    };
+
+    setTimeLeft(calculateTimeLeft());
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [balanceDueAt]);
+
+  const fullPrice = seatType === 'founder' ? 300000 : 500000;
+  const balanceOwed = (fullPrice - depositAmount) / 100;
+
+  if (timeLeft.expired) {
+    return (
+      <div className="mb-6 p-4 bg-destructive/10 border border-destructive/30 rounded-lg">
+        <div className="flex items-start gap-3">
+          <AlertTriangle className="w-6 h-6 text-destructive flex-shrink-0" />
+          <div className="flex-1">
+            <p className="text-sm font-semibold text-foreground mb-2">Deposit Expired</p>
+            <p className="text-sm text-muted-foreground">
+              Your 24-hour window to pay the balance has expired. Your seat has been released back to the pool.
+              Please contact us if you need assistance.
+            </p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mb-6 p-4 bg-bronze/10 border border-bronze/30 rounded-lg">
+      <div className="flex items-start gap-3">
+        <Clock className="w-6 h-6 text-bronze flex-shrink-0 animate-pulse" />
+        <div className="flex-1">
+          <p className="text-sm font-semibold text-foreground mb-2">
+            Deposit Secured - Complete Payment Required
+          </p>
+          <p className="text-sm text-muted-foreground mb-3">
+            You paid R{(depositAmount / 100).toLocaleString()} deposit. Pay the remaining 
+            <span className="font-bold text-accent-gold"> R{balanceOwed.toLocaleString()}</span> before your seat is released.
+          </p>
+          
+          <div className="flex items-center gap-4 mb-4">
+            <div className="text-center bg-background/50 px-4 py-2 rounded-lg border border-border">
+              <div className="text-2xl font-bold text-bronze font-mono">{String(timeLeft.hours).padStart(2, '0')}</div>
+              <div className="text-xs text-muted-foreground uppercase">Hours</div>
+            </div>
+            <div className="text-xl font-bold text-muted-foreground">:</div>
+            <div className="text-center bg-background/50 px-4 py-2 rounded-lg border border-border">
+              <div className="text-2xl font-bold text-bronze font-mono">{String(timeLeft.minutes).padStart(2, '0')}</div>
+              <div className="text-xs text-muted-foreground uppercase">Min</div>
+            </div>
+            <div className="text-xl font-bold text-muted-foreground">:</div>
+            <div className="text-center bg-background/50 px-4 py-2 rounded-lg border border-border">
+              <div className="text-2xl font-bold text-bronze font-mono">{String(timeLeft.seconds).padStart(2, '0')}</div>
+              <div className="text-xs text-muted-foreground uppercase">Sec</div>
+            </div>
+          </div>
+          
+          <Button
+            className="w-full md:w-auto bg-bronze hover:bg-bronze/90 text-white"
+            onClick={() => window.location.href = `/checkout/${seatType}?mode=balance&purchaseId=${purchaseId}`}
+            data-testid="button-pay-balance"
+          >
+            Pay Balance Now - R{balanceOwed.toLocaleString()}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 const SPECIMEN_OPTIONS = [
   { value: "cones_bracts_seedpods", label: "Cones, Bracts & Seed Pods" },
@@ -29,7 +127,7 @@ const PATINA_OPTIONS = [
   { value: "custom", label: "Custom Aging", description: "Discuss with David for unique finish" },
 ];
 
-const MOUNTING_OPTIONS = [
+const MOUNTING_OPTIONS: { value: "none" | "wall" | "base" | "custom"; label: string; description: string }[] = [
   { value: "none", label: "No mounting", description: "Display on shelf or mantle" },
   { value: "wall", label: "Wall mount", description: "Stainless steel hardware (+R1,000 deposit)" },
   { value: "base", label: "Display base", description: "Wood or slate base (+R1,000 deposit)" },
@@ -84,7 +182,7 @@ function CustomizeExtras({ purchase }: { purchase: Purchase & { codes: Code[] } 
     setHasChanges(true);
   };
 
-  const handleMountingChange = (value: string) => {
+  const handleMountingChange = (value: "none" | "wall" | "base" | "custom") => {
     setSelectedMounting(value);
     setHasChanges(true);
   };
@@ -376,11 +474,21 @@ export default function Dashboard() {
                     </div>
                   )}
 
-                  {/* Pending Purchase Notice */}
-                  {purchase.status === 'pending' && (
+                  {/* SECURE Deposit Countdown - Shows when deposit paid but balance not yet paid */}
+                  {purchase.isDepositOnly && purchase.depositPaidAt && purchase.balanceDueAt && purchase.status !== 'completed' && (
+                    <DepositCountdown 
+                      balanceDueAt={purchase.balanceDueAt.toString()} 
+                      purchaseId={purchase.id}
+                      seatType={purchase.seatType}
+                      depositAmount={purchase.depositAmountCents}
+                    />
+                  )}
+
+                  {/* Pending Purchase Notice - Only for non-deposit purchases awaiting payment */}
+                  {purchase.status === 'pending' && !purchase.isDepositOnly && (
                     <div className="mb-6 p-4 bg-bronze/10 border border-bronze/30 rounded-lg">
                       <div className="flex items-start gap-3">
-                        <div className="text-bronze text-xl">⏳</div>
+                        <Clock className="w-6 h-6 text-bronze flex-shrink-0" />
                         <div className="flex-1">
                           <p className="text-sm font-semibold text-foreground mb-2">Complete Your Payment</p>
                           <p className="text-sm text-muted-foreground mb-3">
