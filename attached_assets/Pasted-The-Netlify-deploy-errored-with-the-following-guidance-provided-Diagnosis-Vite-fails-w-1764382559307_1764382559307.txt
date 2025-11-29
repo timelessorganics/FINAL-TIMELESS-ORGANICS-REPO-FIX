@@ -1,0 +1,80 @@
+The Netlify deploy errored, with the following guidance provided:
+
+**Diagnosis**  
+- Vite fails while loading PostCSS because the plugin defined in `postcss.config.js` cannot be found. See [line 75](#L75-L88), where the stack trace shows `Error: Loading PostCSS Plugin failed: Cannot find module 'autoprefixer'`.
+
+**Solution**  
+- Add `autoprefixer` to your project dependencies so the plugin referenced in `postcss.config.js` is available during the build. From the project root run:
+
+  ```bash
+  npm install --save-dev autoprefixer
+  ```
+
+- Commit the updated `package.json` and lockfile, then push to trigger a new Netlify build.
+
+The relevant error logs are:
+
+Line 63: [96m[1mBuild command from Netlify app                                [22m[39m
+Line 64: [96m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 65: ​
+Line 66: [36m$ npm run build[39m
+Line 67: npm WARN config production Use `--omit=dev` instead.
+Line 68: > rest-express@1.0.0 build
+Line 69: > vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+Line 70: [36mvite v5.4.21 [32mbuilding for production...[36m[39m
+Line 71: transforming...
+Line 72: node:internal/process/promises:289
+Line 73:             triggerUncaughtException(err, true /* fromPromise */);
+Line 74:             ^
+Line 75: [Failed to load PostCSS config: Failed to load PostCSS config (searchPath: /opt/build/repo/client): [Error] Loading PostCSS Plug
+Line 76: Require stack:
+Line 77: - /opt/build/repo/postcss.config.js
+Line 78: (@/opt/build/repo/postcss.config.js)
+Line 79: Error: Loading PostCSS Plugin failed: Cannot find module 'autoprefixer'
+Line 80: Require stack:
+Line 81: - /opt/build/repo/postcss.config.js
+Line 82: (@/opt/build/repo/postcss.config.js)
+Line 83:     at load (file:///opt/build/repo/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:33632:11)
+Line 84:     at file:///opt/build/repo/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:33657:16
+Line 85:     at Array.map (<anonymous>)
+Line 86:     at plugins (file:///opt/build/repo/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:33656:8)
+Line 87:     at processResult (file:///opt/build/repo/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:33726:14)
+Line 88:     at file:///opt/build/repo/node_modules/vite/dist/node/chunks/dep-BK3b2jBa.js:33856:14]
+Line 89: Node.js v20.11.0
+Line 90: [91m[1m​[22m[39m
+Line 91: [91m[1m"build.command" failed                                        [22m[39m
+Line 92: [91m[1m────────────────────────────────────────────────────────────────[22m[39m
+Line 93: ​
+Line 94:   [31m[1mError message[22m[39m
+Line 95:   Command failed with exit code 1: npm run build
+Line 96: ​
+Line 97:   [31m[1mError location[22m[39m
+Line 98:   In Build command from Netlify app:
+Line 99:   npm run build
+Line 100: ​
+Line 101:   [31m[1mResolved config[22m[39m
+Line 102:   build:
+Line 103:     command: npm run build
+Line 104:     commandOrigin: ui
+Line 105:     environment:
+Line 106:       - BACKEND_URL
+Line 107:       - FRONTEND_URL
+Line 119:       - SUPABASE_URL
+Line 120:       - VITE_API_URL
+Line 121:       - VITE_SUPABASE_ANON_KEY
+Line 122:       - VITE_SUPABASE_DATABASE_URL
+Line 123:       - VITE_SUPABASE_URL
+Line 124:     publish: /opt/build/repo/dist/public
+Line 125:     publishOrigin: ui
+Line 126:   redirects:
+Line 127:     - force: true
+Line 128:       from: /api/*
+      headers:
+        Authorization: :Authorization
+        Content-Type: :Content-Type
+      status: 200
+  
+Line 129: Build failed due to a user error: Build script returned non-zero exit code: 2
+Line 130: Failing build: Failed to build site
+Line 131: Finished processing build request in 24.29s
+Line 132: Failed during stage 'building site': Build script returned non-zero exit code: 2
