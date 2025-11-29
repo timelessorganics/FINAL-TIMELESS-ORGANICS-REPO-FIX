@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import MainLaunch from "@/pages/main-launch";
+import HomePage from "@/pages/home";
 import Founding100ExplainedPage from "@/pages/founding-100-explained";
 import WorkshopsPage from "@/pages/workshops";
 import CommissionPage from "@/pages/commission";
@@ -68,8 +69,12 @@ function Router() {
       <Route path="/payment/success" component={PaymentSuccess} />
       <Route path="/payment/cancel" component={PaymentCancel} />
 
-      {/* Home Page - Root - Founding 100 Launch */}
-      <Route path="/" component={MainLaunch} />
+      {/* Home Page - Root */}
+      <Route path="/" component={HomePage} />
+
+      {/* Founding 100 Launch Page */}
+      <Route path="/founding-100" component={MainLaunch} />
+      <Route path="/founding100" component={MainLaunch} />
 
       {/* Founding 100 Explanation */}
       <Route path="/founding-100-explained" component={Founding100ExplainedPage} />
