@@ -2813,27 +2813,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Auto-fix seat prices on startup if they're incorrect
-  (async () => {
-    try {
-      const seats = await storage.getSeats();
-      const founderSeat = seats.find(s => s.type === 'founder');
-      const patronSeat = seats.find(s => s.type === 'patron');
-      
-      // Correct prices: Founder R3,000 (300000 cents), Patron R5,000 (500000 cents)
-      if (founderSeat && founderSeat.price !== 300000) {
-        await storage.updateSeatPrice('founder', 300000);
-        console.log('[Startup] Fixed founder seat price to R3,000');
-      }
-      if (patronSeat && patronSeat.price !== 500000) {
-        await storage.updateSeatPrice('patron', 500000);
-        console.log('[Startup] Fixed patron seat price to R5,000');
-      }
-    } catch (error) {
-      console.log('[Startup] Could not verify seat prices:', error);
-    }
-  })();
-
   const httpServer = createServer(app);
   return httpServer;
 }
