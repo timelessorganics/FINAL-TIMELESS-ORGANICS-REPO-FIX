@@ -529,46 +529,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
 
-        // For SECURE (deposit) and BUY NOW: generate PayFast payment
+        // For SECURE (deposit) and BUY NOW: return purchaseId for redirect flow
         if (purchase.amount === 0) {
           return res.status(400).json({ message: "Invalid payment amount" });
         }
 
-        try {
-          const uuid = await generatePaymentIdentifier(
-            purchase.id,
-            purchase.amount,
-            purchase.seatType,
-            userEmail,
-            userFirstName,
-            normalizedIp,
-            userAgent,
-          );
+        console.log(
+          "[Purchase] Created purchase, ready for redirect flow:",
+          purchase.id,
+          `(${isDepositOnly ? 'SECURE R1000 deposit' : 'BUY NOW full price'})`
+        );
 
-          console.log(
-            "[Purchase] Generated PayFast UUID for purchase:",
-            purchase.id,
-            `(${isDepositOnly ? 'SECURE R1000 deposit' : 'BUY NOW full price'})`
-          );
-
-          // Return UUID for onsite payment modal
-          res.json({
-            uuid,
-            purchaseId: purchase.id,
-            paymentType: isDepositOnly ? 'deposit' : 'full',
-            amount: purchase.amount,
-          });
-        } catch (uuidError: any) {
-          console.error(
-            "[Purchase] Failed to generate PayFast UUID:",
-            uuidError,
-          );
-          // Mark purchase as failed since payment can't proceed
-          await storage.updatePurchaseStatus(purchase.id, "failed");
-          return res.status(500).json({
-            message: "Failed to initiate payment: " + uuidError.message,
-          });
-        }
+        // Return purchaseId for redirect flow (more reliable than Onsite modal)
+        res.json({
+          purchaseId: purchase.id,
+          paymentType: isDepositOnly ? 'deposit' : 'full',
+          amount: purchase.amount,
+        });
       } catch (error: any) {
         console.error("Purchase initiation error:", error);
         res

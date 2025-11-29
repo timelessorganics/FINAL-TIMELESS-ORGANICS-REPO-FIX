@@ -139,44 +139,18 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
       }
 
       toast({
-        title: "Opening Payment",
-        description: response.paymentType === 'deposit' ? "R1,000 deposit payment loading..." : "Secure payment modal loading...",
+        title: "Redirecting to Payment",
+        description: "Taking you to PayFast secure checkout...",
       });
 
-      const payFastModal = (window as any).payfast_do_onsite_payment;
+      // Use redirect flow instead of modal - more reliable
+      const apiUrl = import.meta.env.VITE_API_URL || '';
+      const redirectUrl = `${apiUrl}/api/purchase/${response.purchaseId}/redirect`;
       
-      if (typeof payFastModal !== 'function') {
-        toast({
-          variant: "destructive",
-          title: "Payment Error",
-          description: "PayFast payment system not loaded. Please refresh and try again.",
-        });
-        return;
-      }
-
-      payFastModal(
-        { uuid: response.uuid },
-        function (result: boolean) {
-          if (result === true) {
-            const successMsg = response.paymentType === 'deposit' 
-              ? "Deposit received! You have 48 hours to pay the balance."
-              : "Welcome to the Founding 100!";
-            toast({
-              title: "Payment Successful!",
-              description: successMsg + " Redirecting...",
-            });
-            setTimeout(() => {
-              setLocation('/payment/success');
-            }, 1500);
-          } else {
-            toast({
-              variant: "destructive",
-              title: "Payment Cancelled",
-              description: "You can try again when ready.",
-            });
-          }
-        }
-      );
+      // Small delay to show toast, then redirect
+      setTimeout(() => {
+        window.location.href = redirectUrl;
+      }, 500);
     },
     onError: (error: Error) => {
       toast({
