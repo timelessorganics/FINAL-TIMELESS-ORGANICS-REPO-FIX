@@ -44,7 +44,7 @@ export async function generatePaymentIdentifier(
   // ADD PayFast Onsite REQUIRED fields to signature payload
   dataForSignature['user_ip'] = userIp;
   dataForSignature['user_agent'] = userAgent;
-  dataForSignature['payment_method'] = 'card';
+  dataForSignature['payment_method'] = 'cc';
 
   // Generate signature with ALL fields (including user context)
   const signature = generateSignature(dataForSignature, config.passphrase);
