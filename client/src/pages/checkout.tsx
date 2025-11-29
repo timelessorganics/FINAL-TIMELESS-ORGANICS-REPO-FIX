@@ -266,8 +266,27 @@ export default function CheckoutPage({ seatType }: CheckoutPageProps) {
     }
   };
 
+  // Calculate add-on costs
+  const patinaCost = hasPatina ? 1000 : 0; // R1,000 for patina
+  const mountingCosts: Record<string, number> = {
+    none: 0,
+    wall: 500,
+    base: 800,
+    custom: 1200,
+  };
+  const mountingCost = mountingCosts[mountingType] || 0;
+
+  // Calculate total price
   const discount = validatedPromo?.valid ? (basePrice * (validatedPromo.discount! / 100)) : 0;
-  const totalPrice = basePrice - discount;
+  const subtotal = basePrice - discount + (patinaCost / 100) + (mountingCost / 100); // Convert from cents to Rands
+  
+  // Apply payment type adjustments
+  let totalPrice = subtotal;
+  if (paymentType === 'deposit') {
+    totalPrice = 10; // R1,000 = 100000 cents, but display as R1,000
+  } else if (paymentType === 'reserve') {
+    totalPrice = 0;
+  }
 
   const seatLabel = seatType === "founder" ? "Founder" : "Patron";
   const seatColor = seatType === "founder" ? "bronze" : "accent-gold";
