@@ -568,13 +568,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
           return res.status(404).send("Purchase not found");
         }
 
-        // Create PayFast payment data
+        // Get customer email from user record or use gift recipient
+        let customerEmail = "noemail@provided.co.za";
+        let customerName = "Customer";
+        
+        if (purchase.isGift && purchase.giftRecipientEmail) {
+          customerEmail = purchase.giftRecipientEmail;
+          customerName = purchase.giftRecipientName || "Recipient";
+        } else if (purchase.userId) {
+          // Get email from user table
+          const user = await db.query.usersTable.findFirst({
+            where: (users, { eq }) => eq(users.id, purchase.userId),
+          });
+          if (user?.email) {
+            customerEmail = user.email;
+            customerName = user.firstName || "Customer";
+          }
+        }
+        
+        // Create PayFast payment data using customer email, NOT merchant email
+        // CRITICAL: PayFast rejects if we send merchant's own email as customer email
         const paymentData = createPaymentData(
           purchase.id,
           purchase.amount,
           purchase.seatType,
-          (req as any).user?.email || "studio@timeless.organic",
-          (req as any).user?.firstName || "Investor",
+          customerEmail,
+          customerName,
         );
 
         // Add passphrase and generate signature
