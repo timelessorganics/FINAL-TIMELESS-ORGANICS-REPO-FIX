@@ -434,14 +434,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
 
-        // Map payment type to reservation type
-        let reservationType = 'regular';
-        if (isReserveOnly) {
-          reservationType = 'prelaunch_hold';
-        } else if (isDepositOnly) {
-          reservationType = 'prelaunch_deposit';
-        }
-
         // Create purchase record with payment type tracking
         const purchase = await storage.createPurchase({
           userId,
@@ -463,7 +455,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
           deliveryAddress,
           isDepositOnly,
           depositAmountCents,
-          reservationType,
         });
 
         console.log(
@@ -2654,8 +2645,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           internationalShipping: false,
           purchaseMode: 'cast_now',
           giftMessage: null,
-          recipientEmail: null,
-          recipientName: null,
+          giftRecipientEmail: null,
+          giftRecipientName: null,
           giftStatus: null,
           specimenStyle: 'cones_bracts_seedpods',
           patternSelection: null,
@@ -2670,7 +2661,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             purchaseId: mockPurchase.id,
             type: 'bronze_claim',
             code: generateBronzeClaimCode(),
-            redeemed: false,
+            redeemedBy: null,
+            lastRedeemedAt: null,
             createdAt: new Date()
           },
           {
@@ -2678,7 +2670,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             purchaseId: mockPurchase.id,
             type: 'workshop_voucher',
             code: generateWorkshopVoucherCode('founder'),
-            redeemed: false,
+            redeemedBy: null,
+            lastRedeemedAt: null,
             createdAt: new Date()
           },
           {
@@ -2686,7 +2679,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
             purchaseId: mockPurchase.id,
             type: 'lifetime_workshop',
             code: generateLifetimeWorkshopCode('founder'),
-            redeemed: false,
+            redeemedBy: null,
+            lastRedeemedAt: null,
             createdAt: new Date()
           }
         ];

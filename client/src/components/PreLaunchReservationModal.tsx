@@ -201,15 +201,15 @@ export default function PreLaunchReservationModal({
                 <Label>How Would You Like to Reserve?</Label>
                 <RadioGroup
                   value={reservationType}
-                  onValueChange={(v) => setReservationType(v as 'deposit' | 'hold')}
+                  onValueChange={(v) => setReservationType(v as 'reserve' | 'secure' | 'buy')}
                   className="space-y-3"
                 >
                   <div className="relative">
-                    <RadioGroupItem value="deposit" id="deposit" className="peer sr-only" />
+                    <RadioGroupItem value="secure" id="secure" className="peer sr-only" />
                     <Label
-                      htmlFor="deposit"
+                      htmlFor="secure"
                       className="flex items-start gap-3 p-4 border-2 rounded-md cursor-pointer transition-all peer-data-[state=checked]:border-bronze peer-data-[state=checked]:bg-bronze/10"
-                      data-testid="radio-reserve-deposit"
+                      data-testid="radio-reserve-secure"
                     >
                       <CreditCard className="w-5 h-5 text-bronze mt-0.5" />
                       <div className="flex-1">
@@ -221,9 +221,9 @@ export default function PreLaunchReservationModal({
                     </Label>
                   </div>
                   <div className="relative">
-                    <RadioGroupItem value="hold" id="hold" className="peer sr-only" />
+                    <RadioGroupItem value="reserve" id="reserve" className="peer sr-only" />
                     <Label
-                      htmlFor="hold"
+                      htmlFor="reserve"
                       className="flex items-start gap-3 p-4 border-2 rounded-md cursor-pointer transition-all peer-data-[state=checked]:border-bronze peer-data-[state=checked]:bg-bronze/10"
                       data-testid="radio-reserve-hold"
                     >
@@ -247,7 +247,7 @@ export default function PreLaunchReservationModal({
               >
                 {reserveMutation.isPending ? (
                   "Processing..."
-                ) : reservationType === 'deposit' ? (
+                ) : reservationType === 'secure' ? (
                   <>
                     <CreditCard className="w-4 h-4 mr-2" />
                     Pay R1,000 Deposit Now
@@ -270,7 +270,7 @@ export default function PreLaunchReservationModal({
               <span className="moving-fill">Seat Reserved!</span>
             </DialogTitle>
             <p className="text-muted-foreground mb-6">
-              {reservationType === 'deposit' ? (
+              {reservationType === 'secure' ? (
                 "Your deposit has been received. Your seat is guaranteed!"
               ) : (
                 "Your 24-hour hold will activate Monday 9 AM at launch. We'll email you a reminder!"

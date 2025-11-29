@@ -203,7 +203,6 @@ export const insertPurchaseSchema = createInsertSchema(purchases).pick({
   giftStatus: true,
   isDepositOnly: true,
   depositAmountCents: true,
-  reservationType: true,
 });
 
 export type InsertPurchase = z.infer<typeof insertPurchaseSchema>;
