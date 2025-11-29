@@ -7,7 +7,6 @@ import { useEffect } from "react";
 import { useAuth } from "@/hooks/useAuth";
 import NotFound from "@/pages/not-found";
 import MainLaunch from "@/pages/main-launch";
-import HomePage from "@/pages/home";
 import Founding100ExplainedPage from "@/pages/founding-100-explained";
 import WorkshopsPage from "@/pages/workshops";
 import CommissionPage from "@/pages/commission";
@@ -82,9 +81,6 @@ function Router() {
       <Route path="/auctions" component={AuctionsPage} />
       <Route path="/about" component={AboutPage} />
 
-      {/* Founding 100 Launch Page - PUBLIC */}
-      <Route path="/founding-100" component={MainLaunch} />
-      <Route path="/founding100" component={MainLaunch} />
 
       {/* Checkout Pages - PUBLIC */}
       <Route path="/checkout/founder">
