@@ -155,6 +155,7 @@ export default function MainLaunch() {
                       "20% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
                       "24hr seat reservation — held for you while you decide",
                     ]}
+                    onPaymentClick={handlePaymentClick}
                   />
                 )}
                 {patronSeat && (
@@ -170,6 +171,7 @@ export default function MainLaunch() {
                       "24hr seat reservation — held for you while you decide",
                     ]}
                     featured
+                    onPaymentClick={handlePaymentClick}
                   />
                 )}
               </div>

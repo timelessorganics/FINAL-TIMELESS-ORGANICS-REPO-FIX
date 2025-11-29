@@ -4,7 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import type { Seat } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
-import { useLocation } from "wouter";
+import { Shield, Clock, ArrowRight } from "lucide-react";
 
 interface SeatCardProps {
   seat: Seat;
@@ -13,6 +13,7 @@ interface SeatCardProps {
   description: string;
   benefits: string[];
   featured?: boolean;
+  onPaymentClick?: (paymentType: 'full' | 'deposit' | 'reserve') => void;
 }
 
 export default function SeatCard({
@@ -22,15 +23,15 @@ export default function SeatCard({
   description,
   benefits,
   featured = false,
+  onPaymentClick,
 }: SeatCardProps) {
   const { toast } = useToast();
   const { isAuthenticated } = useAuth();
-  const [, setLocation] = useLocation();
 
   const available = seat.totalAvailable - seat.sold;
   const percentageSold = (seat.sold / seat.totalAvailable) * 100;
 
-  const handlePurchase = () => {
+  const handlePaymentClick = (paymentType: 'full' | 'deposit' | 'reserve') => {
     if (!isAuthenticated) {
       toast({
         title: "Sign In Required",
@@ -49,8 +50,7 @@ export default function SeatCard({
       return;
     }
 
-    // Navigate to checkout page
-    setLocation(`/checkout/${seat.type}`);
+    onPaymentClick?.(paymentType);
   };
 
   return (
@@ -115,25 +115,43 @@ export default function SeatCard({
         </ul>
       </div>
 
-      {/* CTA Button - Updated for 24hr Reservation */}
-      <Button
-        onClick={handlePurchase}
-        disabled={available <= 0}
-        className={`w-full font-bold py-6 ${
-          available <= 0 
-            ? "opacity-50 cursor-not-allowed btn-bronze" 
-            : "bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background"
-        }`}
-        data-testid={`button-purchase-${seat.type}`}
-      >
-        {available <= 0 ? (
-          "SOLD OUT"
-        ) : (
-          <>
-            <span className="font-bold">RESERVE SEAT FOR 24HRS</span>
-          </>
-        )}
-      </Button>
+      {/* 3-Tier Payment Options */}
+      <div className="space-y-2">
+        {/* BUY NOW - Full Price */}
+        <Button
+          onClick={() => handlePaymentClick('full')}
+          disabled={available <= 0}
+          className="w-full font-bold py-5 bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background hover:opacity-90"
+          data-testid={`button-buy-now-${seat.type}`}
+        >
+          <ArrowRight className="w-4 h-4 mr-2" />
+          BUY NOW
+        </Button>
+
+        {/* SECURE - R1K Deposit */}
+        <Button
+          onClick={() => handlePaymentClick('deposit')}
+          disabled={available <= 0}
+          variant="outline"
+          className="w-full font-bold py-5 border-accent-gold/50 text-accent-gold hover:bg-accent-gold/10"
+          data-testid={`button-secure-${seat.type}`}
+        >
+          <Shield className="w-4 h-4 mr-2" />
+          SECURE R1K
+        </Button>
+
+        {/* RESERVE - Free 24hr Hold */}
+        <Button
+          onClick={() => handlePaymentClick('reserve')}
+          disabled={available <= 0}
+          variant="outline"
+          className="w-full font-bold py-5 border-white/30 text-white/80 hover:bg-white/10"
+          data-testid={`button-reserve-${seat.type}`}
+        >
+          <Clock className="w-4 h-4 mr-2" />
+          RESERVE FREE
+        </Button>
+      </div>
     </Card>
   );
 }
