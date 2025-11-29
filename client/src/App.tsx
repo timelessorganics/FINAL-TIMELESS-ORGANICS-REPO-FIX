@@ -87,17 +87,11 @@ function Router() {
       <Route path="/about" component={AboutPage} />
 
 
-      {/* Checkout Page - PUBLIC (seat type via URL param or path) */}
-      {/* More specific paths first */}
-      <Route path="/checkout/founder">
-        {() => <CheckoutPage />}
+      {/* Checkout Page - PUBLIC */}
+      <Route path="/checkout/:seatType">
+        {(params) => <CheckoutPage seatType={params.seatType} />}
       </Route>
-      <Route path="/checkout/patron">
-        {() => <CheckoutPage />}
-      </Route>
-      <Route path="/checkout">
-        {() => <CheckoutPage />}
-      </Route>
+      <Route path="/checkout" component={CheckoutPage} />
 
       {/* Promo Code Redemption - PUBLIC */}
       <Route path="/redeem" component={RedeemCodePage} />

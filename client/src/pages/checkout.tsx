@@ -39,19 +39,21 @@ const checkoutFormSchema = z.object({
 
 type CheckoutForm = z.infer<typeof checkoutFormSchema>;
 
-export default function CheckoutPage() {
-  const [location, setLocation] = useLocation();
+interface CheckoutPageProps {
+  seatType?: string;
+}
+
+export default function CheckoutPage({ seatType: propSeatType }: CheckoutPageProps = {}) {
+  const [, setLocation] = useLocation();
   const search = useSearch();
   const params = new URLSearchParams(search);
   
-  // Support both /checkout?seat=founder AND /checkout/founder URL formats
+  // Priority: prop > query param > default to founder
   let seatType: "founder" | "patron" = "founder";
-  if (params.get("seat")) {
+  if (propSeatType === "founder" || propSeatType === "patron") {
+    seatType = propSeatType;
+  } else if (params.get("seat") === "founder" || params.get("seat") === "patron") {
     seatType = params.get("seat") as "founder" | "patron";
-  } else if (location.includes("/founder")) {
-    seatType = "founder";
-  } else if (location.includes("/patron")) {
-    seatType = "patron";
   }
   
   // Support both ?payment=deposit AND ?mode=deposit URL formats
@@ -74,8 +76,10 @@ export default function CheckoutPage() {
     queryKey: ['/api/seats/availability'],
   });
 
-  const currentSeat = seats?.find((s) => s.type === seatType);
-  const basePriceCents = currentSeat?.price || 0;
+  // Normalize seatType to lowercase for matching
+  const normalizedSeatType = seatType.toLowerCase();
+  const currentSeat = seats?.find((s) => s.type.toLowerCase() === normalizedSeatType);
+  const basePriceCents = currentSeat?.price || (normalizedSeatType === "founder" ? 300000 : 500000);
   const basePrice = basePriceCents / 100;
 
   const form = useForm<CheckoutForm>({
