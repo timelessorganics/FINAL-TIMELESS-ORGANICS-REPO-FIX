@@ -108,19 +108,34 @@ export default function HomePage() {
                 One-Of-A-Kind Castings From Organic Matter
               </p>
 
-              {/* Dual CTA Buttons - SECURE and RESERVE (will swap to RESERVE and BUY on Monday) */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6 mb-4 sm:mb-8">
+              {/* 3-Tier CTA Buttons: RESERVE, SECURE, BUY NOW */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-8">
                 <div className="w-full sm:w-auto text-center">
                   <Button 
                     size="lg" 
-                    className="w-full btn-bronze text-xs sm:text-base px-6 sm:px-10 py-4 sm:py-6 min-h-11 sm:min-h-14 gap-2 font-bold shadow-lg mb-1 sm:mb-2" 
+                    className="w-full btn-bronze text-xs sm:text-sm px-4 sm:px-6 py-3 sm:py-5 min-h-10 sm:min-h-12 gap-2 font-bold shadow-lg mb-1 sm:mb-2" 
                     onClick={() => setIsReservationModalOpen(true)}
-                    data-testid="button-secure-now"
+                    data-testid="button-reserve-free"
                   >
-                    RESERVE FOR 24HRS
-                    <Clock className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+                    RESERVE FREE
+                    <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                   </Button>
-                  <p className="text-xs text-white/60 font-light mt-1">24 hours — released Monday</p>
+                  <p className="text-xs text-white/60 font-light mt-1">24 hours</p>
+                </div>
+
+                <div className="w-full sm:w-auto text-center">
+                  <Link href="/checkout/patron?mode=deposit" className="block mb-1 sm:mb-2">
+                    <Button 
+                      size="lg" 
+                      variant="outline"
+                      className="w-full text-xs sm:text-sm px-4 sm:px-6 py-3 sm:py-5 min-h-10 sm:min-h-12 gap-2 font-bold border-white/30 text-white hover:bg-white/10" 
+                      data-testid="button-secure-deposit"
+                    >
+                      SECURE R1K
+                      <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    </Button>
+                  </Link>
+                  <p className="text-xs text-white/60 font-light mt-1">48hr deadline</p>
                 </div>
                 
                 <div className="w-full sm:w-auto text-center">
@@ -128,14 +143,14 @@ export default function HomePage() {
                     <Button 
                       size="lg" 
                       variant="outline"
-                      className="w-full text-xs sm:text-base px-6 sm:px-10 py-4 sm:py-6 min-h-11 sm:min-h-14 gap-2 font-bold border-white/30 text-white hover:bg-white/10" 
+                      className="w-full text-xs sm:text-sm px-4 sm:px-6 py-3 sm:py-5 min-h-10 sm:min-h-12 gap-2 font-bold border-white/30 text-white hover:bg-white/10" 
                       data-testid="button-buy-now"
                     >
                       BUY NOW
-                      <ArrowRight className="w-3.5 h-3.5 sm:w-5 sm:h-5" />
+                      <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     </Button>
                   </Link>
-                  <p className="text-xs text-white/60 font-light mt-1">Complete immediately</p>
+                  <p className="text-xs text-white/60 font-light mt-1">Full price</p>
                 </div>
               </div>
                 
