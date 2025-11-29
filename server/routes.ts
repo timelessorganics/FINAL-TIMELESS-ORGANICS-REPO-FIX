@@ -263,6 +263,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({
       status: "healthy",
       timestamp: new Date().toISOString(),
+      payfast: {
+        merchant_id: process.env.PAYFAST_MERCHANT_ID ? "SET" : "MISSING",
+        merchant_key: process.env.PAYFAST_MERCHANT_KEY ? "SET" : "MISSING",
+        passphrase: process.env.PAYFAST_PASSPHRASE ? "SET" : "MISSING",
+        mode: process.env.PAYFAST_MODE || "MISSING",
+      },
       deployment: {
         repo: "FINAL-TIMELESS-ORGANICS-REPO-FIX",
         payfastFixDeployed: true,
