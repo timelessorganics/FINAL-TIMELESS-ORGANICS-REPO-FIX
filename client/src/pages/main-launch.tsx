@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import SeatCard from "@/components/seat-card";
 import Header from "@/components/header";
@@ -7,6 +8,7 @@ import { Card } from "@/components/ui/card";
 import { SmokeFireBackground } from "@/components/SmokeFireBackground";
 import { FlowerTimelapseBackground } from "@/components/FlowerTimelapseBackground";
 import { ArrowRight, Check, Star, Flame, Gift, Award, Users, Sparkles } from "lucide-react";
+import SeatSelectionModal from "@/components/seat-selection-modal";
 import type { Seat } from "@shared/schema";
 
 // Import AI-generated bronze concept images
@@ -18,6 +20,9 @@ import bronzeAloe1 from "@assets/Gemini_Generated_Image_hrdzhzhrdzhzhrdz_1764103
 import bronzeMounting from "@assets/Gemini_Generated_Image_o1612no1612no161_1764103956649.png";
 
 export default function MainLaunch() {
+  const [seatModalOpen, setSeatModalOpen] = useState(false);
+  const [paymentType, setPaymentType] = useState<'full' | 'deposit' | 'reserve'>('full');
+  
   const { data: seats, isLoading } = useQuery<Seat[]>({
     queryKey: ["/api/seats/availability"],
   });
@@ -27,6 +32,11 @@ export default function MainLaunch() {
 
   const scrollToSeats = () => {
     document.getElementById('seats')?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const handlePaymentClick = (type: 'full' | 'deposit' | 'reserve') => {
+    setPaymentType(type);
+    setSeatModalOpen(true);
   };
 
   return (
@@ -63,23 +73,36 @@ export default function MainLaunch() {
               and exclusive access to the ancient art of lost-wax casting.
             </p>
 
-            {/* 24-HOUR RESERVATION CTA - GORGEOUS ANIMATED BUTTON */}
-            <div className="mb-8">
+            {/* 3-BUTTON PAYMENT OPTIONS */}
+            <div className="mb-8 flex flex-col sm:flex-row gap-3 justify-center">
               <Button 
                 size="lg"
-                onClick={scrollToSeats}
-                className="relative overflow-hidden text-xl px-12 py-8 font-bold shadow-lg bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background hover:shadow-bronze/50"
-                data-testid="button-reserve-seat-hero"
+                onClick={() => handlePaymentClick('reserve')}
+                className="text-xs sm:text-sm px-6 py-4 font-bold btn-bronze"
+                data-testid="button-reserve-free"
               >
-                <Sparkles className="w-6 h-6 mr-3" />
-                RESERVE A SEAT INSTANTLY FOR 24HRS
-                <ArrowRight className="w-6 h-6 ml-3" />
+                RESERVE FREE (24hrs)
               </Button>
-              <p className="text-sm text-accent-gold mt-3 font-medium">
-                Reserved seats held for 24 hours — unpurchased seats return to pool. Subscribers notified first.
-              </p>
-              <p className="text-xs text-muted-foreground mt-1">Only 100 seats total. Once gone, gone forever.</p>
+              <Button 
+                size="lg"
+                onClick={() => handlePaymentClick('deposit')}
+                variant="outline"
+                className="text-xs sm:text-sm px-6 py-4 font-bold border-white/30 text-white"
+                data-testid="button-secure-deposit"
+              >
+                SECURE (R1K deposit)
+              </Button>
+              <Button 
+                size="lg"
+                onClick={() => handlePaymentClick('full')}
+                variant="outline"
+                className="text-xs sm:text-sm px-6 py-4 font-bold border-white/30 text-white"
+                data-testid="button-buy-now"
+              >
+                BUY NOW (Full Price)
+              </Button>
             </div>
+            <p className="text-xs text-muted-foreground mt-1">Only 100 seats total. Once gone, gone forever.</p>
 
             {/* Three Stat Cards - Updated Value Messaging */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
@@ -801,6 +824,11 @@ export default function MainLaunch() {
         </div>
       </div>
       
+      <SeatSelectionModal 
+        open={seatModalOpen} 
+        onOpenChange={setSeatModalOpen}
+        paymentType={paymentType}
+      />
       <Footer />
     </>
   );
