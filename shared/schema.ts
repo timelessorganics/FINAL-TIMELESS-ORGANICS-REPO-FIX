@@ -200,7 +200,6 @@ export const insertPurchaseSchema = createInsertSchema(purchases).pick({
   giftRecipientEmail: true,
   giftRecipientName: true,
   giftMessage: true,
-  giftStatus: true,
   isDepositOnly: true,
   depositAmountCents: true,
 });
