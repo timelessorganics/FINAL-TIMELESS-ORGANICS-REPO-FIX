@@ -88,9 +88,6 @@ Yarn Integrity file
 
 dotenv environment variables file
 
-.env
-.env.test
-.env.production
 
 parcel-bundler cache (https://parceljs.org/)
 
@@ -149,7 +146,6 @@ yarn v2
 .yarn/install-state.gz
 .pnp.*
 
-Vite
 
 dist-ssr
 *.local
