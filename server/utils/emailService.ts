@@ -84,7 +84,7 @@ export async function sendCertificateToRecipient(
 
   try {
     const seatName = seatType === "founder" ? "Founder" : "Patron";
-    const baseUrl = process.env.VITE_API_URL || 'https://timeless-organics-fouding-100-production.up.railway.app';
+    const baseUrl = process.env.VITE_API_URL || 'https://final-timeless-organics-repo-fix-production.up.railway.app';
     const fullCertificateUrl = `${baseUrl}${certificateUrl}`;
 
     const html = `
@@ -156,7 +156,7 @@ export async function sendGiftNotificationEmail(
 
   try {
     const seatName = seatType === "founder" ? "Founder" : "Patron";
-    const apiUrl = process.env.VITE_API_URL || 'https://timeless-organics-fouding-100-production.up.railway.app';
+    const apiUrl = process.env.VITE_API_URL || 'https://final-timeless-organics-repo-fix-production.up.railway.app';
     const claimUrl = `${apiUrl.replace('/api', '')}/claim-gift?id=${purchaseId}`;
 
     const subject = `${senderName} has gifted you a Timeless Organics ${seatName} Seat`;
@@ -282,7 +282,7 @@ export async function sendCertificateEmail(
     const lifetimeWorkshopCode = codes.find((c) => c.type === "lifetime_workshop");
 
     // Build full certificate URL - use production URL if available
-    const baseUrl = process.env.VITE_API_URL || process.env.REPLIT_DEV_DOMAIN || 'https://timeless-organics-fouding-100-production.up.railway.app';
+    const baseUrl = process.env.VITE_API_URL || process.env.REPLIT_DEV_DOMAIN || 'https://final-timeless-organics-repo-fix-production.up.railway.app';
     const fullCertificateUrl = `${baseUrl}${certificateUrl}`;
 
     const htmlContent = `
