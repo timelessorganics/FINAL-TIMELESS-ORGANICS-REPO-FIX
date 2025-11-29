@@ -1,55 +1,13 @@
-import crypto from "crypto";
 import axios from "axios";
 import https from "https";
-import { getPayFastConfig, createPaymentData } from "./payfast.js";
-
-/**
- * Generate PayFast API signature using ALPHABETICAL ordering
- * This is the CORRECT method for all PayFast API calls per official documentation:
- * https://developers.payfast.co.za/api#authentication
- * 
- * ALPHABETICAL signature (for API calls):
- * 1. Sort ALL variables (headers, body, query) alphabetically
- * 2. URL encode each value
- * 3. Concatenate with & separator
- * 4. Append passphrase at end
- * 5. MD5 hash the string
- */
-function generateApiSignature(data: Record<string, string>, passphrase: string): string {
-  // Add passphrase to data for signature generation
-  const dataWithPass: Record<string, string> = {
-    ...data,
-    passphrase,
-  };
-
-  // Sort ALPHABETICALLY (not field order - that's only for HTML forms)
-  const sortedKeys = Object.keys(dataWithPass).sort();
-  
-  const paramPairs: string[] = [];
-  for (const key of sortedKeys) {
-    const value = dataWithPass[key];
-    if (value && value.trim() !== '') {
-      // URL encode value
-      const encoded = encodeURIComponent(value.trim());
-      paramPairs.push(`${key}=${encoded}`);
-    }
-  }
-
-  const paramString = paramPairs.join('&');
-  console.log('[PayFast API Signature] Alphabetically sorted param string (first 100 chars):', paramString.substring(0, 100));
-  
-  const signature = crypto.createHash('md5').update(paramString).digest('hex');
-  console.log('[PayFast API Signature] Generated MD5 signature:', signature);
-  
-  return signature;
-}
+import { getPayFastConfig, createPaymentData, generateSignature } from "./payfast.js";
 
 /**
  * Generate PayFast Payment Identifier (UUID) for Onsite Payments
  * This UUID is used to open the PayFast modal on the client side
  * 
- * CRITICAL: Uses ALPHABETICAL signature generation for API authentication
- * Reference: https://developers.payfast.co.za/api#authentication
+ * CRITICAL: Uses FIELD ORDER signature generation (same as HTML forms)
+ * Reference: https://developers.payfast.co.za/docs#step_2_signature
  * 
  * @param userIp - User's IP address (REQUIRED by PayFast Onsite API)
  * @param userAgent - User's browser user-agent (REQUIRED by PayFast Onsite API)
@@ -88,8 +46,8 @@ export async function generatePaymentIdentifier(
   dataForSignature['user_agent'] = userAgent;
   dataForSignature['payment_method'] = 'cc';
 
-  // Generate signature using ALPHABETICAL ordering (per PayFast API spec)
-  const signature = generateApiSignature(dataForSignature, config.passphrase);
+  // Generate signature using FIELD ORDER (same as HTML forms, NOT alphabetical)
+  const signature = generateSignature(dataForSignature, config.passphrase);
 
   // Final payload with signature
   const dataWithSignature = {

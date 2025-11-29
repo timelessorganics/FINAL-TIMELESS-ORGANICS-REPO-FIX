@@ -1,0 +1,131 @@
+
+
+Step 1: Post payment details and get a unique payment identifier
+The transaction and customer details need to be sent to Payfast before any customer interaction.
+
+Live: https://www.payfast.co.za/onsite/​process
+Sandbox: https://sandbox.payfast.co.za/onsite/​process
+
+POST Data:
+The POST data that is required can be found in the Quickstart guide.
+The following are additional requirements for Onsite
+signature
+stringREQUIRED
+The signature is a hash of the posted data used to ensure the integrity of the data transfer
+email_address
+string, 100 char REQUIRED UNLESS MOBILE REGISTRATION ALLOWED
+The customer’s email address. This is required unless the merchant has specifically allowed mobile registration from their account.
+cell_number
+string, 100 char REQUIRED IF EMAIL NOT SET
+The customer’s valid cell number. If the email_address field is empty, and cell_number provided, the system will use the cell_number as the username and auto login the user, if they do not have a registered account
+If no return_url is submitted, the modal will just close on payment completion and customers will not be redirected to a success page.
+POST /onsite/process
+https://www.payfast.co.za/onsite/process 
+RESPONSE
+{
+"uuid":
+"123-abc"
+}
+Payment identifier generation
+Select library
+<?php
+$passPhrase = 'jt7NOE43FZPn';
+$data = [
+    'merchant_id' => '10000100',
+    'merchant_key' => '46f0cd694581a',
+    ...
+];
+
+function dataToString($dataArray) {
+  // Create parameter string
+    $pfOutput = '';
+    foreach( $dataArray as $key => $val ) {
+        if($val !== '') {
+            $pfOutput .= $key .'='. urlencode( trim( $val ) ) .'&';
+        }
+    }
+    // Remove last ampersand
+    return substr( $pfOutput, 0, -1 );
+}
+
+function generatePaymentIdentifier($pfParamString, $pfProxy = null) {
+    // Use cURL (if available)
+    if( in_array( 'curl', get_loaded_extensions(), true ) ) {
+        // Variable initialization
+        $url = 'https://www.payfast.co.za/onsite/process';
+
+        // Create default cURL object
+        $ch = curl_init();
+
+        // Set cURL options - Use curl_setopt for greater PHP compatibility
+        // Base settings
+        curl_setopt( $ch, CURLOPT_USERAGENT, NULL );  // Set user agent
+        curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );      // Return output as string rather than outputting it
+        curl_setopt( $ch, CURLOPT_HEADER, false );             // Don't include header in output
+        curl_setopt( $ch, CURLOPT_SSL_VERIFYHOST, 2 );
+        curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, true );
+
+        // Standard settings
+        curl_setopt( $ch, CURLOPT_URL, $url );
+        curl_setopt( $ch, CURLOPT_POST, true );
+        curl_setopt( $ch, CURLOPT_POSTFIELDS, $pfParamString );
+        if( !empty( $pfProxy ) )
+            curl_setopt( $ch, CURLOPT_PROXY, $pfProxy );
+
+        // Execute cURL
+        $response = curl_exec( $ch );
+        curl_close( $ch );
+        echo $response;
+        $rsp = json_decode($response, true);
+        if ($rsp['uuid']) {
+            return $rsp['uuid'];
+        }
+    }
+    return null;
+}
+
+// Generate signature (see Custom Integration -> Step 2)
+$data["signature"] = generateSignature($data, $passPhrase);
+
+// Convert the data array to a string
+$pfParamString = dataToString($data);
+
+// Generate payment identifier
+$identifier = generatePaymentIdentifier($pfParamString); 
+Step 2: Trigger the modal popup
+Once you have successfully retrieved the above UUID for the payment you can pass that into the Javascript for the payment page initialisation.
+Place the following script inside of your document to initialise the payment modal on your website.
+
+There are 2 initialisation options for the modal that can be used depending on how you would like payment completion to be handled.
+Onsite activation script
+<script src="https://www.payfast.co.za/onsite/engine.js"></script> 
+Method 1: Simple
+This is the simplest method of triggering the payment modal.
+All that is needed is to specify the uuid you received in the first step.
+On payment success the buyer is redirected to your return url.
+
+Additionally, if you did not specify the return and cancel urls while getting the unique identifier in step 1, you can add these to the call in this step.
+
+Method 1 - Simple
+window.payfast_do_onsite_payment({"uuid":"123-abc"}); 
+Method 1 - With URLs
+window.payfast_do_onsite_payment({
+  "uuid":"123-abc",
+  "return_url":"http://example.com",
+  "cancel_url":"http://example.com"
+}); 
+Method 2: Callback
+This method is triggered in the same way as the simple method, the difference is that with this method you can define a callback method.
+On a final action (either a success or the user closing the popup) a call to the callback defined will be fired.
+
+Important: When using the callback method, only the callback will be triggered and any return or cancel urls specified will be ignored!
+Method 2 - Callback
+window.payfast_do_onsite_payment({"uuid":"123-abc"}, function (result) {
+  if (result === true) {
+    // Payment Completed
+  }
+  else {
+    // Payment Window Closed
+  }
+}); 
+Payment Confirmation
