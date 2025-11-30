@@ -137,9 +137,9 @@ export default function HomePage() {
               </p>
 
               {/* Seat Selection Cards - 24hr Friends & Family Discount */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-3 sm:gap-5 lg:gap-8 mb-3 sm:mb-6 px-2 sm:px-0 max-w-5xl mx-auto w-full">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-3 sm:gap-6 lg:gap-16 xl:gap-20 mb-3 sm:mb-6 px-2 sm:px-0 max-w-6xl mx-auto w-full">
                 {/* FOUNDER SEAT CARD */}
-                <div className="group relative flex-1 min-w-0 max-w-sm sm:max-w-md lg:max-w-xs p-3 sm:p-4 lg:p-5 border border-white/20 rounded-lg bg-black/40 backdrop-blur-sm hover:bg-black/50 hover:border-white/30 transition-all duration-300 hover-elevate">
+                <div className="group relative flex-1 min-w-0 max-w-sm sm:max-w-md lg:max-w-lg p-3 sm:p-4 lg:p-5 border border-white/20 rounded-lg bg-black/40 backdrop-blur-sm hover:bg-black/50 hover:border-white/30 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-2 sm:space-y-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
