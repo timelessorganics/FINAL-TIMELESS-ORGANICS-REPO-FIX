@@ -247,7 +247,7 @@ export default function HomePage() {
               <div className="hero-text-reveal hero-text-reveal-delay-3 space-y-2 text-center">
                 <div className="flex items-center justify-center gap-4 flex-wrap">
                   <div className="text-xs text-white/50 font-light">
-                    <span className="text-bronze font-semibold">{founderRemaining}</span> Founder / <span className="text-teal-400 font-semibold">{patronRemaining}</span> Patron remaining
+                    <span className="text-bronze font-semibold">{founderRemaining}</span> Founder / <span className="text-green-500 font-semibold">{patronRemaining}</span> Patron remaining
                   </div>
                   <div className="h-4 w-px bg-white/20" />
                   <div className="text-xs text-white/50 font-light">
