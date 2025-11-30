@@ -2595,29 +2595,139 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin: Update website content
-  app.patch("/api/admin/content", isAuthenticated, async (req: any, res: Response) => {
+  // Admin: Get all website content
+  app.get("/api/admin/content", isAuthenticated, async (req: any, res: Response) => {
     try {
       const userId = await getUserIdFromToken(req);
       if (!userId) return res.status(401).json({ message: "Unauthorized" });
       const user = await storage.getUser(userId);
       if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
 
-      const { heroTitle, heroSubtitle, aboutText, workshopsText } = req.body;
-      
-      // Store content updates (in-memory for now, can be persisted to DB later)
-      const contentUpdates = {
-        heroTitle: heroTitle || undefined,
-        heroSubtitle: heroSubtitle || undefined,
-        aboutText: aboutText || undefined,
-        workshopsText: workshopsText || undefined,
-        updatedAt: new Date(),
-      };
+      const pageSlug = req.query.page as string | undefined;
+      const content = await storage.getWebsiteContent(pageSlug);
+      res.json(content);
+    } catch (error: any) {
+      console.error("[Admin] Content fetch error:", error);
+      res.status(500).json({ message: error.message });
+    }
+  });
 
-      console.log("[Admin] Website content updated:", contentUpdates);
-      res.json({ success: true, message: "Content updated successfully", updates: contentUpdates });
+  // Admin: Set/Update website content item
+  app.post("/api/admin/content", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const { pageSlug, sectionKey, content, contentType, metadata } = req.body;
+      
+      if (!pageSlug || !sectionKey || !content) {
+        return res.status(400).json({ message: "pageSlug, sectionKey, and content are required" });
+      }
+
+      const result = await storage.setWebsiteContent({
+        pageSlug,
+        sectionKey,
+        content,
+        contentType: contentType || 'text',
+        metadata,
+        updatedBy: userId,
+        isActive: true,
+      });
+
+      console.log("[Admin] Website content updated:", { pageSlug, sectionKey });
+      res.json(result);
     } catch (error: any) {
       console.error("[Admin] Content update error:", error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Admin: Delete website content item
+  app.delete("/api/admin/content/:pageSlug/:sectionKey", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const { pageSlug, sectionKey } = req.params;
+      await storage.deleteWebsiteContent(pageSlug, sectionKey);
+      res.json({ success: true });
+    } catch (error: any) {
+      console.error("[Admin] Content delete error:", error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Public: Get website content for a page (for frontend to read)
+  app.get("/api/content/:pageSlug", async (req: Request, res: Response) => {
+    try {
+      const { pageSlug } = req.params;
+      const content = await storage.getWebsiteContent(pageSlug);
+      const contentMap: Record<string, string> = {};
+      content.forEach(item => {
+        if (item.isActive) {
+          contentMap[item.sectionKey] = item.content;
+        }
+      });
+      res.json(contentMap);
+    } catch (error: any) {
+      console.error("[Content] Fetch error:", error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Public: Get page assets with media details (for frontend to read images)
+  app.get("/api/page-assets/:pageSlug", async (req: Request, res: Response) => {
+    try {
+      const { pageSlug } = req.params;
+      const assets = await storage.getPageAssets(pageSlug);
+      const assetDetails = await Promise.all(
+        assets.map(async (pa) => {
+          const media = await storage.getMediaAsset(pa.assetId);
+          return {
+            slotKey: pa.slotKey,
+            displayOrder: pa.displayOrder,
+            isActive: pa.isActive,
+            media: media ? { id: media.id, url: media.url, altText: media.altText, caption: media.caption } : null,
+          };
+        })
+      );
+      res.json(assetDetails);
+    } catch (error: any) {
+      console.error("[PageAssets] Fetch error:", error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Admin: Assign media to page slot
+  app.post("/api/admin/page-assets", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const { pageSlug, slotKey, assetId, displayOrder } = req.body;
+      
+      if (!pageSlug || !slotKey || !assetId) {
+        return res.status(400).json({ message: "pageSlug, slotKey, and assetId are required" });
+      }
+
+      const result = await storage.setPageAsset({
+        pageSlug,
+        slotKey,
+        assetId,
+        displayOrder: displayOrder || 0,
+        isActive: true,
+      });
+
+      console.log("[Admin] Page asset assigned:", { pageSlug, slotKey, assetId });
+      res.json(result);
+    } catch (error: any) {
+      console.error("[Admin] Page asset error:", error);
       res.status(500).json({ message: error.message });
     }
   });

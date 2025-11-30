@@ -14,6 +14,7 @@ import {
   workshopWaitlistTable,
   mediaAssets,
   pageAssets,
+  websiteContent,
   products,
   productImages,
   auctions,
@@ -42,6 +43,8 @@ import {
   type InsertMediaAsset,
   type PageAsset,
   type InsertPageAsset,
+  type WebsiteContent,
+  type InsertWebsiteContent,
   type Product,
   type InsertProduct,
   type ProductImage,
@@ -725,6 +728,44 @@ export class DatabaseStorage implements IStorage {
 
   async deletePageAsset(pageSlug: string, slotKey: string): Promise<boolean> {
     await db.delete(pageAssets).where(and(eq(pageAssets.pageSlug, pageSlug), eq(pageAssets.slotKey, slotKey)));
+    return true;
+  }
+
+  // Website Content operations (CMS)
+  async getWebsiteContent(pageSlug?: string): Promise<WebsiteContent[]> {
+    if (pageSlug) {
+      return await db.select().from(websiteContent).where(eq(websiteContent.pageSlug, pageSlug));
+    }
+    return await db.select().from(websiteContent);
+  }
+
+  async getContentItem(pageSlug: string, sectionKey: string): Promise<WebsiteContent | undefined> {
+    const [result] = await db.select().from(websiteContent)
+      .where(and(eq(websiteContent.pageSlug, pageSlug), eq(websiteContent.sectionKey, sectionKey)));
+    return result;
+  }
+
+  async setWebsiteContent(data: InsertWebsiteContent): Promise<WebsiteContent> {
+    const [result] = await db
+      .insert(websiteContent)
+      .values(data)
+      .onConflictDoUpdate({
+        target: [websiteContent.pageSlug, websiteContent.sectionKey],
+        set: { 
+          content: data.content, 
+          contentType: data.contentType, 
+          metadata: data.metadata, 
+          isActive: data.isActive, 
+          updatedAt: new Date(),
+          updatedBy: data.updatedBy,
+        },
+      })
+      .returning();
+    return result;
+  }
+
+  async deleteWebsiteContent(pageSlug: string, sectionKey: string): Promise<boolean> {
+    await db.delete(websiteContent).where(and(eq(websiteContent.pageSlug, pageSlug), eq(websiteContent.sectionKey, sectionKey)));
     return true;
   }
 
