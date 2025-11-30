@@ -166,7 +166,7 @@ export default function HomePage() {
                     </div>
                     
                     <div className="space-y-2">
-                      <p className="text-xs text-white/50 font-light line-through">Full Price: R4,500</p>
+                      <p className="text-sm text-white/70 font-light line-through">Full Price: R4,500</p>
                       <p className="font-serif text-3xl sm:text-4xl font-bold text-bronze">R3,000</p>
                       <p className="text-xs text-bronze/80 font-light">24hr Friends & Family</p>
                     </div>
@@ -218,7 +218,7 @@ export default function HomePage() {
                     </div>
                     
                     <div className="space-y-2">
-                      <p className="text-xs text-white/50 font-light line-through">Full Price: R6,000</p>
+                      <p className="text-sm font-light line-through" style={{color: 'rgba(241, 243, 224, 0.75)'}}>Full Price: R6,000</p>
                       <p className="font-serif text-3xl sm:text-4xl font-bold text-accent-gold">R4,500</p>
                       <p className="text-xs text-accent-gold/80 font-light">24hr Friends & Family</p>
                     </div>
