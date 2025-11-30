@@ -94,8 +94,8 @@ export default function HomePage() {
           <div className="absolute top-6 sm:top-10 left-0 right-0 z-10 px-4 sm:px-6">
             <div className="max-w-4xl mx-auto text-center">
               <div className="hero-text-reveal hero-text-reveal-delay-1">
-                <span className="inline-block font-serif text-sm sm:text-base md:text-lg tracking-[0.15em] sm:tracking-[0.2em] uppercase moving-fill">
-                  Founding 100 Investment Launch
+                <span className="inline-block font-serif text-base sm:text-2xl md:text-4xl font-semibold tracking-[0.08em] sm:tracking-[0.12em] uppercase moving-fill">
+                  Founding 100 Investor Launch
                 </span>
               </div>
             </div>
@@ -115,8 +115,27 @@ export default function HomePage() {
                 <span className="hero-glass-text">Timeless Organics</span>
               </h1>
               
+              {/* Fire Sale Pricing Banner */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-8 sm:mb-12 space-y-3">
+                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
+                  <div className="text-center">
+                    <p className="text-xs text-white/60 font-light mb-1">Founder Seat</p>
+                    <p className="font-serif text-2xl sm:text-3xl font-bold text-bronze">R3,000</p>
+                    <p className="text-xs text-white/50 font-light">Unmounted Bronze</p>
+                  </div>
+                  <div className="h-12 w-px bg-white/20" />
+                  <div className="text-center">
+                    <p className="text-xs text-white/60 font-light mb-1">Patron Seat</p>
+                    <p className="font-serif text-2xl sm:text-3xl font-bold text-accent-gold">R4,500</p>
+                    <p className="text-xs text-accent-gold/80 font-light">Includes Patina + Mounting</p>
+                    <p className="text-xs text-white/40 mt-1 line-through">Was R6,000</p>
+                  </div>
+                </div>
+                <p className="text-xs text-white/50 font-light">24-hour fire sale ends at midnight Sunday SA time</p>
+              </div>
+              
               {/* Tagline - Playfair Display font, responsive */}
-              <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-base sm:text-xl md:text-2xl lg:text-3xl text-white/90 max-w-2xl mx-auto mb-6 sm:mb-10 leading-relaxed px-2">
+              <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-base sm:text-xl md:text-2xl lg:text-3xl text-white/90 max-w-2xl mx-auto mb-4 sm:mb-6 leading-relaxed px-2">
                 One-Of-A-Kind Castings From Organic Matter
               </p>
 
