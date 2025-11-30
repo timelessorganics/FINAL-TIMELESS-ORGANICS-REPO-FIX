@@ -144,10 +144,10 @@ export default function HomePage() {
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <p className="text-[0.65rem] sm:text-xs text-white font-bold uppercase tracking-wider mb-0.5 sm:mb-1">Founder</p>
-                        <p className="text-[0.65rem] sm:text-xs text-white/60 font-light mb-0.5 sm:mb-1">Unmounted</p>
+                        <p className="text-[0.55rem] sm:text-[0.65rem] text-white/60 font-light mb-0.5 sm:mb-1 leading-tight">Unmounted & unpatinated<br/>Services available now or later</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm sm:text-lg font-bold text-white">{50 - founderRemaining} / 50</p>
+                        <p className="text-sm sm:text-lg font-bold text-white">{founderRemaining} / 50</p>
                         <p className="text-[0.6rem] sm:text-xs text-white/50 font-light">LEFT</p>
                       </div>
                     </div>
@@ -175,10 +175,10 @@ export default function HomePage() {
                     <div className="flex items-start justify-between gap-2">
                       <div>
                         <p className="text-[0.65rem] sm:text-xs font-bold uppercase tracking-wider mb-0.5 sm:mb-1" style={{color: 'rgba(241, 243, 224, 0.9)'}}>Patron</p>
-                        <p className="text-[0.65rem] sm:text-xs font-light mb-0.5 sm:mb-1" style={{color: 'rgba(241, 243, 224, 0.7)'}}>+ Patina + Mount</p>
+                        <p className="text-[0.55rem] sm:text-[0.65rem] font-light mb-0.5 sm:mb-1 leading-tight" style={{color: 'rgba(241, 243, 224, 0.7)'}}>+ Patina + Mounting included</p>
                       </div>
                       <div className="text-right whitespace-nowrap">
-                        <p className="text-sm sm:text-lg font-bold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>{50 - patronRemaining} / 50</p>
+                        <p className="text-sm sm:text-lg font-bold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>{patronRemaining} / 50</p>
                         <p className="text-[0.6rem] sm:text-xs font-light" style={{color: 'rgba(241, 243, 224, 0.65)'}}>LEFT</p>
                       </div>
                     </div>
