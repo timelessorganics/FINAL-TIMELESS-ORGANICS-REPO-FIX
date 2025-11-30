@@ -25,7 +25,7 @@ export default function MainLaunch() {
     document.getElementById('seats')?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const handlePaymentClick = (type: 'full' | 'deposit' | 'reserve') => {
+  const handlePaymentClick = (type: 'full' | 'deposit') => {
     setPaymentType(type);
     setSeatModalOpen(true);
   };
@@ -47,9 +47,9 @@ export default function MainLaunch() {
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 leading-relaxed font-light">
-              Your investment funds our foundry's final fit-out. In return, we <span className="text-bronze font-medium">invest</span> (immortalize) your chosen botanical specimen now — 
-              guaranteeing you a flawless bronze casting, lifetime discount codes for <strong className="text-foreground">shop sales, commissions, AND workshops</strong>, 
-              and exclusive access to the ancient art of lost-wax casting.
+              We <span className="text-bronze font-medium">"invest"</span> your specimen in a heat-resistant plaster/silica mix — this is called "investing" in the sculpture world. 
+              Your specimen is encased in investment material that withstands extreme temperatures, kept for 2-3 months. 
+              <strong className="text-foreground"> Your sculptures are the first to ever come out of the Timeless Organics Studio.</strong>
             </p>
 
             {/* Three Stat Cards */}
@@ -176,7 +176,7 @@ export default function MainLaunch() {
 
       <Footer />
       <SeatSelectionModal 
-        isOpen={seatModalOpen}
+        open={seatModalOpen}
         onOpenChange={setSeatModalOpen}
         paymentType={paymentType}
       />
