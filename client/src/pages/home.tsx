@@ -149,7 +149,7 @@ export default function HomePage() {
               </p>
 
               {/* Seat Selection Cards - 24hr Friends & Family Discount */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-4 sm:gap-6 mb-6 sm:mb-8">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-8 sm:gap-12 mb-6 sm:mb-8">
                 {/* FOUNDER SEAT CARD */}
                 <div className="group relative flex-1 max-w-xs p-5 sm:p-6 border border-white/20 rounded-lg bg-black/40 backdrop-blur-sm hover:bg-black/50 hover:border-white/30 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-4">
