@@ -121,107 +121,107 @@ export default function HomePage() {
           </div>
 
           {/* Layer 4: Content grid - stable positioning */}
-          <div className="relative z-10 min-h-screen grid grid-rows-[1fr_auto_1fr] px-4 sm:px-6 py-12 sm:py-16">
+          <div className="relative z-10 min-h-screen grid grid-rows-[1fr_auto_1fr] px-3 sm:px-4 lg:px-6 py-8 sm:py-12 lg:py-16">
             
             {/* Spacer - first row pushes content down */}
             <div />
             
             {/* Center content - fixed height area */}
-            <div className="text-center max-w-4xl mx-auto w-full">
+            <div className="text-center max-w-6xl mx-auto w-full">
               
               {/* Main title with glassy effect - responsive sizing - moved down onto slate */}
-              <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-[clamp(2.5rem,8vw,6rem)] font-light mt-8 sm:mt-12 mb-4 sm:mb-6 leading-[1.05] tracking-tight w-full">
+              <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-[clamp(2.2rem,7vw,5.5rem)] font-light mt-6 sm:mt-10 lg:mt-14 mb-3 sm:mb-5 lg:mb-8 leading-[1.05] tracking-tight w-full px-2">
                 <span className="hero-glass-text">Timeless Organics</span>
               </h1>
               
               {/* Tagline - Playfair Display font, responsive */}
-              <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-base sm:text-xl md:text-2xl lg:text-3xl text-white/90 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed px-2">
+              <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 max-w-3xl mx-auto mb-6 sm:mb-8 lg:mb-10 leading-relaxed px-3 sm:px-2">
                 One-Of-A-Kind Castings From Organic Matter
               </p>
 
               {/* Seat Selection Cards - 24hr Friends & Family Discount */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-8 sm:gap-12 mb-6 sm:mb-8">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-4 sm:gap-6 lg:gap-8 mb-6 sm:mb-8 px-2 sm:px-0 max-w-5xl mx-auto w-full">
                 {/* FOUNDER SEAT CARD */}
-                <div className="group relative flex-1 max-w-xs p-4 sm:p-4 border border-white/20 rounded-lg bg-black/40 backdrop-blur-sm hover:bg-black/50 hover:border-white/30 transition-all duration-300 hover-elevate">
-                  <div className="text-left space-y-3">
+                <div className="group relative flex-1 min-w-0 max-w-sm sm:max-w-md lg:max-w-xs p-3 sm:p-4 lg:p-5 border border-white/20 rounded-lg bg-black/40 backdrop-blur-sm hover:bg-black/50 hover:border-white/30 transition-all duration-300 hover-elevate">
+                  <div className="text-left space-y-2 sm:space-y-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <p className="text-xs text-white font-bold uppercase tracking-wider mb-1">Founder</p>
-                        <p className="text-xs text-white/60 font-light mb-1">Unmounted</p>
+                        <p className="text-[0.65rem] sm:text-xs text-white font-bold uppercase tracking-wider mb-0.5 sm:mb-1">Founder</p>
+                        <p className="text-[0.65rem] sm:text-xs text-white/60 font-light mb-0.5 sm:mb-1">Unmounted</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-lg font-bold text-white">{50 - founderRemaining} / 50</p>
-                        <p className="text-xs text-white/50 font-light">LEFT</p>
+                        <p className="text-sm sm:text-lg font-bold text-white">{50 - founderRemaining} / 50</p>
+                        <p className="text-[0.6rem] sm:text-xs text-white/50 font-light">LEFT</p>
                       </div>
                     </div>
                     
-                    <div className="space-y-1">
-                      <p className="text-xs text-white/70 font-light line-through">R4,500</p>
-                      <p className="font-serif text-2xl sm:text-3xl font-bold text-bronze">R3,000</p>
-                      <p className="text-xs text-bronze/80 font-light">Fire Sale</p>
+                    <div className="space-y-0.5 sm:space-y-1">
+                      <p className="text-[0.65rem] sm:text-xs text-white/70 font-light line-through">R4,500</p>
+                      <p className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-bronze">R3,000</p>
+                      <p className="text-[0.65rem] sm:text-xs text-bronze/80 font-light">Fire Sale</p>
                     </div>
 
                     {/* Quantity Selector */}
-                    <div className="flex items-center gap-1 border border-white/30 rounded-md p-1.5 w-fit">
+                    <div className="flex items-center gap-1 border border-white/30 rounded-md p-1 sm:p-1.5 w-fit">
                       <button
                         onClick={() => setFounderQuantity(Math.max(1, founderQuantity - 1))}
                         className="p-0.5 hover:text-white transition-colors text-white/70"
                         data-testid="button-founder-qty-decrease"
                       >
-                        <Minus className="w-3 h-3" />
+                        <Minus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                       </button>
-                      <span className="text-xs font-semibold text-white w-6 text-center">{founderQuantity}</span>
+                      <span className="text-[0.65rem] sm:text-xs font-semibold text-white w-5 sm:w-6 text-center">{founderQuantity}</span>
                       <button
                         onClick={() => setFounderQuantity(founderQuantity + 1)}
                         className="p-0.5 hover:text-white transition-colors text-white/70"
                         data-testid="button-founder-qty-increase"
                       >
-                        <Plus className="w-3 h-3" />
+                        <Plus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                       </button>
                     </div>
                     
                     <button
                       onClick={() => setLocation(`/founding-100?seat=founder&quantity=${founderQuantity}`)}
-                      className="w-full py-1.5 px-2 bg-white/10 border border-white/30 rounded-md hover:bg-white/20 transition-colors flex items-center gap-1 justify-center text-xs font-semibold text-white"
+                      className="w-full py-1 sm:py-1.5 px-2 bg-white/10 border border-white/30 rounded-md hover:bg-white/20 transition-colors flex items-center gap-1 justify-center text-[0.65rem] sm:text-xs font-semibold text-white"
                       data-testid="button-buy-now-founder"
                     >
                       <span>Buy Now</span>
-                      <ArrowRight className="w-3 h-3" />
+                      <ArrowRight className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                     </button>
                   </div>
                 </div>
 
                 {/* PATRON SEAT CARD */}
-                <div className="group relative flex-1 max-w-xs p-4 sm:p-4 border rounded-lg backdrop-blur-sm transition-all duration-300 hover-elevate" style={{backgroundColor: 'rgba(241, 243, 224, 0.15)', borderColor: 'rgba(241, 243, 224, 0.35)'}}>
-                  <div className="text-left space-y-3">
+                <div className="group relative flex-1 min-w-0 max-w-sm sm:max-w-md lg:max-w-xs p-3 sm:p-4 lg:p-5 border rounded-lg backdrop-blur-sm transition-all duration-300 hover-elevate" style={{backgroundColor: 'rgba(241, 243, 224, 0.15)', borderColor: 'rgba(241, 243, 224, 0.35)'}}>
+                  <div className="text-left space-y-2 sm:space-y-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-wider mb-1" style={{color: 'rgba(241, 243, 224, 0.9)'}}>Patron</p>
-                        <p className="text-xs font-light mb-1" style={{color: 'rgba(241, 243, 224, 0.7)'}}>+ Patina + Mount</p>
+                        <p className="text-[0.65rem] sm:text-xs font-bold uppercase tracking-wider mb-0.5 sm:mb-1" style={{color: 'rgba(241, 243, 224, 0.9)'}}>Patron</p>
+                        <p className="text-[0.65rem] sm:text-xs font-light mb-0.5 sm:mb-1" style={{color: 'rgba(241, 243, 224, 0.7)'}}>+ Patina + Mount</p>
                       </div>
                       <div className="text-right whitespace-nowrap">
-                        <p className="text-lg font-bold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>{50 - patronRemaining} / 50</p>
-                        <p className="text-xs font-light" style={{color: 'rgba(241, 243, 224, 0.65)'}}>LEFT</p>
+                        <p className="text-sm sm:text-lg font-bold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>{50 - patronRemaining} / 50</p>
+                        <p className="text-[0.6rem] sm:text-xs font-light" style={{color: 'rgba(241, 243, 224, 0.65)'}}>LEFT</p>
                       </div>
                     </div>
                     
-                    <div className="space-y-1">
-                      <p className="text-xs font-light line-through" style={{color: 'rgba(241, 243, 224, 0.75)'}}>R6,000</p>
-                      <p className="font-serif text-2xl sm:text-3xl font-bold text-accent-gold">R4,500</p>
-                      <p className="text-xs text-accent-gold/80 font-light">Fire Sale</p>
+                    <div className="space-y-0.5 sm:space-y-1">
+                      <p className="text-[0.65rem] sm:text-xs font-light line-through" style={{color: 'rgba(241, 243, 224, 0.75)'}}>R6,000</p>
+                      <p className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-accent-gold">R4,500</p>
+                      <p className="text-[0.65rem] sm:text-xs text-accent-gold/80 font-light">Fire Sale</p>
                     </div>
 
                     {/* Quantity Selector */}
-                    <div className="flex items-center gap-1 rounded-md p-1.5 w-fit" style={{borderColor: 'rgba(241, 243, 224, 0.35)', borderWidth: '1px'}}>
+                    <div className="flex items-center gap-1 rounded-md p-1 sm:p-1.5 w-fit" style={{borderColor: 'rgba(241, 243, 224, 0.35)', borderWidth: '1px'}}>
                       <button
                         onClick={() => setPatronQuantity(Math.max(1, patronQuantity - 1))}
                         className="p-0.5 transition-colors"
                         style={{color: 'rgba(241, 243, 224, 0.6)'}}
                         data-testid="button-patron-qty-decrease"
                       >
-                        <Minus className="w-3 h-3" />
+                        <Minus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
                       </button>
-                      <span className="text-xs font-semibold w-6 text-center" style={{color: 'rgba(241, 243, 224, 0.9)'}}>{patronQuantity}</span>
+                      <span className="text-[0.65rem] sm:text-xs font-semibold w-5 sm:w-6 text-center" style={{color: 'rgba(241, 243, 224, 0.9)'}}>{patronQuantity}</span>
                       <button
                         onClick={() => setPatronQuantity(patronQuantity + 1)}
                         className="p-0.5 transition-colors"
