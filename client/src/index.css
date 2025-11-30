@@ -137,7 +137,11 @@ body {
   50% { opacity: 1; filter: drop-shadow(0 0 16px rgba(166, 124, 82, 0.5)); }
 }
 
-.animate-pulse {
+.value-gradient {
+  background: linear-gradient(90deg, #a67c52, #d8c3a5, #a67c52);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
   animation: gentle-glow 3s ease-in-out infinite;
 }
 

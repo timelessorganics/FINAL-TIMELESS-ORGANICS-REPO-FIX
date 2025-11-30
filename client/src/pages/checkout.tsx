@@ -717,7 +717,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                             {i === 0 && seatType === "founder" ? (
                               <>
                                 One-of-a-kind bronze casting (
-                                <span className="font-light bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-clip-text text-transparent animate-pulse">
+                                <span className="font-light value-gradient">
                                   R25,000+ retail
                                 </span>
                                 )

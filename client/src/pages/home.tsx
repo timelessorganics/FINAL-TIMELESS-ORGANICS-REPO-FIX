@@ -531,7 +531,7 @@ export default function HomePage() {
                   <Award className="w-8 h-8 text-patina" />
                 </div>
                 <h3 className="font-serif text-2xl font-light text-white mb-3">Your Bronze Asset</h3>
-                <div className="text-4xl font-light mb-4 bg-gradient-to-r from-patina via-accent-gold to-patina bg-clip-text text-transparent animate-pulse">
+                <div className="text-4xl font-light mb-4 value-gradient">
                   R25,000+ retail
                 </div>
                 <p className="text-white/70 leading-relaxed text-base font-light">
