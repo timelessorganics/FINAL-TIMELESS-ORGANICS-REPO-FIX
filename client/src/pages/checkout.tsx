@@ -79,8 +79,10 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
   // Normalize seatType to lowercase for matching
   const normalizedSeatType = seatType.toLowerCase();
   const currentSeat = seats?.find((s) => s.type.toLowerCase() === normalizedSeatType);
-  // Use database price (allows admin to set test prices) - keep in cents throughout
-  const basePriceCents = currentSeat?.price || 0;
+  // Use fire sale price if active, otherwise regular price - keep in cents throughout
+  const basePriceCents = (currentSeat?.fireSalePrice && currentSeat?.fireSaleEndsAt && new Date(currentSeat.fireSaleEndsAt) > new Date()) 
+    ? currentSeat.fireSalePrice 
+    : currentSeat?.price || 0;
 
   const form = useForm<CheckoutForm>({
     resolver: zodResolver(checkoutFormSchema),
