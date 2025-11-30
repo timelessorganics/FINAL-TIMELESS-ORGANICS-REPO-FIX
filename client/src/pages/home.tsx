@@ -161,27 +161,8 @@ export default function HomePage() {
                       <p className="text-[0.65rem] sm:text-xs text-bronze/80 font-light">Fire Sale</p>
                     </div>
 
-                    {/* Quantity Selector */}
-                    <div className="flex items-center gap-1 border border-white/30 rounded-md p-1 sm:p-1.5 w-fit">
-                      <button
-                        onClick={() => setFounderQuantity(Math.max(1, founderQuantity - 1))}
-                        className="p-0.5 hover:text-white transition-colors text-white/70"
-                        data-testid="button-founder-qty-decrease"
-                      >
-                        <Minus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                      </button>
-                      <span className="text-[0.65rem] sm:text-xs font-semibold text-white w-5 sm:w-6 text-center">{founderQuantity}</span>
-                      <button
-                        onClick={() => setFounderQuantity(founderQuantity + 1)}
-                        className="p-0.5 hover:text-white transition-colors text-white/70"
-                        data-testid="button-founder-qty-increase"
-                      >
-                        <Plus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                      </button>
-                    </div>
-                    
                     <button
-                      onClick={() => setLocation(`/founding-100?seat=founder&quantity=${founderQuantity}`)}
+                      onClick={() => setLocation(`/founding-100?seat=founder`)}
                       className="w-full py-1 sm:py-1.5 px-2 bg-white/10 border border-white/30 rounded-md hover:bg-white/20 transition-colors flex items-center gap-1 justify-center text-[0.65rem] sm:text-xs font-semibold text-white"
                       data-testid="button-buy-now-founder"
                     >
@@ -211,29 +192,8 @@ export default function HomePage() {
                       <p className="text-[0.65rem] sm:text-xs text-accent-gold/80 font-light">Fire Sale</p>
                     </div>
 
-                    {/* Quantity Selector */}
-                    <div className="flex items-center gap-1 rounded-md p-1 sm:p-1.5 w-fit" style={{borderColor: 'rgba(241, 243, 224, 0.35)', borderWidth: '1px'}}>
-                      <button
-                        onClick={() => setPatronQuantity(Math.max(1, patronQuantity - 1))}
-                        className="p-0.5 transition-colors"
-                        style={{color: 'rgba(241, 243, 224, 0.6)'}}
-                        data-testid="button-patron-qty-decrease"
-                      >
-                        <Minus className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
-                      </button>
-                      <span className="text-[0.65rem] sm:text-xs font-semibold w-5 sm:w-6 text-center" style={{color: 'rgba(241, 243, 224, 0.9)'}}>{patronQuantity}</span>
-                      <button
-                        onClick={() => setPatronQuantity(patronQuantity + 1)}
-                        className="p-0.5 transition-colors"
-                        style={{color: 'rgba(241, 243, 224, 0.6)'}}
-                        data-testid="button-patron-qty-increase"
-                      >
-                        <Plus className="w-3 h-3" />
-                      </button>
-                    </div>
-                    
                     <button
-                      onClick={() => setLocation(`/founding-100?seat=patron&quantity=${patronQuantity}`)}
+                      onClick={() => setLocation(`/founding-100?seat=patron`)}
                       className="w-full py-1.5 px-2 border rounded-md transition-colors flex items-center gap-1 justify-center text-xs font-semibold"
                       style={{backgroundColor: 'rgba(241, 243, 224, 0.2)', borderColor: 'rgba(241, 243, 224, 0.35)', color: 'rgba(241, 243, 224, 0.9)'}}
                       data-testid="button-buy-now-patron"
