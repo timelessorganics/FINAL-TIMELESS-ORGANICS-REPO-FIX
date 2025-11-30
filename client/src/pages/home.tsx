@@ -140,7 +140,7 @@ export default function HomePage() {
             <div className="text-center max-w-4xl mx-auto w-full">
               
               {/* Main title with glassy effect - responsive sizing - moved down onto slate */}
-              <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-[clamp(2.5rem,8vw,6rem)] font-light mt-24 sm:mt-32 mb-4 sm:mb-6 leading-[1.05] tracking-[0.08em] sm:tracking-[0.16em] whitespace-nowrap">
+              <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-[clamp(2.5rem,8vw,6rem)] font-light mt-24 sm:mt-32 mb-4 sm:mb-6 leading-[1.05] tracking-tight w-full">
                 <span className="hero-glass-text">Timeless Organics</span>
               </h1>
               
