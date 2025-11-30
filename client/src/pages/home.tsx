@@ -170,7 +170,7 @@ export default function HomePage() {
                 </div>
 
                 {/* PATRON SEAT CARD */}
-                <div className="group relative flex-1 min-w-0 max-w-sm sm:max-w-md lg:max-w-xs p-3 sm:p-4 lg:p-5 border rounded-lg backdrop-blur-sm transition-all duration-300 hover-elevate" style={{backgroundColor: 'rgba(241, 243, 224, 0.15)', borderColor: 'rgba(241, 243, 224, 0.35)'}}>
+                <div className="group relative flex-1 min-w-0 max-w-sm sm:max-w-md lg:max-w-md p-3 sm:p-4 lg:p-5 border rounded-lg backdrop-blur-sm transition-all duration-300 hover-elevate" style={{backgroundColor: 'rgba(241, 243, 224, 0.15)', borderColor: 'rgba(241, 243, 224, 0.35)'}}>
                   <div className="text-left space-y-2 sm:space-y-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
