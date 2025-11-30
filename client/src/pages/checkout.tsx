@@ -287,7 +287,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
 
   const benefits = seatType === "founder" 
     ? [
-        "One-of-a-kind bronze casting from real specimen (R25,000+ value)",
+        <span key="value">One-of-a-kind bronze casting from real specimen (<span className="text-lg font-light bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-clip-text text-transparent animate-pulse">R25,000+ retail</span>)</span>,
         "One 2-day bronze casting workshop at 50% discount",
         "20% lifetime discount on all future shop purchases",
         "Priority access to custom commissions",

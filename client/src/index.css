@@ -131,6 +131,16 @@ body {
   letter-spacing: 0.3px;
 }
 
+/* Subtle elegant glow animation for value displays */
+@keyframes gentle-glow {
+  0%, 100% { opacity: 0.8; filter: drop-shadow(0 0 8px rgba(166, 124, 82, 0.3)); }
+  50% { opacity: 1; filter: drop-shadow(0 0 16px rgba(166, 124, 82, 0.5)); }
+}
+
+.animate-pulse {
+  animation: gentle-glow 3s ease-in-out infinite;
+}
+
 p, span, div, li {
   font-weight: 300;
 }
