@@ -529,13 +529,15 @@ export default function HomePage() {
             {/* The punchline */}
             <div className="text-center border-t border-bronze/20 pt-10">
               <p className="text-lg text-white/90 font-light max-w-3xl mx-auto leading-relaxed mb-6">
-                Both investments happen <span className="text-bronze font-medium">simultaneously</span>. You invest in our future. We invest your cutting. Together, we create something 
+                Both <span className="text-accent-gold font-medium">investments</span> happen <span className="text-bronze font-medium">simultaneously</span>. You <span className="text-patina font-medium">invest</span> in our future. We <span className="text-bronze font-medium">invest</span> your cutting. Together, we create something 
                 <span className="text-bronze font-serif italic"> Timeless</span>.
               </p>
               
-              <p className="text-xl text-bronze font-light italic mb-10 pb-10 border-b border-bronze/20">
-                "Once they're gone, this chapter closes. The kiln doors shut. 
-                This founding group becomes the story — and you become part of it."
+              <p className="text-xl font-light italic mb-10 pb-10 border-b border-bronze/20">
+                <span className="text-bronze">"Once they're gone, this chapter closes. The kiln doors shut.</span>
+                <br />
+                <span className="text-accent-gold">This founding group becomes the story</span> 
+                <span className="text-bronze"> — and you become part of it."</span>
               </p>
               
               <Button asChild size="lg" className="btn-bronze gap-2 min-h-14 text-lg px-10" data-testid="button-investments-cta">

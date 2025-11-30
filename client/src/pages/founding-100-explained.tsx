@@ -64,7 +64,7 @@ export default function Founding100ExplainedPage() {
 
             <div className="text-center mt-12 pt-12 border-t border-border/50">
               <p className="text-xl md:text-2xl text-foreground/90 font-light leading-relaxed">
-                Both investments happen <span className="text-bronze font-medium">simultaneously</span>. You invest in our future. We invest your cutting. 
+                Both <span className="text-accent-gold font-medium">investments</span> happen <span className="text-bronze font-medium">simultaneously</span>. You <span className="text-patina font-medium">invest</span> in our future. We <span className="text-bronze font-medium">invest</span> your cutting. 
                 Together, we create something <span className="text-bronze font-serif italic">Timeless</span>.
               </p>
             </div>
