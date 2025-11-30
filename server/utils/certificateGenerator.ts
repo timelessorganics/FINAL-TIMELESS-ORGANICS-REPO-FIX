@@ -35,18 +35,18 @@ export async function generateCertificate(
       const DARK_BG = '#0a0a0a';
       const CARD_BG = '#1a1a1a';
 
-      // Dark background
-      doc.rect(0, 0, doc.page.width, doc.page.height).fill(DARK_BG);
+      // White background
+      doc.rect(0, 0, doc.page.width, doc.page.height).fill('#ffffff');
 
       // Full-page translucent aloe background - using bronze aloe sculpture
       const aloeImagePath = path.join(process.cwd(), 'attached_assets', 'Bronze Aloe Sculpture in Resin Block_1764516081629.png');
       if (fs.existsSync(aloeImagePath)) {
         doc.save();
-        doc.opacity(0.12);
+        doc.opacity(0.08);
         // Center the image and scale to fit page
-        const imgWidth = doc.page.width * 0.65;
+        const imgWidth = doc.page.width * 0.6;
         const imgX = (doc.page.width - imgWidth) / 2;
-        const imgY = 120;
+        const imgY = 150;
         doc.image(aloeImagePath, imgX, imgY, {
           width: imgWidth,
           align: 'center'
