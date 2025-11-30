@@ -436,27 +436,6 @@ export default function HomePage() {
                     First access to custom commissions. Your specimen, your vision, cast in bronze.
                   </p>
                 </div>
-                <div className="p-6 rounded-lg border border-bronze/10 bg-bronze/[0.02]">
-                  <Flame className="w-6 h-6 text-bronze mb-3" />
-                  <h4 className="font-light mb-2">Auction First Dibs</h4>
-                  <p className="text-sm text-muted-foreground font-light">
-                    Early access to future one-of-a-kind works before they go to public auction.
-                  </p>
-                </div>
-                <div className="p-6 rounded-lg border border-accent-gold/10 bg-accent-gold/[0.02]">
-                  <Sparkles className="w-6 h-6 text-accent-gold mb-3" />
-                  <h4 className="font-light mb-2">Giftable for Life</h4>
-                  <p className="text-sm text-muted-foreground font-light">
-                    Transfer your benefits to family or friends. A gift that keeps giving for generations.
-                  </p>
-                </div>
-                <div className="p-6 rounded-lg border border-patina/10 bg-patina/[0.02]">
-                  <Shield className="w-6 h-6 text-patina mb-3" />
-                  <h4 className="font-light mb-2">Founding Member Status</h4>
-                  <p className="text-sm text-muted-foreground font-light">
-                    Your name in our foundry. Part of the story from day one.
-                  </p>
-                </div>
               </div>
             </div>
 
