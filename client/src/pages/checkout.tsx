@@ -288,7 +288,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
   const benefits = seatType === "founder" 
     ? [
         "One-of-a-kind bronze casting from real specimen (R25,000+ value)",
-        "50% discount on future 2-day bronze casting workshops",
+        "One 2-day bronze casting workshop at 50% discount",
         "20% lifetime discount on all future shop purchases",
         "Priority access to custom commissions",
         "Early access to future auction pieces",
@@ -297,8 +297,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
     : [
         "One-of-a-kind bronze casting with patina finish included",
         "Professional mounting service included",
-        "80% discount on future 2-day bronze casting workshops",
-        "One complimentary masterclass workshop (hands-on experience) at 80% discount",
+        "One 2-day bronze casting workshop at 80% discount (hands-on masterclass)",
         "30% discount on all future workshops",
         "30% lifetime discount on all future shop purchases",
         "Priority access to custom commissions",
