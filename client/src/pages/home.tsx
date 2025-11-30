@@ -21,6 +21,8 @@ interface SeatAvailability {
   type: string;
   name: string;
   price: number;
+  fireSalePrice?: number;
+  fireSaleEndsAt?: string;
   totalAvailable: number;
   sold: number;
   remaining: number;
