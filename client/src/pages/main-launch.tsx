@@ -41,7 +41,7 @@ export default function MainLaunch() {
           {/* HERO SECTION */}
           <section className="text-center mb-8 sm:mb-12 pt-6 sm:pt-8" data-testid="section-hero">
             <div className="kicker mb-3 sm:mb-4">FOUNDING 100 INVESTOR LAUNCH</div>
-            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light mb-4 sm:mb-6 leading-tight">
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-4 sm:mb-6 leading-tight whitespace-nowrap">
               Your Investment Is <span className="moving-fill">Our Investment</span>
             </h1>
             
