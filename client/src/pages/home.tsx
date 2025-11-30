@@ -115,59 +115,63 @@ export default function HomePage() {
                 <span className="hero-glass-text">Timeless Organics</span>
               </h1>
               
-              {/* Fire Sale Pricing Banner */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-8 sm:mb-12 space-y-3">
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8">
-                  <div className="text-center">
-                    <p className="text-xs text-white/60 font-light mb-1">Founder Seat</p>
-                    <p className="font-serif text-2xl sm:text-3xl font-bold text-bronze">R3,000</p>
-                    <p className="text-xs text-white/50 font-light">Unmounted Bronze</p>
-                  </div>
-                  <div className="h-12 w-px bg-white/20" />
-                  <div className="text-center">
-                    <p className="text-xs text-white/60 font-light mb-1">Patron Seat</p>
-                    <p className="font-serif text-2xl sm:text-3xl font-bold text-accent-gold">R4,500</p>
-                    <p className="text-xs text-accent-gold/80 font-light">Includes Patina + Mounting</p>
-                    <p className="text-xs text-white/40 mt-1 line-through">Was R6,000</p>
-                  </div>
-                </div>
-                <p className="text-xs text-white/50 font-light">24-hour fire sale ends at midnight Sunday SA time</p>
-              </div>
-              
               {/* Tagline - Playfair Display font, responsive */}
-              <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-base sm:text-xl md:text-2xl lg:text-3xl text-white/90 max-w-2xl mx-auto mb-4 sm:mb-6 leading-relaxed px-2">
+              <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-base sm:text-xl md:text-2xl lg:text-3xl text-white/90 max-w-2xl mx-auto mb-8 sm:mb-12 leading-relaxed px-2">
                 One-Of-A-Kind Castings From Organic Matter
               </p>
 
-              {/* 2-Tier CTA Buttons: SECURE, BUY NOW */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mb-4 sm:mb-8">
-                <div className="w-full sm:w-auto text-center">
-                  <Button 
-                    size="lg" 
-                    variant="outline"
-                    className="w-full text-xs sm:text-sm px-4 sm:px-6 py-3 sm:py-5 min-h-10 sm:min-h-12 gap-2 font-bold border-white/30 text-white hover:bg-white/10 mb-1 sm:mb-2" 
-                    onClick={() => { setCheckoutPaymentType('deposit'); setCheckoutModalOpen(true); }}
-                    data-testid="button-secure-deposit"
-                  >
-                    SECURE R1K
-                    <Shield className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  </Button>
-                  <p className="text-xs text-white/60 font-light mt-1">48hr deadline</p>
-                </div>
-                
-                <div className="w-full sm:w-auto text-center">
-                  <Button 
-                    size="lg" 
-                    variant="outline"
-                    className="w-full text-xs sm:text-sm px-4 sm:px-6 py-3 sm:py-5 min-h-10 sm:min-h-12 gap-2 font-bold border-white/30 text-white hover:bg-white/10 mb-1 sm:mb-2" 
-                    onClick={() => { setCheckoutPaymentType('full'); setCheckoutModalOpen(true); }}
-                    data-testid="button-buy-now"
-                  >
-                    BUY NOW
-                    <ArrowRight className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                  </Button>
-                  <p className="text-xs text-white/60 font-light mt-1">Full price</p>
-                </div>
+              {/* Seat Selection Cards - 24hr Friends & Family Discount */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-4 sm:gap-6 mb-8 sm:mb-12">
+                {/* FOUNDER SEAT CARD */}
+                <button
+                  onClick={() => { setCheckoutPaymentType('full'); setCheckoutModalOpen(true); handleSeatSelection('founder'); }}
+                  className="group relative flex-1 max-w-xs p-6 sm:p-8 border border-bronze/40 rounded-lg bg-black/30 backdrop-blur-sm hover:bg-black/50 hover:border-bronze/60 transition-all duration-300 cursor-pointer hover-elevate"
+                  data-testid="card-seat-founder"
+                >
+                  <div className="text-left">
+                    <p className="text-xs text-white/60 font-light uppercase tracking-wider mb-3">Founder Seat</p>
+                    <p className="text-xs text-white/50 font-light mb-4">Unmounted Bronze</p>
+                    
+                    <div className="space-y-2 mb-6">
+                      <p className="text-xs text-white/50 font-light line-through">Full Price: R4,500</p>
+                      <p className="font-serif text-3xl sm:text-4xl font-bold text-bronze">R3,000</p>
+                      <p className="text-xs text-bronze/80 font-light">24hr Friends & Family</p>
+                    </div>
+                    
+                    <div className="flex items-center gap-2 text-accent-gold group-hover:translate-x-1 transition-transform">
+                      <span className="text-sm font-semibold">Select</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </button>
+
+                {/* PATRON SEAT CARD */}
+                <button
+                  onClick={() => { setCheckoutPaymentType('full'); setCheckoutModalOpen(true); handleSeatSelection('patron'); }}
+                  className="group relative flex-1 max-w-xs p-6 sm:p-8 border border-accent-gold/40 rounded-lg bg-black/30 backdrop-blur-sm hover:bg-black/50 hover:border-accent-gold/60 transition-all duration-300 cursor-pointer hover-elevate"
+                  data-testid="card-seat-patron"
+                >
+                  <div className="text-left">
+                    <p className="text-xs text-white/60 font-light uppercase tracking-wider mb-3">Patron Seat</p>
+                    <p className="text-xs text-accent-gold/80 font-light mb-4">Includes Patina + Mounting (R2,000 value)</p>
+                    
+                    <div className="space-y-2 mb-6">
+                      <p className="text-xs text-white/50 font-light line-through">Full Price: R6,000</p>
+                      <p className="font-serif text-3xl sm:text-4xl font-bold text-accent-gold">R4,500</p>
+                      <p className="text-xs text-accent-gold/80 font-light">24hr Friends & Family</p>
+                    </div>
+                    
+                    <div className="flex items-center gap-2 text-accent-gold group-hover:translate-x-1 transition-transform">
+                      <span className="text-sm font-semibold">Select</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </div>
+                  </div>
+                </button>
+              </div>
+
+              {/* Fire Sale Info Banner - Below seat cards */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 text-xs text-white/50 font-light">
+                <p>24-hour friends & family discount ends at midnight Sunday SA time</p>
               </div>
                 
               {/* Reservation counter - shows live reservations */}
