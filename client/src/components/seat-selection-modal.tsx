@@ -15,14 +15,11 @@ export default function SeatSelectionModal({ open, onOpenChange, paymentType }: 
   const [, setLocation] = useLocation();
 
   const handleSelect = (seatType: 'founder' | 'patron') => {
-    const params = new URLSearchParams();
-    params.set('seat', seatType);
-    params.set('payment', paymentType);
     onOpenChange(false);
-    setLocation(`/checkout?${params.toString()}`);
+    setLocation(`/founding-100?seat=${seatType}`);
   };
 
-  const paymentLabel = paymentType === 'deposit' ? 'SECURE (R1,000 Deposit)' : 'BUY NOW (Full Price)';
+  const paymentLabel = 'Choose Your Tier';
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -39,6 +36,7 @@ export default function SeatSelectionModal({ open, onOpenChange, paymentType }: 
           <Card 
             className="p-6 bg-card/50 border-bronze/50 cursor-pointer hover-elevate transition-all"
             onClick={() => handleSelect('founder')}
+            data-testid="card-select-founder"
           >
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-bronze/20 flex items-center justify-center">
@@ -49,12 +47,8 @@ export default function SeatSelectionModal({ open, onOpenChange, paymentType }: 
                 <div className="text-xl font-bold text-bronze">R3,000</div>
               </div>
             </div>
-            <ul className="space-y-2 text-xs text-muted-foreground">
-              <li>• 50% off first workshop</li>
-              <li>• 20% lifetime discount</li>
-              <li>• Founders Wall engraving</li>
-            </ul>
-            <Button className="w-full mt-4 btn-bronze" size="sm">
+            <p className="text-xs text-muted-foreground mb-3">Unmounted bronze casting</p>
+            <Button className="w-full btn-bronze" size="sm" data-testid="button-select-founder">
               Select Founder
             </Button>
           </Card>
@@ -63,6 +57,7 @@ export default function SeatSelectionModal({ open, onOpenChange, paymentType }: 
           <Card 
             className="p-6 bg-card/50 border-accent-gold/50 cursor-pointer hover-elevate transition-all"
             onClick={() => handleSelect('patron')}
+            data-testid="card-select-patron"
           >
             <div className="flex items-center gap-3 mb-4">
               <div className="w-10 h-10 rounded-full bg-accent-gold/20 flex items-center justify-center">
@@ -73,12 +68,8 @@ export default function SeatSelectionModal({ open, onOpenChange, paymentType }: 
                 <div className="text-xl font-bold text-accent-gold">R5,000</div>
               </div>
             </div>
-            <ul className="space-y-2 text-xs text-muted-foreground">
-              <li>• 80% off first workshop</li>
-              <li>• 30% lifetime discount</li>
-              <li>• Patrons Wall engraving</li>
-            </ul>
-            <Button className="w-full mt-4 bg-accent-gold text-background hover:bg-accent-gold/90" size="sm">
+            <p className="text-xs text-muted-foreground mb-3">Patina + mounting included</p>
+            <Button className="w-full bg-accent-gold text-background hover:bg-accent-gold/90" size="sm" data-testid="button-select-patron">
               Select Patron
             </Button>
           </Card>
