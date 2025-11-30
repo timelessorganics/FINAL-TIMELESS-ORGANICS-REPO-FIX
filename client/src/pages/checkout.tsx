@@ -264,7 +264,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
   const patinaCost = hasPatina ? 100000 : 0; // R1,000 for patina
   const mountingCosts: Record<string, number> = {
     none: 0,
-    wall: 50000,      // R500
+    wall: 150000,     // R1,500
     base: 80000,      // R800
     custom: 120000,   // R1,200
   };
