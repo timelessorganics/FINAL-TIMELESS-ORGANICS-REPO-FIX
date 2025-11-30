@@ -75,6 +75,7 @@ export default function AdminPanel() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/seats"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/seats/availability"] });
       setEditingPrice({ founderPrice: "", patronPrice: "" });
       toast({ title: "Pricing Updated!", description: "Seat prices have been updated." });
     },
