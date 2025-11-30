@@ -79,9 +79,8 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
   // Normalize seatType to lowercase for matching
   const normalizedSeatType = seatType.toLowerCase();
   const currentSeat = seats?.find((s) => s.type.toLowerCase() === normalizedSeatType);
-  // Use database price (allows admin to set test prices)
+  // Use database price (allows admin to set test prices) - keep in cents throughout
   const basePriceCents = currentSeat?.price || 0;
-  const basePrice = basePriceCents / 100;
 
   const form = useForm<CheckoutForm>({
     resolver: zodResolver(checkoutFormSchema),
@@ -270,9 +269,9 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
   };
   const mountingCost = mountingCosts[mountingType] || 0;
 
-  // Calculate total price
-  const discount = validatedPromo?.valid ? (basePrice * (validatedPromo.discount! / 100)) : 0;
-  const subtotal = basePrice - discount + patinaCost + mountingCost; // All values already in cents
+  // Calculate total price (all in cents)
+  const discount = validatedPromo?.valid ? (basePriceCents * (validatedPromo.discount! / 100)) : 0;
+  const subtotal = basePriceCents - discount + patinaCost + mountingCost; // All values in cents
   
   // Apply payment type adjustments
   let totalPrice = subtotal;
@@ -695,11 +694,11 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                   {/* Price */}
                   <div>
                     <div className="text-3xl font-light">
-                      R{totalPrice.toLocaleString()}
+                      R{(totalPrice / 100).toLocaleString()}
                     </div>
                     {discount > 0 && (
                       <div className="text-sm text-muted-foreground line-through">
-                        R{basePrice.toLocaleString()}
+                        R{(basePriceCents / 100).toLocaleString()}
                       </div>
                     )}
                   </div>
