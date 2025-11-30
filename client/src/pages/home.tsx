@@ -5,8 +5,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Sparkles, Shield, Award, ArrowRight, Flame, Users, Leaf, Calendar } from "lucide-react";
-import SeatSelectionModal from "@/components/seat-selection-modal";
+import { Sparkles, Shield, Award, ArrowRight, Flame, Users, Leaf, Calendar, Plus, Minus } from "lucide-react";
 
 import heroImage from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764248900779.png";
 import bronzeImage1 from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764170102466.png";
@@ -36,7 +35,8 @@ interface PreLaunchStats {
 }
 
 export default function HomePage() {
-  const [checkoutModalOpen, setCheckoutModalOpen] = useState(false);
+  const [founderQuantity, setFounderQuantity] = useState(1);
+  const [patronQuantity, setPatronQuantity] = useState(1);
   const [timeRemaining, setTimeRemaining] = useState<string>("24:00:00");
   const [, setLocation] = useLocation();
   
@@ -160,13 +160,32 @@ export default function HomePage() {
                       <p className="font-serif text-3xl sm:text-4xl font-bold text-bronze">R3,000</p>
                       <p className="text-xs text-bronze/80 font-light">24hr Friends & Family</p>
                     </div>
+
+                    {/* Quantity Selector */}
+                    <div className="flex items-center gap-2 border border-white/30 rounded-md p-2 w-fit">
+                      <button
+                        onClick={() => setFounderQuantity(Math.max(1, founderQuantity - 1))}
+                        className="p-1 hover:text-white transition-colors text-white/70"
+                        data-testid="button-founder-qty-decrease"
+                      >
+                        <Minus className="w-4 h-4" />
+                      </button>
+                      <span className="text-sm font-semibold text-white w-8 text-center">{founderQuantity}</span>
+                      <button
+                        onClick={() => setFounderQuantity(founderQuantity + 1)}
+                        className="p-1 hover:text-white transition-colors text-white/70"
+                        data-testid="button-founder-qty-increase"
+                      >
+                        <Plus className="w-4 h-4" />
+                      </button>
+                    </div>
                     
                     <button
-                      onClick={() => setCheckoutModalOpen(true)}
+                      onClick={() => setLocation(`/founding-100?seat=founder&quantity=${founderQuantity}`)}
                       className="w-full py-2 px-3 bg-white/10 border border-white/30 rounded-md hover:bg-white/20 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-white"
-                      data-testid="button-select-founder"
+                      data-testid="button-buy-now-founder"
                     >
-                      <span>Select</span>
+                      <span>Buy Now</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -191,14 +210,35 @@ export default function HomePage() {
                       <p className="font-serif text-3xl sm:text-4xl font-bold text-accent-gold">R4,500</p>
                       <p className="text-xs text-accent-gold/80 font-light">24hr Friends & Family</p>
                     </div>
+
+                    {/* Quantity Selector */}
+                    <div className="flex items-center gap-2 rounded-md p-2 w-fit" style={{borderColor: 'rgba(241, 243, 224, 0.35)', borderWidth: '1px'}}>
+                      <button
+                        onClick={() => setPatronQuantity(Math.max(1, patronQuantity - 1))}
+                        className="p-1 transition-colors"
+                        style={{color: 'rgba(241, 243, 224, 0.6)'}}
+                        data-testid="button-patron-qty-decrease"
+                      >
+                        <Minus className="w-4 h-4" />
+                      </button>
+                      <span className="text-sm font-semibold w-8 text-center" style={{color: 'rgba(241, 243, 224, 0.9)'}}>{patronQuantity}</span>
+                      <button
+                        onClick={() => setPatronQuantity(patronQuantity + 1)}
+                        className="p-1 transition-colors"
+                        style={{color: 'rgba(241, 243, 224, 0.6)'}}
+                        data-testid="button-patron-qty-increase"
+                      >
+                        <Plus className="w-4 h-4" />
+                      </button>
+                    </div>
                     
                     <button
-                      onClick={() => setCheckoutModalOpen(true)}
+                      onClick={() => setLocation(`/founding-100?seat=patron&quantity=${patronQuantity}`)}
                       className="w-full py-2 px-3 border rounded-md transition-colors flex items-center gap-2 justify-center text-sm font-semibold"
                       style={{backgroundColor: 'rgba(241, 243, 224, 0.2)', borderColor: 'rgba(241, 243, 224, 0.35)', color: 'rgba(241, 243, 224, 0.9)'}}
-                      data-testid="button-select-patron"
+                      data-testid="button-buy-now-patron"
                     >
-                      <span>Select</span>
+                      <span>Buy Now</span>
                       <ArrowRight className="w-4 h-4" />
                     </button>
                   </div>
@@ -575,13 +615,6 @@ export default function HomePage() {
       </main>
 
       <Footer />
-      
-      {/* Seat Selection Modal */}
-      <SeatSelectionModal 
-        open={checkoutModalOpen}
-        onOpenChange={setCheckoutModalOpen}
-        paymentType="full"
-      />
     </>
   );
 }
