@@ -85,7 +85,9 @@ export default function HomePage() {
 
   const founderSeats = seats?.find(s => s.type === 'founder');
   const patronSeats = seats?.find(s => s.type === 'patron');
-  const totalRemaining = (founderSeats?.remaining || 0) + (patronSeats?.remaining || 0);
+  const founderRemaining = founderSeats?.remaining || 0;
+  const patronRemaining = patronSeats?.remaining || 0;
+  const totalRemaining = founderRemaining + patronRemaining;
   const totalReserved = prelaunchStats?.totalReserved || 0;
 
   return (
@@ -149,11 +151,11 @@ export default function HomePage() {
               {/* Seat Selection Cards - 24hr Friends & Family Discount */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-4 sm:gap-6 mb-8 sm:mb-12">
                 {/* FOUNDER SEAT CARD */}
-                <div className="group relative flex-1 max-w-xs p-6 sm:p-8 border border-bronze/40 rounded-lg bg-black/30 backdrop-blur-sm hover:bg-black/50 hover:border-bronze/60 transition-all duration-300 hover-elevate">
+                <div className="group relative flex-1 max-w-xs p-6 sm:p-8 border border-white/20 rounded-lg bg-black backdrop-blur-sm hover:bg-black/80 hover:border-white/30 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-4">
                     <div>
-                      <p className="text-xs text-bronze font-bold uppercase tracking-wider mb-1">Founder Seat</p>
-                      <p className="text-xs text-white/50 font-light mb-2">Unmounted Bronze</p>
+                      <p className="text-xs text-white font-bold uppercase tracking-wider mb-1">Founder Seat</p>
+                      <p className="text-xs text-white/60 font-light mb-2">Unmounted and Unpatinated</p>
                     </div>
                     
                     <div className="space-y-2">
@@ -163,29 +165,29 @@ export default function HomePage() {
                     </div>
 
                     {/* Quantity Selector */}
-                    <div className="flex items-center gap-2 border border-bronze/40 rounded-md p-2 w-fit">
+                    <div className="flex items-center gap-2 border border-white/30 rounded-md p-2 w-fit">
                       <button
                         onClick={() => setFounderQuantity(Math.max(1, founderQuantity - 1))}
-                        className="p-1 hover:text-bronze transition-colors"
+                        className="p-1 hover:text-white transition-colors text-white/70"
                         data-testid="button-founder-qty-decrease"
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <span className="text-sm font-semibold text-bronze w-8 text-center">{founderQuantity}</span>
+                      <span className="text-sm font-semibold text-white w-8 text-center">{founderQuantity}</span>
                       <button
                         onClick={() => setFounderQuantity(founderQuantity + 1)}
-                        className="p-1 hover:text-bronze transition-colors"
+                        className="p-1 hover:text-white transition-colors text-white/70"
                         data-testid="button-founder-qty-increase"
                       >
                         <Plus className="w-4 h-4" />
                       </button>
                     </div>
 
-                    <p className="text-xs text-bronze/70 font-light">Perfect for gifts</p>
+                    <p className="text-xs text-white/60 font-light">The Perfect Gift</p>
                     
                     <button
                       onClick={() => { setCheckoutPaymentType('full'); handleSeatSelection('founder', founderQuantity); }}
-                      className="w-full py-2 px-3 bg-bronze/20 border border-bronze/50 rounded-md hover:bg-bronze/30 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-bronze"
+                      className="w-full py-2 px-3 bg-white/10 border border-white/30 rounded-md hover:bg-white/20 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-white"
                       data-testid="button-select-founder"
                     >
                       <span>Select</span>
@@ -195,11 +197,11 @@ export default function HomePage() {
                 </div>
 
                 {/* PATRON SEAT CARD */}
-                <div className="group relative flex-1 max-w-xs p-6 sm:p-8 border border-accent-gold/40 rounded-lg bg-black/30 backdrop-blur-sm hover:bg-black/50 hover:border-accent-gold/60 transition-all duration-300 hover-elevate">
+                <div className="group relative flex-1 max-w-xs p-6 sm:p-8 border border-teal-600/40 rounded-lg bg-teal-950/40 backdrop-blur-sm hover:bg-teal-950/60 hover:border-teal-600/60 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-4">
                     <div>
-                      <p className="text-xs text-accent-gold font-bold uppercase tracking-wider mb-1">Patron Seat</p>
-                      <p className="text-xs text-accent-gold/80 font-light mb-2">Includes Patina + Mounting (R2,000 value)</p>
+                      <p className="text-xs text-teal-400 font-bold uppercase tracking-wider mb-1">Patron Seat</p>
+                      <p className="text-xs text-teal-300/80 font-light mb-2">Includes Patina + Mounting (R2,000 value)</p>
                     </div>
                     
                     <div className="space-y-2">
@@ -209,29 +211,29 @@ export default function HomePage() {
                     </div>
 
                     {/* Quantity Selector */}
-                    <div className="flex items-center gap-2 border border-accent-gold/40 rounded-md p-2 w-fit">
+                    <div className="flex items-center gap-2 border border-teal-500/40 rounded-md p-2 w-fit">
                       <button
                         onClick={() => setPatronQuantity(Math.max(1, patronQuantity - 1))}
-                        className="p-1 hover:text-accent-gold transition-colors"
+                        className="p-1 hover:text-teal-400 transition-colors text-teal-300/70"
                         data-testid="button-patron-qty-decrease"
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <span className="text-sm font-semibold text-accent-gold w-8 text-center">{patronQuantity}</span>
+                      <span className="text-sm font-semibold text-teal-400 w-8 text-center">{patronQuantity}</span>
                       <button
                         onClick={() => setPatronQuantity(patronQuantity + 1)}
-                        className="p-1 hover:text-accent-gold transition-colors"
+                        className="p-1 hover:text-teal-400 transition-colors text-teal-300/70"
                         data-testid="button-patron-qty-increase"
                       >
                         <Plus className="w-4 h-4" />
                       </button>
                     </div>
 
-                    <p className="text-xs text-accent-gold/70 font-light">Perfect for gifts</p>
+                    <p className="text-xs text-teal-300/70 font-light">The Perfect Gift</p>
                     
                     <button
                       onClick={() => { setCheckoutPaymentType('full'); handleSeatSelection('patron', patronQuantity); }}
-                      className="w-full py-2 px-3 bg-accent-gold/20 border border-accent-gold/50 rounded-md hover:bg-accent-gold/30 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-accent-gold"
+                      className="w-full py-2 px-3 bg-teal-500/20 border border-teal-500/50 rounded-md hover:bg-teal-500/30 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-teal-400"
                       data-testid="button-select-patron"
                     >
                       <span>Select</span>
@@ -245,14 +247,14 @@ export default function HomePage() {
               <div className="hero-text-reveal hero-text-reveal-delay-3 space-y-2 text-center">
                 <div className="flex items-center justify-center gap-4 flex-wrap">
                   <div className="text-xs text-white/50 font-light">
-                    <span className="text-accent-gold font-semibold">{totalRemaining}</span> of 100 seats remaining
+                    <span className="text-bronze font-semibold">{founderRemaining}</span> Founder / <span className="text-teal-400 font-semibold">{patronRemaining}</span> Patron remaining
                   </div>
                   <div className="h-4 w-px bg-white/20" />
                   <div className="text-xs text-white/50 font-light">
-                    Ends in <span className="text-bronze font-semibold">{timeRemaining}</span>
+                    <span className="text-accent-gold font-semibold">{timeRemaining}</span>
                   </div>
                 </div>
-                <p className="text-xs text-white/40 font-light">Friends & family discount expires Sunday midnight SA time</p>
+                <p className="text-sm text-accent-gold font-semibold">Friends and Family Early Bird Fire Sale Expires in 24 hrs!!</p>
               </div>
                 
               {/* Reservation counter - shows live reservations */}

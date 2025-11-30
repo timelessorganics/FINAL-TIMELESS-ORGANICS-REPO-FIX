@@ -40,7 +40,7 @@ export default function Header({
           <Link href="/" className="font-serif text-xl font-bold" data-testid="link-home">
             <div>
               <p className="text-xs text-muted-foreground font-normal">David Junor</p>
-              <span className="moving-fill">Timeless Organics</span>
+              <span className="moving-fill block pt-1">Timeless Organics</span>
               {context && (
                 <p className="text-xs text-muted-foreground font-normal">{context}</p>
               )}
