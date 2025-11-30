@@ -149,7 +149,7 @@ export default function HomePage() {
               </p>
 
               {/* Seat Selection Cards - 24hr Friends & Family Discount */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-8 sm:gap-12 mb-6 sm:mb-8">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-12 sm:gap-20 mb-6 sm:mb-8">
                 {/* FOUNDER SEAT CARD */}
                 <div className="group relative flex-1 max-w-xs p-5 sm:p-6 border border-white/20 rounded-lg bg-black/40 backdrop-blur-sm hover:bg-black/50 hover:border-white/30 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-4">
@@ -197,11 +197,11 @@ export default function HomePage() {
                 </div>
 
                 {/* PATRON SEAT CARD */}
-                <div className="group relative flex-1 max-w-xs p-5 sm:p-6 border border-stone-600/40 rounded-lg bg-stone-900/35 backdrop-blur-sm hover:bg-stone-900/50 hover:border-stone-600/60 transition-all duration-300 hover-elevate">
+                <div className="group relative flex-1 max-w-xs p-5 sm:p-6 border border-emerald-700/35 rounded-lg bg-emerald-950/25 backdrop-blur-sm hover:bg-emerald-950/35 hover:border-emerald-700/45 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-4">
                     <div>
-                      <p className="text-xs text-stone-300 font-bold uppercase tracking-wider mb-1">Patron Seat</p>
-                      <p className="text-xs text-stone-400/80 font-light mb-2">Includes Patina + Mounting (R2,000 value)</p>
+                      <p className="text-xs text-emerald-300 font-bold uppercase tracking-wider mb-1">Patron Seat</p>
+                      <p className="text-xs text-emerald-400/70 font-light mb-2">Includes Patina + Mounting (R2,000 value)</p>
                     </div>
                     
                     <div className="space-y-2">
@@ -211,29 +211,29 @@ export default function HomePage() {
                     </div>
 
                     {/* Quantity Selector */}
-                    <div className="flex items-center gap-2 border border-stone-600/40 rounded-md p-2 w-fit">
+                    <div className="flex items-center gap-2 border border-emerald-700/35 rounded-md p-2 w-fit">
                       <button
                         onClick={() => setPatronQuantity(Math.max(1, patronQuantity - 1))}
-                        className="p-1 hover:text-stone-300 transition-colors text-stone-400/70"
+                        className="p-1 hover:text-emerald-300 transition-colors text-emerald-400/60"
                         data-testid="button-patron-qty-decrease"
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <span className="text-sm font-semibold text-stone-300 w-8 text-center">{patronQuantity}</span>
+                      <span className="text-sm font-semibold text-emerald-300 w-8 text-center">{patronQuantity}</span>
                       <button
                         onClick={() => setPatronQuantity(patronQuantity + 1)}
-                        className="p-1 hover:text-stone-300 transition-colors text-stone-400/70"
+                        className="p-1 hover:text-emerald-300 transition-colors text-emerald-400/60"
                         data-testid="button-patron-qty-increase"
                       >
                         <Plus className="w-4 h-4" />
                       </button>
                     </div>
 
-                    <p className="text-xs text-stone-400/70 font-light">a Timeless Gift</p>
+                    <p className="text-xs text-emerald-400/60 font-light">a Timeless Gift</p>
                     
                     <button
                       onClick={() => { setCheckoutPaymentType('full'); handleSeatSelection('patron', patronQuantity); }}
-                      className="w-full py-2 px-3 bg-stone-600/20 border border-stone-600/50 rounded-md hover:bg-stone-600/30 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-stone-300"
+                      className="w-full py-2 px-3 bg-emerald-700/15 border border-emerald-700/35 rounded-md hover:bg-emerald-700/25 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-emerald-300"
                       data-testid="button-select-patron"
                     >
                       <span>Select</span>
