@@ -104,3 +104,9 @@ waitForPort = 5000
 [agent]
 integrations = ["javascript_database:1.0.0", "javascript_log_in_with_replit:1.0.0", "github:1.0.0", "javascript_object_storage:1.0.0"]
 expertMode = true
+
+[userenv]
+
+[userenv.shared]
+SUPABASE_URL = "https://rcillyhlieikmzeuaghc.supabase.co"
+SUPABASE_SERVICE_ROLE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJjaWxseWhsaWVpa216ZXVhZ2hjIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2MTI4MjgxOCwiZXhwIjoyMDc2ODU4ODE4fQ.pm6Fo6oGAbXiTh4aLgIQcwa7AbxP8l4bC4UDaV2ChY4"
