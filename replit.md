@@ -45,9 +45,16 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Certificate Generation:** Automated PDF certificates.
 - **Email Notifications:** Automated confirmation, certificate, and gift notification emails.
 - **User Dashboard:** Displays purchases, production status, codes, and certificates.
-- **Admin Panel:** Comprehensive management dashboard with 5 tabbed sections:
+- **Admin Panel:** Comprehensive management dashboard with 6 tabbed sections:
   - **Overview Tab:** Analytics, seat tracking, purchase management, custom specimen approval, subscriber export, promo code generation, Mailchimp sync, mounting/international shipping flags
+  - **Content Tab (NEW CMS):** Full content management system for editing all website text:
+    - Page-by-page editing organized by category (hero, about, founding-100, workshops, seasonal-guide)
+    - Live preview of editable sections with section key labels
+    - Database-backed storage using `website_content` table with (pageSlug, sectionKey, content)
+    - API: GET /api/admin/content, POST /api/admin/content, GET /api/content/:pageSlug
   - **Media Library Tab:** Upload/manage images with URL, alt text, caption, tags; grid view with delete/view actions
+    - Images can be tagged (e.g., "protea-plant", "protea-bronze") for use in components
+    - Gallery/Sculptures page dynamically loads images from media library by tag
   - **Products Tab:** Create/manage shop products with name, price (cents), category (bronze/print/merchandise), status (draft/active/sold_out)
   - **Auctions Tab:** Schedule bronze auctions with title, start/end times, starting bid; tracks current bids and bid history
   - **Workshops Tab:** Manage workshop dates with date/time, max participants, deposit amount, location; status badges (available/fully_booked)
