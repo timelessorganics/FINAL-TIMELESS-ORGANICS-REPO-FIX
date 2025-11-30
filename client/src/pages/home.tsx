@@ -122,7 +122,7 @@ export default function HomePage() {
           <div className="absolute top-6 sm:top-10 left-0 right-0 z-10 px-4 sm:px-6">
             <div className="max-w-4xl mx-auto text-center">
               <div className="hero-text-reveal hero-text-reveal-delay-1">
-                <span className="inline-block font-serif text-base sm:text-2xl md:text-4xl font-semibold tracking-[0.08em] sm:tracking-[0.12em] uppercase moving-fill">
+                <span className="inline-block font-serif text-sm sm:text-lg md:text-2xl font-semibold tracking-[0.08em] sm:tracking-[0.12em] uppercase moving-fill">
                   Founding 100 Investor Launch
                 </span>
               </div>
@@ -139,7 +139,7 @@ export default function HomePage() {
             <div className="text-center max-w-4xl mx-auto w-full">
               
               {/* Main title with glassy effect - responsive sizing */}
-              <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-[clamp(2.5rem,8vw,6rem)] font-light mb-4 sm:mb-6 leading-[1.05] tracking-tight">
+              <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-[clamp(2.5rem,8vw,6rem)] font-light mt-12 sm:mt-16 mb-4 sm:mb-6 leading-[1.05] tracking-tight">
                 <span className="hero-glass-text">Timeless Organics</span>
               </h1>
               
@@ -149,9 +149,9 @@ export default function HomePage() {
               </p>
 
               {/* Seat Selection Cards - 24hr Friends & Family Discount */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-4 sm:gap-6 mb-8 sm:mb-12">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-4 sm:gap-6 mb-6 sm:mb-8">
                 {/* FOUNDER SEAT CARD */}
-                <div className="group relative flex-1 max-w-xs p-6 sm:p-8 border border-white/20 rounded-lg bg-black backdrop-blur-sm hover:bg-black/80 hover:border-white/30 transition-all duration-300 hover-elevate">
+                <div className="group relative flex-1 max-w-xs p-5 sm:p-6 border border-white/20 rounded-lg bg-black/40 backdrop-blur-sm hover:bg-black/50 hover:border-white/30 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-4">
                     <div>
                       <p className="text-xs text-white font-bold uppercase tracking-wider mb-1">Founder Seat</p>
@@ -183,7 +183,7 @@ export default function HomePage() {
                       </button>
                     </div>
 
-                    <p className="text-xs text-white/60 font-light">The Perfect Gift</p>
+                    <p className="text-xs text-white/60 font-light">a Timeless Gift</p>
                     
                     <button
                       onClick={() => { setCheckoutPaymentType('full'); handleSeatSelection('founder', founderQuantity); }}
@@ -197,11 +197,11 @@ export default function HomePage() {
                 </div>
 
                 {/* PATRON SEAT CARD */}
-                <div className="group relative flex-1 max-w-xs p-6 sm:p-8 border border-teal-600/40 rounded-lg bg-teal-950/40 backdrop-blur-sm hover:bg-teal-950/60 hover:border-teal-600/60 transition-all duration-300 hover-elevate">
+                <div className="group relative flex-1 max-w-xs p-5 sm:p-6 border border-stone-600/40 rounded-lg bg-stone-900/35 backdrop-blur-sm hover:bg-stone-900/50 hover:border-stone-600/60 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-4">
                     <div>
-                      <p className="text-xs text-teal-400 font-bold uppercase tracking-wider mb-1">Patron Seat</p>
-                      <p className="text-xs text-teal-300/80 font-light mb-2">Includes Patina + Mounting (R2,000 value)</p>
+                      <p className="text-xs text-stone-300 font-bold uppercase tracking-wider mb-1">Patron Seat</p>
+                      <p className="text-xs text-stone-400/80 font-light mb-2">Includes Patina + Mounting (R2,000 value)</p>
                     </div>
                     
                     <div className="space-y-2">
@@ -211,29 +211,29 @@ export default function HomePage() {
                     </div>
 
                     {/* Quantity Selector */}
-                    <div className="flex items-center gap-2 border border-teal-500/40 rounded-md p-2 w-fit">
+                    <div className="flex items-center gap-2 border border-stone-600/40 rounded-md p-2 w-fit">
                       <button
                         onClick={() => setPatronQuantity(Math.max(1, patronQuantity - 1))}
-                        className="p-1 hover:text-teal-400 transition-colors text-teal-300/70"
+                        className="p-1 hover:text-stone-300 transition-colors text-stone-400/70"
                         data-testid="button-patron-qty-decrease"
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <span className="text-sm font-semibold text-teal-400 w-8 text-center">{patronQuantity}</span>
+                      <span className="text-sm font-semibold text-stone-300 w-8 text-center">{patronQuantity}</span>
                       <button
                         onClick={() => setPatronQuantity(patronQuantity + 1)}
-                        className="p-1 hover:text-teal-400 transition-colors text-teal-300/70"
+                        className="p-1 hover:text-stone-300 transition-colors text-stone-400/70"
                         data-testid="button-patron-qty-increase"
                       >
                         <Plus className="w-4 h-4" />
                       </button>
                     </div>
 
-                    <p className="text-xs text-teal-300/70 font-light">The Perfect Gift</p>
+                    <p className="text-xs text-stone-400/70 font-light">a Timeless Gift</p>
                     
                     <button
                       onClick={() => { setCheckoutPaymentType('full'); handleSeatSelection('patron', patronQuantity); }}
-                      className="w-full py-2 px-3 bg-teal-500/20 border border-teal-500/50 rounded-md hover:bg-teal-500/30 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-teal-400"
+                      className="w-full py-2 px-3 bg-stone-600/20 border border-stone-600/50 rounded-md hover:bg-stone-600/30 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-stone-300"
                       data-testid="button-select-patron"
                     >
                       <span>Select</span>
