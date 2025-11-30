@@ -298,10 +298,12 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
         "One-of-a-kind bronze casting with patina finish included",
         "Professional mounting service included",
         "80% discount on future 2-day bronze casting workshops",
+        "One complimentary masterclass workshop (hands-on experience) at 80% discount",
+        "30% discount on all future workshops",
         "30% lifetime discount on all future shop purchases",
         "Priority access to custom commissions",
         "Early access to future auction pieces",
-        "Lifetime benefits transferable to family/friends",
+        "All benefits transferable to family/friends you gift to",
         "Founding member status & premium certificate"
       ];
 
