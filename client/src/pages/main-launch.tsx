@@ -94,7 +94,7 @@ export default function MainLaunch() {
                     title="Founders Pass"
                     regularPrice="R4,500"
                     fireSalePrice="R3,000"
-                    description="One bronze casting included of a Studio-Guaranteed Cutting"
+                    description="Unmounted and unpatinated. Can be purchased now or at a later stage via our shop or at checkout"
                     benefits={[
                       "Your name permanently engraved on our Founders & Patrons Leaf Wall",
                       "50% off first workshop (Transferable, single-use, never expires)",
