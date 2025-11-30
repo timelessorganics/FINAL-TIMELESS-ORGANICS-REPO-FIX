@@ -140,7 +140,7 @@ export default function HomePage() {
             <div className="text-center max-w-4xl mx-auto w-full">
               
               {/* Main title with glassy effect - responsive sizing - moved down onto slate */}
-              <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-[clamp(2.5rem,8vw,6rem)] font-light mt-24 sm:mt-32 mb-4 sm:mb-6 leading-[1.05] tracking-tight">
+              <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-[clamp(2.5rem,8vw,6rem)] font-light mt-24 sm:mt-32 mb-4 sm:mb-6 leading-[1.05] tracking-[0.08em] sm:tracking-[0.16em]">
                 <span className="hero-glass-text">Timeless Organics</span>
               </h1>
               
@@ -150,7 +150,7 @@ export default function HomePage() {
               </p>
 
               {/* Seat Selection Cards - 24hr Friends & Family Discount */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-20 sm:gap-32 mb-6 sm:mb-8">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-16 sm:gap-24 mb-6 sm:mb-8">
                 {/* FOUNDER SEAT CARD */}
                 <div className="group relative flex-1 max-w-md p-5 sm:p-6 border border-white/20 rounded-lg bg-black/40 backdrop-blur-sm hover:bg-black/50 hover:border-white/30 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-4">
@@ -204,16 +204,16 @@ export default function HomePage() {
                 </div>
 
                 {/* PATRON SEAT CARD */}
-                <div className="group relative flex-1 max-w-md p-5 sm:p-6 border border-emerald-700/40 rounded-lg bg-emerald-950/20 backdrop-blur-sm hover:bg-emerald-950/30 hover:border-emerald-700/50 transition-all duration-300 hover-elevate">
+                <div className="group relative flex-1 max-w-md p-5 sm:p-6 border border-stone-600/30 rounded-lg bg-stone-900/15 backdrop-blur-sm hover:bg-stone-900/25 hover:border-stone-600/40 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-4">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <p className="text-xs text-emerald-300 font-bold uppercase tracking-wider mb-1">Patron Seat</p>
-                        <p className="text-xs text-emerald-400/60 font-light mb-2">Includes Patina + Mounting (R2,000 value)</p>
+                        <p className="text-xs text-stone-300 font-bold uppercase tracking-wider mb-1">Patron Seat</p>
+                        <p className="text-xs text-stone-400/60 font-light mb-2">Includes Patina + Mounting (R2,000 value)</p>
                       </div>
                       <div className="text-right whitespace-nowrap">
-                        <p className="text-2xl font-bold text-emerald-300">{50 - patronRemaining} / 50</p>
-                        <p className="text-xs text-emerald-300/60 font-light">LEFT</p>
+                        <p className="text-2xl font-bold text-stone-300">{50 - patronRemaining} / 50</p>
+                        <p className="text-xs text-stone-300/60 font-light">LEFT</p>
                       </div>
                     </div>
                     
@@ -224,29 +224,29 @@ export default function HomePage() {
                     </div>
 
                     {/* Quantity Selector */}
-                    <div className="flex items-center gap-2 border border-emerald-700/40 rounded-md p-2 w-fit">
+                    <div className="flex items-center gap-2 border border-stone-600/30 rounded-md p-2 w-fit">
                       <button
                         onClick={() => setPatronQuantity(Math.max(1, patronQuantity - 1))}
-                        className="p-1 hover:text-emerald-300 transition-colors text-emerald-400/50"
+                        className="p-1 hover:text-stone-300 transition-colors text-stone-400/50"
                         data-testid="button-patron-qty-decrease"
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <span className="text-sm font-semibold text-emerald-300 w-8 text-center">{patronQuantity}</span>
+                      <span className="text-sm font-semibold text-stone-300 w-8 text-center">{patronQuantity}</span>
                       <button
                         onClick={() => setPatronQuantity(patronQuantity + 1)}
-                        className="p-1 hover:text-emerald-300 transition-colors text-emerald-400/50"
+                        className="p-1 hover:text-stone-300 transition-colors text-stone-400/50"
                         data-testid="button-patron-qty-increase"
                       >
                         <Plus className="w-4 h-4" />
                       </button>
                     </div>
 
-                    <p className="text-xs text-emerald-400/50 font-light">a Timeless Gift</p>
+                    <p className="text-xs text-stone-400/50 font-light">a Timeless Gift</p>
                     
                     <button
                       onClick={() => { setCheckoutPaymentType('full'); handleSeatSelection('patron', patronQuantity); }}
-                      className="w-full py-2 px-3 bg-emerald-700/20 border border-emerald-700/40 rounded-md hover:bg-emerald-700/30 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-emerald-300"
+                      className="w-full py-2 px-3 bg-stone-600/15 border border-stone-600/30 rounded-md hover:bg-stone-600/25 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-stone-300"
                       data-testid="button-select-patron"
                     >
                       <span>Select</span>
