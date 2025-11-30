@@ -4,12 +4,13 @@ import { Badge } from "@/components/ui/badge";
 import type { Seat } from "@shared/schema";
 import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
-import { Shield, Clock, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface SeatCardProps {
   seat: Seat;
   title: string;
-  subtitle: string;
+  regularPrice: string;
+  fireSalePrice: string;
   description: string;
   benefits: string[];
   featured?: boolean;
@@ -19,7 +20,8 @@ interface SeatCardProps {
 export default function SeatCard({
   seat,
   title,
-  subtitle,
+  regularPrice,
+  fireSalePrice,
   description,
   benefits,
   featured = false,
@@ -83,7 +85,12 @@ export default function SeatCard({
           {seat.type === "founder" ? "FOUNDERS (50 SEATS)" : "PATRON (50 SEATS)"}
         </div>
         <h3 className="font-serif text-3xl font-bold mb-2 text-foreground">{title}</h3>
-        <div className="text-2xl font-bold text-accent-gold mb-3">{subtitle}</div>
+        <div className="mb-3">
+          <span className="text-base text-muted-foreground line-through mr-2">{regularPrice}</span>
+          <span className="text-xs text-muted-foreground">(after 24hrs)</span>
+        </div>
+        <div className="text-3xl font-bold text-accent-gold mb-1">{fireSalePrice}</div>
+        <div className="text-xs text-bronze font-semibold mb-3">24HR FIRE SALE PRICE</div>
         <p className="text-sm text-muted-foreground">{description}</p>
       </div>
 
@@ -115,9 +122,8 @@ export default function SeatCard({
         </ul>
       </div>
 
-      {/* 2-Tier Payment Options */}
-      <div className="space-y-2">
-        {/* BUY NOW - Full Price */}
+      {/* BUY NOW Button Only */}
+      <div>
         <Button
           onClick={() => handlePaymentClick('full')}
           disabled={available <= 0}
@@ -126,18 +132,6 @@ export default function SeatCard({
         >
           <ArrowRight className="w-4 h-4 mr-2" />
           BUY NOW
-        </Button>
-
-        {/* SECURE - R1K Deposit */}
-        <Button
-          onClick={() => handlePaymentClick('deposit')}
-          disabled={available <= 0}
-          variant="outline"
-          className="w-full font-bold py-5 border-accent-gold/50 text-accent-gold hover:bg-accent-gold/10"
-          data-testid={`button-secure-${seat.type}`}
-        >
-          <Shield className="w-4 h-4 mr-2" />
-          SECURE R1K
         </Button>
       </div>
     </Card>

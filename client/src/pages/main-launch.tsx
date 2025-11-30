@@ -12,7 +12,7 @@ import type { Seat } from "@shared/schema";
 
 export default function MainLaunch() {
   const [seatModalOpen, setSeatModalOpen] = useState(false);
-  const [paymentType, setPaymentType] = useState<'full' | 'deposit' | 'reserve'>('full');
+  const [paymentType, setPaymentType] = useState<'full' | 'deposit'>('full');
   
   const { data: seats, isLoading } = useQuery<Seat[]>({
     queryKey: ["/api/seats/availability"],
@@ -95,13 +95,13 @@ export default function MainLaunch() {
                   <SeatCard
                     seat={founderSeat}
                     title="Founders Pass"
-                    subtitle="R3,000"
+                    regularPrice="R4,500"
+                    fireSalePrice="R3,000"
                     description="One bronze casting included of a Studio-Guaranteed Cutting"
                     benefits={[
                       "Your name permanently engraved on our Founders & Patrons Leaf Wall",
                       "50% off first workshop (Transferable, single-use, never expires)",
                       "20% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
-                      "24hr seat reservation — held for you while you decide",
                     ]}
                     onPaymentClick={handlePaymentClick}
                   />
@@ -110,13 +110,13 @@ export default function MainLaunch() {
                   <SeatCard
                     seat={patronSeat}
                     title="Patron Gift Card"
-                    subtitle="R5,000"
-                    description="One bronze casting included of a Studio-Guaranteed Cutting"
+                    regularPrice="R6,000"
+                    fireSalePrice="R4,500"
+                    description="One bronze casting included of a Studio-Guaranteed Cutting + Patina + Mounting"
                     benefits={[
                       "Your name permanently engraved on our Founders & Patrons Leaf Wall",
                       "80% off first workshop (Transferable, single-use, never expires)",
                       "30% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
-                      "24hr seat reservation — held for you while you decide",
                     ]}
                     featured
                     onPaymentClick={handlePaymentClick}
