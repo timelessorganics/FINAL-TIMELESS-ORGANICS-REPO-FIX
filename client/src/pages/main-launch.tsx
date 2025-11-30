@@ -55,18 +55,6 @@ export default function MainLaunch() {
               Meets Modern Investment
             </h1>
             
-            {/* CLEAR 50/50 SPLIT - RIGHT UPFRONT */}
-            <div className="flex flex-wrap justify-center gap-4 mb-6">
-              <div className="bg-bronze/20 border border-bronze/50 rounded-lg px-5 py-3">
-                <div className="text-xl font-bold text-bronze">50 Founder Seats</div>
-                <div className="text-foreground">R3,000 each</div>
-              </div>
-              <div className="bg-accent-gold/20 border border-accent-gold/50 rounded-lg px-5 py-3">
-                <div className="text-xl font-bold text-accent-gold">50 Patron Seats</div>
-                <div className="text-foreground">R5,000 each</div>
-              </div>
-            </div>
-            
             <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
               Your investment funds our foundry's final fit-out. In return, we invest (immortalize) your chosen botanical specimen now — 
               guaranteeing you a flawless bronze casting, lifetime discount codes for <strong className="text-foreground">shop sales, commissions, AND workshops</strong>, 
