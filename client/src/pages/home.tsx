@@ -7,9 +7,9 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Sparkles, Shield, Award, ArrowRight, Flame, Users, Leaf, Calendar, Plus, Minus } from "lucide-react";
 
-import heroImage from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764248900779.png";
+import heroImage from "@assets/Bronze Aloe Sculpture in Resin Block_1764516081629.png";
 import bronzeImage1 from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764170102466.png";
-import bronzeImage2 from "@assets/Gemini_Generated_Image_rl9enarl9enarl9e_1764170102466.png";
+import bronzeImage2 from "@assets/Bronze Aloe Sculpture in Resin Block 2_1763150497628.jpg";
 import bronzeImage3 from "@assets/Gemini_Generated_Image_o0oi1oo0oi1oo0oi_1764170102464.png";
 import davidStoryImage from "@assets/Gemini_Generated_Image_pgo4cnpgo4cnpgo4_result_1764296343897.webp";
 
