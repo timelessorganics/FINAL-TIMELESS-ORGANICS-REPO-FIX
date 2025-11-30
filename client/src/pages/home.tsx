@@ -140,106 +140,106 @@ export default function HomePage() {
               </p>
 
               {/* Seat Selection Cards - 24hr Friends & Family Discount */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-16 sm:gap-24 mb-6 sm:mb-8">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-8 sm:gap-12 mb-6 sm:mb-8">
                 {/* FOUNDER SEAT CARD */}
-                <div className="group relative flex-1 max-w-md p-5 sm:p-6 border border-white/20 rounded-lg bg-black/40 backdrop-blur-sm hover:bg-black/50 hover:border-white/30 transition-all duration-300 hover-elevate">
-                  <div className="text-left space-y-4">
+                <div className="group relative flex-1 max-w-xs p-4 sm:p-4 border border-white/20 rounded-lg bg-black/40 backdrop-blur-sm hover:bg-black/50 hover:border-white/30 transition-all duration-300 hover-elevate">
+                  <div className="text-left space-y-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <p className="text-xs text-white font-bold uppercase tracking-wider mb-1">Founder Seat</p>
-                        <p className="text-xs text-white/60 font-light mb-2">Unmounted and Unpatinated</p>
+                        <p className="text-xs text-white font-bold uppercase tracking-wider mb-1">Founder</p>
+                        <p className="text-xs text-white/60 font-light mb-1">Unmounted</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-2xl font-bold text-white">{50 - founderRemaining} / 50</p>
+                        <p className="text-lg font-bold text-white">{50 - founderRemaining} / 50</p>
                         <p className="text-xs text-white/50 font-light">LEFT</p>
                       </div>
                     </div>
                     
-                    <div className="space-y-2">
-                      <p className="text-sm text-white/70 font-light line-through">Full Price: R4,500</p>
-                      <p className="font-serif text-3xl sm:text-4xl font-bold text-bronze">R3,000</p>
-                      <p className="text-xs text-bronze/80 font-light">24hr Friends & Family</p>
+                    <div className="space-y-1">
+                      <p className="text-xs text-white/70 font-light line-through">R4,500</p>
+                      <p className="font-serif text-2xl sm:text-3xl font-bold text-bronze">R3,000</p>
+                      <p className="text-xs text-bronze/80 font-light">Fire Sale</p>
                     </div>
 
                     {/* Quantity Selector */}
-                    <div className="flex items-center gap-2 border border-white/30 rounded-md p-2 w-fit">
+                    <div className="flex items-center gap-1 border border-white/30 rounded-md p-1.5 w-fit">
                       <button
                         onClick={() => setFounderQuantity(Math.max(1, founderQuantity - 1))}
-                        className="p-1 hover:text-white transition-colors text-white/70"
+                        className="p-0.5 hover:text-white transition-colors text-white/70"
                         data-testid="button-founder-qty-decrease"
                       >
-                        <Minus className="w-4 h-4" />
+                        <Minus className="w-3 h-3" />
                       </button>
-                      <span className="text-sm font-semibold text-white w-8 text-center">{founderQuantity}</span>
+                      <span className="text-xs font-semibold text-white w-6 text-center">{founderQuantity}</span>
                       <button
                         onClick={() => setFounderQuantity(founderQuantity + 1)}
-                        className="p-1 hover:text-white transition-colors text-white/70"
+                        className="p-0.5 hover:text-white transition-colors text-white/70"
                         data-testid="button-founder-qty-increase"
                       >
-                        <Plus className="w-4 h-4" />
+                        <Plus className="w-3 h-3" />
                       </button>
                     </div>
                     
                     <button
                       onClick={() => setLocation(`/founding-100?seat=founder&quantity=${founderQuantity}`)}
-                      className="w-full py-2 px-3 bg-white/10 border border-white/30 rounded-md hover:bg-white/20 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-white"
+                      className="w-full py-1.5 px-2 bg-white/10 border border-white/30 rounded-md hover:bg-white/20 transition-colors flex items-center gap-1 justify-center text-xs font-semibold text-white"
                       data-testid="button-buy-now-founder"
                     >
                       <span>Buy Now</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-3 h-3" />
                     </button>
                   </div>
                 </div>
 
                 {/* PATRON SEAT CARD */}
-                <div className="group relative flex-1 max-w-md p-5 sm:p-6 border rounded-lg backdrop-blur-sm transition-all duration-300 hover-elevate" style={{backgroundColor: 'rgba(241, 243, 224, 0.15)', borderColor: 'rgba(241, 243, 224, 0.35)'}}>
-                  <div className="text-left space-y-4">
+                <div className="group relative flex-1 max-w-xs p-4 sm:p-4 border rounded-lg backdrop-blur-sm transition-all duration-300 hover-elevate" style={{backgroundColor: 'rgba(241, 243, 224, 0.15)', borderColor: 'rgba(241, 243, 224, 0.35)'}}>
+                  <div className="text-left space-y-3">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <p className="text-xs font-bold uppercase tracking-wider mb-1" style={{color: 'rgba(241, 243, 224, 0.9)'}}>Patron Seat</p>
-                        <p className="text-xs font-light mb-2" style={{color: 'rgba(241, 243, 224, 0.7)'}}>Includes Patina + Mounting (R2,000 value)</p>
+                        <p className="text-xs font-bold uppercase tracking-wider mb-1" style={{color: 'rgba(241, 243, 224, 0.9)'}}>Patron</p>
+                        <p className="text-xs font-light mb-1" style={{color: 'rgba(241, 243, 224, 0.7)'}}>+ Patina + Mount</p>
                       </div>
                       <div className="text-right whitespace-nowrap">
-                        <p className="text-2xl font-bold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>{50 - patronRemaining} / 50</p>
+                        <p className="text-lg font-bold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>{50 - patronRemaining} / 50</p>
                         <p className="text-xs font-light" style={{color: 'rgba(241, 243, 224, 0.65)'}}>LEFT</p>
                       </div>
                     </div>
                     
-                    <div className="space-y-2">
-                      <p className="text-sm font-light line-through" style={{color: 'rgba(241, 243, 224, 0.75)'}}>Full Price: R6,000</p>
-                      <p className="font-serif text-3xl sm:text-4xl font-bold text-accent-gold">R4,500</p>
-                      <p className="text-xs text-accent-gold/80 font-light">24hr Friends & Family</p>
+                    <div className="space-y-1">
+                      <p className="text-xs font-light line-through" style={{color: 'rgba(241, 243, 224, 0.75)'}}>R6,000</p>
+                      <p className="font-serif text-2xl sm:text-3xl font-bold text-accent-gold">R4,500</p>
+                      <p className="text-xs text-accent-gold/80 font-light">Fire Sale</p>
                     </div>
 
                     {/* Quantity Selector */}
-                    <div className="flex items-center gap-2 rounded-md p-2 w-fit" style={{borderColor: 'rgba(241, 243, 224, 0.35)', borderWidth: '1px'}}>
+                    <div className="flex items-center gap-1 rounded-md p-1.5 w-fit" style={{borderColor: 'rgba(241, 243, 224, 0.35)', borderWidth: '1px'}}>
                       <button
                         onClick={() => setPatronQuantity(Math.max(1, patronQuantity - 1))}
-                        className="p-1 transition-colors"
+                        className="p-0.5 transition-colors"
                         style={{color: 'rgba(241, 243, 224, 0.6)'}}
                         data-testid="button-patron-qty-decrease"
                       >
-                        <Minus className="w-4 h-4" />
+                        <Minus className="w-3 h-3" />
                       </button>
-                      <span className="text-sm font-semibold w-8 text-center" style={{color: 'rgba(241, 243, 224, 0.9)'}}>{patronQuantity}</span>
+                      <span className="text-xs font-semibold w-6 text-center" style={{color: 'rgba(241, 243, 224, 0.9)'}}>{patronQuantity}</span>
                       <button
                         onClick={() => setPatronQuantity(patronQuantity + 1)}
-                        className="p-1 transition-colors"
+                        className="p-0.5 transition-colors"
                         style={{color: 'rgba(241, 243, 224, 0.6)'}}
                         data-testid="button-patron-qty-increase"
                       >
-                        <Plus className="w-4 h-4" />
+                        <Plus className="w-3 h-3" />
                       </button>
                     </div>
                     
                     <button
                       onClick={() => setLocation(`/founding-100?seat=patron&quantity=${patronQuantity}`)}
-                      className="w-full py-2 px-3 border rounded-md transition-colors flex items-center gap-2 justify-center text-sm font-semibold"
+                      className="w-full py-1.5 px-2 border rounded-md transition-colors flex items-center gap-1 justify-center text-xs font-semibold"
                       style={{backgroundColor: 'rgba(241, 243, 224, 0.2)', borderColor: 'rgba(241, 243, 224, 0.35)', color: 'rgba(241, 243, 224, 0.9)'}}
                       data-testid="button-buy-now-patron"
                     >
                       <span>Buy Now</span>
-                      <ArrowRight className="w-4 h-4" />
+                      <ArrowRight className="w-3 h-3" />
                     </button>
                   </div>
                 </div>
