@@ -56,7 +56,7 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Mailchimp Integration:** Automated email list synchronization with tagging.
 - **Seasonal Guide:** Educational page detailing specimen styles and future workshop options.
 
-## Recent Changes (November 30, 2025 - FIRE SALE & INVESTOR HUB)
+## Recent Changes (November 30, 2025 - FINAL LAUNCH POLISH)
 
 ### Fire Sale Pricing System
 - **Database columns:** Added `fire_sale_price` and `fire_sale_ends_at` to seats table
@@ -77,6 +77,26 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Body text:** font-weight 300 (thin, elegant)
 - **Headings:** font-weight 400
 - **Serif font:** Playfair Display for sophisticated feel
+
+### Hero Section Final Messaging
+- **Main Headline:** "Your Investment Is Our Investment" (one line, gold highlight on "Our Investment")
+- **Subheading:** "Three investments happen simultaneously. You invest capital. You invest your cutting. We invest our mastery. Together, we create something Timeless."
+- **Value Props:** Now shows 4 stat cards (R25K+ | 50-80% first workshop | 20-30% lifetime discount | FOREVER giftable)
+- **Value Props Grid:** 2 columns on mobile, 4 columns on desktop with responsive gaps
+
+### Seat Card Spacing (Home Page Hero)
+- **Container:** Increased max-width to `max-w-6xl` for more breathing room
+- **Large Screens:** `lg:gap-16 xl:gap-24` spacing between cards (much more spread out)
+- **Card Width:** Consistent `lg:max-w-md` (same size, just more space between)
+
+### Founders Pass Description (Founding 100 Page)
+- Changed from "One bronze casting included of a Studio-Guaranteed Cutting"
+- To: "Unmounted and unpatinated. Can be purchased now or at a later stage via our shop or at checkout"
+- Clarifies the base offering and upgrade path
+
+### Home Page CTA Button
+- "Secure Your Seat Now" button now links directly to `/founding-100` (purchase page)
+- Was linking to `#seats` (old anchor)
 
 ---
 
