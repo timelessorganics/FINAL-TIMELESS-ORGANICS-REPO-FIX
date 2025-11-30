@@ -260,19 +260,19 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
     }
   };
 
-  // Calculate add-on costs
-  const patinaCost = hasPatina ? 1000 : 0; // R1,000 for patina
+  // Calculate add-on costs (all in cents)
+  const patinaCost = hasPatina ? 100000 : 0; // R1,000 for patina
   const mountingCosts: Record<string, number> = {
     none: 0,
-    wall: 500,
-    base: 800,
-    custom: 1200,
+    wall: 50000,      // R500
+    base: 80000,      // R800
+    custom: 120000,   // R1,200
   };
   const mountingCost = mountingCosts[mountingType] || 0;
 
   // Calculate total price
   const discount = validatedPromo?.valid ? (basePrice * (validatedPromo.discount! / 100)) : 0;
-  const subtotal = basePrice - discount + (patinaCost / 100) + (mountingCost / 100); // Convert from cents to Rands
+  const subtotal = basePrice - discount + patinaCost + mountingCost; // All values already in cents
   
   // Apply payment type adjustments
   let totalPrice = subtotal;
