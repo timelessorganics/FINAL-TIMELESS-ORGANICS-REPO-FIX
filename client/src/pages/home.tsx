@@ -120,27 +120,24 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Layer 4: Content grid - stable positioning */}
-          <div className="relative z-10 min-h-screen grid grid-rows-[1fr_auto_1fr] px-3 sm:px-4 lg:px-6 py-8 sm:py-12 lg:py-16">
+          {/* Layer 4: Content - flex layout for tighter mobile spacing */}
+          <div className="relative z-10 h-screen flex flex-col justify-center px-3 sm:px-4 lg:px-6 py-4 sm:py-8 lg:py-12">
             
-            {/* Spacer - first row pushes content down */}
-            <div />
-            
-            {/* Center content - fixed height area */}
+            {/* Center content */}
             <div className="text-center max-w-6xl mx-auto w-full">
               
-              {/* Main title with glassy effect - responsive sizing - moved down onto slate */}
-              <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-[clamp(2.2rem,7vw,5.5rem)] font-light mt-6 sm:mt-10 lg:mt-14 mb-3 sm:mb-5 lg:mb-8 leading-[1.05] tracking-tight w-full px-2">
+              {/* Main title with glassy effect - responsive sizing */}
+              <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-[clamp(2.2rem,7vw,5.5rem)] font-light mt-2 sm:mt-6 lg:mt-10 mb-2 sm:mb-4 lg:mb-6 leading-[1.05] tracking-tight w-full px-2">
                 <span className="hero-glass-text">Timeless Organics</span>
               </h1>
               
               {/* Tagline - Playfair Display font, responsive */}
-              <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 max-w-3xl mx-auto mb-6 sm:mb-8 lg:mb-10 leading-relaxed px-3 sm:px-2">
+              <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 max-w-3xl mx-auto mb-3 sm:mb-6 lg:mb-8 leading-relaxed px-3 sm:px-2">
                 One-Of-A-Kind Castings From Organic Matter
               </p>
 
               {/* Seat Selection Cards - 24hr Friends & Family Discount */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-4 sm:gap-6 lg:gap-8 mb-6 sm:mb-8 px-2 sm:px-0 max-w-5xl mx-auto w-full">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-3 sm:gap-5 lg:gap-8 mb-3 sm:mb-6 px-2 sm:px-0 max-w-5xl mx-auto w-full">
                 {/* FOUNDER SEAT CARD */}
                 <div className="group relative flex-1 min-w-0 max-w-sm sm:max-w-md lg:max-w-xs p-3 sm:p-4 lg:p-5 border border-white/20 rounded-lg bg-black/40 backdrop-blur-sm hover:bg-black/50 hover:border-white/30 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-2 sm:space-y-3">
@@ -206,38 +203,30 @@ export default function HomePage() {
               </div>
 
               {/* Fire Sale Info Banner - With countdown and seats remaining */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 space-y-2 text-center">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 space-y-1 sm:space-y-2 text-center">
                 <div className="text-xs text-white/50 font-light">
                   <span className="text-accent-gold font-semibold">{timeRemaining}</span>
                 </div>
-                <p className="text-sm text-accent-gold font-semibold">Friends and Family Early Bird Fire Sale Expires in 24 hrs!!</p>
+                <p className="text-xs sm:text-sm text-accent-gold font-semibold">Friends and Family Early Bird Fire Sale Expires in 24 hrs!!</p>
               </div>
                 
               {/* Reservation counter - shows live reservations */}
               {totalReserved > 0 && (
-                <div className="hero-text-reveal hero-text-reveal-delay-3 flex items-center gap-2 text-sm text-white/70 bg-white/10 px-4 py-2 rounded-full backdrop-blur-sm justify-center">
-                  <Sparkles className="w-4 h-4 text-bronze" />
+                <div className="hero-text-reveal hero-text-reveal-delay-3 flex items-center gap-2 text-xs sm:text-sm text-white/70 bg-white/10 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full backdrop-blur-sm justify-center mt-2">
+                  <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-bronze" />
                   <span className="font-semibold text-white">{totalReserved}</span>
                   <span>seats already reserved</span>
                 </div>
               )}
-            </div>
-            
-            {/* Bottom area - seat counter and scroll hint */}
-            <div className="flex flex-col items-center justify-start pt-4 gap-4">
+              
               {/* Seat counter */}
               {totalRemaining > 0 && (
-                <div className="hero-text-reveal hero-text-reveal-delay-3">
-                  <span className="text-xs sm:text-sm text-white/50 font-light">
+                <div className="hero-text-reveal hero-text-reveal-delay-3 mt-2">
+                  <span className="text-[0.65rem] sm:text-xs text-white/50 font-light">
                     {totalRemaining} of 100 seats remaining
                   </span>
                 </div>
               )}
-              
-              {/* Scroll indicator */}
-              <div className="text-white/30 animate-bounce">
-                <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 rotate-90" />
-              </div>
             </div>
           </div>
         </section>
