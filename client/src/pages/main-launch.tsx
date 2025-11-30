@@ -46,7 +46,7 @@ export default function MainLaunch() {
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 leading-relaxed font-light">
-              Both investments happen simultaneously. You invest in our future. We invest your cutting. <strong className="text-accent-gold">Together, we create something Timeless.</strong>
+              Three investments happen simultaneously. You invest capital. You invest your cutting. We invest our mastery. <strong className="text-accent-gold">Together, we create something Timeless.</strong>
             </p>
 
             {/* Three Stat Cards */}
