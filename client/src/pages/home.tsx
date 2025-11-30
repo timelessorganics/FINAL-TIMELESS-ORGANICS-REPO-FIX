@@ -41,6 +41,8 @@ export default function HomePage() {
   const [founderQuantity, setFounderQuantity] = useState(1);
   const [patronQuantity, setPatronQuantity] = useState(1);
   const [timeRemaining, setTimeRemaining] = useState<string>("24:00:00");
+  const [founderCountdown, setFounderCountdown] = useState(50);
+  const [patronCountdown, setPatronCountdown] = useState(50);
   const [, setLocation] = useLocation();
   
   const { data: seats } = useQuery<SeatAvailability[]>({
@@ -70,6 +72,28 @@ export default function HomePage() {
         setTimeRemaining(`${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
       }
     }, 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Countdown timer for seat availability (counts down from 50)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setFounderCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+      setPatronCountdown(prev => {
+        if (prev <= 1) {
+          clearInterval(interval);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 3000); // Decrease every 3 seconds
     
     return () => clearInterval(interval);
   }, []);
@@ -197,11 +221,11 @@ export default function HomePage() {
                 </div>
 
                 {/* PATRON SEAT CARD */}
-                <div className="group relative flex-1 max-w-xs p-5 sm:p-6 border border-teal-600/30 rounded-lg bg-teal-950/20 backdrop-blur-sm hover:bg-teal-950/30 hover:border-teal-600/40 transition-all duration-300 hover-elevate">
+                <div className="group relative flex-1 max-w-xs p-5 sm:p-6 border border-stone-600/20 rounded-lg bg-stone-900/15 backdrop-blur-sm hover:bg-stone-900/25 hover:border-stone-600/30 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-4">
                     <div>
-                      <p className="text-xs text-teal-300 font-bold uppercase tracking-wider mb-1">Patron Seat</p>
-                      <p className="text-xs text-teal-400/70 font-light mb-2">Includes Patina + Mounting (R2,000 value)</p>
+                      <p className="text-xs text-stone-300 font-bold uppercase tracking-wider mb-1">Patron Seat</p>
+                      <p className="text-xs text-stone-400/60 font-light mb-2">Includes Patina + Mounting (R2,000 value)</p>
                     </div>
                     
                     <div className="space-y-2">
@@ -211,29 +235,29 @@ export default function HomePage() {
                     </div>
 
                     {/* Quantity Selector */}
-                    <div className="flex items-center gap-2 border border-teal-600/30 rounded-md p-2 w-fit">
+                    <div className="flex items-center gap-2 border border-stone-600/20 rounded-md p-2 w-fit">
                       <button
                         onClick={() => setPatronQuantity(Math.max(1, patronQuantity - 1))}
-                        className="p-1 hover:text-teal-300 transition-colors text-teal-400/60"
+                        className="p-1 hover:text-stone-300 transition-colors text-stone-400/50"
                         data-testid="button-patron-qty-decrease"
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <span className="text-sm font-semibold text-teal-300 w-8 text-center">{patronQuantity}</span>
+                      <span className="text-sm font-semibold text-stone-300 w-8 text-center">{patronQuantity}</span>
                       <button
                         onClick={() => setPatronQuantity(patronQuantity + 1)}
-                        className="p-1 hover:text-teal-300 transition-colors text-teal-400/60"
+                        className="p-1 hover:text-stone-300 transition-colors text-stone-400/50"
                         data-testid="button-patron-qty-increase"
                       >
                         <Plus className="w-4 h-4" />
                       </button>
                     </div>
 
-                    <p className="text-xs text-teal-400/60 font-light">a Timeless Gift</p>
+                    <p className="text-xs text-stone-400/50 font-light">a Timeless Gift</p>
                     
                     <button
                       onClick={() => { setCheckoutPaymentType('full'); handleSeatSelection('patron', patronQuantity); }}
-                      className="w-full py-2 px-3 bg-teal-600/15 border border-teal-600/30 rounded-md hover:bg-teal-600/25 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-teal-300"
+                      className="w-full py-2 px-3 bg-stone-600/10 border border-stone-600/20 rounded-md hover:bg-stone-600/15 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-stone-300"
                       data-testid="button-select-patron"
                     >
                       <span>Select</span>
@@ -247,7 +271,7 @@ export default function HomePage() {
               <div className="hero-text-reveal hero-text-reveal-delay-3 space-y-2 text-center">
                 <div className="flex items-center justify-center gap-4 flex-wrap">
                   <div className="text-xs text-white/50 font-light">
-                    <span className="text-bronze font-semibold">{founderRemaining}</span> Founder / <span className="text-green-500 font-semibold">{patronRemaining}</span> Patron remaining
+                    <span className="text-white font-bold">{founderCountdown}/{patronCountdown}</span> <span className="text-accent-gold font-semibold">LEFT!!!</span>
                   </div>
                   <div className="h-4 w-px bg-white/20" />
                   <div className="text-xs text-white/50 font-light">
