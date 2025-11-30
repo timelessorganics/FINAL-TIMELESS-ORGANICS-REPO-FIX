@@ -38,15 +38,15 @@ export async function generateCertificate(
       // Dark background
       doc.rect(0, 0, doc.page.width, doc.page.height).fill(DARK_BG);
 
-      // Full-page translucent aloe background
-      const aloeImagePath = path.join(process.cwd(), 'attached_assets', 'aloe-certificate-background.png');
+      // Full-page translucent aloe background - using bronze aloe sculpture
+      const aloeImagePath = path.join(process.cwd(), 'attached_assets', 'Bronze Aloe Sculpture in Resin Block_1764516081629.png');
       if (fs.existsSync(aloeImagePath)) {
         doc.save();
-        doc.opacity(0.15);
+        doc.opacity(0.12);
         // Center the image and scale to fit page
-        const imgWidth = doc.page.width * 0.7;
+        const imgWidth = doc.page.width * 0.65;
         const imgX = (doc.page.width - imgWidth) / 2;
-        const imgY = 100;
+        const imgY = 120;
         doc.image(aloeImagePath, imgX, imgY, {
           width: imgWidth,
           align: 'center'
@@ -54,19 +54,19 @@ export async function generateCertificate(
         doc.restore();
       }
 
-      // Bronze border frame
+      // Ultra-fine bronze border frame
       doc.rect(30, 30, doc.page.width - 60, doc.page.height - 60)
-        .lineWidth(2)
+        .lineWidth(0.3)
         .stroke(BRONZE);
 
-      // Inner accent frame
+      // Ultra-fine inner accent frame
       doc.rect(40, 40, doc.page.width - 80, doc.page.height - 80)
-        .lineWidth(1)
+        .lineWidth(0.15)
         .stroke(ACCENT_GOLD);
 
-      // Title - Playfair-style serif
+      // Title - Playfair-style serif with hero colors (bronze gradient simulation)
       doc.fontSize(52)
-        .fillColor(ACCENT_GOLD)
+        .fillColor(BRONZE)
         .font('Times-Bold')
         .text('TIMELESS ORGANICS', 60, 90, { align: 'center', width: doc.page.width - 120 });
 
