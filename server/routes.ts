@@ -2646,6 +2646,60 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin: Activate 24-hour Fire Sale
+  app.post("/api/admin/fire-sale", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      // Validate fire sale payload
+      const fireSaleSchema = z.object({
+        founderPrice: z.number().int().min(100, "Founder price must be at least R1").max(10000000, "Price too high"),
+        patronPrice: z.number().int().min(100, "Patron price must be at least R1").max(10000000, "Price too high"),
+        durationHours: z.number().int().min(1, "Duration must be at least 1 hour").max(168, "Duration cannot exceed 1 week")
+      });
+      
+      const parsed = fireSaleSchema.safeParse(req.body);
+      if (!parsed.success) {
+        return res.status(400).json({ message: "Invalid fire sale parameters", errors: parsed.error.flatten() });
+      }
+      
+      const { founderPrice, patronPrice, durationHours } = parsed.data;
+      
+      await storage.activateFireSale(founderPrice, patronPrice, durationHours);
+      
+      const seats = await storage.getSeats();
+      res.json({ 
+        success: true, 
+        message: `Fire sale activated! Founder R${founderPrice/100}, Patron R${patronPrice/100} for ${durationHours} hours`,
+        seats 
+      });
+    } catch (error: any) {
+      console.error("[Admin] Fire sale activation error:", error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Admin: Deactivate Fire Sale
+  app.delete("/api/admin/fire-sale", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      await storage.deactivateFireSale();
+      
+      const seats = await storage.getSeats();
+      res.json({ success: true, message: "Fire sale deactivated", seats });
+    } catch (error: any) {
+      console.error("[Admin] Fire sale deactivation error:", error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+
   // Serve certificates statically
   app.use(
     "/certificates",

@@ -8,7 +8,7 @@ import { apiRequest } from "@/lib/queryClient";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import type { Seat, Purchase, Code, PromoCode, MediaAsset, Product, Auction } from "@shared/schema";
-import { Users, Package, DollarSign, Award, Download, Gift, Copy, CheckCircle, XCircle, Upload, Image as ImageIcon, ShoppingBag, Gavel, Calendar, Trash2, Edit, Plus, ExternalLink } from "lucide-react";
+import { Users, Package, DollarSign, Award, Download, Gift, Copy, CheckCircle, XCircle, Upload, Image as ImageIcon, ShoppingBag, Gavel, Calendar, Trash2, Edit, Plus, ExternalLink, Flame } from "lucide-react";
 import { useState } from "react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
@@ -324,6 +324,43 @@ export default function AdminPanel() {
     },
   });
 
+  // Fire sale mutations
+  const [fireSaleForm, setFireSaleForm] = useState({ founderPrice: "2000", patronPrice: "3500", durationHours: "24" });
+  
+  const activateFireSale = useMutation({
+    mutationFn: async (data: { founderPrice: number; patronPrice: number; durationHours: number }) => {
+      const response = await apiRequest("POST", "/api/admin/fire-sale", data);
+      return await response.json();
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/seats"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/seats/availability"] });
+      toast({ title: "Fire Sale Activated!", description: data.message });
+    },
+    onError: (error: Error) => {
+      toast({ variant: "destructive", title: "Failed to activate fire sale", description: error.message });
+    },
+  });
+
+  const deactivateFireSale = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest("DELETE", "/api/admin/fire-sale");
+      return await response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/seats"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/seats/availability"] });
+      toast({ title: "Fire Sale Deactivated", description: "Prices reverted to normal." });
+    },
+    onError: (error: Error) => {
+      toast({ variant: "destructive", title: "Failed to deactivate fire sale", description: error.message });
+    },
+  });
+
+  // Check if fire sale is active
+  const fireSaleActive = seats?.some(s => s.fireSalePrice && s.fireSaleEndsAt && new Date(s.fireSaleEndsAt) > new Date());
+  const fireSaleEndsAt = seats?.find(s => s.fireSaleEndsAt)?.fireSaleEndsAt;
+
   // Create workshop date mutation
   const createWorkshopDate = useMutation({
     mutationFn: async (data: any) => {
@@ -519,21 +556,90 @@ export default function AdminPanel() {
             <p className="text-sm text-muted-foreground">Manage hero titles, descriptions, and section text directly from your admin panel</p>
           </Card>
 
+          {/* Fire Sale Control - 24 Hour Friends & Family Discount */}
+          <Card className={`border-2 p-7 mb-12 ${fireSaleActive ? 'bg-orange-500/10 border-orange-500' : 'bg-card border-card-border'}`}>
+            <div className="flex items-center justify-between mb-4">
+              <div className="flex items-center gap-3">
+                <Flame className={`w-8 h-8 ${fireSaleActive ? 'text-orange-500 animate-pulse' : 'text-muted-foreground'}`} />
+                <div>
+                  <h2 className="font-serif text-2xl font-bold">24-Hour Fire Sale</h2>
+                  <p className="text-sm text-muted-foreground">Friends & Family discounted pricing</p>
+                </div>
+              </div>
+              {fireSaleActive && (
+                <Badge className="bg-orange-500 text-white text-lg px-4 py-1">ACTIVE</Badge>
+              )}
+            </div>
+            
+            {fireSaleActive && fireSaleEndsAt && (
+              <div className="bg-background/50 rounded-lg p-4 mb-6 border border-orange-500/30">
+                <p className="text-sm text-muted-foreground mb-1">Fire sale ends:</p>
+                <p className="text-lg font-bold text-orange-500">{new Date(fireSaleEndsAt).toLocaleString()}</p>
+              </div>
+            )}
+            
+            {!fireSaleActive && (
+              <div className="grid grid-cols-3 gap-4 mb-6">
+                <div className="space-y-2">
+                  <Label htmlFor="fire-founder-price">Founder Price (R)</Label>
+                  <Input id="fire-founder-price" type="number" placeholder="2000" value={fireSaleForm.founderPrice} onChange={(e) => setFireSaleForm({...fireSaleForm, founderPrice: e.target.value})} data-testid="input-fire-founder-price" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="fire-patron-price">Patron Price (R)</Label>
+                  <Input id="fire-patron-price" type="number" placeholder="3500" value={fireSaleForm.patronPrice} onChange={(e) => setFireSaleForm({...fireSaleForm, patronPrice: e.target.value})} data-testid="input-fire-patron-price" />
+                </div>
+                <div className="space-y-2">
+                  <Label htmlFor="fire-duration">Duration (hours)</Label>
+                  <Input id="fire-duration" type="number" placeholder="24" value={fireSaleForm.durationHours} onChange={(e) => setFireSaleForm({...fireSaleForm, durationHours: e.target.value})} data-testid="input-fire-duration" />
+                </div>
+              </div>
+            )}
+            
+            <div className="flex gap-4">
+              {!fireSaleActive ? (
+                <Button 
+                  onClick={() => activateFireSale.mutate({
+                    founderPrice: parseInt(fireSaleForm.founderPrice) * 100,
+                    patronPrice: parseInt(fireSaleForm.patronPrice) * 100,
+                    durationHours: parseInt(fireSaleForm.durationHours)
+                  })} 
+                  disabled={activateFireSale.isPending}
+                  className="bg-orange-500 hover:bg-orange-600 text-white gap-2"
+                  data-testid="button-activate-fire-sale"
+                >
+                  <Flame className="w-4 h-4" />
+                  {activateFireSale.isPending ? "Activating..." : "Activate Fire Sale"}
+                </Button>
+              ) : (
+                <Button 
+                  onClick={() => deactivateFireSale.mutate()} 
+                  disabled={deactivateFireSale.isPending}
+                  variant="outline"
+                  className="border-orange-500 text-orange-500 hover:bg-orange-500/10"
+                  data-testid="button-deactivate-fire-sale"
+                >
+                  {deactivateFireSale.isPending ? "Deactivating..." : "End Fire Sale Early"}
+                </Button>
+              )}
+            </div>
+          </Card>
+
           {/* Pricing Management */}
           <Card className="bg-card border-card-border p-7 mb-12">
-            <h2 className="font-serif text-2xl font-bold mb-6">Pricing Management</h2>
+            <h2 className="font-serif text-2xl font-bold mb-6">Normal Pricing</h2>
+            <p className="text-sm text-muted-foreground mb-4">Set the regular prices (used after fire sale ends)</p>
             <div className="grid grid-cols-2 gap-4 mb-6">
               <div className="space-y-2">
                 <Label htmlFor="founder-price">Founder Seat Price (R)</Label>
-                <Input id="founder-price" type="number" placeholder="3000" step="100" value={editingPrice.founderPrice} onChange={(e) => setEditingPrice({...editingPrice, founderPrice: e.target.value})} data-testid="input-founder-price" />
+                <Input id="founder-price" type="number" placeholder="3500" step="100" value={editingPrice.founderPrice} onChange={(e) => setEditingPrice({...editingPrice, founderPrice: e.target.value})} data-testid="input-founder-price" />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="patron-price">Patron Seat Price (R)</Label>
-                <Input id="patron-price" type="number" placeholder="5000" step="100" value={editingPrice.patronPrice} onChange={(e) => setEditingPrice({...editingPrice, patronPrice: e.target.value})} data-testid="input-patron-price" />
+                <Input id="patron-price" type="number" placeholder="5500" step="100" value={editingPrice.patronPrice} onChange={(e) => setEditingPrice({...editingPrice, patronPrice: e.target.value})} data-testid="input-patron-price" />
               </div>
             </div>
             <Button onClick={() => updatePricing.mutate()} disabled={updatePricing.isPending || (!editingPrice.founderPrice && !editingPrice.patronPrice)} className="bg-patina text-white" data-testid="button-update-pricing">
-              {updatePricing.isPending ? "Updating..." : "Update Pricing"}
+              {updatePricing.isPending ? "Updating..." : "Update Normal Pricing"}
             </Button>
           </Card>
 
@@ -810,10 +916,144 @@ export default function AdminPanel() {
             </Card>
           )}
 
+          {/* ALL INVESTORS HUB - Complete Order Management */}
+          <Card className="bg-card border-card-border p-7 mb-12">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+              <div>
+                <h2 className="font-serif text-2xl font-bold text-foreground mb-1">
+                  Investor HUB
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Complete view of all investors, their codes, and order status
+                </p>
+              </div>
+              <div className="flex gap-2">
+                <Badge className="bg-bronze text-white px-3 py-1">
+                  {purchases?.filter(p => p.seatType === 'founder' && p.status === 'completed').length || 0} Founders
+                </Badge>
+                <Badge className="bg-patina text-white px-3 py-1">
+                  {purchases?.filter(p => p.seatType === 'patron' && p.status === 'completed').length || 0} Patrons
+                </Badge>
+              </div>
+            </div>
+            
+            {/* Add-ons Summary */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-muted rounded-lg border border-border">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-foreground">{purchases?.filter(p => p.hasPatina && p.status === 'completed').length || 0}</div>
+                <div className="text-xs text-muted-foreground">Patina Orders</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-foreground">{purchases?.filter(p => p.hasMounting && p.status === 'completed').length || 0}</div>
+                <div className="text-xs text-muted-foreground">Mounting Orders</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-foreground">{purchases?.filter(p => p.commissionVoucher && p.status === 'completed').length || 0}</div>
+                <div className="text-xs text-muted-foreground">Commission Vouchers</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-foreground">{purchases?.filter(p => p.internationalShipping && p.status === 'completed').length || 0}</div>
+                <div className="text-xs text-muted-foreground">International Ship</div>
+              </div>
+            </div>
+
+            {/* Codes Summary */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 p-4 bg-muted rounded-lg border border-border">
+              <div className="text-center">
+                <div className="text-2xl font-bold text-accent-gold">{codes?.filter(c => c.type === 'bronze_claim').length || 0}</div>
+                <div className="text-xs text-muted-foreground">Bronze Claims</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-accent-gold">{codes?.filter(c => c.type === 'workshop_voucher').length || 0}</div>
+                <div className="text-xs text-muted-foreground">Workshop Vouchers</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-accent-gold">{codes?.filter(c => c.type === 'lifetime_workshop').length || 0}</div>
+                <div className="text-xs text-muted-foreground">Lifetime Workshop</div>
+              </div>
+              <div className="text-center">
+                <div className="text-2xl font-bold text-patina">{codes?.filter(c => c.redeemedAt).length || 0}</div>
+                <div className="text-xs text-muted-foreground">Codes Redeemed</div>
+              </div>
+            </div>
+
+            {/* Full Investor Table */}
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-border bg-muted/50">
+                    <th className="text-left py-3 px-3 font-semibold text-muted-foreground">Investor</th>
+                    <th className="text-left py-3 px-3 font-semibold text-muted-foreground">Type</th>
+                    <th className="text-left py-3 px-3 font-semibold text-muted-foreground">Amount</th>
+                    <th className="text-left py-3 px-3 font-semibold text-muted-foreground">Add-ons</th>
+                    <th className="text-left py-3 px-3 font-semibold text-muted-foreground">Codes</th>
+                    <th className="text-left py-3 px-3 font-semibold text-muted-foreground">Status</th>
+                    <th className="text-left py-3 px-3 font-semibold text-muted-foreground">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {purchases?.filter(p => p.status === 'completed').map((purchase) => {
+                    const purchaseCodes = codes?.filter(c => c.purchaseId === purchase.id) || [];
+                    return (
+                      <tr key={purchase.id} className="border-b border-border/30 hover:bg-muted/30">
+                        <td className="py-3 px-3">
+                          <div className="font-medium text-foreground">#{purchase.id.slice(0, 8)}</div>
+                          {purchase.isGift && <Badge variant="outline" className="text-xs mt-1">Gift</Badge>}
+                        </td>
+                        <td className="py-3 px-3">
+                          <Badge className={purchase.seatType === 'founder' ? 'bg-bronze text-white' : 'bg-patina text-white'}>
+                            {purchase.seatType}
+                          </Badge>
+                        </td>
+                        <td className="py-3 px-3 font-semibold text-accent-gold">
+                          R{(purchase.amount / 100).toLocaleString()}
+                        </td>
+                        <td className="py-3 px-3">
+                          <div className="flex flex-wrap gap-1">
+                            {purchase.hasPatina && <Badge variant="outline" className="text-xs bg-purple-500/10 text-purple-400 border-purple-500/30">Patina</Badge>}
+                            {purchase.hasMounting && <Badge variant="outline" className="text-xs bg-blue-500/10 text-blue-400 border-blue-500/30">Mount</Badge>}
+                            {purchase.commissionVoucher && <Badge variant="outline" className="text-xs bg-accent-gold/10 text-accent-gold border-accent-gold/30">Comm</Badge>}
+                            {purchase.internationalShipping && <Badge variant="outline" className="text-xs">Int'l</Badge>}
+                            {!purchase.hasPatina && !purchase.hasMounting && !purchase.commissionVoucher && <span className="text-muted-foreground">-</span>}
+                          </div>
+                        </td>
+                        <td className="py-3 px-3">
+                          <div className="flex flex-col gap-1">
+                            {purchaseCodes.map(code => (
+                              <div key={code.id} className="flex items-center gap-2">
+                                <code className="text-xs font-mono bg-muted px-2 py-0.5 rounded">{code.code}</code>
+                                {code.redeemedAt ? (
+                                  <CheckCircle className="w-3 h-3 text-patina" />
+                                ) : (
+                                  <Button size="sm" variant="ghost" className="h-5 w-5 p-0" onClick={() => copyToClipboard(code.code)} data-testid={`button-copy-hub-${code.id}`}>
+                                    <Copy className="w-3 h-3" />
+                                  </Button>
+                                )}
+                              </div>
+                            ))}
+                            {purchaseCodes.length === 0 && <span className="text-muted-foreground text-xs">Pending</span>}
+                          </div>
+                        </td>
+                        <td className="py-3 px-3">
+                          <Badge className={purchase.status === 'completed' ? 'bg-patina text-white' : 'bg-bronze text-white'}>
+                            {purchase.status}
+                          </Badge>
+                        </td>
+                        <td className="py-3 px-3 text-muted-foreground">
+                          {new Date(purchase.createdAt!).toLocaleDateString()}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </Card>
+
           {/* Recent Purchases */}
           <Card className="bg-card border-card-border p-7">
             <h2 className="font-serif text-2xl font-bold mb-6 text-foreground">
-              Recent Purchases
+              Recent Purchases (Including Pending)
             </h2>
             <div className="overflow-x-auto">
               <table className="w-full">

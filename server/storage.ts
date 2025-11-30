@@ -69,6 +69,8 @@ export interface IStorage {
   getSeatByType(type: 'founder' | 'patron'): Promise<Seat | undefined>;
   updateSeatSold(type: 'founder' | 'patron', increment: number): Promise<void>;
   updateSeatPrice(type: 'founder' | 'patron', priceCents: number): Promise<void>;
+  activateFireSale(founderPriceCents: number, patronPriceCents: number, durationHours: number): Promise<void>;
+  deactivateFireSale(): Promise<void>;
 
   // Purchase operations
   createPurchase(purchase: InsertPurchase): Promise<Purchase>;
@@ -217,7 +219,26 @@ export class DatabaseStorage implements IStorage {
 
   // Seat operations
   async getSeats(): Promise<Seat[]> {
-    return await db.select().from(seats);
+    // Auto-expire fire sales on read
+    const allSeats = await db.select().from(seats);
+    const now = new Date();
+    
+    for (const seat of allSeats) {
+      if (seat.fireSaleEndsAt && seat.fireSaleEndsAt < now && seat.fireSalePrice) {
+        // Fire sale expired, clear it automatically
+        await db.update(seats).set({
+          fireSalePrice: null,
+          fireSaleEndsAt: null,
+          updatedAt: now,
+        }).where(eq(seats.id, seat.id));
+        
+        console.log(`[Fire Sale] Auto-expired fire sale for ${seat.type} seat`);
+        seat.fireSalePrice = null;
+        seat.fireSaleEndsAt = null;
+      }
+    }
+    
+    return allSeats;
   }
 
   async getSeatByType(type: 'founder' | 'patron'): Promise<Seat | undefined> {
@@ -243,6 +264,34 @@ export class DatabaseStorage implements IStorage {
         updatedAt: new Date(),
       })
       .where(eq(seats.type, type));
+  }
+
+  async activateFireSale(founderPriceCents: number, patronPriceCents: number, durationHours: number): Promise<void> {
+    const endsAt = new Date();
+    endsAt.setHours(endsAt.getHours() + durationHours);
+    
+    await db.update(seats).set({
+      fireSalePrice: founderPriceCents,
+      fireSaleEndsAt: endsAt,
+      updatedAt: new Date(),
+    }).where(eq(seats.type, 'founder'));
+    
+    await db.update(seats).set({
+      fireSalePrice: patronPriceCents,
+      fireSaleEndsAt: endsAt,
+      updatedAt: new Date(),
+    }).where(eq(seats.type, 'patron'));
+    
+    console.log(`[Fire Sale] Activated! Founder R${founderPriceCents/100}, Patron R${patronPriceCents/100}, ends ${endsAt.toISOString()}`);
+  }
+
+  async deactivateFireSale(): Promise<void> {
+    await db.update(seats).set({
+      fireSalePrice: null,
+      fireSaleEndsAt: null,
+      updatedAt: new Date(),
+    });
+    console.log(`[Fire Sale] Deactivated`);
   }
 
   // Purchase operations
