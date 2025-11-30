@@ -286,8 +286,24 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
   const seatColor = seatType === "founder" ? "bronze" : "accent-gold";
 
   const benefits = seatType === "founder" 
-    ? ["Guaranteed bronze casting (R25K+ value)", "50% off one future workshop", "20% lifetime discount on all purchases"]
-    : ["Guaranteed bronze casting (R25K+ value)", "80% off one future workshop", "30% lifetime discount on all purchases"];
+    ? [
+        "One-of-a-kind bronze casting from real specimen (R25,000+ value)",
+        "50% discount on future 2-day bronze casting workshops",
+        "20% lifetime discount on all future shop purchases",
+        "Priority access to custom commissions",
+        "Early access to future auction pieces",
+        "Founding member status & certificate of authenticity"
+      ]
+    : [
+        "One-of-a-kind bronze casting with patina finish included",
+        "Professional mounting service included",
+        "80% discount on future 2-day bronze casting workshops",
+        "30% lifetime discount on all future shop purchases",
+        "Priority access to custom commissions",
+        "Early access to future auction pieces",
+        "Lifetime benefits transferable to family/friends",
+        "Founding member status & premium certificate"
+      ];
 
   return (
     <>
@@ -392,64 +408,29 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                     </CardContent>
                   </Card>
 
-                  {/* 2-TIER EARLY BIRD PAYMENT OPTIONS */}
-                  <Card className="border-border/50 border-2 border-bronze/30">
+                  {/* Specimen Style Selection */}
+                  <Card className="border-border/50">
                     <CardHeader className="pb-4">
-                      <CardTitle className="text-lg font-medium flex items-center gap-2">
-                        <Sparkles className="w-5 h-5 text-bronze" />
-                        Choose Your Payment Option
-                      </CardTitle>
+                      <CardTitle className="text-lg font-medium">Choose Your Specimen</CardTitle>
+                      <CardDescription className="text-sm">Cape Fynbos plants cast in permanent bronze</CardDescription>
                     </CardHeader>
-                    <CardContent className="space-y-3">
-                      <div 
-                        className={`flex items-center gap-3 p-4 rounded-lg cursor-pointer transition-all border ${
-                          paymentType === "full" 
-                            ? "border-bronze/60 bg-bronze/10" 
-                            : "border-border/50 hover:border-border"
-                        }`}
-                        onClick={() => setPaymentType("full")}
-                        data-testid="option-buy-now"
-                      >
-                        {paymentType === "full" ? (
-                          <CheckCircle2 className="w-5 h-5 text-bronze" />
-                        ) : (
-                          <Circle className="w-5 h-5 text-muted-foreground" />
-                        )}
-                        <div className="flex-1">
-                          <div className="font-medium text-sm flex items-center justify-between">
-                            <span>BUY NOW</span>
-                            <span className="text-bronze">R{basePrice.toLocaleString()}</span>
-                          </div>
-                          <p className="text-xs text-muted-foreground">
-                            Full payment - instant confirmation & codes
-                          </p>
-                        </div>
-                      </div>
-
-                      <div 
-                        className={`flex items-center gap-3 p-4 rounded-lg cursor-pointer transition-all border ${
-                          paymentType === "deposit" 
-                            ? "border-bronze/60 bg-bronze/10" 
-                            : "border-border/50 hover:border-border"
-                        }`}
-                        onClick={() => setPaymentType("deposit")}
-                        data-testid="option-secure"
-                      >
-                        {paymentType === "deposit" ? (
-                          <CheckCircle2 className="w-5 h-5 text-bronze" />
-                        ) : (
-                          <Circle className="w-5 h-5 text-muted-foreground" />
-                        )}
-                        <div className="flex-1">
-                          <div className="font-medium text-sm flex items-center justify-between">
-                            <span>SECURE</span>
-                            <span className="text-bronze">R1,000 deposit</span>
-                          </div>
-                          <p className="text-xs text-muted-foreground">
-                            Non-refundable deposit, 48 hours to pay balance
-                          </p>
-                        </div>
-                      </div>
+                    <CardContent>
+                      <Select>
+                        <SelectTrigger className="border-border/50" data-testid="select-specimen">
+                          <SelectValue placeholder="Select a plant specimen..." />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="protea">Protea (Royal Bloom)</SelectItem>
+                          <SelectItem value="aloe">Aloe (Desert Grace)</SelectItem>
+                          <SelectItem value="restio">Restio (Delicate Weave)</SelectItem>
+                          <SelectItem value="disa">Disa (Red Pride)</SelectItem>
+                          <SelectItem value="leucadendron">Leucadendron (Golden Cone)</SelectItem>
+                          <SelectItem value="erica">Erica (Heather Elegance)</SelectItem>
+                        </SelectContent>
+                      </Select>
+                      <p className="text-xs text-muted-foreground mt-3">
+                        Each specimen is cast from real organic matter at 700°C. Your choice will be documented in your certificate.
+                      </p>
                     </CardContent>
                   </Card>
 
@@ -506,60 +487,60 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                     </CardContent>
                   </Card>
 
-                  {/* Patina & Mounting Options */}
-                  <Card className="border-border/50">
-                    <CardHeader className="pb-4">
-                      <CardTitle className="text-lg font-medium">Add-Ons & Finishes</CardTitle>
-                      <CardDescription className="text-sm">Customize your bronze sculpture</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-6">
-                      {/* Patina Finish */}
-                      <div className="space-y-3">
-                        <div className="flex items-center justify-between">
-                          <div>
-                            <label className="text-sm font-medium">Patina Finish</label>
-                            <p className="text-xs text-muted-foreground">Premium oxidized bronze surface</p>
+                  {/* Add-ons - FOUNDER ONLY */}
+                  {seatType === "founder" && (
+                    <Card className="border-border/50">
+                      <CardHeader className="pb-4">
+                        <CardTitle className="text-lg font-medium">Upgrade Your Bronze</CardTitle>
+                        <CardDescription className="text-sm">Optional enhancements for your sculpture</CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-6">
+                        {/* Patina Finish */}
+                        <div className="space-y-3">
+                          <div className="flex items-center justify-between">
+                            <div>
+                              <label className="text-sm font-medium">Patina Oxidation</label>
+                              <p className="text-xs text-muted-foreground">Premium aged bronze surface finish</p>
+                            </div>
+                            <button
+                              type="button"
+                              onClick={() => setHasPatina(!hasPatina)}
+                              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
+                                hasPatina
+                                  ? `bg-${seatColor}/20 border border-${seatColor}/40 text-${seatColor}`
+                                  : "bg-border/50 border border-border text-muted-foreground hover:bg-border"
+                              }`}
+                              data-testid="button-toggle-patina"
+                            >
+                              {hasPatina ? "Selected" : "Add R1,000"}
+                            </button>
                           </div>
-                          <button
-                            type="button"
-                            onClick={() => setHasPatina(!hasPatina)}
-                            className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                              hasPatina
-                                ? `bg-${seatColor}/20 border border-${seatColor}/40 text-${seatColor}`
-                                : "bg-border/50 border border-border text-muted-foreground hover:bg-border"
-                            }`}
-                            data-testid="button-toggle-patina"
-                          >
-                            {hasPatina ? "Selected" : "Add"}
-                          </button>
+                          {hasPatina && (
+                            <p className="text-xs text-foreground/70 bg-background/50 p-2 rounded border border-border/50">
+                              Beautiful oxidized finish transforms the raw bronze into deep greens and blacks
+                            </p>
+                          )}
                         </div>
-                        {hasPatina && (
-                          <p className="text-xs text-foreground/70 bg-background/50 p-2 rounded border border-border/50">
-                            +R1,000 for patina oxidation service
-                          </p>
-                        )}
-                      </div>
 
-                      {/* Mounting Type */}
-                      <div className="space-y-3">
-                        <label className="text-sm font-medium block">Mounting Service</label>
-                        <Select value={mountingType} onValueChange={setMountingType}>
-                          <SelectTrigger className="border-border/50" data-testid="select-mounting-type">
-                            <SelectValue />
-                          </SelectTrigger>
-                          <SelectContent>
-                            <SelectItem value="none">No Mounting</SelectItem>
-                            <SelectItem value="wall">Wall Mount (+R500)</SelectItem>
-                            <SelectItem value="base">Display Base (+R800)</SelectItem>
-                            <SelectItem value="custom">Custom Mount (+R1,200)</SelectItem>
-                          </SelectContent>
-                        </Select>
-                        <p className="text-xs text-muted-foreground">
-                          Select how you'd like your sculpture mounted or displayed
-                        </p>
-                      </div>
-                    </CardContent>
-                  </Card>
+                        {/* Mounting Service */}
+                        <div className="space-y-3">
+                          <label className="text-sm font-medium block">Display Mounting</label>
+                          <Select value={mountingType} onValueChange={setMountingType}>
+                            <SelectTrigger className="border-border/50" data-testid="select-mounting-type">
+                              <SelectValue />
+                            </SelectTrigger>
+                            <SelectContent>
+                              <SelectItem value="none">No Mounting (Unboxed)</SelectItem>
+                              <SelectItem value="wall">Professional Mounting - R1,500</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <p className="text-xs text-muted-foreground">
+                            Professional mounting service includes wall brackets and installation guide
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  )}
 
                   {/* Gift Purchasing Option */}
                   <Card className="border-border/50">
