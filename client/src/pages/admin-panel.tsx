@@ -972,7 +972,7 @@ export default function AdminPanel() {
                 <div className="text-xs text-muted-foreground">Lifetime Workshop</div>
               </div>
               <div className="text-center">
-                <div className="text-2xl font-bold text-patina">{codes?.filter(c => c.redeemedAt).length || 0}</div>
+                <div className="text-2xl font-bold text-patina">{codes?.filter(c => c.lastRedeemedAt).length || 0}</div>
                 <div className="text-xs text-muted-foreground">Codes Redeemed</div>
               </div>
             </div>
@@ -1022,7 +1022,7 @@ export default function AdminPanel() {
                             {purchaseCodes.map(code => (
                               <div key={code.id} className="flex items-center gap-2">
                                 <code className="text-xs font-mono bg-muted px-2 py-0.5 rounded">{code.code}</code>
-                                {code.redeemedAt ? (
+                                {code.lastRedeemedAt ? (
                                   <CheckCircle className="w-3 h-3 text-patina" />
                                 ) : (
                                   <Button size="sm" variant="ghost" className="h-5 w-5 p-0" onClick={() => copyToClipboard(code.code)} data-testid={`button-copy-hub-${code.id}`}>
