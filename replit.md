@@ -56,9 +56,33 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Mailchimp Integration:** Automated email list synchronization with tagging.
 - **Seasonal Guide:** Educational page detailing specimen styles and future workshop options.
 
-## Recent Changes (November 29, 2025 - SATURDAY LAUNCH FINAL FIX)
+## Recent Changes (November 30, 2025 - FIRE SALE & INVESTOR HUB)
 
-### CRITICAL FIXES FOR SATURDAY LAUNCH ✅
+### Fire Sale Pricing System
+- **Database columns:** Added `fire_sale_price` and `fire_sale_ends_at` to seats table
+- **Admin controls:** Activate/deactivate fire sale with custom prices and duration (1-168 hours)
+- **Validation:** Zod schema enforces positive prices (min R1), valid duration
+- **Auto-expiry:** Fire sales automatically clear on read after expiration time
+- **UI:** Orange "Activate Fire Sale" button in admin panel with countdown timer display
+
+### Investor HUB Dashboard
+- **Comprehensive view:** Shows all completed purchases with investor details
+- **Summary badges:** Total Founders, Total Patrons count
+- **Add-ons tracking:** Patina orders, Mounting orders, Commission vouchers, International shipping
+- **Codes summary:** Bronze Claims, Workshop Vouchers, Lifetime Workshop, Codes Redeemed
+- **Full table:** ID, Type, Amount, Add-ons (color-coded), Codes (with copy buttons), Status, Date
+- **Unique test IDs:** Each copy button has unique data-testid for testing
+
+### Typography Refinement
+- **Body text:** font-weight 300 (thin, elegant)
+- **Headings:** font-weight 400
+- **Serif font:** Playfair Display for sophisticated feel
+
+---
+
+## Previous: November 29, 2025 - SATURDAY LAUNCH FINAL FIX
+
+### CRITICAL FIXES FOR SATURDAY LAUNCH
 
 #### 1. Environment Variables Corrected
 - **Railway Backend** (REMOVED):
