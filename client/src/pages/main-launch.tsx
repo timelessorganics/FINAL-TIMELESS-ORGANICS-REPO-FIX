@@ -36,24 +36,24 @@ export default function MainLaunch() {
       <FlowerTimelapseBackground intensity="medium" />
       <Header />
       <div className="relative z-50 min-h-screen" id="top">
-        <div className="max-w-[1100px] mx-auto px-7 py-12">
+        <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
           
           {/* HERO SECTION */}
-          <section className="text-center mb-12 pt-8" data-testid="section-hero">
-            <div className="kicker mb-3">FOUNDING 100 INVESTOR LAUNCH</div>
-            <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+          <section className="text-center mb-8 sm:mb-12 pt-6 sm:pt-8" data-testid="section-hero">
+            <div className="kicker mb-3 sm:mb-4">FOUNDING 100 INVESTOR LAUNCH</div>
+            <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light mb-4 sm:mb-6 leading-tight">
               Where <span className="moving-fill">Ancient Craft</span><br />
               Meets Modern Investment
             </h1>
             
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-8 leading-relaxed">
+            <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 leading-relaxed font-light">
               Your investment funds our foundry's final fit-out. In return, we <span className="text-bronze font-medium">invest</span> (immortalize) your chosen botanical specimen now — 
               guaranteeing you a flawless bronze casting, lifetime discount codes for <strong className="text-foreground">shop sales, commissions, AND workshops</strong>, 
               and exclusive access to the ancient art of lost-wax casting.
             </p>
 
             {/* Three Stat Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
               <Card className="p-6 bg-card/50 border-card-border">
                 <div className="text-5xl font-bold font-serif text-bronze mb-2">100</div>
                 <div className="text-muted-foreground">Limited Seats</div>
@@ -75,12 +75,12 @@ export default function MainLaunch() {
           </section>
 
           {/* SEAT SELECTION - RIGHT AFTER HERO */}
-          <section id="seats" className="mb-16 py-12 scroll-mt-20" data-testid="section-seats">
-            <div className="text-center mb-10">
-              <h2 className="font-serif text-4xl md:text-5xl font-bold mb-4">
+          <section id="seats" className="mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 scroll-mt-20" data-testid="section-seats">
+            <div className="text-center mb-6 sm:mb-10">
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-3 sm:mb-4">
                 <span className="text-accent-gold">Invest Now</span> — Choose Your Seat
               </h2>
-              <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-light">
                 Only 100 seats available. Once they're gone, they're gone forever.
               </p>
             </div>
@@ -90,7 +90,7 @@ export default function MainLaunch() {
                 <div className="spinner" />
               </div>
             ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-7">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-7">
                 {founderSeat && (
                   <SeatCard
                     seat={founderSeat}
@@ -127,8 +127,8 @@ export default function MainLaunch() {
           </section>
 
           {/* URGENCY & VALUE - CONDENSED */}
-          <section className="mb-16 py-12 bg-gradient-to-br from-bronze/10 via-card/50 to-accent-gold/10 rounded-xl border border-bronze/30" data-testid="section-urgency">
-            <div className="max-w-4xl mx-auto px-7">
+          <section className="mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-bronze/10 via-card/50 to-accent-gold/10 rounded-xl border border-bronze/30" data-testid="section-urgency">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="text-center">
                 <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2">
                   <Flame className="w-4 h-4" />

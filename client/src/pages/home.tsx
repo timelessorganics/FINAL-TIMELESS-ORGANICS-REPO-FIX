@@ -283,7 +283,7 @@ export default function HomePage() {
         </section>
 
         {/* FIRE SALE URGENCY & VALUE - CONDENSED */}
-        <section className="py-12 px-4 sm:px-6 bg-gradient-to-br from-bronze/10 via-card/50 to-accent-gold/10 border-y border-bronze/30" data-testid="section-urgency">
+        <section className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-bronze/10 via-card/50 to-accent-gold/10 border-y border-bronze/30" data-testid="section-urgency">
           <div className="max-w-4xl mx-auto">
             <div className="text-center">
               <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2 justify-center">
