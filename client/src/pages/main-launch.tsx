@@ -138,18 +138,22 @@ export default function MainLaunch() {
                   This Is The Founding 100 Moment
                 </h2>
                 
-                <div className="grid md:grid-cols-3 gap-6 mb-8">
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8">
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-bronze mb-2">R25K+</div>
-                    <p className="text-sm text-foreground/80">Bronze market value (when finished)</p>
+                    <div className="text-2xl sm:text-3xl font-bold text-bronze mb-2">R25K+</div>
+                    <p className="text-xs sm:text-sm text-foreground/80">Bronze Sculpture market value (Mounted and Patinated)</p>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-accent-gold mb-2">20-30%</div>
-                    <p className="text-sm text-foreground/80">Lifetime discount on everything</p>
+                    <div className="text-2xl sm:text-3xl font-bold text-accent-gold mb-2">50-80%</div>
+                    <p className="text-xs sm:text-sm text-foreground/80">First hands-on 2-day casting workshop</p>
                   </div>
                   <div className="text-center">
-                    <div className="text-3xl font-bold text-patina mb-2">FOREVER</div>
-                    <p className="text-sm text-foreground/80">Giftable, transferable benefits</p>
+                    <div className="text-2xl sm:text-3xl font-bold text-patina mb-2">20-30%</div>
+                    <p className="text-xs sm:text-sm text-foreground/80">Lifetime discount on everything</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl sm:text-3xl font-bold text-bronze mb-2">FOREVER</div>
+                    <p className="text-xs sm:text-sm text-foreground/80">Giftable, transferable benefits</p>
                   </div>
                 </div>
 
