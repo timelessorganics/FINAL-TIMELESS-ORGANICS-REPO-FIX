@@ -514,6 +514,29 @@ export const insertPageAssetSchema = createInsertSchema(pageAssets).omit({
 export type InsertPageAsset = z.infer<typeof insertPageAssetSchema>;
 export type PageAsset = typeof pageAssets.$inferSelect;
 
+// Website Content - Editable text sections for each page
+export const websiteContent = pgTable("website_content", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  pageSlug: varchar("page_slug").notNull(), // 'home', 'about', 'gallery', 'founding-100', etc.
+  sectionKey: varchar("section_key").notNull(), // 'hero-title', 'hero-subtitle', 'about-text', etc.
+  contentType: varchar("content_type").default('text').notNull(), // 'text', 'richtext', 'html'
+  content: text("content").notNull(),
+  metadata: jsonb("metadata"), // For additional styling info, links, etc.
+  isActive: boolean("is_active").default(true),
+  updatedAt: timestamp("updated_at").defaultNow(),
+  updatedBy: varchar("updated_by").references(() => usersTable.id),
+}, (table) => [
+  unique("unique_page_section").on(table.pageSlug, table.sectionKey),
+]);
+
+export const insertWebsiteContentSchema = createInsertSchema(websiteContent).omit({
+  id: true,
+  updatedAt: true,
+});
+
+export type InsertWebsiteContent = z.infer<typeof insertWebsiteContentSchema>;
+export type WebsiteContent = typeof websiteContent.$inferSelect;
+
 // Product status enum
 export const productStatusEnum = pgEnum('product_status', ['draft', 'active', 'sold_out', 'archived']);
 
