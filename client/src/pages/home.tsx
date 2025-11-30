@@ -204,16 +204,16 @@ export default function HomePage() {
                 </div>
 
                 {/* PATRON SEAT CARD */}
-                <div className="group relative flex-1 max-w-md p-5 sm:p-6 border border-stone-600/30 rounded-lg bg-stone-900/15 backdrop-blur-sm hover:bg-stone-900/25 hover:border-stone-600/40 transition-all duration-300 hover-elevate">
+                <div className="group relative flex-1 max-w-md p-5 sm:p-6 border rounded-lg backdrop-blur-sm transition-all duration-300 hover-elevate" style={{backgroundColor: 'rgba(241, 243, 224, 0.15)', borderColor: 'rgba(241, 243, 224, 0.35)'}}>
                   <div className="text-left space-y-4">
                     <div className="flex items-start justify-between gap-2">
                       <div>
-                        <p className="text-xs text-stone-300 font-bold uppercase tracking-wider mb-1">Patron Seat</p>
-                        <p className="text-xs text-stone-400/60 font-light mb-2">Includes Patina + Mounting (R2,000 value)</p>
+                        <p className="text-xs font-bold uppercase tracking-wider mb-1" style={{color: 'rgba(241, 243, 224, 0.9)'}}>Patron Seat</p>
+                        <p className="text-xs font-light mb-2" style={{color: 'rgba(241, 243, 224, 0.7)'}}>Includes Patina + Mounting (R2,000 value)</p>
                       </div>
                       <div className="text-right whitespace-nowrap">
-                        <p className="text-2xl font-bold text-stone-300">{50 - patronRemaining} / 50</p>
-                        <p className="text-xs text-stone-300/60 font-light">LEFT</p>
+                        <p className="text-2xl font-bold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>{50 - patronRemaining} / 50</p>
+                        <p className="text-xs font-light" style={{color: 'rgba(241, 243, 224, 0.65)'}}>LEFT</p>
                       </div>
                     </div>
                     
@@ -224,29 +224,32 @@ export default function HomePage() {
                     </div>
 
                     {/* Quantity Selector */}
-                    <div className="flex items-center gap-2 border border-stone-600/30 rounded-md p-2 w-fit">
+                    <div className="flex items-center gap-2 rounded-md p-2 w-fit" style={{borderColor: 'rgba(241, 243, 224, 0.35)', borderWidth: '1px'}}>
                       <button
                         onClick={() => setPatronQuantity(Math.max(1, patronQuantity - 1))}
-                        className="p-1 hover:text-stone-300 transition-colors text-stone-400/50"
+                        className="p-1 transition-colors"
+                        style={{color: 'rgba(241, 243, 224, 0.6)'}}
                         data-testid="button-patron-qty-decrease"
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <span className="text-sm font-semibold text-stone-300 w-8 text-center">{patronQuantity}</span>
+                      <span className="text-sm font-semibold w-8 text-center" style={{color: 'rgba(241, 243, 224, 0.9)'}}>{patronQuantity}</span>
                       <button
                         onClick={() => setPatronQuantity(patronQuantity + 1)}
-                        className="p-1 hover:text-stone-300 transition-colors text-stone-400/50"
+                        className="p-1 transition-colors"
+                        style={{color: 'rgba(241, 243, 224, 0.6)'}}
                         data-testid="button-patron-qty-increase"
                       >
                         <Plus className="w-4 h-4" />
                       </button>
                     </div>
 
-                    <p className="text-xs text-stone-400/50 font-light">a Timeless Gift</p>
+                    <p className="text-xs font-light" style={{color: 'rgba(241, 243, 224, 0.6)'}}>a Timeless Gift</p>
                     
                     <button
                       onClick={() => { setCheckoutPaymentType('full'); handleSeatSelection('patron', patronQuantity); }}
-                      className="w-full py-2 px-3 bg-stone-600/15 border border-stone-600/30 rounded-md hover:bg-stone-600/25 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-stone-300"
+                      className="w-full py-2 px-3 border rounded-md transition-colors flex items-center gap-2 justify-center text-sm font-semibold"
+                      style={{backgroundColor: 'rgba(241, 243, 224, 0.2)', borderColor: 'rgba(241, 243, 224, 0.35)', color: 'rgba(241, 243, 224, 0.9)'}}
                       data-testid="button-select-patron"
                     >
                       <span>Select</span>
