@@ -176,6 +176,12 @@ export interface IStorage {
   placeBid(bid: InsertAuctionBid): Promise<AuctionBid>;
   getAuctionBids(auctionId: string): Promise<AuctionBid[]>;
   getHighestBid(auctionId: string): Promise<AuctionBid | undefined>;
+
+  // Website Content operations (CMS)
+  getWebsiteContent(pageSlug?: string): Promise<WebsiteContent[]>;
+  getContentItem(pageSlug: string, sectionKey: string): Promise<WebsiteContent | undefined>;
+  setWebsiteContent(data: InsertWebsiteContent): Promise<WebsiteContent>;
+  deleteWebsiteContent(pageSlug: string, sectionKey: string): Promise<boolean>;
 }
 
 export class DatabaseStorage implements IStorage {

@@ -242,18 +242,52 @@ export default function AdminPanel() {
     },
   });
 
-  // Update content mutation
+  // Website content queries
+  const { data: websiteContent, refetch: refetchContent } = useQuery<any[]>({
+    queryKey: ["/api/admin/content"],
+  });
+
+  // Page assets query
+  const { data: pageAssetsData } = useQuery<any[]>({
+    queryKey: ["/api/admin/page-assets"],
+    enabled: false,
+  });
+
+  // Content form state for editing
+  const [editingContent, setEditingContent] = useState<{ pageSlug: string; sectionKey: string; content: string } | null>(null);
+  const [selectedPage, setSelectedPage] = useState<string>("home");
+  const [showImageAssigner, setShowImageAssigner] = useState<{ pageSlug: string; slotKey: string } | null>(null);
+
+  // Update content mutation - now uses database
   const updateContent = useMutation({
-    mutationFn: async (data: any) => {
-      const response = await apiRequest("PATCH", "/api/admin/content", data);
+    mutationFn: async (data: { pageSlug: string; sectionKey: string; content: string }) => {
+      const response = await apiRequest("POST", "/api/admin/content", data);
       return await response.json();
     },
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/content"] });
+      setEditingContent(null);
       setShowContentEditor(false);
-      toast({ title: "Content Updated!", description: "Website content has been updated." });
+      toast({ title: "Content Updated!", description: "Website content has been saved to database." });
     },
     onError: (error: Error) => {
       toast({ variant: "destructive", title: "Failed to update content", description: error.message });
+    },
+  });
+
+  // Assign image to page slot mutation
+  const assignImageToSlot = useMutation({
+    mutationFn: async (data: { pageSlug: string; slotKey: string; assetId: string }) => {
+      const response = await apiRequest("POST", "/api/admin/page-assets", data);
+      return await response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/page-assets"] });
+      setShowImageAssigner(null);
+      toast({ title: "Image Assigned!", description: "Image has been assigned to the page slot." });
+    },
+    onError: (error: Error) => {
+      toast({ variant: "destructive", title: "Failed to assign image", description: error.message });
     },
   });
 
@@ -438,10 +472,14 @@ export default function AdminPanel() {
 
           {/* Navigation Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
-            <TabsList className="grid w-full grid-cols-5 lg:w-auto lg:inline-flex gap-1">
+            <TabsList className="grid w-full grid-cols-6 lg:w-auto lg:inline-flex gap-1">
               <TabsTrigger value="overview" className="gap-2" data-testid="tab-overview">
                 <Users className="w-4 h-4" />
                 <span className="hidden sm:inline">Overview</span>
+              </TabsTrigger>
+              <TabsTrigger value="content" className="gap-2" data-testid="tab-content">
+                <Edit className="w-4 h-4" />
+                <span className="hidden sm:inline">Content</span>
               </TabsTrigger>
               <TabsTrigger value="media" className="gap-2" data-testid="tab-media">
                 <ImageIcon className="w-4 h-4" />
@@ -510,50 +548,34 @@ export default function AdminPanel() {
             </Card>
           </div>
 
-          {/* Content Management */}
+          {/* Content Management - Quick Access */}
           <Card className="bg-card border-card-border p-7 mb-12">
-            <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center justify-between mb-4">
               <h2 className="font-serif text-2xl font-bold">Website Content</h2>
-              <Dialog open={showContentEditor} onOpenChange={setShowContentEditor}>
-                <DialogTrigger asChild>
-                  <Button className="gap-2" data-testid="button-edit-content">
-                    <Edit className="w-4 h-4" />
-                    Edit Content
-                  </Button>
-                </DialogTrigger>
-                <DialogContent className="max-w-2xl">
-                  <DialogHeader>
-                    <DialogTitle>Edit Website Content</DialogTitle>
-                    <DialogDescription>Update text displayed on your website</DialogDescription>
-                  </DialogHeader>
-                  <div className="space-y-4 max-h-[60vh] overflow-y-auto">
-                    <div className="space-y-2">
-                      <Label htmlFor="hero-title">Hero Title</Label>
-                      <Input id="hero-title" placeholder="FOUNDING 100 INVESTMENT LAUNCH" value={contentForm.heroTitle} onChange={(e) => setContentForm({...contentForm, heroTitle: e.target.value})} data-testid="input-hero-title" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="hero-subtitle">Hero Subtitle</Label>
-                      <Textarea id="hero-subtitle" placeholder="Founding opportunity text..." value={contentForm.heroSubtitle} onChange={(e) => setContentForm({...contentForm, heroSubtitle: e.target.value})} data-testid="input-hero-subtitle" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="about-text">About Section</Label>
-                      <Textarea id="about-text" placeholder="About text..." value={contentForm.aboutText} onChange={(e) => setContentForm({...contentForm, aboutText: e.target.value})} data-testid="input-about-text" className="min-h-[100px]" />
-                    </div>
-                    <div className="space-y-2">
-                      <Label htmlFor="workshops-text">Workshops Section</Label>
-                      <Textarea id="workshops-text" placeholder="Workshops text..." value={contentForm.workshopsText} onChange={(e) => setContentForm({...contentForm, workshopsText: e.target.value})} data-testid="input-workshops-text" className="min-h-[100px]" />
-                    </div>
-                  </div>
-                  <DialogFooter>
-                    <Button variant="outline" onClick={() => setShowContentEditor(false)}>Cancel</Button>
-                    <Button onClick={() => updateContent.mutate(contentForm)} disabled={updateContent.isPending} data-testid="button-save-content">
-                      {updateContent.isPending ? "Saving..." : "Save Content"}
-                    </Button>
-                  </DialogFooter>
-                </DialogContent>
-              </Dialog>
+              <Button className="gap-2" onClick={() => setActiveTab("content")} data-testid="button-goto-content">
+                <Edit className="w-4 h-4" />
+                Manage Content
+              </Button>
             </div>
-            <p className="text-sm text-muted-foreground">Manage hero titles, descriptions, and section text directly from your admin panel</p>
+            <p className="text-sm text-muted-foreground">Edit all text and images across your website from the Content tab</p>
+            <div className="mt-4 grid grid-cols-2 md:grid-cols-4 gap-4">
+              <div className="text-center p-3 bg-muted/30 rounded-lg">
+                <p className="text-2xl font-bold text-bronze">{websiteContent?.length || 0}</p>
+                <p className="text-xs text-muted-foreground">Content Items</p>
+              </div>
+              <div className="text-center p-3 bg-muted/30 rounded-lg">
+                <p className="text-2xl font-bold text-patina">{mediaAssets?.length || 0}</p>
+                <p className="text-xs text-muted-foreground">Media Assets</p>
+              </div>
+              <div className="text-center p-3 bg-muted/30 rounded-lg">
+                <p className="text-2xl font-bold text-accent-gold">7</p>
+                <p className="text-xs text-muted-foreground">Pages</p>
+              </div>
+              <div className="text-center p-3 bg-muted/30 rounded-lg">
+                <p className="text-2xl font-bold text-foreground">Active</p>
+                <p className="text-xs text-muted-foreground">CMS Status</p>
+              </div>
+            </div>
           </Card>
 
           {/* Fire Sale Control - 24 Hour Friends & Family Discount */}
@@ -1140,6 +1162,410 @@ export default function AdminPanel() {
               </table>
             </div>
           </Card>
+            </TabsContent>
+
+            {/* Content Management Tab - Full CMS */}
+            <TabsContent value="content" className="mt-6">
+              <div className="space-y-8">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <h2 className="font-serif text-2xl font-bold">Content Manager</h2>
+                    <p className="text-muted-foreground">Edit all text and images across your website</p>
+                  </div>
+                </div>
+
+                {/* Page Selector */}
+                <Card className="p-6">
+                  <div className="flex items-center gap-4 mb-6">
+                    <Label className="font-semibold">Select Page:</Label>
+                    <Select value={selectedPage} onValueChange={setSelectedPage}>
+                      <SelectTrigger className="w-[200px]" data-testid="select-page">
+                        <SelectValue placeholder="Select a page" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="home">Home Page</SelectItem>
+                        <SelectItem value="founding-100">Founding 100</SelectItem>
+                        <SelectItem value="about">About</SelectItem>
+                        <SelectItem value="gallery">Gallery</SelectItem>
+                        <SelectItem value="sculptures">Sculptures</SelectItem>
+                        <SelectItem value="workshops">Workshops</SelectItem>
+                        <SelectItem value="shop">Shop</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+
+                  {/* Content Sections for Selected Page */}
+                  <div className="space-y-6">
+                    <h3 className="font-semibold text-lg border-b pb-2">Text Content - {selectedPage}</h3>
+                    
+                    {/* Pre-defined content sections based on page */}
+                    {selectedPage === "home" && (
+                      <div className="grid gap-4">
+                        {[
+                          { key: "hero-badge", label: "Hero Badge Text", placeholder: "FOUNDING 100 INVESTOR LAUNCH" },
+                          { key: "hero-title", label: "Hero Main Title", placeholder: "Timeless Organics" },
+                          { key: "hero-tagline", label: "Hero Tagline", placeholder: "One-Of-A-Kind Castings From Organic Matter" },
+                          { key: "value-prop-1", label: "Value Proposition 1", placeholder: "R25K+ Market Value" },
+                          { key: "value-prop-2", label: "Value Proposition 2", placeholder: "50-80% First Workshop" },
+                          { key: "value-prop-3", label: "Value Proposition 3", placeholder: "20-30% Lifetime Discounts" },
+                          { key: "value-prop-4", label: "Value Proposition 4", placeholder: "FOREVER Giftable" },
+                          { key: "about-section", label: "About Section Text", placeholder: "About the studio..." },
+                        ].map((section) => {
+                          const existingContent = websiteContent?.find(c => c.pageSlug === selectedPage && c.sectionKey === section.key);
+                          return (
+                            <div key={section.key} className="flex items-start gap-4 p-4 border rounded-lg bg-card">
+                              <div className="flex-1">
+                                <Label className="font-medium">{section.label}</Label>
+                                <p className="text-xs text-muted-foreground mb-2">{section.key}</p>
+                                {editingContent?.sectionKey === section.key && editingContent?.pageSlug === selectedPage ? (
+                                  <div className="space-y-2">
+                                    <Textarea 
+                                      value={editingContent.content}
+                                      onChange={(e) => setEditingContent({...editingContent, content: e.target.value})}
+                                      className="min-h-[80px]"
+                                      data-testid={`textarea-${section.key}`}
+                                    />
+                                    <div className="flex gap-2">
+                                      <Button size="sm" onClick={() => updateContent.mutate(editingContent)} disabled={updateContent.isPending} data-testid={`button-save-${section.key}`}>
+                                        {updateContent.isPending ? "Saving..." : "Save"}
+                                      </Button>
+                                      <Button size="sm" variant="outline" onClick={() => setEditingContent(null)}>Cancel</Button>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <p className="text-sm text-foreground/80 bg-muted/50 p-2 rounded">
+                                    {existingContent?.content || <span className="italic text-muted-foreground">{section.placeholder}</span>}
+                                  </p>
+                                )}
+                              </div>
+                              {editingContent?.sectionKey !== section.key && (
+                                <Button 
+                                  size="icon" 
+                                  variant="ghost"
+                                  onClick={() => setEditingContent({ pageSlug: selectedPage, sectionKey: section.key, content: existingContent?.content || "" })}
+                                  data-testid={`button-edit-${section.key}`}
+                                >
+                                  <Edit className="w-4 h-4" />
+                                </Button>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {selectedPage === "founding-100" && (
+                      <div className="grid gap-4">
+                        {[
+                          { key: "main-headline", label: "Main Headline", placeholder: "Your Investment Is Our Investment" },
+                          { key: "sub-headline", label: "Sub Headline", placeholder: "Three investments happen simultaneously..." },
+                          { key: "founder-title", label: "Founder Seat Title", placeholder: "Founder" },
+                          { key: "founder-description", label: "Founder Description", placeholder: "Unmounted & unpatinated..." },
+                          { key: "patron-title", label: "Patron Seat Title", placeholder: "Patron" },
+                          { key: "patron-description", label: "Patron Description", placeholder: "Patina + Mounting included..." },
+                          { key: "fire-sale-badge", label: "Fire Sale Badge", placeholder: "24-Hour Fire Sale" },
+                        ].map((section) => {
+                          const existingContent = websiteContent?.find(c => c.pageSlug === selectedPage && c.sectionKey === section.key);
+                          return (
+                            <div key={section.key} className="flex items-start gap-4 p-4 border rounded-lg bg-card">
+                              <div className="flex-1">
+                                <Label className="font-medium">{section.label}</Label>
+                                <p className="text-xs text-muted-foreground mb-2">{section.key}</p>
+                                {editingContent?.sectionKey === section.key && editingContent?.pageSlug === selectedPage ? (
+                                  <div className="space-y-2">
+                                    <Textarea 
+                                      value={editingContent.content}
+                                      onChange={(e) => setEditingContent({...editingContent, content: e.target.value})}
+                                      className="min-h-[80px]"
+                                      data-testid={`textarea-${section.key}`}
+                                    />
+                                    <div className="flex gap-2">
+                                      <Button size="sm" onClick={() => updateContent.mutate(editingContent)} disabled={updateContent.isPending}>
+                                        {updateContent.isPending ? "Saving..." : "Save"}
+                                      </Button>
+                                      <Button size="sm" variant="outline" onClick={() => setEditingContent(null)}>Cancel</Button>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <p className="text-sm text-foreground/80 bg-muted/50 p-2 rounded">
+                                    {existingContent?.content || <span className="italic text-muted-foreground">{section.placeholder}</span>}
+                                  </p>
+                                )}
+                              </div>
+                              {editingContent?.sectionKey !== section.key && (
+                                <Button 
+                                  size="icon" 
+                                  variant="ghost"
+                                  onClick={() => setEditingContent({ pageSlug: selectedPage, sectionKey: section.key, content: existingContent?.content || "" })}
+                                >
+                                  <Edit className="w-4 h-4" />
+                                </Button>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {selectedPage === "sculptures" && (
+                      <div className="grid gap-4">
+                        {[
+                          { key: "page-title", label: "Page Title", placeholder: "Sculpture Gallery" },
+                          { key: "page-intro", label: "Page Introduction", placeholder: "Explore our Cape Fynbos specimens..." },
+                          { key: "protea-title", label: "Protea Section Title", placeholder: "Protea / Pincushion Blooms / Heads" },
+                          { key: "protea-description", label: "Protea Description", placeholder: "Single flower head types..." },
+                          { key: "cones-title", label: "Cones Section Title", placeholder: "Cones / Bracts / Seedpods" },
+                          { key: "cones-description", label: "Cones Description", placeholder: "Leucadendron cone with coloured bracts..." },
+                          { key: "bulbs-title", label: "Bulb Spikes Title", placeholder: "Bulb Spikes" },
+                          { key: "bulbs-description", label: "Bulb Spikes Description", placeholder: "Lachenalia and similar bulb spikes..." },
+                        ].map((section) => {
+                          const existingContent = websiteContent?.find(c => c.pageSlug === selectedPage && c.sectionKey === section.key);
+                          return (
+                            <div key={section.key} className="flex items-start gap-4 p-4 border rounded-lg bg-card">
+                              <div className="flex-1">
+                                <Label className="font-medium">{section.label}</Label>
+                                <p className="text-xs text-muted-foreground mb-2">{section.key}</p>
+                                {editingContent?.sectionKey === section.key && editingContent?.pageSlug === selectedPage ? (
+                                  <div className="space-y-2">
+                                    <Textarea 
+                                      value={editingContent.content}
+                                      onChange={(e) => setEditingContent({...editingContent, content: e.target.value})}
+                                      className="min-h-[80px]"
+                                    />
+                                    <div className="flex gap-2">
+                                      <Button size="sm" onClick={() => updateContent.mutate(editingContent)} disabled={updateContent.isPending}>
+                                        {updateContent.isPending ? "Saving..." : "Save"}
+                                      </Button>
+                                      <Button size="sm" variant="outline" onClick={() => setEditingContent(null)}>Cancel</Button>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <p className="text-sm text-foreground/80 bg-muted/50 p-2 rounded">
+                                    {existingContent?.content || <span className="italic text-muted-foreground">{section.placeholder}</span>}
+                                  </p>
+                                )}
+                              </div>
+                              {editingContent?.sectionKey !== section.key && (
+                                <Button 
+                                  size="icon" 
+                                  variant="ghost"
+                                  onClick={() => setEditingContent({ pageSlug: selectedPage, sectionKey: section.key, content: existingContent?.content || "" })}
+                                >
+                                  <Edit className="w-4 h-4" />
+                                </Button>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+
+                    {(selectedPage === "about" || selectedPage === "gallery" || selectedPage === "workshops" || selectedPage === "shop") && (
+                      <div className="grid gap-4">
+                        {[
+                          { key: "page-title", label: "Page Title", placeholder: "Page title..." },
+                          { key: "page-intro", label: "Page Introduction", placeholder: "Introduction text..." },
+                          { key: "section-1-title", label: "Section 1 Title", placeholder: "First section title..." },
+                          { key: "section-1-content", label: "Section 1 Content", placeholder: "First section content..." },
+                          { key: "section-2-title", label: "Section 2 Title", placeholder: "Second section title..." },
+                          { key: "section-2-content", label: "Section 2 Content", placeholder: "Second section content..." },
+                        ].map((section) => {
+                          const existingContent = websiteContent?.find(c => c.pageSlug === selectedPage && c.sectionKey === section.key);
+                          return (
+                            <div key={section.key} className="flex items-start gap-4 p-4 border rounded-lg bg-card">
+                              <div className="flex-1">
+                                <Label className="font-medium">{section.label}</Label>
+                                <p className="text-xs text-muted-foreground mb-2">{section.key}</p>
+                                {editingContent?.sectionKey === section.key && editingContent?.pageSlug === selectedPage ? (
+                                  <div className="space-y-2">
+                                    <Textarea 
+                                      value={editingContent.content}
+                                      onChange={(e) => setEditingContent({...editingContent, content: e.target.value})}
+                                      className="min-h-[80px]"
+                                    />
+                                    <div className="flex gap-2">
+                                      <Button size="sm" onClick={() => updateContent.mutate(editingContent)} disabled={updateContent.isPending}>
+                                        {updateContent.isPending ? "Saving..." : "Save"}
+                                      </Button>
+                                      <Button size="sm" variant="outline" onClick={() => setEditingContent(null)}>Cancel</Button>
+                                    </div>
+                                  </div>
+                                ) : (
+                                  <p className="text-sm text-foreground/80 bg-muted/50 p-2 rounded">
+                                    {existingContent?.content || <span className="italic text-muted-foreground">{section.placeholder}</span>}
+                                  </p>
+                                )}
+                              </div>
+                              {editingContent?.sectionKey !== section.key && (
+                                <Button 
+                                  size="icon" 
+                                  variant="ghost"
+                                  onClick={() => setEditingContent({ pageSlug: selectedPage, sectionKey: section.key, content: existingContent?.content || "" })}
+                                >
+                                  <Edit className="w-4 h-4" />
+                                </Button>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                </Card>
+
+                {/* Image Slots for Selected Page */}
+                <Card className="p-6">
+                  <h3 className="font-semibold text-lg border-b pb-2 mb-6">Page Images - {selectedPage}</h3>
+                  <p className="text-sm text-muted-foreground mb-4">
+                    Assign images from your Media Library to specific slots on this page. 
+                    First upload images in the Media tab, then assign them here.
+                  </p>
+                  
+                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {/* Image slot definitions per page */}
+                    {selectedPage === "home" && ["hero-background", "hero-overlay", "about-image-1", "about-image-2", "featured-sculpture"].map((slotKey) => (
+                      <div key={slotKey} className="border rounded-lg p-4 bg-card">
+                        <Label className="font-medium capitalize">{slotKey.replace(/-/g, " ")}</Label>
+                        <div className="aspect-video bg-muted rounded mt-2 flex items-center justify-center relative overflow-hidden">
+                          <span className="text-xs text-muted-foreground">No image assigned</span>
+                        </div>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button size="sm" variant="outline" className="w-full mt-2 gap-2" data-testid={`button-assign-${slotKey}`}>
+                              <ImageIcon className="w-4 h-4" />
+                              Assign Image
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                            <DialogHeader>
+                              <DialogTitle>Select Image for {slotKey.replace(/-/g, " ")}</DialogTitle>
+                              <DialogDescription>Choose an image from your media library</DialogDescription>
+                            </DialogHeader>
+                            <div className="grid grid-cols-3 gap-4 mt-4">
+                              {mediaAssets?.map((asset) => (
+                                <div 
+                                  key={asset.id} 
+                                  className="relative aspect-video bg-muted rounded overflow-hidden cursor-pointer border-2 border-transparent hover:border-bronze transition-colors"
+                                  onClick={() => assignImageToSlot.mutate({ pageSlug: selectedPage, slotKey, assetId: asset.id })}
+                                >
+                                  <img src={asset.url} alt={asset.altText || ""} className="w-full h-full object-cover" />
+                                  <div className="absolute bottom-0 left-0 right-0 bg-black/60 p-1">
+                                    <p className="text-xs text-white truncate">{asset.altText || asset.filename}</p>
+                                  </div>
+                                </div>
+                              ))}
+                              {(!mediaAssets || mediaAssets.length === 0) && (
+                                <div className="col-span-3 text-center py-8 text-muted-foreground">
+                                  No images in library. Add images in the Media tab first.
+                                </div>
+                              )}
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      </div>
+                    ))}
+
+                    {selectedPage === "sculptures" && ["protea-1", "protea-2", "protea-3", "cones-1", "cones-2", "cones-3", "bulbs-1", "bulbs-2", "bulbs-3", "branches-1", "branches-2", "branches-3"].map((slotKey) => (
+                      <div key={slotKey} className="border rounded-lg p-4 bg-card">
+                        <Label className="font-medium capitalize">{slotKey.replace(/-/g, " ")}</Label>
+                        <div className="aspect-video bg-muted rounded mt-2 flex items-center justify-center">
+                          <span className="text-xs text-muted-foreground">No image assigned</span>
+                        </div>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button size="sm" variant="outline" className="w-full mt-2 gap-2">
+                              <ImageIcon className="w-4 h-4" />
+                              Assign Image
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                            <DialogHeader>
+                              <DialogTitle>Select Image for {slotKey.replace(/-/g, " ")}</DialogTitle>
+                            </DialogHeader>
+                            <div className="grid grid-cols-3 gap-4 mt-4">
+                              {mediaAssets?.map((asset) => (
+                                <div 
+                                  key={asset.id} 
+                                  className="relative aspect-video bg-muted rounded overflow-hidden cursor-pointer border-2 border-transparent hover:border-bronze transition-colors"
+                                  onClick={() => assignImageToSlot.mutate({ pageSlug: selectedPage, slotKey, assetId: asset.id })}
+                                >
+                                  <img src={asset.url} alt={asset.altText || ""} className="w-full h-full object-cover" />
+                                </div>
+                              ))}
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      </div>
+                    ))}
+
+                    {selectedPage === "gallery" && ["gallery-1", "gallery-2", "gallery-3", "gallery-4", "gallery-5", "gallery-6", "gallery-7", "gallery-8", "gallery-9"].map((slotKey) => (
+                      <div key={slotKey} className="border rounded-lg p-4 bg-card">
+                        <Label className="font-medium capitalize">{slotKey.replace(/-/g, " ")}</Label>
+                        <div className="aspect-video bg-muted rounded mt-2 flex items-center justify-center">
+                          <span className="text-xs text-muted-foreground">No image assigned</span>
+                        </div>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button size="sm" variant="outline" className="w-full mt-2 gap-2">
+                              <ImageIcon className="w-4 h-4" />
+                              Assign Image
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                            <DialogHeader>
+                              <DialogTitle>Select Image for {slotKey.replace(/-/g, " ")}</DialogTitle>
+                            </DialogHeader>
+                            <div className="grid grid-cols-3 gap-4 mt-4">
+                              {mediaAssets?.map((asset) => (
+                                <div 
+                                  key={asset.id} 
+                                  className="relative aspect-video bg-muted rounded overflow-hidden cursor-pointer border-2 border-transparent hover:border-bronze transition-colors"
+                                  onClick={() => assignImageToSlot.mutate({ pageSlug: selectedPage, slotKey, assetId: asset.id })}
+                                >
+                                  <img src={asset.url} alt={asset.altText || ""} className="w-full h-full object-cover" />
+                                </div>
+                              ))}
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      </div>
+                    ))}
+
+                    {(selectedPage === "founding-100" || selectedPage === "about" || selectedPage === "workshops" || selectedPage === "shop") && ["hero-image", "section-image-1", "section-image-2", "background"].map((slotKey) => (
+                      <div key={slotKey} className="border rounded-lg p-4 bg-card">
+                        <Label className="font-medium capitalize">{slotKey.replace(/-/g, " ")}</Label>
+                        <div className="aspect-video bg-muted rounded mt-2 flex items-center justify-center">
+                          <span className="text-xs text-muted-foreground">No image assigned</span>
+                        </div>
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button size="sm" variant="outline" className="w-full mt-2 gap-2">
+                              <ImageIcon className="w-4 h-4" />
+                              Assign Image
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+                            <DialogHeader>
+                              <DialogTitle>Select Image for {slotKey.replace(/-/g, " ")}</DialogTitle>
+                            </DialogHeader>
+                            <div className="grid grid-cols-3 gap-4 mt-4">
+                              {mediaAssets?.map((asset) => (
+                                <div 
+                                  key={asset.id} 
+                                  className="relative aspect-video bg-muted rounded overflow-hidden cursor-pointer border-2 border-transparent hover:border-bronze transition-colors"
+                                  onClick={() => assignImageToSlot.mutate({ pageSlug: selectedPage, slotKey, assetId: asset.id })}
+                                >
+                                  <img src={asset.url} alt={asset.altText || ""} className="w-full h-full object-cover" />
+                                </div>
+                              ))}
+                            </div>
+                          </DialogContent>
+                        </Dialog>
+                      </div>
+                    ))}
+                  </div>
+                </Card>
+              </div>
             </TabsContent>
 
             {/* Media Library Tab */}

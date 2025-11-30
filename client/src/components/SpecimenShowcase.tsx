@@ -1,14 +1,23 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Calendar, X, ZoomIn } from "lucide-react";
+import { Calendar, X, ZoomIn, Loader2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 
-// Plant images (real specimens)
+interface MediaAsset {
+  id: string;
+  url: string;
+  altText: string | null;
+  caption: string | null;
+  tags: string[] | null;
+}
+
+// Plant images (real specimens) - fallback for Protea category
 import proteaPlant1 from "@assets/2d64bb2fe63096b1f16475d4cf59a842_result_1764290952462.jpg";
 import proteaPlant2 from "@assets/Carnival-Red-copy_result_1764291106963.jpg";
 import proteaPlant3 from "@assets/Comparison-of-Leucospermum-gracile-and-prostratum-8-1_result_1764291106964.jpg";
 
-// Bronze versions (cast specimens)
+// Bronze versions (cast specimens) - fallback for Protea category
 import proteaBronze1 from "@assets/Gemini_Generated_Image_dx6keedx6keedx6k_result_1764291106964.webp";
 import proteaBronze2 from "@assets/Gemini_Generated_Image_qhu6lzqhu6lzqhu6_result_1764291106964.webp";
 import proteaBronze3 from "@assets/Gemini_Generated_Image_ie60w2ie60w2ie60_result_1764291291740.webp";
@@ -202,6 +211,38 @@ function HoverBronzeImage({ plant, bronze }: SpecimenImage) {
 }
 
 export default function SpecimenShowcase() {
+  // Fetch media assets from the admin media library
+  const { data: mediaAssets, isLoading } = useQuery<MediaAsset[]>({
+    queryKey: ["/api/media"],
+  });
+
+  // Helper to get images from media library by tag
+  const getMediaByTag = (tag: string): MediaAsset[] => {
+    if (!mediaAssets) return [];
+    return mediaAssets.filter(m => m.tags?.some(t => t.toLowerCase().includes(tag.toLowerCase())));
+  };
+
+  // Build specimen images from media library or use fallbacks
+  const getSpecimenImages = (specimenName: string, fallbackImages: SpecimenImage[]): SpecimenImage[] => {
+    // Try to find media tagged with this specimen type
+    const tagName = specimenName.toLowerCase().split("/")[0].trim();
+    const plantMedia = getMediaByTag(`${tagName}-plant`);
+    const bronzeMedia = getMediaByTag(`${tagName}-bronze`);
+    
+    // If we have media for this specimen type, use it
+    if (plantMedia.length > 0 && bronzeMedia.length > 0) {
+      const pairs: SpecimenImage[] = [];
+      const maxPairs = Math.min(plantMedia.length, bronzeMedia.length, 3);
+      for (let i = 0; i < maxPairs; i++) {
+        pairs.push({ plant: plantMedia[i].url, bronze: bronzeMedia[i].url });
+      }
+      return pairs;
+    }
+    
+    // Otherwise return the fallback hardcoded images
+    return fallbackImages;
+  };
+
   return (
     <section className="space-y-8">
       <div className="text-center space-y-2">
@@ -212,47 +253,57 @@ export default function SpecimenShowcase() {
         </p>
       </div>
 
+      {isLoading && (
+        <div className="flex justify-center py-8">
+          <Loader2 className="w-6 h-6 animate-spin text-bronze" />
+        </div>
+      )}
+
       {/* Specimen Grid - Bigger cards */}
       <div className="space-y-12">
-        {specimenTypes.map((specimen, index) => (
-          <Card
-            key={index}
-            className="border-bronze/30 hover-elevate overflow-hidden"
-            data-testid={`card-specimen-${index}`}
-          >
-            <CardHeader className="pb-4">
-              <CardTitle className="text-2xl text-bronze">{specimen.name}</CardTitle>
-              <CardDescription className="flex items-center gap-2 text-sm mt-2">
-                <Calendar className="w-4 h-4" />
-                <span className="font-medium">{specimen.season}</span>
-              </CardDescription>
-            </CardHeader>
+        {specimenTypes.map((specimen, index) => {
+          const images = getSpecimenImages(specimen.name, specimen.images);
+          
+          return (
+            <Card
+              key={index}
+              className="border-bronze/30 hover-elevate overflow-hidden"
+              data-testid={`card-specimen-${index}`}
+            >
+              <CardHeader className="pb-4">
+                <CardTitle className="text-2xl text-bronze">{specimen.name}</CardTitle>
+                <CardDescription className="flex items-center gap-2 text-sm mt-2">
+                  <Calendar className="w-4 h-4" />
+                  <span className="font-medium">{specimen.season}</span>
+                </CardDescription>
+              </CardHeader>
 
-            <CardContent className="space-y-4">
-              <p className="text-muted-foreground">{specimen.description}</p>
+              <CardContent className="space-y-4">
+                <p className="text-muted-foreground">{specimen.description}</p>
 
-              {/* Images - Much bigger, hover effect */}
-              {specimen.images && specimen.images.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                  {specimen.images.map((img, imgIndex) => (
-                    <HoverBronzeImage key={imgIndex} plant={img.plant} bronze={img.bronze} />
-                  ))}
-                </div>
-              ) : (
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                  {[0, 1, 2].map((i) => (
-                    <div
-                      key={i}
-                      className="aspect-[4/3] rounded-lg border border-bronze/20 bg-muted flex items-center justify-center"
-                    >
-                      <span className="text-xs text-muted-foreground">Coming Soon</span>
-                    </div>
-                  ))}
-                </div>
-              )}
-            </CardContent>
-          </Card>
-        ))}
+                {/* Images - Much bigger, hover effect */}
+                {images && images.length > 0 ? (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                    {images.map((img, imgIndex) => (
+                      <HoverBronzeImage key={imgIndex} plant={img.plant} bronze={img.bronze} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                    {[0, 1, 2].map((i) => (
+                      <div
+                        key={i}
+                        className="aspect-[4/3] rounded-lg border border-bronze/20 bg-muted flex items-center justify-center"
+                      >
+                        <span className="text-xs text-muted-foreground">Coming Soon</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          );
+        })}
       </div>
 
       {/* Info box */}
