@@ -282,6 +282,53 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* FIRE SALE URGENCY & VALUE - CONDENSED */}
+        <section className="py-12 px-4 sm:px-6 bg-gradient-to-br from-bronze/10 via-card/50 to-accent-gold/10 border-y border-bronze/30" data-testid="section-urgency">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center">
+              <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2 justify-center">
+                <Flame className="w-4 h-4" />
+                24-HOUR FIRE SALE
+              </div>
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+                This Is The Founding 100 Moment
+              </h2>
+              
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-bronze mb-2">R25K+</div>
+                  <p className="text-sm text-foreground/80">Bronze market value (when finished)</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-accent-gold mb-2">20-30%</div>
+                  <p className="text-sm text-foreground/80">Lifetime discount on everything</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-3xl font-bold text-patina mb-2">FOREVER</div>
+                  <p className="text-sm text-foreground/80">Giftable, transferable benefits</p>
+                </div>
+              </div>
+
+              <p className="text-base sm:text-lg text-foreground/90 max-w-2xl mx-auto mb-8 leading-relaxed">
+                100 seats. No waiting list. No phase two. When these sell out, this exclusive opportunity closes. 
+                <span className="text-accent-gold font-medium"> Only Founding 100 members get these terms for life.</span>
+              </p>
+
+              <Link href="/#seats">
+                <Button 
+                  size="lg"
+                  className="relative overflow-hidden text-lg px-10 py-6 font-bold bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background"
+                  data-testid="button-urgency-claim-seat"
+                >
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  CLAIM YOUR SEAT
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* WHY THIS EXISTS - The Opportunity */}
         <section className="py-8 sm:py-16 px-4 sm:px-6" data-testid="section-why-this-exists">
           <div className="max-w-5xl mx-auto">
