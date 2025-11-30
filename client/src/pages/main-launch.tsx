@@ -73,36 +73,6 @@ export default function MainLaunch() {
               and exclusive access to the ancient art of lost-wax casting.
             </p>
 
-            {/* 3-BUTTON PAYMENT OPTIONS */}
-            <div className="mb-8 flex flex-col sm:flex-row gap-3 justify-center">
-              <Button 
-                size="lg"
-                onClick={() => handlePaymentClick('reserve')}
-                className="text-xs sm:text-sm px-6 py-4 font-bold btn-bronze"
-                data-testid="button-reserve-free"
-              >
-                RESERVE FREE (24hrs)
-              </Button>
-              <Button 
-                size="lg"
-                onClick={() => handlePaymentClick('deposit')}
-                variant="outline"
-                className="text-xs sm:text-sm px-6 py-4 font-bold border-white/30 text-white"
-                data-testid="button-secure-deposit"
-              >
-                SECURE (R1K deposit)
-              </Button>
-              <Button 
-                size="lg"
-                onClick={() => handlePaymentClick('full')}
-                variant="outline"
-                className="text-xs sm:text-sm px-6 py-4 font-bold border-white/30 text-white"
-                data-testid="button-buy-now"
-              >
-                BUY NOW (Full Price)
-              </Button>
-            </div>
-            <p className="text-xs text-muted-foreground mt-1">Only 100 seats total. Once gone, gone forever.</p>
 
             {/* Three Stat Cards - Updated Value Messaging */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
