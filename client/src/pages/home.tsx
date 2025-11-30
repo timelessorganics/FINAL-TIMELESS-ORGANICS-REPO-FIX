@@ -197,11 +197,11 @@ export default function HomePage() {
                 </div>
 
                 {/* PATRON SEAT CARD */}
-                <div className="group relative flex-1 max-w-xs p-5 sm:p-6 border border-emerald-700/35 rounded-lg bg-emerald-950/25 backdrop-blur-sm hover:bg-emerald-950/35 hover:border-emerald-700/45 transition-all duration-300 hover-elevate">
+                <div className="group relative flex-1 max-w-xs p-5 sm:p-6 border border-teal-600/30 rounded-lg bg-teal-950/20 backdrop-blur-sm hover:bg-teal-950/30 hover:border-teal-600/40 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-4">
                     <div>
-                      <p className="text-xs text-emerald-300 font-bold uppercase tracking-wider mb-1">Patron Seat</p>
-                      <p className="text-xs text-emerald-400/70 font-light mb-2">Includes Patina + Mounting (R2,000 value)</p>
+                      <p className="text-xs text-teal-300 font-bold uppercase tracking-wider mb-1">Patron Seat</p>
+                      <p className="text-xs text-teal-400/70 font-light mb-2">Includes Patina + Mounting (R2,000 value)</p>
                     </div>
                     
                     <div className="space-y-2">
@@ -211,29 +211,29 @@ export default function HomePage() {
                     </div>
 
                     {/* Quantity Selector */}
-                    <div className="flex items-center gap-2 border border-emerald-700/35 rounded-md p-2 w-fit">
+                    <div className="flex items-center gap-2 border border-teal-600/30 rounded-md p-2 w-fit">
                       <button
                         onClick={() => setPatronQuantity(Math.max(1, patronQuantity - 1))}
-                        className="p-1 hover:text-emerald-300 transition-colors text-emerald-400/60"
+                        className="p-1 hover:text-teal-300 transition-colors text-teal-400/60"
                         data-testid="button-patron-qty-decrease"
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <span className="text-sm font-semibold text-emerald-300 w-8 text-center">{patronQuantity}</span>
+                      <span className="text-sm font-semibold text-teal-300 w-8 text-center">{patronQuantity}</span>
                       <button
                         onClick={() => setPatronQuantity(patronQuantity + 1)}
-                        className="p-1 hover:text-emerald-300 transition-colors text-emerald-400/60"
+                        className="p-1 hover:text-teal-300 transition-colors text-teal-400/60"
                         data-testid="button-patron-qty-increase"
                       >
                         <Plus className="w-4 h-4" />
                       </button>
                     </div>
 
-                    <p className="text-xs text-emerald-400/60 font-light">a Timeless Gift</p>
+                    <p className="text-xs text-teal-400/60 font-light">a Timeless Gift</p>
                     
                     <button
                       onClick={() => { setCheckoutPaymentType('full'); handleSeatSelection('patron', patronQuantity); }}
-                      className="w-full py-2 px-3 bg-emerald-700/15 border border-emerald-700/35 rounded-md hover:bg-emerald-700/25 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-emerald-300"
+                      className="w-full py-2 px-3 bg-teal-600/15 border border-teal-600/30 rounded-md hover:bg-teal-600/25 transition-colors flex items-center gap-2 justify-center text-sm font-semibold text-teal-300"
                       data-testid="button-select-patron"
                     >
                       <span>Select</span>
