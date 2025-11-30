@@ -226,6 +226,18 @@ async function getUserIdFromToken(req: any): Promise<string | null> {
 }
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Auto-initialize seats if they don't exist
+  try {
+    const existingSeats = await storage.getSeats();
+    if (!existingSeats || existingSeats.length === 0) {
+      console.log('[Init] Initializing default seats...');
+      await storage.updateSeatPrice('founder', 300000); // R3,000
+      await storage.updateSeatPrice('patron', 450000); // R4,500
+      console.log('[Init] Default seats initialized');
+    }
+  } catch (error) {
+    console.log('[Init] Seats already exist or will be created on first access');
+  }
   // Auth middleware
   await setupAuth(app);
 

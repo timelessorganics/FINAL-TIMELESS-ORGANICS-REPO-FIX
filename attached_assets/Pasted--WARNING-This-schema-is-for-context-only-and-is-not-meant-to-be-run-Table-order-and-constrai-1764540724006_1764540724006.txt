@@ -1,0 +1,242 @@
+-- WARNING: This schema is for context only and is not meant to be run.
+-- Table order and constraints may not be valid for execution.
+
+CREATE TABLE public.auctions (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  title text NOT NULL,
+  slug text NOT NULL UNIQUE,
+  description text,
+  starting_price_cents integer NOT NULL,
+  reserve_price_cents integer,
+  bid_increment_cents integer DEFAULT 10000,
+  status text NOT NULL DEFAULT 'draft'::text,
+  starts_at timestamp without time zone,
+  ends_at timestamp without time zone,
+  featured_image_id uuid,
+  created_at timestamp without time zone DEFAULT now(),
+  updated_at timestamp without time zone DEFAULT now(),
+  CONSTRAINT auctions_pkey PRIMARY KEY (id),
+  CONSTRAINT auctions_featured_image_id_fkey FOREIGN KEY (featured_image_id) REFERENCES public.media_assets(id)
+);
+CREATE TABLE public.codes (
+  id character varying NOT NULL DEFAULT gen_random_uuid(),
+  purchase_id character varying NOT NULL,
+  type USER-DEFINED NOT NULL,
+  code character varying NOT NULL UNIQUE,
+  discount integer,
+  transferable boolean DEFAULT false,
+  used_at timestamp without time zone,
+  created_at timestamp without time zone DEFAULT now(),
+  redemption_count integer NOT NULL DEFAULT 0,
+  max_redemptions integer DEFAULT 1,
+  redeemed_by jsonb DEFAULT '[]'::jsonb,
+  last_redeemed_at timestamp without time zone,
+  applies_to USER-DEFINED NOT NULL DEFAULT 'any'::code_applies_to,
+  CONSTRAINT codes_pkey PRIMARY KEY (id),
+  CONSTRAINT codes_purchase_id_purchases_id_fk FOREIGN KEY (purchase_id) REFERENCES public.purchases(id)
+);
+CREATE TABLE public.media_assets (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  filename text NOT NULL,
+  url text NOT NULL,
+  alt text,
+  file_size integer,
+  width integer,
+  height integer,
+  created_at timestamp without time zone DEFAULT now(),
+  CONSTRAINT media_assets_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.mounting_options (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  key text NOT NULL UNIQUE,
+  label text NOT NULL,
+  description text,
+  price_cents integer NOT NULL,
+  is_active boolean NOT NULL DEFAULT true,
+  display_order integer DEFAULT 0,
+  created_at timestamp without time zone DEFAULT now(),
+  updated_at timestamp without time zone DEFAULT now(),
+  CONSTRAINT mounting_options_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.products (
+  id uuid NOT NULL DEFAULT gen_random_uuid(),
+  name text NOT NULL,
+  slug text NOT NULL UNIQUE,
+  description text,
+  short_description text,
+  price_cents integer NOT NULL,
+  compare_price_cents integer,
+  status text NOT NULL DEFAULT 'draft'::text,
+  category text,
+  sku text,
+  stock_quantity integer DEFAULT 0,
+  featured_image_id uuid,
+  display_order integer DEFAULT 0,
+  metadata jsonb,
+  created_at timestamp without time zone DEFAULT now(),
+  updated_at timestamp without time zone DEFAULT now(),
+  CONSTRAINT products_pkey PRIMARY KEY (id),
+  CONSTRAINT products_featured_image_id_fkey FOREIGN KEY (featured_image_id) REFERENCES public.media_assets(id)
+);
+CREATE TABLE public.promo_codes (
+  id character varying NOT NULL DEFAULT gen_random_uuid(),
+  code character varying NOT NULL UNIQUE,
+  seat_type USER-DEFINED NOT NULL,
+  discount integer NOT NULL DEFAULT 100,
+  used boolean NOT NULL DEFAULT false,
+  redeemed_by character varying,
+  purchase_id character varying,
+  redeemed_at timestamp without time zone,
+  created_at timestamp without time zone DEFAULT now(),
+  created_by character varying,
+  CONSTRAINT promo_codes_pkey PRIMARY KEY (id),
+  CONSTRAINT promo_codes_created_by_users_id_fk FOREIGN KEY (created_by) REFERENCES public.users(id),
+  CONSTRAINT promo_codes_purchase_id_purchases_id_fk FOREIGN KEY (purchase_id) REFERENCES public.purchases(id),
+  CONSTRAINT promo_codes_redeemed_by_users_id_fk FOREIGN KEY (redeemed_by) REFERENCES public.users(id)
+);
+CREATE TABLE public.purchases (
+  id character varying NOT NULL DEFAULT gen_random_uuid(),
+  user_id character varying NOT NULL,
+  seat_type USER-DEFINED NOT NULL,
+  amount integer NOT NULL,
+  status USER-DEFINED NOT NULL DEFAULT 'pending'::purchase_status,
+  payment_reference character varying,
+  certificate_url character varying,
+  created_at timestamp without time zone DEFAULT now(),
+  completed_at timestamp without time zone,
+  specimen_id character varying,
+  has_patina boolean NOT NULL DEFAULT false,
+  delivery_name character varying,
+  delivery_phone character varying,
+  delivery_address text,
+  purchase_choice USER-DEFINED NOT NULL DEFAULT 'cast_now'::purchase_choice,
+  production_status USER-DEFINED NOT NULL DEFAULT 'queued'::production_status,
+  seasonal_batch_window character varying,
+  custom_specimen_photo_url character varying,
+  custom_specimen_approval_status USER-DEFINED,
+  custom_specimen_notes text,
+  specimen_style USER-DEFINED,
+  has_mounting boolean NOT NULL DEFAULT false,
+  international_shipping boolean NOT NULL DEFAULT false,
+  commission_voucher boolean NOT NULL DEFAULT false,
+  mounting_type USER-DEFINED NOT NULL DEFAULT 'none'::mounting_type,
+  mounting_price_cents integer NOT NULL DEFAULT 0,
+  purchase_mode USER-DEFINED NOT NULL DEFAULT 'cast_now'::purchase_mode,
+  is_gift boolean NOT NULL DEFAULT false,
+  gift_recipient_email character varying,
+  gift_recipient_name character varying,
+  gift_message text,
+  gift_status USER-DEFINED DEFAULT 'pending'::gift_status,
+  claimed_by_user_id character varying,
+  gift_claimed_at timestamp without time zone,
+  is_deposit_only boolean NOT NULL DEFAULT false,
+  deposit_amount_cents integer NOT NULL DEFAULT 0,
+  deposit_paid_at timestamp without time zone,
+  balance_due_at timestamp without time zone,
+  CONSTRAINT purchases_pkey PRIMARY KEY (id),
+  CONSTRAINT purchases_specimen_id_sculptures_id_fk FOREIGN KEY (specimen_id) REFERENCES public.sculptures(id),
+  CONSTRAINT purchases_user_id_users_id_fk FOREIGN KEY (user_id) REFERENCES public.users(id)
+);
+CREATE TABLE public.referrals (
+  id character varying NOT NULL DEFAULT gen_random_uuid(),
+  referral_code_id character varying NOT NULL,
+  referred_user_id character varying,
+  purchase_id character varying,
+  discount_applied integer,
+  status character varying NOT NULL DEFAULT 'pending'::character varying,
+  created_at timestamp without time zone DEFAULT now(),
+  CONSTRAINT referrals_pkey PRIMARY KEY (id),
+  CONSTRAINT referrals_purchase_id_purchases_id_fk FOREIGN KEY (purchase_id) REFERENCES public.purchases(id),
+  CONSTRAINT referrals_referral_code_id_codes_id_fk FOREIGN KEY (referral_code_id) REFERENCES public.codes(id),
+  CONSTRAINT referrals_referred_user_id_users_id_fk FOREIGN KEY (referred_user_id) REFERENCES public.users(id)
+);
+CREATE TABLE public.registrations (
+  id character varying NOT NULL DEFAULT gen_random_uuid(),
+  email character varying NOT NULL UNIQUE,
+  full_name character varying,
+  verified boolean DEFAULT false,
+  created_at timestamp without time zone DEFAULT now(),
+  CONSTRAINT registrations_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.reservations (
+  id character varying NOT NULL DEFAULT gen_random_uuid(),
+  user_id character varying,
+  seat_type character varying NOT NULL,
+  status character varying DEFAULT 'active'::character varying,
+  expires_at timestamp without time zone NOT NULL,
+  converted_to_purchase_id character varying,
+  created_at timestamp without time zone DEFAULT now(),
+  reservation_type character varying DEFAULT 'regular'::character varying,
+  email character varying,
+  name character varying,
+  phone character varying,
+  deposit_amount_cents integer DEFAULT 0,
+  deposit_paid_at timestamp without time zone,
+  deposit_payment_ref character varying,
+  balance_due_at timestamp without time zone,
+  CONSTRAINT reservations_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.sculpture_selections (
+  id character varying NOT NULL DEFAULT gen_random_uuid(),
+  purchase_id character varying NOT NULL UNIQUE,
+  sculpture_id character varying NOT NULL,
+  selected_at timestamp without time zone DEFAULT now(),
+  CONSTRAINT sculpture_selections_pkey PRIMARY KEY (id),
+  CONSTRAINT sculpture_selections_purchase_id_purchases_id_fk FOREIGN KEY (purchase_id) REFERENCES public.purchases(id),
+  CONSTRAINT sculpture_selections_sculpture_id_sculptures_id_fk FOREIGN KEY (sculpture_id) REFERENCES public.sculptures(id)
+);
+CREATE TABLE public.sculptures (
+  id character varying NOT NULL DEFAULT gen_random_uuid(),
+  name character varying NOT NULL,
+  description text,
+  image_url character varying NOT NULL,
+  available_for USER-DEFINED,
+  is_bronze boolean DEFAULT false,
+  display_order integer DEFAULT 0,
+  created_at timestamp without time zone DEFAULT now(),
+  specimen_style USER-DEFINED,
+  season_window USER-DEFINED NOT NULL DEFAULT 'year_round'::season_window,
+  peak_seasons jsonb DEFAULT '[]'::jsonb,
+  CONSTRAINT sculptures_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.seats (
+  id character varying NOT NULL DEFAULT gen_random_uuid(),
+  type USER-DEFINED NOT NULL,
+  price integer NOT NULL,
+  total_available integer NOT NULL,
+  sold integer NOT NULL DEFAULT 0,
+  updated_at timestamp without time zone DEFAULT now(),
+  fire_sale_price integer,
+  fire_sale_ends_at timestamp without time zone,
+  CONSTRAINT seats_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.sessions (
+  sid character varying NOT NULL,
+  sess jsonb NOT NULL,
+  expire timestamp without time zone NOT NULL,
+  CONSTRAINT sessions_pkey PRIMARY KEY (sid)
+);
+CREATE TABLE public.subscribers (
+  id character varying NOT NULL DEFAULT gen_random_uuid(),
+  name character varying NOT NULL,
+  email character varying NOT NULL UNIQUE,
+  phone character varying,
+  notes text,
+  created_at timestamp without time zone DEFAULT now(),
+  reservation_type text,
+  seat_type text,
+  hold_expires_at timestamp without time zone,
+  hold_status text DEFAULT 'active'::text,
+  CONSTRAINT subscribers_pkey PRIMARY KEY (id)
+);
+CREATE TABLE public.users (
+  id character varying NOT NULL DEFAULT gen_random_uuid(),
+  email character varying UNIQUE,
+  first_name character varying,
+  last_name character varying,
+  profile_image_url character varying,
+  is_admin boolean DEFAULT false,
+  created_at timestamp without time zone DEFAULT now(),
+  updated_at timestamp without time zone DEFAULT now(),
+  CONSTRAINT users_pkey PRIMARY KEY (id)
+);

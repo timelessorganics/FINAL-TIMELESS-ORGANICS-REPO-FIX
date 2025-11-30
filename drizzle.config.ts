@@ -5,7 +5,9 @@ if (!process.env.DATABASE_URL) {
 }
 
 // Construct database URL with proper SSL settings
-const dbUrl = process.env.DATABASE_URL;
+// Remove pgbouncer parameter if present and add sslmode
+let dbUrl = process.env.DATABASE_URL;
+dbUrl = dbUrl.replace("?pgbouncer=true", ""); // Remove pgbouncer param
 const urlWithSsl = dbUrl.includes("?") 
   ? `${dbUrl}&sslmode=require` 
   : `${dbUrl}?sslmode=require`;
