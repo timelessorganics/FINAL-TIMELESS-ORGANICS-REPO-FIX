@@ -541,7 +541,7 @@ export default function HomePage() {
               </p>
               
               <Button asChild size="lg" className="btn-bronze gap-2 min-h-14 text-lg px-10" data-testid="button-investments-cta">
-                <Link href="#seats">
+                <Link href="/founding-100">
                   Secure Your Seat Now
                   <ArrowRight className="w-5 h-5" />
                 </Link>
