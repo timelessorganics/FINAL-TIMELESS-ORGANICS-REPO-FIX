@@ -80,6 +80,26 @@ export default function HomePage() {
   const patronRemaining = patronSeats?.remaining || 0;
   const totalRemaining = founderRemaining + patronRemaining;
   const totalReserved = prelaunchStats?.totalReserved || 0;
+  
+  // Fire sale pricing helpers
+  const getDisplayPrice = (seat: any) => {
+    if (seat?.fireSalePrice && seat?.fireSaleEndsAt && new Date(seat.fireSaleEndsAt) > new Date()) {
+      return seat.fireSalePrice / 100; // Fire sale is active
+    }
+    return seat?.price ? seat.price / 100 : 0;
+  };
+  
+  const getOriginalPrice = (seat: any) => {
+    if (seat?.fireSalePrice && seat?.fireSaleEndsAt && new Date(seat.fireSaleEndsAt) > new Date()) {
+      return seat?.price ? seat.price / 100 : 0; // Show regular price as original
+    }
+    return null;
+  };
+  
+  const founderPrice = getDisplayPrice(founderSeats);
+  const founderOriginal = getOriginalPrice(founderSeats);
+  const patronPrice = getDisplayPrice(patronSeats);
+  const patronOriginal = getOriginalPrice(patronSeats);
 
   return (
     <>
@@ -153,9 +173,9 @@ export default function HomePage() {
                     </div>
                     
                     <div className="space-y-0.5 sm:space-y-1">
-                      <p className="text-[0.65rem] sm:text-xs text-white/70 font-light line-through">R4,500</p>
-                      <p className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-bronze">R3,000</p>
-                      <p className="text-[0.65rem] sm:text-xs text-bronze/80 font-light">Fire Sale</p>
+                      {founderOriginal && <p className="text-[0.65rem] sm:text-xs text-white/70 font-light line-through">R{founderOriginal.toLocaleString()}</p>}
+                      <p className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-bronze">R{founderPrice.toLocaleString()}</p>
+                      {founderOriginal && <p className="text-[0.65rem] sm:text-xs text-bronze/80 font-light">Fire Sale</p>}
                     </div>
 
                     <button
@@ -184,9 +204,9 @@ export default function HomePage() {
                     </div>
                     
                     <div className="space-y-0.5 sm:space-y-1">
-                      <p className="text-[0.65rem] sm:text-xs font-light line-through" style={{color: 'rgba(241, 243, 224, 0.75)'}}>R6,000</p>
-                      <p className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-accent-gold">R4,500</p>
-                      <p className="text-[0.65rem] sm:text-xs text-accent-gold/80 font-light">Fire Sale</p>
+                      {patronOriginal && <p className="text-[0.65rem] sm:text-xs font-light line-through" style={{color: 'rgba(241, 243, 224, 0.75)'}}>R{patronOriginal.toLocaleString()}</p>}
+                      <p className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-accent-gold">R{patronPrice.toLocaleString()}</p>
+                      {patronOriginal && <p className="text-[0.65rem] sm:text-xs text-accent-gold/80 font-light">Fire Sale</p>}
                     </div>
 
                     <button
