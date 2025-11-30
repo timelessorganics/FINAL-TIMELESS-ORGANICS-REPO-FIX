@@ -46,9 +46,7 @@ export default function MainLaunch() {
             </h1>
             
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 leading-relaxed font-light">
-              We <span className="text-bronze font-medium">"invest"</span> your specimen in a heat-resistant plaster/silica mix — this is called "investing" in the sculpture world. 
-              Your specimen is encased in investment material that withstands extreme temperatures, kept for 2-3 months. 
-              <strong className="text-foreground"> Your sculptures are the first to ever come out of the Timeless Organics Studio.</strong>
+              Both investments happen simultaneously. You invest in our future. We invest your cutting. <strong className="text-accent-gold">Together, we create something Timeless.</strong>
             </p>
 
             {/* Three Stat Cards */}
