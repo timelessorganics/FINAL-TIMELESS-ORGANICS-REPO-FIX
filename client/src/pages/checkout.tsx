@@ -287,7 +287,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
 
   const benefits = seatType === "founder" 
     ? [
-        <span key="value">One-of-a-kind bronze casting from real specimen (<span className="text-lg font-light bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-clip-text text-transparent animate-pulse">R25,000+ retail</span>)</span>,
+        "One-of-a-kind bronze casting (R25,000+ retail value)",
         "One 2-day bronze casting workshop at 50% discount",
         "20% lifetime discount on all future shop purchases",
         "Priority access to custom commissions",
@@ -713,7 +713,19 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                       {benefits.map((benefit, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm">
                           <Check className={`w-4 h-4 text-${seatColor} mt-0.5 flex-shrink-0`} />
-                          <span className="text-foreground/80">{benefit}</span>
+                          <span className="text-foreground/80">
+                            {i === 0 && seatType === "founder" ? (
+                              <>
+                                One-of-a-kind bronze casting (
+                                <span className="font-light bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-clip-text text-transparent animate-pulse">
+                                  R25,000+ retail
+                                </span>
+                                )
+                              </>
+                            ) : (
+                              benefit
+                            )}
+                          </span>
                         </li>
                       ))}
                     </ul>
