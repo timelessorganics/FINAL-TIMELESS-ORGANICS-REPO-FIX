@@ -16,7 +16,7 @@ export default function SeatSelectionModal({ open, onOpenChange, paymentType }: 
 
   const handleSelect = (seatType: 'founder' | 'patron') => {
     onOpenChange(false);
-    setLocation(`/founding-100?seat=${seatType}`);
+    setLocation(`/checkout/${seatType}`);
   };
 
   const paymentLabel = 'Choose Your Tier';
