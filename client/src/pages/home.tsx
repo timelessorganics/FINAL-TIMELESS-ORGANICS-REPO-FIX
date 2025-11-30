@@ -257,7 +257,7 @@ export default function HomePage() {
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div className="text-center">
                   <div className="text-3xl font-bold text-bronze mb-2">R25K+</div>
-                  <p className="text-sm text-foreground/80">Bronze market value (when finished)</p>
+                  <p className="text-sm text-foreground/80">Bronze Sculpture market value (Mounted and Patinated)</p>
                 </div>
                 <div className="text-center">
                   <div className="text-3xl font-bold text-accent-gold mb-2">20-30%</div>
