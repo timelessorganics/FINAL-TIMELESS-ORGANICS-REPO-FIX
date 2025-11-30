@@ -89,15 +89,15 @@ export default function HomePage() {
         
         {/* HERO: Bronze emerging from darkness - STABLE GRID LAYOUT */}
         <section 
-          className="relative min-h-screen overflow-hidden bg-[#050505]" 
+          className="relative h-screen overflow-hidden bg-[#050505]" 
           data-testid="section-hero"
         >
-          {/* Layer 1: Full-bleed hero image */}
+          {/* Layer 1: Full-bleed hero image - full screen, scaled up */}
           <div className="absolute inset-0 hero-image-reveal">
             <img 
               src={heroImage} 
               alt="Wall-mounted bronze botanical sculpture on slate" 
-              className="w-full h-full object-cover bronze-warmth-subtle"
+              className="w-full h-full object-cover object-center scale-110 bronze-warmth-subtle"
             />
           </div>
           
