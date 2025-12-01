@@ -292,12 +292,14 @@ export default function MainLaunch() {
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-3 sm:mb-4">
                 <span className="text-accent-gold">Invest Now</span> — Choose Your Seat
               </h2>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-light mb-3 sm:mb-4">
+              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-light mb-4 sm:mb-5">
                 Only 100 seats available. Once they're gone, they're gone forever.
               </p>
-              <p className="text-sm sm:text-base text-accent-gold font-serif italic">
-                24-Hour Friends & Family Launch: The Best Deal on the Planet for a Bronze Investment
-              </p>
+              <div className="inline-block px-3 sm:px-5 py-1.5 sm:py-2 bg-orange-500/25 rounded-full border border-orange-400/40 mb-3 sm:mb-4">
+                <p className="text-xs sm:text-sm text-orange-300 font-black tracking-wide">24HR FRIENDS & FAMILY FIRE SALE</p>
+              </div>
+              <p className="text-sm sm:text-base text-orange-300 font-serif font-bold">THE BEST DEAL ON THE PLANET</p>
+              <p className="text-xs sm:text-sm text-orange-200/80 font-light mt-1">Bronze Sculpture + 20-30% Lifetime Discounts Forever</p>
             </div>
 
             {isLoading ? (
