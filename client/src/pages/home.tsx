@@ -217,34 +217,32 @@ export default function HomePage() {
               </div>
 
               {/* Why You're Being Invited First - MOBILE VERSION (below md) */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-8 md:hidden px-4">
-                <div>
-                  <h3 className="text-sm font-bold mb-3 moving-fill" style={{color: 'rgba(241, 243, 224, 0.95)'}}>
-                    Why You're Being Invited First
-                  </h3>
-                  <ul className="space-y-2 text-[0.85rem]" style={{color: '#ffffff'}}>
-                    <li className="flex gap-2 items-start">
-                      <span style={{color: '#b1bb9a', flexShrink: 0}}>•</span>
-                      <span>R25,000+ bronze artwork</span>
-                    </li>
-                    <li className="flex gap-2 items-start">
-                      <span style={{color: '#b1bb9a', flexShrink: 0}}>•</span>
-                      <span>50–80% off your first workshop (you or a friend)</span>
-                    </li>
-                    <li className="flex gap-2 items-start">
-                      <span style={{color: '#b1bb9a', flexShrink: 0}}>•</span>
-                      <span>Lifetime 20–30% discounts on workshops, shop pieces & commissions</span>
-                    </li>
-                    <li className="flex gap-2 items-start">
-                      <span style={{color: '#b1bb9a', flexShrink: 0}}>•</span>
-                      <span>Open-door studio access for you & your kids</span>
-                    </li>
-                    <li className="flex gap-2 items-start">
-                      <span style={{color: '#b1bb9a', flexShrink: 0}}>•</span>
-                      <span>Your name on the Founding 100 wall</span>
-                    </li>
-                  </ul>
-                </div>
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-8 md:hidden px-4 text-left">
+                <h3 className="text-sm font-bold mb-3 moving-fill" style={{color: 'rgba(241, 243, 224, 0.95)'}}>
+                  Why You're Being Invited First
+                </h3>
+                <ul className="space-y-2 text-[0.85rem]" style={{color: '#ffffff'}}>
+                  <li className="flex gap-2 items-start">
+                    <span style={{color: '#b1bb9a', flexShrink: 0}}>•</span>
+                    <span>R25,000+ bronze artwork</span>
+                  </li>
+                  <li className="flex gap-2 items-start">
+                    <span style={{color: '#b1bb9a', flexShrink: 0}}>•</span>
+                    <span>50–80% off your first workshop (you or a friend)</span>
+                  </li>
+                  <li className="flex gap-2 items-start">
+                    <span style={{color: '#b1bb9a', flexShrink: 0}}>•</span>
+                    <span>Lifetime 20–30% discounts on workshops, shop pieces & commissions</span>
+                  </li>
+                  <li className="flex gap-2 items-start">
+                    <span style={{color: '#b1bb9a', flexShrink: 0}}>•</span>
+                    <span>Open-door studio access for you & your kids</span>
+                  </li>
+                  <li className="flex gap-2 items-start">
+                    <span style={{color: '#b1bb9a', flexShrink: 0}}>•</span>
+                    <span>Your name on the Founding 100 wall</span>
+                  </li>
+                </ul>
               </div>
 
               {/* Seat Selection Cards - Friends & Family Launch Pricing */}
