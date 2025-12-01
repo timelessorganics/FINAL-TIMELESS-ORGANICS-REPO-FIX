@@ -3035,6 +3035,49 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin: Get all specimen customizations
+  app.get("/api/admin/specimen-customizations", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+      
+      const customizations = await storage.getAllSpecimenCustomizations();
+      res.json(customizations);
+    } catch (error: any) {
+      console.error("[Admin] Get customizations error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Admin: Save specimen customization
+  app.post("/api/admin/specimen-customizations", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+      
+      const customization = await storage.upsertSpecimenCustomization(req.body);
+      res.json(customization);
+    } catch (error: any) {
+      console.error("[Admin] Save customization error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
+  // Frontend: Get all specimen customizations (public endpoint for fetch)
+  app.get("/api/specimen-customizations", async (req: any, res: Response) => {
+    try {
+      const customizations = await storage.getAllSpecimenCustomizations();
+      res.json(customizations);
+    } catch (error: any) {
+      console.error("[Specimen] Get customizations error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   // Admin: Diagnostic endpoint to verify PayFast and Email configuration
   app.get("/api/admin/diagnostics", isAuthenticated, async (req: any, res: Response) => {
     try {

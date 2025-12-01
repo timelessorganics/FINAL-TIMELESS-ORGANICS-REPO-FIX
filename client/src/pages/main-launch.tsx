@@ -24,13 +24,23 @@ const DEFAULT_SPECIMEN_IMAGES: Record<string, string> = {
   small_succulents: new URL("../../attached_assets/Gemini_Generated_Image_9rrlvn9rrlvn9rrl_1761271985179.png", import.meta.url).href,
 };
 
-const getSpecimenImages = (): Record<string, string> => {
-  const custom = typeof window !== 'undefined' ? sessionStorage.getItem("specimenCustomImages") : null;
-  const customImages = custom ? JSON.parse(custom) : {};
-  return { ...DEFAULT_SPECIMEN_IMAGES, ...customImages };
-};
+// Fetch specimen customizations from backend
+async function fetchSpecimenCustomizations(): Promise<Record<string, string>> {
+  try {
+    const response = await fetch('/api/specimen-customizations');
+    const customizations = await response.json();
+    const custom: Record<string, string> = {};
+    customizations.forEach((c: any) => {
+      if (c.imageUrl) custom[c.specimenKey] = c.imageUrl;
+    });
+    return { ...DEFAULT_SPECIMEN_IMAGES, ...custom };
+  } catch (err) {
+    console.error('Failed to fetch customizations:', err);
+    return DEFAULT_SPECIMEN_IMAGES;
+  }
+}
 
-const SPECIMEN_IMAGES = getSpecimenImages();
+let SPECIMEN_IMAGES = DEFAULT_SPECIMEN_IMAGES;
 
 const SPECIMEN_NAMES: Record<string, string> = {
   cones_bracts_seedpods: "Cones, Bracts & Seedpods",
@@ -62,6 +72,33 @@ export default function MainLaunch() {
   const [selectedSpecimen, setSelectedSpecimen] = useState<string | null>(null);
   const [specimenAvailability, setSpecimenAvailability] = useState<Record<string, boolean>>({});
   const [expandedSpecimen, setExpandedSpecimen] = useState<string | null>(null);
+  const [specimenImages, setSpecimenImages] = useState<Record<string, string>>(SPECIMEN_IMAGES);
+
+  // Load custom specimen images from backend on mount
+  const { data: customizations } = useQuery({
+    queryKey: ['/api/specimen-customizations'],
+    queryFn: async () => {
+      const response = await fetch('/api/specimen-customizations');
+      return response.json();
+    },
+    staleTime: 5 * 60 * 1000, // Cache for 5 minutes
+  });
+
+  // Update specimen images when customizations change
+  useQuery({
+    queryKey: ['/api/specimen-customizations'],
+    enabled: !!customizations,
+    queryFn: async () => {
+      if (customizations) {
+        const custom: Record<string, string> = {};
+        customizations.forEach((c: any) => {
+          if (c.imageUrl) custom[c.specimenKey] = c.imageUrl;
+        });
+        setSpecimenImages({ ...DEFAULT_SPECIMEN_IMAGES, ...custom });
+      }
+      return customizations;
+    },
+  });
   
   const { data: seats, isLoading } = useQuery<Seat[]>({
     queryKey: ["/api/seats/availability"],

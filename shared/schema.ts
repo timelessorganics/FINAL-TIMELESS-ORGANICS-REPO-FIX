@@ -800,3 +800,21 @@ export const pageAssetsRelations = relations(pageAssets, ({ one }) => ({
     references: [mediaAssets.id],
   }),
 }));
+
+// Specimen Customizations - Store custom images/styles for founding-100 page
+export const specimenCustomizations = pgTable("specimen_customizations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  specimenKey: varchar("specimen_key").notNull(), // e.g., 'cones_bracts_seedpods'
+  imageUrl: varchar("image_url"), // Custom image URL
+  name: varchar("name"), // Custom display name
+  season: varchar("season"), // Custom season info
+  updatedAt: timestamp("updated_at").defaultNow(),
+});
+
+export const insertSpecimenCustomizationSchema = createInsertSchema(specimenCustomizations).omit({
+  id: true,
+  updatedAt: true,
+});
+
+export type InsertSpecimenCustomization = z.infer<typeof insertSpecimenCustomizationSchema>;
+export type SpecimenCustomization = typeof specimenCustomizations.$inferSelect;

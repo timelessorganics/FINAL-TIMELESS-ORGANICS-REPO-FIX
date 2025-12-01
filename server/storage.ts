@@ -20,6 +20,7 @@ import {
   auctions,
   auctionImages,
   auctionBids,
+  specimenCustomizations,
   type User,
   type UpsertUser,
   type Seat,
@@ -55,6 +56,8 @@ import {
   type InsertAuctionImage,
   type AuctionBid,
   type InsertAuctionBid,
+  type SpecimenCustomization,
+  type InsertSpecimenCustomization,
 } from "@shared/schema";
 import { db } from "./db";
 import { eq, desc, sql, and, gt, lt } from "drizzle-orm";
@@ -182,9 +185,39 @@ export interface IStorage {
   getContentItem(pageSlug: string, sectionKey: string): Promise<WebsiteContent | undefined>;
   setWebsiteContent(data: InsertWebsiteContent): Promise<WebsiteContent>;
   deleteWebsiteContent(pageSlug: string, sectionKey: string): Promise<boolean>;
+
+  // Specimen Customization operations
+  getAllSpecimenCustomizations(): Promise<SpecimenCustomization[]>;
+  upsertSpecimenCustomization(data: InsertSpecimenCustomization): Promise<SpecimenCustomization>;
+  deleteSpecimenCustomization(specimenKey: string): Promise<boolean>;
 }
 
 export class DatabaseStorage implements IStorage {
+  // Specimen Customization operations
+  async getAllSpecimenCustomizations(): Promise<SpecimenCustomization[]> {
+    return await db.select().from(specimenCustomizations);
+  }
+
+  async upsertSpecimenCustomization(data: InsertSpecimenCustomization): Promise<SpecimenCustomization> {
+    const [result] = await db
+      .insert(specimenCustomizations)
+      .values(data)
+      .onConflictDoUpdate({
+        target: specimenCustomizations.specimenKey,
+        set: data,
+      })
+      .returning();
+    return result;
+  }
+
+  async deleteSpecimenCustomization(specimenKey: string): Promise<boolean> {
+    const result = await db
+      .delete(specimenCustomizations)
+      .where(eq(specimenCustomizations.specimenKey, specimenKey))
+      .returning();
+    return result.length > 0;
+  }
+
   // User operations
   async getUser(id: string): Promise<User | undefined> {
     const [user] = await db.select().from(usersTable).where(eq(usersTable.id, id));
