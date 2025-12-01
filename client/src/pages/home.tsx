@@ -153,23 +153,23 @@ export default function HomePage() {
           </div>
 
           {/* Layer 4: Content - flex layout with spacious mobile padding */}
-          <div className="relative z-10 h-screen flex flex-col justify-center px-3 sm:px-4 lg:px-6 py-16 sm:py-8 lg:py-12">
+          <div className="relative z-10 min-h-screen flex flex-col justify-start pt-24 sm:justify-center sm:pt-0 px-3 sm:px-4 lg:px-6 py-8 sm:py-8 lg:py-12">
             
             {/* Center content */}
             <div className="text-center max-w-6xl mx-auto w-full">
               
               {/* Main title with glassy effect - moved up, more space below */}
-              <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-[clamp(2.2rem,7vw,5.5rem)] font-light mt-4 sm:mt-6 lg:mt-10 mb-2 sm:mb-2 lg:mb-3 leading-[1.05] tracking-tight w-full px-2">
+              <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-[clamp(2.2rem,7vw,5.5rem)] font-light mt-0 sm:mt-6 lg:mt-10 mb-3 sm:mb-2 lg:mb-3 leading-[1.05] tracking-tight w-full px-2">
                 <span className="hero-glass-text">Timeless Organics</span>
               </h1>
               
               {/* Tagline - responsive */}
-              <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 max-w-3xl mx-auto mb-6 sm:mb-6 lg:mb-8 leading-relaxed px-3 sm:px-2">
+              <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 max-w-3xl mx-auto mb-8 sm:mb-6 lg:mb-8 leading-relaxed px-3 sm:px-2">
                 For the people who know our story, supported us, and walked this road with us.
               </p>
 
               {/* FIRE SALE BADGE - Orange Patina Glow */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-8">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-8 sm:mb-8">
                 <div className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-amber-600/30 rounded-full text-amber-200 text-[0.75rem] sm:text-sm font-black tracking-wide shadow-lg shadow-amber-600/40 border border-amber-500/50">
                   <div className="flex items-center gap-2 justify-center">
                     <Flame className="w-3 h-3 sm:w-4 sm:h-4 animate-pulse" />
@@ -180,12 +180,12 @@ export default function HomePage() {
               </div>
 
               {/* Personal Message */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-10 max-w-2xl mx-auto">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-8 sm:mb-10 max-w-2xl mx-auto">
                 <p className="text-sm sm:text-base text-white/90 font-serif font-light leading-relaxed">We've built this studio 90% with our own hands. These 100 seats finish the last 10% — and we want the first chapter to belong to our closest people.</p>
               </div>
 
               {/* Why You're Being Invited First - DESKTOP VERSION (md+) */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-8 lg:mb-10 hidden md:block">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-8 sm:mb-8 lg:mb-10 hidden md:block">
                 <div className="max-w-5xl mx-auto p-3 sm:p-4 lg:p-6 border rounded-xl backdrop-blur-sm" style={{backgroundColor: 'rgba(107, 95, 62, 0.35)', borderColor: 'rgba(107, 95, 62, 0.5)'}}>
                   <h3 className="text-sm sm:text-base lg:text-lg font-bold mb-3 sm:mb-4 flex items-center gap-2 justify-center moving-fill" style={{color: 'rgba(241, 243, 224, 0.95)'}}>
                     Why You're Being Invited First
@@ -217,7 +217,7 @@ export default function HomePage() {
               </div>
 
               {/* Why You're Being Invited First - MOBILE VERSION (below md) */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-8 md:hidden px-4 text-left">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-8 sm:mb-8 md:hidden px-4 text-left">
                 <h3 className="text-sm font-bold mb-3 moving-fill" style={{color: 'rgba(241, 243, 224, 0.95)'}}>
                   Why You're Being Invited First
                 </h3>
