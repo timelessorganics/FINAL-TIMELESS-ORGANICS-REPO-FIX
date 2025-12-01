@@ -134,11 +134,11 @@ export default function HomePage() {
           </div>
           
           {/* Layer 2: Soft radial vignette overlay */}
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(5,5,5,0.5)_70%,rgba(5,5,5,0.9)_100%)]" />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-70" />
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,rgba(5,5,5,0.65)_70%,rgba(5,5,5,0.95)_100%)]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent opacity-80" />
           
           {/* Layer 3: Subtle overlay for text readability - NO BLUR for crystal clear image */}
-          <div className="absolute inset-0 bg-black/[0.15]" />
+          <div className="absolute inset-0 bg-black/[0.3]" />
           <div className="absolute inset-0 border-b border-white/[0.05]" />
           
           {/* Kicker on BLACK space - positioned on dark area just above slate */}
