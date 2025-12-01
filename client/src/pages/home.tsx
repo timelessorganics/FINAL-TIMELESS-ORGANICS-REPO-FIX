@@ -146,7 +146,7 @@ export default function HomePage() {
             <div className="max-w-4xl mx-auto text-center">
               <div className="hero-text-reveal hero-text-reveal-delay-1">
                 <span className="inline-block font-serif text-sm sm:text-lg md:text-2xl font-semibold tracking-[0.08em] sm:tracking-[0.12em] uppercase moving-fill">
-                  Founding 100 Investor Launch
+                  PRIVATE FRIENDS & FAMILY LAUNCH — 48 HOURS ONLY
                 </span>
               </div>
             </div>
