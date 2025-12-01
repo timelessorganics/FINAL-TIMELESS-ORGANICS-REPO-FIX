@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "wouter";
 import SeatCard from "@/components/seat-card";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
@@ -9,7 +10,6 @@ import { FlowerTimelapseBackground } from "@/components/FlowerTimelapseBackgroun
 import { ArrowRight, Sparkles, Flame, AlertCircle, Check, Calendar } from "lucide-react";
 import SeatSelectionModal from "@/components/seat-selection-modal";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import type { Seat, Sculpture } from "@shared/schema";
 
 const DEFAULT_SPECIMEN_IMAGES: Record<string, string> = {
@@ -61,7 +61,7 @@ export default function MainLaunch() {
   const [paymentType, setPaymentType] = useState<'full' | 'deposit'>('full');
   const [selectedSpecimen, setSelectedSpecimen] = useState<string | null>(null);
   const [specimenAvailability, setSpecimenAvailability] = useState<Record<string, boolean>>({});
-  const [seasonGuideOpen, setSeasonGuideOpen] = useState(false);
+  const [expandedSpecimen, setExpandedSpecimen] = useState<string | null>(null);
   
   const { data: seats, isLoading } = useQuery<Seat[]>({
     queryKey: ["/api/seats/availability"],
@@ -182,65 +182,75 @@ export default function MainLaunch() {
               </p>
             </div>
 
-            {/* Season Guide Button */}
-            <div className="mb-6 flex justify-center">
-              <Button
-                onClick={() => setSeasonGuideOpen(true)}
-                variant="outline"
-                className="gap-2"
-                data-testid="button-season-guide"
-              >
-                <Calendar className="w-4 h-4" />
-                View Season Guide
-              </Button>
-            </div>
-
-            {/* Specimen Gallery Grid - 9 columns, compact */}
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3 mb-8">
-              {sculptures?.filter(s => s.specimenStyle).map((specimen) => {
-                const isAvailableNow = isSpecimenAvailableNow(specimen);
-                const isSelected = selectedSpecimen === specimen.specimenStyle;
-
+            {/* 9-Block Specimen Quick Reference Grid */}
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3 mb-8">
+              {Object.entries(SPECIMEN_NAMES).map(([key, name]) => {
+                const specimen = sculptures?.find(s => s.specimenStyle === key);
+                const isAvailableNow = specimen ? isSpecimenAvailableNow(specimen) : true;
+                
                 return (
                   <div
-                    key={specimen.specimenStyle}
-                    onClick={() => {
-                      setSelectedSpecimen(specimen.specimenStyle || null);
-                      setSpecimenAvailability({ [specimen.specimenStyle || '']: isAvailableNow });
-                    }}
-                    className={`cursor-pointer transition-all group relative`}
-                    data-testid={`specimen-card-${specimen.specimenStyle}`}
+                    key={key}
+                    className="group cursor-pointer"
+                    data-testid={`specimen-ref-${key}`}
                   >
-                    <div className={`relative overflow-hidden rounded-lg border-2 transition-all h-full aspect-square ${
-                      isSelected 
-                        ? 'border-bronze ring-2 ring-bronze/50' 
-                        : 'border-card-border hover:border-bronze/50'
-                    } bg-card-background`}>
-                      <img
-                        src={SPECIMEN_IMAGES[specimen.specimenStyle || '']}
-                        alt={SPECIMEN_NAMES[specimen.specimenStyle || '']}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                      />
+                    <div 
+                      onClick={() => setExpandedSpecimen(expandedSpecimen === key ? null : key)}
+                      className="relative overflow-hidden rounded-lg border-2 border-card-border hover:border-bronze/50 transition-all h-32 bg-card-background p-2 flex flex-col justify-between hover-elevate"
+                    >
+                      {/* Specimen Image */}
+                      <div className="absolute inset-0 opacity-40">
+                        <img
+                          src={SPECIMEN_IMAGES[key]}
+                          alt={name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
                       
-                      {/* Selection Checkmark */}
-                      {isSelected && (
-                        <div className="absolute top-1 right-1 bg-bronze text-white rounded-full p-0.5">
-                          <Check className="w-3 h-3" />
-                        </div>
-                      )}
-
-                      {/* Availability Badge - tiny */}
-                      <div className={`absolute bottom-1 left-1 px-1.5 py-0.5 rounded text-[0.65rem] font-semibold ${
-                        isAvailableNow
-                          ? 'bg-green-500/90 text-white'
-                          : 'bg-orange-500/90 text-white'
-                      }`}>
-                        {isAvailableNow ? 'Now' : 'Wait'}
+                      {/* Content */}
+                      <div className="relative z-10">
+                        <p className="text-[0.7rem] font-bold text-white truncate">{name}</p>
+                      </div>
+                      
+                      {/* Bottom Info */}
+                      <div className="relative z-10 flex items-end justify-between">
+                        <span className={`text-[0.6rem] font-semibold px-1.5 py-0.5 rounded ${
+                          isAvailableNow
+                            ? 'bg-green-500/90 text-white'
+                            : 'bg-orange-500/90 text-white'
+                        }`}>
+                          {isAvailableNow ? 'Now' : 'Wait'}
+                        </span>
+                        <span className="text-[0.65rem] text-white/80 font-light">{SPECIMEN_SEASONS[key]}</span>
                       </div>
                     </div>
+                    
+                    {/* Expanded Details - Pop-out */}
+                    {expandedSpecimen === key && (
+                      <div className="absolute top-full left-0 right-0 mt-2 bg-card border-2 border-bronze rounded-lg p-3 z-50 text-xs max-w-sm">
+                        <p className="font-semibold text-foreground mb-1">{name}</p>
+                        <p className="text-muted-foreground mb-2">Season: <span className="text-bronze font-semibold">{SPECIMEN_SEASONS[key]}</span></p>
+                        <p className="text-muted-foreground text-[0.6rem]">
+                          {isAvailableNow 
+                            ? "✓ Available now! Receive soon after purchase." 
+                            : "Select 'BUY & WAIT' at checkout to secure now, receive when in peak condition."}
+                        </p>
+                      </div>
+                    )}
                   </div>
                 );
               })}
+            </div>
+
+            {/* Read More Link */}
+            <div className="text-center">
+              <Link href="/sculpture-gallery">
+                <Button variant="outline" className="gap-2" data-testid="button-read-more-specimens">
+                  <Calendar className="w-4 h-4" />
+                  View Full Specimen Gallery (3 Examples Per Style)
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
             </div>
 
             {/* Availability Status */}
@@ -374,42 +384,6 @@ export default function MainLaunch() {
       </div>
 
       <Footer />
-      
-      {/* Season Guide Modal - stays on page */}
-      <Dialog open={seasonGuideOpen} onOpenChange={setSeasonGuideOpen}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle>Specimen Season Guide</DialogTitle>
-            <DialogDescription>
-              Each specimen has optimal collection windows. Choose one now, or select "Buy & Wait" at checkout to secure your specimen and receive it when it's in peak condition.
-            </DialogDescription>
-          </DialogHeader>
-          
-          <div className="grid gap-4">
-            {Object.entries(SPECIMEN_NAMES).map(([key, name]) => (
-              <div key={key} className="flex items-start gap-4 p-3 border rounded-lg bg-card/50">
-                <div className="w-16 h-16 rounded-lg overflow-hidden bg-muted flex-shrink-0">
-                  <img
-                    src={SPECIMEN_IMAGES[key]}
-                    alt={name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="font-semibold text-foreground">{name}</h4>
-                  <p className="text-sm text-muted-foreground mt-1">
-                    <span className="font-medium text-bronze">Available:</span> {SPECIMEN_SEASONS[key]}
-                  </p>
-                  {selectedSpecimen === key && (
-                    <p className="text-xs text-accent-gold font-semibold mt-2">✓ Selected</p>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-        </DialogContent>
-      </Dialog>
-      
       <SeatSelectionModal 
         open={seatModalOpen}
         onOpenChange={setSeatModalOpen}
