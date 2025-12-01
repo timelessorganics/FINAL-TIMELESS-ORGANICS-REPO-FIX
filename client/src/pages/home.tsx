@@ -164,14 +164,14 @@ export default function HomePage() {
               </h1>
               
               {/* Tagline - responsive */}
-              <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 max-w-3xl mx-auto mb-8 sm:mb-12 lg:mb-16 leading-relaxed px-3 sm:px-2">
+              <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 max-w-3xl mx-auto mb-4 sm:mb-6 lg:mb-8 leading-relaxed px-3 sm:px-2">
                 One-Of-A-Kind Castings From Organic Matter
               </p>
 
               {/* THIS IS THE FOUNDING 100 MOMENT - Glassy Card on Hero */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-8 sm:mb-12 lg:mb-16">
                 <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 border rounded-xl backdrop-blur-md" style={{backgroundColor: 'rgba(107, 117, 75, 0.15)', borderColor: 'rgba(107, 117, 75, 0.35)'}}>
-                  <div className="inline-block px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold mb-3 sm:mb-4 flex items-center gap-2 justify-center mx-auto" style={{backgroundColor: 'rgba(107, 117, 75, 0.25)', color: 'rgba(107, 117, 75, 0.9)'}}>
+                  <div className="inline-block px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold mb-3 sm:mb-4 flex items-center gap-2 justify-center mx-auto moving-fill" style={{backgroundColor: 'rgba(107, 117, 75, 0.25)'}}>
                     <Flame className="w-3 sm:w-4 h-3 sm:h-4" />
                     THIS IS THE FOUNDING 100 MOMENT
                   </div>
