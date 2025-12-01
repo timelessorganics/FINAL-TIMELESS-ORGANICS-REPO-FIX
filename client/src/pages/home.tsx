@@ -168,30 +168,38 @@ export default function HomePage() {
                 One-Of-A-Kind Castings From Organic Matter
               </p>
 
+              {/* 24-HOUR FIRE SALE BADGE */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-4 sm:mb-6">
+                <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-accent-gold/25 rounded-full text-accent-gold text-xs sm:text-sm font-bold flex items-center gap-2 justify-center">
+                  <Flame className="w-3 sm:w-4 h-3 sm:h-4" />
+                  24-HOUR FIRE SALE
+                </div>
+              </div>
+
               {/* THIS IS THE FOUNDING 100 MOMENT - Glassy Card on Hero */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-8 sm:mb-12 lg:mb-16">
-                <div className="max-w-4xl mx-auto p-6 sm:p-8 lg:p-10 border rounded-xl backdrop-blur-md" style={{backgroundColor: 'rgba(107, 117, 75, 0.15)', borderColor: 'rgba(107, 117, 75, 0.35)'}}>
-                  <h3 className="text-base sm:text-xl lg:text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-3 justify-center moving-fill" style={{color: 'rgba(107, 117, 75, 1)'}}>
-                    <Flame className="w-4 sm:w-6 h-4 sm:h-6" />
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-8 lg:mb-10">
+                <div className="max-w-3xl mx-auto p-3 sm:p-4 lg:p-6 border rounded-xl backdrop-blur-md" style={{backgroundColor: 'rgba(107, 117, 75, 0.15)', borderColor: 'rgba(107, 117, 75, 0.35)'}}>
+                  <h3 className="text-sm sm:text-base lg:text-lg font-bold mb-3 sm:mb-4 flex items-center gap-2 justify-center moving-fill" style={{color: 'rgba(107, 117, 75, 1)'}}>
+                    <Flame className="w-3 sm:w-4 h-3 sm:h-4" />
                     THIS IS THE FOUNDING 100 MOMENT
                   </h3>
                   
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 w-full">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-1.5 sm:gap-2 w-full">
                     <div className="text-center">
-                      <div className="text-base sm:text-xl lg:text-2xl font-bold text-bronze mb-1">R25K+</div>
-                      <p className="text-[0.6rem] sm:text-xs text-white/80 leading-tight">Bronze<br/>Sculpture</p>
+                      <div className="text-sm sm:text-base lg:text-lg font-bold text-bronze">R25K+</div>
+                      <p className="text-[0.55rem] sm:text-[0.65rem] text-white/80 leading-tight">Bronze<br/>Sculpture</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-base sm:text-xl lg:text-2xl font-bold text-accent-gold mb-1">50-80%</div>
-                      <p className="text-[0.6rem] sm:text-xs text-white/80 leading-tight">First<br/>Workshop</p>
+                      <div className="text-sm sm:text-base lg:text-lg font-bold text-accent-gold">50-80%</div>
+                      <p className="text-[0.55rem] sm:text-[0.65rem] text-white/80 leading-tight">First<br/>Workshop</p>
                     </div>
-                    <div className="text-center p-2 sm:p-3 rounded-lg" style={{backgroundColor: 'rgba(107, 117, 75, 0.40)'}}>
-                      <div className="text-base sm:text-xl lg:text-2xl font-bold mb-0.5" style={{color: 'rgba(107, 117, 75, 1)'}}>20-30%</div>
-                      <p className="text-[0.6rem] sm:text-xs font-medium leading-tight" style={{color: 'rgba(107, 117, 75, 0.9)'}}>Lifetime<br/>Discount</p>
+                    <div className="text-center p-1.5 sm:p-2 rounded-lg" style={{backgroundColor: 'rgba(107, 117, 75, 0.40)'}}>
+                      <div className="text-sm sm:text-base lg:text-lg font-bold" style={{color: 'rgba(107, 117, 75, 1)'}}>20-30%</div>
+                      <p className="text-[0.55rem] sm:text-[0.65rem] font-medium leading-tight" style={{color: 'rgba(107, 117, 75, 0.9)'}}>Lifetime<br/>Discount</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-base sm:text-xl lg:text-2xl font-bold text-bronze mb-1">FOREVER</div>
-                      <p className="text-[0.6rem] sm:text-xs text-white/80 leading-tight">Giftable<br/>Benefits</p>
+                      <div className="text-sm sm:text-base lg:text-lg font-bold text-bronze">FOREVER</div>
+                      <p className="text-[0.55rem] sm:text-[0.65rem] text-white/80 leading-tight">Giftable<br/>Benefits</p>
                     </div>
                   </div>
                 </div>
@@ -263,9 +271,9 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Founding 100 Value Proposition */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 text-center px-4 sm:px-6">
-                <p className="text-xs sm:text-sm text-white/90 leading-relaxed max-w-2xl mx-auto font-light">
+              {/* Founding 100 Value Proposition - LARGER & MORE PROMINENT */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 text-center px-4 sm:px-6 mb-2 sm:mb-4">
+                <p className="text-sm sm:text-base lg:text-lg text-white/95 leading-relaxed max-w-2xl mx-auto font-semibold tracking-tight">
                   100 seats. No waiting list. No phase two. When these sell out, this exclusive opportunity closes. Only Founding 100 members get these terms for life.
                 </p>
               </div>
@@ -291,8 +299,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* FIRE SALE URGENCY & VALUE - CONDENSED */}
-        <section className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-bronze/10 via-card/50 to-accent-gold/10 border-y border-bronze/30" data-testid="section-urgency">
+        {/* FIRE SALE URGENCY & VALUE - HIDDEN */}
+        <section className="hidden py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-bronze/10 via-card/50 to-accent-gold/10 border-y border-bronze/30" data-testid="section-urgency">
           <div className="max-w-4xl mx-auto">
             <div className="text-center">
               <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2 justify-center">
