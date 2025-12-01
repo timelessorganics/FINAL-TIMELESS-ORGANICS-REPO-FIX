@@ -112,7 +112,8 @@ Comment in the public line in if your project uses Gatsby and not Next.js
 
 https://www.google.com/search?q=https://nextjs.org/blog/next-9-1%23public-directory-support
 
-public
+# IMPORTANT: Do NOT ignore /client/public - it contains critical static files like favicon and _redirects
+# public
 
 vuepress build output
 
