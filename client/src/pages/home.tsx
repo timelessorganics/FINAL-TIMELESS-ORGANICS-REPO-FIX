@@ -179,10 +179,9 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Catchy Deal Copy - Emphasize Best Deal + Lifetime Benefits */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-10">
-                <p className="text-sm sm:text-base text-amber-200 font-serif font-bold">THE BEST DEAL ON THE PLANET</p>
-                <p className="text-xs sm:text-sm text-amber-100/90 font-light mt-1">Bronze Sculpture + 20-30% Lifetime Discounts Forever</p>
+              {/* Personal Message */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-10 max-w-2xl mx-auto">
+                <p className="text-sm sm:text-base text-white/90 font-serif font-light leading-relaxed">We've built this studio 90% with our own hands. These 100 seats finish the last 10% — and we want the first chapter to belong to our closest people.</p>
               </div>
 
               {/* THIS IS THE FOUNDING 100 MOMENT - Glassy Card on Hero */}
