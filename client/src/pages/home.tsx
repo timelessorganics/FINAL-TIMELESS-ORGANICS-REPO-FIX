@@ -186,46 +186,27 @@ export default function HomePage() {
 
               {/* Why You're Being Invited First - Green Block on Hero */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-8 lg:mb-10">
-                <div className="max-w-3xl mx-auto p-4 sm:p-6 lg:p-8 border rounded-xl backdrop-blur-sm" style={{backgroundColor: 'rgba(241, 243, 224, 0.12)', borderColor: 'rgba(241, 243, 224, 0.35)'}}>
-                  <h3 className="text-sm sm:text-base lg:text-lg font-bold mb-4 sm:mb-6 text-center" style={{color: 'rgba(241, 243, 224, 0.95)'}}>
+                <div className="max-w-3xl mx-auto p-3 sm:p-4 lg:p-6 border rounded-xl backdrop-blur-sm" style={{backgroundColor: 'rgba(241, 243, 224, 0.12)', borderColor: 'rgba(241, 243, 224, 0.35)'}}>
+                  <h3 className="text-sm sm:text-base lg:text-lg font-bold mb-3 sm:mb-4 flex items-center gap-2 justify-center" style={{color: 'rgba(241, 243, 224, 0.95)'}}>
                     Why You're Being Invited First
                   </h3>
                   
-                  <div className="space-y-4 sm:space-y-5">
-                    {/* Bullet 1 */}
-                    <div className="flex gap-3 sm:gap-4">
-                      <Award className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 mt-0.5" style={{color: 'rgba(241, 243, 224, 0.8)'}} />
-                      <div>
-                        <p className="text-sm sm:text-base font-semibold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>R25,000+ Bronze Artwork</p>
-                        <p className="text-xs sm:text-sm mt-1" style={{color: 'rgba(241, 243, 224, 0.75)'}}>Your own one-of-a-kind bronze sculpture cast in our Kommetjie studio.</p>
-                      </div>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-3 sm:gap-4 w-full">
+                    <div className="text-center">
+                      <div className="text-sm sm:text-base font-bold mb-1" style={{color: 'rgba(241, 243, 224, 0.95)'}}>R25,000+ Bronze Artwork</div>
+                      <p className="text-[0.65rem] sm:text-[0.75rem]" style={{color: 'rgba(241, 243, 224, 0.75)'}}>Your own one-of-a-kind bronze sculpture cast in our Kommetjie studio.</p>
                     </div>
-
-                    {/* Bullet 2 */}
-                    <div className="flex gap-3 sm:gap-4">
-                      <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 mt-0.5" style={{color: 'rgba(241, 243, 224, 0.8)'}} />
-                      <div>
-                        <p className="text-sm sm:text-base font-semibold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Lifetime Discounts — For You and Anyone You Gift Them To</p>
-                        <p className="text-xs sm:text-sm mt-1" style={{color: 'rgba(241, 243, 224, 0.75)'}}>20–30% off workshops, commissions, and shop pieces — yours to use or gift forever. A truly timeless gift for family, friends, and future generations.</p>
-                      </div>
+                    <div className="text-center">
+                      <div className="text-sm sm:text-base font-bold mb-1" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Lifetime Discounts</div>
+                      <p className="text-[0.65rem] sm:text-[0.75rem]" style={{color: 'rgba(241, 243, 224, 0.75)'}}>20–30% off workshops, commissions, and shop pieces — yours to use or gift forever.</p>
                     </div>
-
-                    {/* Bullet 3 */}
-                    <div className="flex gap-3 sm:gap-4">
-                      <Flame className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 mt-0.5" style={{color: 'rgba(241, 243, 224, 0.8)'}} />
-                      <div>
-                        <p className="text-sm sm:text-base font-semibold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Open-Shed Access</p>
-                        <p className="text-xs sm:text-sm mt-1" style={{color: 'rgba(241, 243, 224, 0.75)'}}>Pop in anytime, bring your kids, see pours, colour practice castings, and be part of the making.</p>
-                      </div>
+                    <div className="text-center">
+                      <div className="text-sm sm:text-base font-bold mb-1" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Open-Shed Access</div>
+                      <p className="text-[0.65rem] sm:text-[0.75rem]" style={{color: 'rgba(241, 243, 224, 0.75)'}}>Pop in anytime, bring your kids, see pours, colour practice castings, and be part of the making.</p>
                     </div>
-
-                    {/* Bullet 4 */}
-                    <div className="flex gap-3 sm:gap-4">
-                      <Users className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0 mt-0.5" style={{color: 'rgba(241, 243, 224, 0.8)'}} />
-                      <div>
-                        <p className="text-sm sm:text-base font-semibold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Your Name on the Founding 100 Wall</p>
-                        <p className="text-xs sm:text-sm mt-1" style={{color: 'rgba(241, 243, 224, 0.75)'}}>Your story becomes part of the studio's story from day one.</p>
-                      </div>
+                    <div className="text-center">
+                      <div className="text-sm sm:text-base font-bold mb-1" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Your Name on the Founding 100 Wall</div>
+                      <p className="text-[0.65rem] sm:text-[0.75rem]" style={{color: 'rgba(241, 243, 224, 0.75)'}}>Your story becomes part of the studio's story from day one.</p>
                     </div>
                   </div>
                 </div>
