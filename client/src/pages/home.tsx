@@ -170,28 +170,28 @@ export default function HomePage() {
 
               {/* THIS IS THE FOUNDING 100 MOMENT - Glassy Card on Hero */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-8 sm:mb-12 lg:mb-16">
-                <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 border rounded-xl backdrop-blur-md" style={{backgroundColor: 'rgba(107, 117, 75, 0.15)', borderColor: 'rgba(107, 117, 75, 0.35)'}}>
-                  <div className="inline-block px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold mb-3 sm:mb-4 flex items-center gap-2 justify-center mx-auto moving-fill" style={{backgroundColor: 'rgba(107, 117, 75, 0.25)'}}>
-                    <Flame className="w-3 sm:w-4 h-3 sm:h-4" />
+                <div className="max-w-4xl mx-auto p-6 sm:p-8 lg:p-10 border rounded-xl backdrop-blur-md" style={{backgroundColor: 'rgba(107, 117, 75, 0.15)', borderColor: 'rgba(107, 117, 75, 0.35)'}}>
+                  <h3 className="text-lg sm:text-2xl lg:text-3xl font-bold mb-6 sm:mb-8 flex items-center gap-3 justify-center moving-fill" style={{color: 'rgba(107, 117, 75, 1)'}}>
+                    <Flame className="w-4 sm:w-6 h-4 sm:h-6" />
                     THIS IS THE FOUNDING 100 MOMENT
-                  </div>
+                  </h3>
                   
-                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 w-full">
                     <div className="text-center">
-                      <div className="text-lg sm:text-2xl lg:text-3xl font-bold text-bronze mb-1 sm:mb-2">R25K+</div>
-                      <p className="text-[0.65rem] sm:text-xs text-white/80">Bronze Sculpture<br/>market value</p>
+                      <div className="text-base sm:text-xl lg:text-2xl font-bold text-bronze mb-1">R25K+</div>
+                      <p className="text-[0.6rem] sm:text-xs text-white/80 leading-tight">Bronze<br/>Sculpture</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-lg sm:text-2xl lg:text-3xl font-bold text-accent-gold mb-1 sm:mb-2">50-80%</div>
-                      <p className="text-[0.65rem] sm:text-xs text-white/80">First hands-on<br/>casting workshop</p>
+                      <div className="text-base sm:text-xl lg:text-2xl font-bold text-accent-gold mb-1">50-80%</div>
+                      <p className="text-[0.6rem] sm:text-xs text-white/80 leading-tight">First<br/>Workshop</p>
                     </div>
-                    <div className="text-center p-3 sm:p-4 rounded-lg" style={{backgroundColor: 'rgba(107, 117, 75, 0.25)'}}>
-                      <div className="text-lg sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2" style={{color: 'rgba(107, 117, 75, 1)'}}>20-30%</div>
-                      <p className="text-[0.65rem] sm:text-xs font-medium" style={{color: 'rgba(107, 117, 75, 0.9)'}}>Lifetime discount<br/>on everything</p>
+                    <div className="text-center p-2 sm:p-3 rounded-lg" style={{backgroundColor: 'rgba(107, 117, 75, 0.25)'}}>
+                      <div className="text-base sm:text-xl lg:text-2xl font-bold mb-0.5" style={{color: 'rgba(107, 117, 75, 1)'}}>20-30%</div>
+                      <p className="text-[0.6rem] sm:text-xs font-medium leading-tight" style={{color: 'rgba(107, 117, 75, 0.9)'}}>Lifetime<br/>Discount</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-lg sm:text-2xl lg:text-3xl font-bold text-bronze mb-1 sm:mb-2">FOREVER</div>
-                      <p className="text-[0.65rem] sm:text-xs text-white/80">Giftable,<br/>transferable benefits</p>
+                      <div className="text-base sm:text-xl lg:text-2xl font-bold text-bronze mb-1">FOREVER</div>
+                      <p className="text-[0.6rem] sm:text-xs text-white/80 leading-tight">Giftable<br/>Benefits</p>
                     </div>
                   </div>
                 </div>
