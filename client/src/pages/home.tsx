@@ -184,8 +184,8 @@ export default function HomePage() {
                 <p className="text-sm sm:text-base text-white/90 font-serif font-light leading-relaxed">We've built this studio 90% with our own hands. These 100 seats finish the last 10% — and we want the first chapter to belong to our closest people.</p>
               </div>
 
-              {/* Why You're Being Invited First - Green Block on Hero */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-8 lg:mb-10">
+              {/* Why You're Being Invited First - DESKTOP VERSION (md+) */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-8 lg:mb-10 hidden md:block">
                 <div className="max-w-5xl mx-auto p-3 sm:p-4 lg:p-6 border rounded-xl backdrop-blur-sm" style={{backgroundColor: 'rgba(107, 95, 62, 0.35)', borderColor: 'rgba(107, 95, 62, 0.5)'}}>
                   <h3 className="text-sm sm:text-base lg:text-lg font-bold mb-3 sm:mb-4 flex items-center gap-2 justify-center moving-fill" style={{color: 'rgba(241, 243, 224, 0.95)'}}>
                     Why You're Being Invited First
@@ -213,6 +213,37 @@ export default function HomePage() {
                       <p className="text-[0.55rem] sm:text-[0.65rem] lg:text-sm" style={{color: '#ffffff', lineHeight: '1.3'}}>Your story becomes part of the studio from day one.</p>
                     </div>
                   </div>
+                </div>
+              </div>
+
+              {/* Why You're Being Invited First - MOBILE VERSION (below md) */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-8 md:hidden">
+                <div className="max-w-2xl mx-auto">
+                  <h3 className="text-sm font-bold mb-3 flex items-center gap-2 justify-center moving-fill text-center" style={{color: 'rgba(241, 243, 224, 0.95)'}}>
+                    Why You're Being Invited First
+                  </h3>
+                  <ul className="space-y-2 text-[0.85rem]" style={{color: '#ffffff'}}>
+                    <li className="flex gap-2">
+                      <span style={{color: '#b1bb9a'}}>•</span>
+                      <span>R25,000+ bronze artwork</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span style={{color: '#b1bb9a'}}>•</span>
+                      <span>50–80% off your first workshop (you or a friend)</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span style={{color: '#b1bb9a'}}>•</span>
+                      <span>Lifetime 20–30% discounts on workshops, shop pieces & commissions</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span style={{color: '#b1bb9a'}}>•</span>
+                      <span>Open-door studio access for you & your kids</span>
+                    </li>
+                    <li className="flex gap-2">
+                      <span style={{color: '#b1bb9a'}}>•</span>
+                      <span>Your name on the Founding 100 wall</span>
+                    </li>
+                  </ul>
                 </div>
               </div>
 
