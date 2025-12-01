@@ -193,23 +193,23 @@ export default function HomePage() {
                   
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-2.5 w-full">
                     <div className="text-center">
-                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-1 leading-tight" style={{color: '#aab3a6'}}>R25,000+ Bronze Artwork</div>
+                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-1 leading-tight" style={{color: '#b1bb9a'}}>R25,000+ Bronze Artwork</div>
                       <p className="text-[0.55rem] sm:text-[0.65rem] lg:text-sm" style={{color: 'rgba(241, 243, 224, 0.85)', lineHeight: '1.3'}}>Your own one-of-a-kind bronze piece.</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-1 leading-tight" style={{color: '#aab3a6'}}>50–80% Off Your First Workshop — Giftable</div>
+                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-1 leading-tight" style={{color: '#b1bb9a'}}>50–80% Off Your First Workshop — Giftable</div>
                       <p className="text-[0.55rem] sm:text-[0.65rem] lg:text-sm" style={{color: 'rgba(241, 243, 224, 0.85)', lineHeight: '1.3'}}>Use it yourself or give the discount to anyone you choose.</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-1 leading-tight" style={{color: '#aab3a6'}}>Lifetime Discounts — For You & Anyone You Gift</div>
+                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-1 leading-tight" style={{color: '#b1bb9a'}}>Lifetime Discounts — For You & Anyone You Gift</div>
                       <p className="text-[0.55rem] sm:text-[0.65rem] lg:text-sm" style={{color: 'rgba(241, 243, 224, 0.85)', lineHeight: '1.3'}}>20–30% off workshops, shop pieces & commissions — forever.</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-1 leading-tight" style={{color: '#aab3a6'}}>Open-Shed Access</div>
+                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-1 leading-tight" style={{color: '#b1bb9a'}}>Open-Shed Access</div>
                       <p className="text-[0.55rem] sm:text-[0.65rem] lg:text-sm" style={{color: 'rgba(241, 243, 224, 0.85)', lineHeight: '1.3'}}>Pop in anytime, bring kids, watch pours, colour practice castings.</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-1 leading-tight" style={{color: '#aab3a6'}}>Your Name on the Founding 100 Wall</div>
+                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-1 leading-tight" style={{color: '#b1bb9a'}}>Your Name on the Founding 100 Wall</div>
                       <p className="text-[0.55rem] sm:text-[0.65rem] lg:text-sm" style={{color: 'rgba(241, 243, 224, 0.85)', lineHeight: '1.3'}}>Your story becomes part of the studio from day one.</p>
                     </div>
                   </div>
