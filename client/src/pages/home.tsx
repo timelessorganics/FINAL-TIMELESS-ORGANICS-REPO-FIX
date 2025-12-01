@@ -474,51 +474,63 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* Lifetime Benefits Grid */}
-            <div className="mb-8 sm:mb-12">
-              <h3 className="font-serif text-xl sm:text-2xl text-center mb-6 sm:mb-8 font-light">Plus Lifetime Benefits</h3>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-                <div className="p-4 sm:p-6 rounded-lg border border-bronze/10 bg-bronze/[0.02]">
-                  <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-accent-gold mb-2 sm:mb-3" />
-                  <h4 className="font-light mb-1 sm:mb-2 text-sm sm:text-base">Workshop Vouchers</h4>
-                  <p className="text-xs sm:text-sm text-muted-foreground font-light">
-                    50-80% off future 2-day bronze casting workshops. Learn the ancient lost-wax process yourself.
-                  </p>
+            {/* Why You're Being Invited First - Green Block */}
+            <div className="mb-8 sm:mb-12 p-6 sm:p-8 rounded-lg border" style={{backgroundColor: 'rgba(241, 243, 224, 0.12)', borderColor: 'rgba(241, 243, 224, 0.35)'}}>
+              <h3 className="font-serif text-2xl sm:text-3xl text-center mb-8 font-light" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Why You're Being Invited First</h3>
+              
+              <div className="space-y-6 max-w-4xl mx-auto">
+                {/* Bullet 1: R25,000+ Bronze Artwork */}
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <Award className="w-6 h-6 mt-1" style={{color: 'rgba(241, 243, 224, 0.8)'}} />
+                  </div>
+                  <div>
+                    <h4 className="font-serif text-base sm:text-lg font-light mb-2" style={{color: 'rgba(241, 243, 224, 0.95)'}}>R25,000+ Bronze Artwork</h4>
+                    <p className="text-sm sm:text-base font-light" style={{color: 'rgba(241, 243, 224, 0.75)'}}>
+                      Your own one-of-a-kind bronze sculpture cast in our Kommetjie studio.
+                    </p>
+                  </div>
                 </div>
-                <div className="p-6 rounded-lg border border-patina/10 bg-patina/[0.02]">
-                  <Shield className="w-6 h-6 text-patina mb-3" />
-                  <h4 className="font-light mb-2">Lifetime Shop Discounts</h4>
-                  <p className="text-sm text-muted-foreground font-light">
-                    20-30% off everything in our future shop — sculptures, limited editions, tools, materials.
-                  </p>
+
+                {/* Bullet 2: Lifetime Discounts */}
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <Sparkles className="w-6 h-6 mt-1" style={{color: 'rgba(241, 243, 224, 0.8)'}} />
+                  </div>
+                  <div>
+                    <h4 className="font-serif text-base sm:text-lg font-light mb-2" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Lifetime Discounts — For You and Anyone You Gift Them To</h4>
+                    <p className="text-sm sm:text-base font-light" style={{color: 'rgba(241, 243, 224, 0.75)'}}>
+                      20–30% off workshops, commissions, and shop pieces — yours to use or gift forever.
+                      <br />
+                      A truly timeless gift for family, friends, and future generations.
+                    </p>
+                  </div>
                 </div>
-                <div className="p-6 rounded-lg border border-bronze/10 bg-bronze/[0.02]">
-                  <Award className="w-6 h-6 text-bronze mb-3" />
-                  <h4 className="font-light mb-2">Commission Priority</h4>
-                  <p className="text-sm text-muted-foreground font-light">
-                    First access to custom commissions. Your specimen, your vision, cast in bronze.
-                  </p>
+
+                {/* Bullet 3: Open-Shed Access */}
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <Flame className="w-6 h-6 mt-1" style={{color: 'rgba(241, 243, 224, 0.8)'}} />
+                  </div>
+                  <div>
+                    <h4 className="font-serif text-base sm:text-lg font-light mb-2" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Open-Shed Access</h4>
+                    <p className="text-sm sm:text-base font-light" style={{color: 'rgba(241, 243, 224, 0.75)'}}>
+                      Pop in anytime, bring your kids, see pours, colour practice castings, and be part of the making.
+                    </p>
+                  </div>
                 </div>
-                <div className="p-6 rounded-lg border border-bronze/10 bg-bronze/[0.02]">
-                  <Flame className="w-6 h-6 text-bronze mb-3" />
-                  <h4 className="font-light mb-2">Auction First Dibs</h4>
-                  <p className="text-sm text-muted-foreground font-light">
-                    Early access to future one-of-a-kind works before they go to public auction.
-                  </p>
-                </div>
-                <div className="p-6 rounded-lg border border-accent-gold/10 bg-accent-gold/[0.02]">
-                  <Sparkles className="w-6 h-6 text-accent-gold mb-3" />
-                  <h4 className="font-light mb-2">Giftable for Life</h4>
-                  <p className="text-sm text-muted-foreground font-light">
-                    Transfer your benefits to family or friends. A gift that keeps giving for generations.
-                  </p>
-                </div>
-                <div className="p-6 rounded-lg border border-patina/10 bg-patina/[0.02]">
-                  <Shield className="w-6 h-6 text-patina mb-3" />
-                  <h4 className="font-light mb-2">Founding Member Status</h4>
-                  <p className="text-sm text-muted-foreground font-light">
-                    Your name in our foundry. Part of the story from day one.
-                  </p>
+
+                {/* Bullet 4: Your Name on the Founding 100 Wall */}
+                <div className="flex gap-4">
+                  <div className="flex-shrink-0">
+                    <Users className="w-6 h-6 mt-1" style={{color: 'rgba(241, 243, 224, 0.8)'}} />
+                  </div>
+                  <div>
+                    <h4 className="font-serif text-base sm:text-lg font-light mb-2" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Your Name on the Founding 100 Wall</h4>
+                    <p className="text-sm sm:text-base font-light" style={{color: 'rgba(241, 243, 224, 0.75)'}}>
+                      Your story becomes part of the studio's story from day one.
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>          </div>
