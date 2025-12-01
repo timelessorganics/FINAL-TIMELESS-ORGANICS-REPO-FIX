@@ -77,9 +77,6 @@ function Router() {
       <Route path="/founding-100" component={MainLaunch} />
       <Route path="/founding100" component={MainLaunch} />
 
-      {/* Specimen Image Manager - Test tool */}
-      <Route path="/specimen-manager" component={SpecimenManager} />
-
       {/* Founding 100 Explanation */}
       <Route path="/founding-100-explained" component={Founding100ExplainedPage} />
 
@@ -135,6 +132,13 @@ function Router() {
       {isAuthenticated && (
         <Route path="/admin">
           {user?.isAdmin ? <AdminPanel /> : <NotFound />}
+        </Route>
+      )}
+
+      {/* Specimen Manager - Admin only test tool */}
+      {isAuthenticated && (
+        <Route path="/specimen-manager">
+          {user?.isAdmin ? <SpecimenManager /> : <NotFound />}
         </Route>
       )}
 
