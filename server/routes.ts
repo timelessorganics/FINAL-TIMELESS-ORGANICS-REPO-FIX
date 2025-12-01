@@ -15,6 +15,7 @@ import {
   type Code,
   subscribers,
   purchases,
+  seats,
 } from "@shared/schema";
 import { z } from "zod";
 import { fromError } from "zod-validation-error";
@@ -234,6 +235,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
       await storage.updateSeatPrice('founder', 300000); // R3,000
       await storage.updateSeatPrice('patron', 450000); // R4,500
       console.log('[Init] Default seats initialized');
+    } else {
+      // Fix fire sale prices if they're incorrect (legacy data fix)
+      const founderSeat = existingSeats.find(s => s.type === 'founder');
+      const patronSeat = existingSeats.find(s => s.type === 'patron');
+      
+      if (founderSeat?.fireSalePrice && founderSeat.fireSalePrice > 200000) {
+        console.log('[Init] Correcting founder fire sale price from', founderSeat.fireSalePrice, 'to 200000 (R2,000)');
+        const { db } = await import("./db");
+        await db.update(seats).set({ fireSalePrice: 200000 }).where(eq(seats.type, 'founder'));
+      }
+      
+      if (patronSeat?.fireSalePrice && patronSeat.fireSalePrice > 350000) {
+        console.log('[Init] Correcting patron fire sale price from', patronSeat.fireSalePrice, 'to 350000 (R3,500)');
+        const { db } = await import("./db");
+        await db.update(seats).set({ fireSalePrice: 350000 }).where(eq(seats.type, 'patron'));
+      }
     }
   } catch (error) {
     console.log('[Init] Seats already exist or will be created on first access');
