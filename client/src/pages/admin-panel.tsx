@@ -10,6 +10,7 @@ import Footer from "@/components/footer";
 import type { Seat, Purchase, Code, PromoCode, MediaAsset, Product, Auction } from "@shared/schema";
 import { Users, Package, DollarSign, Award, Download, Gift, Copy, CheckCircle, XCircle, Upload, Image as ImageIcon, ShoppingBag, Gavel, Calendar, Trash2, Edit, Plus, ExternalLink, Flame } from "lucide-react";
 import { useState } from "react";
+import { Eye } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -23,6 +24,10 @@ export default function AdminPanel() {
   const queryClient = useQueryClient();
   const [codeCount, setCodeCount] = useState("10");
   const [activeTab, setActiveTab] = useState("overview");
+  const [customImages, setCustomImages] = useState<Record<string, string>>(() => {
+    const stored = sessionStorage.getItem("specimenCustomImages");
+    return stored ? JSON.parse(stored) : {};
+  });
 
   const { data: seats } = useQuery<Seat[]>({
     queryKey: ["/api/admin/seats"],
@@ -473,7 +478,7 @@ export default function AdminPanel() {
 
           {/* Navigation Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="mb-8">
-            <TabsList className="grid w-full grid-cols-6 lg:w-auto lg:inline-flex gap-1">
+            <TabsList className="grid w-full grid-cols-7 lg:w-auto lg:inline-flex gap-1">
               <TabsTrigger value="overview" className="gap-2" data-testid="tab-overview">
                 <Users className="w-4 h-4" />
                 <span className="hidden sm:inline">Overview</span>
@@ -485,6 +490,10 @@ export default function AdminPanel() {
               <TabsTrigger value="media" className="gap-2" data-testid="tab-media">
                 <ImageIcon className="w-4 h-4" />
                 <span className="hidden sm:inline">Media</span>
+              </TabsTrigger>
+              <TabsTrigger value="specimens" className="gap-2" data-testid="tab-specimens">
+                <ImageIcon className="w-4 h-4" />
+                <span className="hidden sm:inline">Specimens</span>
               </TabsTrigger>
               <TabsTrigger value="products" className="gap-2" data-testid="tab-products">
                 <ShoppingBag className="w-4 h-4" />
@@ -1820,6 +1829,132 @@ export default function AdminPanel() {
                     <p className="text-muted-foreground">No auctions yet. Create your first auction above.</p>
                   </Card>
                 )}
+              </div>
+            </TabsContent>
+
+            {/* Specimens Tab */}
+            <TabsContent value="specimens" className="mt-6">
+              <div className="mb-8">
+                <h2 className="font-serif text-2xl font-bold mb-2">Specimen Image Manager</h2>
+                <p className="text-muted-foreground">
+                  Upload custom images for each specimen style to test the gallery. Images are stored temporarily in your browser session.
+                </p>
+              </div>
+
+              <div className="mb-6 flex gap-3">
+                <Button
+                  onClick={() => window.open("/founding-100", "_blank")}
+                  variant="outline"
+                  className="flex items-center gap-2"
+                  data-testid="button-view-gallery-from-admin"
+                >
+                  <Eye className="w-4 h-4" />
+                  View Gallery in New Tab
+                </Button>
+                {Object.keys(customImages).length > 0 && (
+                  <Button
+                    onClick={() => {
+                      setCustomImages({});
+                      sessionStorage.removeItem("specimenCustomImages");
+                    }}
+                    variant="destructive"
+                    className="flex items-center gap-2"
+                    data-testid="button-clear-all-specimens"
+                  >
+                    <Trash2 className="w-4 h-4" />
+                    Clear All Images
+                  </Button>
+                )}
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                {[
+                  { id: "cones_bracts_seedpods", name: "Cones, Bracts & Seedpods" },
+                  { id: "protea_pincushion_blooms_heads", name: "Protea Pincushion Blooms" },
+                  { id: "bulb_spikes", name: "Bulb Spikes" },
+                  { id: "branches_leaves", name: "Branches & Leaves" },
+                  { id: "aloe_inflorescence_heads", name: "Aloe Inflorescence" },
+                  { id: "flower_heads", name: "Flower Heads" },
+                  { id: "erica_sprays", name: "Erica Sprays" },
+                  { id: "restios_seedheads_grasses", name: "Restios & Seedheads" },
+                  { id: "small_succulents", name: "Small Succulents" },
+                ].map((specimen) => (
+                  <Card key={specimen.id} className="overflow-hidden" data-testid={`card-${specimen.id}`}>
+                    <div className="aspect-square relative bg-muted overflow-hidden">
+                      {customImages[specimen.id] ? (
+                        <img
+                          src={customImages[specimen.id]}
+                          alt={specimen.name}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-full h-full flex items-center justify-center bg-muted">
+                          <span className="text-muted-foreground text-sm">No image uploaded</span>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="p-4">
+                      <h3 className="font-medium mb-3 text-sm">{specimen.name}</h3>
+
+                      <div className="flex gap-2">
+                        <label className="flex-1">
+                          <Button
+                            asChild
+                            variant="outline"
+                            size="sm"
+                            className="w-full cursor-pointer flex items-center gap-2"
+                            data-testid={`button-upload-${specimen.id}`}
+                          >
+                            <span className="cursor-pointer flex items-center gap-2">
+                              <Upload className="w-4 h-4" />
+                              Upload
+                            </span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              onChange={(e) => {
+                                if (e.target.files?.[0]) {
+                                  const reader = new FileReader();
+                                  reader.onload = (event) => {
+                                    const dataUrl = event.target?.result as string;
+                                    const updated = { ...customImages, [specimen.id]: dataUrl };
+                                    setCustomImages(updated);
+                                    sessionStorage.setItem("specimenCustomImages", JSON.stringify(updated));
+                                  };
+                                  reader.readAsDataURL(e.target.files[0]);
+                                }
+                              }}
+                            />
+                          </Button>
+                        </label>
+
+                        {customImages[specimen.id] && (
+                          <Button
+                            onClick={() => {
+                              const updated = { ...customImages };
+                              delete updated[specimen.id];
+                              setCustomImages(updated);
+                              sessionStorage.setItem("specimenCustomImages", JSON.stringify(updated));
+                            }}
+                            variant="ghost"
+                            size="sm"
+                            data-testid={`button-clear-${specimen.id}`}
+                          >
+                            <Trash2 className="w-4 h-4" />
+                          </Button>
+                        )}
+                      </div>
+
+                      {customImages[specimen.id] && (
+                        <p className="text-xs text-green-600 dark:text-green-400 mt-2">
+                          ✓ Custom image loaded
+                        </p>
+                      )}
+                    </div>
+                  </Card>
+                ))}
               </div>
             </TabsContent>
 

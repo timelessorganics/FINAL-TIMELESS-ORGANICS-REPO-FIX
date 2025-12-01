@@ -29,7 +29,6 @@ import SeasonalGuide from "@/pages/seasonal-guide";
 import SignIn from "@/pages/sign-in";
 import AuthCallback from "@/pages/auth-callback";
 import ClaimGiftPage from "@/pages/claim-gift";
-import SpecimenManager from "@/pages/specimen-manager";
 
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -132,13 +131,6 @@ function Router() {
       {isAuthenticated && (
         <Route path="/admin">
           {user?.isAdmin ? <AdminPanel /> : <NotFound />}
-        </Route>
-      )}
-
-      {/* Specimen Manager - Admin only test tool */}
-      {isAuthenticated && (
-        <Route path="/specimen-manager">
-          {user?.isAdmin ? <SpecimenManager /> : <NotFound />}
         </Route>
       )}
 
