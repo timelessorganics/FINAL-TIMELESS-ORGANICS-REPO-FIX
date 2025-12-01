@@ -186,27 +186,27 @@ export default function HomePage() {
 
               {/* Why You're Being Invited First - Green Block on Hero */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-8 lg:mb-10">
-                <div className="max-w-3xl mx-auto p-3 sm:p-4 lg:p-6 border rounded-xl backdrop-blur-sm" style={{backgroundColor: 'rgba(241, 243, 224, 0.12)', borderColor: 'rgba(241, 243, 224, 0.35)'}}>
+                <div className="max-w-5xl mx-auto p-3 sm:p-4 lg:p-6 border rounded-xl backdrop-blur-sm" style={{backgroundColor: 'rgba(241, 243, 224, 0.12)', borderColor: 'rgba(241, 243, 224, 0.35)'}}>
                   <h3 className="text-sm sm:text-base lg:text-lg font-bold mb-3 sm:mb-4 flex items-center gap-2 justify-center moving-fill" style={{color: 'rgba(241, 243, 224, 0.95)'}}>
                     Why You're Being Invited First
                   </h3>
                   
-                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-1.5 sm:gap-2 w-full">
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3 w-full">
                     <div className="text-center">
-                      <div className="text-sm sm:text-base lg:text-lg font-bold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>R25,000+</div>
-                      <p className="text-[0.55rem] sm:text-[0.65rem]" style={{color: 'rgba(241, 243, 224, 0.8)', lineHeight: 'tight'}}>Bronze Artwork</p>
+                      <div className="text-xs sm:text-sm lg:text-base font-bold mb-1 leading-tight" style={{color: 'rgba(241, 243, 224, 0.95)'}}>R25,000+ Bronze Artwork</div>
+                      <p className="text-[0.5rem] sm:text-[0.6rem] lg:text-[0.65rem]" style={{color: 'rgba(241, 243, 224, 0.75)', lineHeight: '1.3'}}>Your own one-of-a-kind bronze sculpture cast in our Kommetjie studio.</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-sm sm:text-base lg:text-lg font-bold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Lifetime</div>
-                      <p className="text-[0.55rem] sm:text-[0.65rem]" style={{color: 'rgba(241, 243, 224, 0.8)', lineHeight: 'tight'}}>Discounts<br/>For You & Gifts</p>
+                      <div className="text-xs sm:text-sm lg:text-base font-bold mb-1 leading-tight" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Lifetime Discounts — For You and Anyone You Gift Them To</div>
+                      <p className="text-[0.5rem] sm:text-[0.6rem] lg:text-[0.65rem]" style={{color: 'rgba(241, 243, 224, 0.75)', lineHeight: '1.3'}}>20–30% off workshops, commissions, and shop pieces — yours to use or gift forever. A truly timeless gift for family, friends, and future generations.</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-sm sm:text-base lg:text-lg font-bold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Open-Shed</div>
-                      <p className="text-[0.55rem] sm:text-[0.65rem]" style={{color: 'rgba(241, 243, 224, 0.8)', lineHeight: 'tight'}}>Access<br/>Anytime</p>
+                      <div className="text-xs sm:text-sm lg:text-base font-bold mb-1 leading-tight" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Open-Shed Access</div>
+                      <p className="text-[0.5rem] sm:text-[0.6rem] lg:text-[0.65rem]" style={{color: 'rgba(241, 243, 224, 0.75)', lineHeight: '1.3'}}>Pop in anytime, bring your kids, see pours, colour practice castings, and be part of the making.</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-sm sm:text-base lg:text-lg font-bold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Your Name</div>
-                      <p className="text-[0.55rem] sm:text-[0.65rem]" style={{color: 'rgba(241, 243, 224, 0.8)', lineHeight: 'tight'}}>Founding 100<br/>Wall</p>
+                      <div className="text-xs sm:text-sm lg:text-base font-bold mb-1 leading-tight" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Your Name on the Founding 100 Wall</div>
+                      <p className="text-[0.5rem] sm:text-[0.6rem] lg:text-[0.65rem]" style={{color: 'rgba(241, 243, 224, 0.75)', lineHeight: '1.3'}}>Your story becomes part of the studio's story from day one.</p>
                     </div>
                   </div>
                 </div>
