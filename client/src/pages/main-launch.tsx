@@ -292,8 +292,11 @@ export default function MainLaunch() {
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-3 sm:mb-4">
                 <span className="text-accent-gold">Invest Now</span> — Choose Your Seat
               </h2>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-light">
+              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-light mb-3 sm:mb-4">
                 Only 100 seats available. Once they're gone, they're gone forever.
+              </p>
+              <p className="text-sm sm:text-base text-accent-gold font-serif italic">
+                24-Hour Friends & Family Launch: The Best Deal on the Planet for a Bronze Investment
               </p>
             </div>
 

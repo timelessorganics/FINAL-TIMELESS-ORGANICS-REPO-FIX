@@ -168,12 +168,19 @@ export default function HomePage() {
                 One-Of-A-Kind Castings From Organic Matter
               </p>
 
-              {/* FIRE SALE BADGE - configurable duration */}
+              {/* FIRE SALE BADGE - Friends & Family Launch */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-4 sm:mb-6">
-                <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-accent-gold/20 rounded-full text-accent-gold text-[0.65rem] sm:text-xs font-bold whitespace-nowrap">
-                  <Flame className="w-2 h-2 sm:w-2.5 sm:h-2.5" />
-                  24HR
+                <div className="inline-block px-3 sm:px-4 py-1 sm:py-1.5 bg-accent-gold/25 rounded-full text-accent-gold text-[0.7rem] sm:text-xs font-bold">
+                  <div className="flex items-center gap-1.5 justify-center">
+                    <Flame className="w-2.5 h-2.5 sm:w-3 sm:h-3" />
+                    <span>24HR FRIENDS & FAMILY FIRE SALE</span>
+                  </div>
                 </div>
+              </div>
+
+              {/* Catchy Deal Copy */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-4 sm:mb-8">
+                <p className="text-sm sm:text-base text-accent-gold font-serif italic">The Best Deal on the Planet for a R25K+ Bronze Sculpture</p>
               </div>
 
               {/* THIS IS THE FOUNDING 100 MOMENT - Glassy Card on Hero */}
@@ -205,7 +212,7 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Seat Selection Cards - 24hr Friends & Family Discount */}
+              {/* Seat Selection Cards - Friends & Family Launch Pricing */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-3 sm:gap-6 lg:gap-16 xl:gap-24 mb-3 sm:mb-6 px-2 sm:px-0 max-w-6xl mx-auto w-full">
                 {/* FOUNDER SEAT CARD */}
                 <div className="group relative flex-1 min-w-0 max-w-sm sm:max-w-md lg:max-w-md p-3 sm:p-4 lg:p-5 border border-white/20 rounded-lg bg-black/40 backdrop-blur-sm hover:bg-black/50 hover:border-white/30 transition-all duration-300 hover-elevate">
@@ -224,7 +231,7 @@ export default function HomePage() {
                     <div className="space-y-0.5 sm:space-y-1">
                       {founderOriginal && <p className="text-[0.65rem] sm:text-xs text-white/70 font-light line-through">R{founderOriginal.toLocaleString()}</p>}
                       <p className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-bronze">R{founderPrice.toLocaleString()}</p>
-                      {founderOriginal && <p className="text-[0.65rem] sm:text-xs text-bronze/80 font-light">Fire Sale</p>}
+                      {founderOriginal && <p className="text-[0.65rem] sm:text-xs text-bronze/80 font-light">Friends & Family Price</p>}
                     </div>
 
                     <button
@@ -255,7 +262,7 @@ export default function HomePage() {
                     <div className="space-y-0.5 sm:space-y-1">
                       {patronOriginal && <p className="text-[0.65rem] sm:text-xs font-light line-through" style={{color: 'rgba(241, 243, 224, 0.75)'}}>R{patronOriginal.toLocaleString()}</p>}
                       <p className="font-serif text-xl sm:text-2xl lg:text-3xl font-bold text-accent-gold">R{patronPrice.toLocaleString()}</p>
-                      {patronOriginal && <p className="text-[0.65rem] sm:text-xs text-accent-gold/80 font-light">Fire Sale</p>}
+                      {patronOriginal && <p className="text-[0.65rem] sm:text-xs text-accent-gold/80 font-light">Friends & Family Price</p>}
                     </div>
 
                     <button
