@@ -199,15 +199,28 @@ export class DatabaseStorage implements IStorage {
   }
 
   async upsertSpecimenCustomization(data: InsertSpecimenCustomization): Promise<SpecimenCustomization> {
-    const [result] = await db
-      .insert(specimenCustomizations)
-      .values(data)
-      .onConflictDoUpdate({
-        target: specimenCustomizations.specimenKey,
-        set: data,
-      })
-      .returning();
-    return result;
+    // Check if record exists first
+    const existing = await db
+      .select()
+      .from(specimenCustomizations)
+      .where(eq(specimenCustomizations.specimenKey, data.specimenKey));
+    
+    if (existing.length > 0) {
+      // Update existing record
+      const [result] = await db
+        .update(specimenCustomizations)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(specimenCustomizations.specimenKey, data.specimenKey))
+        .returning();
+      return result;
+    } else {
+      // Insert new record
+      const [result] = await db
+        .insert(specimenCustomizations)
+        .values(data)
+        .returning();
+      return result;
+    }
   }
 
   async deleteSpecimenCustomization(specimenKey: string): Promise<boolean> {
