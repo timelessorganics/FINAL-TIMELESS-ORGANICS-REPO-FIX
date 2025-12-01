@@ -235,8 +235,8 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
         commissionVoucher: false,
         purchaseMode,
         isGift: data.isGift,
-        giftRecipientEmail: data.isGift ? data.giftRecipientEmail : undefined,
-        giftRecipientName: data.isGift ? data.giftRecipientName : undefined,
+        giftRecipientEmail: data.isGift && data.giftRecipients?.[0] ? data.giftRecipients[0].email : undefined,
+        giftRecipientName: data.isGift && data.giftRecipients?.[0] ? data.giftRecipients[0].name : undefined,
         giftMessage: data.isGift ? data.giftMessage : undefined,
       });
     },
