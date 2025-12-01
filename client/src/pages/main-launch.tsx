@@ -242,12 +242,19 @@ export default function MainLaunch() {
               })}
             </div>
 
-            {/* Read More Link */}
-            <div className="text-center">
+            {/* Read More Links - Two Buttons */}
+            <div className="text-center flex gap-3 justify-center flex-wrap">
               <Link href="/sculpture-gallery">
-                <Button variant="outline" className="gap-2" data-testid="button-read-more-specimens">
+                <Button variant="outline" className="gap-2" data-testid="button-view-specimen-gallery">
                   <Calendar className="w-4 h-4" />
-                  View Full Specimen Gallery (3 Examples Per Style)
+                  View Full Specimen Gallery
+                  <ArrowRight className="w-4 h-4" />
+                </Button>
+              </Link>
+              <Link href="/seasonal-guide">
+                <Button variant="outline" className="gap-2" data-testid="button-view-seasonal-guide">
+                  <Calendar className="w-4 h-4" />
+                  View Seasonal Guide
                   <ArrowRight className="w-4 h-4" />
                 </Button>
               </Link>
