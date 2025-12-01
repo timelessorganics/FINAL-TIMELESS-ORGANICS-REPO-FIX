@@ -170,10 +170,9 @@ export default function HomePage() {
 
               {/* FIRE SALE BADGE - configurable duration */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-4 sm:mb-6">
-                <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-accent-gold/25 rounded-full text-accent-gold text-xs sm:text-sm font-bold flex items-center gap-2 justify-center whitespace-nowrap">
-                  <Flame className="w-3 sm:w-4 h-3 sm:h-4" />
-                  <span className="hidden sm:inline">FIRE SALE</span>
-                  <span className="sm:hidden">SALE</span>
+                <div className="inline-flex items-center gap-1 px-2 py-0.5 bg-accent-gold/20 rounded-full text-accent-gold text-[0.65rem] sm:text-xs font-bold whitespace-nowrap">
+                  <Flame className="w-2 h-2 sm:w-2.5 sm:h-2.5" />
+                  24HR
                 </div>
               </div>
 
@@ -217,8 +216,8 @@ export default function HomePage() {
                         <p className="text-[0.55rem] sm:text-[0.65rem] text-white/60 font-light mb-0.5 sm:mb-1 leading-tight">Unmounted & unpatinated<br/>Services available now or later</p>
                       </div>
                       <div className="text-right">
-                        <p className="text-sm sm:text-lg font-bold text-white">{founderRemaining} / 50</p>
-                        <p className="text-[0.6rem] sm:text-xs text-white/50 font-light">LEFT</p>
+                        <p className="text-sm sm:text-lg font-bold text-white">{founderRemaining}</p>
+                        <p className="text-[0.6rem] sm:text-xs text-white/50 font-light">REMAINING</p>
                       </div>
                     </div>
                     
@@ -248,8 +247,8 @@ export default function HomePage() {
                         <p className="text-[0.55rem] sm:text-[0.65rem] font-light mb-0.5 sm:mb-1 leading-tight" style={{color: 'rgba(241, 243, 224, 0.7)'}}>+ Patina + Mounting included</p>
                       </div>
                       <div className="text-right whitespace-nowrap">
-                        <p className="text-sm sm:text-lg font-bold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>{patronRemaining} / 50</p>
-                        <p className="text-[0.6rem] sm:text-xs font-light" style={{color: 'rgba(241, 243, 224, 0.65)'}}>LEFT</p>
+                        <p className="text-sm sm:text-lg font-bold" style={{color: 'rgba(241, 243, 224, 0.95)'}}>{patronRemaining}</p>
+                        <p className="text-[0.6rem] sm:text-xs font-light" style={{color: 'rgba(241, 243, 224, 0.65)'}}>REMAINING</p>
                       </div>
                     </div>
                     

@@ -1833,7 +1833,7 @@ export default function AdminPanel() {
             </TabsContent>
 
             {/* Specimens Tab */}
-            <TabsContent value="specimens" className="mt-6">
+            <TabsContent value="specimens" className="mt-6 w-full">
               <div className="mb-8">
                 <h2 className="font-serif text-2xl font-bold mb-2">Specimen Image Manager</h2>
                 <p className="text-muted-foreground">

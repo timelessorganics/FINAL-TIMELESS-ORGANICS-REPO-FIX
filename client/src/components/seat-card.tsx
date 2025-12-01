@@ -76,7 +76,7 @@ export default function SeatCard({
           <span className="moving-number text-accent-gold">{available}</span>
           <span className="text-muted-foreground text-sm">/{seat.totalAvailable}</span>
         </div>
-        <div className="text-xs text-muted-foreground uppercase tracking-wider">Seats Left</div>
+        <div className="text-xs text-muted-foreground uppercase tracking-wider">Remaining</div>
       </div>
 
       {/* Title */}
@@ -90,7 +90,7 @@ export default function SeatCard({
           <span className="text-xs text-muted-foreground">(after 24hrs)</span>
         </div>
         <div className="text-3xl font-bold text-accent-gold mb-1">{fireSalePrice}</div>
-        <div className="text-xs text-bronze font-semibold mb-3">24HR FIRE SALE PRICE</div>
+        <div className="text-xs text-bronze font-semibold mb-3">24HR SALE</div>
         <p className="text-sm text-muted-foreground">{description}</p>
       </div>
 
