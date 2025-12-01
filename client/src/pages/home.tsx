@@ -352,7 +352,7 @@ export default function HomePage() {
                   data-testid="button-urgency-claim-seat"
                 >
                   <Sparkles className="w-5 h-5 mr-2" />
-                  CLAIM YOUR SEAT
+                  Your Founding 100 Window — Ends Soon
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
