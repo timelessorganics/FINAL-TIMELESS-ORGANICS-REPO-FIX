@@ -6,9 +6,10 @@ import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { FlowerTimelapseBackground } from "@/components/FlowerTimelapseBackground";
-import { ArrowRight, Sparkles, Flame, AlertCircle, Check } from "lucide-react";
+import { ArrowRight, Sparkles, Flame, AlertCircle, Check, Calendar } from "lucide-react";
 import SeatSelectionModal from "@/components/seat-selection-modal";
 import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import type { Seat, Sculpture } from "@shared/schema";
 
 const DEFAULT_SPECIMEN_IMAGES: Record<string, string> = {
@@ -43,11 +44,24 @@ const SPECIMEN_NAMES: Record<string, string> = {
   small_succulents: "Small Succulents",
 };
 
+const SPECIMEN_SEASONS: Record<string, string> = {
+  cones_bracts_seedpods: "All Year",
+  protea_pincushion_blooms_heads: "Spring & Summer",
+  bulb_spikes: "Spring",
+  branches_leaves: "Year Round",
+  aloe_inflorescence_heads: "Summer & Autumn",
+  flower_heads: "Spring & Summer",
+  erica_sprays: "Winter & Spring",
+  restios_seedheads_grasses: "Summer & Autumn",
+  small_succulents: "Year Round",
+};
+
 export default function MainLaunch() {
   const [seatModalOpen, setSeatModalOpen] = useState(false);
   const [paymentType, setPaymentType] = useState<'full' | 'deposit'>('full');
   const [selectedSpecimen, setSelectedSpecimen] = useState<string | null>(null);
   const [specimenAvailability, setSpecimenAvailability] = useState<Record<string, boolean>>({});
+  const [seasonGuideOpen, setSeasonGuideOpen] = useState(false);
   
   const { data: seats, isLoading } = useQuery<Seat[]>({
     queryKey: ["/api/seats/availability"],
@@ -168,8 +182,21 @@ export default function MainLaunch() {
               </p>
             </div>
 
-            {/* Specimen Gallery Grid */}
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-8">
+            {/* Season Guide Button */}
+            <div className="mb-6 flex justify-center">
+              <Button
+                onClick={() => setSeasonGuideOpen(true)}
+                variant="outline"
+                className="gap-2"
+                data-testid="button-season-guide"
+              >
+                <Calendar className="w-4 h-4" />
+                View Season Guide
+              </Button>
+            </div>
+
+            {/* Specimen Gallery Grid - 9 columns, compact */}
+            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-2 sm:gap-3 mb-8">
               {sculptures?.filter(s => s.specimenStyle).map((specimen) => {
                 const isAvailableNow = isSpecimenAvailableNow(specimen);
                 const isSelected = selectedSpecimen === specimen.specimenStyle;
@@ -184,46 +211,33 @@ export default function MainLaunch() {
                     className={`cursor-pointer transition-all group relative`}
                     data-testid={`specimen-card-${specimen.specimenStyle}`}
                   >
-                    <Card className={`overflow-hidden border-2 transition-all h-full ${
+                    <div className={`relative overflow-hidden rounded-lg border-2 transition-all h-full aspect-square ${
                       isSelected 
                         ? 'border-bronze ring-2 ring-bronze/50' 
                         : 'border-card-border hover:border-bronze/50'
-                    }`}>
-                      {/* Image */}
-                      <div className="aspect-square relative overflow-hidden bg-card-background">
-                        <img
-                          src={SPECIMEN_IMAGES[specimen.specimenStyle || '']}
-                          alt={SPECIMEN_NAMES[specimen.specimenStyle || '']}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                        />
-                        
-                        {/* Selection Checkmark */}
-                        {isSelected && (
-                          <div className="absolute top-2 right-2 bg-bronze text-white rounded-full p-1.5 shadow-lg">
-                            <Check className="w-4 h-4" />
-                          </div>
-                        )}
-
-                        {/* Availability Badge */}
-                        <div className={`absolute bottom-2 left-2 px-2 py-1 rounded text-xs font-medium ${
-                          isAvailableNow
-                            ? 'bg-green-500/90 text-white'
-                            : 'bg-orange-500/90 text-white'
-                        }`}>
-                          {isAvailableNow ? 'Available Now' : 'Buy & Wait'}
+                    } bg-card-background`}>
+                      <img
+                        src={SPECIMEN_IMAGES[specimen.specimenStyle || '']}
+                        alt={SPECIMEN_NAMES[specimen.specimenStyle || '']}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                      />
+                      
+                      {/* Selection Checkmark */}
+                      {isSelected && (
+                        <div className="absolute top-1 right-1 bg-bronze text-white rounded-full p-0.5">
+                          <Check className="w-3 h-3" />
                         </div>
-                      </div>
+                      )}
 
-                      {/* Label */}
-                      <div className="p-2 sm:p-3 text-center border-t border-border/30">
-                        <p className="text-xs sm:text-sm font-medium text-foreground line-clamp-2">
-                          {SPECIMEN_NAMES[specimen.specimenStyle || '']}
-                        </p>
-                        <p className="text-xs text-muted-foreground mt-1 capitalize">
-                          {specimen.seasonWindow === 'year_round' ? 'All Year' : specimen.seasonWindow}
-                        </p>
+                      {/* Availability Badge - tiny */}
+                      <div className={`absolute bottom-1 left-1 px-1.5 py-0.5 rounded text-[0.65rem] font-semibold ${
+                        isAvailableNow
+                          ? 'bg-green-500/90 text-white'
+                          : 'bg-orange-500/90 text-white'
+                      }`}>
+                        {isAvailableNow ? 'Now' : 'Wait'}
                       </div>
-                    </Card>
+                    </div>
                   </div>
                 );
               })}
@@ -360,6 +374,42 @@ export default function MainLaunch() {
       </div>
 
       <Footer />
+      
+      {/* Season Guide Modal - stays on page */}
+      <Dialog open={seasonGuideOpen} onOpenChange={setSeasonGuideOpen}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Specimen Season Guide</DialogTitle>
+            <DialogDescription>
+              Each specimen has optimal collection windows. Choose one now, or select "Buy & Wait" at checkout to secure your specimen and receive it when it's in peak condition.
+            </DialogDescription>
+          </DialogHeader>
+          
+          <div className="grid gap-4">
+            {Object.entries(SPECIMEN_NAMES).map(([key, name]) => (
+              <div key={key} className="flex items-start gap-4 p-3 border rounded-lg bg-card/50">
+                <div className="w-16 h-16 rounded-lg overflow-hidden bg-muted flex-shrink-0">
+                  <img
+                    src={SPECIMEN_IMAGES[key]}
+                    alt={name}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+                <div className="flex-1 min-w-0">
+                  <h4 className="font-semibold text-foreground">{name}</h4>
+                  <p className="text-sm text-muted-foreground mt-1">
+                    <span className="font-medium text-bronze">Available:</span> {SPECIMEN_SEASONS[key]}
+                  </p>
+                  {selectedSpecimen === key && (
+                    <p className="text-xs text-accent-gold font-semibold mt-2">✓ Selected</p>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </DialogContent>
+      </Dialog>
+      
       <SeatSelectionModal 
         open={seatModalOpen}
         onOpenChange={setSeatModalOpen}
