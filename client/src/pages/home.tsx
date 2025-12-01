@@ -170,8 +170,8 @@ export default function HomePage() {
 
               {/* THIS IS THE FOUNDING 100 MOMENT - Glassy Card on Hero */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-8 sm:mb-12 lg:mb-16">
-                <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 border border-white/20 rounded-xl bg-white/10 backdrop-blur-md">
-                  <div className="inline-block px-3 py-1 sm:px-4 sm:py-2 bg-accent-gold/20 rounded-full text-accent-gold text-xs sm:text-sm font-bold mb-3 sm:mb-4 flex items-center gap-2 justify-center mx-auto">
+                <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 border rounded-xl backdrop-blur-md" style={{backgroundColor: 'rgba(107, 117, 75, 0.15)', borderColor: 'rgba(107, 117, 75, 0.35)'}}>
+                  <div className="inline-block px-3 py-1 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-bold mb-3 sm:mb-4 flex items-center gap-2 justify-center mx-auto" style={{backgroundColor: 'rgba(107, 117, 75, 0.25)', color: 'rgba(107, 117, 75, 0.9)'}}>
                     <Flame className="w-3 sm:w-4 h-3 sm:h-4" />
                     THIS IS THE FOUNDING 100 MOMENT
                   </div>
@@ -185,9 +185,9 @@ export default function HomePage() {
                       <div className="text-lg sm:text-2xl lg:text-3xl font-bold text-accent-gold mb-1 sm:mb-2">50-80%</div>
                       <p className="text-[0.65rem] sm:text-xs text-white/80">First hands-on<br/>casting workshop</p>
                     </div>
-                    <div className="text-center">
-                      <div className="text-lg sm:text-2xl lg:text-3xl font-bold text-patina mb-1 sm:mb-2">20-30%</div>
-                      <p className="text-[0.65rem] sm:text-xs text-white/80">Lifetime discount<br/>on everything</p>
+                    <div className="text-center p-3 sm:p-4 rounded-lg" style={{backgroundColor: 'rgba(107, 117, 75, 0.25)'}}>
+                      <div className="text-lg sm:text-2xl lg:text-3xl font-bold mb-1 sm:mb-2" style={{color: 'rgba(107, 117, 75, 1)'}}>20-30%</div>
+                      <p className="text-[0.65rem] sm:text-xs font-medium" style={{color: 'rgba(107, 117, 75, 0.9)'}}>Lifetime discount<br/>on everything</p>
                     </div>
                     <div className="text-center">
                       <div className="text-lg sm:text-2xl lg:text-3xl font-bold text-bronze mb-1 sm:mb-2">FOREVER</div>
