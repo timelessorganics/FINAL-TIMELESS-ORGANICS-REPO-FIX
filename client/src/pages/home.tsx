@@ -173,7 +173,7 @@ export default function HomePage() {
                 <div className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-amber-600/30 rounded-full text-amber-200 text-[0.75rem] sm:text-sm font-black tracking-wide shadow-lg shadow-amber-600/40 border border-amber-500/50">
                   <div className="flex items-center gap-2 justify-center">
                     <Flame className="w-3 h-3 sm:w-4 sm:h-4 animate-pulse" />
-                    <span>24HR FRIENDS & FAMILY FIRE SALE</span>
+                    <span>Your Founding 100 Window — Ends Soon</span>
                     <Flame className="w-3 h-3 sm:w-4 sm:h-4 animate-pulse" />
                   </div>
                 </div>
