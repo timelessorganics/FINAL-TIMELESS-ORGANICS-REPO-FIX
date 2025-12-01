@@ -1,0 +1,395 @@
+2025-12-01T23:22:06.000000000Z [inf]  Starting Container
+2025-12-01T23:22:08.125652833Z [inf]  [Mailchimp] Integration configured
+2025-12-01T23:22:08.125662388Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:22:08.125671341Z [inf]  [Supabase Auth] Authentication configured
+2025-12-01T23:22:08.125679998Z [inf]  11:22:07 PM [express] serving on port 8080
+2025-12-01T23:24:19.087539862Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:24:19.087554173Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:24:19.087555508Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:24:19.087567832Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:24:19.087572586Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:24:19.087582418Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:24:19.087590997Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:24:19.087599232Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:24:19.087607383Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:24:19.087614503Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:24:19.087622058Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:24:19.087630542Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:24:19.087639461Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:24:19.087646724Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:24:19.087668345Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:24:19.087674214Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:24:19.087678066Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:24:19.087681465Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:24:19.087686469Z [inf]  11:24:11 PM [express] GET /api/auth/user 304 in 394ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-01T23:24:19.087693173Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:24:19.088789123Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:24:19.088795605Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:24:19.088800487Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:24:19.088805058Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:24:19.088810040Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:24:19.088815257Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:24:19.088819873Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:24:19.088824028Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:24:19.088828033Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:24:19.088832577Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:24:19.088836542Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:24:19.088841105Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:24:19.088862834Z [inf]  11:24:13 PM [express] GET /api/admin/custom-specimens 200 in 30ms
+2025-12-01T23:24:19.088867798Z [err]  Get auctions error: error: column "start_at" does not exist
+2025-12-01T23:24:19.088872279Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-01T23:24:19.088876664Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-01T23:24:19.088880984Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-01T23:24:19.088885719Z [err]      at async DatabaseStorage.getAuctions (file:///app/dist/index.js:1495:12)
+2025-12-01T23:24:19.088890688Z [err]      at async file:///app/dist/index.js:4328:28 {
+2025-12-01T23:24:19.088894891Z [err]    length: 173,
+2025-12-01T23:24:19.090786307Z [err]    severity: 'ERROR',
+2025-12-01T23:24:19.090799678Z [err]    code: '42703',
+2025-12-01T23:24:19.090809955Z [err]    detail: undefined,
+2025-12-01T23:24:19.090816982Z [err]    hint: 'Perhaps you meant to reference the column "auctions.starts_at".',
+2025-12-01T23:24:19.090823819Z [err]    position: '46',
+2025-12-01T23:24:19.090830938Z [err]    internalPosition: undefined,
+2025-12-01T23:24:19.090838108Z [err]    internalQuery: undefined,
+2025-12-01T23:24:19.090843933Z [err]    where: undefined,
+2025-12-01T23:24:19.090850845Z [err]    schema: undefined,
+2025-12-01T23:24:19.090859749Z [err]    table: undefined,
+2025-12-01T23:24:19.090866448Z [err]    column: undefined,
+2025-12-01T23:24:19.090873371Z [err]    dataType: undefined,
+2025-12-01T23:24:19.090880698Z [err]    constraint: undefined,
+2025-12-01T23:24:19.090887432Z [err]    file: 'parse_relation.c',
+2025-12-01T23:24:19.090894925Z [err]    line: '3723',
+2025-12-01T23:24:19.090903289Z [err]    routine: 'errorMissingColumn'
+2025-12-01T23:24:19.090912286Z [err]  }
+2025-12-01T23:24:19.090919155Z [inf]  11:24:13 PM [express] GET /api/admin/auctions 500 in 162ms :: {"message":"column \"start_at\" does no…
+2025-12-01T23:24:19.090926122Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:24:19.090932691Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:24:19.090939369Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:24:19.090945667Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:24:19.090952464Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:24:19.090959102Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:24:19.090966243Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:24:19.090972199Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:24:19.090977391Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:24:19.092252065Z [err]    schema: undefined,
+2025-12-01T23:24:19.092265785Z [err]    table: undefined,
+2025-12-01T23:24:19.092275191Z [err]    column: undefined,
+2025-12-01T23:24:19.092296598Z [err]    dataType: undefined,
+2025-12-01T23:24:19.092314041Z [err]  Media database fetch failed, returning empty list: column "original_name" does not exist
+2025-12-01T23:24:19.092325292Z [inf]  11:24:13 PM [express] GET /api/admin/media 304 in 380ms :: []
+2025-12-01T23:24:19.092332252Z [inf]  11:24:13 PM [express] GET /api/admin/promo-codes 304 in 356ms :: [{"id":"4a76b3fa-9d53-4434-9088-2472…
+2025-12-01T23:24:19.092338782Z [inf]  11:24:13 PM [express] GET /api/admin/products 304 in 390ms :: []
+2025-12-01T23:24:19.092347502Z [err]  [Admin] Get customizations error: error: relation "specimen_customizations" does not exist
+2025-12-01T23:24:19.092354381Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-01T23:24:19.092367797Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-01T23:24:19.092375173Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-01T23:24:19.092382165Z [err]      at async DatabaseStorage.getAllSpecimenCustomizations (file:///app/dist/index.js:1022:12)
+2025-12-01T23:24:19.092388279Z [err]      at async file:///app/dist/index.js:4790:30 {
+2025-12-01T23:24:19.092394591Z [err]    length: 122,
+2025-12-01T23:24:19.092399877Z [err]    severity: 'ERROR',
+2025-12-01T23:24:19.092405591Z [err]    code: '42P01',
+2025-12-01T23:24:19.093473934Z [err]    detail: undefined,
+2025-12-01T23:24:19.093502050Z [err]    hint: undefined,
+2025-12-01T23:24:19.093509846Z [err]    position: '79',
+2025-12-01T23:24:19.093517503Z [err]    internalPosition: undefined,
+2025-12-01T23:24:19.093527061Z [err]    internalQuery: undefined,
+2025-12-01T23:24:19.093538572Z [err]    where: undefined,
+2025-12-01T23:24:19.096026961Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-01T23:24:19.096039254Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-01T23:24:19.096049809Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-01T23:24:19.096051986Z [err]    constraint: undefined,
+2025-12-01T23:24:19.096059223Z [err]      at async DatabaseStorage.getWebsiteContent (file:///app/dist/index.js:1429:12)
+2025-12-01T23:24:19.096064659Z [err]    file: 'parse_relation.c',
+2025-12-01T23:24:19.096071906Z [err]      at async file:///app/dist/index.js:4451:23 {
+2025-12-01T23:24:19.096077912Z [err]    line: '1449',
+2025-12-01T23:24:19.096085149Z [err]    length: 115,
+2025-12-01T23:24:19.096091554Z [err]    routine: 'parserOpenTable'
+2025-12-01T23:24:19.096099564Z [err]    severity: 'ERROR',
+2025-12-01T23:24:19.096103444Z [err]  }
+2025-12-01T23:24:19.096116742Z [err]    code: '42P01',
+2025-12-01T23:24:19.096117384Z [inf]  11:24:13 PM [express] GET /api/admin/specimen-customizations 500 in 390ms :: {"error":"relation \"spe…
+2025-12-01T23:24:19.096130480Z [err]    detail: undefined,
+2025-12-01T23:24:19.096130881Z [err]  [Admin] Content fetch error: error: relation "website_content" does not exist
+2025-12-01T23:24:19.096140739Z [err]    hint: undefined,
+2025-12-01T23:24:19.096146977Z [err]    position: '126',
+2025-12-01T23:24:19.096153481Z [err]    internalPosition: undefined,
+2025-12-01T23:24:19.096160698Z [err]    internalQuery: undefined,
+2025-12-01T23:24:19.096167641Z [err]    where: undefined,
+2025-12-01T23:24:19.096174866Z [err]    schema: undefined,
+2025-12-01T23:24:19.096181193Z [err]    table: undefined,
+2025-12-01T23:24:19.096188235Z [err]    column: undefined,
+2025-12-01T23:24:19.096197857Z [err]    dataType: undefined,
+2025-12-01T23:24:19.096218250Z [err]    constraint: undefined,
+2025-12-01T23:24:19.100357219Z [err]    file: 'parse_relation.c',
+2025-12-01T23:24:19.100363399Z [err]    line: '1449',
+2025-12-01T23:24:19.100369626Z [err]    routine: 'parserOpenTable'
+2025-12-01T23:24:19.100375602Z [err]  }
+2025-12-01T23:24:19.100381278Z [inf]  11:24:13 PM [express] GET /api/admin/content 500 in 419ms :: {"message":"relation \"website_content\"…
+2025-12-01T23:24:19.100386870Z [inf]  11:24:13 PM [express] GET /api/admin/codes 304 in 414ms :: []
+2025-12-01T23:24:19.100392910Z [inf]  11:24:13 PM [express] GET /api/admin/seats 304 in 402ms :: [{"id":"5b2c079b-6680-443a-823e-bf07f6d19f…
+2025-12-01T23:24:19.100398693Z [err]  Get workshop dates error: error: relation "workshop_dates" does not exist
+2025-12-01T23:24:19.100405638Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-01T23:24:19.100418587Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-01T23:24:19.100424678Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-01T23:24:19.100430487Z [err]      at async DatabaseStorage.getWorkshopDates (file:///app/dist/index.js:1340:19)
+2025-12-01T23:24:19.100439969Z [err]      at async file:///app/dist/index.js:4413:29 {
+2025-12-01T23:24:19.100445519Z [err]    length: 114,
+2025-12-01T23:24:19.100452121Z [err]    severity: 'ERROR',
+2025-12-01T23:24:19.100458514Z [err]    code: '42P01',
+2025-12-01T23:24:19.100464252Z [err]    detail: undefined,
+2025-12-01T23:24:19.100470464Z [err]    hint: undefined,
+2025-12-01T23:24:19.100476104Z [err]    position: '140',
+2025-12-01T23:24:19.100482467Z [err]    internalPosition: undefined,
+2025-12-01T23:24:19.100488384Z [err]    internalQuery: undefined,
+2025-12-01T23:24:19.100494152Z [err]    where: undefined,
+2025-12-01T23:24:19.100499926Z [err]    schema: undefined,
+2025-12-01T23:24:19.100505859Z [err]    table: undefined,
+2025-12-01T23:24:19.101657792Z [err]    column: undefined,
+2025-12-01T23:24:19.101671276Z [err]    dataType: undefined,
+2025-12-01T23:24:19.101678008Z [err]    constraint: undefined,
+2025-12-01T23:24:19.101684558Z [err]    file: 'parse_relation.c',
+2025-12-01T23:24:19.101691378Z [err]    line: '1449',
+2025-12-01T23:24:19.101697688Z [err]    routine: 'parserOpenTable'
+2025-12-01T23:24:19.101703770Z [err]  }
+2025-12-01T23:24:19.101709892Z [inf]  11:24:13 PM [express] GET /api/admin/workshops 500 in 395ms :: {"message":"relation \"workshop_dates\…
+2025-12-01T23:24:19.101715877Z [inf]  11:24:14 PM [express] GET /api/admin/purchases 304 in 409ms :: [{"id":"32dfee78-b9eb-4442-8d36-06d067…
+2025-12-01T23:28:19.563712396Z [inf]  [Auth] Checking authorization header: Bearer test...
+2025-12-01T23:28:19.563719165Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:28:19.563726014Z [err]  [Auth] JWT verification failed: jwt malformed
+2025-12-01T23:28:19.563733029Z [inf]  11:28:17 PM [express] GET /api/admin/specimen-customizations 401 in 2ms :: {"message":"Unauthorized -…
+2025-12-01T23:28:20.380982383Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:28:20.380988030Z [inf]  11:28:19 PM [express] GET /api/auth/user 304 in 310ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-01T23:28:21.869545426Z [inf]  11:28:21 PM [express] GET /api/prelaunch/stats 304 in 98ms :: {"totalReserved":0,"founderDeposits":0,…
+2025-12-01T23:28:22.644050383Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:28:22.644066710Z [inf]  11:28:22 PM [express] GET /api/dashboard 304 in 312ms :: [{"id":"01d17273-15b5-40e8-917b-5e7fe6c399fc…
+2025-12-01T23:28:22.644080710Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:28:22.644089293Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:28:22.644097886Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:28:22.644107342Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:28:22.644132281Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:28:22.644150065Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:28:22.644162472Z [inf]  11:28:22 PM [express] GET /api/seats/availability 304 in 338ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-01T23:28:23.735219831Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:28:23.735227229Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:28:23.735234933Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:28:23.742219097Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:28:23.742228237Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:28:23.742232466Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:28:23.745043553Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:28:23.745059639Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:28:23.745066154Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:28:23.753709279Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:28:23.753717546Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:28:23.753723871Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:28:23.753730476Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:28:23.753736073Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:28:23.753743205Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:28:23.761589930Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:28:23.761598893Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:28:23.761605845Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:28:23.761612153Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:28:23.761617753Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:28:23.761623275Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:28:23.769059612Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:28:23.769067379Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:28:23.769073336Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:28:23.769079242Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:28:23.769083551Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:28:23.769089302Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:28:23.776765569Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T23:28:23.776774765Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T23:28:23.776781165Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T23:28:23.875066527Z [err]  [Admin] Get customizations error: error: relation "specimen_customizations" does not exist
+2025-12-01T23:28:23.875070946Z [err]    schema: undefined,
+2025-12-01T23:28:23.875078105Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-01T23:28:23.875086385Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-01T23:28:23.875088315Z [err]    table: undefined,
+2025-12-01T23:28:23.875095634Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-01T23:28:23.875097567Z [err]    column: undefined,
+2025-12-01T23:28:23.875104246Z [err]      at async DatabaseStorage.getAllSpecimenCustomizations (file:///app/dist/index.js:1022:12)
+2025-12-01T23:28:23.875105471Z [err]    dataType: undefined,
+2025-12-01T23:28:23.875113807Z [err]      at async file:///app/dist/index.js:4790:30 {
+2025-12-01T23:28:23.875114706Z [err]    constraint: undefined,
+2025-12-01T23:28:23.875121840Z [err]    length: 122,
+2025-12-01T23:28:23.875123044Z [err]    file: 'parse_relation.c',
+2025-12-01T23:28:23.875130941Z [err]    severity: 'ERROR',
+2025-12-01T23:28:23.875131465Z [err]    line: '1449',
+2025-12-01T23:28:23.875140553Z [err]    routine: 'parserOpenTable'
+2025-12-01T23:28:23.875141130Z [err]    code: '42P01',
+2025-12-01T23:28:23.875149859Z [err]  }
+2025-12-01T23:28:23.875150449Z [err]    detail: undefined,
+2025-12-01T23:28:23.875158942Z [inf]  11:28:23 PM [express] GET /api/admin/specimen-customizations 500 in 140ms :: {"error":"relation \"spe…
+2025-12-01T23:28:23.875159356Z [err]    hint: undefined,
+2025-12-01T23:28:23.875166380Z [err]    position: '79',
+2025-12-01T23:28:23.875172787Z [err]    internalPosition: undefined,
+2025-12-01T23:28:23.875182078Z [err]    internalQuery: undefined,
+2025-12-01T23:28:23.875188672Z [err]    where: undefined,
+2025-12-01T23:28:23.885695123Z [inf]  11:28:23 PM [express] GET /api/admin/custom-specimens 304 in 2ms
+2025-12-01T23:28:23.896022620Z [inf]  11:28:23 PM [express] GET /api/admin/promo-codes 304 in 142ms :: [{"id":"4a76b3fa-9d53-4434-9088-2472…
+2025-12-01T23:28:23.896028024Z [inf]  11:28:23 PM [express] GET /api/admin/seats 304 in 160ms :: [{"id":"5b2c079b-6680-443a-823e-bf07f6d19f…
+2025-12-01T23:28:24.391210839Z [err]    file: 'parse_relation.c',
+2025-12-01T23:28:24.391233692Z [err]    line: '3723',
+2025-12-01T23:28:24.391244939Z [err]    routine: 'errorMissingColumn'
+2025-12-01T23:28:24.391269775Z [err]    length: 173,
+2025-12-01T23:28:24.391282719Z [err]  Get auctions error: error: column "start_at" does not exist
+2025-12-01T23:28:24.391289490Z [err]    severity: 'ERROR',
+2025-12-01T23:28:24.391295809Z [err]    internalPosition: undefined,
+2025-12-01T23:28:24.391298491Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-01T23:28:24.391304937Z [err]    code: '42703',
+2025-12-01T23:28:24.391308986Z [inf]  11:28:23 PM [express] GET /api/admin/codes 304 in 153ms :: []
+2025-12-01T23:28:24.391315867Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-01T23:28:24.391318591Z [err]    internalQuery: undefined,
+2025-12-01T23:28:24.391319057Z [err]    detail: undefined,
+2025-12-01T23:28:24.391329790Z [inf]  11:28:23 PM [express] GET /api/admin/products 304 in 148ms :: []
+2025-12-01T23:28:24.391337978Z [err]    hint: 'Perhaps you meant to reference the column "auctions.starts_at".',
+2025-12-01T23:28:24.391338634Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-01T23:28:24.391340762Z [err]    where: undefined,
+2025-12-01T23:28:24.391353953Z [err]    position: '46',
+2025-12-01T23:28:24.391354785Z [err]      at async DatabaseStorage.getAuctions (file:///app/dist/index.js:1495:12)
+2025-12-01T23:28:24.391356954Z [err]    schema: undefined,
+2025-12-01T23:28:24.391369141Z [err]      at async file:///app/dist/index.js:4328:28 {
+2025-12-01T23:28:24.391373069Z [err]    table: undefined,
+2025-12-01T23:28:24.391387092Z [err]    column: undefined,
+2025-12-01T23:28:24.391395339Z [err]    dataType: undefined,
+2025-12-01T23:28:24.391403311Z [err]    constraint: undefined,
+2025-12-01T23:28:24.394945400Z [err]  }
+2025-12-01T23:28:24.394949741Z [inf]  11:28:23 PM [express] GET /api/admin/auctions 500 in 217ms :: {"message":"column \"start_at\" does no…
+2025-12-01T23:28:24.394954102Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:28:24.394958722Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:28:24.394963359Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:28:24.394971716Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:28:24.394977545Z [err]  Media database fetch failed, returning empty list: column "original_name" does not exist
+2025-12-01T23:28:24.394981866Z [inf]  11:28:24 PM [express] GET /api/admin/media 304 in 305ms :: []
+2025-12-01T23:28:24.394986146Z [err]  Get workshop dates error: error: relation "workshop_dates" does not exist
+2025-12-01T23:28:24.394990577Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-01T23:28:24.394994946Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-01T23:28:24.394999500Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-01T23:28:24.395003956Z [err]      at async DatabaseStorage.getWorkshopDates (file:///app/dist/index.js:1340:19)
+2025-12-01T23:28:24.395008935Z [err]      at async file:///app/dist/index.js:4413:29 {
+2025-12-01T23:28:24.395013530Z [err]    length: 114,
+2025-12-01T23:28:24.395018022Z [err]    severity: 'ERROR',
+2025-12-01T23:28:24.395025618Z [err]    code: '42P01',
+2025-12-01T23:28:24.395032743Z [err]    detail: undefined,
+2025-12-01T23:28:24.395038832Z [err]    hint: undefined,
+2025-12-01T23:28:24.395045253Z [err]    position: '140',
+2025-12-01T23:28:24.395051766Z [err]    internalPosition: undefined,
+2025-12-01T23:28:24.395058112Z [err]    internalQuery: undefined,
+2025-12-01T23:28:24.395065165Z [err]    where: undefined,
+2025-12-01T23:28:24.395071632Z [err]    schema: undefined,
+2025-12-01T23:28:24.396373405Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-01T23:28:24.396387377Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-01T23:28:24.396397051Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-01T23:28:24.396420080Z [err]      at async DatabaseStorage.getWebsiteContent (file:///app/dist/index.js:1429:12)
+2025-12-01T23:28:24.396429465Z [err]      at async file:///app/dist/index.js:4451:23 {
+2025-12-01T23:28:24.396440395Z [err]    length: 115,
+2025-12-01T23:28:24.396448077Z [err]    severity: 'ERROR',
+2025-12-01T23:28:24.396455993Z [err]    code: '42P01',
+2025-12-01T23:28:24.396465001Z [err]    detail: undefined,
+2025-12-01T23:28:24.396473970Z [err]    hint: undefined,
+2025-12-01T23:28:24.396481452Z [err]    position: '126',
+2025-12-01T23:28:24.396489477Z [err]    internalPosition: undefined,
+2025-12-01T23:28:24.396501598Z [err]    internalQuery: undefined,
+2025-12-01T23:28:24.396509851Z [err]    where: undefined,
+2025-12-01T23:28:24.396519451Z [err]    schema: undefined,
+2025-12-01T23:28:24.396527016Z [err]    table: undefined,
+2025-12-01T23:28:24.396537717Z [err]    table: undefined,
+2025-12-01T23:28:24.396543063Z [err]    column: undefined,
+2025-12-01T23:28:24.396549649Z [err]    dataType: undefined,
+2025-12-01T23:28:24.396556210Z [err]    constraint: undefined,
+2025-12-01T23:28:24.396565612Z [err]    file: 'parse_relation.c',
+2025-12-01T23:28:24.396574364Z [err]    line: '1449',
+2025-12-01T23:28:24.396582891Z [err]    routine: 'parserOpenTable'
+2025-12-01T23:28:24.396589433Z [err]  }
+2025-12-01T23:28:24.396597104Z [inf]  11:28:24 PM [express] GET /api/admin/workshops 500 in 340ms :: {"message":"relation \"workshop_dates\…
+2025-12-01T23:28:24.396604613Z [err]  [Admin] Content fetch error: error: relation "website_content" does not exist
+2025-12-01T23:28:24.397925588Z [err]    routine: 'parserOpenTable'
+2025-12-01T23:28:24.397933987Z [err]  }
+2025-12-01T23:28:24.397939464Z [inf]  11:28:24 PM [express] GET /api/admin/content 500 in 352ms :: {"message":"relation \"website_content\"…
+2025-12-01T23:28:24.397944706Z [inf]  11:28:24 PM [express] GET /api/admin/purchases 304 in 393ms :: [{"id":"32dfee78-b9eb-4442-8d36-06d067…
+2025-12-01T23:28:24.397974582Z [err]    column: undefined,
+2025-12-01T23:28:24.397981092Z [err]    dataType: undefined,
+2025-12-01T23:28:24.397987772Z [err]    constraint: undefined,
+2025-12-01T23:28:24.397994094Z [err]    file: 'parse_relation.c',
+2025-12-01T23:28:24.398001132Z [err]    line: '1449',
+2025-12-01T23:28:43.929328003Z [inf]  [Auth] Checking authorization header: MISSING
+2025-12-01T23:28:43.929335698Z [inf]  [Auth] No Bearer token found - returning 401
+2025-12-01T23:28:43.929342190Z [inf]  11:28:39 PM [express] GET /api/admin/specimen-customizations 401 in 1ms :: {"message":"Unauthorized -…
+2025-12-01T23:30:04.233120082Z [inf]  [Auth] Checking authorization header: MISSING
+2025-12-01T23:30:04.233131277Z [inf]  [Auth] No Bearer token found - returning 401
+2025-12-01T23:30:04.233138254Z [inf]  11:30:01 PM [express] GET /api/admin/specimen-customizations 401 in 1ms :: {"message":"Unauthorized -…
+2025-12-01T23:30:12.225437638Z [inf]  11:30:11 PM [express] GET /api/prelaunch/stats 200 in 267ms :: {"totalReserved":0,"founderDeposits":0…
+2025-12-01T23:30:12.225448354Z [inf]  11:30:11 PM [express] GET /api/seats/availability 200 in 343ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-01T23:30:12.225539696Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:30:12.225547526Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:30:41.591549569Z [inf]  [Auth] Checking authorization header: MISSING
+2025-12-01T23:30:41.591558466Z [inf]  [Auth] No Bearer token found - returning 401
+2025-12-01T23:30:41.591565010Z [inf]  11:30:40 PM [express] GET /api/admin/seats 401 in 1ms :: {"message":"Unauthorized - No token"}
+2025-12-01T23:32:51.354050254Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:32:51.354059318Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:32:51.354067332Z [inf]  11:32:45 PM [express] GET /api/prelaunch/stats 200 in 264ms :: {"totalReserved":0,"founderDeposits":0…
+2025-12-01T23:32:51.354075183Z [inf]  11:32:45 PM [express] GET /api/seats/availability 200 in 388ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-01T23:32:52.407667595Z [inf]  11:32:52 PM [express] GET /api/auth/user 304 in 126ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-01T23:32:52.661100371Z [inf]  11:32:52 PM [express] GET /api/auth/user 401 in 58ms :: {"message":"Invalid session"}
+2025-12-01T23:32:54.237544673Z [inf]  11:32:54 PM [express] GET /api/prelaunch/stats 304 in 94ms :: {"totalReserved":0,"founderDeposits":0,…
+2025-12-01T23:32:54.237552122Z [inf]  11:32:54 PM [express] GET /api/seats/availability 304 in 183ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-01T23:32:59.593962914Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-01T23:32:59.593969155Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-01T23:32:59.593974345Z [inf]  11:32:58 PM [express] GET /api/sculptures 304 in 28ms :: [{"id":"1b5bcff5-e900-45dd-8d94-e28b03bef95b…
+2025-12-01T23:32:59.593977002Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-01T23:32:59.593985807Z [err]      at async DatabaseStorage.getAllSpecimenCustomizations (file:///app/dist/index.js:1022:12)
+2025-12-01T23:32:59.593986258Z [inf]  11:32:59 PM [express] GET /api/seats/availability 304 in 180ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-01T23:32:59.593992218Z [err]  [Specimen] Get customizations error: error: relation "specimen_customizations" does not exist
+2025-12-01T23:32:59.594003367Z [err]      at async file:///app/dist/index.js:4825:30 {
+2025-12-01T23:32:59.594008542Z [err]    length: 122,
+2025-12-01T23:32:59.594013475Z [err]    severity: 'ERROR',
+2025-12-01T23:32:59.594018919Z [err]    code: '42P01',
+2025-12-01T23:32:59.594378837Z [err]    hint: undefined,
+2025-12-01T23:32:59.594390366Z [err]    position: '79',
+2025-12-01T23:32:59.594396898Z [err]    internalPosition: undefined,
+2025-12-01T23:32:59.594772547Z [err]    detail: undefined,
+2025-12-01T23:32:59.598515745Z [err]    internalQuery: undefined,
+2025-12-01T23:32:59.598526962Z [err]    where: undefined,
+2025-12-01T23:32:59.598533893Z [err]    schema: undefined,
+2025-12-01T23:32:59.598539928Z [err]    table: undefined,
+2025-12-01T23:32:59.598546097Z [err]    column: undefined,
+2025-12-01T23:32:59.598552260Z [err]    dataType: undefined,
+2025-12-01T23:32:59.598560599Z [err]    constraint: undefined,
+2025-12-01T23:32:59.598566730Z [err]    file: 'parse_relation.c',
+2025-12-01T23:32:59.598572175Z [err]    line: '1449',
+2025-12-01T23:32:59.599290136Z [err]  }
+2025-12-01T23:32:59.599300283Z [inf]  11:32:59 PM [express] GET /api/specimen-customizations 500 in 26ms :: {"error":"relation \"specimen_c…
+2025-12-01T23:32:59.599332857Z [err]    routine: 'parserOpenTable'
+2025-12-01T23:33:18.784815487Z [err]    internalQuery: undefined,
+2025-12-01T23:33:18.784822907Z [err]    length: 122,
+2025-12-01T23:33:18.784829522Z [err]    where: undefined,
+2025-12-01T23:33:18.784837208Z [err]    severity: 'ERROR',
+2025-12-01T23:33:18.784844323Z [err]    code: '42P01',
+2025-12-01T23:33:18.784852592Z [err]    detail: undefined,
+2025-12-01T23:33:18.784855986Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:33:18.784861873Z [err]    hint: undefined,
+2025-12-01T23:33:18.784866665Z [inf]  11:33:12 PM [express] GET /api/auth/user 200 in 300ms :: {"id":"a85ab0c3-90a7-4f5b-86c1-366036a1781b"…
+2025-12-01T23:33:18.784872958Z [err]    position: '79',
+2025-12-01T23:33:18.784876693Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:33:18.784880887Z [err]    internalPosition: undefined,
+2025-12-01T23:33:18.784885660Z [inf]  11:33:13 PM [express] GET /api/seats/availability 304 in 184ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-01T23:33:18.784892315Z [inf]  11:33:14 PM [express] GET /api/prelaunch/stats 304 in 265ms :: {"totalReserved":0,"founderDeposits":0…
+2025-12-01T23:33:18.784898590Z [inf]  11:33:16 PM [express] GET /api/seats/availability 304 in 173ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-01T23:33:18.784905155Z [err]  [Specimen] Get customizations error: error: relation "specimen_customizations" does not exist
+2025-12-01T23:33:18.784911407Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-01T23:33:18.784921103Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-01T23:33:18.784927938Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-01T23:33:18.784933744Z [err]      at async DatabaseStorage.getAllSpecimenCustomizations (file:///app/dist/index.js:1022:12)
+2025-12-01T23:33:18.784940061Z [err]      at async file:///app/dist/index.js:4825:30 {
+2025-12-01T23:33:18.792694318Z [err]    schema: undefined,
+2025-12-01T23:33:18.792707864Z [err]    table: undefined,
+2025-12-01T23:33:18.792715472Z [err]    column: undefined,
+2025-12-01T23:33:18.792721942Z [err]    dataType: undefined,
+2025-12-01T23:33:18.792729222Z [err]    constraint: undefined,
+2025-12-01T23:33:18.792736099Z [err]    file: 'parse_relation.c',
+2025-12-01T23:33:18.792742726Z [err]    line: '1449',
+2025-12-01T23:33:18.792749316Z [err]    routine: 'parserOpenTable'
+2025-12-01T23:33:18.792755888Z [err]  }
+2025-12-01T23:33:18.792762949Z [inf]  11:33:16 PM [express] GET /api/specimen-customizations 500 in 29ms :: {"error":"relation \"specimen_c…
+2025-12-01T23:33:18.792769873Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T23:33:18.792776535Z [inf]  11:33:16 PM [express] GET /api/sculptures 304 in 185ms :: [{"id":"1b5bcff5-e900-45dd-8d94-e28b03bef95…
+2025-12-01T23:33:22.508928709Z [inf]  11:33:22 PM [express] GET /api/seats/availability 304 in 171ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-01T23:33:43.000000000Z [inf]  Stopping Container
