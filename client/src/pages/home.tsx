@@ -165,7 +165,7 @@ export default function HomePage() {
               
               {/* Tagline - responsive */}
               <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 max-w-3xl mx-auto mb-4 sm:mb-6 lg:mb-8 leading-relaxed px-3 sm:px-2">
-                One-Of-A-Kind Castings From Organic Matter
+                For the people who know our story, supported us, and walked this road with us.
               </p>
 
               {/* FIRE SALE BADGE - Orange Patina Glow */}
