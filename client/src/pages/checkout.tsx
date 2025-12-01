@@ -22,20 +22,23 @@ const checkoutFormSchema = z.object({
   email: z.string().email("Please enter a valid email"),
   phone: z.string().min(10, "Please enter a valid phone number"),
   address: z.string().min(10, "Please enter your delivery address"),
+  quantity: z.string().default("1"),
   isGift: z.boolean().default(false),
-  giftRecipientEmail: z.string().optional(),
-  giftRecipientName: z.string().optional(),
+  giftRecipients: z.array(z.object({
+    email: z.string().email("Invalid email"),
+    name: z.string().min(1, "Name required"),
+  })).optional(),
   giftMessage: z.string().optional(),
 }).refine((data) => {
-  // Only validate gift fields if isGift is true
   if (!data.isGift) return true;
-  if (!data.giftRecipientEmail) return false;
-  if (!data.giftRecipientName) return false;
-  // Validate email format only if required
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.giftRecipientEmail);
+  const qty = parseInt(data.quantity) || 1;
+  if (!data.giftRecipients || data.giftRecipients.length !== qty) {
+    return false;
+  }
+  return data.giftRecipients.every(r => r.email && r.name);
 }, {
-  message: "Recipient email and name are required for gifts",
-  path: ["giftRecipientEmail"],
+  message: "Enter email and name for each recipient",
+  path: ["giftRecipients"],
 });
 
 type CheckoutForm = z.infer<typeof checkoutFormSchema>;
@@ -69,6 +72,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
   const [validatedPromo, setValidatedPromo] = useState<{valid: boolean; discount?: number; seatType?: string} | null>(null);
   const [isValidatingPromo, setIsValidatingPromo] = useState(false);
   const [isGift, setIsGift] = useState(false);
+  const [quantity, setQuantity] = useState("1");
   const [hasPatina, setHasPatina] = useState(false);
   const [mountingType, setMountingType] = useState("none");
   const [paymentType, setPaymentType] = useState<"full" | "deposit" | "reserve">(urlPaymentType);
@@ -120,22 +124,48 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
       email: "",
       phone: "",
       address: "",
+      quantity: "1",
       isGift: false,
-      giftRecipientEmail: "",
-      giftRecipientName: "",
+      giftRecipients: [],
       giftMessage: "",
     },
   });
 
   const initiatePurchase = useMutation({
     mutationFn: async (data: CheckoutForm) => {
-      // Validate gift fields if enabled
-      if (data.isGift) {
-        if (!data.giftRecipientEmail || !data.giftRecipientName) {
-          throw new Error("Recipient name and email are required for gifts");
-        }
-      }
+      const qty = parseInt(data.quantity) || 1;
       
+      if (data.isGift && (!data.giftRecipients || data.giftRecipients.length !== qty)) {
+        throw new Error(`Please enter ${qty} recipient(s)`);
+      }
+
+      // For bulk gifts, create multiple purchases
+      if (data.isGift && qty > 1) {
+        const purchases = [];
+        for (const recipient of data.giftRecipients || []) {
+          const response = await apiRequest("POST", "/api/purchase/initiate", {
+            seatType,
+            purchaseMode,
+            paymentType,
+            deliveryName: data.fullName,
+            deliveryPhone: data.phone,
+            deliveryAddress: data.address,
+            specimenStyle: null,
+            hasPatina,
+            mountingType,
+            internationalShipping: false,
+            commissionVoucher: false,
+            isGift: true,
+            giftRecipientEmail: recipient.email,
+            giftRecipientName: recipient.name,
+            giftMessage: data.giftMessage,
+          });
+          purchases.push(await response.json());
+        }
+        return purchases[0]; // Return first for redirect
+      }
+
+      // Single purchase (personal or single gift)
       const response = await apiRequest("POST", "/api/purchase/initiate", {
         seatType,
         purchaseMode,
@@ -149,8 +179,8 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
         internationalShipping: false,
         commissionVoucher: false,
         isGift: data.isGift,
-        giftRecipientEmail: data.isGift ? data.giftRecipientEmail : undefined,
-        giftRecipientName: data.isGift ? data.giftRecipientName : undefined,
+        giftRecipientEmail: data.isGift && data.giftRecipients?.[0] ? data.giftRecipients[0].email : undefined,
+        giftRecipientName: data.isGift && data.giftRecipients?.[0] ? data.giftRecipients[0].name : undefined,
         giftMessage: data.isGift ? data.giftMessage : undefined,
       });
       
@@ -604,7 +634,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                   <Card className="border-border/50">
                     <CardHeader className="pb-4">
                       <CardTitle className="text-lg font-medium">Purchasing for Someone Else?</CardTitle>
-                      <CardDescription className="text-sm">Give them their own Founding seat as a gift</CardDescription>
+                      <CardDescription className="text-sm">Buy up to 10 seats and gift to multiple people</CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-4">
                       <div 
@@ -616,51 +646,71 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                         onClick={() => {
                           setIsGift(!isGift);
                           form.setValue("isGift", !isGift);
-                          if (isGift) {
-                            form.setValue("giftRecipientEmail", "");
-                            form.setValue("giftRecipientName", "");
-                            form.setValue("giftMessage", "");
+                          if (!isGift) {
+                            form.setValue("giftRecipients", []);
                           }
                         }}
                         data-testid="toggle-gift-purchase"
                       >
                         <input type="checkbox" checked={isGift} readOnly className="w-5 h-5 cursor-pointer" />
                         <div>
-                          <div className="font-medium text-sm">Yes, this is a gift</div>
+                          <div className="font-medium text-sm">Yes, these are gifts</div>
                           <p className="text-xs text-muted-foreground">
-                            Recipient will receive email to claim their seat
+                            Recipients will receive emails to claim their seats
                           </p>
                         </div>
                       </div>
 
                       {isGift && (
                         <div className="space-y-3 p-4 bg-background/50 rounded-lg border border-border">
-                          <FormField
-                            control={form.control}
-                            name="giftRecipientName"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-sm font-normal text-muted-foreground">Their Name</FormLabel>
-                                <FormControl>
-                                  <Input {...field} placeholder="Jane Doe" data-testid="input-gift-name" />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
-                          <FormField
-                            control={form.control}
-                            name="giftRecipientEmail"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-sm font-normal text-muted-foreground">Their Email</FormLabel>
-                                <FormControl>
-                                  <Input {...field} type="email" placeholder="jane@example.com" data-testid="input-gift-email" />
-                                </FormControl>
-                                <FormMessage />
-                              </FormItem>
-                            )}
-                          />
+                          <div>
+                            <label className="text-sm font-normal text-muted-foreground block mb-2">How many seats?</label>
+                            <Select value={quantity} onValueChange={(val) => {
+                              setQuantity(val);
+                              form.setValue("quantity", val);
+                              form.setValue("giftRecipients", Array(parseInt(val)).fill({ email: "", name: "" }));
+                            }}>
+                              <SelectTrigger className="border-border/50">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent>
+                                {[1,2,3,4,5,6,7,8,9,10].map(n => (
+                                  <SelectItem key={n} value={n.toString()}>{n} Seat{n>1?'s':''}</SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </div>
+
+                          {Array.from({ length: parseInt(quantity) }).map((_, i) => (
+                            <div key={i} className="space-y-2 p-3 bg-background rounded border border-border/50">
+                              <p className="text-xs font-semibold text-muted-foreground">Recipient {i + 1}</p>
+                              <FormField
+                                control={form.control}
+                                name={`giftRecipients.${i}.name` as any}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel className="text-xs">Name</FormLabel>
+                                    <FormControl>
+                                      <Input {...field} placeholder="Jane Doe" data-testid={`input-gift-name-${i}`} />
+                                    </FormControl>
+                                  </FormItem>
+                                )}
+                              />
+                              <FormField
+                                control={form.control}
+                                name={`giftRecipients.${i}.email` as any}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel className="text-xs">Email</FormLabel>
+                                    <FormControl>
+                                      <Input {...field} type="email" placeholder="jane@example.com" data-testid={`input-gift-email-${i}`} />
+                                    </FormControl>
+                                  </FormItem>
+                                )}
+                              />
+                            </div>
+                          ))}
+
                           <FormField
                             control={form.control}
                             name="giftMessage"
@@ -670,7 +720,6 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                                 <FormControl>
                                   <Textarea {...field} placeholder="Add a personal note..." data-testid="textarea-gift-message" className="min-h-20 text-sm" />
                                 </FormControl>
-                                <FormMessage />
                               </FormItem>
                             )}
                           />
