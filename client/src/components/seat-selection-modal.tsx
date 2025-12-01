@@ -5,14 +5,32 @@ import { useLocation } from "wouter";
 import { Card } from "@/components/ui/card";
 import { Award, Sparkles } from "lucide-react";
 
+interface Seat {
+  type: 'founder' | 'patron';
+  price: number;
+  fireSalePrice: number | null;
+  fireSaleEndsAt: Date | null | string;
+}
+
 interface SeatSelectionModalProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   paymentType: 'full' | 'deposit';
+  founderSeat?: Seat;
+  patronSeat?: Seat;
 }
 
-export default function SeatSelectionModal({ open, onOpenChange, paymentType }: SeatSelectionModalProps) {
+export default function SeatSelectionModal({ open, onOpenChange, paymentType, founderSeat, patronSeat }: SeatSelectionModalProps) {
   const [, setLocation] = useLocation();
+
+  // Calculate display price for a seat
+  const getDisplayPrice = (seat?: Seat) => {
+    if (!seat) return 'R0';
+    const isFireSaleActive = seat.fireSalePrice && seat.fireSaleEndsAt && new Date(seat.fireSaleEndsAt) > new Date();
+    const priceCents = isFireSaleActive ? (seat.fireSalePrice || 0) : seat.price;
+    const priceRand = priceCents / 100;
+    return `R${priceRand.toLocaleString('en-ZA', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+  };
 
   const handleSelect = (seatType: 'founder' | 'patron') => {
     onOpenChange(false);
@@ -44,7 +62,7 @@ export default function SeatSelectionModal({ open, onOpenChange, paymentType }: 
               </div>
               <div>
                 <h3 className="font-bold text-bronze">FOUNDER</h3>
-                <div className="text-xl font-bold text-bronze">R3,000</div>
+                <div className="text-xl font-bold text-bronze">{getDisplayPrice(founderSeat)}</div>
               </div>
             </div>
             <p className="text-xs text-muted-foreground mb-3">Unmounted bronze casting</p>
@@ -65,7 +83,7 @@ export default function SeatSelectionModal({ open, onOpenChange, paymentType }: 
               </div>
               <div>
                 <h3 className="font-bold text-accent-gold">PATRON</h3>
-                <div className="text-xl font-bold text-accent-gold">R5,000</div>
+                <div className="text-xl font-bold text-accent-gold">{getDisplayPrice(patronSeat)}</div>
               </div>
             </div>
             <p className="text-xs text-muted-foreground mb-3">Patina + mounting included</p>

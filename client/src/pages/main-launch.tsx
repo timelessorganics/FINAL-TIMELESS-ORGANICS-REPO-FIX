@@ -205,6 +205,8 @@ export default function MainLaunch() {
         open={seatModalOpen}
         onOpenChange={setSeatModalOpen}
         paymentType={paymentType}
+        founderSeat={founderSeat}
+        patronSeat={patronSeat}
       />
     </>
   );
