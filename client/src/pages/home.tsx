@@ -179,7 +179,7 @@ export default function HomePage() {
 
               {/* THIS IS THE FOUNDING 100 MOMENT - Glassy Card on Hero */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-8 lg:mb-10">
-                <div className="max-w-3xl mx-auto p-3 sm:p-4 lg:p-6 border rounded-xl backdrop-blur-sm" style={{backgroundColor: 'rgba(107, 117, 75, 0.25)', borderColor: 'rgba(107, 117, 75, 0.50)'}}>
+                <div className="max-w-3xl mx-auto p-3 sm:p-4 lg:p-6 border rounded-xl backdrop-blur-sm" style={{backgroundColor: 'rgba(107, 117, 75, 0.32)', borderColor: 'rgba(107, 117, 75, 0.55)'}}>
                   <h3 className="text-sm sm:text-base lg:text-lg font-bold mb-3 sm:mb-4 flex items-center gap-2 justify-center moving-fill" style={{color: 'rgba(107, 117, 75, 1)'}}>
                     <Flame className="w-3 sm:w-4 h-3 sm:h-4" />
                     THIS IS THE FOUNDING 100 MOMENT
