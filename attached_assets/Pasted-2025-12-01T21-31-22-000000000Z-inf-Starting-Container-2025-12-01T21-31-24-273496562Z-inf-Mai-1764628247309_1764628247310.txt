@@ -1,0 +1,97 @@
+2025-12-01T21:31:22.000000000Z [inf]  Starting Container
+2025-12-01T21:31:24.273496562Z [inf]  [Mailchimp] Integration configured
+2025-12-01T21:31:24.293002355Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T21:31:24.325269751Z [inf]  [Supabase Auth] Authentication configured
+2025-12-01T21:31:24.345921594Z [inf]  9:31:24 PM [express] serving on port 8080
+2025-12-01T21:33:53.970897649Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T21:33:53.970902288Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T21:33:53.970907074Z [inf]  9:33:47 PM [express] GET /api/prelaunch/stats 200 in 308ms :: {"totalReserved":0,"founderDeposits":0…
+2025-12-01T21:33:53.970911454Z [inf]  9:33:47 PM [express] GET /api/seats/availability 200 in 367ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-01T21:34:13.592690681Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T21:34:13.592698229Z [inf]  9:34:07 PM [express] GET /api/auth/user 200 in 327ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-01T21:34:13.592704986Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T21:34:13.592710412Z [inf]  9:34:08 PM [express] GET /api/seats/availability 304 in 176ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-01T21:34:13.592715735Z [inf]  9:34:08 PM [express] GET /api/prelaunch/stats 304 in 255ms :: {"totalReserved":0,"founderDeposits":0…
+2025-12-01T21:34:33.598232236Z [inf]  9:34:31 PM [express] GET /api/dashboard 200 in 507ms :: [{"id":"01d17273-15b5-40e8-917b-5e7fe6c399fc…
+2025-12-01T21:34:33.598233172Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-01T21:34:33.598243324Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-01T21:34:33.598250191Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-01T21:34:33.598258146Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T21:34:33.598264162Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T21:34:33.598270496Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T21:34:33.598276584Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T21:34:33.598282575Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T21:37:24.162480235Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T21:37:24.162499120Z [inf]  9:37:18 PM [express] GET /api/auth/user 304 in 371ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-01T21:37:24.162508056Z [inf]  9:37:19 PM [express] GET /api/auth/user 304 in 102ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-01T22:25:18.138290308Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T22:25:18.138300906Z [inf]  10:25:12 PM [express] GET /api/auth/user 304 in 407ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-01T22:25:18.138308432Z [inf]  10:25:12 PM [express] GET /api/auth/user 304 in 86ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c",…
+2025-12-01T22:25:18.138314486Z [err]  [Specimen] Get customizations error: error: relation "specimen_customizations" does not exist
+2025-12-01T22:25:18.138333581Z [err]    severity: 'ERROR',
+2025-12-01T22:25:18.138340870Z [err]    code: '42P01',
+2025-12-01T22:25:18.138347805Z [err]    constraint: undefined,
+2025-12-01T22:25:18.138349536Z [err]    detail: undefined,
+2025-12-01T22:25:18.138353519Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-01T22:25:18.138360348Z [err]    hint: undefined,
+2025-12-01T22:25:18.138361881Z [err]    file: 'parse_relation.c',
+2025-12-01T22:25:18.138366236Z [err]      at async DatabaseStorage.getAllSpecimenCustomizations (file:///app/dist/index.js:1022:12)
+2025-12-01T22:25:18.138366268Z [err]    position: '79',
+2025-12-01T22:25:18.138376380Z [err]      at async file:///app/dist/index.js:4809:30 {
+2025-12-01T22:25:18.138377095Z [err]    internalPosition: undefined,
+2025-12-01T22:25:18.138382597Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-01T22:25:18.138387135Z [err]    length: 122,
+2025-12-01T22:25:18.138389615Z [err]    internalQuery: undefined,
+2025-12-01T22:25:18.138393123Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-01T22:25:18.138398541Z [err]    where: undefined,
+2025-12-01T22:25:18.138407569Z [err]    schema: undefined,
+2025-12-01T22:25:18.138415117Z [err]    table: undefined,
+2025-12-01T22:25:18.138422932Z [err]    column: undefined,
+2025-12-01T22:25:18.138430750Z [err]    dataType: undefined,
+2025-12-01T22:25:18.141967755Z [err]    line: '1449',
+2025-12-01T22:25:18.141972970Z [err]    routine: 'parserOpenTable'
+2025-12-01T22:25:18.141978294Z [err]  }
+2025-12-01T22:25:18.141984440Z [inf]  10:25:12 PM [express] GET /api/specimen-customizations 500 in 31ms :: {"error":"relation \"specimen_c…
+2025-12-01T22:25:18.141988670Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T22:25:18.141993441Z [inf]  10:25:14 PM [express] GET /api/auth/user 304 in 229ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-01T22:25:18.142000510Z [inf]  10:25:14 PM [express] GET /api/sculptures 200 in 27ms :: [{"id":"1b5bcff5-e900-45dd-8d94-e28b03bef95b…
+2025-12-01T22:25:18.142005681Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T22:25:18.142010922Z [inf]  10:25:14 PM [express] GET /api/seats/availability 304 in 323ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-01T22:26:07.768724228Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T22:26:07.768730011Z [inf]  10:26:03 PM [express] GET /api/auth/user 304 in 330ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-01T22:26:07.768736916Z [inf]  10:26:04 PM [express] GET /api/auth/user 304 in 92ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c",…
+2025-12-01T22:26:07.768742900Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T22:26:07.768748179Z [inf]  10:26:04 PM [express] GET /api/seats/availability 304 in 190ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-01T22:26:07.768752897Z [inf]  10:26:04 PM [express] GET /api/prelaunch/stats 304 in 243ms :: {"totalReserved":0,"founderDeposits":0…
+2025-12-01T22:26:07.768756996Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T22:26:07.768762374Z [inf]  10:26:05 PM [express] GET /api/auth/user 304 in 258ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-01T22:26:27.775913542Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T22:26:27.775931103Z [err]  Get media assets error: error: column "original_name" does not exist
+2025-12-01T22:26:27.775939334Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-01T22:26:27.775946822Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-01T22:26:27.775955248Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-01T22:26:27.775963426Z [err]      at async DatabaseStorage.getMediaAssets (file:///app/dist/index.js:1389:12)
+2025-12-01T22:26:27.775972080Z [err]      at async file:///app/dist/index.js:4124:22 {
+2025-12-01T22:26:27.775981030Z [err]    length: 113,
+2025-12-01T22:26:27.775989803Z [err]    severity: 'ERROR',
+2025-12-01T22:26:27.775998955Z [err]    code: '42703',
+2025-12-01T22:26:27.776007055Z [err]    detail: undefined,
+2025-12-01T22:26:27.776015915Z [err]    hint: undefined,
+2025-12-01T22:26:27.776024313Z [err]    position: '26',
+2025-12-01T22:26:27.776030908Z [err]    internalPosition: undefined,
+2025-12-01T22:26:27.776040298Z [err]    internalQuery: undefined,
+2025-12-01T22:26:27.776050138Z [err]    where: undefined,
+2025-12-01T22:26:27.776056792Z [err]    schema: undefined,
+2025-12-01T22:26:27.776065426Z [err]    table: undefined,
+2025-12-01T22:26:27.776075087Z [err]    column: undefined,
+2025-12-01T22:26:27.776084142Z [err]    dataType: undefined,
+2025-12-01T22:26:27.776090824Z [err]    constraint: undefined,
+2025-12-01T22:26:27.776097758Z [err]    file: 'parse_relation.c',
+2025-12-01T22:26:27.776104554Z [err]    line: '3716',
+2025-12-01T22:26:27.776113598Z [err]    routine: 'errorMissingColumn'
+2025-12-01T22:26:27.776122108Z [err]  }
+2025-12-01T22:26:27.776128586Z [inf]  10:26:18 PM [express] GET /api/media 200 in 180ms :: []
+2025-12-01T22:26:57.780834921Z [inf]  [DB] Connected to Supabase successfully
+2025-12-01T22:26:57.780843362Z [inf]  10:26:52 PM [express] GET /api/auth/user 304 in 258ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-01T22:26:57.780849515Z [inf]  10:26:53 PM [express] GET /api/auth/user 304 in 78ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c",…
+2025-12-01T22:26:57.780855368Z [inf]  10:26:55 PM [express] GET /api/auth/user 304 in 93ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c",…
