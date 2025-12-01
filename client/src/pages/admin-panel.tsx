@@ -10,7 +10,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import type { Seat, Purchase, Code, PromoCode, MediaAsset, Product, Auction } from "@shared/schema";
 import { Users, Package, DollarSign, Award, Download, Gift, Copy, CheckCircle, XCircle, Upload, Image as ImageIcon, ShoppingBag, Gavel, Calendar, Trash2, Edit, Plus, ExternalLink, Flame } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Eye } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
@@ -34,7 +34,7 @@ export default function AdminPanel() {
   const [customImages, setCustomImages] = useState<Record<string, string>>({});
 
   // Update customImages when specimenCustomizations loads
-  React.useEffect(() => {
+  useEffect(() => {
     if (specimenCustomizations && specimenCustomizations.length > 0) {
       const images: Record<string, string> = {};
       specimenCustomizations.forEach((custom: any) => {
