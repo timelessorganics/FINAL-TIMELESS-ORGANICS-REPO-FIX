@@ -171,7 +171,7 @@ export default function HomePage() {
               {/* THIS IS THE FOUNDING 100 MOMENT - Glassy Card on Hero */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-8 sm:mb-12 lg:mb-16">
                 <div className="max-w-4xl mx-auto p-6 sm:p-8 lg:p-10 border rounded-xl backdrop-blur-md" style={{backgroundColor: 'rgba(107, 117, 75, 0.15)', borderColor: 'rgba(107, 117, 75, 0.35)'}}>
-                  <h3 className="text-lg sm:text-2xl lg:text-3xl font-bold mb-6 sm:mb-8 flex items-center gap-3 justify-center moving-fill" style={{color: 'rgba(107, 117, 75, 1)'}}>
+                  <h3 className="text-base sm:text-xl lg:text-2xl font-bold mb-6 sm:mb-8 flex items-center gap-3 justify-center moving-fill" style={{color: 'rgba(107, 117, 75, 1)'}}>
                     <Flame className="w-4 sm:w-6 h-4 sm:h-6" />
                     THIS IS THE FOUNDING 100 MOMENT
                   </h3>
@@ -185,7 +185,7 @@ export default function HomePage() {
                       <div className="text-base sm:text-xl lg:text-2xl font-bold text-accent-gold mb-1">50-80%</div>
                       <p className="text-[0.6rem] sm:text-xs text-white/80 leading-tight">First<br/>Workshop</p>
                     </div>
-                    <div className="text-center p-2 sm:p-3 rounded-lg" style={{backgroundColor: 'rgba(107, 117, 75, 0.25)'}}>
+                    <div className="text-center p-2 sm:p-3 rounded-lg" style={{backgroundColor: 'rgba(107, 117, 75, 0.40)'}}>
                       <div className="text-base sm:text-xl lg:text-2xl font-bold mb-0.5" style={{color: 'rgba(107, 117, 75, 1)'}}>20-30%</div>
                       <p className="text-[0.6rem] sm:text-xs font-medium leading-tight" style={{color: 'rgba(107, 117, 75, 0.9)'}}>Lifetime<br/>Discount</p>
                     </div>
@@ -263,12 +263,11 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Fire Sale Info Banner - With countdown and seats remaining */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 space-y-1 sm:space-y-2 text-center">
-                <div className="text-xs text-white/50 font-light">
-                  <span className="text-accent-gold font-semibold">{timeRemaining}</span>
-                </div>
-                <p className="text-xs sm:text-sm text-accent-gold font-semibold">Friends and Family Early Bird Fire Sale Expires in 24 hrs!!</p>
+              {/* Founding 100 Value Proposition */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 text-center px-4 sm:px-6">
+                <p className="text-xs sm:text-sm text-white/90 leading-relaxed max-w-2xl mx-auto font-light">
+                  100 seats. No waiting list. No phase two. When these sell out, this exclusive opportunity closes. Only Founding 100 members get these terms for life.
+                </p>
               </div>
                 
               {/* Reservation counter - shows live reservations */}
