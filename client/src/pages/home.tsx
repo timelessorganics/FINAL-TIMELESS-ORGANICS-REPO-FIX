@@ -275,7 +275,8 @@ export default function HomePage() {
               {/* Founding 100 Value Proposition - LARGER & MORE PROMINENT */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 text-center px-4 sm:px-6 mt-6 sm:mt-8 mb-2 sm:mb-4">
                 <p className="text-sm sm:text-base lg:text-lg text-white/95 leading-relaxed max-w-2xl mx-auto font-semibold tracking-tight">
-                  100 seats. No waiting list. No phase two. When these sell out, this exclusive opportunity closes. Only Founding 100 members get these terms for life.
+                  100 seats. No waiting list. No phase two. When these sell out, this exclusive opportunity closes.{' '}
+                  <span className="text-bronze">Only Founding 100 members get these terms for life.</span>
                 </p>
               </div>
                 
