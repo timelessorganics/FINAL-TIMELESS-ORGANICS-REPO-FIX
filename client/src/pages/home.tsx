@@ -186,31 +186,31 @@ export default function HomePage() {
 
               {/* Why You're Being Invited First - Green Block on Hero */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-8 lg:mb-10">
-                <div className="max-w-3xl mx-auto p-2 sm:p-3 lg:p-5 border rounded-xl backdrop-blur-sm" style={{backgroundColor: 'rgba(241, 243, 224, 0.25)', borderColor: 'rgba(241, 243, 224, 0.5)'}}>
-                  <h3 className="text-xs sm:text-sm lg:text-base font-bold mb-2 sm:mb-3 flex items-center gap-2 justify-center moving-fill" style={{color: 'rgba(241, 243, 224, 0.95)'}}>
+                <div className="max-w-5xl mx-auto p-3 sm:p-4 lg:p-6 border rounded-xl backdrop-blur-sm" style={{backgroundColor: 'rgba(241, 243, 224, 0.25)', borderColor: 'rgba(241, 243, 224, 0.5)'}}>
+                  <h3 className="text-sm sm:text-base lg:text-lg font-bold mb-3 sm:mb-4 flex items-center gap-2 justify-center moving-fill" style={{color: 'rgba(241, 243, 224, 0.95)'}}>
                     Why You're Being Invited First
                   </h3>
                   
-                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-1.5 sm:gap-2 w-full">
+                  <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-2.5 w-full">
                     <div className="text-center">
-                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-0.5 leading-tight" style={{color: 'rgba(241, 243, 224, 0.95)'}}>R25,000+ Bronze Artwork</div>
-                      <p className="text-[0.45rem] sm:text-[0.5rem] lg:text-[0.55rem]" style={{color: 'rgba(241, 243, 224, 0.75)', lineHeight: '1.25'}}>Your own one-of-a-kind bronze piece.</p>
+                      <div className="text-[0.7rem] sm:text-sm lg:text-base font-bold mb-1 leading-tight" style={{color: 'rgba(241, 243, 224, 0.95)'}}>R25,000+ Bronze Artwork</div>
+                      <p className="text-[0.5rem] sm:text-[0.6rem] lg:text-[0.65rem]" style={{color: 'rgba(241, 243, 224, 0.75)', lineHeight: '1.3'}}>Your own one-of-a-kind bronze piece.</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-0.5 leading-tight" style={{color: 'rgba(241, 243, 224, 0.95)'}}>50–80% Off Your First Workshop — Giftable</div>
-                      <p className="text-[0.45rem] sm:text-[0.5rem] lg:text-[0.55rem]" style={{color: 'rgba(241, 243, 224, 0.75)', lineHeight: '1.25'}}>Use it yourself or give the discount to anyone you choose.</p>
+                      <div className="text-[0.7rem] sm:text-sm lg:text-base font-bold mb-1 leading-tight" style={{color: 'rgba(241, 243, 224, 0.95)'}}>50–80% Off Your First Workshop — Giftable</div>
+                      <p className="text-[0.5rem] sm:text-[0.6rem] lg:text-[0.65rem]" style={{color: 'rgba(241, 243, 224, 0.75)', lineHeight: '1.3'}}>Use it yourself or give the discount to anyone you choose.</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-0.5 leading-tight" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Lifetime Discounts — For You & Anyone You Gift</div>
-                      <p className="text-[0.45rem] sm:text-[0.5rem] lg:text-[0.55rem]" style={{color: 'rgba(241, 243, 224, 0.75)', lineHeight: '1.25'}}>20–30% off workshops, shop pieces & commissions — forever.</p>
+                      <div className="text-[0.7rem] sm:text-sm lg:text-base font-bold mb-1 leading-tight" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Lifetime Discounts — For You & Anyone You Gift</div>
+                      <p className="text-[0.5rem] sm:text-[0.6rem] lg:text-[0.65rem]" style={{color: 'rgba(241, 243, 224, 0.75)', lineHeight: '1.3'}}>20–30% off workshops, shop pieces & commissions — forever.</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-0.5 leading-tight" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Open-Shed Access</div>
-                      <p className="text-[0.45rem] sm:text-[0.5rem] lg:text-[0.55rem]" style={{color: 'rgba(241, 243, 224, 0.75)', lineHeight: '1.25'}}>Pop in anytime, bring kids, watch pours, colour practice castings.</p>
+                      <div className="text-[0.7rem] sm:text-sm lg:text-base font-bold mb-1 leading-tight" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Open-Shed Access</div>
+                      <p className="text-[0.5rem] sm:text-[0.6rem] lg:text-[0.65rem]" style={{color: 'rgba(241, 243, 224, 0.75)', lineHeight: '1.3'}}>Pop in anytime, bring kids, watch pours, colour practice castings.</p>
                     </div>
                     <div className="text-center">
-                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-0.5 leading-tight" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Your Name on the Founding 100 Wall</div>
-                      <p className="text-[0.45rem] sm:text-[0.5rem] lg:text-[0.55rem]" style={{color: 'rgba(241, 243, 224, 0.75)', lineHeight: '1.25'}}>Your story becomes part of the studio from day one.</p>
+                      <div className="text-[0.7rem] sm:text-sm lg:text-base font-bold mb-1 leading-tight" style={{color: 'rgba(241, 243, 224, 0.95)'}}>Your Name on the Founding 100 Wall</div>
+                      <p className="text-[0.5rem] sm:text-[0.6rem] lg:text-[0.65rem]" style={{color: 'rgba(241, 243, 224, 0.75)', lineHeight: '1.3'}}>Your story becomes part of the studio from day one.</p>
                     </div>
                   </div>
                 </div>
