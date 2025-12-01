@@ -3,6 +3,7 @@ import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import type { Express, RequestHandler } from "express";
 import session from "express-session";
 import createMemoryStore from "memorystore";
+import jwt from 'jsonwebtoken';
 
 // Create Supabase admin client for server-side operations
 export const supabaseAdmin: SupabaseClient = createClient(
@@ -56,26 +57,30 @@ export const isAuthenticated: RequestHandler = async (req, res, next) => {
   const token = authHeader.replace('Bearer ', '');
 
   try {
-    // Verify the JWT token with Supabase
-    console.log('[Auth] Verifying token with Supabase...');
-    const { data: { user }, error } = await supabaseAdmin.auth.getUser(token);
-
-    if (error) {
-      console.log('[Auth] Supabase validation error:', error.message);
-      return res.status(401).json({ message: "Unauthorized - Token invalid" });
+    // Manually verify the JWT token using Supabase's secret
+    const secret = process.env.SUPABASE_JWT_SECRET;
+    if (!secret) {
+      console.error('[Auth] SUPABASE_JWT_SECRET not configured');
+      return res.status(500).json({ message: "Server error: Auth not configured" });
     }
+
+    console.log('[Auth] Verifying JWT token manually...');
+    const decoded: any = jwt.verify(token, secret, {
+      algorithms: ['HS256'],
+    });
+
+    console.log('[Auth] Token verified successfully, user:', decoded.sub);
     
-    if (!user) {
-      console.log('[Auth] No user returned from Supabase');
-      return res.status(401).json({ message: "Unauthorized - No user" });
-    }
-
-    console.log('[Auth] User verified:', user.email);
-    // Attach user to request object
-    (req as any).user = user;
+    // Attach decoded token info to request
+    (req as any).user = {
+      id: decoded.sub,
+      email: decoded.email,
+      aud: decoded.aud,
+    };
+    
     next();
   } catch (error: any) {
-    console.error('[Auth] Exception during verification:', error?.message || error);
-    res.status(401).json({ message: "Unauthorized - Verification failed" });
+    console.error('[Auth] JWT verification failed:', error?.message || error);
+    res.status(401).json({ message: `Unauthorized - ${error?.message || 'Token invalid'}` });
   }
 };
