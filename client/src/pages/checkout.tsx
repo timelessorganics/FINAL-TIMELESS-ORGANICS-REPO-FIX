@@ -75,6 +75,8 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
 
   const { data: seats, isLoading: loadingSeats } = useQuery<any[]>({
     queryKey: ['/api/seats/availability'],
+    staleTime: 0,
+    refetchOnMount: true,
   });
 
   const { data: allSculptures = [] } = useQuery<Sculpture[]>({
