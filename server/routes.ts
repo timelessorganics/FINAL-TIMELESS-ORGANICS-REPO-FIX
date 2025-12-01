@@ -2249,6 +2249,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
   );
 
   // ============================================
+  // PUBLIC MEDIA ROUTES
+  // ============================================
+
+  // Public: Get all media assets (for gallery)
+  app.get("/api/media", async (req: any, res: Response) => {
+    try {
+      const assets = await storage.getMediaAssets();
+      res.json(assets);
+    } catch (error: any) {
+      console.error("Get media assets error:", error);
+      res.json([]);
+    }
+  });
+
+  // ============================================
   // ADMIN MANAGEMENT ROUTES
   // ============================================
 
