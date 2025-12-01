@@ -25,8 +25,12 @@ export default function AdminPanel() {
   const [codeCount, setCodeCount] = useState("10");
   const [activeTab, setActiveTab] = useState("overview");
   const [customImages, setCustomImages] = useState<Record<string, string>>(() => {
-    const stored = sessionStorage.getItem("specimenCustomImages");
-    return stored ? JSON.parse(stored) : {};
+    try {
+      const stored = sessionStorage.getItem("specimenCustomImages");
+      return stored ? JSON.parse(stored) : {};
+    } catch {
+      return {};
+    }
   });
 
   const { data: seats } = useQuery<Seat[]>({
