@@ -158,15 +158,44 @@ export default function HomePage() {
             {/* Center content */}
             <div className="text-center max-w-6xl mx-auto w-full">
               
-              {/* Main title with glassy effect - responsive sizing */}
-              <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-[clamp(2.2rem,7vw,5.5rem)] font-light mt-2 sm:mt-6 lg:mt-10 mb-2 sm:mb-4 lg:mb-6 leading-[1.05] tracking-tight w-full px-2">
+              {/* Main title with glassy effect - moved up, more space below */}
+              <h1 className="hero-text-reveal hero-text-reveal-delay-2 font-serif text-[clamp(2.2rem,7vw,5.5rem)] font-light mt-2 sm:mt-6 lg:mt-10 mb-1 sm:mb-2 lg:mb-3 leading-[1.05] tracking-tight w-full px-2">
                 <span className="hero-glass-text">Timeless Organics</span>
               </h1>
               
-              {/* Tagline - Playfair Display font, responsive */}
-              <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 max-w-3xl mx-auto mb-3 sm:mb-6 lg:mb-8 leading-relaxed px-3 sm:px-2">
+              {/* Tagline - responsive */}
+              <p className="hero-text-reveal hero-text-reveal-delay-3 font-serif text-sm sm:text-lg md:text-xl lg:text-2xl xl:text-3xl text-white/90 max-w-3xl mx-auto mb-8 sm:mb-12 lg:mb-16 leading-relaxed px-3 sm:px-2">
                 One-Of-A-Kind Castings From Organic Matter
               </p>
+
+              {/* THIS IS THE FOUNDING 100 MOMENT - Glassy Card on Hero */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-8 sm:mb-12 lg:mb-16">
+                <div className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8 border border-white/20 rounded-xl bg-white/10 backdrop-blur-md">
+                  <div className="inline-block px-3 py-1 sm:px-4 sm:py-2 bg-accent-gold/20 rounded-full text-accent-gold text-xs sm:text-sm font-bold mb-3 sm:mb-4 flex items-center gap-2 justify-center mx-auto">
+                    <Flame className="w-3 sm:w-4 h-3 sm:h-4" />
+                    THIS IS THE FOUNDING 100 MOMENT
+                  </div>
+                  
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                    <div className="text-center">
+                      <div className="text-lg sm:text-2xl lg:text-3xl font-bold text-bronze mb-1 sm:mb-2">R25K+</div>
+                      <p className="text-[0.65rem] sm:text-xs text-white/80">Bronze Sculpture<br/>market value</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-lg sm:text-2xl lg:text-3xl font-bold text-accent-gold mb-1 sm:mb-2">50-80%</div>
+                      <p className="text-[0.65rem] sm:text-xs text-white/80">First hands-on<br/>casting workshop</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-lg sm:text-2xl lg:text-3xl font-bold text-patina mb-1 sm:mb-2">20-30%</div>
+                      <p className="text-[0.65rem] sm:text-xs text-white/80">Lifetime discount<br/>on everything</p>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-lg sm:text-2xl lg:text-3xl font-bold text-bronze mb-1 sm:mb-2">FOREVER</div>
+                      <p className="text-[0.65rem] sm:text-xs text-white/80">Giftable,<br/>transferable benefits</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
 
               {/* Seat Selection Cards - 24hr Friends & Family Discount */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-3 sm:gap-6 lg:gap-16 xl:gap-24 mb-3 sm:mb-6 px-2 sm:px-0 max-w-6xl mx-auto w-full">
