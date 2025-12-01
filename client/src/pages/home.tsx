@@ -93,7 +93,13 @@ export default function HomePage() {
   
   const getOriginalPrice = (seat: any) => {
     if (seat?.fireSalePrice && seat?.fireSaleEndsAt && new Date(seat.fireSaleEndsAt) > new Date()) {
-      return seat?.price ? seat.price / 100 : 0; // Show regular price as original
+      // During fire sale, show the regular price (struck through)
+      // If seat.price is missing, use known original prices
+      if (seat?.price && seat.price > 0) {
+        return seat.price / 100;
+      }
+      // Fallback to known original prices if not in DB
+      return seat?.type === 'founder' ? 5000 : 9500;
     }
     return null;
   };
