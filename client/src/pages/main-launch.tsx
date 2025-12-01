@@ -6,18 +6,51 @@ import Footer from "@/components/footer";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { FlowerTimelapseBackground } from "@/components/FlowerTimelapseBackground";
-import { ArrowRight, Sparkles, Flame } from "lucide-react";
+import { ArrowRight, Sparkles, Flame, AlertCircle, Check } from "lucide-react";
 import SeatSelectionModal from "@/components/seat-selection-modal";
-import type { Seat } from "@shared/schema";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import type { Seat, Sculpture } from "@shared/schema";
+
+const SPECIMEN_IMAGES: Record<string, string> = {
+  cones_bracts_seedpods: new URL("../../attached_assets/Gemini_Generated_Image_t5zvs6t5zvs6t5zv_1761271985175.png", import.meta.url).href,
+  protea_pincushion_blooms_heads: new URL("../../attached_assets/Gemini_Generated_Image_f90dtof90dtof90d_1761271985176.png", import.meta.url).href,
+  bulb_spikes: new URL("../../attached_assets/Gemini_Generated_Image_r45js4r45js4r45j_1761271985177.png", import.meta.url).href,
+  branches_leaves: new URL("../../attached_assets/Gemini_Generated_Image_r7x3y8r7x3y8r7x3_1761271985178.png", import.meta.url).href,
+  aloe_inflorescence_heads: new URL("../../attached_assets/Gemini_Generated_Image_an1l12an1l12an1l_1761271985175.png", import.meta.url).href,
+  flower_heads: new URL("../../attached_assets/Gemini_Generated_Image_9rrlvn9rrlvn9rrl (1)_1761271985174.png", import.meta.url).href,
+  erica_sprays: new URL("../../attached_assets/Gemini_Generated_Image_daxzjqdaxzjqdaxz_1761271985176.png", import.meta.url).href,
+  restios_seedheads_grasses: new URL("../../attached_assets/Gemini_Generated_Image_qey8v1qey8v1qey8 (1)_1761271985177.png", import.meta.url).href,
+  small_succulents: new URL("../../attached_assets/Gemini_Generated_Image_9rrlvn9rrlvn9rrl_1761271985179.png", import.meta.url).href,
+};
+
+const SPECIMEN_NAMES: Record<string, string> = {
+  cones_bracts_seedpods: "Cones, Bracts & Seedpods",
+  protea_pincushion_blooms_heads: "Protea Pincushion Blooms",
+  bulb_spikes: "Bulb Spikes",
+  branches_leaves: "Branches & Leaves",
+  aloe_inflorescence_heads: "Aloe Inflorescence",
+  flower_heads: "Flower Heads",
+  erica_sprays: "Erica Sprays",
+  restios_seedheads_grasses: "Restios & Seedheads",
+  small_succulents: "Small Succulents",
+};
 
 export default function MainLaunch() {
   const [seatModalOpen, setSeatModalOpen] = useState(false);
   const [paymentType, setPaymentType] = useState<'full' | 'deposit'>('full');
+  const [selectedSpecimen, setSelectedSpecimen] = useState<string | null>(null);
+  const [specimenAvailability, setSpecimenAvailability] = useState<Record<string, boolean>>({});
   
   const { data: seats, isLoading } = useQuery<Seat[]>({
     queryKey: ["/api/seats/availability"],
-    staleTime: 0, // Always treat data as stale
-    refetchOnMount: true, // Always refetch when component mounts
+    staleTime: 0,
+    refetchOnMount: true,
+  });
+
+  const { data: sculptures } = useQuery<Sculpture[]>({
+    queryKey: ["/api/sculptures"],
+    staleTime: 0,
+    refetchOnMount: true,
   });
 
   const founderSeat = seats?.find((s) => s.type === "founder");
@@ -30,6 +63,22 @@ export default function MainLaunch() {
   const handlePaymentClick = (type: 'full' | 'deposit') => {
     setPaymentType(type);
     setSeatModalOpen(true);
+  };
+
+  // Check if a specimen is available RIGHT NOW (not wait for season)
+  const isSpecimenAvailableNow = (specimen: Sculpture): boolean => {
+    if (!specimen.seasonWindow) return true; // year_round
+    const now = new Date();
+    const month = now.getMonth() + 1; // 1-12
+    const season = getSeason(month);
+    return specimen.seasonWindow === 'year_round' || specimen.seasonWindow === season;
+  };
+
+  const getSeason = (month: number): string => {
+    if (month >= 12 || month <= 2) return 'winter';
+    if (month >= 3 && month <= 5) return 'spring';
+    if (month >= 6 && month <= 8) return 'summer';
+    return 'autumn';
   };
 
   // Calculate display prices dynamically from seat data
@@ -96,7 +145,109 @@ export default function MainLaunch() {
             </div>
           </section>
 
-          {/* SEAT SELECTION - RIGHT AFTER HERO */}
+          {/* WAIT BEFORE YOU BUY - SEASONAL GUIDE */}
+          <section className="mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-card/40 via-background to-card/40 rounded-xl border border-border/50" data-testid="section-specimen-guide">
+            <div className="text-center mb-8 sm:mb-10">
+              <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2">
+                <AlertCircle className="w-4 h-4" />
+                WAIT BEFORE YOU BUY
+              </div>
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-4 sm:mb-6">
+                Choose Your Specimen
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto font-light mb-6">
+                Cape Fynbos changes with the seasons. Each specimen has optimal collection windows. Select your style—we'll tell you if it's available now or if you need to wait.
+              </p>
+            </div>
+
+            {/* Specimen Gallery Grid */}
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4 mb-8">
+              {sculptures?.filter(s => s.specimenStyle).map((specimen) => {
+                const isAvailableNow = isSpecimenAvailableNow(specimen);
+                const isSelected = selectedSpecimen === specimen.specimenStyle;
+
+                return (
+                  <div
+                    key={specimen.specimenStyle}
+                    onClick={() => {
+                      setSelectedSpecimen(specimen.specimenStyle || null);
+                      setSpecimenAvailability({ [specimen.specimenStyle || '']: isAvailableNow });
+                    }}
+                    className={`cursor-pointer transition-all group relative`}
+                    data-testid={`specimen-card-${specimen.specimenStyle}`}
+                  >
+                    <Card className={`overflow-hidden border-2 transition-all h-full ${
+                      isSelected 
+                        ? 'border-bronze ring-2 ring-bronze/50' 
+                        : 'border-card-border hover:border-bronze/50'
+                    }`}>
+                      {/* Image */}
+                      <div className="aspect-square relative overflow-hidden bg-card-background">
+                        <img
+                          src={SPECIMEN_IMAGES[specimen.specimenStyle || '']}
+                          alt={SPECIMEN_NAMES[specimen.specimenStyle || '']}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+                        />
+                        
+                        {/* Selection Checkmark */}
+                        {isSelected && (
+                          <div className="absolute top-2 right-2 bg-bronze text-white rounded-full p-1.5 shadow-lg">
+                            <Check className="w-4 h-4" />
+                          </div>
+                        )}
+
+                        {/* Availability Badge */}
+                        <div className={`absolute bottom-2 left-2 px-2 py-1 rounded text-xs font-medium ${
+                          isAvailableNow
+                            ? 'bg-green-500/90 text-white'
+                            : 'bg-orange-500/90 text-white'
+                        }`}>
+                          {isAvailableNow ? 'Available Now' : 'Buy & Wait'}
+                        </div>
+                      </div>
+
+                      {/* Label */}
+                      <div className="p-2 sm:p-3 text-center border-t border-border/30">
+                        <p className="text-xs sm:text-sm font-medium text-foreground line-clamp-2">
+                          {SPECIMEN_NAMES[specimen.specimenStyle || '']}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1 capitalize">
+                          {specimen.seasonWindow === 'year_round' ? 'All Year' : specimen.seasonWindow}
+                        </p>
+                      </div>
+                    </Card>
+                  </div>
+                );
+              })}
+            </div>
+
+            {/* Availability Status */}
+            {selectedSpecimen && (
+              <Alert className={`${
+                specimenAvailability[selectedSpecimen]
+                  ? 'bg-green-500/10 border-green-500/30'
+                  : 'bg-orange-500/10 border-orange-500/30'
+              }`}>
+                {specimenAvailability[selectedSpecimen] ? (
+                  <>
+                    <Check className="h-4 w-4 text-green-600" />
+                    <AlertDescription className="text-green-700 dark:text-green-400">
+                      <strong>{SPECIMEN_NAMES[selectedSpecimen]}</strong> is in season NOW! You can receive your casting soon after purchase.
+                    </AlertDescription>
+                  </>
+                ) : (
+                  <>
+                    <AlertCircle className="h-4 w-4 text-orange-600" />
+                    <AlertDescription className="text-orange-700 dark:text-orange-400">
+                      <strong>{SPECIMEN_NAMES[selectedSpecimen]}</strong> is out of season. Select "BUY & WAIT" at checkout to secure your specimen now and receive it when it's in peak condition.
+                    </AlertDescription>
+                  </>
+                )}
+              </Alert>
+            )}
+          </section>
+
+          {/* SEAT SELECTION - RIGHT AFTER SPECIMEN GUIDE */}
           <section id="seats" className="mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 scroll-mt-20" data-testid="section-seats">
             <div className="text-center mb-6 sm:mb-10">
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-3 sm:mb-4">
