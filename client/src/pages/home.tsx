@@ -218,8 +218,8 @@ export default function HomePage() {
 
               {/* Why You're Being Invited First - MOBILE VERSION (below md) */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-8 md:hidden px-4">
-                <div className="max-w-2xl mx-auto">
-                  <h3 className="text-sm font-bold mb-3 flex items-center gap-2 justify-center moving-fill text-center" style={{color: 'rgba(241, 243, 224, 0.95)'}}>
+                <div>
+                  <h3 className="text-sm font-bold mb-3 moving-fill" style={{color: 'rgba(241, 243, 224, 0.95)'}}>
                     Why You're Being Invited First
                   </h3>
                   <ul className="space-y-2 text-[0.85rem]" style={{color: '#ffffff'}}>
