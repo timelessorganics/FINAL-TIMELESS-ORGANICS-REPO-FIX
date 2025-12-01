@@ -194,9 +194,9 @@ export default function HomePage() {
                       <div className="text-sm sm:text-base lg:text-lg font-bold text-accent-gold">50-80%</div>
                       <p className="text-[0.55rem] sm:text-[0.65rem] text-white/80 leading-tight">First<br/>Workshop</p>
                     </div>
-                    <div className="text-center p-1.5 sm:p-2 rounded-lg" style={{backgroundColor: 'rgba(107, 117, 75, 0.40)'}}>
-                      <div className="text-sm sm:text-base lg:text-lg font-bold" style={{color: 'rgba(107, 117, 75, 1)'}}>20-30%</div>
-                      <p className="text-[0.55rem] sm:text-[0.65rem] font-medium leading-tight" style={{color: 'rgba(107, 117, 75, 0.9)'}}>Lifetime<br/>Discount</p>
+                    <div className="text-center">
+                      <div className="text-sm sm:text-base lg:text-lg font-bold text-accent-gold">20-30%</div>
+                      <p className="text-[0.55rem] sm:text-[0.65rem] text-white/80 leading-tight">Lifetime<br/>Discount</p>
                     </div>
                     <div className="text-center">
                       <div className="text-sm sm:text-base lg:text-lg font-bold text-bronze">FOREVER</div>
