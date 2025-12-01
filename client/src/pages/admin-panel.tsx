@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { supabase } from "@/lib/supabase";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import type { Seat, Purchase, Code, PromoCode, MediaAsset, Product, Auction } from "@shared/schema";
@@ -1964,17 +1965,36 @@ export default function AdminPanel() {
                               type="file"
                               accept="image/*"
                               className="hidden"
-                              onChange={(e) => {
+                              onChange={async (e) => {
                                 if (e.target.files?.[0]) {
-                                  const reader = new FileReader();
-                                  reader.onload = (event) => {
-                                    const dataUrl = event.target?.result as string;
-                                    const updated = { ...customImages, [specimen.id]: dataUrl };
+                                  const file = e.target.files[0];
+                                  try {
+                                    // Upload to Supabase Storage
+                                    const fileName = `${specimen.id}-${Date.now()}-${file.name}`;
+                                    const { data, error } = await supabase.storage
+                                      .from('specimen-photos')
+                                      .upload(fileName, file, { upsert: true });
+                                    
+                                    if (error) throw error;
+                                    
+                                    // Get public URL
+                                    const { data: { publicUrl } } = supabase.storage
+                                      .from('specimen-photos')
+                                      .getPublicUrl(fileName);
+                                    
+                                    // Update UI immediately with public URL
+                                    const updated = { ...customImages, [specimen.id]: publicUrl };
                                     setCustomImages(updated);
-                                    // Save to database
-                                    saveSpecimenPhoto.mutate({ specimenKey: specimen.id, imageUrl: dataUrl });
-                                  };
-                                  reader.readAsDataURL(e.target.files[0]);
+                                    
+                                    // Save URL to database
+                                    saveSpecimenPhoto.mutate({ specimenKey: specimen.id, imageUrl: publicUrl });
+                                  } catch (err: any) {
+                                    toast({ 
+                                      variant: "destructive", 
+                                      title: "Upload failed", 
+                                      description: err.message || "Failed to upload image"
+                                    });
+                                  }
                                 }
                               }}
                             />
