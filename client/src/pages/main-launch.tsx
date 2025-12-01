@@ -254,7 +254,7 @@ export default function MainLaunch() {
                         <span className={`text-[0.6rem] font-semibold px-1.5 py-0.5 rounded ${
                           isAvailableNow
                             ? 'bg-green-500/90 text-white'
-                            : 'bg-orange-500/90 text-white'
+                            : 'bg-amber-600/90 text-white'
                         }`}>
                           {isAvailableNow ? 'Now' : 'Wait'}
                         </span>
@@ -302,7 +302,7 @@ export default function MainLaunch() {
               <Alert className={`${
                 specimenAvailability[selectedSpecimen]
                   ? 'bg-green-500/10 border-green-500/30'
-                  : 'bg-orange-500/10 border-orange-500/30'
+                  : 'bg-amber-600/10 border-amber-600/30'
               }`}>
                 {specimenAvailability[selectedSpecimen] ? (
                   <>
@@ -313,8 +313,8 @@ export default function MainLaunch() {
                   </>
                 ) : (
                   <>
-                    <AlertCircle className="h-4 w-4 text-orange-600" />
-                    <AlertDescription className="text-orange-700 dark:text-orange-400">
+                    <AlertCircle className="h-4 w-4 text-amber-700" />
+                    <AlertDescription className="text-amber-700 dark:text-amber-400">
                       <strong>{SPECIMEN_NAMES[selectedSpecimen]}</strong> is out of season. Select "BUY & WAIT" at checkout to secure your specimen now and receive it when it's in peak condition.
                     </AlertDescription>
                   </>
@@ -332,11 +332,11 @@ export default function MainLaunch() {
               <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-light mb-4 sm:mb-5">
                 Only 100 seats available. Once they're gone, they're gone forever.
               </p>
-              <div className="inline-block px-3 sm:px-5 py-1.5 sm:py-2 bg-orange-500/25 rounded-full border border-orange-400/40 mb-3 sm:mb-4">
-                <p className="text-xs sm:text-sm text-orange-300 font-black tracking-wide">24HR FRIENDS & FAMILY FIRE SALE</p>
+              <div className="inline-block px-3 sm:px-5 py-1.5 sm:py-2 bg-amber-600/25 rounded-full border border-amber-500/40 mb-3 sm:mb-4">
+                <p className="text-xs sm:text-sm text-amber-200 font-black tracking-wide">24HR FRIENDS & FAMILY FIRE SALE</p>
               </div>
-              <p className="text-sm sm:text-base text-orange-300 font-serif font-bold">THE BEST DEAL ON THE PLANET</p>
-              <p className="text-xs sm:text-sm text-orange-200/80 font-light mt-1">Bronze Sculpture + 20-30% Lifetime Discounts Forever</p>
+              <p className="text-sm sm:text-base text-amber-200 font-serif font-bold">THE BEST DEAL ON THE PLANET</p>
+              <p className="text-xs sm:text-sm text-amber-100/80 font-light mt-1">Bronze Sculpture + 20-30% Lifetime Discounts Forever</p>
             </div>
 
             {isLoading ? (

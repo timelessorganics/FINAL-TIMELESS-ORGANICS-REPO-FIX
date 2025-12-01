@@ -589,10 +589,10 @@ export default function AdminPanel() {
           </Card>
 
           {/* Fire Sale Control - 24 Hour Friends & Family Discount */}
-          <Card className={`border-2 p-7 mb-12 ${fireSaleActive ? 'bg-orange-500/10 border-orange-500' : 'bg-card border-card-border'}`}>
+          <Card className={`border-2 p-7 mb-12 ${fireSaleActive ? 'bg-amber-600/10 border-amber-600' : 'bg-card border-card-border'}`}>
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-3">
-                <Flame className={`w-8 h-8 ${fireSaleActive ? 'text-orange-500 animate-pulse' : 'text-muted-foreground'}`} />
+                <Flame className={`w-8 h-8 ${fireSaleActive ? 'text-amber-600 animate-pulse' : 'text-muted-foreground'}`} />
                 <div>
                   <h2 className="font-serif text-2xl font-bold">24-Hour Fire Sale</h2>
                   <p className="text-sm text-muted-foreground">Friends & Family discounted pricing</p>

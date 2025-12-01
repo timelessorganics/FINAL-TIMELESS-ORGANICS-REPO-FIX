@@ -170,7 +170,7 @@ export default function HomePage() {
 
               {/* FIRE SALE BADGE - Orange Patina Glow */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-4 sm:mb-8">
-                <div className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-orange-500/30 rounded-full text-orange-300 text-[0.75rem] sm:text-sm font-black tracking-wide shadow-lg shadow-orange-500/40 border border-orange-400/50">
+                <div className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-amber-600/30 rounded-full text-amber-200 text-[0.75rem] sm:text-sm font-black tracking-wide shadow-lg shadow-amber-600/40 border border-amber-500/50">
                   <div className="flex items-center gap-2 justify-center">
                     <Flame className="w-3 h-3 sm:w-4 sm:h-4 animate-pulse" />
                     <span>24HR FRIENDS & FAMILY FIRE SALE</span>
@@ -181,8 +181,8 @@ export default function HomePage() {
 
               {/* Catchy Deal Copy - Emphasize Best Deal + Lifetime Benefits */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-10">
-                <p className="text-sm sm:text-base text-orange-300 font-serif font-bold">THE BEST DEAL ON THE PLANET</p>
-                <p className="text-xs sm:text-sm text-orange-200/90 font-light mt-1">Bronze Sculpture + 20-30% Lifetime Discounts Forever</p>
+                <p className="text-sm sm:text-base text-amber-200 font-serif font-bold">THE BEST DEAL ON THE PLANET</p>
+                <p className="text-xs sm:text-sm text-amber-100/90 font-light mt-1">Bronze Sculpture + 20-30% Lifetime Discounts Forever</p>
               </div>
 
               {/* THIS IS THE FOUNDING 100 MOMENT - Glassy Card on Hero */}
