@@ -29,6 +29,7 @@ import SeasonalGuide from "@/pages/seasonal-guide";
 import SignIn from "@/pages/sign-in";
 import AuthCallback from "@/pages/auth-callback";
 import ClaimGiftPage from "@/pages/claim-gift";
+import SpecimenManager from "@/pages/specimen-manager";
 
 function Router() {
   const { isAuthenticated, isLoading, user } = useAuth();
@@ -75,6 +76,9 @@ function Router() {
       {/* Founding 100 Launch Page */}
       <Route path="/founding-100" component={MainLaunch} />
       <Route path="/founding100" component={MainLaunch} />
+
+      {/* Specimen Image Manager - Test tool */}
+      <Route path="/specimen-manager" component={SpecimenManager} />
 
       {/* Founding 100 Explanation */}
       <Route path="/founding-100-explained" component={Founding100ExplainedPage} />

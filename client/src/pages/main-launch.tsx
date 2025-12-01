@@ -11,7 +11,7 @@ import SeatSelectionModal from "@/components/seat-selection-modal";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { Seat, Sculpture } from "@shared/schema";
 
-const SPECIMEN_IMAGES: Record<string, string> = {
+const DEFAULT_SPECIMEN_IMAGES: Record<string, string> = {
   cones_bracts_seedpods: new URL("../../attached_assets/Gemini_Generated_Image_t5zvs6t5zvs6t5zv_1761271985175.png", import.meta.url).href,
   protea_pincushion_blooms_heads: new URL("../../attached_assets/Gemini_Generated_Image_f90dtof90dtof90d_1761271985176.png", import.meta.url).href,
   bulb_spikes: new URL("../../attached_assets/Gemini_Generated_Image_r45js4r45js4r45j_1761271985177.png", import.meta.url).href,
@@ -22,6 +22,14 @@ const SPECIMEN_IMAGES: Record<string, string> = {
   restios_seedheads_grasses: new URL("../../attached_assets/Gemini_Generated_Image_qey8v1qey8v1qey8 (1)_1761271985177.png", import.meta.url).href,
   small_succulents: new URL("../../attached_assets/Gemini_Generated_Image_9rrlvn9rrlvn9rrl_1761271985179.png", import.meta.url).href,
 };
+
+const getSpecimenImages = (): Record<string, string> => {
+  const custom = typeof window !== 'undefined' ? sessionStorage.getItem("specimenCustomImages") : null;
+  const customImages = custom ? JSON.parse(custom) : {};
+  return { ...DEFAULT_SPECIMEN_IMAGES, ...customImages };
+};
+
+const SPECIMEN_IMAGES = getSpecimenImages();
 
 const SPECIMEN_NAMES: Record<string, string> = {
   cones_bracts_seedpods: "Cones, Bracts & Seedpods",
