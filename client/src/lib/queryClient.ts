@@ -6,14 +6,14 @@ import { supabase } from "@/lib/supabase";
 const isProduction = import.meta.env.PROD;
 const API_BASE_URL = isProduction ? (import.meta.env.VITE_API_URL || "") : "";
 
-// Helper to get auth headers from Supabase session
+// Helper to get auth headers
 async function getAuthHeaders(): Promise<HeadersInit> {
-  const { data: { session } } = await supabase.auth.getSession();
-  
   const headers: HeadersInit = {};
   
-  if (session?.access_token) {
-    headers['Authorization'] = `Bearer ${session.access_token}`;
+  // Check for admin password in localStorage
+  const adminPassword = localStorage.getItem('admin_password');
+  if (adminPassword) {
+    headers['x-admin-password'] = adminPassword;
   }
   
   return headers;

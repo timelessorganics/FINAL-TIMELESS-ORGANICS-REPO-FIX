@@ -23,6 +23,17 @@ export default function AdminPanel() {
   const queryClient = useQueryClient();
   const [codeCount, setCodeCount] = useState("10");
   const [activeTab, setActiveTab] = useState("overview");
+  const [adminPassword, setAdminPassword] = useState(() => localStorage.getItem('admin_password') || '');
+  
+  // Save admin password to localStorage
+  const handlePasswordChange = (newPassword: string) => {
+    setAdminPassword(newPassword);
+    if (newPassword) {
+      localStorage.setItem('admin_password', newPassword);
+    } else {
+      localStorage.removeItem('admin_password');
+    }
+  };
 
   const { data: seats } = useQuery<Seat[]>({
     queryKey: ["/api/admin/seats"],
