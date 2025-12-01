@@ -30,16 +30,20 @@ export default function AdminPanel() {
     queryKey: ["/api/admin/specimen-customizations"],
   });
 
-  const [customImages, setCustomImages] = useState<Record<string, string>>(() => {
-    // Initialize from database customizations
-    const images: Record<string, string> = {};
-    specimenCustomizations?.forEach((custom) => {
-      if (custom.specimenKey && custom.imageUrl) {
-        images[custom.specimenKey] = custom.imageUrl;
-      }
-    });
-    return images;
-  });
+  const [customImages, setCustomImages] = useState<Record<string, string>>({});
+
+  // Update customImages when specimenCustomizations loads
+  React.useEffect(() => {
+    if (specimenCustomizations && specimenCustomizations.length > 0) {
+      const images: Record<string, string> = {};
+      specimenCustomizations.forEach((custom: any) => {
+        if (custom.specimenKey && custom.imageUrl) {
+          images[custom.specimenKey] = custom.imageUrl;
+        }
+      });
+      setCustomImages(images);
+    }
+  }, [specimenCustomizations]);
 
   // Save specimen photo to database
   const saveSpecimenPhoto = useMutation({
