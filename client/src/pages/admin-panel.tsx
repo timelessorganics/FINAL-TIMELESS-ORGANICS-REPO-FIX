@@ -435,6 +435,21 @@ export default function AdminPanel() {
       <Header />
       <div className="relative z-10 min-h-screen">
         <div className="max-w-[1400px] mx-auto px-7 py-12">
+          {/* Admin Password Input */}
+          <div className="mb-8 p-4 bg-card rounded-md border">
+            <Label htmlFor="admin-password" className="block mb-2">Admin Password</Label>
+            <Input
+              id="admin-password"
+              type="password"
+              placeholder="Enter admin password to unlock admin features"
+              value={adminPassword}
+              onChange={(e) => handlePasswordChange(e.target.value)}
+              data-testid="input-admin-password"
+              className="max-w-xs"
+            />
+            {adminPassword && <p className="text-xs text-green-600 mt-2">✓ Admin access enabled</p>}
+          </div>
+
           {/* Header */}
           <div className="mb-12 flex flex-wrap items-center justify-between gap-4">
             <div>
