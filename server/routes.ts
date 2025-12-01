@@ -3067,6 +3067,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Admin: Delete specimen customization
+  app.delete("/api/admin/specimen-customizations/:specimenKey", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+      
+      const success = await storage.deleteSpecimenCustomization(req.params.specimenKey);
+      res.json({ success });
+    } catch (error: any) {
+      console.error("[Admin] Delete customization error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   // Frontend: Get all specimen customizations (public endpoint for fetch)
   app.get("/api/specimen-customizations", async (req: any, res: Response) => {
     try {

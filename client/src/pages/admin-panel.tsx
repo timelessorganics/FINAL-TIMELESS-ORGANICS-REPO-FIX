@@ -24,13 +24,52 @@ export default function AdminPanel() {
   const queryClient = useQueryClient();
   const [codeCount, setCodeCount] = useState("10");
   const [activeTab, setActiveTab] = useState("overview");
+  
+  // Fetch specimen customizations from database
+  const { data: specimenCustomizations = [] } = useQuery<any[]>({
+    queryKey: ["/api/admin/specimen-customizations"],
+  });
+
   const [customImages, setCustomImages] = useState<Record<string, string>>(() => {
-    try {
-      const stored = sessionStorage.getItem("specimenCustomImages");
-      return stored ? JSON.parse(stored) : {};
-    } catch {
-      return {};
-    }
+    // Initialize from database customizations
+    const images: Record<string, string> = {};
+    specimenCustomizations?.forEach((custom) => {
+      if (custom.specimenKey && custom.imageUrl) {
+        images[custom.specimenKey] = custom.imageUrl;
+      }
+    });
+    return images;
+  });
+
+  // Save specimen photo to database
+  const saveSpecimenPhoto = useMutation({
+    mutationFn: async ({ specimenKey, imageUrl }: { specimenKey: string; imageUrl: string }) => {
+      const response = await apiRequest("POST", "/api/admin/specimen-customizations", {
+        specimenKey,
+        imageUrl,
+      });
+      return await response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/specimen-customizations"] });
+    },
+    onError: (error: Error) => {
+      toast({ variant: "destructive", title: "Upload failed", description: error.message });
+    },
+  });
+
+  // Delete specimen photo from database
+  const deleteSpecimenPhoto = useMutation({
+    mutationFn: async (specimenKey: string) => {
+      const response = await apiRequest("DELETE", `/api/admin/specimen-customizations/${specimenKey}`);
+      return await response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/specimen-customizations"] });
+    },
+    onError: (error: Error) => {
+      toast({ variant: "destructive", title: "Delete failed", description: error.message });
+    },
   });
 
   const { data: seats } = useQuery<Seat[]>({
@@ -1859,7 +1898,10 @@ export default function AdminPanel() {
                   <Button
                     onClick={() => {
                       setCustomImages({});
-                      sessionStorage.removeItem("specimenCustomImages");
+                      // Clear all from database
+                      Object.keys(customImages).forEach(key => {
+                        deleteSpecimenPhoto.mutate(key);
+                      });
                     }}
                     variant="destructive"
                     className="flex items-center gap-2"
@@ -1925,7 +1967,8 @@ export default function AdminPanel() {
                                     const dataUrl = event.target?.result as string;
                                     const updated = { ...customImages, [specimen.id]: dataUrl };
                                     setCustomImages(updated);
-                                    sessionStorage.setItem("specimenCustomImages", JSON.stringify(updated));
+                                    // Save to database
+                                    saveSpecimenPhoto.mutate({ specimenKey: specimen.id, imageUrl: dataUrl });
                                   };
                                   reader.readAsDataURL(e.target.files[0]);
                                 }
@@ -1940,7 +1983,8 @@ export default function AdminPanel() {
                               const updated = { ...customImages };
                               delete updated[specimen.id];
                               setCustomImages(updated);
-                              sessionStorage.setItem("specimenCustomImages", JSON.stringify(updated));
+                              // Delete from database
+                              deleteSpecimenPhoto.mutate(specimen.id);
                             }}
                             variant="ghost"
                             size="sm"
