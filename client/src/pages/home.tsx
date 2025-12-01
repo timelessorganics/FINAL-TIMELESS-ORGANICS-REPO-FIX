@@ -44,10 +44,14 @@ export default function HomePage() {
   
   const { data: seats } = useQuery<SeatAvailability[]>({
     queryKey: ['/api/seats/availability'],
+    staleTime: 0,
+    refetchOnMount: true,
   });
   
   const { data: prelaunchStats } = useQuery<PreLaunchStats>({
     queryKey: ['/api/prelaunch/stats'],
+    staleTime: 0,
+    refetchOnMount: true,
   });
 
   // 24-hour countdown timer

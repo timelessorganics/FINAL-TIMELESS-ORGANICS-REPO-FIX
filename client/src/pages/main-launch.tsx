@@ -16,6 +16,8 @@ export default function MainLaunch() {
   
   const { data: seats, isLoading } = useQuery<Seat[]>({
     queryKey: ["/api/seats/availability"],
+    staleTime: 0, // Always treat data as stale
+    refetchOnMount: true, // Always refetch when component mounts
   });
 
   const founderSeat = seats?.find((s) => s.type === "founder");
@@ -29,6 +31,29 @@ export default function MainLaunch() {
     setPaymentType(type);
     setSeatModalOpen(true);
   };
+
+  // Calculate display prices dynamically from seat data
+  const getDisplayPrice = (seat: any) => {
+    if (seat?.fireSalePrice && seat?.fireSaleEndsAt && new Date(seat.fireSaleEndsAt) > new Date()) {
+      return `R${(seat.fireSalePrice / 100).toLocaleString('en-ZA', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+    }
+    return `R${(seat?.price ? seat.price / 100 : 0).toLocaleString('en-ZA', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+  };
+
+  const getOriginalPrice = (seat: any) => {
+    if (seat?.fireSalePrice && seat?.fireSaleEndsAt && new Date(seat.fireSaleEndsAt) > new Date()) {
+      if (seat?.price && seat.price > 0) {
+        return `R${(seat.price / 100).toLocaleString('en-ZA', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
+      }
+      return seat?.type === 'founder' ? 'R4,500' : 'R6,000';
+    }
+    return null;
+  };
+
+  const founderRegular = getOriginalPrice(founderSeat);
+  const founderSale = getDisplayPrice(founderSeat);
+  const patronRegular = getOriginalPrice(patronSeat);
+  const patronSale = getDisplayPrice(patronSeat);
 
   return (
     <>
@@ -92,8 +117,8 @@ export default function MainLaunch() {
                   <SeatCard
                     seat={founderSeat}
                     title="Founders Pass"
-                    regularPrice="R4,500"
-                    fireSalePrice="R3,000"
+                    regularPrice={founderRegular || "R4,500"}
+                    fireSalePrice={founderSale}
                     description="Unmounted and unpatinated. Can be purchased now or at a later stage via our shop or at checkout"
                     benefits={[
                       "Your name permanently engraved on our Founders & Patrons Leaf Wall",
@@ -107,8 +132,8 @@ export default function MainLaunch() {
                   <SeatCard
                     seat={patronSeat}
                     title="Patron Gift Card"
-                    regularPrice="R6,000"
-                    fireSalePrice="R4,500"
+                    regularPrice={patronRegular || "R6,000"}
+                    fireSalePrice={patronSale}
                     description="One bronze casting included of a Studio-Guaranteed Cutting + Patina + Mounting"
                     benefits={[
                       "Your name permanently engraved on our Founders & Patrons Leaf Wall",
