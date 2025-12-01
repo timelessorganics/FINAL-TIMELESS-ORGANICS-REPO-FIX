@@ -99,7 +99,7 @@ export default function HomePage() {
         return seat.price / 100;
       }
       // Fallback to known original prices if not in DB
-      return seat?.type === 'founder' ? 5000 : 9500;
+      return seat?.type === 'founder' ? 3500 : 5500;
     }
     return null;
   };
