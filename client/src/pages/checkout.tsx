@@ -15,6 +15,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { Check, Clock, Sparkles, Shield, Award, ArrowLeft, CheckCircle2, Circle } from "lucide-react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
+import type { Sculpture } from "@shared/schema";
 
 const checkoutFormSchema = z.object({
   fullName: z.string().min(2, "Name must be at least 2 characters"),
@@ -74,6 +75,32 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
 
   const { data: seats, isLoading: loadingSeats } = useQuery<any[]>({
     queryKey: ['/api/seats/availability'],
+  });
+
+  const { data: allSculptures = [] } = useQuery<Sculpture[]>({
+    queryKey: ['/api/sculptures'],
+  });
+
+  // Get current season (Southern Hemisphere - Dec/Jan/Feb = summer)
+  const getCurrentSeason = (): string => {
+    const month = new Date().getMonth() + 1; // 1-12
+    if (month >= 12 || month <= 2) return 'summer';
+    if (month >= 3 && month <= 5) return 'autumn';
+    if (month >= 6 && month <= 8) return 'winter';
+    return 'spring'; // Sep, Oct, Nov
+  };
+
+  const currentSeason = getCurrentSeason();
+
+  // Filter sculptures based on casting mode and season
+  const filteredSculptures = allSculptures.filter(s => {
+    if (purchaseMode === 'cast_now') {
+      // Only show sculptures available in current season
+      const peakSeasons = (s.peakSeasons || []).map(m => m.toLowerCase());
+      return peakSeasons.length === 0 || peakSeasons.includes(currentSeason);
+    }
+    // Wait for season - show all
+    return true;
   });
 
   // Normalize seatType to lowercase for matching
@@ -414,24 +441,51 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                   <Card className="border-border/50">
                     <CardHeader className="pb-4">
                       <CardTitle className="text-lg font-medium">Choose Your Specimen</CardTitle>
-                      <CardDescription className="text-sm">Cape Fynbos plants cast in permanent bronze</CardDescription>
+                      <CardDescription className="text-sm">
+                        Cape Fynbos plants cast in permanent bronze
+                        {purchaseMode === 'cast_now' && filteredSculptures.length > 0 && (
+                          <span className="block text-xs text-bronze mt-1">
+                            Showing {filteredSculptures.length} specimens available now in {currentSeason}
+                          </span>
+                        )}
+                      </CardDescription>
                     </CardHeader>
                     <CardContent>
                       <Select>
                         <SelectTrigger className="border-border/50" data-testid="select-specimen">
-                          <SelectValue placeholder="Select a plant specimen..." />
+                          <SelectValue placeholder={filteredSculptures.length === 0 ? "No specimens available for selected option" : "Select a plant specimen..."} />
                         </SelectTrigger>
                         <SelectContent>
-                          <SelectItem value="protea">Protea (Royal Bloom)</SelectItem>
-                          <SelectItem value="aloe">Aloe (Desert Grace)</SelectItem>
-                          <SelectItem value="restio">Restio (Delicate Weave)</SelectItem>
-                          <SelectItem value="disa">Disa (Red Pride)</SelectItem>
-                          <SelectItem value="leucadendron">Leucadendron (Golden Cone)</SelectItem>
-                          <SelectItem value="erica">Erica (Heather Elegance)</SelectItem>
+                          {filteredSculptures.length > 0 ? (
+                            filteredSculptures.map((sculpture) => (
+                              <SelectItem key={sculpture.id} value={sculpture.specimenStyle || sculpture.id}>
+                                {sculpture.name}
+                                {purchaseMode === 'cast_now' && sculpture.peakSeasons && sculpture.peakSeasons.length > 0 && (
+                                  <span className="text-xs text-muted-foreground ml-2">
+                                    (Peak: {sculpture.peakSeasons.join(", ")})
+                                  </span>
+                                )}
+                              </SelectItem>
+                            ))
+                          ) : (
+                            <SelectItem value="placeholder" disabled>
+                              Loading specimens...
+                            </SelectItem>
+                          )}
                         </SelectContent>
                       </Select>
                       <p className="text-xs text-muted-foreground mt-3">
                         Each specimen is cast from real organic matter at 700°C. Your choice will be documented in your certificate.
+                        {purchaseMode === 'cast_now' && (
+                          <span className="block text-xs text-bronze mt-2">
+                            Selecting "{currentSeason}" specimens ensures fast casting - available now!
+                          </span>
+                        )}
+                        {purchaseMode === 'wait_for_season' && (
+                          <span className="block text-xs text-patina mt-2">
+                            Waiting allows us to cast your specimen at peak season for maximum beauty.
+                          </span>
+                        )}
                       </p>
                     </CardContent>
                   </Card>
