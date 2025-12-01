@@ -129,7 +129,8 @@ export default function HomePage() {
             <img 
               src={heroImage} 
               alt="Wall-mounted bronze botanical sculpture on slate" 
-              className="w-full h-full object-cover object-top sm:object-center scale-110 bronze-warmth-subtle"
+              className="w-full h-full object-cover scale-110 bronze-warmth-subtle"
+              style={{objectPosition: '50% 20%'}}
             />
           </div>
           
