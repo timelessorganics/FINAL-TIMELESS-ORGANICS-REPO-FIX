@@ -129,7 +129,7 @@ export default function HomePage() {
             <img 
               src={heroImage} 
               alt="Wall-mounted bronze botanical sculpture on slate" 
-              className="w-full h-full object-cover object-center scale-110 bronze-warmth-subtle"
+              className="w-full h-full object-cover object-top sm:object-center scale-110 bronze-warmth-subtle"
             />
           </div>
           
@@ -168,11 +168,12 @@ export default function HomePage() {
                 One-Of-A-Kind Castings From Organic Matter
               </p>
 
-              {/* 24-HOUR FIRE SALE BADGE */}
+              {/* FIRE SALE BADGE - configurable duration */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-4 sm:mb-6">
-                <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-accent-gold/25 rounded-full text-accent-gold text-xs sm:text-sm font-bold flex items-center gap-2 justify-center">
+                <div className="inline-block px-3 sm:px-4 py-1.5 sm:py-2 bg-accent-gold/25 rounded-full text-accent-gold text-xs sm:text-sm font-bold flex items-center gap-2 justify-center whitespace-nowrap">
                   <Flame className="w-3 sm:w-4 h-3 sm:h-4" />
-                  24-HOUR FIRE SALE
+                  <span className="hidden sm:inline">FIRE SALE</span>
+                  <span className="sm:hidden">SALE</span>
                 </div>
               </div>
 
