@@ -104,35 +104,43 @@ export default function AdminPanel() {
 
   const { data: seats } = useQuery<Seat[]>({
     queryKey: ["/api/admin/seats"],
+    enabled: false,
   });
 
   const { data: purchases } = useQuery<Purchase[]>({
     queryKey: ["/api/admin/purchases"],
+    enabled: false,
   });
 
   const { data: codes } = useQuery<Code[]>({
     queryKey: ["/api/admin/codes"],
+    enabled: false,
   });
 
   const { data: promoCodes } = useQuery<PromoCode[]>({
     queryKey: ["/api/admin/promo-codes"],
+    enabled: false,
   });
 
   const { data: customSpecimens } = useQuery<Purchase[]>({
     queryKey: ["/api/admin/custom-specimens"],
+    enabled: false,
   });
 
   // New admin queries for media, products, auctions
   const { data: mediaAssets } = useQuery<MediaAsset[]>({
     queryKey: ["/api/admin/media"],
+    enabled: false,
   });
 
   const { data: productsList } = useQuery<Product[]>({
     queryKey: ["/api/admin/products"],
+    enabled: false,
   });
 
   const { data: auctionsList } = useQuery<Auction[]>({
     queryKey: ["/api/admin/auctions"],
+    enabled: false,
   });
 
   const { data: workshopDates } = useQuery<any[]>({
