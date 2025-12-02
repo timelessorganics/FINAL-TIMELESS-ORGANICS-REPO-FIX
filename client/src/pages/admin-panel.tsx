@@ -56,14 +56,19 @@ export default function AdminPanel() {
           .list('', { limit: 100 });
         
         if (!error && data) {
-          const files = data.map((file) => ({
-            id: file.name,
-            filename: file.name,
-            originalName: file.name,
-            url: `${supabase.storage.from('specimen-photos').getPublicUrl(file.name).data.publicUrl}`,
-            altText: file.name,
-            tags: [],
-          }));
+          const files = data.map((file) => {
+            const { data: urlData } = supabase.storage
+              .from('specimen-photos')
+              .getPublicUrl(file.name);
+            return {
+              id: file.name,
+              filename: file.name,
+              originalName: file.name,
+              url: urlData.publicUrl,
+              altText: file.name,
+              tags: [],
+            };
+          });
           setStorageFiles(files);
         }
       } catch (err) {
