@@ -51,9 +51,10 @@ export default function AdminPanel() {
   useEffect(() => {
     const fetchStorageFiles = async () => {
       try {
-        const response = await fetch('/api/admin/media-storage-files');
+        const response = await apiRequest("GET", "/api/admin/media-storage-files");
         const files = await response.json();
         setStorageFiles(files || []);
+        console.log("[Storage] Fetched files:", files?.length);
       } catch (err) {
         console.log("Storage fetch error:", err);
       }
