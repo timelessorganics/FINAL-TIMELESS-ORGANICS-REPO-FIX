@@ -47,6 +47,12 @@ export default function AdminPanel() {
     }
   }, [specimenCustomizations]);
 
+  // Fetch page assets (currently unused, can be enabled when needed)
+  // const { data: pageAssetsData } = useQuery<any[]>({
+  //   queryKey: ["/api/admin/page-assets"],
+  //   enabled: false,
+  // });
+
   // Fetch media files from backend endpoint
   useEffect(() => {
     const fetchStorageFiles = async () => {
@@ -1676,7 +1682,7 @@ export default function AdminPanel() {
                       <DialogTitle>Add Media Asset</DialogTitle>
                       <DialogDescription>Upload a file or enter image URL</DialogDescription>
                     </DialogHeader>
-                    <div className="space-y-4">
+                    <div className="space-y-4 py-4">
                       <div className="space-y-2">
                         <Label htmlFor="media-file">Upload Image or Video</Label>
                         <Input id="media-file" type="file" accept="image/*,video/*" onChange={(e) => setMediaForm({...mediaForm, file: e.target.files?.[0] || null})} data-testid="input-media-file" />
@@ -1698,13 +1704,13 @@ export default function AdminPanel() {
                         <Label htmlFor="media-tags">Tags (comma separated)</Label>
                         <Input id="media-tags" placeholder="hero, gallery, product" value={mediaForm.tags} onChange={(e) => setMediaForm({...mediaForm, tags: e.target.value})} data-testid="input-media-tags" />
                       </div>
+                      <DialogFooter>
+                        <Button variant="outline" onClick={() => setShowMediaDialog(false)}>Cancel</Button>
+                        <Button onClick={() => createMedia.mutate({ url: mediaForm.url || undefined, file: mediaForm.file || undefined, altText: mediaForm.altText, caption: mediaForm.caption, tags: mediaForm.tags ? mediaForm.tags.split(',').map(t => t.trim()) : undefined })} disabled={createMedia.isPending || (!mediaForm.file && !mediaForm.url)} data-testid="button-save-media">
+                          {createMedia.isPending ? "Uploading..." : "Add Media"}
+                        </Button>
+                      </DialogFooter>
                     </div>
-                    <DialogFooter>
-                      <Button variant="outline" onClick={() => setShowMediaDialog(false)}>Cancel</Button>
-                      <Button onClick={() => createMedia.mutate({ url: mediaForm.url || undefined, file: mediaForm.file || undefined, altText: mediaForm.altText, caption: mediaForm.caption, tags: mediaForm.tags ? mediaForm.tags.split(',').map(t => t.trim()) : undefined })} disabled={createMedia.isPending || (!mediaForm.file && !mediaForm.url)} data-testid="button-save-media">
-                        {createMedia.isPending ? "Uploading..." : "Add Media"}
-                      </Button>
-                    </DialogFooter>
                   </DialogContent>
                 </Dialog>
               </div>
@@ -1757,7 +1763,7 @@ export default function AdminPanel() {
                       <DialogTitle>Add Product</DialogTitle>
                       <DialogDescription>Create a new product for the shop</DialogDescription>
                     </DialogHeader>
-                    <div className="space-y-4">
+                    <div className="space-y-4 py-4">
                       <div className="grid grid-cols-2 gap-4">
                         <div className="space-y-2">
                           <Label htmlFor="product-name">Name</Label>
@@ -1796,13 +1802,13 @@ export default function AdminPanel() {
                         <Label htmlFor="product-description">Description</Label>
                         <Textarea id="product-description" placeholder="Product description" value={productForm.description} onChange={(e) => setProductForm({...productForm, description: e.target.value})} data-testid="input-product-description" />
                       </div>
+                      <DialogFooter>
+                        <Button variant="outline" onClick={() => setShowProductDialog(false)}>Cancel</Button>
+                        <Button onClick={() => createProduct.mutate({ name: productForm.name, slug: productForm.slug, description: productForm.description, priceCents: parseInt(productForm.priceCents), category: productForm.category, status: productForm.status })} disabled={createProduct.isPending} data-testid="button-save-product">
+                          {createProduct.isPending ? "Creating..." : "Create Product"}
+                        </Button>
+                      </DialogFooter>
                     </div>
-                    <DialogFooter>
-                      <Button variant="outline" onClick={() => setShowProductDialog(false)}>Cancel</Button>
-                      <Button onClick={() => createProduct.mutate({ name: productForm.name, slug: productForm.slug, description: productForm.description, priceCents: parseInt(productForm.priceCents), category: productForm.category, status: productForm.status })} disabled={createProduct.isPending} data-testid="button-save-product">
-                        {createProduct.isPending ? "Creating..." : "Create Product"}
-                      </Button>
-                    </DialogFooter>
                   </DialogContent>
                 </Dialog>
               </div>
@@ -1849,7 +1855,7 @@ export default function AdminPanel() {
                       <DialogTitle>Create Auction</DialogTitle>
                       <DialogDescription>Schedule a new bronze auction</DialogDescription>
                     </DialogHeader>
-                    <div className="space-y-4">
+                    <div className="space-y-4 py-4">
                       <div className="space-y-2">
                         <Label htmlFor="auction-title">Title</Label>
                         <Input id="auction-title" placeholder="Auction title" value={auctionForm.title} onChange={(e) => setAuctionForm({...auctionForm, title: e.target.value, slug: e.target.value.toLowerCase().replace(/\s+/g, '-')})} data-testid="input-auction-title" />
@@ -1872,13 +1878,13 @@ export default function AdminPanel() {
                         <Label htmlFor="auction-description">Description</Label>
                         <Textarea id="auction-description" placeholder="Describe the piece" value={auctionForm.description} onChange={(e) => setAuctionForm({...auctionForm, description: e.target.value})} data-testid="input-auction-description" />
                       </div>
+                      <DialogFooter>
+                        <Button variant="outline" onClick={() => setShowAuctionDialog(false)}>Cancel</Button>
+                        <Button onClick={() => createAuction.mutate({ title: auctionForm.title, slug: auctionForm.slug, description: auctionForm.description, startingBidCents: parseInt(auctionForm.startingBidCents), startAt: auctionForm.startAt, endAt: auctionForm.endAt, status: auctionForm.status })} disabled={createAuction.isPending} data-testid="button-save-auction">
+                          {createAuction.isPending ? "Creating..." : "Create Auction"}
+                        </Button>
+                      </DialogFooter>
                     </div>
-                    <DialogFooter>
-                      <Button variant="outline" onClick={() => setShowAuctionDialog(false)}>Cancel</Button>
-                      <Button onClick={() => createAuction.mutate({ title: auctionForm.title, slug: auctionForm.slug, description: auctionForm.description, startingBidCents: parseInt(auctionForm.startingBidCents), startAt: auctionForm.startAt, endAt: auctionForm.endAt, status: auctionForm.status })} disabled={createAuction.isPending} data-testid="button-save-auction">
-                        {createAuction.isPending ? "Creating..." : "Create Auction"}
-                      </Button>
-                    </DialogFooter>
                   </DialogContent>
                 </Dialog>
               </div>
