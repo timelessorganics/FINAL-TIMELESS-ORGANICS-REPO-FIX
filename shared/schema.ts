@@ -472,7 +472,7 @@ export const insertWorkshopBookingSchema = createInsertSchema(workshopBookingsTa
 
 // Media Assets - Centralized image/file management
 export const mediaAssets = pgTable("media_assets", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
   filename: varchar("filename").notNull(),
   originalName: varchar("original_name").notNull(),
   mimeType: varchar("mime_type").notNull(),
@@ -495,10 +495,10 @@ export type MediaAsset = typeof mediaAssets.$inferSelect;
 
 // Page Assets - Map media to specific page locations (hero, gallery slots, etc.)
 export const pageAssets = pgTable("page_assets", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
   pageSlug: varchar("page_slug").notNull(), // 'home', 'about', 'gallery', etc.
   slotKey: varchar("slot_key").notNull(), // 'hero', 'gallery-1', 'background', etc.
-  assetId: varchar("asset_id").references(() => mediaAssets.id).notNull(),
+  assetId: text("asset_id").references(() => mediaAssets.id).notNull(),
   displayOrder: integer("display_order").default(0),
   isActive: boolean("is_active").default(true),
   updatedAt: timestamp("updated_at").defaultNow(),
@@ -516,7 +516,7 @@ export type PageAsset = typeof pageAssets.$inferSelect;
 
 // Website Content - Editable text sections for each page
 export const websiteContent = pgTable("website_content", {
-  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  id: text("id").primaryKey().default(sql`gen_random_uuid()`),
   pageSlug: varchar("page_slug").notNull(), // 'home', 'about', 'gallery', 'founding-100', etc.
   sectionKey: varchar("section_key").notNull(), // 'hero-title', 'hero-subtitle', 'about-text', etc.
   contentType: varchar("content_type").default('text').notNull(), // 'text', 'richtext', 'html'
