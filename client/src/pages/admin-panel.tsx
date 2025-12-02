@@ -1987,32 +1987,41 @@ export default function AdminPanel() {
                                       if (!base64) throw new Error("Failed to read file");
                                       
                                       // Upload via backend (uses service role, bypasses RLS)
-                                      const uploadUrl = `${API_BASE_URL}/api/admin/upload-specimen-photo`;
-                                      console.log('[Upload] Uploading to:', uploadUrl);
-                                      const response = await fetch(uploadUrl, {
-                                        method: 'POST',
-                                        headers: { 'Content-Type': 'application/json' },
-                                        body: JSON.stringify({
-                                          file: base64,
-                                          specimenKey: specimen.id,
-                                          originalName: file.name,
-                                          contentType: file.type,
-                                        }),
-                                      });
-                                      
-                                      if (!response.ok) {
-                                        const error = await response.json();
-                                        throw new Error(error.error || "Upload failed");
+                                      const uploadUrl = `/api/admin/upload-specimen-photo`;
+                                      console.log('[Upload] Uploading to:', uploadUrl, 'API_BASE_URL:', API_BASE_URL);
+                                      try {
+                                        const response = await fetch(uploadUrl, {
+                                          method: 'POST',
+                                          headers: { 'Content-Type': 'application/json' },
+                                          body: JSON.stringify({
+                                            file: base64,
+                                            specimenKey: specimen.id,
+                                            originalName: file.name,
+                                            contentType: file.type,
+                                          }),
+                                        });
+                                        
+                                        console.log('[Upload] Response status:', response.status);
+                                        
+                                        if (!response.ok) {
+                                          const errorText = await response.text();
+                                          console.error('[Upload] Error response:', errorText);
+                                          throw new Error(errorText || `HTTP ${response.status}`);
+                                        }
+                                        
+                                        const { publicUrl } = await response.json();
+                                        console.log('[Upload] Success! URL:', publicUrl);
+                                        
+                                        // Update UI immediately
+                                        const updated = { ...customImages, [specimen.id]: publicUrl };
+                                        setCustomImages(updated);
+                                        
+                                        // Save to database
+                                        saveSpecimenPhoto.mutate({ specimenKey: specimen.id, imageUrl: publicUrl });
+                                      } catch (fetchErr: any) {
+                                        console.error('[Upload] Fetch error:', fetchErr.message);
+                                        throw fetchErr;
                                       }
-                                      
-                                      const { publicUrl } = await response.json();
-                                      
-                                      // Update UI immediately
-                                      const updated = { ...customImages, [specimen.id]: publicUrl };
-                                      setCustomImages(updated);
-                                      
-                                      // Save to database
-                                      saveSpecimenPhoto.mutate({ specimenKey: specimen.id, imageUrl: publicUrl });
                                     };
                                     reader.readAsDataURL(file);
                                   } catch (err: any) {
