@@ -1,0 +1,82 @@
+Summarize the issue and suggest fixes for the following lint item: Title: RLS Disabled in Public Entity: public.specimen_customizations Schema: public Issue Details: Table public.specimen_customizations is public, but RLS has not been enabled. Description: Detects cases where row level security (RLS) has not been enabled on tables in schemas exposed to PostgREST
+
+
+
+
+Reasoned
+
+Reasoned
+
+Ran list_tables
+
+Reasoned
+Summary of the Issue
+Table: public.specimen_customizations
+Problem: Row Level Security (RLS) is disabled on a table in the public schema, which is exposed via PostgREST.
+Risk: Without RLS, any client with anon or authenticated access through your API can read and potentially modify rows if granted table privileges. This bypasses per-user or per-tenant access controls and is a common data exposure vector.
+Recommended Fixes
+1) Enable RLS
+Enable RLS so that access is denied by default until policies are defined:
+
+SQL Query
+
+
+
+ALTER TABLE public.specimen_customizations ENABLE ROW LEVEL SECURITY;
+
+2) Define Appropriate Policies
+Decide how this table should be accessed. Common patterns:
+
+Public, read-only content (safe to show to everyone; no writes from clients):
+SQL Query
+
+
+
+-- Allow anyone to read
+CREATE POLICY "public_read_specimen_customizations"
+  ON public.specimen_customizations
+  FOR SELECT
+  TO anon, authenticated
+  USING (true);
+
+-- Block direct writes from clients (do not grant INSERT/UPDATE/DELETE to anon/authenticated)
+REVOKE INSERT, UPDATE, DELETE ON public.specimen_customizations FROM anon, authenticated;
+
+Authenticated-only reads:
+SQL Query
+
+
+
+CREATE POLICY "auth_read_specimen_customizations"
+  ON public.specimen_customizations
+  FOR SELECT
+  TO authenticated
+  USING (true);
+REVOKE SELECT ON public.specimen_customizations FROM anon;
+
+Owner- or admin-controlled writes only (via server role):
+Keep all write privileges ungranted for anon/authenticated, and perform writes with the service_role or a secure RPC.
+3) Verify Grants
+RLS controls row visibility, but privileges still matter. Ensure you haven’t granted write access to public roles unintentionally:
+
+SQL Query
+
+
+
+REVOKE ALL ON public.specimen_customizations FROM PUBLIC, anon, authenticated;
+GRANT SELECT ON public.specimen_customizations TO anon, authenticated; -- only if read access is intended
+-- Keep INSERT/UPDATE/DELETE restricted to service_role or a trusted DB role
+
+4) Index Columns Used in Policies (if adding filters later)
+If you later add conditions (e.g., tenant, status), add indexes on those columns to keep RLS performant.
+
+Minimal, Safe Baseline
+If this table is intended as read-only public content:
+
+Enable RLS
+Add a SELECT-only policy for anon/authenticated
+Revoke all writes from anon/authenticated
+That resolves the lint and protects against unintended data exposure while preserving API reads.
+
+
+
