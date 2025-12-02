@@ -61,7 +61,7 @@ async function getSeatingPrice(seatType: 'founder' | 'patron'): Promise<number> 
   const seats = await storage.getSeats();
   const seat = seats.find(s => s.type === seatType);
   if (!seat) throw new Error(`Seat type ${seatType} not found`);
-  
+
   // Check if fire sale is active
   if (seat.fireSalePrice && seat.fireSaleEndsAt && new Date() < new Date(seat.fireSaleEndsAt)) {
     return seat.fireSalePrice;
@@ -104,7 +104,7 @@ async function updateSeatingPricing(req: any, res: Response): Promise<void> {
     }
 
     const { founderPrice, patronPrice } = req.body;
-    
+
     // Update in database
     if (founderPrice !== undefined) {
       await storage.updateSeatPrice("founder", founderPrice);
@@ -139,7 +139,7 @@ async function handlePurchaseCompletion(purchaseId: string): Promise<void> {
     if (purchase.isGift && purchase.giftRecipientEmail && purchase.giftRecipientName) {
       const buyer = await storage.getUser(purchase.userId);
       const buyerName = buyer?.firstName ? buyer.firstName : "A Friend";
-      
+
       await sendGiftNotificationEmail(
         purchase.giftRecipientEmail,
         purchase.giftRecipientName,
@@ -239,13 +239,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Fix fire sale prices if they're incorrect (legacy data fix)
       const founderSeat = existingSeats.find(s => s.type === 'founder');
       const patronSeat = existingSeats.find(s => s.type === 'patron');
-      
+
       if (founderSeat?.fireSalePrice && founderSeat.fireSalePrice > 200000) {
         console.log('[Init] Correcting founder fire sale price from', founderSeat.fireSalePrice, 'to 200000 (R2,000)');
         const { db } = await import("./db");
         await db.update(seats).set({ fireSalePrice: 200000 }).where(eq(seats.type, 'founder'));
       }
-      
+
       if (patronSeat?.fireSalePrice && patronSeat.fireSalePrice > 350000) {
         console.log('[Init] Correcting patron fire sale price from', patronSeat.fireSalePrice, 'to 350000 (R3,500)');
         const { db } = await import("./db");
@@ -339,13 +339,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Wrapped in try-catch to gracefully handle missing reservations table
       let founderReservations = 0;
       let patronReservations = 0;
-      
+
       try {
         const expiredCount = await storage.expireOldReservations();
         if (expiredCount > 0) {
           console.log(`[Reservations] Expired ${expiredCount} old reservations, seats returned to pool`);
         }
-        
+
         // Expire SECURE deposits where balance deadline has passed
         const expiredDeposits = await db.update(purchases)
           .set({ status: 'failed' })
@@ -357,11 +357,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
             )
           )
           .returning();
-        
+
         if (expiredDeposits.length > 0) {
           console.log(`[SECURE] Released ${expiredDeposits.length} expired deposit holds - seats returned to pool`);
         }
-        
+
         // Expire early bird holds that have passed their hold expiration time
         const expiredHolds = await db.update(subscribers)
           .set({ holdStatus: 'expired' })
@@ -372,15 +372,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
             )
           )
           .returning();
-        
+
         if (expiredHolds.length > 0) {
           console.log(`[Early Bird] Released ${expiredHolds.length} expired early bird holds`);
         }
-        
+
         // Get active reservation counts to adjust available seats
         founderReservations = await storage.getActiveReservationsCount("founder");
         patronReservations = await storage.getActiveReservationsCount("patron");
-        
+
         // Add active early bird holds to reservation count
         const activeHolds = await db.select({ seatType: subscribers.seatType })
           .from(subscribers)
@@ -390,19 +390,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
               gt(subscribers.holdExpiresAt, new Date())
             )
           );
-        
+
         const earlyBirdFounderHolds = activeHolds.filter(h => h.seatType === 'founder').length;
         const earlyBirdPatronHolds = activeHolds.filter(h => h.seatType === 'patron').length;
         founderReservations += earlyBirdFounderHolds;
         patronReservations += earlyBirdPatronHolds;
-        
+
       } catch (reservationError: any) {
         // Reservations table may not exist - continue without reservation counts
         console.log(`[Reservations] Table not available, skipping reservation adjustments`);
       }
-      
+
       const seats = await storage.getSeats();
-      
+
       // Adjust available counts by subtracting active reservations
       const adjustedSeats = seats.map(seat => {
         const currentAvailable = seat.totalAvailable - seat.sold;
@@ -413,7 +413,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           reservedCount: reservedForType
         };
       });
-      
+
       res.json(adjustedSeats);
     } catch (error: any) {
       console.error("Get seats error:", error);
@@ -618,7 +618,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Get customer email from user record or use gift recipient
         let customerEmail = "noemail@provided.co.za";
         let customerName = "Customer";
-        
+
         if (purchase.isGift && purchase.giftRecipientEmail) {
           customerEmail = purchase.giftRecipientEmail;
           customerName = purchase.giftRecipientName || "Recipient";
@@ -632,7 +632,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             customerName = user.firstName || "Customer";
           }
         }
-        
+
         // Create PayFast payment data using customer email, NOT merchant email
         // CRITICAL: PayFast rejects if we send merchant's own email as customer email
         const paymentData = createPaymentData(
@@ -918,13 +918,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
         // Try to get email from user record first, then from PayFast notification
         const userEmail = user?.email || pfData.email_address;
         console.log("[Email] Sending notifications to:", userEmail, "| Certificate:", certificateUrl ? "generated" : "pending");
-        
+
         if (userEmail) {
           // Always send confirmation email - certificate can fail without blocking email
           sendPurchaseConfirmationEmail(userEmail, userName, purchase).catch(
             (err) => console.error("[Email] Confirmation failed:", err),
           );
-          
+
           // Send certificate email if we have the certificate
           if (certificateUrl) {
             sendCertificateEmail(
@@ -1397,7 +1397,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // =============================================
   // PRE-LAUNCH RESERVATION SYSTEM
   // =============================================
-  
+
   // Public: Get pre-launch reservation stats - ONLY count completed payments
   app.get("/api/prelaunch/stats", async (req: Request, res: Response) => {
     try {
@@ -1408,24 +1408,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
         founderHolds: 0,
         patronHolds: 0,
       };
-      
+
       try {
         // ONLY count purchases with 'completed' status = actually paid
         const allPurchases = await storage.getAllPurchases();
         if (allPurchases && Array.isArray(allPurchases)) {
           const completedPurchases = allPurchases.filter(p => p.status === 'completed');
-          
+
           stats.founderDeposits = completedPurchases.filter(p => p.seatType === 'founder').length;
           stats.patronDeposits = completedPurchases.filter(p => p.seatType === 'patron').length;
           stats.totalReserved = stats.founderDeposits + stats.patronDeposits;
-          
+
           // Also count active 24-hour holds if available
           try {
             const founderHolds = await storage.getActiveReservationsByType('founder');
             if (founderHolds && Array.isArray(founderHolds)) {
               stats.founderHolds = founderHolds.length;
             }
-            
+
             const patronHolds = await storage.getActiveReservationsByType('patron');
             if (patronHolds && Array.isArray(patronHolds)) {
               stats.patronHolds = patronHolds.length;
@@ -1437,7 +1437,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       } catch (e) {
         console.error("Stats query error:", e);
       }
-      
+
       res.json(stats);
     } catch (error: any) {
       console.error("Pre-launch stats error:", error);
@@ -1451,27 +1451,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     }
   });
-  
+
   // Public: Create pre-launch reservation (early bird)
   app.post("/api/prelaunch/reserve", async (req: Request, res: Response) => {
     try {
       const { name, email, phone, seatType, reservationType } = req.body;
-      
+
       if (!name || !email || !seatType || !reservationType) {
         return res.status(400).json({ message: "Missing required fields" });
       }
-      
+
       // Valid types: 'reserve' (free), 'secure' (R100), 'buy' (full price)
       if (!['reserve', 'secure', 'buy'].includes(reservationType)) {
         return res.status(400).json({ message: "Invalid reservation type" });
       }
-      
+
       // Check if email already has an active early bird hold
       const existing = await storage.getSubscriberByEmail(email.toLowerCase());
       if (existing && existing.holdStatus === 'active' && existing.holdExpiresAt && new Date(existing.holdExpiresAt) > new Date()) {
         return res.status(409).json({ message: "You already have an active early bird hold with this email" });
       }
-      
+
       // Calculate hold expiration: Monday, December 1, 2025 at midnight SA time (UTC+2)
       // If today is already Monday or past, expires next Monday midnight
       const getMondayMidnightSA = () => {
@@ -1480,15 +1480,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const sa = new Date(now.toLocaleString('en-US', { timeZone: 'Africa/Johannesburg' }));
         const dayOfWeek = sa.getDay();
         const daysUntilMonday = dayOfWeek === 1 ? 7 : (1 - dayOfWeek + 7) % 7;
-        
+
         const nextMonday = new Date(sa);
         nextMonday.setDate(nextMonday.getDate() + (daysUntilMonday || 7));
         nextMonday.setHours(0, 0, 0, 0);
         return nextMonday;
       };
-      
+
       const holdExpiresAt = getMondayMidnightSA();
-      
+
       // Create or update subscriber with hold details
       const subscriber = await storage.createSubscriber({
         name,
@@ -1496,7 +1496,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         phone: phone || null,
         notes: `[PRELAUNCH] ${seatType} ${reservationType} - Reserved ${new Date().toISOString()}`,
       });
-      
+
       // Update hold expiration in database
       await db.update(subscribers).set({
         reservationType,
@@ -1504,23 +1504,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
         holdExpiresAt,
         holdStatus: 'active',
       }).where(eq(subscribers.id, subscriber.id));
-      
+
       console.log(`[Early Bird] ${name} (${email}) reserved ${seatType} seat as "${reservationType}" - expires ${holdExpiresAt.toISOString()}`);
-      
+
       // Add to Mailchimp
       const tags = [
         "Pre-Launch Reservation",
         seatType === 'founder' ? "Founder Interest" : "Patron Interest",
         reservationType === 'reserve' ? "Early Bird Reserve" : (reservationType === 'secure' ? "Early Bird Secure" : "Early Bird Buy"),
       ];
-      
+
       addSubscriberToMailchimp({
         email: subscriber.email,
         firstName: name,
         phone: phone || undefined,
         tags,
       }).catch((err) => console.error("[Mailchimp] Failed to sync reservation:", err));
-      
+
       // Send confirmation email
       sendCertificateToRecipient(
         subscriber.email,
@@ -1528,7 +1528,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         `/confirm-reservation?email=${encodeURIComponent(subscriber.email)}`,
         seatType
       ).catch((err) => console.error("[Email] Failed to send reservation confirmation:", err));
-      
+
       res.json({ 
         success: true, 
         message: `Your ${reservationType === 'reserve' ? 'reserve' : reservationType === 'secure' ? 'secure (R100)' : 'buy now'} hold is confirmed! Expires Monday midnight SA time.`,
@@ -2200,12 +2200,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
 
         const { count = 1, seatType = "patron" } = req.body;
-        
+
         // Validate seat type
         if (seatType !== "founder" && seatType !== "patron") {
           return res.status(400).json({ message: "Invalid seat type. Must be 'founder' or 'patron'" });
         }
-        
+
         const generatedCodes = [];
 
         for (let i = 0; i < Math.min(count, 20); i++) {
@@ -2273,20 +2273,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/media", async (req: any, res: Response) => {
     try {
       const { supabaseAdmin } = await import("./supabaseAuth");
-      
+
       // Helper to recursively list all files in bucket and subfolders
       async function listAllFiles(path: string = ''): Promise<any[]> {
         const { data, error } = await supabaseAdmin.storage
           .from('specimen-photos')
           .list(path, { limit: 1000 });
-        
+
         if (error) {
           console.warn(`Storage list error for path '${path}':`, error);
           return [];
         }
-        
+
         let allFiles: any[] = [];
-        
+
         if (data) {
           for (const item of data) {
             if (item.id === false) {
@@ -2301,13 +2301,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
             }
           }
         }
-        
+
         return allFiles;
       }
-      
+
       // Get all image files from storage
       const imageFiles = await listAllFiles();
-      
+
       // Convert to media asset format with proxy URLs
       const assets = imageFiles.map((file: any) => ({
         id: file.fullPath,
@@ -2316,7 +2316,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         caption: file.name,
         tags: [],
       }));
-      
+
       res.json(assets);
     } catch (error: any) {
       console.error("Get media assets error:", error);
@@ -2337,7 +2337,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const { supabaseAdmin } = await import("./supabaseAuth");
-      
+
       // Check if service role key is available
       if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
         console.error("[ImageProxy] SUPABASE_SERVICE_ROLE_KEY not set");
@@ -2373,20 +2373,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/admin/media-storage-files", async (req: any, res: Response) => {
     try {
       const { supabaseAdmin } = await import("./supabaseAuth");
-      
+
       // Helper to recursively list all files in bucket and subfolders
       async function listAllFiles(path: string = ''): Promise<any[]> {
         const { data, error } = await supabaseAdmin.storage
           .from('specimen-photos')
           .list(path, { limit: 1000 });
-        
+
         if (error) {
           console.warn(`Storage list error for path '${path}':`, error);
           return [];
         }
-        
+
         let allFiles: any[] = [];
-        
+
         if (data) {
           for (const item of data) {
             if (item.id === false) {
@@ -2402,14 +2402,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
             }
           }
         }
-        
+
         return allFiles;
       }
-      
+
       // Get all files from bucket and subfolders
       const imageFiles = await listAllFiles();
       console.log(`[Storage] Found ${imageFiles.length} image files`);
-      
+
       // Generate signed URLs for each file
       const files = await Promise.all(imageFiles.map(async (file: any) => {
         try {
@@ -2417,16 +2417,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
           const { data, error } = await supabaseAdmin.storage
             .from('specimen-photos')
             .createSignedUrl(file.fullPath, 60 * 60 * 24 * 365);
-          
+
           if (error) {
             console.warn(`[SignURL Error] ${file.fullPath}:`, error);
           }
-          
+
           const signedUrl = data?.signedUrl;
           if (signedUrl && !signedUrl.includes('?token=')) {
             console.warn(`[SignURL Warning] No token in URL for ${file.fullPath}: ${signedUrl}`);
           }
-          
+
           return {
             id: file.fullPath,
             filename: file.name,
@@ -2477,7 +2477,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/admin/media", async (req: any, res: Response) => {
     try {
       const { filename, originalName, mimeType, size, url, altText, caption, tags } = req.body;
-      
+
       if (!filename || !originalName || !mimeType || !url) {
         return res.status(400).json({ message: "Missing required fields: filename, originalName, mimeType, url" });
       }
@@ -2552,42 +2552,49 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  2555    app.post("/api/admin/upload-specimen-photo", async (req: any, res: Response) => {
-  2556      try {
-  2557        console.log('[Upload Endpoint] Request received');
-  2558        const { supabaseAdmin } = await import("./supabaseAuth");
-  2559        const data = req.body;
-  2560        
-  2561        console.log('[Upload Endpoint] Data received:', { specimenKey: data.specimenKey, hasFile: !!data.file, fileName: data.originalName });
-  2562        
-  2563        if (!data.file || !data.specimenKey) {
-  2564          console.error('[Upload Endpoint] Missing file or specimenKey');
-  2565          return res.status(400).json({ error: "Missing file or specimenKey" });
-  2566        }
-  2567    
-  2568        const buffer = Buffer.from(data.file, 'base64');
-  2569        const fileName = `${data.specimenKey}-${Date.now()}-${data.originalName}.jpg`;
-  2570    
-  2571        // Upload using service role (has full permissions, bypasses RLS)
-  2572        const uploadRes = await supabaseAdmin.storage
-  2573          .from('specimen-photos')
-  2574          .upload(fileName, buffer, { contentType: 'image/jpeg' });
-  2575    
-  2576        if (uploadRes.error) {
-  2577          console.error('[Upload Endpoint] Upload error:', uploadRes.error);
-  2578          return res.status(500).json({ error: uploadRes.error.message || 'Failed to upload photo' });
-  2579        }
-  2580    
-  2581        const publicUrl = supabaseAdmin.storage
-  2582          .from('specimen-photos')
-  2583          .getPublicUrl(fileName).publicURL;
-  2584    
-  2585        res.status(200).json({ fileName, publicUrl });
-  2586      } catch (error) {
-  2587        console.error('[Upload Endpoint] Error:', error);
-  2588        res.status(500).json({ error: error.message || 'An unexpected error occurred' });
-  2589      }
-  2590    });
+  // Admin: Upload specimen photo with service role (bypasses RLS)
+  app.post("/api/admin/upload-specimen-photo", async (req: any, res: Response) => {
+    try {
+      console.log('[Upload Endpoint] Request received');
+      const { supabaseAdmin } = await import("./supabaseAuth");
+      const data = req.body;
+
+      console.log('[Upload Endpoint] Data received:', { specimenKey: data.specimenKey, hasFile: !!data.file, fileName: data.originalName });
+
+      if (!data.file || !data.specimenKey) {
+        console.error('[Upload Endpoint] Missing file or specimenKey');
+        return res.status(400).json({ error: "Missing file or specimenKey" });
+      }
+
+      // Decode base64 file
+      const buffer = Buffer.from(data.file, 'base64');
+      const fileName = `${data.specimenKey}-${Date.now()}-${data.originalName || 'photo.jpg'}`;
+
+      // Upload using service role (has full permissions, bypasses RLS)
+      const { data: uploadData, error: uploadError } = await supabaseAdmin.storage
+        .from('specimen-photos')
+        .upload(fileName, buffer, { contentType: data.contentType || 'image/jpeg' });
+
+      if (uploadError) throw uploadError;
+
+      // Get public URL
+      const { data: { publicUrl } } = supabaseAdmin.storage
+        .from('specimen-photos')
+        .getPublicUrl(fileName);
+
+      // Save to database
+      try {
+        await storage.upsertSpecimenCustomization({ specimenKey: data.specimenKey, imageUrl: publicUrl });
+      } catch (dbError: any) {
+        console.warn("Database save failed but upload succeeded:", dbError.message);
+      }
+
+      res.json({ publicUrl, fileName });
+    } catch (error: any) {
+      console.error("Upload specimen photo error:", error);
+      res.status(500).json({ error: error.message || "Upload failed" });
+    }
+  });
 
   // Admin: Get page assets
   app.get("/api/admin/page-assets", isAuthenticated, async (req: any, res: Response) => {
@@ -2652,7 +2659,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
 
       const { name, slug, description, shortDescription, priceCents, comparePriceCents, status, category, sku, stockQuantity, featuredImageId, displayOrder, metadata } = req.body;
-      
+
       if (!name || !slug || !priceCents) {
         return res.status(400).json({ message: "Missing required fields: name, slug, priceCents" });
       }
@@ -2725,7 +2732,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
 
       const { title, slug, description, startAt, endAt, reservePriceCents, startingBidCents, bidIncrementCents, status, featuredImageId, metadata } = req.body;
-      
+
       if (!title || !slug || !startAt || !endAt || !startingBidCents) {
         return res.status(400).json({ message: "Missing required fields: title, slug, startAt, endAt, startingBidCents" });
       }
@@ -2818,7 +2825,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
 
       const { date, startTime, endTime, maxParticipants, depositAmount, location } = req.body;
-      
+
       if (!date || !startTime || !endTime || !depositAmount || !location) {
         return res.status(400).json({ message: "Missing required fields" });
       }
@@ -2864,7 +2871,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
 
       const { pageSlug, sectionKey, content, contentType, metadata } = req.body;
-      
+
       if (!pageSlug || !sectionKey || !content) {
         return res.status(400).json({ message: "pageSlug, sectionKey, and content are required" });
       }
@@ -2954,7 +2961,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
 
       const { pageSlug, slotKey, assetId, displayOrder } = req.body;
-      
+
       if (!pageSlug || !slotKey || !assetId) {
         return res.status(400).json({ message: "pageSlug, slotKey, and assetId are required" });
       }
@@ -3001,7 +3008,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
 
       const { founderPrice, patronPrice } = req.body;
-      
+
       if (founderPrice !== undefined) {
         await storage.updateSeatPrice("founder", founderPrice);
       }
@@ -3031,16 +3038,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         patronPrice: z.number().int().min(100, "Patron price must be at least R1").max(10000000, "Price too high"),
         durationHours: z.number().int().min(1, "Duration must be at least 1 hour").max(168, "Duration cannot exceed 1 week")
       });
-      
+
       const parsed = fireSaleSchema.safeParse(req.body);
       if (!parsed.success) {
         return res.status(400).json({ message: "Invalid fire sale parameters", errors: parsed.error.flatten() });
       }
-      
+
       const { founderPrice, patronPrice, durationHours } = parsed.data;
-      
+
       await storage.activateFireSale(founderPrice, patronPrice, durationHours);
-      
+
       const seats = await storage.getSeats();
       res.json({ 
         success: true, 
@@ -3062,7 +3069,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
 
       await storage.deactivateFireSale();
-      
+
       const seats = await storage.getSeats();
       res.json({ success: true, message: "Fire sale deactivated", seats });
     } catch (error: any) {
@@ -3092,7 +3099,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const bronzeCode = generateBronzeClaimCode();
         const workshopVoucherCode = generateWorkshopVoucherCode('founder');
         const lifetimeCode = generateLifetimeWorkshopCode('founder');
-        
+
         results.tests.codeGeneration = {
           status: 'PASS',
           bronze: bronzeCode,
@@ -3245,7 +3252,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!userId) return res.status(401).json({ message: "Unauthorized" });
       const user = await storage.getUser(userId);
       if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
-      
+
       const customizations = await storage.getAllSpecimenCustomizations();
       res.json(customizations);
     } catch (error: any) {
@@ -3261,7 +3268,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!userId) return res.status(401).json({ message: "Unauthorized" });
       const user = await storage.getUser(userId);
       if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
-      
+
       const customization = await storage.upsertSpecimenCustomization(req.body);
       res.json(customization);
     } catch (error: any) {
@@ -3277,7 +3284,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!userId) return res.status(401).json({ message: "Unauthorized" });
       const user = await storage.getUser(userId);
       if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
-      
+
       const success = await storage.deleteSpecimenCustomization(req.params.specimenKey);
       res.json({ success });
     } catch (error: any) {
