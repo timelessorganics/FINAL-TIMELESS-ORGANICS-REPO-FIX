@@ -282,28 +282,27 @@ export default function AdminPanel() {
     });
   };
 
-  // Create media asset mutation - upload via backend endpoint
+  // Create media asset mutation - upload via backend endpoint using FormData
   const createMedia = useMutation({
     mutationFn: async (data: { url?: string; file?: File; altText?: string; caption?: string; tags?: string[] }) => {
       let mediaUrl = data.url;
       let filename = "image";
       
       if (data.file) {
-        // Convert file to base64
-        const fileToUpload = data.file;
-        const fileBase64 = await new Promise<string>((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result as string);
-          reader.onerror = reject;
-          reader.readAsDataURL(fileToUpload);
+        // Upload file using FormData (multipart/form-data)
+        const formData = new FormData();
+        formData.append('media-file', data.file);
+
+        const uploadResponse = await fetch('/api/admin/upload-specimen-photo', {
+          method: 'POST',
+          body: formData,
         });
-        
-        // Upload via backend endpoint
-        const uploadResponse = await apiRequest("POST", "/api/admin/upload-specimen-photo", {
-          file: fileBase64,
-          specimenKey: `media-${Date.now()}`,
-        });
-        
+
+        if (!uploadResponse.ok) {
+          const error = await uploadResponse.json();
+          throw new Error(error.error || 'Upload failed');
+        }
+
         const uploadResult = await uploadResponse.json();
         if (!uploadResult.publicUrl) {
           throw new Error("Upload failed: no public URL returned");

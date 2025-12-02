@@ -3,6 +3,7 @@ import type { Server } from "http";
 import { createServer } from "http";
 import express from "express";
 import path from "path";
+import multer from "multer";
 import { storage } from "./storage";
 import { setupAuth, isAuthenticated } from "./supabaseAuth";
 import {
@@ -2552,28 +2553,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Set up multer for file uploads (memory storage)
+  const upload = multer({ storage: multer.memoryStorage() });
+
   // Admin: Upload specimen photo with service role (bypasses RLS)
-  app.post("/api/admin/upload-specimen-photo", async (req: any, res: Response) => {
+  app.post("/api/admin/upload-specimen-photo", upload.single('media-file'), async (req: any, res: Response) => {
     try {
-      console.log('[Upload Endpoint] Request received');
-      const { supabaseAdmin } = await import("./supabaseAuth");
-      const data = req.body;
-
-      console.log('[Upload Endpoint] Data received:', { specimenKey: data.specimenKey, hasFile: !!data.file, fileName: data.originalName });
-
-      if (!data.file || !data.specimenKey) {
-        console.error('[Upload Endpoint] Missing file or specimenKey');
-        return res.status(400).json({ error: "Missing file or specimenKey" });
+      if (!req.file) {
+        return res.status(400).json({ error: 'No file uploaded' });
       }
 
-      // Decode base64 file
-      const buffer = Buffer.from(data.file, 'base64');
-      const fileName = `${data.specimenKey}-${Date.now()}-${data.originalName || 'photo.jpg'}`;
+      const { supabaseAdmin } = await import("./supabaseAuth");
+      const { originalname, buffer, mimetype } = req.file;
+      const fileName = `${Date.now()}-${originalname}`;
 
       // Upload using service role (has full permissions, bypasses RLS)
       const { data: uploadData, error: uploadError } = await supabaseAdmin.storage
         .from('specimen-photos')
-        .upload(fileName, buffer, { contentType: data.contentType || 'image/jpeg' });
+        .upload(fileName, buffer, { contentType: mimetype });
 
       if (uploadError) throw uploadError;
 
@@ -2581,13 +2578,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { data: { publicUrl } } = supabaseAdmin.storage
         .from('specimen-photos')
         .getPublicUrl(fileName);
-
-      // Save to database
-      try {
-        await storage.upsertSpecimenCustomization({ specimenKey: data.specimenKey, imageUrl: publicUrl });
-      } catch (dbError: any) {
-        console.warn("Database save failed but upload succeeded:", dbError.message);
-      }
 
       res.json({ publicUrl, fileName });
     } catch (error: any) {
