@@ -2269,10 +2269,54 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // PUBLIC MEDIA ROUTES
   // ============================================
 
-  // Public: Get all media assets (for gallery)
+  // Public: Get all media assets (for gallery) - returns storage files with proxy URLs
   app.get("/api/media", async (req: any, res: Response) => {
     try {
-      const assets = await storage.getMediaAssets();
+      const { supabaseAdmin } = await import("./supabaseAuth");
+      
+      // Helper to recursively list all files in bucket and subfolders
+      async function listAllFiles(path: string = ''): Promise<any[]> {
+        const { data, error } = await supabaseAdmin.storage
+          .from('specimen-photos')
+          .list(path, { limit: 1000 });
+        
+        if (error) {
+          console.warn(`Storage list error for path '${path}':`, error);
+          return [];
+        }
+        
+        let allFiles: any[] = [];
+        
+        if (data) {
+          for (const item of data) {
+            if (item.id === false) {
+              // It's a folder - recursively list it
+              const folderPath = path ? `${path}/${item.name}` : item.name;
+              const folderFiles = await listAllFiles(folderPath);
+              allFiles = allFiles.concat(folderFiles);
+            } else if (item.name && item.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+              // It's an image file
+              const fullPath = path ? `${path}/${item.name}` : item.name;
+              allFiles.push({ ...item, fullPath });
+            }
+          }
+        }
+        
+        return allFiles;
+      }
+      
+      // Get all image files from storage
+      const imageFiles = await listAllFiles();
+      
+      // Convert to media asset format with proxy URLs
+      const assets = imageFiles.map((file: any) => ({
+        id: file.fullPath,
+        url: `/api/image-proxy?file=${encodeURIComponent(file.fullPath)}`,
+        altText: file.name,
+        caption: file.name,
+        tags: [],
+      }));
+      
       res.json(assets);
     } catch (error: any) {
       console.error("Get media assets error:", error);
