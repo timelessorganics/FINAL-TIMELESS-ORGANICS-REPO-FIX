@@ -5,7 +5,7 @@ import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { SiGithub, SiGoogle } from "react-icons/si";
+import { SiGoogle } from "react-icons/si";
 import { Mail } from "lucide-react";
 // import { SmokeFireBackground } from "@/components/SmokeFireBackground"; // DISABLED - causing crashes
 
@@ -105,15 +105,6 @@ export default function SignIn() {
           >
             <SiGoogle className="mr-2 h-4 w-4" />
             Continue with Google
-          </Button>
-          <Button
-            onClick={() => signInWithProvider('github')}
-            variant="outline"
-            className="w-full"
-            data-testid="button-github-signin"
-          >
-            <SiGithub className="mr-2 h-4 w-4" />
-            Continue with GitHub
           </Button>
         </div>
 
