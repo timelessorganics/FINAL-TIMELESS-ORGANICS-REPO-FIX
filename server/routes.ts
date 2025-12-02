@@ -2298,14 +2298,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       // Filter out folders, only include image files
-      const files = (data || [])
+      const imageFiles = (data || [])
         .filter((file: any) => !file.metadata || file.metadata?.mimetype?.startsWith('image/') || !file.id.includes('.') === false)
-        .filter((file: any) => file.name && !file.name.endsWith('/') && file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i))
-        .map((file) => {
-          // Generate signed URL (works for private buckets too)
-          const { data: signedUrl } = supabaseAdmin.storage
+        .filter((file: any) => file.name && !file.name.endsWith('/') && file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i));
+      
+      // Generate signed URLs for each file
+      const files = await Promise.all(imageFiles.map(async (file: any) => {
+        try {
+          // Generate signed URL (works for private buckets too) - 1 year expiry
+          const { data: signedUrl, error } = await supabaseAdmin.storage
             .from('specimen-photos')
-            .createSignedUrl(file.name, 60 * 60 * 24 * 365); // 1 year expiry
+            .createSignedUrl(file.name, 60 * 60 * 24 * 365);
           
           return {
             id: file.name,
@@ -2315,7 +2318,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
             altText: file.name,
             tags: [],
           };
-        });
+        } catch (err) {
+          console.warn(`Failed to sign URL for ${file.name}:`, err);
+          return {
+            id: file.name,
+            filename: file.name,
+            originalName: file.name,
+            url: `https://rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/public/specimen-photos/${file.name}`,
+            altText: file.name,
+            tags: [],
+          };
+        }
+      }));
       res.json(files);
     } catch (error: any) {
       console.error("Storage files error:", error);
