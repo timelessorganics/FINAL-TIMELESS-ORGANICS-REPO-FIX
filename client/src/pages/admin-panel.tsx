@@ -1717,8 +1717,8 @@ export default function AdminPanel() {
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
                 {(storageFiles && storageFiles.length > 0 ? storageFiles : mediaAssets)?.map((asset) => (
                   <Card key={asset.id} className="bg-card border-card-border overflow-hidden group">
-                    <div className="aspect-square relative bg-muted">
-                      <img src={asset.url} alt={asset.altText || asset.filename} className="w-full h-full object-cover" />
+                    <div className="aspect-square relative bg-muted overflow-hidden">
+                      <img src={asset.url} alt={asset.altText || asset.filename} className="w-full h-full object-cover block" loading="lazy" />
                       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                         <Button size="icon" variant="ghost" className="text-white" onClick={() => window.open(asset.url, '_blank')} data-testid={`button-view-media-${asset.id}`}>
                           <ExternalLink className="w-4 h-4" />
