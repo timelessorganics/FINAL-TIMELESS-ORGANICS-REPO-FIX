@@ -2333,11 +2333,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
             .from('specimen-photos')
             .createSignedUrl(file.fullPath, 60 * 60 * 24 * 365);
           
+          if (error) {
+            console.warn(`[SignURL Error] ${file.fullPath}:`, error);
+          }
+          
+          const signedUrl = data?.signedUrl;
+          if (signedUrl && !signedUrl.includes('?token=')) {
+            console.warn(`[SignURL Warning] No token in URL for ${file.fullPath}: ${signedUrl}`);
+          }
+          
           return {
             id: file.fullPath,
             filename: file.name,
             originalName: file.name,
-            url: data?.signedUrl || `https://rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/public/specimen-photos/${file.fullPath}`,
+            url: signedUrl || `https://rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/public/specimen-photos/${file.fullPath}`,
             altText: file.name,
             tags: [],
           };
