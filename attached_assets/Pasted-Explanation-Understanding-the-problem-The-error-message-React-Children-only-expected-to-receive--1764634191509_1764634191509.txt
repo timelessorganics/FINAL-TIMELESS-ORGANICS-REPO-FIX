@@ -1,0 +1,117 @@
+Explanation
+
+Understanding the problem
+The error message React.Children.only expected to receive a single React element child indicates that a React component or utility function, which specifically requires exactly one child element, has received zero, two, or more children. The React.Children.only function is used to validate that a component's props.children property contains only one child. If it receives anything other than a single React element (e.g., null, undefined, an array of children, or a string/number directly), this error is thrown.
+
+This often happens with components designed to wrap a single element, such as some modal components, tooltips, or form input wrappers that expect a single input field as their child.
+
+How to verify
+To verify the problem, you should inspect the JSX structure of the component where this error originates. Look for the component that is trying to enforce a single child (often implicitly through its internal logic using React.Children.only). Check its children prop in your code. If you are passing multiple direct children or no children to it, that's likely the cause.
+
+For instance, if you have a custom SingleChildWrapper component that uses React.Children.only, and you use it like this:
+
+Code
+
+jsx
+<SingleChildWrapper>
+  <p>First child</p>
+  <p>Second child</p> {/* This would cause the error */}
+</SingleChildWrapper>
+
+Use code snippets with caution
+
+or like this:
+
+Code
+
+jsx
+<SingleChildWrapper>
+  {/* No children here would also cause the error */}
+</SingleChildWrapper>
+Use code snippets with caution
+
+The error would occur.
+
+Suggested fix
+Ensure that the component receiving this error has exactly one React element as its child.
+
+Scenario 1: You are providing multiple children. If you intended to pass multiple children, and the parent component should accept multiple children, then the parent component's implementation might be incorrect (using React.Children.only when it shouldn't). If the parent component must have a single child, you need to wrap your multiple children in a single parent element (like a div, span, or a React Fragment).
+
+Example of wrapping multiple children:
+
+Code
+
+jsx
+// Before (causes error if SingleChildWrapper expects only one child)
+<SingleChildWrapper>
+  <ChildComponentA />
+  <ChildComponentB />
+</SingleChildWrapper>
+
+// After (correct)
+<SingleChildWrapper>
+  <> {/* Use a React Fragment */}
+    <ChildComponentA />
+    <ChildComponentB />
+  </>
+</SingleChildWrapper>
+
+// Or if a DOM element is acceptable
+<SingleChildWrapper>
+  <div>
+    <ChildComponentA />
+    <ChildComponentB />
+  </div>
+</SingleChildWrapper>
+
+Use code snippets with caution
+
+Scenario 2: You are providing no children. If the component expects a single child but receives none, you must provide one.
+
+Example of providing a missing child:
+
+Code
+
+jsx
+// Before (causes error if SingleChildWrapper expects only one child)
+<SingleChildWrapper>
+  {/* No children */}
+</SingleChildWrapper>
+
+// After (correct)
+<SingleChildWrapper>
+  <RequiredChildComponent />
+</SingleChildWrapper>
+
+Use code snippets with caution
+
+Scenario 3: The child is conditionally rendered and might be null or undefined. If your child is conditionally rendered, and sometimes evaluates to null or undefined, the component using React.Children.only will throw an error. You might need to conditionally render the parent component itself, or provide a fallback child.
+
+Code
+
+jsx
+// Before (causes error if showChild is false, making child null)
+<SingleChildWrapper>
+  {showChild ? <ActualChild /> : null}
+</SingleChildWrapper>
+
+// After (conditionally render the wrapper itself)
+{showChild && (
+  <SingleChildWrapper>
+    <ActualChild />
+  </SingleChildWrapper>
+)}
+
+// Or provide a fallback if the wrapper always needs a child
+<SingleChildWrapper>
+  {showChild ? <ActualChild /> : <FallbackChild />}
+</SingleChildWrapper>
+
+Use code snippets with caution
+
+Summary
+The React.Children.only expected to receive a single React element child error occurs when a React component or utility expects exactly one child but receives zero, two, or more. The solution is to ensure that the problematic component always receives precisely one React element as its direct child, potentially by wrapping multiple elements in a Fragment or a single div, or by conditionally rendering the parent component.
+
+Data used to understand this message
+Use search instead
+AI tools may generate inaccurate info that doesn't represent Google's views. Data sent to Google may be seen by human reviewers to improve this feature. Open settings or learn mor
