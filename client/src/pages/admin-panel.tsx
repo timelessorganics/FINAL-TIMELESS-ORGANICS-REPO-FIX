@@ -127,12 +127,6 @@ export default function AdminPanel() {
     enabled: false,
   });
 
-  // New admin queries for media, products, auctions
-  const { data: mediaAssets } = useQuery<MediaAsset[]>({
-    queryKey: ["/api/admin/media"],
-    enabled: activeTab === "content" || activeTab === "media" || showMediaDialog,
-  });
-
   const { data: productsList } = useQuery<Product[]>({
     queryKey: ["/api/admin/products"],
     enabled: false,
@@ -195,6 +189,12 @@ export default function AdminPanel() {
   const [showWorkshopDialog, setShowWorkshopDialog] = useState(false);
   const [workshopForm, setWorkshopForm] = useState({ 
     date: "", startTime: "09:00", endTime: "17:00", maxParticipants: "6", depositAmount: "100000", location: "Franschhoek Studio" 
+  });
+
+  // Media query - declared after showMediaDialog state
+  const { data: mediaAssets } = useQuery<MediaAsset[]>({
+    queryKey: ["/api/admin/media"],
+    enabled: activeTab === "content" || activeTab === "media" || showMediaDialog,
   });
 
   const approveSpecimen = useMutation({
