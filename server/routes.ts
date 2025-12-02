@@ -2303,7 +2303,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .filter((file: any) => file.name && !file.name.endsWith('/') && file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i))
         .map((file) => {
           // Generate signed URL (works for private buckets too)
-          const { data: { signedUrl } } = supabaseAdmin.storage
+          const { data: signedUrl } = supabaseAdmin.storage
             .from('specimen-photos')
             .createSignedUrl(file.name, 60 * 60 * 24 * 365); // 1 year expiry
           
