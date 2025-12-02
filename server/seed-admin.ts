@@ -7,10 +7,10 @@ async function seedAdmin() {
 
   try {
     // Get the admin email from environment or use a default
-    const adminEmail = process.env.ADMIN_EMAIL || "admin@timelessorganics.com";
-    
+    const adminEmail = process.env.ADMIN_EMAIL || "studio@timeless.organic";
+
     console.log(`Looking for user with email: ${adminEmail}`);
-    
+
     // Find user by email
     const [existingUser] = await db
       .select()
@@ -19,7 +19,9 @@ async function seedAdmin() {
 
     if (!existingUser) {
       console.log(`No user found with email ${adminEmail}`);
-      console.log("Please log in with this email first, then run this script again.");
+      console.log(
+        "Please log in with this email first, then run this script again.",
+      );
       return;
     }
 
