@@ -256,26 +256,34 @@ export default function AdminPanel() {
     });
   };
 
-  // Create media asset mutation
+  // Create media asset mutation - upload to Supabase Storage
   const createMedia = useMutation({
     mutationFn: async (data: { url?: string; file?: File; altText?: string; caption?: string; tags?: string[] }) => {
       let mediaUrl = data.url;
       let filename = "image";
       
       if (data.file) {
-        // Convert file to base64
-        const reader = new FileReader();
-        mediaUrl = await new Promise((resolve, reject) => {
-          reader.onload = () => resolve(reader.result as string);
-          reader.onerror = reject;
-          reader.readAsDataURL(data.file!);
-        });
-        filename = data.file.name;
+        // Upload file to Supabase Storage
+        filename = `${Date.now()}-${data.file.name}`;
+        const { data: uploadData, error: uploadError } = await supabase.storage
+          .from('specimen-photos')
+          .upload(filename, data.file);
+        
+        if (uploadError) {
+          throw new Error(`Upload failed: ${uploadError.message}`);
+        }
+        
+        // Get public URL
+        const { data: urlData } = supabase.storage
+          .from('specimen-photos')
+          .getPublicUrl(filename);
+        
+        mediaUrl = urlData.publicUrl;
       }
       
       const response = await apiRequest("POST", "/api/admin/media", {
         filename,
-        originalName: filename,
+        originalName: data.file?.name || "image",
         mimeType: data.file?.type || (data.url?.includes('.png') ? 'image/png' : data.url?.includes('.webp') ? 'image/webp' : 'image/jpeg'),
         size: data.file?.size || 0,
         url: mediaUrl,
@@ -289,10 +297,10 @@ export default function AdminPanel() {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/media"] });
       setShowMediaDialog(false);
       setMediaForm({ url: "", file: null, altText: "", caption: "", tags: "" });
-      toast({ title: "Media Added!", description: "Image has been added to the library." });
+      toast({ title: "Media Added!", description: "Image uploaded successfully." });
     },
     onError: (error: Error) => {
-      toast({ variant: "destructive", title: "Failed to add media", description: error.message });
+      toast({ variant: "destructive", title: "Upload Failed", description: error.message });
     },
   });
 
