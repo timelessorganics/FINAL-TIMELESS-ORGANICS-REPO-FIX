@@ -130,7 +130,7 @@ export default function AdminPanel() {
   // New admin queries for media, products, auctions
   const { data: mediaAssets } = useQuery<MediaAsset[]>({
     queryKey: ["/api/admin/media"],
-    enabled: false,
+    enabled: activeTab === "content" || activeTab === "media" || showMediaDialog,
   });
 
   const { data: productsList } = useQuery<Product[]>({
