@@ -1,0 +1,30 @@
+A NULL value for a UUID in Supabase is a common issue typically related to Row Level Security (RLS) policies, unauthenticated requests, or incompatible data types when using external authentication providers. 
+Here are the primary reasons why you might encounter a NULL UUID in Supabase:
+1. Unauthenticated Requests (Most Common)
+auth.uid() or similar functions in RLS policies return NULL if the request to the database is not made with a valid JWT (JSON Web Token). 
+Cause: When a user is not logged in or the API call is made with the public anon key, the auth.uid() function used in RLS policies or as a column default value will return NULL.
+Solution:
+Ensure the user is properly authenticated on the client side before making the database request.
+Verify that the client is using the correct, signed access token in the request headers.
+If the operation is intended for unauthenticated users, your RLS policy must explicitly allow access without checking for auth.uid(), or you should check for auth.uid() IS NULL if that is your intended logic. 
+2. RLS Policy Configuration Issues
+An RLS policy that uses auth.uid() = owner_id will always fail for unauthenticated users because NULL = user_id evaluates to FALSE in SQL. 
+Solution: Use explicit checks in your RLS policies, such as USING (auth.uid() IS NOT NULL AND auth.uid() = user_id).
+If you're writing to a table and want the owner_id to be automatically set, you can set a default value for the column using auth.uid(). Example:
+sql
+create table public.profiles (
+  id uuid not null references auth.users on delete cascade primary key,
+  user_id uuid not null default auth.uid()
+  -- other columns
+);
+This requires a valid JWT during the insert operation. 
+3. External Auth Providers & Data Type Mismatches
+If you are using an external authentication system like Firebase or Clerk, their user IDs might be text strings, not standard UUIDs. 
+Cause: Supabase's internal owner column in the storage.objects table expects a UUID type. If a text-based user ID is inserted, it results in an invalid input syntax for type uuid error. This can also happen in custom tables if not handled correctly.
+Solution:
+For custom tables, ensure your user ID column is of type text if using a text-based external ID, and reference it accordingly.
+For Supabase Storage, the system is designed to handle this by using both owner (UUID, can be null) and owner_id (Text). Ensure your RLS policies use auth.jwt()->>'sub' (which is a text value) for comparison instead of auth.uid(). 
+4. Trigger Issues
+If you have a trigger function, especially a statement-level trigger, the NEW variable might be NULL. 
+Cause: In statement-level triggers, NEW is null. You must use the REFERENCING NEW TABLE AS new_table clause to access the inserted/updated rows and their generated IDs.
+Solution: Use row-level triggers (FOR EACH ROW) if you need to access individual NEW records, or adapt your statement-level trigger to use the transition table. 
