@@ -144,6 +144,7 @@ export default function AdminPanel() {
 
   const { data: workshopDates } = useQuery<any[]>({
     queryKey: ["/api/admin/workshops"],
+    enabled: false,
   });
 
   const [approvalNotes, setApprovalNotes] = useState<{[key: string]: string}>({});
