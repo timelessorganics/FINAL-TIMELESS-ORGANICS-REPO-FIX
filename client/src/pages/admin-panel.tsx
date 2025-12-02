@@ -1980,25 +1980,39 @@ export default function AdminPanel() {
                                 if (e.target.files?.[0]) {
                                   const file = e.target.files[0];
                                   try {
-                                    // Upload to Supabase Storage
-                                    const fileName = `${specimen.id}-${Date.now()}-${file.name}`;
-                                    const { data, error } = await supabase.storage
-                                      .from('specimen-photos')
-                                      .upload(fileName, file);
-                                    
-                                    if (error) throw error;
-                                    
-                                    // Get public URL
-                                    const { data: { publicUrl } } = supabase.storage
-                                      .from('specimen-photos')
-                                      .getPublicUrl(fileName);
-                                    
-                                    // Update UI immediately with public URL
-                                    const updated = { ...customImages, [specimen.id]: publicUrl };
-                                    setCustomImages(updated);
-                                    
-                                    // Save URL to database
-                                    saveSpecimenPhoto.mutate({ specimenKey: specimen.id, imageUrl: publicUrl });
+                                    // Convert to base64
+                                    const reader = new FileReader();
+                                    reader.onload = async () => {
+                                      const base64 = reader.result?.toString().split(',')[1];
+                                      if (!base64) throw new Error("Failed to read file");
+                                      
+                                      // Upload via backend (uses service role, bypasses RLS)
+                                      const response = await fetch(`${API_BASE_URL}/api/admin/upload-specimen-photo`, {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({
+                                          file: base64,
+                                          specimenKey: specimen.id,
+                                          originalName: file.name,
+                                          contentType: file.type,
+                                        }),
+                                      });
+                                      
+                                      if (!response.ok) {
+                                        const error = await response.json();
+                                        throw new Error(error.error || "Upload failed");
+                                      }
+                                      
+                                      const { publicUrl } = await response.json();
+                                      
+                                      // Update UI immediately
+                                      const updated = { ...customImages, [specimen.id]: publicUrl };
+                                      setCustomImages(updated);
+                                      
+                                      // Save to database
+                                      saveSpecimenPhoto.mutate({ specimenKey: specimen.id, imageUrl: publicUrl });
+                                    };
+                                    reader.readAsDataURL(file);
                                   } catch (err: any) {
                                     toast({ 
                                       variant: "destructive", 

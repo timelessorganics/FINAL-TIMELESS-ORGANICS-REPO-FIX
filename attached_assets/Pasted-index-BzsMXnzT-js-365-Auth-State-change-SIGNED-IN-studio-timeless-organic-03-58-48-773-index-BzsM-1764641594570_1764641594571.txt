@@ -1,0 +1,32 @@
+index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+03:58:48.773 index-BzsMXnzT.js:365 [Auth] State change: INITIAL_SESSION studio@timeless.organic
+03:58:50.307 index-BzsMXnzT.js:365 [Auth] State change: INITIAL_SESSION studio@timeless.organic
+03:58:52.473 index-BzsMXnzT.js:365 [Auth] State change: INITIAL_SESSION studio@timeless.organic
+03:58:53.020 final-timeless-organics-repo-fix-production.up.railway.app/api/admin/auctions:1  Failed to load resource: the server responded with a status of 500 ()Understand this error
+03:58:53.170 final-timeless-organics-repo-fix-production.up.railway.app/api/admin/content:1  Failed to load resource: the server responded with a status of 500 ()Understand this error
+03:58:53.229 final-timeless-organics-repo-fix-production.up.railway.app/api/admin/workshops:1  Failed to load resource: the server responded with a status of 500 ()Understand this error
+03:59:01.648 rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/specimen-photos/1764640740452-20240924_142615_result.jpg:1  Failed to load resource: the server responded with a status of 400 ()Understand this error
+04:02:43.812 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:02:43.813 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:03:20.453 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:03:20.453 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:03:22.984 rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/specimen-photos/1764641001739-20240924_142615_result.jpg:1  Failed to load resource: the server responded with a status of 400 ()Understand this error
+04:03:28.003 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:03:28.003 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:05:01.996 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:05:01.996 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:05:04.658 rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/specimen-photos/1764641103635-20240924_142615_result.jpg:1  Failed to load resource: the server responded with a status of 400 ()Understand this error
+04:05:11.149 rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/specimen-photos/1764641110517-20240924_142618_result.jpg:1  Failed to load resource: the server responded with a status of 400 ()Understand this error
+04:05:19.770 rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/specimen-photos/1764641119339-20240924_142618_result.jpg:1  Failed to load resource: the server responded with a status of 400 ()Understand this error
+04:06:30.240 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:06:30.241 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:06:32.678 rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/specimen-photos/1764641191820-20240924_142618_result.jpg:1  Failed to load resource: the server responded with a status of 400 ()Understand this error
+04:10:03.227 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:10:03.227 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:10:10.024 rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/specimen-photos/1764641408236-20240924_142618_result.jpg:1  Failed to load resource: the server responded with a status of 400 ()Understand this error
+04:10:41.254 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:10:41.254 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:11:17.847 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:11:17.847 index-BzsMXnzT.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:11:26.619 rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/specimen-photos/1764641485652-20240924_142618_result.jpg:1  Failed to load resource: the server responded with a status of 400 ()Understand this error
+04:12:33.612 rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/specimen-photos/1764641552604-20240924_142618_result.jpg:1  Failed to load resource: the server responded with a status of 400 ()Understand this error
