@@ -1539,6 +1539,7 @@ export default function AdminPanel() {
                           <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
                             <DialogHeader>
                               <DialogTitle>Select Image for {slotKey.replace(/-/g, " ")}</DialogTitle>
+                              <DialogDescription>Choose from your media library</DialogDescription>
                             </DialogHeader>
                             <div className="grid grid-cols-3 gap-4 mt-4">
                               {mediaAssets?.map((asset) => (
@@ -1572,6 +1573,7 @@ export default function AdminPanel() {
                           <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
                             <DialogHeader>
                               <DialogTitle>Select Image for {slotKey.replace(/-/g, " ")}</DialogTitle>
+                              <DialogDescription>Choose from your media library</DialogDescription>
                             </DialogHeader>
                             <div className="grid grid-cols-3 gap-4 mt-4">
                               {mediaAssets?.map((asset) => (
@@ -1605,6 +1607,7 @@ export default function AdminPanel() {
                           <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
                             <DialogHeader>
                               <DialogTitle>Select Image for {slotKey.replace(/-/g, " ")}</DialogTitle>
+                              <DialogDescription>Choose from your media library</DialogDescription>
                             </DialogHeader>
                             <div className="grid grid-cols-3 gap-4 mt-4">
                               {mediaAssets?.map((asset) => (
