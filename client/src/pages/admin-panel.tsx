@@ -2024,51 +2024,37 @@ export default function AdminPanel() {
                                 if (e.target.files?.[0]) {
                                   const file = e.target.files[0];
                                   try {
-                                    // Convert to base64
-                                    const reader = new FileReader();
-                                    reader.onload = async () => {
-                                      const base64 = reader.result?.toString().split(',')[1];
-                                      if (!base64) throw new Error("Failed to read file");
-                                      
-                                      // Upload via backend (uses service role, bypasses RLS)
-                                      const uploadUrl = `/api/admin/upload-specimen-photo`;
-                                      console.log('[Upload] Uploading to:', uploadUrl, 'API_BASE_URL:', API_BASE_URL);
-                                      try {
-                                        const response = await fetch(uploadUrl, {
-                                          method: 'POST',
-                                          headers: { 'Content-Type': 'application/json' },
-                                          body: JSON.stringify({
-                                            file: base64,
-                                            specimenKey: specimen.id,
-                                            originalName: file.name,
-                                            contentType: file.type,
-                                          }),
-                                        });
-                                        
-                                        console.log('[Upload] Response status:', response.status);
-                                        
-                                        if (!response.ok) {
-                                          const errorText = await response.text();
-                                          console.error('[Upload] Error response:', errorText);
-                                          throw new Error(errorText || `HTTP ${response.status}`);
-                                        }
-                                        
-                                        const { publicUrl } = await response.json();
-                                        console.log('[Upload] Success! URL:', publicUrl);
-                                        
-                                        // Update UI immediately
-                                        const updated = { ...customImages, [specimen.id]: publicUrl };
-                                        setCustomImages(updated);
-                                        
-                                        // Save to database
-                                        saveSpecimenPhoto.mutate({ specimenKey: specimen.id, imageUrl: publicUrl });
-                                      } catch (fetchErr: any) {
-                                        console.error('[Upload] Fetch error:', fetchErr.message);
-                                        throw fetchErr;
-                                      }
-                                    };
-                                    reader.readAsDataURL(file);
+                                    // Upload via FormData (multipart/form-data)
+                                    const formData = new FormData();
+                                    formData.append('media-file', file);
+
+                                    const uploadUrl = `/api/admin/upload-specimen-photo`;
+                                    console.log('[Upload] Uploading to:', uploadUrl);
+                                    
+                                    const response = await fetch(uploadUrl, {
+                                      method: 'POST',
+                                      body: formData,
+                                    });
+                                    
+                                    console.log('[Upload] Response status:', response.status);
+                                    
+                                    if (!response.ok) {
+                                      const errorData = await response.json();
+                                      console.error('[Upload] Error response:', errorData);
+                                      throw new Error(errorData.error || `HTTP ${response.status}`);
+                                    }
+                                    
+                                    const { publicUrl } = await response.json();
+                                    console.log('[Upload] Success! URL:', publicUrl);
+                                    
+                                    // Update UI immediately
+                                    const updated = { ...customImages, [specimen.id]: publicUrl };
+                                    setCustomImages(updated);
+                                    
+                                    // Save to database
+                                    saveSpecimenPhoto.mutate({ specimenKey: specimen.id, imageUrl: publicUrl });
                                   } catch (err: any) {
+                                    console.error('[Upload] Error:', err.message);
                                     toast({ 
                                       variant: "destructive", 
                                       title: "Upload failed", 
