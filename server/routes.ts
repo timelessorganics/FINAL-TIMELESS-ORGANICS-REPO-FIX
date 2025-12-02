@@ -2302,14 +2302,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         .filter((file: any) => !file.metadata || file.metadata?.mimetype?.startsWith('image/') || !file.id.includes('.') === false)
         .filter((file: any) => file.name && !file.name.endsWith('/') && file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i))
         .map((file) => {
-          const { data: urlData } = supabaseAdmin.storage
+          // Generate signed URL (works for private buckets too)
+          const { data: { signedUrl } } = supabaseAdmin.storage
             .from('specimen-photos')
-            .getPublicUrl(file.name);
+            .createSignedUrl(file.name, 60 * 60 * 24 * 365); // 1 year expiry
+          
           return {
             id: file.name,
             filename: file.name,
             originalName: file.name,
-            url: urlData.publicUrl,
+            url: signedUrl || `https://rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/public/specimen-photos/${file.name}`,
             altText: file.name,
             tags: [],
           };
