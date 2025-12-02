@@ -488,27 +488,27 @@ button, [role="button"] {
     opacity: 1;
   }
 
-  /* Fixed background with aloe image */
+  /* Fixed background with bronze image */
   .bg-aloe {
     position: fixed;
     inset: 0;
     pointer-events: none;
     z-index: -1;
     background: 
-      radial-gradient(40% 40% at 110% 110%, rgba(166, 124, 82, 0.08), transparent 60%),
-      radial-gradient(50% 50% at -10% 120%, rgba(111, 143, 121, 0.08), transparent 60%);
+      radial-gradient(40% 40% at 110% 110%, rgba(166, 124, 82, 0.12), transparent 60%),
+      radial-gradient(50% 50% at -10% 120%, rgba(111, 143, 121, 0.12), transparent 60%);
   }
 
   .bg-aloe::after {
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url('/attached_assets/Gemini_Generated_Image_9rrlvn9rrlvn9rrl (1)_1761271985174.png');
+    background-image: url('/attached_assets/Bronze Aloe Sculpture in Resin Block_1764516081629.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: min(95vmin, 95%);
-    opacity: 0.3;
-    filter: grayscale(35%) contrast(1.05);
+    background-size: min(50vmin, 50%);
+    opacity: 0.15;
+    filter: grayscale(15%) contrast(1.1) brightness(1.05);
   }
 
   /* Bronze piece special treatment in image grid */
