@@ -1752,7 +1752,7 @@ export default function AdminPanel() {
                       <p className="text-xs text-muted-foreground truncate">{asset.altText || 'No alt text'}</p>
                       {asset.tags && asset.tags.length > 0 && (
                         <div className="flex flex-wrap gap-1 mt-2">
-                          {asset.tags.slice(0, 3).map((tag, i) => (
+                          {asset.tags.slice(0, 3).map((tag: string, i: number) => (
                             <Badge key={i} variant="outline" className="text-xs">{tag}</Badge>
                           ))}
                         </div>
