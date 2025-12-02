@@ -2297,19 +2297,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.json([]);
       }
       
-      const files = (data || []).map((file) => {
-        const { data: urlData } = supabaseAdmin.storage
-          .from('specimen-photos')
-          .getPublicUrl(file.name);
-        return {
-          id: file.name,
-          filename: file.name,
-          originalName: file.name,
-          url: urlData.publicUrl,
-          altText: file.name,
-          tags: [],
-        };
-      });
+      // Filter out folders, only include image files
+      const files = (data || [])
+        .filter((file: any) => !file.metadata || file.metadata?.mimetype?.startsWith('image/') || !file.id.includes('.') === false)
+        .filter((file: any) => file.name && !file.name.endsWith('/') && file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i))
+        .map((file) => {
+          const { data: urlData } = supabaseAdmin.storage
+            .from('specimen-photos')
+            .getPublicUrl(file.name);
+          return {
+            id: file.name,
+            filename: file.name,
+            originalName: file.name,
+            url: urlData.publicUrl,
+            altText: file.name,
+            tags: [],
+          };
+        });
       res.json(files);
     } catch (error: any) {
       console.error("Storage files error:", error);
