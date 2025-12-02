@@ -32,6 +32,7 @@ export default function AdminPanel() {
   });
 
   const [customImages, setCustomImages] = useState<Record<string, string>>({});
+  const [storageFiles, setStorageFiles] = useState<any[]>([]);
 
   // Update customImages when specimenCustomizations loads
   useEffect(() => {
@@ -45,6 +46,32 @@ export default function AdminPanel() {
       setCustomImages(images);
     }
   }, [specimenCustomizations]);
+
+  // Fetch media files directly from Supabase Storage
+  useEffect(() => {
+    const fetchStorageFiles = async () => {
+      try {
+        const { data, error } = await supabase.storage
+          .from('specimen-photos')
+          .list('', { limit: 100 });
+        
+        if (!error && data) {
+          const files = data.map((file) => ({
+            id: file.name,
+            filename: file.name,
+            originalName: file.name,
+            url: `${supabase.storage.from('specimen-photos').getPublicUrl(file.name).data.publicUrl}`,
+            altText: file.name,
+            tags: [],
+          }));
+          setStorageFiles(files);
+        }
+      } catch (err) {
+        console.log("Storage fetch error:", err);
+      }
+    };
+    fetchStorageFiles();
+  }, []);
 
   // Save specimen photo to database
   const saveSpecimenPhoto = useMutation({
@@ -1692,14 +1719,11 @@ export default function AdminPanel() {
                 </Dialog>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {mediaAssets?.map((asset) => (
+                {(storageFiles && storageFiles.length > 0 ? storageFiles : mediaAssets)?.map((asset) => (
                   <Card key={asset.id} className="bg-card border-card-border overflow-hidden group">
                     <div className="aspect-square relative bg-muted">
                       <img src={asset.url} alt={asset.altText || asset.filename} className="w-full h-full object-cover" />
                       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                        <Button size="icon" variant="ghost" className="text-white" onClick={() => deleteMedia.mutate(asset.id)} data-testid={`button-delete-media-${asset.id}`}>
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
                         <Button size="icon" variant="ghost" className="text-white" onClick={() => window.open(asset.url, '_blank')} data-testid={`button-view-media-${asset.id}`}>
                           <ExternalLink className="w-4 h-4" />
                         </Button>
@@ -1718,7 +1742,7 @@ export default function AdminPanel() {
                     </div>
                   </Card>
                 ))}
-                {(!mediaAssets || mediaAssets.length === 0) && (
+                {((!mediaAssets || mediaAssets.length === 0) && (!storageFiles || storageFiles.length === 0)) && (
                   <Card className="col-span-full bg-card border-card-border p-12 text-center">
                     <ImageIcon className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
                     <p className="text-muted-foreground">No media assets yet. Add your first image above.</p>
