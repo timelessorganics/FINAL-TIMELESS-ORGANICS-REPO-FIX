@@ -1,0 +1,326 @@
+04:39:04.559 index-DrMIaR1I.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:39:04.560 index-DrMIaR1I.js:365 [Auth] State change: INITIAL_SESSION studio@timeless.organic
+04:39:05.915 index-DrMIaR1I.js:365 [Auth] State change: INITIAL_SESSION studio@timeless.organic
+04:39:07.487 final-timeless-organics-repo-fix-production.up.railway.app/api/admin/workshops:1  Failed to load resource: the server responded with a status of 500 ()
+04:39:07.650 final-timeless-organics-repo-fix-production.up.railway.app/api/admin/content:1  Failed to load resource: the server responded with a status of 500 ()
+04:39:07.723 final-timeless-organics-repo-fix-production.up.railway.app/api/admin/auctions:1  Failed to load resource: the server responded with a status of 500 ()
+04:39:15.972 rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/specimen-photos/1764643154277-20250910_163237_result.jpg:1  Failed to load resource: the server responded with a status of 400 ()
+04:40:14.405 index-DrMIaR1I.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:40:14.405 index-DrMIaR1I.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:40:25.511 index-DrMIaR1I.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:40:25.511 index-DrMIaR1I.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:40:29.969 rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/specimen-photos/1764643228092-20250910_163237_result.jpg:1  Failed to load resource: the server responded with a status of 400 ()
+04:40:31.370 rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/specimen-photos/1764643230013-20250910_163237_result.jpg:1  Failed to load resource: the server responded with a status of 400 ()
+04:41:13.288 index-DrMIaR1I.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:41:13.290 index-DrMIaR1I.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:41:14.973 index-DrMIaR1I.js:365 Fetch finished loading: GET "https://www.timeless.organic/api/auth/user".
+queryFn @ index-DrMIaR1I.js:365
+await in queryFn
+a @ index-DrMIaR1I.js:48
+w @ index-DrMIaR1I.js:48
+start @ index-DrMIaR1I.js:48
+fetch @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:48
+batch @ index-DrMIaR1I.js:48
+refetchQueries @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:48
+batch @ index-DrMIaR1I.js:48
+invalidateQueries @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:365
+(anonymous) @ index-DrMIaR1I.js:90
+_notifyAllSubscribers @ index-DrMIaR1I.js:90
+_recoverAndRefresh @ index-DrMIaR1I.js:90
+await in _recoverAndRefresh
+(anonymous) @ index-DrMIaR1I.js:90
+(anonymous) @ index-DrMIaR1I.js:90
+(anonymous) @ index-DrMIaR1I.js:74
+04:41:15.582 index-DrMIaR1I.js:365 Fetch finished loading: GET "https://www.timeless.organic/api/auth/user".
+queryFn @ index-DrMIaR1I.js:365
+await in queryFn
+a @ index-DrMIaR1I.js:48
+w @ index-DrMIaR1I.js:48
+start @ index-DrMIaR1I.js:48
+fetch @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:48
+batch @ index-DrMIaR1I.js:48
+refetchQueries @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:48
+batch @ index-DrMIaR1I.js:48
+invalidateQueries @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:365
+(anonymous) @ index-DrMIaR1I.js:90
+_notifyAllSubscribers @ index-DrMIaR1I.js:90
+_recoverAndRefresh @ index-DrMIaR1I.js:90
+await in _recoverAndRefresh
+(anonymous) @ index-DrMIaR1I.js:90
+(anonymous) @ index-DrMIaR1I.js:90
+(anonymous) @ index-DrMIaR1I.js:74
+04:44:20.761 index-DrMIaR1I.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:44:20.761 index-DrMIaR1I.js:365 [Auth] State change: SIGNED_IN studio@timeless.organic
+04:44:25.346 index-DrMIaR1I.js:40 Error: React.Children.only expected to receive a single React element child.
+    at Object.only (index-DrMIaR1I.js:9:4044)
+    at index-DrMIaR1I.js:365:60964
+    at Lp (index-DrMIaR1I.js:38:16998)
+    at Gx (index-DrMIaR1I.js:40:1571)
+    at zw (index-DrMIaR1I.js:40:46001)
+    at Dw (index-DrMIaR1I.js:40:39766)
+    at w2 (index-DrMIaR1I.js:40:39694)
+    at Fd (index-DrMIaR1I.js:40:39547)
+    at Jf (index-DrMIaR1I.js:40:35914)
+    at iv (index-DrMIaR1I.js:40:36717)
+$f @ index-DrMIaR1I.js:40
+r.callback @ index-DrMIaR1I.js:40
+$x @ index-DrMIaR1I.js:38
+rv @ index-DrMIaR1I.js:40
+Ow @ index-DrMIaR1I.js:40
+v2 @ index-DrMIaR1I.js:40
+N2 @ index-DrMIaR1I.js:40
+fi @ index-DrMIaR1I.js:40
+iv @ index-DrMIaR1I.js:40
+ri @ index-DrMIaR1I.js:38
+(anonymous) @ index-DrMIaR1I.js:40
+04:44:25.346 index-DrMIaR1I.js:40 Error: React.Children.only expected to receive a single React element child.
+    at Object.only (index-DrMIaR1I.js:9:4044)
+    at index-DrMIaR1I.js:365:60964
+    at Lp (index-DrMIaR1I.js:38:16998)
+    at Gx (index-DrMIaR1I.js:40:1571)
+    at zw (index-DrMIaR1I.js:40:46001)
+    at Dw (index-DrMIaR1I.js:40:39766)
+    at w2 (index-DrMIaR1I.js:40:39694)
+    at Fd (index-DrMIaR1I.js:40:39547)
+    at Jf (index-DrMIaR1I.js:40:35914)
+    at iv (index-DrMIaR1I.js:40:36717)
+$f @ index-DrMIaR1I.js:40
+r.callback @ index-DrMIaR1I.js:40
+$x @ index-DrMIaR1I.js:38
+rv @ index-DrMIaR1I.js:40
+Ow @ index-DrMIaR1I.js:40
+v2 @ index-DrMIaR1I.js:40
+N2 @ index-DrMIaR1I.js:40
+fi @ index-DrMIaR1I.js:40
+iv @ index-DrMIaR1I.js:40
+ri @ index-DrMIaR1I.js:38
+(anonymous) @ index-DrMIaR1I.js:40
+04:44:25.346 index-DrMIaR1I.js:40 Error: React.Children.only expected to receive a single React element child.
+    at Object.only (index-DrMIaR1I.js:9:4044)
+    at index-DrMIaR1I.js:365:60964
+    at Lp (index-DrMIaR1I.js:38:16998)
+    at Gx (index-DrMIaR1I.js:40:1571)
+    at zw (index-DrMIaR1I.js:40:46001)
+    at Dw (index-DrMIaR1I.js:40:39766)
+    at w2 (index-DrMIaR1I.js:40:39694)
+    at Fd (index-DrMIaR1I.js:40:39547)
+    at Jf (index-DrMIaR1I.js:40:35914)
+    at iv (index-DrMIaR1I.js:40:36717)
+$f @ index-DrMIaR1I.js:40
+r.callback @ index-DrMIaR1I.js:40
+$x @ index-DrMIaR1I.js:38
+rv @ index-DrMIaR1I.js:40
+Ow @ index-DrMIaR1I.js:40
+v2 @ index-DrMIaR1I.js:40
+N2 @ index-DrMIaR1I.js:40
+fi @ index-DrMIaR1I.js:40
+iv @ index-DrMIaR1I.js:40
+ri @ index-DrMIaR1I.js:38
+(anonymous) @ index-DrMIaR1I.js:40
+04:44:25.346 index-DrMIaR1I.js:40 Error: React.Children.only expected to receive a single React element child.
+    at Object.only (index-DrMIaR1I.js:9:4044)
+    at index-DrMIaR1I.js:365:60964
+    at Lp (index-DrMIaR1I.js:38:16998)
+    at Gx (index-DrMIaR1I.js:40:1571)
+    at zw (index-DrMIaR1I.js:40:46001)
+    at Dw (index-DrMIaR1I.js:40:39766)
+    at w2 (index-DrMIaR1I.js:40:39694)
+    at Fd (index-DrMIaR1I.js:40:39547)
+    at Jf (index-DrMIaR1I.js:40:35914)
+    at iv (index-DrMIaR1I.js:40:36717)
+$f @ index-DrMIaR1I.js:40
+r.callback @ index-DrMIaR1I.js:40
+$x @ index-DrMIaR1I.js:38
+rv @ index-DrMIaR1I.js:40
+Ow @ index-DrMIaR1I.js:40
+v2 @ index-DrMIaR1I.js:40
+N2 @ index-DrMIaR1I.js:40
+fi @ index-DrMIaR1I.js:40
+iv @ index-DrMIaR1I.js:40
+ri @ index-DrMIaR1I.js:38
+(anonymous) @ index-DrMIaR1I.js:40
+04:44:25.346 index-DrMIaR1I.js:40 Error: React.Children.only expected to receive a single React element child.
+    at Object.only (index-DrMIaR1I.js:9:4044)
+    at index-DrMIaR1I.js:365:60964
+    at Lp (index-DrMIaR1I.js:38:16998)
+    at Gx (index-DrMIaR1I.js:40:1571)
+    at zw (index-DrMIaR1I.js:40:46001)
+    at Dw (index-DrMIaR1I.js:40:39766)
+    at w2 (index-DrMIaR1I.js:40:39694)
+    at Fd (index-DrMIaR1I.js:40:39547)
+    at Jf (index-DrMIaR1I.js:40:35914)
+    at iv (index-DrMIaR1I.js:40:36717)
+$f @ index-DrMIaR1I.js:40
+r.callback @ index-DrMIaR1I.js:40
+$x @ index-DrMIaR1I.js:38
+rv @ index-DrMIaR1I.js:40
+Ow @ index-DrMIaR1I.js:40
+v2 @ index-DrMIaR1I.js:40
+N2 @ index-DrMIaR1I.js:40
+fi @ index-DrMIaR1I.js:40
+iv @ index-DrMIaR1I.js:40
+ri @ index-DrMIaR1I.js:38
+(anonymous) @ index-DrMIaR1I.js:40
+04:44:25.346 index-DrMIaR1I.js:40 Error: React.Children.only expected to receive a single React element child.
+    at Object.only (index-DrMIaR1I.js:9:4044)
+    at index-DrMIaR1I.js:365:60964
+    at Lp (index-DrMIaR1I.js:38:16998)
+    at Gx (index-DrMIaR1I.js:40:1571)
+    at zw (index-DrMIaR1I.js:40:46001)
+    at Dw (index-DrMIaR1I.js:40:39766)
+    at w2 (index-DrMIaR1I.js:40:39694)
+    at Fd (index-DrMIaR1I.js:40:39547)
+    at Jf (index-DrMIaR1I.js:40:35914)
+    at iv (index-DrMIaR1I.js:40:36717)
+$f @ index-DrMIaR1I.js:40
+r.callback @ index-DrMIaR1I.js:40
+$x @ index-DrMIaR1I.js:38
+rv @ index-DrMIaR1I.js:40
+Ow @ index-DrMIaR1I.js:40
+v2 @ index-DrMIaR1I.js:40
+N2 @ index-DrMIaR1I.js:40
+fi @ index-DrMIaR1I.js:40
+iv @ index-DrMIaR1I.js:40
+ri @ index-DrMIaR1I.js:38
+(anonymous) @ index-DrMIaR1I.js:40
+04:44:25.347 index-DrMIaR1I.js:40 Error: React.Children.only expected to receive a single React element child.
+    at Object.only (index-DrMIaR1I.js:9:4044)
+    at index-DrMIaR1I.js:365:60964
+    at Lp (index-DrMIaR1I.js:38:16998)
+    at Gx (index-DrMIaR1I.js:40:1571)
+    at zw (index-DrMIaR1I.js:40:46001)
+    at Dw (index-DrMIaR1I.js:40:39766)
+    at w2 (index-DrMIaR1I.js:40:39694)
+    at Fd (index-DrMIaR1I.js:40:39547)
+    at Jf (index-DrMIaR1I.js:40:35914)
+    at iv (index-DrMIaR1I.js:40:36717)
+$f @ index-DrMIaR1I.js:40
+r.callback @ index-DrMIaR1I.js:40
+$x @ index-DrMIaR1I.js:38
+rv @ index-DrMIaR1I.js:40
+Ow @ index-DrMIaR1I.js:40
+v2 @ index-DrMIaR1I.js:40
+N2 @ index-DrMIaR1I.js:40
+fi @ index-DrMIaR1I.js:40
+iv @ index-DrMIaR1I.js:40
+ri @ index-DrMIaR1I.js:38
+(anonymous) @ index-DrMIaR1I.js:40
+04:44:25.347 index-DrMIaR1I.js:40 Error: React.Children.only expected to receive a single React element child.
+    at Object.only (index-DrMIaR1I.js:9:4044)
+    at index-DrMIaR1I.js:365:60964
+    at Lp (index-DrMIaR1I.js:38:16998)
+    at Gx (index-DrMIaR1I.js:40:1571)
+    at zw (index-DrMIaR1I.js:40:46001)
+    at Dw (index-DrMIaR1I.js:40:39766)
+    at w2 (index-DrMIaR1I.js:40:39694)
+    at Fd (index-DrMIaR1I.js:40:39547)
+    at Jf (index-DrMIaR1I.js:40:35914)
+    at iv (index-DrMIaR1I.js:40:36717)
+$f @ index-DrMIaR1I.js:40
+r.callback @ index-DrMIaR1I.js:40
+$x @ index-DrMIaR1I.js:38
+rv @ index-DrMIaR1I.js:40
+Ow @ index-DrMIaR1I.js:40
+v2 @ index-DrMIaR1I.js:40
+N2 @ index-DrMIaR1I.js:40
+fi @ index-DrMIaR1I.js:40
+iv @ index-DrMIaR1I.js:40
+ri @ index-DrMIaR1I.js:38
+(anonymous) @ index-DrMIaR1I.js:40
+04:44:25.347 index-DrMIaR1I.js:40 Error: React.Children.only expected to receive a single React element child.
+    at Object.only (index-DrMIaR1I.js:9:4044)
+    at index-DrMIaR1I.js:365:60964
+    at Lp (index-DrMIaR1I.js:38:16998)
+    at Gx (index-DrMIaR1I.js:40:1571)
+    at zw (index-DrMIaR1I.js:40:46001)
+    at Dw (index-DrMIaR1I.js:40:39766)
+    at w2 (index-DrMIaR1I.js:40:39694)
+    at Fd (index-DrMIaR1I.js:40:39547)
+    at Jf (index-DrMIaR1I.js:40:35914)
+    at iv (index-DrMIaR1I.js:40:36717)
+$f @ index-DrMIaR1I.js:40
+r.callback @ index-DrMIaR1I.js:40
+$x @ index-DrMIaR1I.js:38
+rv @ index-DrMIaR1I.js:40
+Ow @ index-DrMIaR1I.js:40
+v2 @ index-DrMIaR1I.js:40
+N2 @ index-DrMIaR1I.js:40
+fi @ index-DrMIaR1I.js:40
+iv @ index-DrMIaR1I.js:40
+ri @ index-DrMIaR1I.js:38
+(anonymous) @ index-DrMIaR1I.js:40
+04:44:25.347 index-DrMIaR1I.js:9 Uncaught Error: React.Children.only expected to receive a single React element child.
+    at Object.only (index-DrMIaR1I.js:9:4044)
+    at index-DrMIaR1I.js:365:60964
+    at Lp (index-DrMIaR1I.js:38:16998)
+    at Gx (index-DrMIaR1I.js:40:1571)
+    at zw (index-DrMIaR1I.js:40:46001)
+    at Dw (index-DrMIaR1I.js:40:39766)
+    at w2 (index-DrMIaR1I.js:40:39694)
+    at Fd (index-DrMIaR1I.js:40:39547)
+    at Jf (index-DrMIaR1I.js:40:35914)
+    at iv (index-DrMIaR1I.js:40:36717)
+only @ index-DrMIaR1I.js:9
+(anonymous) @ index-DrMIaR1I.js:365
+Lp @ index-DrMIaR1I.js:38
+Gx @ index-DrMIaR1I.js:40
+zw @ index-DrMIaR1I.js:40
+Dw @ index-DrMIaR1I.js:40
+w2 @ index-DrMIaR1I.js:40
+Fd @ index-DrMIaR1I.js:40
+Jf @ index-DrMIaR1I.js:40
+iv @ index-DrMIaR1I.js:40
+ri @ index-DrMIaR1I.js:38
+(anonymous) @ index-DrMIaR1I.js:40
+04:44:32.920 index-DrMIaR1I.js:365 Fetch finished loading: GET "https://www.timeless.organic/api/auth/user".
+queryFn @ index-DrMIaR1I.js:365
+await in queryFn
+a @ index-DrMIaR1I.js:48
+w @ index-DrMIaR1I.js:48
+start @ index-DrMIaR1I.js:48
+fetch @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:48
+batch @ index-DrMIaR1I.js:48
+refetchQueries @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:48
+batch @ index-DrMIaR1I.js:48
+invalidateQueries @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:365
+(anonymous) @ index-DrMIaR1I.js:90
+_notifyAllSubscribers @ index-DrMIaR1I.js:90
+_recoverAndRefresh @ index-DrMIaR1I.js:90
+await in _recoverAndRefresh
+(anonymous) @ index-DrMIaR1I.js:90
+(anonymous) @ index-DrMIaR1I.js:90
+(anonymous) @ index-DrMIaR1I.js:74
+04:44:33.518 index-DrMIaR1I.js:365 Fetch finished loading: GET "https://www.timeless.organic/api/auth/user".
+queryFn @ index-DrMIaR1I.js:365
+await in queryFn
+a @ index-DrMIaR1I.js:48
+w @ index-DrMIaR1I.js:48
+start @ index-DrMIaR1I.js:48
+fetch @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:48
+batch @ index-DrMIaR1I.js:48
+refetchQueries @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:48
+batch @ index-DrMIaR1I.js:48
+invalidateQueries @ index-DrMIaR1I.js:48
+(anonymous) @ index-DrMIaR1I.js:365
+(anonymous) @ index-DrMIaR1I.js:90
+_notifyAllSubscribers @ index-DrMIaR1I.js:90
+_recoverAndRefresh @ index-DrMIaR1I.js:90
+await in _recoverAndRefresh
+(anonymous) @ index-DrMIaR1I.js:90
+(anonymous) @ index-DrMIaR1I.js:90
+(anonymous) @ index-DrMIaR1I.js:74
