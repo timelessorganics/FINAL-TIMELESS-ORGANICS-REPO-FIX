@@ -2284,23 +2284,46 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // ADMIN MANAGEMENT ROUTES
   // ============================================
 
-  // Admin: Get storage files from specimen-photos bucket
+  // Admin: Get storage files from specimen-photos bucket (including subdirectories)
   app.get("/api/admin/media-storage-files", async (req: any, res: Response) => {
     try {
       const { supabaseAdmin } = await import("./supabaseAuth");
-      const { data, error } = await supabaseAdmin.storage
-        .from('specimen-photos')
-        .list('', { limit: 100 });
       
-      if (error) {
-        console.warn("Storage list error:", error);
-        return res.json([]);
+      // Helper to recursively list all files in bucket and subfolders
+      async function listAllFiles(path: string = ''): Promise<any[]> {
+        const { data, error } = await supabaseAdmin.storage
+          .from('specimen-photos')
+          .list(path, { limit: 1000 });
+        
+        if (error) {
+          console.warn(`Storage list error for path '${path}':`, error);
+          return [];
+        }
+        
+        let allFiles: any[] = [];
+        
+        if (data) {
+          for (const item of data) {
+            if (item.id === false) {
+              // It's a folder - recursively list it
+              const folderPath = path ? `${path}/${item.name}` : item.name;
+              console.log(`[Storage] Found folder: ${folderPath}, listing contents...`);
+              const folderFiles = await listAllFiles(folderPath);
+              allFiles = allFiles.concat(folderFiles);
+            } else if (item.name && item.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
+              // It's an image file
+              const fullPath = path ? `${path}/${item.name}` : item.name;
+              allFiles.push({ ...item, fullPath });
+            }
+          }
+        }
+        
+        return allFiles;
       }
       
-      // Filter out folders, only include image files
-      const imageFiles = (data || [])
-        .filter((file: any) => !file.metadata || file.metadata?.mimetype?.startsWith('image/') || !file.id.includes('.') === false)
-        .filter((file: any) => file.name && !file.name.endsWith('/') && file.name.match(/\.(jpg|jpeg|png|gif|webp)$/i));
+      // Get all files from bucket and subfolders
+      const imageFiles = await listAllFiles();
+      console.log(`[Storage] Found ${imageFiles.length} image files`);
       
       // Generate signed URLs for each file
       const files = await Promise.all(imageFiles.map(async (file: any) => {
@@ -2308,23 +2331,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Generate signed URL (works for private buckets too) - 1 year expiry
           const { data, error } = await supabaseAdmin.storage
             .from('specimen-photos')
-            .createSignedUrl(file.name, 60 * 60 * 24 * 365);
+            .createSignedUrl(file.fullPath, 60 * 60 * 24 * 365);
           
           return {
-            id: file.name,
+            id: file.fullPath,
             filename: file.name,
             originalName: file.name,
-            url: data?.signedUrl || `https://rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/public/specimen-photos/${file.name}`,
+            url: data?.signedUrl || `https://rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/public/specimen-photos/${file.fullPath}`,
             altText: file.name,
             tags: [],
           };
         } catch (err) {
-          console.warn(`Failed to sign URL for ${file.name}:`, err);
+          console.warn(`Failed to sign URL for ${file.fullPath}:`, err);
           return {
-            id: file.name,
+            id: file.fullPath,
             filename: file.name,
             originalName: file.name,
-            url: `https://rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/public/specimen-photos/${file.name}`,
+            url: `https://rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/public/specimen-photos/${file.fullPath}`,
             altText: file.name,
             tags: [],
           };

@@ -63,7 +63,23 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Mailchimp Integration:** Automated email list synchronization with tagging.
 - **Seasonal Guide:** Educational page detailing specimen styles and future workshop options.
 
-## Recent Changes (November 30, 2025 - FINAL LAUNCH POLISH)
+## Recent Changes (December 2, 2025 - SPECIMEN PHOTO FIX)
+
+### Specimen Photo Upload System - FIXED ✅
+- **Issue:** Photos not showing in Media Library admin tab; only root-level files were being retrieved
+- **Root Cause:** Untitled folder in specimen-photos bucket - photos stored in subdirectories weren't being found
+- **Solution:** Implemented recursive folder traversal in `/api/admin/media-storage-files` endpoint
+- **Technical Details:**
+  - Detects folders with `item.id === false` marker
+  - Recursively lists all files in all subdirectories
+  - Generates signed URLs with full paths (e.g., `Untitled/media-1764644481941...`)
+  - 1-year JWT token expiry for private bucket access
+- **Result:** Now finding 14 specimen photos (was 13), including those in nested folders
+- **Verification:** Browser console shows `[Storage] Fetched files: 14` on admin page load
+
+---
+
+## Previous: November 30, 2025 - FINAL LAUNCH POLISH
 
 ### Fire Sale Pricing System
 - **Database columns:** Added `fire_sale_price` and `fire_sale_ends_at` to seats table
