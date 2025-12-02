@@ -2287,7 +2287,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Get storage files from specimen-photos bucket
   app.get("/api/admin/media-storage-files", async (req: any, res: Response) => {
     try {
-      const { data, error } = await supabaseServiceRole.storage
+      const { supabaseAdmin } = await import("./supabaseAuth");
+      const { data, error } = await supabaseAdmin.storage
         .from('specimen-photos')
         .list('', { limit: 100 });
       
@@ -2297,7 +2298,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       const files = (data || []).map((file) => {
-        const { data: urlData } = supabaseServiceRole.storage
+        const { data: urlData } = supabaseAdmin.storage
           .from('specimen-photos')
           .getPublicUrl(file.name);
         return {
