@@ -256,29 +256,35 @@ export default function AdminPanel() {
     });
   };
 
-  // Create media asset mutation - upload to Supabase Storage
+  // Create media asset mutation - upload via backend endpoint
   const createMedia = useMutation({
     mutationFn: async (data: { url?: string; file?: File; altText?: string; caption?: string; tags?: string[] }) => {
       let mediaUrl = data.url;
       let filename = "image";
       
       if (data.file) {
-        // Upload file to Supabase Storage
-        filename = `${Date.now()}-${data.file.name}`;
-        const { data: uploadData, error: uploadError } = await supabase.storage
-          .from('specimen-photos')
-          .upload(filename, data.file);
+        // Convert file to base64
+        const fileToUpload = data.file;
+        const fileBase64 = await new Promise<string>((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onload = () => resolve(reader.result as string);
+          reader.onerror = reject;
+          reader.readAsDataURL(fileToUpload);
+        });
         
-        if (uploadError) {
-          throw new Error(`Upload failed: ${uploadError.message}`);
+        // Upload via backend endpoint
+        const uploadResponse = await apiRequest("POST", "/api/admin/upload-specimen-photo", {
+          file: fileBase64,
+          specimenKey: `media-${Date.now()}`,
+        });
+        
+        const uploadResult = await uploadResponse.json();
+        if (!uploadResult.publicUrl) {
+          throw new Error("Upload failed: no public URL returned");
         }
         
-        // Get public URL
-        const { data: urlData } = supabase.storage
-          .from('specimen-photos')
-          .getPublicUrl(filename);
-        
-        mediaUrl = urlData.publicUrl;
+        filename = uploadResult.fileName;
+        mediaUrl = uploadResult.publicUrl;
       }
       
       const response = await apiRequest("POST", "/api/admin/media", {
