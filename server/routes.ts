@@ -2306,7 +2306,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const files = await Promise.all(imageFiles.map(async (file: any) => {
         try {
           // Generate signed URL (works for private buckets too) - 1 year expiry
-          const { data: signedUrl, error } = await supabaseAdmin.storage
+          const { data, error } = await supabaseAdmin.storage
             .from('specimen-photos')
             .createSignedUrl(file.name, 60 * 60 * 24 * 365);
           
@@ -2314,7 +2314,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             id: file.name,
             filename: file.name,
             originalName: file.name,
-            url: signedUrl || `https://rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/public/specimen-photos/${file.name}`,
+            url: data?.signedUrl || `https://rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/public/specimen-photos/${file.name}`,
             altText: file.name,
             tags: [],
           };

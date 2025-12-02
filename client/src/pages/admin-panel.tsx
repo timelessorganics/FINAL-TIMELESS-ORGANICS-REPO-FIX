@@ -61,6 +61,9 @@ export default function AdminPanel() {
         const files = await response.json();
         setStorageFiles(files || []);
         console.log("[Storage] Fetched files:", files?.length);
+        if (files?.length > 0) {
+          console.log("[Storage] First file URL:", files[0].url?.substring(0, 100));
+        }
       } catch (err) {
         console.log("Storage fetch error:", err);
       }
@@ -1718,9 +1721,22 @@ export default function AdminPanel() {
                 {(storageFiles && storageFiles.length > 0 ? storageFiles : mediaAssets)?.map((asset) => (
                   <Card key={asset.id} className="bg-card border-card-border overflow-hidden group">
                     <div className="aspect-square relative bg-muted overflow-hidden">
-                      <img src={asset.url} alt={asset.altText || asset.filename} className="w-full h-full object-cover block" loading="lazy" />
+                      <img 
+                        src={asset.url} 
+                        alt={asset.altText || asset.filename} 
+                        className="w-full h-full object-cover block" 
+                        loading="lazy"
+                        onError={(e: any) => {
+                          console.error(`[Storage] Image failed to load: ${asset.url?.substring(0, 100)}`);
+                          console.error(`[Storage] Error event:`, e);
+                        }}
+                        onLoad={() => console.log(`[Storage] Image loaded: ${asset.id}`)}
+                      />
                       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
-                        <Button size="icon" variant="ghost" className="text-white" onClick={() => window.open(asset.url, '_blank')} data-testid={`button-view-media-${asset.id}`}>
+                        <Button size="icon" variant="ghost" className="text-white" onClick={() => {
+                          console.log(`[Storage] Opening URL: ${asset.url?.substring(0, 100)}`);
+                          window.open(asset.url, '_blank');
+                        }} data-testid={`button-view-media-${asset.id}`}>
                           <ExternalLink className="w-4 h-4" />
                         </Button>
                       </div>
