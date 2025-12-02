@@ -2284,6 +2284,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // ADMIN MANAGEMENT ROUTES
   // ============================================
 
+  // Admin: Get storage files from specimen-photos bucket
+  app.get("/api/admin/media-storage-files", async (req: any, res: Response) => {
+    try {
+      const { data, error } = await supabaseServiceRole.storage
+        .from('specimen-photos')
+        .list('', { limit: 100 });
+      
+      if (error) {
+        console.warn("Storage list error:", error);
+        return res.json([]);
+      }
+      
+      const files = (data || []).map((file) => {
+        const { data: urlData } = supabaseServiceRole.storage
+          .from('specimen-photos')
+          .getPublicUrl(file.name);
+        return {
+          id: file.name,
+          filename: file.name,
+          originalName: file.name,
+          url: urlData.publicUrl,
+          altText: file.name,
+          tags: [],
+        };
+      });
+      res.json(files);
+    } catch (error: any) {
+      console.error("Storage files error:", error);
+      res.json([]);
+    }
+  });
+
   // Admin: Get all media assets
   // NOTE: Auth removed for launch emergency - media fetches now public during launch window
   app.get("/api/admin/media", async (req: any, res: Response) => {

@@ -47,30 +47,13 @@ export default function AdminPanel() {
     }
   }, [specimenCustomizations]);
 
-  // Fetch media files directly from Supabase Storage
+  // Fetch media files from backend endpoint
   useEffect(() => {
     const fetchStorageFiles = async () => {
       try {
-        const { data, error } = await supabase.storage
-          .from('specimen-photos')
-          .list('', { limit: 100 });
-        
-        if (!error && data) {
-          const files = data.map((file) => {
-            const { data: urlData } = supabase.storage
-              .from('specimen-photos')
-              .getPublicUrl(file.name);
-            return {
-              id: file.name,
-              filename: file.name,
-              originalName: file.name,
-              url: urlData.publicUrl,
-              altText: file.name,
-              tags: [],
-            };
-          });
-          setStorageFiles(files);
-        }
+        const response = await fetch('/api/admin/media-storage-files');
+        const files = await response.json();
+        setStorageFiles(files || []);
       } catch (err) {
         console.log("Storage fetch error:", err);
       }
