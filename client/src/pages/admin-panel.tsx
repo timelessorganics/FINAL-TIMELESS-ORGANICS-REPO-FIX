@@ -1984,7 +1984,7 @@ export default function AdminPanel() {
                                     const fileName = `${specimen.id}-${Date.now()}-${file.name}`;
                                     const { data, error } = await supabase.storage
                                       .from('specimen-photos')
-                                      .upload(fileName, file, { upsert: true });
+                                      .upload(fileName, file);
                                     
                                     if (error) throw error;
                                     
