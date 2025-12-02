@@ -1,0 +1,18 @@
+
+The error "new row violates row-level security policy" indicates that an attempt to insert a new row into a table has failed because the data in the new row does not satisfy the conditions defined by an active Row-Level Security (RLS) policy on that table.
+Reasons for this error:
+Missing or Insufficient RLS Policy: If RLS is enabled on a table but no policy exists or the existing policies do not explicitly permit the INSERT operation for the current user and the data being inserted, the operation will be denied. By default, with RLS enabled and no policies, all operations are forbidden.
+Policy Conditions Not Met: The data in the new row might not conform to the USING or WITH CHECK expressions defined in an existing RLS policy. For example, a policy might restrict users to inserting rows only where a specific user_id column matches their own authenticated ID, and the new row's user_id does not match.
+Incorrect API Key or URL (in Supabase contexts): In platforms like Supabase, using the wrong API URL or Key, especially the anon key instead of the service_role key when performing backend operations that bypass RLS, can lead to this error.
+Incorrect Table Schema or Data Types: Mismatches in data types or primary/foreign key configurations, particularly when relating user IDs from an authentication system (like auth.users.id in Supabase) to a profile table, can cause policy conditions to fail.
+To resolve this error:
+Define or Adjust RLS Policies:
+Create an INSERT policy: If no policy exists for INSERT operations, create one that allows the necessary users to insert data. For instance, a policy might allow authenticated users to insert rows where a user_id column matches their auth.uid().
+Review and modify existing policies: Ensure that the USING and WITH CHECK expressions in your RLS policies correctly reflect the intended access rules for INSERT operations and accommodate the data being inserted.
+Disable RLS (with caution): As a temporary measure or if RLS is not required for a specific table, you can disable it using:
+Code
+
+    ALTER TABLE table_name DISABLE ROW LEVEL SECURITY;
+This should be done with caution as it removes a layer of security.
+Verify API Credentials (for platforms like Supabase): Ensure the correct API URL and, crucially, the appropriate API Key (e.g., service_role key for administrative tasks that bypass RLS) are being used when interacting with the database.
+Examine Table Schema and Data: Confirm that the table schema, including primary keys, foreign keys, and data types (especially for IDs and related fields), is correctly configured and aligns with the RLS policy conditions.
