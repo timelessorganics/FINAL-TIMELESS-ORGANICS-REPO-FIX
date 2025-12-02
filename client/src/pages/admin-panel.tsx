@@ -598,6 +598,7 @@ export default function AdminPanel() {
 
             {/* Overview Tab - Original Content */}
             <TabsContent value="overview" className="mt-6">
+              <div>
           {/* Stats Overview */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             <Card className="bg-card border-card-border p-6">
@@ -1259,10 +1260,12 @@ export default function AdminPanel() {
               </table>
             </div>
           </Card>
+              </div>
             </TabsContent>
 
             {/* Content Management Tab - Full CMS */}
             <TabsContent value="content" className="mt-6">
+              <div>
               <div className="space-y-8">
                 <div className="flex items-center justify-between">
                   <div>
@@ -1666,10 +1669,12 @@ export default function AdminPanel() {
                   </div>
                 </Card>
               </div>
+              </div>
             </TabsContent>
 
             {/* Media Library Tab */}
             <TabsContent value="media" className="mt-6">
+              <div>
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-serif text-2xl font-bold">Media Library</h2>
                 <Dialog open={showMediaDialog} onOpenChange={setShowMediaDialog}>
@@ -1763,10 +1768,12 @@ export default function AdminPanel() {
                   </Card>
                 )}
               </div>
+              </div>
             </TabsContent>
 
             {/* Products Tab */}
             <TabsContent value="products" className="mt-6">
+              <div>
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-serif text-2xl font-bold">Products</h2>
                 <Dialog open={showProductDialog} onOpenChange={setShowProductDialog}>
@@ -1855,10 +1862,12 @@ export default function AdminPanel() {
                   </Card>
                 )}
               </div>
+              </div>
             </TabsContent>
 
             {/* Auctions Tab */}
             <TabsContent value="auctions" className="mt-6">
+              <div>
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-serif text-2xl font-bold">Auctions</h2>
                 <Dialog open={showAuctionDialog} onOpenChange={setShowAuctionDialog}>
@@ -1933,10 +1942,12 @@ export default function AdminPanel() {
                   </Card>
                 )}
               </div>
+              </div>
             </TabsContent>
 
             {/* Specimens Tab */}
             <TabsContent value="specimens" className="mt-6 w-full">
+              <div>
               <div className="mb-8">
                 <h2 className="font-serif text-2xl font-bold mb-2">Specimen Image Manager</h2>
                 <p className="text-muted-foreground">
@@ -2094,10 +2105,12 @@ export default function AdminPanel() {
                   </Card>
                 ))}
               </div>
+              </div>
             </TabsContent>
 
             {/* Workshops Tab */}
             <TabsContent value="workshops" className="mt-6">
+              <div>
               <div className="flex items-center justify-between mb-6">
                 <h2 className="font-serif text-2xl font-bold">Workshop Dates</h2>
                 <Dialog open={showWorkshopDialog} onOpenChange={setShowWorkshopDialog}>
@@ -2170,6 +2183,7 @@ export default function AdminPanel() {
                     <p className="text-muted-foreground">No workshop dates scheduled. Add your first date above.</p>
                   </Card>
                 )}
+              </div>
               </div>
             </TabsContent>
           </Tabs>
