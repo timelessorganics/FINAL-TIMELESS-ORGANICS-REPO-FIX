@@ -1,0 +1,43 @@
+Supabase successfully
+8:41:16 PM [express] GET /api/prelaunch/stats 200 in 324ms :: {"totalReserved":0,"founderDeposits":0…
+8:41:16 PM [express] GET /api/seats/availability 200 in 391ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+[DB] Connected to Supabase successfully
+8:42:43 PM [express] GET /api/auth/user 304 in 618ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+[DB] Connected to Supabase successfully
+8:42:45 PM [express] GET /api/seats/availability 304 in 183ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+8:42:45 PM [express] GET /api/prelaunch/stats 304 in 266ms :: {"totalReserved":0,"founderDeposits":0…
+[Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+[Auth] Verifying JWT token manually...
+[Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+  hint: undefined,
+[Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+    at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+  position: '58',
+[Auth] Verifying JWT token manually...
+    at async DatabaseStorage.getWebsiteContent (file:///app/dist/index.js:1430:12)
+  where: undefined,
+  internalPosition: undefined,
+    at async file:///app/dist/index.js:4588:23 {
+[Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+  length: 107,
+[DB] Connected to Supabase successfully
+  internalQuery: undefined,
+[DB] Connected to Supabase successfully
+  severity: 'ERROR',
+[Admin] Content fetch error: error: column "content" does not exist
+  code: '42703',
+  detail: undefined,
+    at /app/node_modules/pg-pool/index.js:45:11
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+8:43:03 PM [express] GET /api/admin/specimen-customizations 304 in 382ms :: [{"id":"034bacee-18e5-4a…
+  schema: undefined,
+[Storage] Found 17 image files
+  table: undefined,
+  column: undefined,
+8:43:04 PM [express] GET /api/admin/media-storage-files 200 in 1651ms :: [{"id":"1764681915772-20251…
+  dataType: undefined,
+  constraint: undefined,
+  file: 'parse_relation.c',
+  line: '3716',
+  routine: 'errorMissingColumn'
+}
