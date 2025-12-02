@@ -2284,6 +2284,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // ADMIN MANAGEMENT ROUTES
   // ============================================
 
+  // Image proxy - serves images from private bucket to browser
+  app.get("/api/image-proxy", async (req: any, res: Response) => {
+    try {
+      const { file } = req.query;
+      if (!file) {
+        return res.status(400).json({ error: "Missing file parameter" });
+      }
+
+      const { supabaseAdmin } = await import("./supabaseAuth");
+      const { data, error } = await supabaseAdmin.storage
+        .from('specimen-photos')
+        .download(file as string);
+
+      if (error || !data) {
+        console.warn(`[ImageProxy] Download failed for ${file}:`, error);
+        return res.status(404).json({ error: "File not found" });
+      }
+
+      res.set('Content-Type', data.type);
+      res.set('Cache-Control', 'public, max-age=31536000');
+      res.send(Buffer.from(await data.arrayBuffer()));
+    } catch (error: any) {
+      console.error("[ImageProxy] Error:", error);
+      res.status(500).json({ error: error.message });
+    }
+  });
+
   // Admin: Get storage files from specimen-photos bucket (including subdirectories)
   app.get("/api/admin/media-storage-files", async (req: any, res: Response) => {
     try {

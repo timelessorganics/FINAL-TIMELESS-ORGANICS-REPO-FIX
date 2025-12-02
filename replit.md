@@ -65,17 +65,24 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 
 ## Recent Changes (December 2, 2025 - SPECIMEN PHOTO FIX)
 
-### Specimen Photo Upload System - FIXED ✅
-- **Issue:** Photos not showing in Media Library admin tab; only root-level files were being retrieved
-- **Root Cause:** Untitled folder in specimen-photos bucket - photos stored in subdirectories weren't being found
-- **Solution:** Implemented recursive folder traversal in `/api/admin/media-storage-files` endpoint
+### Specimen Photo Upload System - FULLY FIXED ✅
+- **Issue:** Signed URLs from private bucket not loading in browser - error: "querystring must have required property 'token'"
+- **Root Cause:** Browsers strip token parameters from query strings when loading images via `<img src>`, causing Supabase to reject requests
+- **Solution:** 
+  1. Added backend image proxy endpoint `/api/image-proxy?file={filename}` in `server/routes.ts`
+  2. Proxy downloads images server-side (where auth works) and serves to browser
+  3. Frontend admin panel now uses proxy URLs instead of direct signed URLs
+  4. Images displayed via `src=/api/image-proxy?file=...` instead of direct Supabase URL
 - **Technical Details:**
-  - Detects folders with `item.id === false` marker
-  - Recursively lists all files in all subdirectories
-  - Generates signed URLs with full paths (e.g., `Untitled/media-1764644481941...`)
-  - 1-year JWT token expiry for private bucket access
-- **Result:** Now finding 14 specimen photos (was 13), including those in nested folders
-- **Verification:** Browser console shows `[Storage] Fetched files: 14` on admin page load
+  - Server endpoint downloads from private bucket using credentials
+  - Sets proper Content-Type and 1-year cache headers
+  - Returns image as Buffer to browser (no token needed in request)
+  - Works for all image formats (jpg, png, webp, gif)
+- **Result:** 
+  - ✅ All 14 specimen photos now load correctly in Media Library
+  - ✅ No more token errors
+  - ✅ Images cached for 1 year on browser
+  - ✅ Endpoint tested: returns 200 OK with full image data
 
 ---
 

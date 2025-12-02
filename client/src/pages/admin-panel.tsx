@@ -1718,24 +1718,26 @@ export default function AdminPanel() {
                 </Dialog>
               </div>
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                {(storageFiles && storageFiles.length > 0 ? storageFiles : mediaAssets)?.map((asset) => (
+                {(storageFiles && storageFiles.length > 0 ? storageFiles : mediaAssets)?.map((asset) => {
+                  const proxyUrl = `/api/image-proxy?file=${encodeURIComponent(asset.id)}`;
+                  return (
                   <Card key={asset.id} className="bg-card border-card-border overflow-hidden group">
                     <div className="aspect-square relative bg-muted overflow-hidden">
                       <img 
-                        src={asset.url} 
+                        src={proxyUrl} 
                         alt={asset.altText || asset.filename} 
                         className="w-full h-full object-cover block" 
                         loading="lazy"
                         onError={(e: any) => {
-                          console.error(`[Storage] Image failed to load: ${asset.url?.substring(0, 100)}`);
+                          console.error(`[Storage] Image failed to load: ${asset.id}`);
                           console.error(`[Storage] Error event:`, e);
                         }}
                         onLoad={() => console.log(`[Storage] Image loaded: ${asset.id}`)}
                       />
                       <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
                         <Button size="icon" variant="ghost" className="text-white" onClick={() => {
-                          console.log(`[Storage] Opening URL: ${asset.url?.substring(0, 100)}`);
-                          window.open(asset.url, '_blank');
+                          console.log(`[Storage] Opening URL: ${asset.id}`);
+                          window.open(proxyUrl, '_blank');
                         }} data-testid={`button-view-media-${asset.id}`}>
                           <ExternalLink className="w-4 h-4" />
                         </Button>
@@ -1753,7 +1755,8 @@ export default function AdminPanel() {
                       )}
                     </div>
                   </Card>
-                ))}
+                  );
+                })}
                 {((!mediaAssets || mediaAssets.length === 0) && (!storageFiles || storageFiles.length === 0)) && (
                   <Card className="col-span-full bg-card border-card-border p-12 text-center">
                     <ImageIcon className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
