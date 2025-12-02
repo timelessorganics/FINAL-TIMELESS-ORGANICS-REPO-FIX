@@ -2552,49 +2552,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin: Upload specimen photo with service role (bypasses RLS)
-  app.post("/api/admin/upload-specimen-photo", async (req: any, res: Response) => {
-    try {
-      console.log('[Upload Endpoint] Request received');
-      const { supabaseAdmin } = await import("./supabaseAuth");
-      const data = req.body;
-      
-      console.log('[Upload Endpoint] Data received:', { specimenKey: data.specimenKey, hasFile: !!data.file, fileName: data.originalName });
-      
-      if (!data.file || !data.specimenKey) {
-        console.error('[Upload Endpoint] Missing file or specimenKey');
-        return res.status(400).json({ error: "Missing file or specimenKey" });
-      }
-
-      // Decode base64 file
-      const buffer = Buffer.from(data.file, 'base64');
-      const fileName = `${data.specimenKey}-${Date.now()}-${data.originalName || 'photo.jpg'}`;
-
-      // Upload using service role (has full permissions, bypasses RLS)
-      const { data: uploadData, error: uploadError } = await supabaseAdmin.storage
-        .from('specimen-photos')
-        .upload(fileName, buffer, { contentType: data.contentType || 'image/jpeg' });
-
-      if (uploadError) throw uploadError;
-
-      // Get public URL
-      const { data: { publicUrl } } = supabaseAdmin.storage
-        .from('specimen-photos')
-        .getPublicUrl(fileName);
-
-      // Save to database
-      try {
-        await storage.upsertSpecimenCustomization({ specimenKey: data.specimenKey, imageUrl: publicUrl });
-      } catch (dbError: any) {
-        console.warn("Database save failed but upload succeeded:", dbError.message);
-      }
-
-      res.json({ publicUrl, fileName });
-    } catch (error: any) {
-      console.error("Upload specimen photo error:", error);
-      res.status(500).json({ error: error.message || "Upload failed" });
-    }
-  });
+  2555    app.post("/api/admin/upload-specimen-photo", async (req: any, res: Response) => {
+  2556      try {
+  2557        console.log('[Upload Endpoint] Request received');
+  2558        const { supabaseAdmin } = await import("./supabaseAuth");
+  2559        const data = req.body;
+  2560        
+  2561        console.log('[Upload Endpoint] Data received:', { specimenKey: data.specimenKey, hasFile: !!data.file, fileName: data.originalName });
+  2562        
+  2563        if (!data.file || !data.specimenKey) {
+  2564          console.error('[Upload Endpoint] Missing file or specimenKey');
+  2565          return res.status(400).json({ error: "Missing file or specimenKey" });
+  2566        }
+  2567    
+  2568        const buffer = Buffer.from(data.file, 'base64');
+  2569        const fileName = `${data.specimenKey}-${Date.now()}-${data.originalName}.jpg`;
+  2570    
+  2571        // Upload using service role (has full permissions, bypasses RLS)
+  2572        const uploadRes = await supabaseAdmin.storage
+  2573          .from('specimen-photos')
+  2574          .upload(fileName, buffer, { contentType: 'image/jpeg' });
+  2575    
+  2576        if (uploadRes.error) {
+  2577          console.error('[Upload Endpoint] Upload error:', uploadRes.error);
+  2578          return res.status(500).json({ error: uploadRes.error.message || 'Failed to upload photo' });
+  2579        }
+  2580    
+  2581        const publicUrl = supabaseAdmin.storage
+  2582          .from('specimen-photos')
+  2583          .getPublicUrl(fileName).publicURL;
+  2584    
+  2585        res.status(200).json({ fileName, publicUrl });
+  2586      } catch (error) {
+  2587        console.error('[Upload Endpoint] Error:', error);
+  2588        res.status(500).json({ error: error.message || 'An unexpected error occurred' });
+  2589      }
+  2590    });
 
   // Admin: Get page assets
   app.get("/api/admin/page-assets", isAuthenticated, async (req: any, res: Response) => {
