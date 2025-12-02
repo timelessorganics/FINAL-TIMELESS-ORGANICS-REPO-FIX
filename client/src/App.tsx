@@ -127,12 +127,8 @@ function Router() {
       {/* --- DASHBOARD IS NOW ACCESSIBLE --- */}
       <Route path="/dashboard" component={Dashboard} />
 
-      {/* Admin Panel - Protected for admins only */}
-      {isAuthenticated && (
-        <Route path="/admin">
-          {user?.isAdmin ? <AdminPanel /> : <NotFound />}
-        </Route>
-      )}
+      {/* Admin Panel - Temporarily accessible for launch emergency */}
+      <Route path="/admin" component={AdminPanel} />
 
       {/* Fallback to 404 */}
       <Route component={NotFound} />
