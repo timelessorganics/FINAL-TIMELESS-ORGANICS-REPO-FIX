@@ -2293,21 +2293,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const { supabaseAdmin } = await import("./supabaseAuth");
+      
+      // Check if service role key is available
+      if (!process.env.SUPABASE_SERVICE_ROLE_KEY) {
+        console.error("[ImageProxy] SUPABASE_SERVICE_ROLE_KEY not set");
+        return res.status(500).json({ error: "Service configuration error" });
+      }
+
+      console.log(`[ImageProxy] Attempting to download: ${file}`);
       const { data, error } = await supabaseAdmin.storage
         .from('specimen-photos')
         .download(file as string);
 
-      if (error || !data) {
-        console.warn(`[ImageProxy] Download failed for ${file}:`, error);
+      if (error) {
+        console.error(`[ImageProxy] Supabase error for ${file}:`, JSON.stringify(error));
+        return res.status(404).json({ error: error.message || "File not found" });
+      }
+
+      if (!data) {
+        console.warn(`[ImageProxy] No data returned for ${file}`);
         return res.status(404).json({ error: "File not found" });
       }
 
-      res.set('Content-Type', data.type);
+      const arrayBuffer = await data.arrayBuffer();
+      res.set('Content-Type', data.type || 'image/jpeg');
       res.set('Cache-Control', 'public, max-age=31536000');
-      res.send(Buffer.from(await data.arrayBuffer()));
+      res.send(Buffer.from(arrayBuffer));
     } catch (error: any) {
-      console.error("[ImageProxy] Error:", error);
-      res.status(500).json({ error: error.message });
+      console.error("[ImageProxy] Exception:", error?.message || error);
+      res.status(500).json({ error: error?.message || "Internal server error" });
     }
   });
 
