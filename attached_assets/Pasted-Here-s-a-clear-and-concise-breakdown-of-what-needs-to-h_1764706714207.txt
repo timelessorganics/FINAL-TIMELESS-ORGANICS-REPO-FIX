@@ -1,0 +1,106 @@
+Here's a clear and concise breakdown of what needs to happen to fix the issue:
+
+1. Identify the File
+
+You need to update the admin-panel.tsx file (likely located in client/src/pages/).
+
+2. Locate the Issue
+
+The error is related to React.Children.only in TabsContent components from Radix UI.
+
+The issue is that multiple child elements are being passed into <TabsContent>, but it expects only a single child element.
+
+3. Fix 1: Wrap Tab Content with a Single Wrapper
+
+For each <TabsContent> component, wrap the children inside a single parent element (e.g., <div> or <React.Fragment>).
+
+Example:
+
+Before:
+
+<TabsContent value="overview" className="mt-6">
+  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+    {/* content */}
+  </div>
+  <Card className="bg-card border-card-border p-7 mb-12">
+    {/* more content */}
+  </Card>
+</TabsContent>
+
+
+After (wrap in a single <div>):
+
+<TabsContent value="overview" className="mt-6">
+  <div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
+      {/* content */}
+    </div>
+    <Card className="bg-card border-card-border p-7 mb-12">
+      {/* more content */}
+    </Card>
+  </div>
+</TabsContent>
+
+4. Fix 2: Handle Conditional Rendering Correctly
+
+If you're conditionally rendering components inside <TabsContent>, ensure you're handling null or empty cases.
+
+Before:
+
+<TabsContent value="specimens">
+  {specimenCustomizations && specimenCustomizations.length > 0 && (
+    <div>Content</div>
+  )}
+</TabsContent>
+
+
+After:
+
+<TabsContent value="specimens">
+  <div>
+    {specimenCustomizations && specimenCustomizations.length > 0 ? (
+      <div>Content</div>
+    ) : (
+      <div>No specimens yet</div>
+    )}
+  </div>
+</TabsContent>
+
+5. Fix 3: Update Tabs Component (Optional)
+
+If you're able to modify the Tabs component, ensure children are wrapped correctly before being passed into <TabsContent>.
+
+const TabsContent = React.forwardRef<React.ElementRef<typeof TabsPrimitive.Content>, React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>>(
+  ({ className, children, ...props }, ref) => (
+    <TabsPrimitive.Content ref={ref} {...props} className={className}>
+      <div>{children}</div> {/* Wrap children in a div */}
+    </TabsPrimitive.Content>
+  )
+);
+
+6. Testing the Fix
+
+Save your changes to admin-panel.tsx.
+
+If you're using a live server or dev server, it should auto-reload.
+
+Check your page to see if the error is resolved. If the page still doesn’t render correctly, look for any console errors.
+
+7. Deploy the Changes
+
+Once the fixes are confirmed, commit and push your changes to GitHub.
+
+If you use Netlify or another deploy service, it should auto-deploy.
+
+8. Quick Temporary Fix for Immediate Access (Optional)
+
+If you just need to see the content while testing, add this CSS rule to index.css temporarily:
+
+.admin-panel {
+  background: white !important;
+  color: black !important;
+  min-height: 100vh;
+}
+
+
+Once you paste the code from admin-panel.tsx, I'll guide you on what specific changes need to be made.
