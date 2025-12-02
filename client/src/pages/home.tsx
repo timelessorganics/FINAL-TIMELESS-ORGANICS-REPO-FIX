@@ -700,29 +700,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* REGISTER INTEREST CTA - Horizontal */}
-        <section className="py-12 md:py-16 px-6 bg-gradient-to-r from-bronze/10 via-transparent to-patina/10 border-y border-bronze/20" data-testid="section-register-interest">
-          <div className="max-w-4xl mx-auto">
-            <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-              <div className="flex-1">
-                <h3 className="font-serif text-2xl md:text-3xl font-light mb-2">
-                  Interested but not ready?
-                </h3>
-                <p className="text-muted-foreground font-light">
-                  Join our waitlist for future workshops, custom commissions, and exclusive founding updates.
-                </p>
-              </div>
-              <div className="flex-1 md:flex-none">
-                <Button asChild variant="outline" className="w-full md:w-auto" data-testid="button-register-interest">
-                  <a href="#subscribe">
-                    Register Your Interest
-                    <ArrowRight className="w-4 h-4 ml-2" />
-                  </a>
-                </Button>
-              </div>
-            </div>
-          </div>
-        </section>
 
       </main>
 

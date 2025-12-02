@@ -13,15 +13,15 @@ import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { Seat, Sculpture } from "@shared/schema";
 
 const DEFAULT_SPECIMEN_IMAGES: Record<string, string> = {
-  cones_bracts_seedpods: new URL("../../attached_assets/Gemini_Generated_Image_t5zvs6t5zvs6t5zv_1761271985175.png", import.meta.url).href,
-  protea_pincushion_blooms_heads: new URL("../../attached_assets/Gemini_Generated_Image_f90dtof90dtof90d_1761271985176.png", import.meta.url).href,
-  bulb_spikes: new URL("../../attached_assets/Gemini_Generated_Image_r45js4r45js4r45j_1761271985177.png", import.meta.url).href,
-  branches_leaves: new URL("../../attached_assets/Gemini_Generated_Image_r7x3y8r7x3y8r7x3_1761271985178.png", import.meta.url).href,
-  aloe_inflorescence_heads: new URL("../../attached_assets/Gemini_Generated_Image_an1l12an1l12an1l_1761271985175.png", import.meta.url).href,
-  flower_heads: new URL("../../attached_assets/Gemini_Generated_Image_9rrlvn9rrlvn9rrl (1)_1761271985174.png", import.meta.url).href,
-  erica_sprays: new URL("../../attached_assets/Gemini_Generated_Image_daxzjqdaxzjqdaxz_1761271985176.png", import.meta.url).href,
-  restios_seedheads_grasses: new URL("../../attached_assets/Gemini_Generated_Image_qey8v1qey8v1qey8 (1)_1761271985177.png", import.meta.url).href,
-  small_succulents: new URL("../../attached_assets/Gemini_Generated_Image_9rrlvn9rrlvn9rrl_1761271985179.png", import.meta.url).href,
+  cones_bracts_seedpods: new URL("../../attached_assets/Bronze Aloe Sculpture in Resin Block_1764516081629.png", import.meta.url).href,
+  protea_pincushion_blooms_heads: new URL("../../attached_assets/Bronze Aloe Sculpture in Resin Block 2_1763150497628.jpg", import.meta.url).href,
+  bulb_spikes: new URL("../../attached_assets/Bronze Aloe Sculpture in Resin Block_1764516081629.png", import.meta.url).href,
+  branches_leaves: new URL("../../attached_assets/Bronze Aloe Sculpture in Resin Block 2_1763150497628.jpg", import.meta.url).href,
+  aloe_inflorescence_heads: new URL("../../attached_assets/Bronze Aloe Sculpture in Resin Block_1764516081629.png", import.meta.url).href,
+  flower_heads: new URL("../../attached_assets/Bronze Aloe Sculpture in Resin Block 2_1763150497628.jpg", import.meta.url).href,
+  erica_sprays: new URL("../../attached_assets/Bronze Aloe Sculpture in Resin Block_1764516081629.png", import.meta.url).href,
+  restios_seedheads_grasses: new URL("../../attached_assets/Bronze Aloe Sculpture in Resin Block 2_1763150497628.jpg", import.meta.url).href,
+  small_succulents: new URL("../../attached_assets/Bronze Aloe Sculpture in Resin Block_1764516081629.png", import.meta.url).href,
 };
 
 // Fetch specimen customizations from backend
@@ -172,15 +172,26 @@ export default function MainLaunch() {
         <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
           
           {/* HERO SECTION */}
-          <section className="text-center mb-8 sm:mb-12 pt-6 sm:pt-8" data-testid="section-hero">
+          <section className="text-center mb-8 sm:mb-12 pt-12 sm:pt-20 pb-8 sm:pb-16 lg:pb-24" data-testid="section-hero">
             <div className="kicker mb-3 sm:mb-4">FOUNDING 100 INVESTOR LAUNCH</div>
-            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-4 sm:mb-6 leading-tight whitespace-nowrap">
-              Your Investment Is <span className="moving-fill">Our Investment</span>
+            <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-4 sm:mb-6 leading-tight">
+              We've built this studio 90% with our own hands.
             </h1>
+            <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-light mb-6 sm:mb-8 text-accent-gold">
+              These 100 seats finish the last 10%
+            </h2>
             
             <p className="text-base sm:text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto mb-6 sm:mb-8 leading-relaxed font-light">
-              Three investments happen simultaneously. You invest capital. You invest your cutting. We invest our mastery. <strong className="text-accent-gold">Together, we create something Timeless.</strong>
+              And we want the first chapter to belong to our closest people.
             </p>
+
+            <div className="bg-card/40 border border-bronze/30 rounded-lg p-6 sm:p-8 max-w-2xl mx-auto mb-8">
+              <p className="text-lg sm:text-xl font-serif text-foreground mb-4">
+                <strong>100 seats. No waiting list. No phase two.</strong>
+              </p>
+              <p className="text-accent-gold font-medium">When these sell out, this exclusive opportunity closes.</p>
+              <p className="text-muted-foreground mt-3">Only Founding 100 members get these terms for life.</p>
+            </div>
 
             {/* Three Stat Cards */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
@@ -416,16 +427,17 @@ export default function MainLaunch() {
                   <span className="text-accent-gold font-medium"> Only Founding 100 members get these terms for life.</span>
                 </p>
 
-                <Button 
-                  size="lg"
-                  onClick={scrollToSeats}
-                  className="relative overflow-hidden text-lg px-10 py-6 font-bold bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background"
-                  data-testid="button-claim-seat"
-                >
-                  <Sparkles className="w-5 h-5 mr-2" />
-                  CLAIM YOUR SEAT
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
+                <Link href="/founding-100">
+                  <Button 
+                    size="lg"
+                    className="relative overflow-hidden text-lg px-10 py-6 font-bold bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background"
+                    data-testid="button-claim-seat"
+                  >
+                    <Sparkles className="w-5 h-5 mr-2" />
+                    CLAIM YOUR SEAT
+                    <ArrowRight className="w-5 h-5 ml-2" />
+                  </Button>
+                </Link>
               </div>
             </div>
           </section>
