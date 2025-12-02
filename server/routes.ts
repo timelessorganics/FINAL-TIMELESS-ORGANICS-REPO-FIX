@@ -2389,10 +2389,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Upload specimen photo with service role (bypasses RLS)
   app.post("/api/admin/upload-specimen-photo", async (req: any, res: Response) => {
     try {
+      console.log('[Upload Endpoint] Request received');
       const { supabaseAdmin } = await import("./supabaseAuth");
       const data = req.body;
       
+      console.log('[Upload Endpoint] Data received:', { specimenKey: data.specimenKey, hasFile: !!data.file, fileName: data.originalName });
+      
       if (!data.file || !data.specimenKey) {
+        console.error('[Upload Endpoint] Missing file or specimenKey');
         return res.status(400).json({ error: "Missing file or specimenKey" });
       }
 
