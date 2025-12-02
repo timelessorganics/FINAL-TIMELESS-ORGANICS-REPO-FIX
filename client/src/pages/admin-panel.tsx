@@ -1987,7 +1987,9 @@ export default function AdminPanel() {
                                       if (!base64) throw new Error("Failed to read file");
                                       
                                       // Upload via backend (uses service role, bypasses RLS)
-                                      const response = await fetch(`${API_BASE_URL}/api/admin/upload-specimen-photo`, {
+                                      const uploadUrl = `${API_BASE_URL}/api/admin/upload-specimen-photo`;
+                                      console.log('[Upload] Uploading to:', uploadUrl);
+                                      const response = await fetch(uploadUrl, {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
                                         body: JSON.stringify({
