@@ -300,29 +300,12 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Founding 100 Value Proposition - LARGER & MORE PROMINENT */}
+              {/* Founding 100 Value Proposition - LIVE COUNTER IN TEXT */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 text-center px-4 sm:px-6 mt-6 sm:mt-8 mb-2 sm:mb-4">
                 <p className="text-sm sm:text-base lg:text-lg text-white/95 leading-relaxed max-w-2xl mx-auto font-semibold tracking-tight">
-                  100 seats. No waiting list. No phase two. When these sell out, this exclusive opportunity closes.{' '}
+                  <span className="text-bronze font-bold text-base sm:text-lg lg:text-xl">{totalRemaining} seats</span> remaining. No waiting list. No phase two. When these sell out, this exclusive opportunity closes.{' '}
                   <span className="text-bronze">Only Founding 100 members get these terms for life.</span>
                 </p>
-              </div>
-                
-              {/* Reservation counter - shows live reservations */}
-              {totalReserved > 0 && (
-                <div className="hero-text-reveal hero-text-reveal-delay-3 flex items-center gap-2 text-xs sm:text-sm text-white/70 bg-white/10 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full backdrop-blur-sm justify-center mt-2">
-                  <Sparkles className="w-3 h-3 sm:w-4 sm:h-4 text-bronze" />
-                  <span className="font-semibold text-white">{totalReserved}</span>
-                  <span>seats already reserved</span>
-                </div>
-              )}
-              
-              {/* Seat counter - PROMINENT */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 mt-4 flex justify-center">
-                <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 rounded-full">
-                  <span className="text-lg sm:text-xl font-bold text-bronze">{totalRemaining}</span>
-                  <span className="text-sm sm:text-base text-white/90 font-medium">of 100 seats remaining</span>
-                </div>
               </div>
             </div>
           </div>
