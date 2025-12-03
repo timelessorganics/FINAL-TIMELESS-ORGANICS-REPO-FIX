@@ -172,7 +172,7 @@ export default function MainLaunch() {
         <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
           
           {/* HERO SECTION */}
-          <section className="text-center mb-20 sm:mb-20 md:mb-12 lg:mb-16 pt-12 sm:pt-20 pb-12 sm:pb-16 lg:pb-24" data-testid="section-hero">
+          <section className="relative z-20 text-center mb-24 sm:mb-28 md:mb-16 lg:mb-20 pt-12 sm:pt-20 pb-16 sm:pb-20 lg:pb-24" data-testid="section-hero">
             <div className="kicker mb-3 sm:mb-4">FOUNDING 100 INVESTOR LAUNCH</div>
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-4 sm:mb-6 leading-tight">
               We've built this studio 90% with our own hands.
@@ -194,20 +194,20 @@ export default function MainLaunch() {
             </div>
 
             {/* Three Stat Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
-              <Card className="p-6 bg-card/50 border-card-border">
+            <div className="relative z-30 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
+              <Card className="p-6 bg-card/80 border-card-border backdrop-blur-sm">
                 <div className="text-5xl font-bold font-serif text-bronze mb-2">100</div>
                 <div className="text-muted-foreground">Limited Seats</div>
                 <div className="text-xs text-foreground/60 mt-1">50 Founder + 50 Patron</div>
               </Card>
               
-              <Card className="p-6 bg-card/50 border-card-border">
+              <Card className="p-6 bg-card/80 border-card-border backdrop-blur-sm">
                 <div className="text-5xl font-bold font-serif text-accent-gold mb-2">R25K+</div>
                 <div className="text-muted-foreground">IF Mounted & Patinated</div>
                 <div className="text-xs text-foreground/60 mt-1">Optional services available later</div>
               </Card>
               
-              <Card className="p-6 bg-card/50 border-card-border">
+              <Card className="p-6 bg-card/80 border-card-border backdrop-blur-sm">
                 <div className="text-5xl font-bold font-serif text-patina mb-2">LIFE</div>
                 <div className="text-muted-foreground">time Benefits</div>
                 <div className="text-xs text-foreground/60 mt-1">Shop, Commissions & Workshops</div>
@@ -216,7 +216,7 @@ export default function MainLaunch() {
           </section>
 
           {/* WAIT BEFORE YOU BUY - SEASONAL GUIDE */}
-          <section className="mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-card/40 via-background to-card/40 rounded-xl border border-border/50" data-testid="section-specimen-guide">
+          <section className="relative z-10 mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-card/40 via-background to-card/40 rounded-xl border border-border/50" data-testid="section-specimen-guide">
             <div className="text-center mb-8 sm:mb-10">
               <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2">
                 <AlertCircle className="w-4 h-4" />
