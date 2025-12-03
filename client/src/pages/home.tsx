@@ -82,8 +82,9 @@ export default function HomePage() {
 
   const founderSeats = seats?.find(s => s.type === 'founder');
   const patronSeats = seats?.find(s => s.type === 'patron');
-  const founderRemaining = founderSeats?.remaining || 0;
-  const patronRemaining = patronSeats?.remaining || 0;
+  // Default to 50 each (100 total) while loading, show actual count once loaded
+  const founderRemaining = seats ? (founderSeats?.remaining ?? 50) : 50;
+  const patronRemaining = seats ? (patronSeats?.remaining ?? 50) : 50;
   const totalRemaining = founderRemaining + patronRemaining;
   const totalReserved = prelaunchStats?.totalReserved || 0;
   
