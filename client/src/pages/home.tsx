@@ -457,13 +457,13 @@ export default function HomePage() {
 
             {/* Lifetime Benefits Grid */}
             <div className="mb-8 sm:mb-12">
-              <h3 className="font-serif text-xl sm:text-2xl text-center mb-6 sm:mb-8 font-light">Plus Lifetime Benefits</h3>
+              <h3 className="font-serif text-xl sm:text-2xl text-center mb-6 sm:mb-8 font-light">Plus Lifetime Benefits — Completely Giftable For Life</h3>
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
                 <div className="p-4 sm:p-6 rounded-lg border border-bronze/10 bg-bronze/[0.02]">
                   <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-accent-gold mb-2 sm:mb-3" />
                   <h4 className="font-light mb-1 sm:mb-2 text-sm sm:text-base">Workshop Vouchers</h4>
                   <p className="text-xs sm:text-sm text-muted-foreground font-light">
-                    50-80% off future 2-day bronze casting workshops. Learn the ancient lost-wax process yourself.
+                    50-80% off your first, future 2-day bronze casting workshops. Learn the ancient lost-wax process yourself.
                   </p>
                 </div>
                 <div className="p-6 rounded-lg border border-patina/10 bg-patina/[0.02]">
@@ -525,7 +525,7 @@ export default function HomePage() {
             
             {/* Main heading + scarcity */}
             <div className="text-center">
-              <h2 className="font-serif text-5xl md:text-6xl lg:text-7xl font-light mb-8 tracking-tight text-white">
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-8 tracking-tight text-white">
                 <span className="hero-glass-text">Your Investment Is Our Investment</span>
               </h2>
               
