@@ -332,7 +332,7 @@ export default function HomePage() {
             <div className="text-center">
               <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2 justify-center">
                 <Flame className="w-4 h-4" />
-                24-HOUR FIRE SALE
+                48-HOUR FIRE SALE
               </div>
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-6 tracking-tight">
                 This Is The Founding 100 Moment

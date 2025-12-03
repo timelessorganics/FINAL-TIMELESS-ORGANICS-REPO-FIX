@@ -87,10 +87,10 @@ export default function SeatCard({
         <h3 className="font-serif text-3xl font-bold mb-2 text-foreground">{title}</h3>
         <div className="mb-3">
           <span className="text-base text-muted-foreground line-through mr-2">{regularPrice}</span>
-          <span className="text-xs text-muted-foreground">(after 24hrs)</span>
+          <span className="text-xs text-muted-foreground">(after 48hrs)</span>
         </div>
         <div className="text-3xl font-bold text-accent-gold mb-1">{fireSalePrice}</div>
-        <div className="text-xs text-bronze font-semibold mb-3">24HR FRIENDS & FAMILY FIRE SALE</div>
+        <div className="text-xs text-bronze font-semibold mb-3">48HR FRIENDS & FAMILY FIRE SALE</div>
         <p className="text-sm text-muted-foreground">{description}</p>
       </div>
 

@@ -303,7 +303,7 @@ export default function MainLaunch() {
                 Only 100 seats available. Once they're gone, they're gone forever.
               </p>
               <div className="inline-block px-3 sm:px-5 py-1.5 sm:py-2 bg-amber-600/25 rounded-full border border-amber-500/40 mb-3 sm:mb-4">
-                <p className="text-xs sm:text-sm text-amber-200 font-black tracking-wide">24HR FRIENDS & FAMILY FIRE SALE</p>
+                <p className="text-xs sm:text-sm text-amber-200 font-black tracking-wide">48HR FRIENDS & FAMILY FIRE SALE</p>
               </div>
               <p className="text-sm sm:text-base text-amber-200 font-serif font-bold">THE BEST DEAL ON THE PLANET</p>
               <p className="text-xs sm:text-sm text-amber-100/80 font-light mt-1">Bronze Sculpture + 20-30% Lifetime Discounts Forever</p>
