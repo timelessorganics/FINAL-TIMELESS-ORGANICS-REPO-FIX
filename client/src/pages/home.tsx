@@ -440,9 +440,9 @@ export default function HomePage() {
                   <h3 className="font-serif text-3xl md:text-4xl">Your Bronze Sculpture</h3>
                 </div>
                 <p className="text-base text-foreground/90 font-light leading-relaxed">
-                  A one-of-a-kind casting from real organic matter — a protea, aloe, restio, or 
-                  other Cape Fynbos specimen. The original burns away completely at 700°C, 
-                  leaving only its perfect impression in permanent bronze.
+                  A one-of-a-kind casting — your cutting or group of cuttings "invested" (that's the real term for moulding). 
+                  Your investment is quite literally our investment — these are the first 100 pieces to ever be cast in the 
+                  Timeless Organics Studio. The organic matter burns away completely, leaving only its perfect impression in permanent bronze.
                 </p>
                 <p className="text-base text-muted-foreground font-light leading-relaxed">
                   Each piece captures every vein, every texture, every delicate detail of the 
