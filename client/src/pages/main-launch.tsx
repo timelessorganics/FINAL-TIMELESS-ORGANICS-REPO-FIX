@@ -323,6 +323,7 @@ export default function MainLaunch() {
                     fireSalePrice={founderSale}
                     description="Unmounted and unpatinated. Can be purchased now or at a later stage via our shop or at checkout"
                     benefits={[
+                      "R25,000+ handcrafted bronze sculpture (unmounted, unpatinated)",
                       "Your name permanently engraved on our Founders & Patrons Leaf Wall",
                       "50% off first workshop (Transferable, single-use, never expires)",
                       "20% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
@@ -336,8 +337,9 @@ export default function MainLaunch() {
                     title="Patron Gift Card"
                     regularPrice={patronRegular || "R6,000"}
                     fireSalePrice={patronSale}
-                    description="One bronze casting included of a Studio-Guaranteed Cutting + Patina + Mounting"
+                    description="Full package: Bronze sculpture + Patina + Mounting included"
                     benefits={[
+                      "R25,000+ handcrafted bronze sculpture WITH Patina + Mounting included",
                       "Your name permanently engraved on our Founders & Patrons Leaf Wall",
                       "80% off first workshop (Transferable, single-use, never expires)",
                       "30% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
