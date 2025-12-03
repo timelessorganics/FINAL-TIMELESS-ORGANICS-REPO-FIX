@@ -11,7 +11,7 @@ import heroImage from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_176424890
 import bronzeImage1 from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764170102466.png";
 import bronzeImage2 from "@assets/Bronze Aloe Sculpture in Resin Block 2_1763150497628.jpg";
 import bronzeImage3 from "@assets/Gemini_Generated_Image_o0oi1oo0oi1oo0oi_1764170102464.png";
-import davidStoryImage from "@assets/Gemini_Generated_Image_pgo4cnpgo4cnpgo4_result_1764296343897.webp";
+import davidStoryImage from "@assets/Bronze Aloe Sculpture in Resin Block_1764516081629.png";
 
 import smokeVideo from "@assets/3 SMOKE HOVERS TINY SPARKS7_1761435915770.mp4";
 import flowerBloomVideo from "@assets/Yellow-Lily-Opening-On-Black-Background-4K-2025-08-29-08-44-48-Utc_1764103216693.mp4";
@@ -194,7 +194,7 @@ export default function HomePage() {
                   
                   <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-2.5 w-full">
                     <div className="text-center">
-                      <div className="text-[0.65rem] sm:text-xs lg:text-sm font-bold mb-1 leading-tight" style={{color: '#b1bb9a'}}>R25,000+ Bronze Artwork</div>
+                      <div className="text-sm sm:text-base lg:text-lg font-black mb-1 leading-tight" style={{color: '#d4af37'}}>R25,000+ Bronze Artwork</div>
                       <p className="text-[0.55rem] sm:text-[0.65rem] lg:text-sm" style={{color: '#ffffff', lineHeight: '1.3'}}>Your own one-of-a-kind bronze piece.</p>
                     </div>
                     <div className="text-center">
@@ -225,7 +225,7 @@ export default function HomePage() {
                 <ul className="space-y-2 text-[0.85rem]" style={{color: '#ffffff'}}>
                   <li className="flex gap-2 items-start">
                     <span style={{color: '#b1bb9a', flexShrink: 0}}>•</span>
-                    <span>R25,000+ bronze artwork</span>
+                    <span className="font-bold text-accent-gold">R25,000+ Bronze Artwork</span>
                   </li>
                   <li className="flex gap-2 items-start">
                     <span style={{color: '#b1bb9a', flexShrink: 0}}>•</span>
