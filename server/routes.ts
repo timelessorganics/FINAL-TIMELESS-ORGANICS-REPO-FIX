@@ -2311,13 +2311,64 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Get all image files from storage
       const imageFiles = await listAllFiles();
 
-      // Convert to media asset format with proxy URLs
+      // Helper to generate tags from file path and name
+      const generateTags = (fullPath: string, fileName: string): string[] => {
+        const tags: string[] = [];
+        const pathLower = fullPath.toLowerCase();
+        const nameLower = fileName.toLowerCase();
+        
+        // Extract folder name as primary tag
+        const pathParts = fullPath.split('/');
+        if (pathParts.length > 1) {
+          tags.push(pathParts[0].toLowerCase());
+        }
+        
+        // Check for plant/bronze indicators in path or filename
+        const isPlant = pathLower.includes('plant') || nameLower.includes('plant') || 
+                       pathLower.includes('specimen') || nameLower.includes('specimen') ||
+                       pathLower.includes('flower') || nameLower.includes('flower');
+        const isBronze = pathLower.includes('bronze') || nameLower.includes('bronze') ||
+                        pathLower.includes('cast') || nameLower.includes('cast');
+        
+        // Specimen type detection from path/filename
+        const specimenTypes = [
+          { patterns: ['protea', 'pincushion', 'leucospermum'], tag: 'protea' },
+          { patterns: ['cone', 'bract', 'seedpod', 'leucadendron'], tag: 'cones' },
+          { patterns: ['bulb', 'spike', 'watsonia', 'gladiolus'], tag: 'bulb' },
+          { patterns: ['branch', 'leaves', 'leaf', 'twig'], tag: 'branches' },
+          { patterns: ['aloe', 'inflorescence'], tag: 'aloe' },
+          { patterns: ['erica', 'heather'], tag: 'erica' },
+          { patterns: ['restio', 'seedhead', 'grass'], tag: 'restios' },
+          { patterns: ['succulent', 'echeveria', 'rosette'], tag: 'succulents' },
+          { patterns: ['flower', 'head', 'bloom'], tag: 'flower' },
+        ];
+        
+        for (const spec of specimenTypes) {
+          if (spec.patterns.some(p => pathLower.includes(p) || nameLower.includes(p))) {
+            if (!tags.includes(spec.tag)) {
+              tags.push(spec.tag);
+            }
+            // Add type-specific plant/bronze tag
+            if (isPlant) tags.push(`${spec.tag}-plant`);
+            if (isBronze) tags.push(`${spec.tag}-bronze`);
+            break;
+          }
+        }
+        
+        // General plant/bronze tags
+        if (isPlant && !tags.some(t => t.endsWith('-plant'))) tags.push('plant');
+        if (isBronze && !tags.some(t => t.endsWith('-bronze'))) tags.push('bronze');
+        
+        return Array.from(new Set(tags)); // Remove duplicates
+      };
+
+      // Convert to media asset format with proxy URLs and auto-generated tags
       const assets = imageFiles.map((file: any) => ({
         id: file.fullPath,
         url: `/api/image-proxy?file=${encodeURIComponent(file.fullPath)}`,
         altText: file.name,
         caption: file.name,
-        tags: [],
+        tags: generateTags(file.fullPath, file.name),
       }));
 
       res.json(assets);
