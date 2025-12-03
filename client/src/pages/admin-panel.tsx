@@ -192,8 +192,8 @@ export default function AdminPanel() {
   });
 
   // Media query - declared after showMediaDialog state
-  const { data: mediaAssets } = useQuery<MediaAsset[]>({
-    queryKey: ["/api/admin/media"],
+  const { data: mediaAssets, refetch: refetchMedia } = useQuery<MediaAsset[]>({
+    queryKey: ["/api/media"],
     enabled: activeTab === "content" || activeTab === "media" || showMediaDialog,
   });
 
@@ -398,7 +398,7 @@ export default function AdminPanel() {
       await apiRequest("DELETE", `/api/admin/media/${id}`);
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/media"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/media"] });
       toast({ title: "Media Deleted", description: "Image has been removed from the library." });
     },
   });
