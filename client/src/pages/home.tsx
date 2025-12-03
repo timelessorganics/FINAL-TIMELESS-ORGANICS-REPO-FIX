@@ -119,9 +119,9 @@ export default function HomePage() {
       
       <main className="relative z-50">
         
-        {/* HERO: Bronze emerging from darkness - STABLE GRID LAYOUT */}
+        {/* HERO: Bronze emerging from darkness - STABLE GRID LAYOUT - HIGHEST Z-INDEX */}
         <section 
-          className="relative min-h-screen overflow-visible bg-[#050505]" 
+          className="relative z-[50] min-h-screen overflow-visible bg-[#050505]" 
           data-testid="section-hero"
         >
           {/* Layer 1: Full-bleed hero image - full screen, scaled up */}
@@ -153,8 +153,8 @@ export default function HomePage() {
             </div>
           </div>
 
-          {/* Layer 4: Content - flex layout with spacious mobile padding */}
-          <div className="relative z-40 min-h-screen flex flex-col justify-start pt-24 sm:justify-center sm:pt-0 px-3 sm:px-4 lg:px-6 py-8 sm:py-8 lg:py-12">
+          {/* Layer 4: Content - flex layout with spacious mobile padding - VERY HIGH Z-INDEX */}
+          <div className="relative z-[100] min-h-screen flex flex-col justify-start pt-24 sm:justify-center sm:pt-0 px-3 sm:px-4 lg:px-6 py-8 sm:py-8 lg:py-12">
             
             {/* Center content */}
             <div className="text-center max-w-6xl mx-auto w-full">
@@ -246,8 +246,8 @@ export default function HomePage() {
                 </ul>
               </div>
 
-              {/* Seat Selection Cards - Friends & Family Launch Pricing */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 relative z-50 flex flex-col sm:flex-row items-stretch justify-center gap-3 sm:gap-6 lg:gap-16 xl:gap-24 mb-3 sm:mb-6 px-2 sm:px-0 max-w-6xl mx-auto w-full">
+              {/* Seat Selection Cards - Friends & Family Launch Pricing - HIGHEST Z-INDEX */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 relative z-[200] flex flex-col sm:flex-row items-stretch justify-center gap-3 sm:gap-6 lg:gap-16 xl:gap-24 mb-3 sm:mb-6 px-2 sm:px-0 max-w-6xl mx-auto w-full">
                 {/* FOUNDER SEAT CARD */}
                 <div className="group relative flex-1 min-w-0 max-w-sm sm:max-w-md lg:max-w-md p-3 sm:p-4 lg:p-5 border border-white/20 rounded-lg bg-black/40 backdrop-blur-sm hover:bg-black/50 hover:border-white/30 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-2 sm:space-y-3">
@@ -393,7 +393,7 @@ export default function HomePage() {
         </section>
 
         {/* WHY THIS EXISTS - The Opportunity */}
-        <section className="py-8 sm:py-16 px-4 sm:px-6" data-testid="section-why-this-exists">
+        <section className="relative z-0 py-8 sm:py-16 px-4 sm:px-6 bg-background" data-testid="section-why-this-exists">
           <div className="max-w-5xl mx-auto">
             
             <div className="text-center mb-8 sm:mb-12">
