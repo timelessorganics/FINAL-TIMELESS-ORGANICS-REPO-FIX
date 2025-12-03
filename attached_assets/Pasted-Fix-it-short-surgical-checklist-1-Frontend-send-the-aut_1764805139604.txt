@@ -1,0 +1,342 @@
+Fix it — short, surgical checklist
+1) Frontend: send the auth token to your API
+
+Your admin UI must attach the Supabase access token to every /api/admin/* request.
+
+Where: client/src/lib/api.ts (or wherever you centralize fetch calls)
+
+import { supabase } from "@/lib/supabase"
+
+export async function apiFetch(path: string, options: RequestInit = {}) {
+  const { data: session } = await supabase.auth.getSession()
+  const token = session?.session?.access_token
+
+  const headers = new Headers(options.headers || {})
+  if (token) headers.set("Authorization", `Bearer ${token}`)
+  headers.set("Content-Type", "application/json")
+
+  const res = await fetch(`${import.meta.env.VITE_API_URL}${path}`, {
+    ...options,
+    headers,
+    credentials: "include",
+  })
+  if (!res.ok) {
+    const body = await res.text().catch(() => "")
+    throw new Error(`${res.status} ${res.statusText} :: ${body}`)
+  }
+  return res
+}
+
+
+Use apiFetch("/api/admin/media") etc. That alone kills the wall of 401s.
+
+2) Server: ensure you’re using the service role key
+
+Where: server/.env (Railway/Replit “Secrets”)
+
+SUPABASE_URL=...your project URL...
+SUPABASE_SERVICE_ROLE_KEY=...service role key...
+
+
+Do NOT use the anon key on the server.
+
+3) Database: restore the media table shape your code expects
+
+Run this SQL in Supabase SQL editor:
+
+-- base table if needed
+create table if not exists public.media (
+  id text primary key,
+  bucket text not null default 'media',
+  path text not null,
+  filename text not null,
+  title text,
+  alt text,
+  mime_type text,              -- <- missing in your logs
+  size_bytes bigint,
+  width int,
+  height int,
+  created_at timestamp with time zone default now()
+);
+
+-- indexes (optional but helpful)
+create index if not exists idx_media_bucket_path on public.media(bucket, path);
+
+-- RLS for media table (keep it simple)
+alter table public.media enable row level security;
+
+-- allow public read
+drop policy if exists "public_read_media" on public.media;
+create policy "public_read_media"
+on public.media for select
+to public
+using (true);
+
+-- restrict insert/update/delete to service role only (implicit via server key)
+-- (no extra policy needed if only server inserts)
+
+
+If you already have media, just run the alter lines:
+
+alter table public.media add column if not exists mime_type text;
+alter table public.media add column if not exists size_bytes bigint;
+alter table public.media add column if not exists width int;
+alter table public.media add column if not exists height int;
+
+4) Storage bucket policies (keep files visible)
+
+If your bucket is media (or specimen-photos), ensure read is public and insert is allowed for authenticated (or just let the server upload with service key).
+
+-- storage read
+create policy if not exists "public can read media"
+on storage.objects for select
+to public
+using (bucket_id in ('media','specimen-photos'));
+
+-- storage insert via authenticated (client) - optional if server uploads
+create policy if not exists "admins can upload media"
+on storage.objects for insert
+to authenticated
+with check (bucket_id in ('media','specimen-photos'));
+
+
+(If your server is doing the upload with the service role, the insert policy is less critical. Public read still needed unless you return signed URLs.)
+
+5) Server route: upsert a DB record right after upload
+
+Where: server/routes/admin/media.ts (or your upload handler)
+
+// after you upload to Supabase storage and have `path`, `file`, `bucket`
+await db
+  .from("media")
+  .upsert({
+    id: mediaId,                // generate a stable id
+    bucket,
+    path,                       // e.g. "photos/1764644481941-rose.jpg"
+    filename: file.originalname || file.name,
+    mime_type: file.mimetype || null,
+    size_bytes: file.size || null,
+    title: req.body.title || null,
+    alt: req.body.alt || null,
+  })
+
+
+Important: Save the storage path, not a signed URL.
+In the frontend, render with:
+
+const { data } = supabase.storage.from(bucket).getPublicUrl(path)
+const publicUrl = data.publicUrl
+
+
+(or have the server return publicUrl alongside the record)
+
+6) Frontend upload: send FormData with the right names
+
+Your server logs show POST /api/admin/upload-specimen-photo 200, so file upload works.
+To show images in the admin library, you must also POST /api/admin/media (or your combined endpoint must upsert the row as in step 5).
+
+Double-check your admin upload code sends:
+
+const fd = new FormData()
+fd.append("file", file)            // EXACT name expected by server
+fd.append("bucket", "media")       // or "specimen-photos"
+fd.append("title", title ?? "")
+fd.append("alt", alt ?? "")
+
+await apiFetch("/api/admin/media", {
+  method: "POST",
+  body: fd,                        // do not set Content-Type manually
+})
+
+
+If your upload endpoint already handles DB insert, you’re done; just make sure step 5 exists.
+
+7) Make the admin grid show something even if DB breaks
+
+In your GET /api/admin/media handler: if DB query fails, do not return empty—fallback to Storage listing so the UI still shows files.
+
+try {
+  const { data: rows, error } = await db.from("media").select("*").order("created_at", { ascending: false })
+  if (error) throw error
+  return res.json(rows)
+} catch (e) {
+  console.warn("Media DB fetch failed, falling back to storage list:", e?.message)
+  const { data: list } = await supabase.storage.from("media").list(undefined, { limit: 100 })
+  const mapped = (list ?? []).map(o => ({
+    id: o.id ?? `${o.name}`,
+    bucket: "media",
+    path: o.name,
+    filename: o.name,
+    mime_type: null,
+    size_bytes: o.metadata?.size ?? null,
+    created_at: o.created_at ?? new Date().toISOString()
+  }))
+  return res.json(mapped)
+}
+
+
+This stops the “black empty library” problem during schema hiccups.
+
+TL;DR for you, David
+
+Your frontend isn’t passing the Supabase token to your Express admin API → fix apiFetch (Step 1).
+
+Your media table is missing columns your code reads (mime_type, size, width/height) → run the SQL (Step 3).
+
+Make sure the server uses the service role key and upserts a media row right after each upload (Steps 2 & 5).
+
+Ensure public read on storage or return signed URLs (Step 4).
+
+Optional robustness: fallback to storage listing if DB read fails (Step 7).
+
+Do these in order and your admin image insert/listing will work again. If you paste me your server/routes/admin/media.ts and your admin upload component, I’ll rewrite them to match this exactly.
+
+You said:
+ok need to tell replit this - LOL how
+ChatGPT said:
+Thought for a few seconds
+
+Got you. Here’s exactly what to do in Replit (plus one quick step in Supabase) to get admin image upload/listing working again.
+
+Do these in order (fast path)
+1) Replit → add server secrets (service role)
+
+Replit sidebar → Secrets (lock icon) → add/update:
+
+SUPABASE_URL=YOUR_SUPABASE_PROJECT_URL
+SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY   # not the anon key
+
+
+Restart the repl.
+
+2) Replit → fix your frontend fetch to send the token
+
+File: client/src/lib/api.ts (or wherever your fetch helper lives). Replace with this:
+
+import { supabase } from "@/lib/supabase"
+
+export async function apiFetch(path: string, options: RequestInit = {}) {
+  const { data: session } = await supabase.auth.getSession()
+  const token = session?.session?.access_token
+
+  const headers = new Headers(options.headers || {})
+  if (token) headers.set("Authorization", `Bearer ${token}`)
+  // only set JSON when body is JSON; FormData must not be forced
+  if (!(options.body instanceof FormData)) {
+    headers.set("Content-Type", "application/json")
+  }
+
+  const base = import.meta.env.VITE_API_URL || ""
+  const res = await fetch(`${base}${path}`, {
+    ...options,
+    headers,
+    credentials: "include",
+  })
+
+  if (!res.ok) {
+    const text = await res.text().catch(() => "")
+    throw new Error(`${res.status} ${res.statusText} :: ${text}`)
+  }
+  return res
+}
+
+
+(If your helper is elsewhere, paste this there.)
+
+3) Replit → server must upsert a DB row after storage upload
+
+File: server/routes/admin/media.ts (or your upload handler). After you upload the file to Supabase Storage and have bucket + path, upsert:
+
+// example: using supabase-js with service role on server
+import { createClient } from "@supabase/supabase-js"
+
+const supabase = createClient(
+  process.env.SUPABASE_URL!,
+  process.env.SUPABASE_SERVICE_ROLE_KEY!
+)
+
+// ... inside your POST upload handler, after storage upload succeeds:
+await supabase.from("media").upsert({
+  id: mediaId,                              // your generated id
+  bucket,                                   // e.g. "media" or "specimen-photos"
+  path,                                     // e.g. "photos/1764-rose.jpg"
+  filename: file.originalname || file.name,
+  mime_type: file.mimetype || null,
+  size_bytes: file.size || null,
+  title: req.body?.title ?? null,
+  alt: req.body?.alt ?? null,
+})
+
+4) Supabase (one-time) → fix the media table shape
+
+Open Supabase → SQL Editor → run:
+
+alter table public.media add column if not exists mime_type text;
+alter table public.media add column if not exists size_bytes bigint;
+alter table public.media add column if not exists width int;
+alter table public.media add column if not exists height int;
+
+-- make sure RLS is on and public can read
+alter table public.media enable row level security;
+
+drop policy if exists "public_read_media" on public.media;
+create policy "public_read_media" on public.media
+for select to public using (true);
+
+
+(If public.media doesn’t exist, tell me and I’ll give you the create-table block.)
+
+5) Supabase Storage (one-time) → ensure public read
+
+SQL Editor (or Storage policies):
+
+create policy if not exists "public can read media"
+on storage.objects for select
+to public
+using (bucket_id in ('media','specimen-photos'));
+
+6) Replit → restart & test
+
+Restart the repl.
+
+In your browser (admin page), open DevTools → Network.
+
+Refresh.
+
+/api/admin/media and other admin endpoints should be 200, not 401.
+
+Upload a photo → you should see a POST to your upload endpoint and the new row appear in /api/admin/media.
+
+7) If you still see an empty grid, add a safe fallback (optional)
+
+In GET /api/admin/media on the server, fall back to listing storage if DB read fails:
+
+try {
+  const { data, error } = await supabase.from("media").select("*").order("created_at", { ascending: false })
+  if (error) throw error
+  return res.json(data)
+} catch (e) {
+  const { data: files } = await supabase.storage.from("media").list(undefined, { limit: 100 })
+  const mapped = (files ?? []).map(o => ({
+    id: o.id ?? o.name,
+    bucket: "media",
+    path: o.name,
+    filename: o.name,
+    mime_type: null,
+    size_bytes: o.metadata?.size ?? null,
+    created_at: o.created_at ?? new Date().toISOString()
+  }))
+  return res.json(mapped)
+}
+
+Quick why (so you can tell Replit “what” and “why”)
+
+401 spam = frontend not attaching Supabase token to your Express API. Step 2 fixes it.
+
+“mime_type does not exist” = schema drift. Step 4 adds expected columns.
+
+Uploads succeed but nothing shows = you stored in Storage but didn’t upsert public.media. Step 3 fixes that.
+
+Public can’t see images = storage read policy. Step 5 fixes that.
+
+Do those 6 steps and your admin image uploading/listing will behave again. If you paste your current api.ts and media.ts here, I’ll rewrite them line-for-line to match this plan.
