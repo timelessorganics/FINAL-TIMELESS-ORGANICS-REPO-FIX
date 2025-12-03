@@ -5,6 +5,13 @@ import { Leaf, CalendarDays, Flower2, Sparkles, ArrowLeft, ArrowRight, Camera, C
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import SpecimenShowcase from "@/components/SpecimenShowcase";
+import { 
+  specimenAvailability, 
+  getCurrentSeason, 
+  getSeasonDisplay, 
+  getAvailabilityColor,
+  type Season 
+} from "@/lib/specimenAvailability";
 
 export default function SeasonalGuide() {
   return (
@@ -80,8 +87,23 @@ export default function SeasonalGuide() {
           </div>
 
           <p className="text-muted-foreground">
-            All 9 specimen styles available for future workshop bookings, organized by peak season:
+            All {specimenAvailability.length} specimen styles available for future workshop bookings, organized by peak season:
           </p>
+
+          {/* Current Season Indicator */}
+          {(() => {
+            const currentSeason = getCurrentSeason();
+            const seasonInfo = getSeasonDisplay(currentSeason);
+            return (
+              <div className="bg-bronze/10 border border-bronze/30 rounded-lg p-4 flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-bronze animate-pulse" />
+                <span className="text-sm">
+                  <strong>Current Season:</strong> {seasonInfo.name} ({seasonInfo.months}) — 
+                  Specimens marked with <span className="inline-block w-2 h-2 rounded-full bg-bronze mx-1" /> or <span className="inline-block w-2 h-2 rounded-full bg-bronze/50 mx-1" /> are available for <strong>Buy & Cast Now</strong>
+                </span>
+              </div>
+            );
+          })()}
 
           {/* Seasonal Chart */}
           <div className="overflow-x-auto">
@@ -89,76 +111,45 @@ export default function SeasonalGuide() {
               <thead>
                 <tr className="border-b-2 border-bronze/30">
                   <th className="text-left p-4 font-serif text-lg text-bronze">Specimen Style</th>
-                  <th className="text-center p-4 text-sm font-semibold text-muted-foreground">Winter</th>
-                  <th className="text-center p-4 text-sm font-semibold text-muted-foreground">Spring</th>
-                  <th className="text-center p-4 text-sm font-semibold text-muted-foreground">Summer</th>
-                  <th className="text-center p-4 text-sm font-semibold text-muted-foreground">Autumn</th>
+                  <th className="text-center p-4 text-sm font-semibold text-muted-foreground">
+                    Winter
+                    <span className="block text-xs font-normal">(Jun-Aug)</span>
+                  </th>
+                  <th className="text-center p-4 text-sm font-semibold text-muted-foreground">
+                    Spring
+                    <span className="block text-xs font-normal">(Sep-Nov)</span>
+                  </th>
+                  <th className="text-center p-4 text-sm font-semibold text-muted-foreground">
+                    Summer
+                    <span className="block text-xs font-normal">(Dec-Feb)</span>
+                  </th>
+                  <th className="text-center p-4 text-sm font-semibold text-muted-foreground">
+                    Autumn
+                    <span className="block text-xs font-normal">(Mar-May)</span>
+                  </th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-border">
-                <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Cones / Bracts / Seedpods</td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Protea / Pincushion Blooms / Heads</td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Bulb Spikes</td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Branches + Leaves</td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Aloe Inflorescence Heads</td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Flower Heads</td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze/50"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Erica Sprays</td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Restios / Seedheads / Grasses</td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-border"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                </tr>
-                <tr className="hover-elevate">
-                  <td className="p-4 font-medium">Small Succulents</td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                  <td className="text-center p-4"><span className="inline-block w-3 h-3 rounded-full bg-bronze"></span></td>
-                </tr>
+                {specimenAvailability.map((specimen) => (
+                  <tr key={specimen.id} className="hover-elevate">
+                    <td className="p-4">
+                      <span className="font-medium">{specimen.name}</span>
+                      <span className="block text-xs text-muted-foreground mt-1">{specimen.peakMonths}</span>
+                    </td>
+                    <td className="text-center p-4">
+                      <span className={`inline-block w-3 h-3 rounded-full ${getAvailabilityColor(specimen.winter)}`} />
+                    </td>
+                    <td className="text-center p-4">
+                      <span className={`inline-block w-3 h-3 rounded-full ${getAvailabilityColor(specimen.spring)}`} />
+                    </td>
+                    <td className="text-center p-4">
+                      <span className={`inline-block w-3 h-3 rounded-full ${getAvailabilityColor(specimen.summer)}`} />
+                    </td>
+                    <td className="text-center p-4">
+                      <span className={`inline-block w-3 h-3 rounded-full ${getAvailabilityColor(specimen.autumn)}`} />
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>

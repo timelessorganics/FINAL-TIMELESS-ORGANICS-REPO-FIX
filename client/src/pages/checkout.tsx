@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation, Link, useSearch } from "wouter";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
@@ -12,10 +12,18 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { Check, Clock, Sparkles, Shield, Award, ArrowLeft, CheckCircle2, Circle } from "lucide-react";
+import { Check, Clock, Sparkles, Shield, Award, ArrowLeft, CheckCircle2, Circle, AlertCircle, CalendarDays } from "lucide-react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import type { Sculpture } from "@shared/schema";
+import { 
+  specimenAvailability, 
+  getCurrentSeason, 
+  getSeasonDisplay, 
+  isAvailableForCastNow, 
+  getNextAvailableSeason,
+  type Season 
+} from "@/lib/specimenAvailability";
 
 const checkoutFormSchema = z.object({
   fullName: z.string().min(2, "Name must be at least 2 characters"),
@@ -68,6 +76,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
   
   const { toast } = useToast();
   const [purchaseMode, setPurchaseMode] = useState<"cast_now" | "wait_for_season">("cast_now");
+  const [selectedSpecimen, setSelectedSpecimen] = useState<string>("");
   const [promoCode, setPromoCode] = useState("");
   const [validatedPromo, setValidatedPromo] = useState<{valid: boolean; discount?: number; seatType?: string} | null>(null);
   const [isValidatingPromo, setIsValidatingPromo] = useState(false);
@@ -76,6 +85,28 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
   const [hasPatina, setHasPatina] = useState(false);
   const [mountingType, setMountingType] = useState("none");
   const [paymentType, setPaymentType] = useState<"full" | "deposit" | "reserve">(urlPaymentType);
+
+  // Get current season and check specimen availability
+  const currentSeason = getCurrentSeason() as Season;
+  const seasonInfo = getSeasonDisplay(currentSeason);
+  
+  // Check if selected specimen is available for "Cast Now"
+  const specimenCanCastNow = selectedSpecimen ? isAvailableForCastNow(selectedSpecimen, currentSeason) : true;
+  const nextAvailableSeason = selectedSpecimen && !specimenCanCastNow 
+    ? getNextAvailableSeason(selectedSpecimen, currentSeason) 
+    : null;
+  const nextSeasonInfo = nextAvailableSeason ? getSeasonDisplay(nextAvailableSeason) : null;
+  
+  // If specimen can't cast now and user had "cast_now" selected, switch to "wait_for_season"
+  useEffect(() => {
+    if (selectedSpecimen && !specimenCanCastNow && purchaseMode === "cast_now") {
+      setPurchaseMode("wait_for_season");
+      toast({
+        title: "Specimen not in season",
+        description: `${specimenAvailability.find(s => s.id === selectedSpecimen)?.name} is not available for immediate casting. Switched to "Buy & Wait".`,
+      });
+    }
+  }, [selectedSpecimen, specimenCanCastNow, purchaseMode, toast]);
 
   const { data: seats, isLoading: loadingSeats } = useQuery<any[]>({
     queryKey: ['/api/seats/availability'],
