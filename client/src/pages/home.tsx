@@ -317,14 +317,13 @@ export default function HomePage() {
                 </div>
               )}
               
-              {/* Seat counter */}
-              {totalRemaining > 0 && (
-                <div className="hero-text-reveal hero-text-reveal-delay-3 mt-2">
-                  <span className="text-[0.65rem] sm:text-xs text-white/50 font-light">
-                    {totalRemaining} of 100 seats remaining
-                  </span>
+              {/* Seat counter - PROMINENT */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mt-4 flex justify-center">
+                <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm border border-white/20 px-4 py-2 rounded-full">
+                  <span className="text-lg sm:text-xl font-bold text-bronze">{totalRemaining}</span>
+                  <span className="text-sm sm:text-base text-white/90 font-medium">of 100 seats remaining</span>
                 </div>
-              )}
+              </div>
             </div>
           </div>
         </section>
