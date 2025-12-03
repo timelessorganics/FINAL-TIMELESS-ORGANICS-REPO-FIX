@@ -1,7 +1,7 @@
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Link } from "wouter";
-import { Leaf, CalendarDays, Flower2, Sparkles, ArrowLeft, Camera, CheckCircle2, Package } from "lucide-react";
+import { Leaf, CalendarDays, Flower2, Sparkles, ArrowLeft, ArrowRight, Camera, CheckCircle2, Package } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import SpecimenShowcase from "@/components/SpecimenShowcase";
@@ -354,6 +354,17 @@ export default function SeasonalGuide() {
               data-testid="button-view-founding100"
             >
               View Founding 100 Seats
+            </Button>
+          </Link>
+          <Link href="/founding-100#seats">
+            <Button 
+              size="lg"
+              className="bg-gradient-to-r from-bronze via-accent-gold to-bronze text-background font-bold"
+              data-testid="button-invest-now"
+            >
+              <Sparkles className="w-5 h-5 mr-2" />
+              Invest Now — Choose Your Seat
+              <ArrowRight className="w-5 h-5 ml-2" />
             </Button>
           </Link>
         </section>

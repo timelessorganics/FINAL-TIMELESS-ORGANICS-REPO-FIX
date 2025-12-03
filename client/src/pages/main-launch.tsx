@@ -251,9 +251,10 @@ export default function MainLaunch() {
                     benefits worth even more.
                   </p>
                   <p className="text-base text-muted-foreground font-light leading-relaxed">
-                    Your investment funds the foundry. The kilns. The crucibles. The equipment 
-                    that transforms organic matter into permanent bronze art. Without these 100 
-                    founding investors, none of this exists.
+                    We have built this with our bare hands after extremely unforeseen and suddenly 
+                    unexpected brutal circumstances. The founding 100 lifetime opportunity transforms 
+                    this into the dream that turns organic matter into permanent bronze art. Without 
+                    these 100 founding investors, this is just not going to exist.
                   </p>
                   <p className="text-base text-foreground/90 font-light leading-relaxed">
                     In return, you get first access to workshops, lifetime discounts on everything 
@@ -269,123 +270,27 @@ export default function MainLaunch() {
             </div>
           </section>
 
-          {/* WAIT BEFORE YOU BUY - SEASONAL GUIDE - ABOVE SEAT SELECTION */}
-          <section className="relative z-10 mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-card/40 via-background to-card/40 rounded-xl border border-border/50" data-testid="section-specimen-guide">
-            <div className="text-center mb-8 sm:mb-10">
-              <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2">
+          {/* SEASONAL GUIDE NOTICE - SIMPLE LINK TO FULL PAGE */}
+          <section className="relative z-10 mb-8 sm:mb-12 lg:mb-16 py-6 sm:py-8 lg:py-10 bg-gradient-to-br from-card/40 via-background to-card/40 rounded-xl border border-border/50" data-testid="section-specimen-guide">
+            <div className="text-center px-4">
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4">
                 <AlertCircle className="w-4 h-4" />
-                WAIT BEFORE YOU BUY
+                BEFORE YOU INVEST
               </div>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-4 sm:mb-6">
-                Choose Your Specimen
+              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mb-4">
+                Understand Seasonal Availability
               </h2>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-3xl mx-auto font-light mb-6">
-                Cape Fynbos changes with the seasons. Each specimen has optimal collection windows. Select your style—we'll tell you if it's available now or if you need to wait.
+              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-light mb-6">
+                Read our seasonal guide for clarity on specimen seasons and selection criteria before investing.
               </p>
-            </div>
-
-            {/* 9-Block Specimen Quick Reference Grid */}
-            <div className="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-2 sm:gap-3 mb-8">
-              {Object.entries(SPECIMEN_NAMES).map(([key, name]) => {
-                const specimen = sculptures?.find(s => s.specimenStyle === key);
-                const isAvailableNow = specimen ? isSpecimenAvailableNow(specimen) : true;
-                
-                return (
-                  <div
-                    key={key}
-                    className="group cursor-pointer"
-                    data-testid={`specimen-ref-${key}`}
-                  >
-                    <div 
-                      onClick={() => setExpandedSpecimen(expandedSpecimen === key ? null : key)}
-                      className="relative overflow-hidden rounded-lg border-2 border-card-border hover:border-bronze/50 transition-all h-32 bg-card-background p-2 flex flex-col justify-between hover-elevate"
-                    >
-                      {/* Specimen Image */}
-                      <div className="absolute inset-0 opacity-40">
-                        <img
-                          src={SPECIMEN_IMAGES[key]}
-                          alt={name}
-                          className="w-full h-full object-cover"
-                        />
-                      </div>
-                      
-                      {/* Content */}
-                      <div className="relative z-10">
-                        <p className="text-[0.7rem] font-bold text-white truncate">{name}</p>
-                      </div>
-                      
-                      {/* Bottom Info */}
-                      <div className="relative z-10 flex items-end justify-between">
-                        <span className={`text-[0.6rem] font-semibold px-1.5 py-0.5 rounded ${
-                          isAvailableNow
-                            ? 'bg-green-500/90 text-white'
-                            : 'bg-amber-600/90 text-white'
-                        }`}>
-                          {isAvailableNow ? 'Now' : 'Wait'}
-                        </span>
-                        <span className="text-[0.65rem] text-white/80 font-light">{SPECIMEN_SEASONS[key]}</span>
-                      </div>
-                    </div>
-                    
-                    {/* Expanded Details - Pop-out */}
-                    {expandedSpecimen === key && (
-                      <div className="absolute top-full left-0 right-0 mt-2 bg-card border-2 border-bronze rounded-lg p-3 z-50 text-xs max-w-sm">
-                        <p className="font-semibold text-foreground mb-1">{name}</p>
-                        <p className="text-muted-foreground mb-2">Season: <span className="text-bronze font-semibold">{SPECIMEN_SEASONS[key]}</span></p>
-                        <p className="text-muted-foreground text-[0.6rem]">
-                          {isAvailableNow 
-                            ? "✓ Available now! Receive soon after purchase." 
-                            : "Select 'BUY & WAIT' at checkout to secure now, receive when in peak condition."}
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-
-            {/* Read More Links - Two Buttons */}
-            <div className="text-center flex gap-3 justify-center flex-wrap">
-              <Link href="/sculpture-gallery">
-                <Button variant="outline" className="gap-2" data-testid="button-view-specimen-gallery">
-                  <Calendar className="w-4 h-4" />
-                  View Full Specimen Gallery
-                  <ArrowRight className="w-4 h-4" />
-                </Button>
-              </Link>
               <Link href="/seasonal-guide">
-                <Button variant="outline" className="gap-2" data-testid="button-view-seasonal-guide">
-                  <Calendar className="w-4 h-4" />
+                <Button size="lg" className="gap-2 bg-bronze text-background font-semibold" data-testid="button-view-seasonal-guide">
+                  <Calendar className="w-5 h-5" />
                   View Seasonal Guide
-                  <ArrowRight className="w-4 h-4" />
+                  <ArrowRight className="w-5 h-5" />
                 </Button>
               </Link>
             </div>
-
-            {/* Availability Status */}
-            {selectedSpecimen && (
-              <Alert className={`${
-                specimenAvailability[selectedSpecimen]
-                  ? 'bg-green-500/10 border-green-500/30'
-                  : 'bg-amber-600/10 border-amber-600/30'
-              }`}>
-                {specimenAvailability[selectedSpecimen] ? (
-                  <>
-                    <Check className="h-4 w-4 text-green-600" />
-                    <AlertDescription className="text-green-700 dark:text-green-400">
-                      <strong>{SPECIMEN_NAMES[selectedSpecimen]}</strong> is in season NOW! You can receive your casting soon after purchase.
-                    </AlertDescription>
-                  </>
-                ) : (
-                  <>
-                    <AlertCircle className="h-4 w-4 text-amber-700" />
-                    <AlertDescription className="text-amber-700 dark:text-amber-400">
-                      <strong>{SPECIMEN_NAMES[selectedSpecimen]}</strong> is out of season. Select "BUY & WAIT" at checkout to secure your specimen now and receive it when it's in peak condition.
-                    </AlertDescription>
-                  </>
-                )}
-              </Alert>
-            )}
           </section>
 
           {/* SEAT SELECTION - NOW AFTER SPECIMEN GUIDE */}

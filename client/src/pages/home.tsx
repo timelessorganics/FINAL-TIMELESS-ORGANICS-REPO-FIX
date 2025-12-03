@@ -377,7 +377,7 @@ export default function HomePage() {
                 <span className="text-accent-gold font-medium"> Only Founding 100 members get these terms for life.</span>
               </p>
 
-              <Link href="/founding-100">
+              <Link href="/founding-100#seats">
                 <Button 
                   size="lg"
                   className="relative overflow-hidden text-lg px-10 py-6 font-bold bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background"
