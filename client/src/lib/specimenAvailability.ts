@@ -9,7 +9,7 @@ export type Availability = 'peak' | 'good' | 'limited';
 export interface SpecimenStyle {
   id: string;
   name: string;
-  examples: string;
+  description: string;
   winter: Availability;
   spring: Availability;
   summer: Availability;
@@ -20,81 +20,72 @@ export interface SpecimenStyle {
 // Availability: peak (●), good (◐), limited (○)
 export const specimenStyles: SpecimenStyle[] = [
   {
-    id: 'protea-flowers',
-    name: 'Protea (flowers)',
-    examples: 'King Protea, Sugarbush. Many peak late winter-spring (Aug-Nov), King has spring-summer peak.',
+    id: 'cones-bracts-seedpods',
+    name: 'Cones / Bracts / Seedpods',
+    description: 'Leucadendron cones, coloured bracts, dried seedpods. Best late summer-autumn when dried.',
+    winter: 'good',      // ◐
+    spring: 'good',      // ◐
+    summer: 'good',      // ◐
+    autumn: 'peak',      // ●
+  },
+  {
+    id: 'protea-pincushion-blooms',
+    name: 'Protea Heads / Pincushion Blooms',
+    description: 'King Protea, Sugarbush, Pincushion Protea. Peak late winter through spring.',
     winter: 'good',      // ◐
     spring: 'peak',      // ●
-    summer: 'good',      // ◐ (king + some)
+    summer: 'good',      // ◐
     autumn: 'limited',   // ○
   },
   {
-    id: 'leucospermum-pincushions',
-    name: 'Leucospermum (pincushions)',
-    examples: 'Pincushion Protea. Strongest spring (Aug-Oct), early ones late winter (Jul). Summer rare.',
-    winter: 'good',      // ◐ (late)
-    spring: 'peak',      // ●
-    summer: 'limited',   // ○
-    autumn: 'limited',   // ○
-  },
-  {
-    id: 'leucadendron-bracts',
-    name: 'Leucadendron (coloured bracts)',
-    examples: 'Safari Sunset, Silvertree. Female bracts colour in winter-spring.',
+    id: 'bulb-spikes',
+    name: 'Bulb Spikes',
+    description: 'Watsonia, Ixia, Babiana, Moraea. Wild iris and bulb flower spikes.',
     winter: 'peak',      // ●
     spring: 'peak',      // ●
     summer: 'limited',   // ○
     autumn: 'limited',   // ○
   },
   {
-    id: 'leucadendron-cones',
-    name: 'Leucadendron (cones/seedheads)',
-    examples: 'Dried cones and seedpods. Best late summer-autumn once dried but before shattering.',
-    winter: 'limited',   // ○
-    spring: 'limited',   // ○
-    summer: 'good',      // ◐
-    autumn: 'peak',      // ●
-  },
-  {
-    id: 'watsonia',
-    name: 'Watsonia',
-    examples: 'Bugle Lily spikes. Mostly late spring to early summer (Oct-Dec).',
-    winter: 'limited',   // ○
-    spring: 'good',      // ◐ (late)
-    summer: 'peak',      // ● (early-mid)
-    autumn: 'limited',   // ○
-  },
-  {
-    id: 'bulb-spikes',
-    name: 'Bulb Spikes (Ixia/Babiana/Moraea)',
-    examples: 'Wild iris, Babiana. Mainly late winter-spring (Aug-Oct).',
-    winter: 'peak',      // ● (late)
-    spring: 'peak',      // ●
-    summer: 'limited',   // ○
-    autumn: 'limited',   // ○
-  },
-  {
-    id: 'restios-reeds',
-    name: 'Restios / Reeds (forms)',
-    examples: 'Cape Reed, Thatching reed. Structural year-round, harvest late summer-autumn when dry.',
+    id: 'branches-leaves',
+    name: 'Branches + Leaves',
+    description: 'Sculptural twigs with foliage. Year-round, avoid soft new growth after spring flush.',
     winter: 'peak',      // ●
     spring: 'peak',      // ●
     summer: 'peak',      // ●
     autumn: 'peak',      // ●
   },
   {
-    id: 'erica-heaths',
-    name: 'Erica (heaths)',
-    examples: 'Cape Heath, Heather. Many winter-spring, some autumn, few in high summer.',
+    id: 'aloe-inflorescence',
+    name: 'Aloe Inflorescence Heads',
+    description: 'Striking aloe flower spikes. Peak winter flowering period.',
+    winter: 'peak',      // ●
+    spring: 'good',      // ◐
+    summer: 'limited',   // ○
+    autumn: 'good',      // ◐
+  },
+  {
+    id: 'flower-heads',
+    name: 'Flower Heads',
+    description: 'Pelargonium, wild geraniums, and other delicate flower heads.',
+    winter: 'good',      // ◐
+    spring: 'peak',      // ●
+    summer: 'good',      // ◐
+    autumn: 'good',      // ◐
+  },
+  {
+    id: 'erica-sprays',
+    name: 'Erica Sprays',
+    description: 'Cape Heath, Heather sprays. Many winter-spring, some autumn.',
     winter: 'peak',      // ●
     spring: 'peak',      // ●
     summer: 'limited',   // ○
     autumn: 'good',      // ◐
   },
   {
-    id: 'branches-leaves',
-    name: 'Branches + Leaves',
-    examples: 'Sculptural twigs with foliage. Year-round, avoid soft new growth after spring flush.',
+    id: 'restios-grasses',
+    name: 'Restios / Seedheads / Grasses',
+    description: 'Cape Reed, Thatching reed. Structural year-round.',
     winter: 'peak',      // ●
     spring: 'peak',      // ●
     summer: 'peak',      // ●
@@ -103,7 +94,7 @@ export const specimenStyles: SpecimenStyle[] = [
   {
     id: 'small-succulents',
     name: 'Small Succulents',
-    examples: 'Compact rosettes, Vygies. Structure year-round, many flower autumn-winter.',
+    description: 'Compact rosettes, Vygies. Structure year-round, many flower autumn-winter.',
     winter: 'peak',      // ●
     spring: 'good',      // ◐
     summer: 'limited',   // ○
@@ -211,4 +202,9 @@ export function getAvailabilitySymbol(availability: Availability): string {
     case 'good': return '◐';
     case 'limited': return '○';
   }
+}
+
+// Get style by ID
+export function getStyleById(styleId: string): SpecimenStyle | undefined {
+  return specimenStyles.find(s => s.id === styleId);
 }

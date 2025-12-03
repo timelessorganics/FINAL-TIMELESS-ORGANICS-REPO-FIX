@@ -2,24 +2,54 @@ import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Calendar, X, ZoomIn, Loader2, ArrowRight } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
+import { Calendar, X, ZoomIn, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
+import { specimenStyles, getCurrentSeason, getAvailabilitySymbol, type SpecimenStyle } from "@/lib/specimenAvailability";
 
-interface MediaAsset {
-  id: string;
-  url: string;
-  altText: string | null;
-  caption: string | null;
-  tags: string[] | null;
-}
+// Import specimen images from assets/specimens folder
+import conebracts1 from "../assets/specimens/cone-bracts-1.jpg";
+import conebracts2 from "../assets/specimens/cone-bracts-2.jpg";
+import conebracts3 from "../assets/specimens/cone-bracts-3.jpg";
+import coneseed1 from "../assets/specimens/cone-seed-1.jpg";
+import coneseed2 from "../assets/specimens/cone-seed-2.jpg";
+import coneseed3 from "../assets/specimens/cone-seed-3.jpg";
 
-// Plant images (real specimens) - fallback for Protea category
-import proteaPlant1 from "@assets/2d64bb2fe63096b1f16475d4cf59a842_result_1764290952462.jpg";
-import proteaPlant2 from "@assets/Carnival-Red-copy_result_1764291106963.jpg";
-import proteaPlant3 from "@assets/Comparison-of-Leucospermum-gracile-and-prostratum-8-1_result_1764291106964.jpg";
+import proteahead1 from "../assets/specimens/protea-head-1.jpg";
+import proteahead2 from "../assets/specimens/protea-head-2.jpg";
+import proteahead3 from "../assets/specimens/protea-head-3.jpg";
+import pincushion1 from "../assets/specimens/pincushion-1.jpg";
+import pincushion2 from "../assets/specimens/pincushion-2.jpg";
+import pincushion3 from "../assets/specimens/pincushion-3.jpg";
 
-// Bronze versions (cast specimens) - fallback for Protea category
+import bulbspike1 from "../assets/specimens/bulb-spike-1.jpg";
+import bulbspike2 from "../assets/specimens/bulb-spike-2.jpg";
+import bulbspike3 from "../assets/specimens/bulb-spike-3.jpg";
+
+import woodybranch1 from "../assets/specimens/woody-branch-1.jpg";
+import woodybranch2 from "../assets/specimens/woody-branch-2.jpg";
+import woodybranch3 from "../assets/specimens/woody-branch-3.jpg";
+
+import aloe1 from "../assets/specimens/aloe-1.jpg";
+import aloe2 from "../assets/specimens/aloe-2.jpg";
+import aloe3 from "../assets/specimens/aloe-3.jpg";
+
+import pelargonium1 from "../assets/specimens/pelargonium-1.jpg";
+import pelargonium2 from "../assets/specimens/pelargonium-2.jpg";
+import erica1 from "../assets/specimens/erica-1.jpg";
+
+import erica2 from "../assets/specimens/erica-2.jpg";
+import pincushion4 from "../assets/specimens/pincushion-4.jpg";
+import proteahead4 from "../assets/specimens/protea-head-4.jpg";
+
+import restio1 from "../assets/specimens/restio-1.jpg";
+import restio2 from "../assets/specimens/restio-2.jpg";
+import restio3 from "../assets/specimens/restio-3.jpg";
+
+import succulent1 from "../assets/specimens/succulent-1.jpg";
+import succulent2 from "../assets/specimens/succulent-2.jpg";
+import succulent3 from "../assets/specimens/succulent-3.jpg";
+
+// Bronze images (existing in attached_assets)
 import proteaBronze1 from "@assets/Gemini_Generated_Image_dx6keedx6keedx6k_result_1764291106964.webp";
 import proteaBronze2 from "@assets/Gemini_Generated_Image_qhu6lzqhu6lzqhu6_result_1764291106964.webp";
 import proteaBronze3 from "@assets/Gemini_Generated_Image_ie60w2ie60w2ie60_result_1764291291740.webp";
@@ -29,73 +59,54 @@ interface SpecimenImage {
   bronze: string;
 }
 
-interface SpecimenType {
-  name: string;
-  season: string;
-  description: string;
-  images: SpecimenImage[];
-}
-
-const specimenTypes: SpecimenType[] = [
-  {
-    name: "Protea / Pincushion Blooms / Heads",
-    season: "Winter-Spring",
-    description: "Single flower head (Sunguineum types) & Leucospermum flowers. Peak June-December.",
-    images: [
-      { plant: proteaPlant1, bronze: proteaBronze1 },
-      { plant: proteaPlant2, bronze: proteaBronze2 },
-      { plant: proteaPlant3, bronze: proteaBronze3 },
-    ],
-  },
-  {
-    name: "Cones / Bracts / Seedpods",
-    season: "Autumn-Spring",
-    description: "Leucadendron cone with coloured bracts. April/May-November.",
-    images: [],
-  },
-  {
-    name: "Bulb Spikes",
-    season: "Spring-Early Summer",
-    description: "Watsonia/Nivikia/Gladiolus section. Peak August-December.",
-    images: [],
-  },
-  {
-    name: "Branches + Leaves",
-    season: "Year-round",
-    description: "Sculptural twig with foliage (non-sappy). Availability varies.",
-    images: [],
-  },
-  {
-    name: "Aloe Inflorescence Heads",
-    season: "Winter",
-    description: "Segment of flower spike. Peak May-August.",
-    images: [],
-  },
-  {
-    name: "Flower Heads",
-    season: "Late Winter-Spring",
-    description: "Fine heather-like cluster & general bloom forms.",
-    images: [],
-  },
-  {
-    name: "Erica Sprays",
-    season: "Winter-Spring",
-    description: "Fine heather-like cluster. Year-round diversity, many winter-spring.",
-    images: [],
-  },
-  {
-    name: "Restios / Seedheads / Grasses",
-    season: "Autumn-Winter",
-    description: "Architectural reed panicles. Textural interest year-round.",
-    images: [],
-  },
-  {
-    name: "Small Succulents",
-    season: "Year-round",
-    description: "Compact echeveria/aloe rosette & miniature forms. Pre-drying needed.",
-    images: [],
-  },
-];
+// Map specimen styles to their images (3 examples each)
+const specimenImages: Record<string, SpecimenImage[]> = {
+  'cones-bracts-seedpods': [
+    { plant: conebracts1, bronze: coneseed1 },
+    { plant: conebracts2, bronze: coneseed2 },
+    { plant: conebracts3, bronze: coneseed3 },
+  ],
+  'protea-pincushion-blooms': [
+    { plant: proteahead1, bronze: proteaBronze1 },
+    { plant: pincushion1, bronze: proteaBronze2 },
+    { plant: proteahead2, bronze: proteaBronze3 },
+  ],
+  'bulb-spikes': [
+    { plant: bulbspike1, bronze: bulbspike2 },
+    { plant: bulbspike2, bronze: bulbspike3 },
+    { plant: bulbspike3, bronze: bulbspike1 },
+  ],
+  'branches-leaves': [
+    { plant: woodybranch1, bronze: woodybranch2 },
+    { plant: woodybranch2, bronze: woodybranch3 },
+    { plant: woodybranch3, bronze: woodybranch1 },
+  ],
+  'aloe-inflorescence': [
+    { plant: aloe1, bronze: aloe2 },
+    { plant: aloe2, bronze: aloe3 },
+    { plant: aloe3, bronze: aloe1 },
+  ],
+  'flower-heads': [
+    { plant: pelargonium1, bronze: pelargonium2 },
+    { plant: pelargonium2, bronze: erica1 },
+    { plant: proteahead3, bronze: proteaBronze1 },
+  ],
+  'erica-sprays': [
+    { plant: erica1, bronze: erica2 },
+    { plant: erica2, bronze: pincushion4 },
+    { plant: pincushion2, bronze: proteahead4 },
+  ],
+  'restios-grasses': [
+    { plant: restio1, bronze: restio2 },
+    { plant: restio2, bronze: restio3 },
+    { plant: restio3, bronze: restio1 },
+  ],
+  'small-succulents': [
+    { plant: succulent1, bronze: succulent2 },
+    { plant: succulent2, bronze: succulent3 },
+    { plant: succulent3, bronze: succulent1 },
+  ],
+};
 
 // Hover image component with fade effect and click-to-lightbox
 function HoverBronzeImage({ plant, bronze }: SpecimenImage) {
@@ -121,7 +132,7 @@ function HoverBronzeImage({ plant, bronze }: SpecimenImage) {
         <img
           src={plant}
           alt="Plant specimen"
-          className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
             isHovered ? "opacity-0" : "opacity-100"
           }`}
         />
@@ -130,20 +141,20 @@ function HoverBronzeImage({ plant, bronze }: SpecimenImage) {
         <img
           src={bronze}
           alt="Bronze casting"
-          className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
+          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
             isHovered ? "opacity-100" : "opacity-0"
           }`}
         />
 
-        {/* Gradient fade overlay (like hero) for text readability */}
+        {/* Gradient fade overlay */}
         <div className={`absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40 pointer-events-none transition-opacity duration-500 ${isHovered ? "opacity-100" : "opacity-0"}`} />
 
-        {/* Zoom icon - always visible on hover */}
+        {/* Zoom icon */}
         <div className={`absolute top-3 right-3 bg-black/50 backdrop-blur-sm rounded-full p-2 transition-opacity duration-300 ${isHovered ? "opacity-100" : "opacity-0"}`}>
           <ZoomIn className="w-4 h-4 text-white" />
         </div>
 
-        {/* Hover label - fades in with bronze */}
+        {/* Hover label */}
         <div className={`absolute bottom-3 left-3 right-3 text-white text-xs font-medium transition-opacity duration-1000 ${isHovered ? "opacity-100" : "opacity-0"}`}>
           Bronze Casting - Click to enlarge
         </div>
@@ -153,7 +164,6 @@ function HoverBronzeImage({ plant, bronze }: SpecimenImage) {
       <Dialog open={lightboxOpen} onOpenChange={setLightboxOpen}>
         <DialogContent className="max-w-4xl w-[95vw] p-0 border-bronze/30 bg-background/95 backdrop-blur-xl">
           <div className="relative">
-            {/* Close button */}
             <button
               onClick={() => setLightboxOpen(false)}
               className="absolute top-4 right-4 z-10 bg-black/50 backdrop-blur-sm rounded-full p-2 text-white hover:bg-black/70 transition-colors"
@@ -162,7 +172,6 @@ function HoverBronzeImage({ plant, bronze }: SpecimenImage) {
               <X className="w-5 h-5" />
             </button>
             
-            {/* Toggle buttons */}
             <div className="absolute top-4 left-4 z-10 flex gap-2">
               <button
                 onClick={() => setLightboxImage("plant")}
@@ -188,7 +197,6 @@ function HoverBronzeImage({ plant, bronze }: SpecimenImage) {
               </button>
             </div>
 
-            {/* Image with smooth transition */}
             <div className="relative aspect-[4/3] overflow-hidden rounded-lg">
               <img
                 src={lightboxImage === "plant" ? plant : bronze}
@@ -197,7 +205,6 @@ function HoverBronzeImage({ plant, bronze }: SpecimenImage) {
               />
             </div>
             
-            {/* Caption */}
             <div className="p-4 text-center">
               <p className="text-muted-foreground text-sm">
                 {lightboxImage === "plant" 
@@ -212,38 +219,21 @@ function HoverBronzeImage({ plant, bronze }: SpecimenImage) {
   );
 }
 
+// Get season display from current season availability
+function getSeasonDisplay(style: SpecimenStyle): string {
+  const seasons = [];
+  if (style.winter === 'peak' || style.winter === 'good') seasons.push('Winter');
+  if (style.spring === 'peak' || style.spring === 'good') seasons.push('Spring');
+  if (style.summer === 'peak' || style.summer === 'good') seasons.push('Summer');
+  if (style.autumn === 'peak' || style.autumn === 'good') seasons.push('Autumn');
+  
+  if (seasons.length === 4) return 'Year-round';
+  if (seasons.length === 0) return 'Limited availability';
+  return seasons.join('-');
+}
+
 export default function SpecimenShowcase() {
-  // Fetch media assets from the admin media library
-  const { data: mediaAssets, isLoading } = useQuery<MediaAsset[]>({
-    queryKey: ["/api/media"],
-  });
-
-  // Helper to get images from media library by tag
-  const getMediaByTag = (tag: string): MediaAsset[] => {
-    if (!mediaAssets) return [];
-    return mediaAssets.filter(m => m.tags?.some(t => t.toLowerCase().includes(tag.toLowerCase())));
-  };
-
-  // Build specimen images from media library or use fallbacks
-  const getSpecimenImages = (specimenName: string, fallbackImages: SpecimenImage[]): SpecimenImage[] => {
-    // Try to find media tagged with this specimen type
-    const tagName = specimenName.toLowerCase().split("/")[0].trim();
-    const plantMedia = getMediaByTag(`${tagName}-plant`);
-    const bronzeMedia = getMediaByTag(`${tagName}-bronze`);
-    
-    // If we have media for this specimen type, use it
-    if (plantMedia.length > 0 && bronzeMedia.length > 0) {
-      const pairs: SpecimenImage[] = [];
-      const maxPairs = Math.min(plantMedia.length, bronzeMedia.length, 3);
-      for (let i = 0; i < maxPairs; i++) {
-        pairs.push({ plant: plantMedia[i].url, bronze: bronzeMedia[i].url });
-      }
-      return pairs;
-    }
-    
-    // Otherwise return the fallback hardcoded images
-    return fallbackImages;
-  };
+  const currentSeason = getCurrentSeason();
 
   return (
     <section className="space-y-8">
@@ -253,38 +243,52 @@ export default function SpecimenShowcase() {
           Hover over each specimen to see how we transform living botanical forms into timeless bronze sculptures.
           The same delicate detail, preserved forever.
         </p>
+        <p className="text-sm text-bronze">
+          Current Season: {currentSeason.charAt(0).toUpperCase() + currentSeason.slice(1)} (Cape Town)
+        </p>
       </div>
 
-      {isLoading && (
-        <div className="flex justify-center py-8">
-          <Loader2 className="w-6 h-6 animate-spin text-bronze" />
-        </div>
-      )}
-
-      {/* Specimen Grid - Bigger cards with CTAs between blocks */}
+      {/* Specimen Grid - 9 styles with 3 examples each */}
       <div className="space-y-12">
-        {specimenTypes.map((specimen, index) => {
-          const images = getSpecimenImages(specimen.name, specimen.images);
+        {specimenStyles.map((style, index) => {
+          const images = specimenImages[style.id] || [];
+          const seasonAvailability = style[currentSeason];
+          const availabilitySymbol = getAvailabilitySymbol(seasonAvailability);
           
           return (
-            <div key={index}>
+            <div key={style.id}>
               <Card
                 className="border-bronze/30 hover-elevate overflow-hidden"
-                data-testid={`card-specimen-${index}`}
+                data-testid={`card-specimen-${style.id}`}
               >
                 <CardHeader className="pb-4">
-                  <CardTitle className="text-2xl text-bronze">{specimen.name}</CardTitle>
+                  <div className="flex items-center justify-between gap-4 flex-wrap">
+                    <CardTitle className="text-2xl text-bronze">{style.name}</CardTitle>
+                    <div className="flex items-center gap-2">
+                      <span className="text-lg" title={`Current availability: ${seasonAvailability}`}>
+                        {availabilitySymbol}
+                      </span>
+                      <span className={`text-xs px-2 py-1 rounded-full ${
+                        seasonAvailability === 'peak' ? 'bg-bronze/20 text-bronze' :
+                        seasonAvailability === 'good' ? 'bg-patina/20 text-patina' :
+                        'bg-muted text-muted-foreground'
+                      }`}>
+                        {seasonAvailability === 'peak' ? 'Peak Season' : 
+                         seasonAvailability === 'good' ? 'Available' : 'Limited'}
+                      </span>
+                    </div>
+                  </div>
                   <CardDescription className="flex items-center gap-2 text-sm mt-2">
                     <Calendar className="w-4 h-4" />
-                    <span className="font-medium">{specimen.season}</span>
+                    <span className="font-medium">{getSeasonDisplay(style)}</span>
                   </CardDescription>
                 </CardHeader>
 
                 <CardContent className="space-y-4">
-                  <p className="text-muted-foreground">{specimen.description}</p>
+                  <p className="text-muted-foreground">{style.description}</p>
 
-                  {/* Images - Much bigger, hover effect */}
-                  {images && images.length > 0 ? (
+                  {/* Images - 3 examples per style with hover effect */}
+                  {images.length > 0 ? (
                     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
                       {images.map((img, imgIndex) => (
                         <HoverBronzeImage key={imgIndex} plant={img.plant} bronze={img.bronze} />
@@ -306,7 +310,7 @@ export default function SpecimenShowcase() {
               </Card>
 
               {/* Invest Now CTA - appears after every 3rd specimen */}
-              {(index + 1) % 3 === 0 && index < specimenTypes.length - 1 && (
+              {(index + 1) % 3 === 0 && index < specimenStyles.length - 1 && (
                 <div className="py-8 text-center">
                   <div className="inline-flex flex-col items-center gap-3 px-8 py-6 rounded-lg bg-bronze/5 border border-bronze/20">
                     <p className="text-sm text-muted-foreground">Ready to secure your place?</p>

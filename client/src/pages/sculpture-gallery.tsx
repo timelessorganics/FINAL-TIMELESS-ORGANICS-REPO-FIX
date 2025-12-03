@@ -35,8 +35,8 @@ export default function SculptureGallery({ purchaseId }: SculptureGalleryProps) 
             Specimen Styles
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Browse the 12 botanical forms we work with. Hover over cards to see example photos 
-            where available. David hand-selects each specimen for the Founding 100.
+            Browse the 9 botanical styles we work with. Hover over cards to see the plant-to-bronze transformation. 
+            David hand-selects each specimen for the Founding 100.
           </p>
         </header>
 

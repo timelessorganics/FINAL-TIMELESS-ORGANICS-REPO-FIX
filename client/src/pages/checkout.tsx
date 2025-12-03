@@ -161,7 +161,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
             deliveryName: data.fullName,
             deliveryPhone: data.phone,
             deliveryAddress: data.address,
-            specimenStyle: null,
+            specimenStyle: selectedSpecimen || null,
             hasPatina,
             mountingType,
             internationalShipping: false,
@@ -184,7 +184,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
         deliveryName: data.fullName,
         deliveryPhone: data.phone,
         deliveryAddress: data.address,
-        specimenStyle: null,
+        specimenStyle: selectedSpecimen || null,
         hasPatina,
         mountingType,
         internationalShipping: false,
@@ -236,7 +236,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
     mutationFn: async (data: CheckoutForm & { promoCode: string }) => {
       return await apiRequest("POST", "/api/promo-code/redeem", {
         code: data.promoCode,
-        specimenStyle: null,
+        specimenStyle: selectedSpecimen || null,
         deliveryName: data.fullName,
         deliveryPhone: data.phone,
         deliveryAddress: data.address,
@@ -522,7 +522,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                       {selectedSpecimen && (
                         <div className="mt-3 p-3 bg-muted/30 rounded-lg border border-border/30">
                           <p className="text-xs text-muted-foreground">
-                            <strong>Examples:</strong> {specimenStyles.find(s => s.id === selectedSpecimen)?.examples}
+                            {specimenStyles.find(s => s.id === selectedSpecimen)?.description}
                           </p>
                           {!specimenCanCastNow && nextSeasonInfo && (
                             <div className="mt-2 flex items-center gap-2 text-xs text-amber-600 dark:text-amber-400">
