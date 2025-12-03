@@ -215,52 +215,54 @@ export default function MainLaunch() {
             </div>
           </section>
 
-          {/* URGENCY & VALUE - RIGHT AFTER HERO */}
-          <section className="mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-bronze/10 via-card/50 to-accent-gold/10 rounded-xl border border-bronze/30" data-testid="section-urgency">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center">
-                <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2">
-                  <Flame className="w-4 h-4" />
-                  24-HOUR FIRE SALE
-                </div>
-                <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">
-                  This Is The Founding 100 Moment
+          {/* WHY THIS EXISTS - The Opportunity */}
+          <section className="mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-card/40 via-background to-card/40 rounded-xl border border-bronze/20" data-testid="section-why-this-exists">
+            <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+              
+              <div className="text-center mb-8 sm:mb-12">
+                <span className="text-xs tracking-[0.3em] text-bronze/70 uppercase font-light mb-3 sm:mb-4 block">
+                  Why This Exists
+                </span>
+                <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl font-light tracking-tight moving-fill">
+                  A Once-In-A-Lifetime Founding Opportunity
                 </h2>
-                
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8">
-                  <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-bronze mb-2">R25K+</div>
-                    <p className="text-xs sm:text-sm text-foreground/80">Bronze Sculpture market value (Mounted and Patinated)</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-accent-gold mb-2">50-80%</div>
-                    <p className="text-xs sm:text-sm text-foreground/80">First hands-on 2-day casting workshop</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-patina mb-2">20-30%</div>
-                    <p className="text-xs sm:text-sm text-foreground/80">Lifetime discount on everything</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-bronze mb-2">FOREVER</div>
-                    <p className="text-xs sm:text-sm text-foreground/80">Giftable, transferable benefits</p>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-6 sm:gap-12 items-center">
+                {/* Left: Image */}
+                <div className="order-2 md:order-1">
+                  <div className="aspect-[4/3] rounded-lg overflow-hidden border border-bronze/20">
+                    <img 
+                      src={SPECIMEN_IMAGES['cones_bracts_seedpods']} 
+                      alt="Bronze botanical sculpture" 
+                      className="w-full h-full object-cover bronze-warmth image-fade-in"
+                    />
                   </div>
                 </div>
-
-                <p className="text-lg text-foreground/90 max-w-2xl mx-auto mb-8 leading-relaxed">
-                  100 seats. No waiting list. No phase two. When these sell out, this exclusive opportunity closes. 
-                  <span className="text-accent-gold font-medium"> Only Founding 100 members get these terms for life.</span>
-                </p>
-
-                <Button 
-                  size="lg"
-                  onClick={scrollToSeats}
-                  className="relative overflow-hidden text-lg px-10 py-6 font-bold bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background"
-                  data-testid="button-claim-seat"
-                >
-                  <Sparkles className="w-5 h-5 mr-2" />
-                  CLAIM YOUR SEAT
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
+                
+                {/* Right: Text */}
+                <div className="order-1 md:order-2 space-y-6">
+                  <p className="text-base text-foreground/90 font-light leading-relaxed">
+                    <span className="text-bronze font-light">100 founding seats.</span> That's it. 
+                    This isn't a subscription. It's not a membership. It's a one-time investment 
+                    that gives you a handcrafted bronze sculpture worth R25,000+ and lifetime 
+                    benefits worth even more.
+                  </p>
+                  <p className="text-base text-muted-foreground font-light leading-relaxed">
+                    Your investment funds the foundry. The kilns. The crucibles. The equipment 
+                    that transforms organic matter into permanent bronze art. Without these 100 
+                    founding investors, none of this exists.
+                  </p>
+                  <p className="text-base text-foreground/90 font-light leading-relaxed">
+                    In return, you get first access to workshops, lifetime discounts on everything 
+                    we create, priority on custom commissions, and your name etched into our story 
+                    from day one.
+                  </p>
+                  <p className="text-base text-bronze font-light italic border-l-2 border-bronze/40 pl-6">
+                    "The value I'm offering is 20 times what you'll pay. 
+                    Once these seats are gone, this chapter closes forever."
+                  </p>
+                </div>
               </div>
             </div>
           </section>

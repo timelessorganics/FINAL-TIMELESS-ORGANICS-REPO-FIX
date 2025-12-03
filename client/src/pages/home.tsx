@@ -341,8 +341,8 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* FIRE SALE URGENCY & VALUE - HIDDEN */}
-        <section className="hidden py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-bronze/10 via-card/50 to-accent-gold/10 border-y border-bronze/30" data-testid="section-urgency">
+        {/* FIRE SALE URGENCY & VALUE */}
+        <section className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-bronze/10 via-card/50 to-accent-gold/10 border-y border-bronze/30" data-testid="section-urgency">
           <div className="max-w-4xl mx-auto">
             <div className="text-center">
               <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2 justify-center">
@@ -388,58 +388,6 @@ export default function HomePage() {
                   <ArrowRight className="w-5 h-5 ml-2" />
                 </Button>
               </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* WHY THIS EXISTS - The Opportunity */}
-        <section className="relative z-0 py-8 sm:py-16 px-4 sm:px-6 bg-background" data-testid="section-why-this-exists">
-          <div className="max-w-5xl mx-auto">
-            
-            <div className="text-center mb-8 sm:mb-12">
-              <span className="text-xs tracking-[0.3em] text-bronze/70 uppercase font-light mb-3 sm:mb-4 block">
-                Why This Exists
-              </span>
-              <h2 className="font-serif text-2xl sm:text-4xl md:text-5xl font-light tracking-tight moving-fill">
-                A Once-In-A-Lifetime Founding Opportunity
-              </h2>
-            </div>
-
-            <div className="grid md:grid-cols-2 gap-6 sm:gap-12 items-center">
-              {/* Left: Image */}
-              <div className="order-2 md:order-1">
-                <div className="aspect-[4/3] rounded-lg overflow-hidden border border-bronze/20">
-                  <img 
-                    src={davidStoryImage} 
-                    alt="Bronze botanical sculpture" 
-                    className="w-full h-full object-cover bronze-warmth image-fade-in"
-                  />
-                </div>
-              </div>
-              
-              {/* Right: Text */}
-              <div className="order-1 md:order-2 space-y-6">
-                <p className="text-base text-foreground/90 font-light leading-relaxed">
-                  <span className="text-bronze font-light">100 founding seats.</span> That's it. 
-                  This isn't a subscription. It's not a membership. It's a one-time investment 
-                  that gives you a handcrafted bronze sculpture worth R25,000+ and lifetime 
-                  benefits worth even more.
-                </p>
-                <p className="text-base text-muted-foreground font-light leading-relaxed">
-                  Your investment funds the foundry. The kilns. The crucibles. The equipment 
-                  that transforms organic matter into permanent bronze art. Without these 100 
-                  founding investors, none of this exists.
-                </p>
-                <p className="text-base text-foreground/90 font-light leading-relaxed">
-                  In return, you get first access to workshops, lifetime discounts on everything 
-                  we create, priority on custom commissions, and your name etched into our story 
-                  from day one.
-                </p>
-                <p className="text-base text-bronze font-light italic border-l-2 border-bronze/40 pl-6">
-                  "The value I'm offering is 20 times what you'll pay. 
-                  Once these seats are gone, this chapter closes forever."
-                </p>
-              </div>
             </div>
           </div>
         </section>
