@@ -1733,7 +1733,7 @@ export default function AdminPanel() {
                 {(storageFiles && storageFiles.length > 0 ? storageFiles : mediaAssets)?.map((asset) => {
                   const proxyUrl = `/api/image-proxy?file=${encodeURIComponent(asset.id)}`;
                   return (
-                  <Card key={asset.id} className="bg-card border-card-border overflow-hidden group">
+                  <Card key={asset.id} className="bg-card border-card-border overflow-hidden group hover:border-bronze transition-colors">
                     <div className="aspect-square relative bg-muted overflow-hidden">
                       <img 
                         src={proxyUrl} 
