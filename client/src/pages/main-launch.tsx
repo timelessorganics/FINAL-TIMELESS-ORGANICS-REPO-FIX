@@ -269,64 +269,7 @@ export default function MainLaunch() {
             </div>
           </section>
 
-          {/* SEAT SELECTION */}
-          <section id="seats" className="mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 scroll-mt-20" data-testid="section-seats">
-            <div className="text-center mb-6 sm:mb-10">
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-3 sm:mb-4">
-                <span className="text-accent-gold">Invest Now</span> — Choose Your Seat
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-light mb-4 sm:mb-5">
-                Only 100 seats available. Once they're gone, they're gone forever.
-              </p>
-              <div className="inline-block px-3 sm:px-5 py-1.5 sm:py-2 bg-amber-600/25 rounded-full border border-amber-500/40 mb-3 sm:mb-4">
-                <p className="text-xs sm:text-sm text-amber-200 font-black tracking-wide">24HR FRIENDS & FAMILY FIRE SALE</p>
-              </div>
-              <p className="text-sm sm:text-base text-amber-200 font-serif font-bold">THE BEST DEAL ON THE PLANET</p>
-              <p className="text-xs sm:text-sm text-amber-100/80 font-light mt-1">Bronze Sculpture + 20-30% Lifetime Discounts Forever</p>
-            </div>
-
-            {isLoading ? (
-              <div className="flex justify-center items-center py-20">
-                <div className="spinner" />
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-7">
-                {founderSeat && (
-                  <SeatCard
-                    seat={founderSeat}
-                    title="Founders Pass"
-                    regularPrice={founderRegular || "R4,500"}
-                    fireSalePrice={founderSale}
-                    description="Unmounted and unpatinated. Can be purchased now or at a later stage via our shop or at checkout"
-                    benefits={[
-                      "Your name permanently engraved on our Founders & Patrons Leaf Wall",
-                      "50% off first workshop (Transferable, single-use, never expires)",
-                      "20% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
-                    ]}
-                    onPaymentClick={handlePaymentClick}
-                  />
-                )}
-                {patronSeat && (
-                  <SeatCard
-                    seat={patronSeat}
-                    title="Patron Gift Card"
-                    regularPrice={patronRegular || "R6,000"}
-                    fireSalePrice={patronSale}
-                    description="One bronze casting included of a Studio-Guaranteed Cutting + Patina + Mounting"
-                    benefits={[
-                      "Your name permanently engraved on our Founders & Patrons Leaf Wall",
-                      "80% off first workshop (Transferable, single-use, never expires)",
-                      "30% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
-                    ]}
-                    featured
-                    onPaymentClick={handlePaymentClick}
-                  />
-                )}
-              </div>
-            )}
-          </section>
-
-          {/* WAIT BEFORE YOU BUY - SEASONAL GUIDE */}
+          {/* WAIT BEFORE YOU BUY - SEASONAL GUIDE - ABOVE SEAT SELECTION */}
           <section className="relative z-10 mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-card/40 via-background to-card/40 rounded-xl border border-border/50" data-testid="section-specimen-guide">
             <div className="text-center mb-8 sm:mb-10">
               <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2">
@@ -442,6 +385,63 @@ export default function MainLaunch() {
                   </>
                 )}
               </Alert>
+            )}
+          </section>
+
+          {/* SEAT SELECTION - NOW AFTER SPECIMEN GUIDE */}
+          <section id="seats" className="mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 scroll-mt-20" data-testid="section-seats">
+            <div className="text-center mb-6 sm:mb-10">
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-3 sm:mb-4">
+                <span className="text-accent-gold">Invest Now</span> — Choose Your Seat
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-light mb-4 sm:mb-5">
+                Only 100 seats available. Once they're gone, they're gone forever.
+              </p>
+              <div className="inline-block px-3 sm:px-5 py-1.5 sm:py-2 bg-amber-600/25 rounded-full border border-amber-500/40 mb-3 sm:mb-4">
+                <p className="text-xs sm:text-sm text-amber-200 font-black tracking-wide">24HR FRIENDS & FAMILY FIRE SALE</p>
+              </div>
+              <p className="text-sm sm:text-base text-amber-200 font-serif font-bold">THE BEST DEAL ON THE PLANET</p>
+              <p className="text-xs sm:text-sm text-amber-100/80 font-light mt-1">Bronze Sculpture + 20-30% Lifetime Discounts Forever</p>
+            </div>
+
+            {isLoading ? (
+              <div className="flex justify-center items-center py-20">
+                <div className="spinner" />
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-7">
+                {founderSeat && (
+                  <SeatCard
+                    seat={founderSeat}
+                    title="Founders Pass"
+                    regularPrice={founderRegular || "R4,500"}
+                    fireSalePrice={founderSale}
+                    description="Unmounted and unpatinated. Can be purchased now or at a later stage via our shop or at checkout"
+                    benefits={[
+                      "Your name permanently engraved on our Founders & Patrons Leaf Wall",
+                      "50% off first workshop (Transferable, single-use, never expires)",
+                      "20% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
+                    ]}
+                    onPaymentClick={handlePaymentClick}
+                  />
+                )}
+                {patronSeat && (
+                  <SeatCard
+                    seat={patronSeat}
+                    title="Patron Gift Card"
+                    regularPrice={patronRegular || "R6,000"}
+                    fireSalePrice={patronSale}
+                    description="One bronze casting included of a Studio-Guaranteed Cutting + Patina + Mounting"
+                    benefits={[
+                      "Your name permanently engraved on our Founders & Patrons Leaf Wall",
+                      "80% off first workshop (Transferable, single-use, never expires)",
+                      "30% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
+                    ]}
+                    featured
+                    onPaymentClick={handlePaymentClick}
+                  />
+                )}
+              </div>
             )}
           </section>
         </div>
