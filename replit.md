@@ -63,7 +63,34 @@ The application features a React + TypeScript frontend with Tailwind CSS and Sha
 - **Mailchimp Integration:** Automated email list synchronization with tagging.
 - **Seasonal Guide:** Educational page detailing specimen styles and future workshop options.
 
-## Recent Changes (December 2, 2025 - SPECIMEN PHOTO FIX)
+## Recent Changes (December 3, 2025 - SEASONAL SPECIMEN AVAILABILITY)
+
+### Specimen Seasonal Availability System - IMPLEMENTED ✅
+- **New File:** `client/src/lib/specimenAvailability.ts` - Centralized specimen availability data and logic
+- **10 Cape Fynbos Specimen Styles:**
+  1. Protea flowers (Winter/Spring peak)
+  2. Leucospermum pincushions (Winter/Spring peak)
+  3. Leucadendron bracts (Autumn peak, year-round good)
+  4. Leucadendron cones (Autumn peak, year-round good)
+  5. Watsonia spikes (Spring peak)
+  6. Bulb spikes (Spring peak)
+  7. Restios/reeds (Year-round good)
+  8. Erica heaths (Winter/Spring peak)
+  9. Branches & leaves (Year-round good)
+  10. Small succulents (Year-round peak)
+
+- **Availability Levels:** ● Peak (green) | ◐ Good (yellow) | ○ Limited (muted)
+- **Season Detection:** Auto-detects current Cape Town season (Southern Hemisphere)
+- **Checkout Integration:**
+  - Specimen selection shows availability indicators for current season
+  - "Buy & Cast Now" disabled for out-of-season specimens
+  - Auto-switches to "Buy & Wait" with toast notification when unavailable specimen selected
+  - Shows messaging about next available season
+- **Seasonal Guide:** Dynamic availability matrix rendered from centralized data
+
+---
+
+## Previous: December 2, 2025 - SPECIMEN PHOTO FIX
 
 ### Specimen Photo Upload System - FULLY FIXED ✅
 - **Issue:** Signed URLs from private bucket not loading in browser - error: "querystring must have required property 'token'"
