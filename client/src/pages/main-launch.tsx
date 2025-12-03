@@ -215,6 +215,113 @@ export default function MainLaunch() {
             </div>
           </section>
 
+          {/* URGENCY & VALUE - RIGHT AFTER HERO */}
+          <section className="mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-bronze/10 via-card/50 to-accent-gold/10 rounded-xl border border-bronze/30" data-testid="section-urgency">
+            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+              <div className="text-center">
+                <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2">
+                  <Flame className="w-4 h-4" />
+                  24-HOUR FIRE SALE
+                </div>
+                <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">
+                  This Is The Founding 100 Moment
+                </h2>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8">
+                  <div className="text-center">
+                    <div className="text-2xl sm:text-3xl font-bold text-bronze mb-2">R25K+</div>
+                    <p className="text-xs sm:text-sm text-foreground/80">Bronze Sculpture market value (Mounted and Patinated)</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl sm:text-3xl font-bold text-accent-gold mb-2">50-80%</div>
+                    <p className="text-xs sm:text-sm text-foreground/80">First hands-on 2-day casting workshop</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl sm:text-3xl font-bold text-patina mb-2">20-30%</div>
+                    <p className="text-xs sm:text-sm text-foreground/80">Lifetime discount on everything</p>
+                  </div>
+                  <div className="text-center">
+                    <div className="text-2xl sm:text-3xl font-bold text-bronze mb-2">FOREVER</div>
+                    <p className="text-xs sm:text-sm text-foreground/80">Giftable, transferable benefits</p>
+                  </div>
+                </div>
+
+                <p className="text-lg text-foreground/90 max-w-2xl mx-auto mb-8 leading-relaxed">
+                  100 seats. No waiting list. No phase two. When these sell out, this exclusive opportunity closes. 
+                  <span className="text-accent-gold font-medium"> Only Founding 100 members get these terms for life.</span>
+                </p>
+
+                <Button 
+                  size="lg"
+                  onClick={scrollToSeats}
+                  className="relative overflow-hidden text-lg px-10 py-6 font-bold bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background"
+                  data-testid="button-claim-seat"
+                >
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  CLAIM YOUR SEAT
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </div>
+            </div>
+          </section>
+
+          {/* SEAT SELECTION */}
+          <section id="seats" className="mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 scroll-mt-20" data-testid="section-seats">
+            <div className="text-center mb-6 sm:mb-10">
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-3 sm:mb-4">
+                <span className="text-accent-gold">Invest Now</span> — Choose Your Seat
+              </h2>
+              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-light mb-4 sm:mb-5">
+                Only 100 seats available. Once they're gone, they're gone forever.
+              </p>
+              <div className="inline-block px-3 sm:px-5 py-1.5 sm:py-2 bg-amber-600/25 rounded-full border border-amber-500/40 mb-3 sm:mb-4">
+                <p className="text-xs sm:text-sm text-amber-200 font-black tracking-wide">24HR FRIENDS & FAMILY FIRE SALE</p>
+              </div>
+              <p className="text-sm sm:text-base text-amber-200 font-serif font-bold">THE BEST DEAL ON THE PLANET</p>
+              <p className="text-xs sm:text-sm text-amber-100/80 font-light mt-1">Bronze Sculpture + 20-30% Lifetime Discounts Forever</p>
+            </div>
+
+            {isLoading ? (
+              <div className="flex justify-center items-center py-20">
+                <div className="spinner" />
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-7">
+                {founderSeat && (
+                  <SeatCard
+                    seat={founderSeat}
+                    title="Founders Pass"
+                    regularPrice={founderRegular || "R4,500"}
+                    fireSalePrice={founderSale}
+                    description="Unmounted and unpatinated. Can be purchased now or at a later stage via our shop or at checkout"
+                    benefits={[
+                      "Your name permanently engraved on our Founders & Patrons Leaf Wall",
+                      "50% off first workshop (Transferable, single-use, never expires)",
+                      "20% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
+                    ]}
+                    onPaymentClick={handlePaymentClick}
+                  />
+                )}
+                {patronSeat && (
+                  <SeatCard
+                    seat={patronSeat}
+                    title="Patron Gift Card"
+                    regularPrice={patronRegular || "R6,000"}
+                    fireSalePrice={patronSale}
+                    description="One bronze casting included of a Studio-Guaranteed Cutting + Patina + Mounting"
+                    benefits={[
+                      "Your name permanently engraved on our Founders & Patrons Leaf Wall",
+                      "80% off first workshop (Transferable, single-use, never expires)",
+                      "30% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
+                    ]}
+                    featured
+                    onPaymentClick={handlePaymentClick}
+                  />
+                )}
+              </div>
+            )}
+          </section>
+
           {/* WAIT BEFORE YOU BUY - SEASONAL GUIDE */}
           <section className="relative z-10 mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-card/40 via-background to-card/40 rounded-xl border border-border/50" data-testid="section-specimen-guide">
             <div className="text-center mb-8 sm:mb-10">
@@ -332,114 +439,6 @@ export default function MainLaunch() {
                 )}
               </Alert>
             )}
-          </section>
-
-          {/* SEAT SELECTION - RIGHT AFTER SPECIMEN GUIDE */}
-          <section id="seats" className="mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 scroll-mt-20" data-testid="section-seats">
-            <div className="text-center mb-6 sm:mb-10">
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-3 sm:mb-4">
-                <span className="text-accent-gold">Invest Now</span> — Choose Your Seat
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-light mb-4 sm:mb-5">
-                Only 100 seats available. Once they're gone, they're gone forever.
-              </p>
-              <div className="inline-block px-3 sm:px-5 py-1.5 sm:py-2 bg-amber-600/25 rounded-full border border-amber-500/40 mb-3 sm:mb-4">
-                <p className="text-xs sm:text-sm text-amber-200 font-black tracking-wide">24HR FRIENDS & FAMILY FIRE SALE</p>
-              </div>
-              <p className="text-sm sm:text-base text-amber-200 font-serif font-bold">THE BEST DEAL ON THE PLANET</p>
-              <p className="text-xs sm:text-sm text-amber-100/80 font-light mt-1">Bronze Sculpture + 20-30% Lifetime Discounts Forever</p>
-            </div>
-
-            {isLoading ? (
-              <div className="flex justify-center items-center py-20">
-                <div className="spinner" />
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 lg:gap-7">
-                {founderSeat && (
-                  <SeatCard
-                    seat={founderSeat}
-                    title="Founders Pass"
-                    regularPrice={founderRegular || "R4,500"}
-                    fireSalePrice={founderSale}
-                    description="Unmounted and unpatinated. Can be purchased now or at a later stage via our shop or at checkout"
-                    benefits={[
-                      "Your name permanently engraved on our Founders & Patrons Leaf Wall",
-                      "50% off first workshop (Transferable, single-use, never expires)",
-                      "20% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
-                    ]}
-                    onPaymentClick={handlePaymentClick}
-                  />
-                )}
-                {patronSeat && (
-                  <SeatCard
-                    seat={patronSeat}
-                    title="Patron Gift Card"
-                    regularPrice={patronRegular || "R6,000"}
-                    fireSalePrice={patronSale}
-                    description="One bronze casting included of a Studio-Guaranteed Cutting + Patina + Mounting"
-                    benefits={[
-                      "Your name permanently engraved on our Founders & Patrons Leaf Wall",
-                      "80% off first workshop (Transferable, single-use, never expires)",
-                      "30% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
-                    ]}
-                    featured
-                    onPaymentClick={handlePaymentClick}
-                  />
-                )}
-              </div>
-            )}
-          </section>
-
-          {/* URGENCY & VALUE - CONDENSED */}
-          <section className="mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 bg-gradient-to-br from-bronze/10 via-card/50 to-accent-gold/10 rounded-xl border border-bronze/30" data-testid="section-urgency">
-            <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-              <div className="text-center">
-                <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2">
-                  <Flame className="w-4 h-4" />
-                  24-HOUR FIRE SALE
-                </div>
-                <h2 className="font-serif text-4xl md:text-5xl font-bold mb-6">
-                  This Is The Founding 100 Moment
-                </h2>
-                
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8">
-                  <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-bronze mb-2">R25K+</div>
-                    <p className="text-xs sm:text-sm text-foreground/80">Bronze Sculpture market value (Mounted and Patinated)</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-accent-gold mb-2">50-80%</div>
-                    <p className="text-xs sm:text-sm text-foreground/80">First hands-on 2-day casting workshop</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-patina mb-2">20-30%</div>
-                    <p className="text-xs sm:text-sm text-foreground/80">Lifetime discount on everything</p>
-                  </div>
-                  <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-bronze mb-2">FOREVER</div>
-                    <p className="text-xs sm:text-sm text-foreground/80">Giftable, transferable benefits</p>
-                  </div>
-                </div>
-
-                <p className="text-lg text-foreground/90 max-w-2xl mx-auto mb-8 leading-relaxed">
-                  100 seats. No waiting list. No phase two. When these sell out, this exclusive opportunity closes. 
-                  <span className="text-accent-gold font-medium"> Only Founding 100 members get these terms for life.</span>
-                </p>
-
-                <Link href="/founding-100">
-                  <Button 
-                    size="lg"
-                    className="relative overflow-hidden text-lg px-10 py-6 font-bold bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background"
-                    data-testid="button-claim-seat"
-                  >
-                    <Sparkles className="w-5 h-5 mr-2" />
-                    CLAIM YOUR SEAT
-                    <ArrowRight className="w-5 h-5 ml-2" />
-                  </Button>
-                </Link>
-              </div>
-            </div>
           </section>
         </div>
       </div>
