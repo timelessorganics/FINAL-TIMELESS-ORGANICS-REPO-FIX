@@ -12,6 +12,8 @@ import SeatSelectionModal from "@/components/seat-selection-modal";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { Seat, Sculpture } from "@shared/schema";
 
+import bronzeMountedSculpture from "@assets/Gemini_Generated_Image_pgo4cnpgo4cnpgo4_result_1764779086107.webp";
+
 const DEFAULT_SPECIMEN_IMAGES: Record<string, string> = {
   cones_bracts_seedpods: new URL("../../attached_assets/Bronze Aloe Sculpture in Resin Block_1764516081629.png", import.meta.url).href,
   protea_pincushion_blooms_heads: new URL("../../attached_assets/Bronze Aloe Sculpture in Resin Block 2_1763150497628.jpg", import.meta.url).href,
@@ -233,8 +235,8 @@ export default function MainLaunch() {
                 <div className="order-2 md:order-1">
                   <div className="aspect-[4/3] rounded-lg overflow-hidden border border-bronze/20">
                     <img 
-                      src={SPECIMEN_IMAGES['cones_bracts_seedpods']} 
-                      alt="Bronze botanical sculpture" 
+                      src={bronzeMountedSculpture} 
+                      alt="Bronze botanical sculpture on wooden mount" 
                       className="w-full h-full object-cover bronze-warmth image-fade-in"
                     />
                   </div>
