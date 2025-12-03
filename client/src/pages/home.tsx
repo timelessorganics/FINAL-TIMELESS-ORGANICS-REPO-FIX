@@ -251,9 +251,12 @@ export default function HomePage() {
                 {/* FOUNDER SEAT CARD */}
                 <div className="group relative flex-1 min-w-0 max-w-sm sm:max-w-md lg:max-w-md p-3 sm:p-4 lg:p-5 border border-white/20 rounded-lg bg-black/40 backdrop-blur-sm hover:bg-black/50 hover:border-white/30 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-2 sm:space-y-3">
-                    <div>
-                      <p className="text-sm sm:text-base lg:text-lg text-white font-bold uppercase tracking-wider mb-1 sm:mb-2">Founder</p>
-                      <p className="text-xs sm:text-sm lg:text-base text-white/60 font-light mb-1 sm:mb-2 leading-tight">Unmounted & unpatinated<br/>Services available now or later</p>
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <p className="text-sm sm:text-base lg:text-lg text-white font-bold uppercase tracking-wider mb-1 sm:mb-2">Founder</p>
+                        <p className="text-xs sm:text-sm lg:text-base text-white/60 font-light mb-1 sm:mb-2 leading-tight">Unmounted & unpatinated<br/>Services available now or later</p>
+                      </div>
+                      <p className="text-xs sm:text-sm text-white/70 font-medium whitespace-nowrap">50 available</p>
                     </div>
                     
                     <div className="space-y-0.5 sm:space-y-1">
@@ -276,9 +279,12 @@ export default function HomePage() {
                 {/* PATRON SEAT CARD */}
                 <div className="group relative flex-1 min-w-0 max-w-sm sm:max-w-md lg:max-w-md p-3 sm:p-4 lg:p-5 border rounded-lg backdrop-blur-sm transition-all duration-300 hover-elevate" style={{backgroundColor: 'rgba(241, 243, 224, 0.15)', borderColor: 'rgba(241, 243, 224, 0.35)'}}>
                   <div className="text-left space-y-2 sm:space-y-3">
-                    <div>
-                      <p className="text-sm sm:text-base lg:text-lg font-bold uppercase tracking-wider mb-1 sm:mb-2" style={{color: 'rgba(241, 243, 224, 0.9)'}}>Patron</p>
-                      <p className="text-xs sm:text-sm lg:text-base font-light mb-1 sm:mb-2 leading-tight" style={{color: 'rgba(241, 243, 224, 0.7)'}}>+ Patina + Mounting included</p>
+                    <div className="flex items-start justify-between gap-2">
+                      <div>
+                        <p className="text-sm sm:text-base lg:text-lg font-bold uppercase tracking-wider mb-1 sm:mb-2" style={{color: 'rgba(241, 243, 224, 0.9)'}}>Patron</p>
+                        <p className="text-xs sm:text-sm lg:text-base font-light mb-1 sm:mb-2 leading-tight" style={{color: 'rgba(241, 243, 224, 0.7)'}}>+ Patina + Mounting included</p>
+                      </div>
+                      <p className="text-xs sm:text-sm font-medium whitespace-nowrap" style={{color: 'rgba(241, 243, 224, 0.7)'}}>50 available</p>
                     </div>
                     
                     <div className="space-y-0.5 sm:space-y-1">
@@ -303,7 +309,7 @@ export default function HomePage() {
               {/* Founding 100 Value Proposition - LIVE COUNTER IN TEXT */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 text-center px-4 sm:px-6 mt-6 sm:mt-8 mb-2 sm:mb-4">
                 <p className="text-sm sm:text-base lg:text-lg text-white/95 leading-relaxed max-w-2xl mx-auto font-semibold tracking-tight">
-                  <span className="text-bronze font-bold text-base sm:text-lg lg:text-xl">{totalRemaining} seats</span> remaining. No waiting list. No phase two. When these sell out, this exclusive opportunity closes.{' '}
+                  <span className="text-bronze font-bold text-base sm:text-lg lg:text-xl">{totalRemaining} of 100</span> remaining. No waiting list. No phase two. When these sell out, this exclusive opportunity closes.{' '}
                   <span className="text-bronze">Only Founding 100 members get these terms for life.</span>
                 </p>
               </div>
