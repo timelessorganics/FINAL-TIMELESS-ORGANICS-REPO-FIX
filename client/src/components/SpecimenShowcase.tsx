@@ -1,8 +1,10 @@
 import { useState } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
-import { Calendar, X, ZoomIn, Loader2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Calendar, X, ZoomIn, Loader2, ArrowRight } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "wouter";
 
 interface MediaAsset {
   id: string;
@@ -259,49 +261,70 @@ export default function SpecimenShowcase() {
         </div>
       )}
 
-      {/* Specimen Grid - Bigger cards */}
+      {/* Specimen Grid - Bigger cards with CTAs between blocks */}
       <div className="space-y-12">
         {specimenTypes.map((specimen, index) => {
           const images = getSpecimenImages(specimen.name, specimen.images);
           
           return (
-            <Card
-              key={index}
-              className="border-bronze/30 hover-elevate overflow-hidden"
-              data-testid={`card-specimen-${index}`}
-            >
-              <CardHeader className="pb-4">
-                <CardTitle className="text-2xl text-bronze">{specimen.name}</CardTitle>
-                <CardDescription className="flex items-center gap-2 text-sm mt-2">
-                  <Calendar className="w-4 h-4" />
-                  <span className="font-medium">{specimen.season}</span>
-                </CardDescription>
-              </CardHeader>
+            <div key={index}>
+              <Card
+                className="border-bronze/30 hover-elevate overflow-hidden"
+                data-testid={`card-specimen-${index}`}
+              >
+                <CardHeader className="pb-4">
+                  <CardTitle className="text-2xl text-bronze">{specimen.name}</CardTitle>
+                  <CardDescription className="flex items-center gap-2 text-sm mt-2">
+                    <Calendar className="w-4 h-4" />
+                    <span className="font-medium">{specimen.season}</span>
+                  </CardDescription>
+                </CardHeader>
 
-              <CardContent className="space-y-4">
-                <p className="text-muted-foreground">{specimen.description}</p>
+                <CardContent className="space-y-4">
+                  <p className="text-muted-foreground">{specimen.description}</p>
 
-                {/* Images - Much bigger, hover effect */}
-                {images && images.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                    {images.map((img, imgIndex) => (
-                      <HoverBronzeImage key={imgIndex} plant={img.plant} bronze={img.bronze} />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
-                    {[0, 1, 2].map((i) => (
-                      <div
-                        key={i}
-                        className="aspect-[4/3] rounded-lg border border-bronze/20 bg-muted flex items-center justify-center"
+                  {/* Images - Much bigger, hover effect */}
+                  {images && images.length > 0 ? (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                      {images.map((img, imgIndex) => (
+                        <HoverBronzeImage key={imgIndex} plant={img.plant} bronze={img.bronze} />
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                      {[0, 1, 2].map((i) => (
+                        <div
+                          key={i}
+                          className="aspect-[4/3] rounded-lg border border-bronze/20 bg-muted flex items-center justify-center"
+                        >
+                          <span className="text-xs text-muted-foreground">Coming Soon</span>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </CardContent>
+              </Card>
+
+              {/* Invest Now CTA - appears after every 3rd specimen */}
+              {(index + 1) % 3 === 0 && index < specimenTypes.length - 1 && (
+                <div className="py-8 text-center">
+                  <div className="inline-flex flex-col items-center gap-3 px-8 py-6 rounded-lg bg-bronze/5 border border-bronze/20">
+                    <p className="text-sm text-muted-foreground">Ready to secure your place?</p>
+                    <Link href="/founding-100">
+                      <Button 
+                        size="lg" 
+                        className="gap-2 bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border border-bronze/50 text-background font-semibold"
+                        data-testid={`button-invest-now-${index}`}
                       >
-                        <span className="text-xs text-muted-foreground">Coming Soon</span>
-                      </div>
-                    ))}
+                        Invest Now
+                        <ArrowRight className="w-4 h-4" />
+                      </Button>
+                    </Link>
+                    <p className="text-xs text-muted-foreground">Only 100 founding seats available</p>
                   </div>
-                )}
-              </CardContent>
-            </Card>
+                </div>
+              )}
+            </div>
           );
         })}
       </div>
