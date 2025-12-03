@@ -9,7 +9,7 @@ import { Sparkles, Shield, Award, ArrowRight, Flame, Users, Leaf, Calendar, Plus
 
 import heroImage from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764248900779.png";
 import bronzeImage1 from "@assets/Gemini_Generated_Image_rf3vd6rf3vd6rf3v_1764170102466.png";
-import bronzeImage2 from "@assets/Bronze Aloe Sculpture in Resin Block 2_1763150497628.jpg";
+import bronzeImage2 from "@assets/Gemini_Generated_Image_510bsa510bsa510b_1764170102462.png";
 import bronzeImage3 from "@assets/Gemini_Generated_Image_o0oi1oo0oi1oo0oi_1764170102464.png";
 import davidStoryImage from "@assets/Bronze Aloe Sculpture in Resin Block_1764516081629.png";
 
@@ -472,7 +472,7 @@ export default function HomePage() {
                 <div className="aspect-square rounded-lg overflow-hidden border border-bronze/20">
                   <img 
                     src={bronzeImage2} 
-                    alt="Bronze protea casting" 
+                    alt="Bronze botanical casting" 
                     className="w-full h-full object-cover bronze-warmth image-fade-in"
                   />
                 </div>
