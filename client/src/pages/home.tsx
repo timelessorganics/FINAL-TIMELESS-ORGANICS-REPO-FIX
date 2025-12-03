@@ -306,10 +306,18 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Founding 100 Value Proposition - LIVE COUNTER IN TEXT */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 text-center px-4 sm:px-6 mt-6 sm:mt-8 mb-2 sm:mb-4">
+              {/* SEAT COUNTER BUBBLE - PROMINENT */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 flex justify-center mt-6 sm:mt-8 mb-4">
+                <div className="inline-flex items-center gap-2 bg-bronze/20 backdrop-blur-sm border border-bronze/40 px-5 py-2.5 rounded-full">
+                  <span className="text-xl sm:text-2xl lg:text-3xl font-bold text-bronze">{totalRemaining}</span>
+                  <span className="text-sm sm:text-base lg:text-lg text-white/90 font-semibold">of 100 remaining</span>
+                </div>
+              </div>
+
+              {/* Value Proposition Text */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 text-center px-4 sm:px-6 mb-2 sm:mb-4">
                 <p className="text-sm sm:text-base lg:text-lg text-white/95 leading-relaxed max-w-2xl mx-auto font-semibold tracking-tight">
-                  <span className="text-bronze font-bold text-base sm:text-lg lg:text-xl">{totalRemaining} of 100</span> remaining. No waiting list. No phase two. When these sell out, this exclusive opportunity closes.{' '}
+                  No waiting list. No phase two. When these sell out, this exclusive opportunity closes.{' '}
                   <span className="text-bronze">Only Founding 100 members get these terms for life.</span>
                 </p>
               </div>
