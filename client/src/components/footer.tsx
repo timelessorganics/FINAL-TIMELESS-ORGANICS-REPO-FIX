@@ -1,11 +1,10 @@
 import { Link } from "wouter";
-import { InterestForm } from "@/components/InterestForm";
 
 export default function Footer() {
   return (
     <footer className="relative z-50 border-t border-border bg-card/10 backdrop-blur-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 sm:gap-8 mb-6 sm:mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 mb-6 sm:mb-8">
           {/* Company Info */}
           <div>
             <h3 className="font-serif text-lg sm:text-xl font-light text-foreground mb-3">Timeless Organics</h3>
@@ -83,14 +82,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Newsletter */}
-          <div>
-            <h3 className="font-serif text-lg font-light text-foreground mb-3">Stay Updated</h3>
-            <p className="text-xs sm:text-sm text-muted-foreground mb-4 font-light">
-              Get notified about workshop dates, new castings, and exclusive opportunities.
-            </p>
-            <InterestForm />
-          </div>
         </div>
 
         <div className="pt-4 sm:pt-6 border-t border-border text-center text-xs sm:text-sm text-muted-foreground font-light">
