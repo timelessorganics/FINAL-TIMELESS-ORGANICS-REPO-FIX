@@ -73,6 +73,7 @@ export interface IStorage {
   // Seat operations
   getSeats(): Promise<Seat[]>;
   getSeatByType(type: 'founder' | 'patron'): Promise<Seat | undefined>;
+  initializeSeats(): Promise<void>;
   updateSeatSold(type: 'founder' | 'patron', increment: number): Promise<void>;
   updateSeatPrice(type: 'founder' | 'patron', priceCents: number): Promise<void>;
   activateFireSale(founderPriceCents: number, patronPriceCents: number, durationHours: number): Promise<void>;
@@ -299,6 +300,32 @@ export class DatabaseStorage implements IStorage {
   async getSeatByType(type: 'founder' | 'patron'): Promise<Seat | undefined> {
     const [seat] = await db.select().from(seats).where(eq(seats.type, type));
     return seat;
+  }
+
+  async initializeSeats(): Promise<void> {
+    const fireSaleEndsAt = new Date();
+    fireSaleEndsAt.setHours(fireSaleEndsAt.getHours() + 24);
+    
+    await db.insert(seats).values([
+      {
+        type: 'founder',
+        price: 350000,
+        totalAvailable: 50,
+        sold: 0,
+        fireSalePrice: 200000,
+        fireSaleEndsAt: fireSaleEndsAt,
+      },
+      {
+        type: 'patron',
+        price: 550000,
+        totalAvailable: 50,
+        sold: 0,
+        fireSalePrice: 350000,
+        fireSaleEndsAt: fireSaleEndsAt,
+      }
+    ]).onConflictDoNothing();
+    
+    console.log('[Init] Seats created: Founder (50 available, R3,500, Fire Sale R2,000), Patron (50 available, R5,500, Fire Sale R3,500)');
   }
 
   async updateSeatSold(type: 'founder' | 'patron', increment: number): Promise<void> {

@@ -232,14 +232,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
   try {
     const existingSeats = await storage.getSeats();
     if (!existingSeats || existingSeats.length === 0) {
-      console.log('[Init] Initializing default seats...');
-      await storage.updateSeatPrice('founder', 300000); // R3,000
-      await storage.updateSeatPrice('patron', 450000); // R4,500
-      console.log('[Init] Default seats initialized');
+      console.log('[Init] No seats found - creating default seats...');
+      await storage.initializeSeats();
+      console.log('[Init] Default seats created with 50 Founder + 50 Patron available');
     } else {
+      console.log(`[Init] Found ${existingSeats.length} existing seats`);
       // Fix fire sale prices if they're incorrect (legacy data fix)
       const founderSeat = existingSeats.find(s => s.type === 'founder');
       const patronSeat = existingSeats.find(s => s.type === 'patron');
+      
+      console.log(`[Init] Founder: ${(founderSeat?.totalAvailable || 50) - (founderSeat?.sold || 0)} remaining, Patron: ${(patronSeat?.totalAvailable || 50) - (patronSeat?.sold || 0)} remaining`);
 
       if (founderSeat?.fireSalePrice && founderSeat.fireSalePrice > 200000) {
         console.log('[Init] Correcting founder fire sale price from', founderSeat.fireSalePrice, 'to 200000 (R2,000)');
@@ -253,8 +255,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         await db.update(seats).set({ fireSalePrice: 350000 }).where(eq(seats.type, 'patron'));
       }
     }
-  } catch (error) {
-    console.log('[Init] Seats already exist or will be created on first access');
+  } catch (error: any) {
+    console.error('[Init] Error initializing seats:', error.message);
   }
   // Auth middleware
   await setupAuth(app);
@@ -2276,13 +2278,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { supabaseAdmin } = await import("./supabaseAuth");
 
       // Helper to recursively list all files in bucket and subfolders
-      async function listAllFiles(path: string = ''): Promise<any[]> {
+      const listAllFiles = async (basePath: string = ''): Promise<any[]> => {
         const { data, error } = await supabaseAdmin.storage
           .from('specimen-photos')
-          .list(path, { limit: 1000 });
+          .list(basePath, { limit: 1000 });
 
         if (error) {
-          console.warn(`Storage list error for path '${path}':`, error);
+          console.warn(`Storage list error for path '${basePath}':`, error);
           return [];
         }
 
@@ -2290,21 +2292,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         if (data) {
           for (const item of data) {
-            if (item.id === false) {
+            if (!item.id) {
               // It's a folder - recursively list it
-              const folderPath = path ? `${path}/${item.name}` : item.name;
+              const folderPath = basePath ? `${basePath}/${item.name}` : item.name;
               const folderFiles = await listAllFiles(folderPath);
               allFiles = allFiles.concat(folderFiles);
             } else if (item.name && item.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
               // It's an image file
-              const fullPath = path ? `${path}/${item.name}` : item.name;
+              const fullPath = basePath ? `${basePath}/${item.name}` : item.name;
               allFiles.push({ ...item, fullPath });
             }
           }
         }
 
         return allFiles;
-      }
+      };
 
       // Get all image files from storage
       const imageFiles = await listAllFiles();
@@ -2376,13 +2378,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { supabaseAdmin } = await import("./supabaseAuth");
 
       // Helper to recursively list all files in bucket and subfolders
-      async function listAllFiles(path: string = ''): Promise<any[]> {
+      const listAllFiles = async (folderPath: string = ''): Promise<any[]> => {
         const { data, error } = await supabaseAdmin.storage
           .from('specimen-photos')
-          .list(path, { limit: 1000 });
+          .list(folderPath, { limit: 1000 });
 
         if (error) {
-          console.warn(`Storage list error for path '${path}':`, error);
+          console.warn(`Storage list error for path '${folderPath}':`, error);
           return [];
         }
 
@@ -2390,22 +2392,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
         if (data) {
           for (const item of data) {
-            if (item.id === false) {
+            if (!item.id) {
               // It's a folder - recursively list it
-              const folderPath = path ? `${path}/${item.name}` : item.name;
-              console.log(`[Storage] Found folder: ${folderPath}, listing contents...`);
-              const folderFiles = await listAllFiles(folderPath);
+              const subPath = folderPath ? `${folderPath}/${item.name}` : item.name;
+              console.log(`[Storage] Found folder: ${subPath}, listing contents...`);
+              const folderFiles = await listAllFiles(subPath);
               allFiles = allFiles.concat(folderFiles);
             } else if (item.name && item.name.match(/\.(jpg|jpeg|png|gif|webp)$/i)) {
               // It's an image file
-              const fullPath = path ? `${path}/${item.name}` : item.name;
+              const fullPath = folderPath ? `${folderPath}/${item.name}` : item.name;
               allFiles.push({ ...item, fullPath });
             }
           }
         }
 
         return allFiles;
-      }
+      };
 
       // Get all files from bucket and subfolders
       const imageFiles = await listAllFiles();
