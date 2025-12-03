@@ -2612,29 +2612,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Admin: Upload specimen photo with service role (bypasses RLS)
   app.post("/api/admin/upload-specimen-photo", upload.single('media-file'), async (req: any, res: Response) => {
     try {
+      console.log('[Upload] Received upload request');
+      
       if (!req.file) {
+        console.log('[Upload] No file in request');
         return res.status(400).json({ error: 'No file uploaded' });
       }
+
+      console.log('[Upload] File received:', req.file.originalname, 'size:', req.file.size, 'type:', req.file.mimetype);
 
       const { supabaseAdmin } = await import("./supabaseAuth");
       const { originalname, buffer, mimetype } = req.file;
       const fileName = `${Date.now()}-${originalname}`;
+
+      console.log('[Upload] Uploading to Supabase Storage as:', fileName);
+      console.log('[Upload] SUPABASE_URL configured:', !!process.env.SUPABASE_URL);
+      console.log('[Upload] SUPABASE_SERVICE_ROLE_KEY configured:', !!process.env.SUPABASE_SERVICE_ROLE_KEY);
 
       // Upload using service role (has full permissions, bypasses RLS)
       const { data: uploadData, error: uploadError } = await supabaseAdmin.storage
         .from('specimen-photos')
         .upload(fileName, buffer, { contentType: mimetype });
 
-      if (uploadError) throw uploadError;
+      if (uploadError) {
+        console.error('[Upload] Supabase storage error:', uploadError);
+        throw uploadError;
+      }
+
+      console.log('[Upload] Upload successful:', uploadData);
 
       // Get public URL
       const { data: { publicUrl } } = supabaseAdmin.storage
         .from('specimen-photos')
         .getPublicUrl(fileName);
 
+      console.log('[Upload] Public URL:', publicUrl);
       res.json({ publicUrl, fileName });
     } catch (error: any) {
-      console.error("Upload specimen photo error:", error);
+      console.error("[Upload] Error:", error);
       res.status(500).json({ error: error.message || "Upload failed" });
     }
   });
