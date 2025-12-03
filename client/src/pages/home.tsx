@@ -121,7 +121,7 @@ export default function HomePage() {
         
         {/* HERO: Bronze emerging from darkness - STABLE GRID LAYOUT */}
         <section 
-          className="relative h-screen overflow-hidden bg-[#050505]" 
+          className="relative min-h-screen overflow-visible bg-[#050505]" 
           data-testid="section-hero"
         >
           {/* Layer 1: Full-bleed hero image - full screen, scaled up */}
@@ -143,7 +143,7 @@ export default function HomePage() {
           <div className="absolute inset-0 border-b border-white/[0.05]" />
           
           {/* Kicker on BLACK space - positioned on dark area just above slate */}
-          <div className="absolute top-6 sm:top-10 left-0 right-0 z-10 px-4 sm:px-6">
+          <div className="absolute top-6 sm:top-10 left-0 right-0 z-30 px-4 sm:px-6">
             <div className="max-w-4xl mx-auto text-center">
               <div className="hero-text-reveal hero-text-reveal-delay-1">
                 <span className="inline-block font-serif text-sm sm:text-lg md:text-2xl font-semibold tracking-[0.08em] sm:tracking-[0.12em] uppercase moving-fill">
@@ -154,7 +154,7 @@ export default function HomePage() {
           </div>
 
           {/* Layer 4: Content - flex layout with spacious mobile padding */}
-          <div className="relative z-10 min-h-screen flex flex-col justify-start pt-24 sm:justify-center sm:pt-0 px-3 sm:px-4 lg:px-6 py-8 sm:py-8 lg:py-12">
+          <div className="relative z-40 min-h-screen flex flex-col justify-start pt-24 sm:justify-center sm:pt-0 px-3 sm:px-4 lg:px-6 py-8 sm:py-8 lg:py-12">
             
             {/* Center content */}
             <div className="text-center max-w-6xl mx-auto w-full">
@@ -247,7 +247,7 @@ export default function HomePage() {
               </div>
 
               {/* Seat Selection Cards - Friends & Family Launch Pricing */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 flex flex-col sm:flex-row items-stretch justify-center gap-3 sm:gap-6 lg:gap-16 xl:gap-24 mb-3 sm:mb-6 px-2 sm:px-0 max-w-6xl mx-auto w-full">
+              <div className="hero-text-reveal hero-text-reveal-delay-3 relative z-50 flex flex-col sm:flex-row items-stretch justify-center gap-3 sm:gap-6 lg:gap-16 xl:gap-24 mb-3 sm:mb-6 px-2 sm:px-0 max-w-6xl mx-auto w-full">
                 {/* FOUNDER SEAT CARD */}
                 <div className="group relative flex-1 min-w-0 max-w-sm sm:max-w-md lg:max-w-md p-3 sm:p-4 lg:p-5 border border-white/20 rounded-lg bg-black/40 backdrop-blur-sm hover:bg-black/50 hover:border-white/30 transition-all duration-300 hover-elevate">
                   <div className="text-left space-y-2 sm:space-y-3">
