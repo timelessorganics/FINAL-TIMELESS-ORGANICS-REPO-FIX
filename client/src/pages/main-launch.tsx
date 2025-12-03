@@ -325,8 +325,8 @@ export default function MainLaunch() {
                     benefits={[
                       "R25,000+ handcrafted bronze sculpture (unmounted, unpatinated)",
                       "Your name permanently engraved on our Founders & Patrons Leaf Wall",
-                      "50% off first workshop (Transferable, single-use, never expires)",
-                      "20% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
+                      "50% off first workshop (One-time use, giftable)",
+                      "20% lifetime discount — Shop, Commissions, AND Workshops (Forever, unlimited)",
                     ]}
                     onPaymentClick={handlePaymentClick}
                   />
@@ -341,8 +341,8 @@ export default function MainLaunch() {
                     benefits={[
                       "R25,000+ handcrafted bronze sculpture WITH Patina + Mounting included",
                       "Your name permanently engraved on our Founders & Patrons Leaf Wall",
-                      "80% off first workshop (Transferable, single-use, never expires)",
-                      "30% lifetime discount — Shop, Commissions, AND Workshops (Unlimited, giftable)",
+                      "80% off first workshop (One-time use, giftable)",
+                      "30% lifetime discount — Shop, Commissions, AND Workshops (Forever, unlimited)",
                     ]}
                     featured
                     onPaymentClick={handlePaymentClick}
