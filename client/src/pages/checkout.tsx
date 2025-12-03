@@ -17,7 +17,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import type { Sculpture } from "@shared/schema";
 import { 
-  specimenAvailability, 
+  specimenStyles,
   getCurrentSeason, 
   getSeasonDisplay, 
   isAvailableForCastNow, 
@@ -103,7 +103,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
       setPurchaseMode("wait_for_season");
       toast({
         title: "Specimen not in season",
-        description: `${specimenAvailability.find(s => s.id === selectedSpecimen)?.name} is not available for immediate casting. Switched to "Buy & Wait".`,
+        description: `${specimenStyles.find(s => s.id === selectedSpecimen)?.name} is not available for immediate casting. Switched to "Buy & Wait".`,
       });
     }
   }, [selectedSpecimen, specimenCanCastNow, purchaseMode, toast]);
@@ -118,27 +118,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
     queryKey: ['/api/sculptures'],
   });
 
-  // Get current season (Southern Hemisphere - Dec/Jan/Feb = summer)
-  const getCurrentSeason = (): string => {
-    const month = new Date().getMonth() + 1; // 1-12
-    if (month >= 12 || month <= 2) return 'summer';
-    if (month >= 3 && month <= 5) return 'autumn';
-    if (month >= 6 && month <= 8) return 'winter';
-    return 'spring'; // Sep, Oct, Nov
-  };
-
-  const currentSeason = getCurrentSeason();
-
-  // Filter sculptures based on casting mode and season
-  const filteredSculptures = allSculptures.filter(s => {
-    if (purchaseMode === 'cast_now') {
-      // Only show sculptures available in current season
-      const peakSeasons = (s.peakSeasons || []).map(m => m.toLowerCase());
-      return peakSeasons.length === 0 || peakSeasons.includes(currentSeason);
-    }
-    // Wait for season - show all
-    return true;
-  });
+  // Specimen availability is now handled by specimenAvailability from lib/specimenAvailability.ts
 
   // Normalize seatType to lowercase for matching
   const normalizedSeatType = seatType.toLowerCase();
@@ -504,88 +484,120 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                     </CardContent>
                   </Card>
 
-                  {/* Specimen Style Selection */}
+                  {/* Specimen Style Selection - 9 Cape Fynbos Styles */}
                   <Card className="border-border/50">
                     <CardHeader className="pb-4">
-                      <CardTitle className="text-lg font-medium">Choose Your Specimen</CardTitle>
+                      <CardTitle className="text-lg font-medium">Choose Your Specimen Style</CardTitle>
                       <CardDescription className="text-sm">
-                        Cape Fynbos plants cast in permanent bronze
-                        {purchaseMode === 'cast_now' && filteredSculptures.length > 0 && (
-                          <span className="block text-xs text-bronze mt-1">
-                            Showing {filteredSculptures.length} specimens available now in {currentSeason}
-                          </span>
-                        )}
+                        Select from 9 Cape Fynbos styles — David will personally curate the finest specimen
+                        <span className="block text-xs text-bronze mt-1">
+                          Current season: {seasonInfo.name} ({seasonInfo.months})
+                        </span>
                       </CardDescription>
                     </CardHeader>
                     <CardContent>
-                      <Select>
+                      <Select value={selectedSpecimen} onValueChange={setSelectedSpecimen}>
                         <SelectTrigger className="border-border/50" data-testid="select-specimen">
-                          <SelectValue placeholder={filteredSculptures.length === 0 ? "No specimens available for selected option" : "Select a plant specimen..."} />
+                          <SelectValue placeholder="Select a specimen style..." />
                         </SelectTrigger>
                         <SelectContent>
-                          {filteredSculptures.length > 0 ? (
-                            filteredSculptures.map((sculpture) => (
-                              <SelectItem key={sculpture.id} value={sculpture.specimenStyle || sculpture.id}>
-                                {sculpture.name}
-                                {purchaseMode === 'cast_now' && sculpture.peakSeasons && sculpture.peakSeasons.length > 0 && (
-                                  <span className="text-xs text-muted-foreground ml-2">
-                                    (Peak: {sculpture.peakSeasons.join(", ")})
-                                  </span>
-                                )}
+                          {specimenStyles.map((style) => {
+                            const available = isAvailableForCastNow(style.id, currentSeason);
+                            return (
+                              <SelectItem key={style.id} value={style.id}>
+                                <div className="flex items-center gap-2">
+                                  <span className={`w-2 h-2 rounded-full ${available ? 'bg-bronze' : 'bg-border'}`} />
+                                  <span>{style.name}</span>
+                                  {!available && (
+                                    <span className="text-xs text-muted-foreground ml-1">(Wait for season)</span>
+                                  )}
+                                </div>
                               </SelectItem>
-                            ))
-                          ) : (
-                            <SelectItem value="placeholder" disabled>
-                              Loading specimens...
-                            </SelectItem>
-                          )}
+                            );
+                          })}
                         </SelectContent>
                       </Select>
+                      
+                      {/* Selected specimen details */}
+                      {selectedSpecimen && (
+                        <div className="mt-3 p-3 bg-muted/30 rounded-lg border border-border/30">
+                          <p className="text-xs text-muted-foreground">
+                            <strong>Examples:</strong> {specimenStyles.find(s => s.id === selectedSpecimen)?.examples}
+                          </p>
+                          {!specimenCanCastNow && nextSeasonInfo && (
+                            <div className="mt-2 flex items-center gap-2 text-xs text-amber-600 dark:text-amber-400">
+                              <AlertCircle className="w-3 h-3" />
+                              <span>
+                                Available for casting in {nextSeasonInfo.name} ({nextSeasonInfo.months})
+                              </span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      
                       <p className="text-xs text-muted-foreground mt-3">
                         Each specimen is cast from real organic matter at 700°C. Your choice will be documented in your certificate.
-                        {purchaseMode === 'cast_now' && (
-                          <span className="block text-xs text-bronze mt-2">
-                            Selecting "{currentSeason}" specimens ensures fast casting - available now!
-                          </span>
-                        )}
-                        {purchaseMode === 'wait_for_season' && (
-                          <span className="block text-xs text-patina mt-2">
-                            Waiting allows us to cast your specimen at peak season for maximum beauty.
-                          </span>
-                        )}
                       </p>
                     </CardContent>
                   </Card>
 
-                  {/* Cast Timing - Simple Choice */}
+                  {/* Cast Timing - Buy & Cast Now vs Buy & Wait */}
                   <Card className="border-border/50">
                     <CardHeader className="pb-4">
                       <CardTitle className="text-lg font-medium">Casting Timeline</CardTitle>
-                      <CardDescription className="text-sm">When should we cast your bronze?</CardDescription>
+                      <CardDescription className="text-sm">
+                        When should we cast your bronze?
+                        {selectedSpecimen && !specimenCanCastNow && (
+                          <span className="block text-xs text-amber-600 dark:text-amber-400 mt-1">
+                            Your selected specimen is not available for immediate casting
+                          </span>
+                        )}
+                      </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-3">
+                      {/* Buy & Cast Now Option */}
                       <div 
-                        className={`flex items-center gap-3 p-4 rounded-lg cursor-pointer transition-all border ${
-                          purchaseMode === "cast_now" 
-                            ? `border-${seatColor}/60 bg-${seatColor}/5` 
-                            : "border-border/50 hover:border-border"
+                        className={`flex items-center gap-3 p-4 rounded-lg transition-all border ${
+                          !specimenCanCastNow && selectedSpecimen
+                            ? "opacity-50 cursor-not-allowed border-border/30 bg-muted/20"
+                            : purchaseMode === "cast_now" 
+                              ? `border-${seatColor}/60 bg-${seatColor}/5 cursor-pointer` 
+                              : "border-border/50 hover:border-border cursor-pointer"
                         }`}
-                        onClick={() => setPurchaseMode("cast_now")}
+                        onClick={() => {
+                          if (specimenCanCastNow || !selectedSpecimen) {
+                            setPurchaseMode("cast_now");
+                          }
+                        }}
                         data-testid="option-cast-now"
                       >
-                        {purchaseMode === "cast_now" ? (
+                        {purchaseMode === "cast_now" && specimenCanCastNow ? (
                           <CheckCircle2 className={`w-5 h-5 text-${seatColor}`} />
+                        ) : !specimenCanCastNow && selectedSpecimen ? (
+                          <AlertCircle className="w-5 h-5 text-muted-foreground" />
                         ) : (
                           <Circle className="w-5 h-5 text-muted-foreground" />
                         )}
-                        <div>
-                          <div className="font-medium text-sm">Cast Now</div>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium text-sm">Buy & Cast Now</span>
+                            {specimenCanCastNow && selectedSpecimen && (
+                              <span className="text-xs bg-bronze/20 text-bronze px-2 py-0.5 rounded">Available</span>
+                            )}
+                            {!specimenCanCastNow && selectedSpecimen && (
+                              <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded">Not in season</span>
+                            )}
+                          </div>
                           <p className="text-xs text-muted-foreground">
-                            We'll cast when seasonal specimens are available
+                            {specimenCanCastNow || !selectedSpecimen 
+                              ? "Your specimen is in season — we'll begin casting soon"
+                              : `${specimenStyles.find(s => s.id === selectedSpecimen)?.name} peaks in ${nextSeasonInfo?.name || 'another season'}`
+                            }
                           </p>
                         </div>
                       </div>
 
+                      {/* Buy & Wait Option */}
                       <div 
                         className={`flex items-center gap-3 p-4 rounded-lg cursor-pointer transition-all border ${
                           purchaseMode === "wait_for_season" 
@@ -600,10 +612,15 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                         ) : (
                           <Circle className="w-5 h-5 text-muted-foreground" />
                         )}
-                        <div>
-                          <div className="font-medium text-sm">Wait for Peak Season</div>
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2">
+                            <span className="font-medium text-sm">Buy & Wait for Season</span>
+                            {!specimenCanCastNow && selectedSpecimen && (
+                              <span className="text-xs bg-patina/20 text-patina px-2 py-0.5 rounded">Recommended</span>
+                            )}
+                          </div>
                           <p className="text-xs text-muted-foreground">
-                            Hold until your preferred season
+                            We'll cast when your specimen reaches peak seasonal beauty
                           </p>
                         </div>
                       </div>

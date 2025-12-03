@@ -1,124 +1,118 @@
 // Cape Fynbos Specimen Availability Matrix
-// Based on Cape Town's winter-rainfall ecosystem
+// Based on Cape Town's winter-rainfall ecosystem (Western Cape)
 // Seasons: Winter (Jun-Aug), Spring (Sep-Nov), Summer (Dec-Feb), Autumn (Mar-May)
+// Shift +/- 4-6 weeks by microclimate
 
 export type Season = 'winter' | 'spring' | 'summer' | 'autumn';
 export type Availability = 'peak' | 'good' | 'limited';
 
-export interface SpecimenAvailability {
+export interface SpecimenStyle {
   id: string;
   name: string;
-  description: string;
+  examples: string;
   winter: Availability;
   spring: Availability;
   summer: Availability;
   autumn: Availability;
-  peakMonths: string;
 }
 
-// Correct availability matrix for Cape Town fynbos
-export const specimenAvailability: SpecimenAvailability[] = [
+// The 9 specimen STYLES customers choose from
+// Availability: peak (●), good (◐), limited (○)
+export const specimenStyles: SpecimenStyle[] = [
   {
-    id: 'protea',
+    id: 'protea-flowers',
     name: 'Protea (flowers)',
-    description: 'Single flower heads including King Protea. Multiple flushes with spring-summer peak.',
-    winter: 'good',
-    spring: 'peak',
-    summer: 'good',
-    autumn: 'limited',
-    peakMonths: 'Aug-Nov (King has spring-summer peak)',
+    examples: 'King Protea, Sugarbush. Many peak late winter-spring (Aug-Nov), King has spring-summer peak.',
+    winter: 'good',      // ◐
+    spring: 'peak',      // ●
+    summer: 'good',      // ◐ (king + some)
+    autumn: 'limited',   // ○
   },
   {
-    id: 'leucospermum',
+    id: 'leucospermum-pincushions',
     name: 'Leucospermum (pincushions)',
-    description: 'Vibrant pincushion blooms. Strongest in spring, early ones start late winter.',
-    winter: 'good',
-    spring: 'peak',
-    summer: 'limited',
-    autumn: 'limited',
-    peakMonths: 'Jul-Oct',
+    examples: 'Pincushion Protea. Strongest spring (Aug-Oct), early ones late winter (Jul). Summer rare.',
+    winter: 'good',      // ◐ (late)
+    spring: 'peak',      // ●
+    summer: 'limited',   // ○
+    autumn: 'limited',   // ○
   },
   {
     id: 'leucadendron-bracts',
     name: 'Leucadendron (coloured bracts)',
-    description: 'Female bracts colouring. Best in winter-spring.',
-    winter: 'peak',
-    spring: 'peak',
-    summer: 'limited',
-    autumn: 'limited',
-    peakMonths: 'Jun-Nov',
+    examples: 'Safari Sunset, Silvertree. Female bracts colour in winter-spring.',
+    winter: 'peak',      // ●
+    spring: 'peak',      // ●
+    summer: 'limited',   // ○
+    autumn: 'limited',   // ○
   },
   {
     id: 'leucadendron-cones',
-    name: 'Leucadendron (cones/seedpods)',
-    description: 'Cones and seeds. Best late summer-autumn once dried but before shattering.',
-    winter: 'limited',
-    spring: 'limited',
-    summer: 'good',
-    autumn: 'peak',
-    peakMonths: 'Feb-May',
+    name: 'Leucadendron (cones/seedheads)',
+    examples: 'Dried cones and seedpods. Best late summer-autumn once dried but before shattering.',
+    winter: 'limited',   // ○
+    spring: 'limited',   // ○
+    summer: 'good',      // ◐
+    autumn: 'peak',      // ●
   },
   {
     id: 'watsonia',
     name: 'Watsonia',
-    description: 'Tall spike flowers. Mostly late spring to early summer.',
-    winter: 'limited',
-    spring: 'good',
-    summer: 'peak',
-    autumn: 'limited',
-    peakMonths: 'Oct-Dec',
+    examples: 'Bugle Lily spikes. Mostly late spring to early summer (Oct-Dec).',
+    winter: 'limited',   // ○
+    spring: 'good',      // ◐ (late)
+    summer: 'peak',      // ● (early-mid)
+    autumn: 'limited',   // ○
   },
   {
     id: 'bulb-spikes',
     name: 'Bulb Spikes (Ixia/Babiana/Moraea)',
-    description: 'Geophyte flower spikes. Mainly late winter through spring.',
-    winter: 'peak',
-    spring: 'peak',
-    summer: 'limited',
-    autumn: 'limited',
-    peakMonths: 'Aug-Oct',
+    examples: 'Wild iris, Babiana. Mainly late winter-spring (Aug-Oct).',
+    winter: 'peak',      // ● (late)
+    spring: 'peak',      // ●
+    summer: 'limited',   // ○
+    autumn: 'limited',   // ○
   },
   {
-    id: 'restios',
-    name: 'Restios / Reeds / Grasses',
-    description: 'Architectural reed panicles and seedheads. Structural year-round, harvest when firm and dry.',
-    winter: 'peak',
-    spring: 'peak',
-    summer: 'peak',
-    autumn: 'peak',
-    peakMonths: 'Year-round (best late summer-autumn when dried)',
+    id: 'restios-reeds',
+    name: 'Restios / Reeds (forms)',
+    examples: 'Cape Reed, Thatching reed. Structural year-round, harvest late summer-autumn when dry.',
+    winter: 'peak',      // ●
+    spring: 'peak',      // ●
+    summer: 'peak',      // ●
+    autumn: 'peak',      // ●
   },
   {
-    id: 'erica',
+    id: 'erica-heaths',
     name: 'Erica (heaths)',
-    description: 'Fine heather-like clusters. Many winter-spring, some autumn, few in high summer.',
-    winter: 'peak',
-    spring: 'peak',
-    summer: 'limited',
-    autumn: 'good',
-    peakMonths: 'Jun-Nov (varies by species)',
+    examples: 'Cape Heath, Heather. Many winter-spring, some autumn, few in high summer.',
+    winter: 'peak',      // ●
+    spring: 'peak',      // ●
+    summer: 'limited',   // ○
+    autumn: 'good',      // ◐
   },
   {
     id: 'branches-leaves',
     name: 'Branches + Leaves',
-    description: 'Sculptural twigs with foliage. Usable year-round, avoid soft new growth after spring flush.',
-    winter: 'peak',
-    spring: 'peak',
-    summer: 'peak',
-    autumn: 'peak',
-    peakMonths: 'Year-round',
+    examples: 'Sculptural twigs with foliage. Year-round, avoid soft new growth after spring flush.',
+    winter: 'peak',      // ●
+    spring: 'peak',      // ●
+    summer: 'peak',      // ●
+    autumn: 'peak',      // ●
   },
   {
     id: 'small-succulents',
     name: 'Small Succulents',
-    description: 'Compact rosettes and miniature forms. Structure year-round, many flower autumn-winter.',
-    winter: 'peak',
-    spring: 'good',
-    summer: 'limited',
-    autumn: 'peak',
-    peakMonths: 'Mar-Aug (flowering); structure year-round',
+    examples: 'Compact rosettes, Vygies. Structure year-round, many flower autumn-winter.',
+    winter: 'peak',      // ●
+    spring: 'good',      // ◐
+    summer: 'limited',   // ○
+    autumn: 'peak',      // ●
   },
 ];
+
+// Legacy alias for backward compatibility
+export const specimenAvailability = specimenStyles;
 
 // Get current Cape Town season based on date
 export function getCurrentSeason(date: Date = new Date()): Season {
@@ -142,37 +136,43 @@ export function getSeasonDisplay(season: Season): { name: string; months: string
   return seasons[season];
 }
 
-// Check if a specimen is available for "Cast Now" in current season
-export function isAvailableForCastNow(specimenId: string, season: Season = getCurrentSeason()): boolean {
-  const specimen = specimenAvailability.find(s => s.id === specimenId);
-  if (!specimen) return false;
+// Check if a specimen style is available for "Buy & Cast Now" in current season
+// Returns true for peak (●) or good (◐), false for limited (○)
+export function isAvailableForCastNow(styleId: string, season: Season = getCurrentSeason()): boolean {
+  const style = specimenStyles.find(s => s.id === styleId);
+  if (!style) return false;
   
-  const availability = specimen[season];
+  const availability = style[season];
   return availability === 'peak' || availability === 'good';
 }
 
-// Get availability status for a specimen in a season
-export function getAvailability(specimenId: string, season: Season): Availability | null {
-  const specimen = specimenAvailability.find(s => s.id === specimenId);
-  if (!specimen) return null;
-  return specimen[season];
+// Get availability status for a style in a season
+export function getAvailability(styleId: string, season: Season): Availability | null {
+  const style = specimenStyles.find(s => s.id === styleId);
+  if (!style) return null;
+  return style[season];
 }
 
-// Get specimens available for "Cast Now" in current season
-export function getAvailableNow(season: Season = getCurrentSeason()): SpecimenAvailability[] {
-  return specimenAvailability.filter(s => {
+// Get specimen styles available for "Buy & Cast Now" in current season
+export function getStylesAvailableNow(season: Season = getCurrentSeason()): SpecimenStyle[] {
+  return specimenStyles.filter(s => {
     const availability = s[season];
     return availability === 'peak' || availability === 'good';
   });
 }
 
-// Get next season when specimen will be available
-export function getNextAvailableSeason(specimenId: string, currentSeason: Season = getCurrentSeason()): Season | null {
-  const specimen = specimenAvailability.find(s => s.id === specimenId);
-  if (!specimen) return null;
+// Get styles NOT available for casting now (limited)
+export function getStylesNotAvailableNow(season: Season = getCurrentSeason()): SpecimenStyle[] {
+  return specimenStyles.filter(s => s[season] === 'limited');
+}
+
+// Get next season when specimen will be available (peak or good)
+export function getNextAvailableSeason(styleId: string, currentSeason: Season = getCurrentSeason()): Season | null {
+  const style = specimenStyles.find(s => s.id === styleId);
+  if (!style) return null;
   
   // Already available?
-  if (isAvailableForCastNow(specimenId, currentSeason)) return currentSeason;
+  if (isAvailableForCastNow(styleId, currentSeason)) return currentSeason;
   
   // Check next seasons in order
   const seasonOrder: Season[] = ['winter', 'spring', 'summer', 'autumn'];
@@ -180,7 +180,7 @@ export function getNextAvailableSeason(specimenId: string, currentSeason: Season
   
   for (let i = 1; i <= 4; i++) {
     const nextSeason = seasonOrder[(currentIndex + i) % 4];
-    if (isAvailableForCastNow(specimenId, nextSeason)) {
+    if (isAvailableForCastNow(styleId, nextSeason)) {
       return nextSeason;
     }
   }
@@ -191,9 +191,9 @@ export function getNextAvailableSeason(specimenId: string, currentSeason: Season
 // Availability styling helpers
 export function getAvailabilityColor(availability: Availability): string {
   switch (availability) {
-    case 'peak': return 'bg-bronze'; // Full bronze dot
-    case 'good': return 'bg-bronze/50'; // Half bronze dot
-    case 'limited': return 'bg-border'; // Grey dot
+    case 'peak': return 'bg-bronze';       // ● Full bronze dot
+    case 'good': return 'bg-bronze/50';    // ◐ Half bronze dot  
+    case 'limited': return 'bg-border';    // ○ Grey dot
   }
 }
 
@@ -202,5 +202,13 @@ export function getAvailabilityLabel(availability: Availability): string {
     case 'peak': return 'Peak Season';
     case 'good': return 'Available';
     case 'limited': return 'Not Available';
+  }
+}
+
+export function getAvailabilitySymbol(availability: Availability): string {
+  switch (availability) {
+    case 'peak': return '●';
+    case 'good': return '◐';
+    case 'limited': return '○';
   }
 }
