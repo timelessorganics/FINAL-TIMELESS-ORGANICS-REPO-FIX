@@ -307,11 +307,11 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* SEAT COUNTER BUBBLE - BIG & PROMINENT */}
+              {/* SEAT COUNTER BUBBLE */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 flex justify-center mt-6 sm:mt-8 mb-4">
-                <div className="inline-flex items-center gap-3 bg-bronze/20 backdrop-blur-sm border-2 border-bronze/50 px-6 sm:px-8 py-3 sm:py-4 rounded-full">
-                  <span className="text-3xl sm:text-4xl lg:text-5xl font-bold text-bronze">{totalRemaining}</span>
-                  <span className="text-base sm:text-lg lg:text-xl text-white/90 font-semibold">of 100 remaining</span>
+                <div className="inline-flex items-center gap-2 bg-bronze/20 backdrop-blur-sm border border-bronze/40 px-4 sm:px-5 py-2 sm:py-2.5 rounded-full">
+                  <span className="text-xl sm:text-2xl font-bold text-bronze">{totalRemaining}</span>
+                  <span className="text-sm sm:text-base text-white/90 font-semibold">of 100 remaining</span>
                 </div>
               </div>
 
