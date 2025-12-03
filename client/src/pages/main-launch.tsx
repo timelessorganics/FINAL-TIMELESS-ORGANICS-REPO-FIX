@@ -174,7 +174,7 @@ export default function MainLaunch() {
         <div className="max-w-[1100px] mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16">
           
           {/* HERO SECTION */}
-          <section className="relative z-20 text-center mb-24 sm:mb-28 md:mb-16 lg:mb-20 pt-12 sm:pt-20 pb-16 sm:pb-20 lg:pb-24" data-testid="section-hero">
+          <section className="relative z-20 text-center mb-8 sm:mb-10 lg:mb-12 pt-12 sm:pt-20 pb-6 sm:pb-8 lg:pb-10" data-testid="section-hero">
             <div className="kicker mb-3 sm:mb-4">FOUNDING 100 INVESTOR LAUNCH</div>
             <h1 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-4 sm:mb-6 leading-tight">
               We've built this studio 90% with our own hands.
