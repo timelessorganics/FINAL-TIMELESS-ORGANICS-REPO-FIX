@@ -2671,27 +2671,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Admin: Set page asset (create or update)
-  app.post("/api/admin/page-assets", isAuthenticated, async (req: any, res: Response) => {
-    try {
-      const userId = await getUserIdFromToken(req);
-      if (!userId) return res.status(401).json({ message: "Unauthorized" });
-      const user = await storage.getUser(userId);
-      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
-
-      const { pageSlug, slotKey, assetId, displayOrder, isActive } = req.body;
-      if (!pageSlug || !slotKey || !assetId) {
-        return res.status(400).json({ message: "Missing required fields" });
-      }
-
-      const asset = await storage.setPageAsset({ pageSlug, slotKey, assetId, displayOrder, isActive });
-      res.json(asset);
-    } catch (error: any) {
-      console.error("Set page asset error:", error);
-      res.status(500).json({ message: error.message || "Failed to set page asset" });
-    }
-  });
-
   // Admin: Get all products
   app.get("/api/admin/products", isAuthenticated, async (req: any, res: Response) => {
     try {
@@ -3024,15 +3003,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "pageSlug, slotKey, and assetId are required" });
       }
 
+      // Check if assetId is a valid UUID (database media asset ID)
+      const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+      let finalAssetId = assetId;
+
+      if (!uuidRegex.test(assetId)) {
+        // assetId is a storage file path - create a media_assets record first
+        console.log("[Admin] Creating media asset for storage file:", assetId);
+        
+        const proxyUrl = `/api/image-proxy?file=${encodeURIComponent(assetId)}`;
+        const fileName = assetId.split('/').pop() || assetId;
+        
+        // Create media asset record
+        const mediaAsset = await storage.createMediaAsset({
+          filename: assetId,
+          originalName: fileName,
+          url: proxyUrl,
+          altText: fileName,
+          caption: fileName,
+          mimeType: 'image/jpeg',
+          size: 0,
+        });
+        
+        finalAssetId = mediaAsset.id;
+        console.log("[Admin] Created media asset:", finalAssetId);
+      }
+
       const result = await storage.setPageAsset({
         pageSlug,
         slotKey,
-        assetId,
+        assetId: finalAssetId,
         displayOrder: displayOrder || 0,
         isActive: true,
       });
 
-      console.log("[Admin] Page asset assigned:", { pageSlug, slotKey, assetId });
+      console.log("[Admin] Page asset assigned:", { pageSlug, slotKey, assetId: finalAssetId });
       res.json(result);
     } catch (error: any) {
       console.error("[Admin] Page asset error:", error);
