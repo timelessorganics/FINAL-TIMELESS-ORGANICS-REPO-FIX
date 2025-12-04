@@ -84,6 +84,29 @@ export default function Footer() {
 
         </div>
 
+        {/* Founding 100 Value Summary */}
+        <div className="py-4 sm:py-6 border-t border-border mb-4 sm:mb-6">
+          <p className="text-center text-sm sm:text-base font-serif text-foreground/90 mb-4">The Founding 100 Moment</p>
+          <div className="grid grid-cols-4 gap-2 sm:gap-4 max-w-2xl mx-auto text-center">
+            <div>
+              <div className="text-sm sm:text-lg font-bold text-bronze">R25K+</div>
+              <p className="text-[0.6rem] sm:text-xs text-muted-foreground">Bronze value</p>
+            </div>
+            <div>
+              <div className="text-sm sm:text-lg font-bold text-accent-gold">50-80%</div>
+              <p className="text-[0.6rem] sm:text-xs text-muted-foreground">First workshop</p>
+            </div>
+            <div>
+              <div className="text-sm sm:text-lg font-bold text-patina">20-30%</div>
+              <p className="text-[0.6rem] sm:text-xs text-muted-foreground">Lifetime discount</p>
+            </div>
+            <div>
+              <div className="text-sm sm:text-lg font-bold text-bronze">FOREVER</div>
+              <p className="text-[0.6rem] sm:text-xs text-muted-foreground">Giftable benefits</p>
+            </div>
+          </div>
+        </div>
+
         <div className="pt-4 sm:pt-6 border-t border-border text-center text-xs sm:text-sm text-muted-foreground font-light">
           <p>&copy; {new Date().getFullYear()} Timeless Organics. All rights reserved.</p>
         </div>

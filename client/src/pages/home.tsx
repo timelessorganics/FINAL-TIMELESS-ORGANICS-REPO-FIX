@@ -448,52 +448,6 @@ export default function HomePage() {
             </div>          </div>
         </section>
 
-        {/* FIRE SALE URGENCY & VALUE */}
-        <section className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-bronze/10 via-card/50 to-accent-gold/10 border-y border-bronze/30" data-testid="section-urgency">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2 justify-center">
-                <Flame className="w-4 h-4" />
-                48-HOUR FIRE SALE
-              </div>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-6 tracking-tight">
-                This Is The Founding 100 Moment
-              </h2>
-              
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8">
-                <div className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-bronze mb-2">R25K+</div>
-                  <p className="text-xs sm:text-sm text-foreground/80">Bronze Sculpture market value (Mounted and Patinated)</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-accent-gold mb-2">50-80%</div>
-                  <p className="text-xs sm:text-sm text-foreground/80">First hands-on 2-day casting workshop</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-patina mb-2">20-30%</div>
-                  <p className="text-xs sm:text-sm text-foreground/80">Lifetime discount on everything</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-bronze mb-2">FOREVER</div>
-                  <p className="text-xs sm:text-sm text-foreground/80">Giftable, transferable benefits</p>
-                </div>
-              </div>
-
-              <Link href="/founding-100#seats">
-                <Button 
-                  size="lg"
-                  className="relative overflow-hidden text-lg px-10 py-6 font-bold bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background"
-                  data-testid="button-urgency-claim-seat"
-                >
-                  <Sparkles className="w-5 h-5 mr-2" />
-                  Your Founding 100 Window — Ends Soon
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-
         {/* THE INVESTMENTS MERGED - ONE Unified Black Section */}
         <section className="py-16 px-6 bg-[#050505] relative overflow-hidden" data-testid="section-investments-unified">
           {/* Kiln/forge video background - faded */}
