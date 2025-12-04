@@ -40,7 +40,9 @@ const checkoutFormSchema = z.object({
 }).refine((data) => {
   if (!data.isGift) return true;
   const qty = parseInt(data.quantity) || 1;
-  if (!data.giftRecipients || data.giftRecipients.length !== qty) {
+  // For multi-seat purchases: seat 1 is yours, seats 2+ are gifts (qty - 1 recipients)
+  const expectedRecipients = qty > 1 ? qty - 1 : qty;
+  if (!data.giftRecipients || data.giftRecipients.length !== expectedRecipients) {
     return false;
   }
   return data.giftRecipients.every(r => r.email && r.name);
@@ -83,7 +85,8 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
   const [promoCode, setPromoCode] = useState("");
   const [validatedPromo, setValidatedPromo] = useState<{valid: boolean; discount?: number; seatType?: string} | null>(null);
   const [isValidatingPromo, setIsValidatingPromo] = useState(false);
-  const [isGift, setIsGift] = useState(false);
+  // If qty > 1 from URL, treat as gift purchase (seat 1 for you, rest are gifts)
+  const [isGift, setIsGift] = useState(urlQuantity > 1);
   const [quantity, setQuantity] = useState(urlQuantity.toString());
   const [hasPatina, setHasPatina] = useState(false);
   const [mountingType, setMountingType] = useState("none");
@@ -138,9 +141,9 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
       email: "",
       phone: "",
       address: "",
-      quantity: "1",
-      isGift: false,
-      giftRecipients: [],
+      quantity: urlQuantity.toString(),
+      isGift: urlQuantity > 1,
+      giftRecipients: urlQuantity > 1 ? Array(urlQuantity - 1).fill({ email: "", name: "" }) : [],
       giftMessage: "",
     },
   });
@@ -149,13 +152,34 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
     mutationFn: async (data: CheckoutForm) => {
       const qty = parseInt(data.quantity) || 1;
       
-      if (data.isGift && (!data.giftRecipients || data.giftRecipients.length !== qty)) {
-        throw new Error(`Please enter ${qty} recipient(s)`);
+      // For multi-seat purchases: seat 1 is yours, seats 2+ are gifts (qty - 1 recipients)
+      const expectedRecipients = qty > 1 ? qty - 1 : (data.isGift ? 1 : 0);
+      if (data.isGift && (!data.giftRecipients || data.giftRecipients.length !== expectedRecipients)) {
+        throw new Error(`Please enter ${expectedRecipients} recipient(s)`);
       }
 
-      // For bulk gifts, create multiple purchases
-      if (data.isGift && qty > 1) {
+      // Multi-seat purchase: Seat 1 for you + Seats 2+ as gifts
+      if (qty > 1) {
         const purchases = [];
+        
+        // Seat 1: Your seat (not a gift)
+        const selfResponse = await apiRequest("POST", "/api/purchase/initiate", {
+          seatType,
+          purchaseMode,
+          paymentType,
+          deliveryName: data.fullName,
+          deliveryPhone: data.phone,
+          deliveryAddress: data.address,
+          specimenStyle: selectedSpecimen || null,
+          hasPatina,
+          mountingType,
+          internationalShipping: false,
+          commissionVoucher: false,
+          isGift: false,
+        });
+        purchases.push(await selfResponse.json());
+        
+        // Seats 2+: Gift seats for recipients
         for (const recipient of data.giftRecipients || []) {
           const response = await apiRequest("POST", "/api/purchase/initiate", {
             seatType,
@@ -349,8 +373,9 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
 
   // Calculate total price (all in cents) - MULTIPLY BY QUANTITY
   const totalBasePriceCents = basePriceCents * qty;
-  const discount = validatedPromo?.valid ? (totalBasePriceCents * (validatedPromo.discount! / 100)) : 0;
-  const subtotal = totalBasePriceCents - discount + patinaCost + mountingCost; // All values in cents
+  // VIP promo codes only discount ONE seat, not all seats
+  const discountOnOneSeat = validatedPromo?.valid ? (basePriceCents * (validatedPromo.discount! / 100)) : 0;
+  const subtotal = totalBasePriceCents - discountOnOneSeat + patinaCost + mountingCost; // All values in cents
   
   // Apply payment type adjustments
   let totalPrice = subtotal;
@@ -742,110 +767,28 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                     </Card>
                   )}
 
-                  {/* Gift Purchasing Option */}
-                  <Card className="border-border/50">
-                    <CardHeader className="pb-4">
-                      <CardTitle className="text-lg font-medium">Purchasing for Someone Else?</CardTitle>
-                      <CardDescription className="text-sm">Buy up to 10 seats and gift to multiple people</CardDescription>
-                    </CardHeader>
-                    <CardContent className="space-y-4">
-                      <div 
-                        className={`flex items-center gap-3 p-4 rounded-lg cursor-pointer transition-all border ${
-                          isGift 
-                            ? `border-${seatColor}/60 bg-${seatColor}/5` 
-                            : "border-border/50 hover:border-border"
-                        }`}
-                        onClick={() => {
-                          const newIsGift = !isGift;
-                          setIsGift(newIsGift);
-                          form.setValue("isGift", newIsGift);
-                          if (newIsGift) {
-                            // Opening gift mode - initialize with 1 recipient
-                            form.setValue("giftRecipients", [{ email: "", name: "" }]);
-                          } else {
-                            // Closing gift mode - reset quantity to 1 and clear recipients
-                            setQuantity("1");
-                            form.setValue("quantity", "1");
-                            form.setValue("giftRecipients", []);
-                          }
-                        }}
-                        data-testid="toggle-gift-purchase"
-                      >
-                        <input type="checkbox" checked={isGift} readOnly className="w-5 h-5 cursor-pointer" />
-                        <div>
-                          <div className="font-medium text-sm">Yes, these are gifts</div>
-                          <p className="text-xs text-muted-foreground">
-                            Recipients will receive emails to claim their seats
-                          </p>
-                        </div>
-                      </div>
-
-                      {isGift && (
-                        <div className="space-y-3 p-4 bg-background/50 rounded-lg border border-border">
-                          <div>
-                            <label className="text-sm font-normal text-muted-foreground block mb-2">How many seats?</label>
-                            <Select value={quantity} onValueChange={(val) => {
-                              setQuantity(val);
-                              form.setValue("quantity", val);
-                              form.setValue("giftRecipients", Array(parseInt(val)).fill({ email: "", name: "" }));
-                            }}>
-                              <SelectTrigger className="border-border/50">
-                                <SelectValue />
-                              </SelectTrigger>
-                              <SelectContent>
-                                {[1,2,3,4,5,6,7,8,9,10].map(n => (
-                                  <SelectItem key={n} value={n.toString()}>{n} Seat{n>1?'s':''}</SelectItem>
-                                ))}
-                              </SelectContent>
-                            </Select>
-                          </div>
-
-                          {Array.from({ length: parseInt(quantity) }).map((_, i) => (
-                            <div key={i} className="space-y-2 p-3 bg-background rounded border border-border/50">
-                              <p className="text-xs font-semibold text-muted-foreground">Recipient {i + 1}</p>
-                              <FormField
-                                control={form.control}
-                                name={`giftRecipients.${i}.name` as any}
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <FormLabel className="text-xs">Name</FormLabel>
-                                    <FormControl>
-                                      <Input {...field} data-testid={`input-gift-name-${i}`} />
-                                    </FormControl>
-                                  </FormItem>
-                                )}
-                              />
-                              <FormField
-                                control={form.control}
-                                name={`giftRecipients.${i}.email` as any}
-                                render={({ field }) => (
-                                  <FormItem>
-                                    <FormLabel className="text-xs">Email</FormLabel>
-                                    <FormControl>
-                                      <Input {...field} type="email" data-testid={`input-gift-email-${i}`} />
-                                    </FormControl>
-                                  </FormItem>
-                                )}
-                              />
-                            </div>
-                          ))}
-
-                          <FormField
-                            control={form.control}
-                            name="giftMessage"
-                            render={({ field }) => (
-                              <FormItem>
-                                <FormLabel className="text-sm font-normal text-muted-foreground">Personal Message (Optional)</FormLabel>
-                                <FormControl>
-                                  <Textarea {...field} data-testid="textarea-gift-message" className="min-h-20 text-sm" />
-                                </FormControl>
-                              </FormItem>
-                            )}
-                          />
-                        </div>
-                      )}
-                    </CardContent>
-                  </Card>
+                  {/* Gift Message (only show when qty > 1, since gift recipients are already shown above) */}
+                  {qty > 1 && (
+                    <Card className="border-border/50">
+                      <CardHeader className="pb-4">
+                        <CardTitle className="text-lg font-medium">Gift Message (Optional)</CardTitle>
+                        <CardDescription className="text-sm">Add a personal note to your gift recipients</CardDescription>
+                      </CardHeader>
+                      <CardContent>
+                        <FormField
+                          control={form.control}
+                          name="giftMessage"
+                          render={({ field }) => (
+                            <FormItem>
+                              <FormControl>
+                                <Textarea {...field} data-testid="textarea-gift-message" className="min-h-20 text-sm" placeholder="Your message to the recipients..." />
+                              </FormControl>
+                            </FormItem>
+                          )}
+                        />
+                      </CardContent>
+                    </Card>
+                  )}
 
                   {/* Promo Code - Optional */}
                   <Card className="border-border/50">
