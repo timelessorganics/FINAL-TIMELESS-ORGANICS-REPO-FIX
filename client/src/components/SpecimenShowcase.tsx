@@ -303,9 +303,12 @@ export default function SpecimenShowcase() {
       {/* Specimen Grid - 9 styles with 3 examples each */}
       <div className="space-y-12">
         {specimenStyles.map((style, index) => {
+          // Use adminToStyleId mapping for consistent lookups (admin keys → style IDs)
+          const mappedId = adminToStyleId[style.id];
+          const hyphenId = style.id.replace(/_/g, '-');
           // Use admin-uploaded images, mixing with defaults if only partial upload
-          const customArrays = customImageArrays[style.id];
-          const defaultImages = specimenImages[style.id] || [];
+          const customArrays = customImageArrays[style.id] || customImageArrays[mappedId] || customImageArrays[hyphenId];
+          const defaultImages = specimenImages[mappedId] || specimenImages[hyphenId] || specimenImages[style.id] || [];
           
           // Build images array: pair plants with bronzes from admin uploads
           let images: SpecimenImage[];
