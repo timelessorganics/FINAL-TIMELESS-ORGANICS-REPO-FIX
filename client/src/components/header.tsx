@@ -28,6 +28,7 @@ export default function Header({
     { href: "/", label: "Home" },
     { href: "/workshops", label: "Workshops" },
     { href: "/sculptures", label: "Gallery" },
+    { href: "/seasonal-guide", label: "Seasons" },
     { href: "/shop", label: "Shop" },
     { href: "/auctions", label: "Auctions" },
     { href: "/about", label: "About" },
