@@ -392,6 +392,29 @@ export default function AdminPanel() {
     },
   });
 
+  const resendEmails = useMutation({
+    mutationFn: async () => {
+      console.log("[Admin] Resend Emails button clicked...");
+      const response = await apiRequest("POST", "/api/admin/resend-emails", {});
+      return await response.json();
+    },
+    onSuccess: (data) => {
+      console.log("[Admin] Resend emails result:", data);
+      toast({
+        title: "Emails Sent!",
+        description: `Sent: ${data.emailsSent}, Failed: ${data.emailsFailed}`,
+      });
+    },
+    onError: (error: Error) => {
+      console.error("[Admin] Resend emails error:", error);
+      toast({
+        variant: "destructive",
+        title: "Resend Emails Failed",
+        description: error.message,
+      });
+    },
+  });
+
   const copyToClipboard = (code: string) => {
     navigator.clipboard.writeText(code);
     toast({
@@ -1040,6 +1063,16 @@ export default function AdminPanel() {
               >
                 <Mail className="w-4 h-4 mr-2" />
                 {testEmailConfig.isPending ? "Testing..." : "Test Email Config"}
+              </Button>
+              <Button
+                onClick={() => resendEmails.mutate()}
+                disabled={resendEmails.isPending}
+                className="bg-green-600 hover:bg-green-700 text-white"
+                data-testid="button-resend-emails"
+                title="Resend emails to all completed purchases with existing codes"
+              >
+                <Mail className="w-4 h-4 mr-2" />
+                {resendEmails.isPending ? "Sending..." : "RESEND ALL EMAILS"}
               </Button>
             </div>
 

@@ -1515,6 +1515,92 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   );
 
+  // Admin: Resend emails to all completed purchases (uses existing codes)
+  app.post(
+    "/api/admin/resend-emails",
+    isAuthenticated,
+    async (req: any, res: Response) => {
+      console.log("[Resend Emails] ===== ENDPOINT HIT =====");
+      try {
+        const userId = await getUserIdFromToken(req);
+        if (!userId) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+        const user = await storage.getUser(userId);
+        if (!user?.isAdmin) {
+          return res.status(403).json({ message: "Admin access required" });
+        }
+
+        // Get all completed purchases
+        const allPurchases = await storage.getAllPurchases();
+        const completedPurchases = allPurchases.filter((p: any) => p.status === "completed");
+
+        console.log(`[Resend Emails] Found ${completedPurchases.length} completed purchases`);
+
+        const results: any[] = [];
+        let emailsSent = 0;
+        let emailsFailed = 0;
+
+        for (const purchase of completedPurchases) {
+          try {
+            // Get existing codes for this purchase
+            const existingCodes = await storage.getCodesByPurchaseId(purchase.id);
+            if (!existingCodes || existingCodes.length === 0) {
+              results.push({ purchaseId: purchase.id, status: "skipped", reason: "no codes" });
+              continue;
+            }
+
+            // Get user info
+            const purchaseUser = await storage.getUser(purchase.userId);
+            const userName = purchaseUser?.firstName && purchaseUser?.lastName
+              ? `${purchaseUser.firstName} ${purchaseUser.lastName}`
+              : purchaseUser?.firstName || "Valued Investor";
+            const userEmail = purchaseUser?.email;
+
+            if (!userEmail) {
+              results.push({ purchaseId: purchase.id, status: "skipped", reason: "no email" });
+              continue;
+            }
+
+            // Send email with existing codes
+            const emailSent = await sendCertificateEmail(
+              userEmail,
+              userName,
+              purchase,
+              existingCodes,
+              purchase.certificateUrl || "",
+              ""
+            );
+
+            if (emailSent) {
+              emailsSent++;
+              console.log(`[Resend Emails] Sent to ${userEmail} for purchase ${purchase.id}`);
+              results.push({ purchaseId: purchase.id, status: "sent", email: userEmail });
+            } else {
+              emailsFailed++;
+              console.log(`[Resend Emails] FAILED for ${userEmail} - purchase ${purchase.id}`);
+              results.push({ purchaseId: purchase.id, status: "failed", email: userEmail });
+            }
+          } catch (err: any) {
+            emailsFailed++;
+            console.error(`[Resend Emails] Error for ${purchase.id}:`, err.message);
+            results.push({ purchaseId: purchase.id, status: "error", error: err.message });
+          }
+        }
+
+        res.json({
+          message: `Sent ${emailsSent} emails, ${emailsFailed} failed`,
+          emailsSent,
+          emailsFailed,
+          results,
+        });
+      } catch (error: any) {
+        console.error("Resend emails error:", error);
+        res.status(500).json({ message: error.message || "Failed to resend emails" });
+      }
+    },
+  );
+
   // Protected: Redeem code
   app.post(
     "/api/codes/redeem",
