@@ -3925,10 +3925,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Public: Get background videos (for homepage and pages)
   app.get("/api/content/videos", async (req: Request, res: Response) => {
     try {
-      // For now, return empty object
-      // Videos should be stored in Supabase media_assets table with tag "video-background"
-      // TODO: Query media_assets where tag contains "video-background" and return URLs
-      res.json({});
+      const { supabaseAdmin } = await import("./supabaseAuth");
+      
+      // Videos are stored in website_content table with pageSlug = "videos"
+      const { data, error } = await supabaseAdmin
+        .from("website_content")
+        .select("section_key, content")
+        .eq("page_slug", "videos");
+
+      if (error) {
+        console.error("Get videos error:", error);
+        return res.json({});
+      }
+
+      // Convert array to object: { home_hero: "url", home_story: "url", ... }
+      const videos: { [key: string]: string } = {};
+      if (data) {
+        for (const row of data) {
+          videos[row.section_key] = row.content;
+        }
+      }
+
+      console.log(`[Videos] Returning ${Object.keys(videos).length} video URLs`);
+      res.json(videos);
     } catch (error: any) {
       console.error("Get videos error:", error);
       res.json({});
