@@ -6,8 +6,12 @@ import { useToast } from "@/hooks/use-toast";
 import { useAuth } from "@/hooks/useAuth";
 import { ArrowRight } from "lucide-react";
 
+interface SeatWithRemaining extends Seat {
+  remaining?: number;
+}
+
 interface SeatCardProps {
-  seat: Seat;
+  seat: SeatWithRemaining;
   title: string;
   regularPrice: string;
   fireSalePrice: string;
@@ -30,8 +34,8 @@ export default function SeatCard({
   const { toast } = useToast();
   const { isAuthenticated } = useAuth();
 
-  const available = seat.totalAvailable - seat.sold;
-  const percentageSold = (seat.sold / seat.totalAvailable) * 100;
+  const available = seat.remaining ?? (seat.totalAvailable - seat.sold);
+  const percentageSold = ((seat.totalAvailable - available) / seat.totalAvailable) * 100;
 
   const handlePaymentClick = (paymentType: 'full' | 'deposit') => {
     if (!isAuthenticated) {
@@ -82,7 +86,7 @@ export default function SeatCard({
       {/* Title */}
       <div className="mb-6 pr-20">
         <div className="text-xs uppercase tracking-wider text-patina font-semibold mb-2">
-          {seat.type === "founder" ? "FOUNDERS (50 SEATS)" : "PATRON (50 SEATS)"}
+          {seat.type === "founder" ? `FOUNDERS (${seat.totalAvailable} SEATS)` : `PATRON (${seat.totalAvailable} SEATS)`}
         </div>
         <h3 className="font-serif text-3xl font-bold mb-2 text-foreground">{title}</h3>
         <div className="mb-3">
