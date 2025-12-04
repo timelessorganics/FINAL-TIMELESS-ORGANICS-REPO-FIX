@@ -364,12 +364,7 @@ export default function AdminPanel() {
   const testEmailConfig = useMutation({
     mutationFn: async () => {
       console.log("[Admin] Testing email config...");
-      const response = await fetch("/api/admin/test-email-config", {
-        credentials: 'include',
-      });
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
+      const response = await apiRequest("GET", "/api/admin/test-email-config");
       return await response.json();
     },
     onSuccess: (data) => {
