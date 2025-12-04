@@ -73,6 +73,9 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
   if (params.get("payment") === "deposit" || params.get("mode") === "deposit") {
     urlPaymentType = "deposit";
   }
+
+  // Read quantity from URL params (set by tier selection modal)
+  const urlQuantity = Math.min(10, Math.max(1, parseInt(params.get("quantity") || "1")));
   
   const { toast } = useToast();
   const [purchaseMode, setPurchaseMode] = useState<"cast_now" | "wait_for_season">("cast_now");
@@ -81,7 +84,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
   const [validatedPromo, setValidatedPromo] = useState<{valid: boolean; discount?: number; seatType?: string} | null>(null);
   const [isValidatingPromo, setIsValidatingPromo] = useState(false);
   const [isGift, setIsGift] = useState(false);
-  const [quantity, setQuantity] = useState("1");
+  const [quantity, setQuantity] = useState(urlQuantity.toString());
   const [hasPatina, setHasPatina] = useState(false);
   const [mountingType, setMountingType] = useState("none");
   const [paymentType, setPaymentType] = useState<"full" | "deposit" | "reserve">(urlPaymentType);
@@ -483,6 +486,60 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                       />
                     </CardContent>
                   </Card>
+
+                  {/* Recipient Details - Show for multiple seats */}
+                  {qty > 1 && (
+                    <Card className="border-border/50 border-accent-gold/50 bg-accent-gold/5">
+                      <CardHeader className="pb-4">
+                        <CardTitle className="text-lg font-medium text-accent-gold">Gift Recipients</CardTitle>
+                        <CardDescription className="text-sm">
+                          {qty > 1 ? `You're purchasing ${qty} seats: 1 for you + ${qty - 1} gift${qty > 2 ? 's' : ''}` : ''}
+                        </CardDescription>
+                      </CardHeader>
+                      <CardContent className="space-y-6">
+                        {/* Seat 1: Your Seat */}
+                        <div className="p-4 rounded-lg bg-muted/30 border border-border/50">
+                          <h4 className="font-medium text-sm mb-2 text-foreground">Seat 1: Your Seat</h4>
+                          <p className="text-xs text-muted-foreground">{form.getValues("fullName") || "Your name"} ({form.getValues("email") || "your@email"})</p>
+                        </div>
+                        
+                        {/* Gift Seats: 2 onwards */}
+                        {Array.from({ length: qty - 1 }).map((_, index) => (
+                          <div key={index + 1} className="space-y-3 p-4 rounded-lg bg-accent-gold/5 border border-accent-gold/30">
+                            <h4 className="font-medium text-sm text-accent-gold">Seat {index + 2}: Gift Recipient</h4>
+                            <div className="grid grid-cols-2 gap-3">
+                              <FormField
+                                control={form.control}
+                                name={`giftRecipients.${index}.name`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel className="text-xs font-normal text-muted-foreground">Recipient Name</FormLabel>
+                                    <FormControl>
+                                      <Input {...field} placeholder="Gift recipient's full name" data-testid={`input-gift-name-${index + 2}`} className="border-border/50 text-sm" />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                              <FormField
+                                control={form.control}
+                                name={`giftRecipients.${index}.email`}
+                                render={({ field }) => (
+                                  <FormItem>
+                                    <FormLabel className="text-xs font-normal text-muted-foreground">Recipient Email</FormLabel>
+                                    <FormControl>
+                                      <Input {...field} type="email" placeholder="recipient@email.com" data-testid={`input-gift-email-${index + 2}`} className="border-border/50 text-sm" />
+                                    </FormControl>
+                                    <FormMessage />
+                                  </FormItem>
+                                )}
+                              />
+                            </div>
+                          </div>
+                        ))}
+                      </CardContent>
+                    </Card>
+                  )}
 
                   {/* Specimen Style Selection - 9 Cape Fynbos Styles */}
                   <Card className="border-border/50">
