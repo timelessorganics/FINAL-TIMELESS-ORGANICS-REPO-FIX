@@ -1336,26 +1336,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
               console.error(`[Admin Fix] Certificate generation failed for ${purchase.id}:`, certError);
             }
 
-            // Send emails
+            // Skip emails for retroactive fix - only send for new purchases
             const userEmail = purchaseUser?.email;
-            if (userEmail) {
-              console.log(`[Admin Fix] Sending emails to ${userEmail} for purchase ${purchase.id}`);
-              
-              sendPurchaseConfirmationEmail(userEmail, userName, purchase).catch(
-                (err) => console.error("[Admin Fix] Confirmation email failed:", err),
-              );
-
-              if (certificateUrl) {
-                sendCertificateEmail(
-                  userEmail,
-                  userName,
-                  purchase,
-                  allCodes,
-                  certificateUrl,
-                  codeSlipsUrl,
-                ).catch((err) => console.error("[Admin Fix] Certificate email failed:", err));
-              }
-            }
 
             results.push({
               purchaseId: purchase.id,
