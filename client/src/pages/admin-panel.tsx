@@ -148,6 +148,13 @@ export default function AdminPanel() {
   });
 
   const [holdForm, setHoldForm] = useState({ name: "", seatType: "founder" as "founder" | "patron", note: "" });
+  
+  // Background videos state
+  const [backgroundVideos, setBackgroundVideos] = useState<{[key: string]: string}>({
+    home_hero: "",
+    home_investments: "",
+    founding_100: "",
+  });
 
   const createHold = useMutation({
     mutationFn: async (data: { name: string; seatType: string; note?: string }) => {
@@ -2046,6 +2053,65 @@ export default function AdminPanel() {
             {/* Specimens Tab */}
             <TabsContent value="specimens" className="mt-6">
               <div className="relative z-10">
+              
+              {/* Background Videos Manager */}
+              <Card className="bg-card border-card-border p-6 mb-8">
+                <h2 className="font-serif text-2xl font-bold mb-2">Background Videos</h2>
+                <p className="text-sm text-muted-foreground mb-6">Quick upload videos for page backgrounds (MP4, WebM, OGG)</p>
+                
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                  {[
+                    { key: "home_hero", label: "Home Hero Video", desc: "Hero section top" },
+                    { key: "home_investments", label: "Investments Section", desc: "The Investments video" },
+                    { key: "founding_100", label: "Founding 100 Hero", desc: "Founding 100 page hero" },
+                  ].map(({ key, label, desc }) => (
+                    <div key={key} className="border rounded-lg p-4 space-y-3">
+                      <div>
+                        <p className="font-medium text-sm">{label}</p>
+                        <p className="text-xs text-muted-foreground">{desc}</p>
+                      </div>
+                      <div className="aspect-video bg-muted rounded overflow-hidden text-center flex items-center justify-center text-xs text-muted-foreground">
+                        {backgroundVideos[key] ? "✓ Uploaded" : "No video"}
+                      </div>
+                      <label className="block cursor-pointer">
+                        <input 
+                          type="file" 
+                          accept="video/mp4,video/webm,video/ogg" 
+                          className="hidden" 
+                          onChange={(e) => {
+                            if (e.target.files?.[0]) {
+                              const file = e.target.files[0];
+                              const formData = new FormData();
+                              formData.append('media-file', file);
+                              fetch('/api/admin/upload-specimen-photo', {
+                                method: 'POST',
+                                body: formData,
+                              }).then(r => r.json()).then(({ publicUrl }) => {
+                                setBackgroundVideos(prev => ({...prev, [key]: publicUrl}));
+                                toast({ title: "Video uploaded!" });
+                              }).catch(err => toast({ variant: "destructive", title: "Upload failed", description: err.message }));
+                            }
+                          }}
+                          data-testid={`input-video-${key}`}
+                        />
+                        <div className="flex items-center justify-center gap-2 w-full h-9 px-3 text-xs border rounded-md bg-background hover:bg-muted transition-colors">
+                          <Upload className="w-3 h-3" />
+                          Upload Video
+                        </div>
+                      </label>
+                      {backgroundVideos[key] && (
+                        <div className="space-y-2 text-xs">
+                          <p className="truncate text-patina font-mono">{backgroundVideos[key].split('/').pop()}</p>
+                          <Button size="sm" variant="outline" onClick={() => window.open(backgroundVideos[key], '_blank')} className="w-full">
+                            Preview
+                          </Button>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </Card>
+
               <div className="mb-8">
                 <h2 className="font-serif text-2xl font-bold mb-2">Specimen Image Manager</h2>
                 <p className="text-muted-foreground">
