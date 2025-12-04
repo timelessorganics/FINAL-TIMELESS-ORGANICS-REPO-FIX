@@ -163,7 +163,7 @@ export const purchases = pgTable("purchases", {
   // LEGACY FIELDS - Preserved for existing purchases, not used in Founding 100 checkout
   purchaseChoice: purchaseChoiceEnum("purchase_choice").default('cast_now'),
   seasonalBatchWindow: varchar("seasonal_batch_window"),
-  specimenStyle: specimenStyleEnum("specimen_style"),
+  specimenStyle: specimenStyleEnum("specimen_style"), // Nullable - selected later from dashboard
   customSpecimenPhotoUrl: varchar("custom_specimen_photo_url"),
   customSpecimenApprovalStatus: approvalStatusEnum("custom_specimen_approval_status"),
   customSpecimenNotes: text("custom_specimen_notes"),
