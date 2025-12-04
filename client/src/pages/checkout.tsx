@@ -12,44 +12,50 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import { Check, Clock, Sparkles, Shield, Award, ArrowLeft, CheckCircle2, Circle, AlertCircle, CalendarDays } from "lucide-react";
+import { Check, Shield, CheckCircle2, Circle, AlertCircle } from "lucide-react";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import type { Sculpture } from "@shared/schema";
-import { 
+import {
   specimenStyles,
-  getCurrentSeason, 
-  getSeasonDisplay, 
-  isAvailableForCastNow, 
+  getCurrentSeason,
+  getSeasonDisplay,
+  isAvailableForCastNow,
   getNextAvailableSeason,
-  type Season 
+  type Season,
 } from "@/lib/specimenAvailability";
 
-const checkoutFormSchema = z.object({
-  fullName: z.string().min(2, "Name must be at least 2 characters"),
-  email: z.string().email("Please enter a valid email"),
-  phone: z.string().min(10, "Please enter a valid phone number"),
-  address: z.string().min(10, "Please enter your delivery address"),
-  quantity: z.string().default("1"),
-  isGift: z.boolean().default(false),
-  giftRecipients: z.array(z.object({
-    email: z.string().email("Invalid email"),
-    name: z.string().min(1, "Name required"),
-  })).optional(),
-  giftMessage: z.string().optional(),
-}).refine((data) => {
-  if (!data.isGift) return true;
-  const qty = parseInt(data.quantity) || 1;
-  // For multi-seat purchases: seat 1 is yours, seats 2+ are gifts (qty - 1 recipients)
-  const expectedRecipients = qty > 1 ? qty - 1 : qty;
-  if (!data.giftRecipients || data.giftRecipients.length !== expectedRecipients) {
-    return false;
-  }
-  return data.giftRecipients.every(r => r.email && r.name);
-}, {
-  message: "Enter email and name for each recipient",
-  path: ["giftRecipients"],
-});
+// ----------- Form schema -----------
+const checkoutFormSchema = z
+  .object({
+    fullName: z.string().min(2, "Name must be at least 2 characters"),
+    email: z.string().email("Please enter a valid email"),
+    phone: z.string().min(10, "Please enter a valid phone number"),
+    address: z.string().min(10, "Please enter your delivery address"),
+    quantity: z.string().default("1"),
+    isGift: z.boolean().default(false),
+    giftRecipients: z
+      .array(
+        z.object({
+          email: z.string().email("Invalid email"),
+          name: z.string().min(1, "Name required"),
+        })
+      )
+      .optional(),
+    giftMessage: z.string().optional(),
+  })
+  .refine(
+    (data) => {
+      const qty = parseInt(data.quantity || "1", 10) || 1;
+      if (!data.isGift && qty === 1) return true;
+
+      // For multi-seat purchases: seat #1 is purchaser; seats 2+ are gifts
+      const expectedRecipients = qty > 1 ? qty - 1 : 1;
+      if (!data.giftRecipients || data.giftRecipients.length !== expectedRecipients) return false;
+      return data.giftRecipients.every((r) => r.email && r.name);
+    },
+    { message: "Enter email and name for each recipient", path: ["giftRecipients"] }
+  );
 
 type CheckoutForm = z.infer<typeof checkoutFormSchema>;
 
@@ -61,79 +67,75 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
   const [, setLocation] = useLocation();
   const search = useSearch();
   const params = new URLSearchParams(search);
-  
-  // Priority: prop > query param > default to founder
-  let seatType: "founder" | "patron" = "founder";
-  if (propSeatType === "founder" || propSeatType === "patron") {
-    seatType = propSeatType;
-  } else if (params.get("seat") === "founder" || params.get("seat") === "patron") {
-    seatType = params.get("seat") as "founder" | "patron";
-  }
-  
-  // Support both ?payment=deposit AND ?mode=deposit URL formats
-  let urlPaymentType: "full" | "deposit" = "full";
-  if (params.get("payment") === "deposit" || params.get("mode") === "deposit") {
-    urlPaymentType = "deposit";
-  }
 
-  // Read quantity from URL params (set by tier selection modal)
-  const urlQuantity = Math.min(10, Math.max(1, parseInt(params.get("quantity") || "1")));
-  
+  // seat type: prop > query ?seat= > default founder
+  let seatType: "founder" | "patron" = "founder";
+  if (propSeatType === "founder" || propSeatType === "patron") seatType = propSeatType;
+  else if (params.get("seat") === "founder" || params.get("seat") === "patron")
+    seatType = params.get("seat") as "founder" | "patron";
+
+  // support ?payment=deposit or ?mode=deposit
+  let urlPaymentType: "full" | "deposit" | "reserve" = "full";
+  if (params.get("payment") === "deposit" || params.get("mode") === "deposit") urlPaymentType = "deposit";
+  if (params.get("payment") === "reserve" || params.get("mode") === "reserve") urlPaymentType = "reserve";
+
+  // quantity from URL
+  const urlQuantity = Math.min(10, Math.max(1, parseInt(params.get("quantity") || "1", 10)));
+
   const { toast } = useToast();
   const [purchaseMode, setPurchaseMode] = useState<"cast_now" | "wait_for_season">("cast_now");
   const [selectedSpecimen, setSelectedSpecimen] = useState<string>("");
   const [promoCode, setPromoCode] = useState("");
-  const [validatedPromo, setValidatedPromo] = useState<{valid: boolean; discount?: number; seatType?: string} | null>(null);
+  const [validatedPromo, setValidatedPromo] =
+    useState<{ valid: boolean; discount?: number; seatType?: string } | null>(null);
   const [isValidatingPromo, setIsValidatingPromo] = useState(false);
-  // If qty > 1 from URL, treat as gift purchase (seat 1 for you, rest are gifts)
-  const [isGift, setIsGift] = useState(urlQuantity > 1);
+
+  // UI state
   const [quantity, setQuantity] = useState(urlQuantity.toString());
   const [hasPatina, setHasPatina] = useState(false);
   const [mountingType, setMountingType] = useState("none");
   const [paymentType, setPaymentType] = useState<"full" | "deposit" | "reserve">(urlPaymentType);
 
-  // Get current season and check specimen availability
+  // seasons
   const currentSeason = getCurrentSeason() as Season;
   const seasonInfo = getSeasonDisplay(currentSeason);
-  
-  // Check if selected specimen is available for "Cast Now"
   const specimenCanCastNow = selectedSpecimen ? isAvailableForCastNow(selectedSpecimen, currentSeason) : true;
-  const nextAvailableSeason = selectedSpecimen && !specimenCanCastNow 
-    ? getNextAvailableSeason(selectedSpecimen, currentSeason) 
+  const nextAvailableSeason = selectedSpecimen && !specimenCanCastNow
+    ? getNextAvailableSeason(selectedSpecimen, currentSeason)
     : null;
   const nextSeasonInfo = nextAvailableSeason ? getSeasonDisplay(nextAvailableSeason) : null;
-  
-  // If specimen can't cast now and user had "cast_now" selected, switch to "wait_for_season"
+
   useEffect(() => {
     if (selectedSpecimen && !specimenCanCastNow && purchaseMode === "cast_now") {
       setPurchaseMode("wait_for_season");
       toast({
         title: "Specimen not in season",
-        description: `${specimenStyles.find(s => s.id === selectedSpecimen)?.name} is not available for immediate casting. Switched to "Buy & Wait".`,
+        description: `${specimenStyles.find((s) => s.id === selectedSpecimen)?.name
+          } is not available for immediate casting. Switched to "Buy & Wait".`,
       });
     }
   }, [selectedSpecimen, specimenCanCastNow, purchaseMode, toast]);
 
+  // availability + sculptures (for later)
   const { data: seats, isLoading: loadingSeats } = useQuery<any[]>({
-    queryKey: ['/api/seats/availability'],
+    queryKey: ["/api/seats/availability"],
     staleTime: 0,
     refetchOnMount: true,
   });
 
-  const { data: allSculptures = [] } = useQuery<Sculpture[]>({
-    queryKey: ['/api/sculptures'],
-  });
+  useQuery<Sculpture[]>({ queryKey: ["/api/sculptures"] });
 
-  // Specimen availability is now handled by specimenAvailability from lib/specimenAvailability.ts
-
-  // Normalize seatType to lowercase for matching
+  // seat pricing
   const normalizedSeatType = seatType.toLowerCase();
   const currentSeat = seats?.find((s) => s.type.toLowerCase() === normalizedSeatType);
-  // Use fire sale price if active, otherwise regular price - keep in cents throughout
-  const basePriceCents = (currentSeat?.fireSalePrice && currentSeat?.fireSaleEndsAt && new Date(currentSeat.fireSaleEndsAt) > new Date()) 
-    ? currentSeat.fireSalePrice 
-    : currentSeat?.price || 0;
+  const basePriceCents =
+    currentSeat?.fireSalePrice &&
+      currentSeat?.fireSaleEndsAt &&
+      new Date(currentSeat.fireSaleEndsAt) > new Date()
+      ? currentSeat.fireSalePrice
+      : currentSeat?.price || 0;
 
+  // form
   const form = useForm<CheckoutForm>({
     resolver: zodResolver(checkoutFormSchema),
     defaultValues: {
@@ -148,74 +150,23 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
     },
   });
 
+  // ----------- mutations -----------
   const initiatePurchase = useMutation({
     mutationFn: async (data: CheckoutForm) => {
-      const qty = parseInt(data.quantity) || 1;
-      
-      // For multi-seat purchases: seat 1 is yours, seats 2+ are gifts (qty - 1 recipients)
-      const expectedRecipients = qty > 1 ? qty - 1 : (data.isGift ? 1 : 0);
+      const qty = parseInt(data.quantity || "1", 10) || 1;
+
+      // validate recipients for multi-seat
+      const expectedRecipients = qty > 1 ? qty - 1 : data.isGift ? 1 : 0;
       if (data.isGift && (!data.giftRecipients || data.giftRecipients.length !== expectedRecipients)) {
         throw new Error(`Please enter ${expectedRecipients} recipient(s)`);
       }
 
-      try {
-        // Multi-seat purchase: Seat 1 for you + Seats 2+ as gifts
-        if (qty > 1) {
-          console.log("[Checkout] Processing multi-seat purchase:", qty, "seats");
-          const purchases = [];
-          
-          // Seat 1: Your seat (not a gift)
-          console.log("[Checkout] Creating seat 1 (personal)...");
-          const selfResponse = await apiRequest("POST", "/api/purchase/initiate", {
-            seatType,
-            purchaseMode,
-            paymentType,
-            deliveryName: data.fullName,
-            deliveryPhone: data.phone,
-            deliveryAddress: data.address,
-            specimenStyle: selectedSpecimen || null,
-            hasPatina,
-            mountingType,
-            internationalShipping: false,
-            commissionVoucher: false,
-            isGift: false,
-          });
-          const selfPurchase = await selfResponse.json();
-          console.log("[Checkout] Seat 1 response:", selfPurchase);
-          purchases.push(selfPurchase);
-          
-          // Seats 2+: Gift seats for recipients
-          for (let i = 0; i < (data.giftRecipients || []).length; i++) {
-            const recipient = data.giftRecipients![i];
-            console.log(`[Checkout] Creating seat ${i + 2} (gift for ${recipient.name})...`);
-            const response = await apiRequest("POST", "/api/purchase/initiate", {
-              seatType,
-              purchaseMode,
-              paymentType,
-              deliveryName: data.fullName,
-              deliveryPhone: data.phone,
-              deliveryAddress: data.address,
-              specimenStyle: selectedSpecimen || null,
-              hasPatina,
-              mountingType,
-              internationalShipping: false,
-              commissionVoucher: false,
-              isGift: true,
-              giftRecipientEmail: recipient.email,
-              giftRecipientName: recipient.name,
-              giftMessage: data.giftMessage,
-            });
-            const giftPurchase = await response.json();
-            console.log(`[Checkout] Seat ${i + 2} response:`, giftPurchase);
-            purchases.push(giftPurchase);
-          }
-          console.log("[Checkout] All purchases created, returning first one for redirect");
-          return purchases[0]; // Return first for redirect
-        }
+      // Multi-seat: seat #1 purchaser (not a gift), seats 2+ are gifts
+      if (qty > 1) {
+        const purchases: any[] = [];
 
-        // Single purchase (personal or single gift)
-        console.log("[Checkout] Creating single purchase");
-        const response = await apiRequest("POST", "/api/purchase/initiate", {
+        // seat 1
+        const selfResponse = await apiRequest("POST", "/api/purchase/initiate", {
           seatType,
           purchaseMode,
           paymentType,
@@ -227,63 +178,81 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
           mountingType,
           internationalShipping: false,
           commissionVoucher: false,
-          isGift: data.isGift,
-          giftRecipientEmail: data.isGift && data.giftRecipients?.[0] ? data.giftRecipients[0].email : undefined,
-          giftRecipientName: data.isGift && data.giftRecipients?.[0] ? data.giftRecipients[0].name : undefined,
-          giftMessage: data.isGift ? data.giftMessage : undefined,
+          isGift: false,
         });
-        
-        const result = await response.json();
-        console.log("[Checkout] Single purchase response:", result);
-        return result;
-      } catch (error) {
-        console.error("[Checkout] Mutation error:", error);
-        throw error;
+        purchases.push(await selfResponse.json());
+
+        // seats 2+
+        for (const recipient of data.giftRecipients || []) {
+          const res = await apiRequest("POST", "/api/purchase/initiate", {
+            seatType,
+            purchaseMode,
+            paymentType,
+            deliveryName: data.fullName,
+            deliveryPhone: data.phone,
+            deliveryAddress: data.address,
+            specimenStyle: selectedSpecimen || null,
+            hasPatina,
+            mountingType,
+            internationalShipping: false,
+            commissionVoucher: false,
+            isGift: true,
+            giftRecipientEmail: recipient.email,
+            giftRecipientName: recipient.name,
+            giftMessage: data.giftMessage,
+          });
+          purchases.push(await res.json());
+        }
+
+        // return first purchase (redirect handler will know the amount)
+        return purchases[0];
       }
+
+      // single purchase (personal or single gift)
+      const response = await apiRequest("POST", "/api/purchase/initiate", {
+        seatType,
+        purchaseMode,
+        paymentType,
+        deliveryName: data.fullName,
+        deliveryPhone: data.phone,
+        deliveryAddress: data.address,
+        specimenStyle: selectedSpecimen || null,
+        hasPatina,
+        mountingType,
+        internationalShipping: false,
+        commissionVoucher: false,
+        isGift: data.isGift,
+        giftRecipientEmail: data.isGift && data.giftRecipients?.[0] ? data.giftRecipients[0].email : undefined,
+        giftRecipientName: data.isGift && data.giftRecipients?.[0] ? data.giftRecipients[0].name : undefined,
+        giftMessage: data.isGift ? data.giftMessage : undefined,
+      });
+
+      return await response.json();
     },
     onSuccess: (response: any) => {
-      console.log("[Checkout] onSuccess called with response:", response);
-      
-      if (response.paymentType === 'reserve') {
-        console.log("[Checkout] Reserve payment - redirecting to dashboard");
+      if (!response || !response.purchaseId) {
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "Could not create purchase. Please try again.",
+        });
+        return;
+      }
+
+      if (response.paymentType === "reserve") {
         toast({
           title: "Seat Reserved!",
           description: "Your seat is held for 24 hours. Check your email for details.",
         });
-        setTimeout(() => {
-          setLocation('/dashboard');
-        }, 2000);
+        setLocation("/dashboard");
         return;
       }
 
-      if (!response.purchaseId) {
-        console.error("[Checkout] ERROR: No purchaseId in response:", response);
-        toast({
-          variant: "destructive",
-          title: "Error",
-          description: "No purchase ID received. Please try again.",
-        });
-        return;
-      }
-
-      toast({
-        title: "Redirecting to Payment",
-        description: "Taking you to PayFast secure checkout...",
-      });
-
-      // Use redirect flow instead of modal - more reliable
-      // Build redirect URL - always use relative path since frontend and backend are same domain
+      // simple, reliable same-origin redirect
       const redirectUrl = `/api/purchase/${response.purchaseId}/redirect`;
-      
-      console.log("[Checkout] Redirecting to:", redirectUrl);
-      console.log("[Checkout] PaymentType:", response.paymentType);
-      console.log("[Checkout] Amount:", response.amount);
-      
-      // Perform redirect immediately (most browsers will still show toast)
-      window.location.href = redirectUrl;
+      window.location.assign(redirectUrl);
     },
     onError: (error: Error) => {
-      console.error("[Checkout] onError called:", error);
       toast({
         variant: "destructive",
         title: "Purchase Failed",
@@ -316,9 +285,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
         title: "Complimentary Seat Confirmed!",
         description: "Your VIP seat has been reserved. Redirecting to dashboard...",
       });
-      setTimeout(() => {
-        setLocation('/dashboard');
-      }, 2000);
+      setLocation("/dashboard");
     },
     onError: (error: Error) => {
       toast({
@@ -329,13 +296,11 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
     },
   });
 
+  // ----------- handlers -----------
   const handleCheckout = (data: CheckoutForm) => {
-    console.log("[Checkout] Form submitted with data:", data);
-    console.log("[Checkout] Quantity:", parseInt(data.quantity), "isGift:", data.isGift, "Recipients:", data.giftRecipients?.length);
-    
+    // guard seat type binding for promo
     if (validatedPromo?.valid && validatedPromo.discount === 100) {
-      console.log("[Checkout] Using promo code:", promoCode);
-      if (validatedPromo.seatType !== seatType) {
+      if (validatedPromo.seatType && validatedPromo.seatType !== seatType) {
         toast({
           variant: "destructive",
           title: "Seat Type Mismatch",
@@ -344,97 +309,77 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
         return;
       }
       redeemPromo.mutate({ ...data, promoCode: promoCode.toUpperCase() });
-    } else {
-      console.log("[Checkout] Initiating standard purchase");
-      initiatePurchase.mutate(data);
+      return;
     }
-  };
 
-  // Log form errors when validation fails
-  const formErrors = form.formState.errors;
-  if (Object.keys(formErrors).length > 0) {
-    console.log("[Checkout] Form validation errors:", formErrors);
-  }
+    initiatePurchase.mutate(data);
+  };
 
   const validatePromoCode = async () => {
     if (!promoCode.trim()) {
       setValidatedPromo(null);
       return;
     }
-
     setIsValidatingPromo(true);
     try {
       const response = await apiRequest("POST", "/api/promo-code/validate", {
         code: promoCode.toUpperCase(),
       });
       const result = await response.json();
-      
       setValidatedPromo(result);
-      
-      if (result.valid) {
-        toast({
-          title: "Promo Code Applied!",
-          description: `${result.discount}% discount applied`,
-        });
-      } else {
-        toast({
-          variant: "destructive",
-          title: "Invalid Promo Code",
-          description: result.message || "This code is not valid.",
-        });
-      }
-    } catch (error) {
       toast({
-        variant: "destructive",
-        title: "Validation Error",
-        description: "Could not validate promo code.",
+        variant: result.valid ? "default" : "destructive",
+        title: result.valid ? "Promo Code Applied!" : "Invalid Promo Code",
+        description: result.valid ? `${result.discount}% discount applied` : result.message || "This code is not valid.",
       });
+    } catch {
       setValidatedPromo(null);
+      toast({ variant: "destructive", title: "Validation Error", description: "Could not validate promo code." });
     } finally {
       setIsValidatingPromo(false);
     }
   };
 
-  // Parse quantity
-  const qty = parseInt(quantity) || 1;
+  // ----------- pricing (display only) -----------
+  const qty = parseInt(quantity || "1", 10) || 1;
 
-  // Calculate add-on costs (all in cents)
-  const patinaCost = hasPatina ? 100000 : 0; // R1,000 for patina
+  // add-ons (cents)
+  const patinaCost = hasPatina ? 100000 : 0;
   const mountingCosts: Record<string, number> = {
     none: 0,
-    wall: 150000,     // R1,500
-    base: 80000,      // R800
-    custom: 120000,   // R1,200
+    wall: 150000,
+    base: 80000,
+    custom: 120000,
   };
   const mountingCost = mountingCosts[mountingType] || 0;
 
-  // Calculate total price (all in cents) - MULTIPLY BY QUANTITY
+  // base * qty, promo discounts only ONE seat (VIP rule)
   const totalBasePriceCents = basePriceCents * qty;
-  // VIP promo codes only discount ONE seat, not all seats
-  const discountOnOneSeat = validatedPromo?.valid ? (basePriceCents * (validatedPromo.discount! / 100)) : 0;
-  const subtotal = totalBasePriceCents - discountOnOneSeat + patinaCost + mountingCost; // All values in cents
-  
-  // Apply payment type adjustments
-  let totalPrice = subtotal;
-  if (paymentType === 'deposit') {
-    totalPrice = 1; // R1,000 deposit only
-  } else if (paymentType === 'reserve') {
-    totalPrice = 0;
-  }
+  const discountAmountCents =
+    validatedPromo?.valid && typeof validatedPromo.discount === "number"
+      ? Math.round(basePriceCents * (validatedPromo.discount / 100))
+      : 0;
+
+  const subtotalCents = totalBasePriceCents - discountAmountCents + patinaCost + mountingCost;
+
+  let totalPriceCents = subtotalCents;
+  if (paymentType === "deposit") totalPriceCents = 1; // (your existing behavior)
+  if (paymentType === "reserve") totalPriceCents = 0;
 
   const seatLabel = seatType === "founder" ? "Founder" : "Patron";
   const seatColor = seatType === "founder" ? "bronze" : "accent-gold";
 
-  const benefits = seatType === "founder" 
-    ? [
+  const benefits =
+    seatType === "founder"
+      ? [
         "One-of-a-kind bronze casting (R25,000+ retail value)",
         "One 2-day bronze casting workshop at 50% discount",
         "20% lifetime discount on all future shop purchases",
         "Priority access to custom commissions",
         "Early access to future auction pieces",
-        "Founding member status & certificate of authenticity"
+        "Founding member status & certificate of authenticity",
       ]
-    : [
+      : [
         "One-of-a-kind bronze casting with patina finish included",
         "Professional mounting service included",
         "One 2-day bronze casting workshop at 80% discount (hands-on masterclass)",
@@ -443,49 +388,40 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
         "Priority access to custom commissions",
         "Early access to future auction pieces",
         "All benefits transferable to family/friends you gift to",
-        "Founding member status & premium certificate"
+        "Founding member status & premium certificate",
       ];
 
   return (
     <>
-      <Header 
-        variant="checkout" 
-        backHref="/" 
-        backLabel="Back" 
-        context="Founding 100" 
-      />
-      
+      <Header variant="checkout" backHref="/" backLabel="Back" context="Founding 100" />
+
       <main className="relative z-50 min-h-screen bg-background">
         <div className="container mx-auto px-4 py-12 max-w-4xl">
-          
-          {/* Simple Header */}
           <div className="text-center mb-10">
             <h1 className="font-serif text-4xl font-light mb-2 tracking-tight">
               <span className="hero-glass-text">{seatLabel} Seat</span>
             </h1>
-            <p className="text-muted-foreground font-light">
-              Secure your place in the Founding 100
-            </p>
+            <p className="text-muted-foreground font-light">Secure your place in the Founding 100</p>
           </div>
 
           <div className="grid lg:grid-cols-5 gap-8">
-            
             {/* Left: Form */}
             <div className="lg:col-span-3">
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(handleCheckout, (errors) => {
-                  console.log("[Checkout] Validation failed:", errors);
-                  const firstError = Object.values(errors)[0];
-                  if (firstError?.message) {
-                    toast({
-                      variant: "destructive",
-                      title: "Please complete all fields",
-                      description: String(firstError.message),
-                    });
-                  }
-                })} className="space-y-6">
-                  
-                  {/* Contact Details */}
+                <form
+                  onSubmit={form.handleSubmit(handleCheckout, (errors) => {
+                    const firstError = Object.values(errors)[0];
+                    if (firstError?.message) {
+                      toast({
+                        variant: "destructive",
+                        title: "Please complete all fields",
+                        description: String(firstError.message),
+                      });
+                    }
+                  })}
+                  className="space-y-6"
+                >
+                  {/* Your Details */}
                   <Card className="border-border/50">
                     <CardHeader className="pb-4">
                       <CardTitle className="text-lg font-medium">Your Details</CardTitle>
@@ -504,7 +440,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                           </FormItem>
                         )}
                       />
-                      
+
                       <FormField
                         control={form.control}
                         name="email"
@@ -518,7 +454,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                           </FormItem>
                         )}
                       />
-                      
+
                       <FormField
                         control={form.control}
                         name="phone"
@@ -549,23 +485,23 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                     </CardContent>
                   </Card>
 
-                  {/* Recipient Details - Show for multiple seats */}
+                  {/* Gift recipients (multi-seat) */}
                   {qty > 1 && (
                     <Card className="border-border/50 border-accent-gold/50 bg-accent-gold/5">
                       <CardHeader className="pb-4">
                         <CardTitle className="text-lg font-medium text-accent-gold">Gift Recipients</CardTitle>
                         <CardDescription className="text-sm">
-                          {qty > 1 ? `You're purchasing ${qty} seats: 1 for you + ${qty - 1} gift${qty > 2 ? 's' : ''}` : ''}
+                          You’re purchasing {qty} seats: 1 for you + {qty - 1} gift{qty > 2 ? "s" : ""}
                         </CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-6">
-                        {/* Seat 1: Your Seat */}
                         <div className="p-4 rounded-lg bg-muted/30 border border-border/50">
                           <h4 className="font-medium text-sm mb-2 text-foreground">Seat 1: Your Seat</h4>
-                          <p className="text-xs text-muted-foreground">{form.getValues("fullName") || "Your name"} ({form.getValues("email") || "your@email"})</p>
+                          <p className="text-xs text-muted-foreground">
+                            {form.getValues("fullName") || "Your name"} ({form.getValues("email") || "your@email"})
+                          </p>
                         </div>
-                        
-                        {/* Gift Seats: 2 onwards */}
+
                         {Array.from({ length: qty - 1 }).map((_, index) => (
                           <div key={index + 1} className="space-y-3 p-4 rounded-lg bg-accent-gold/5 border border-accent-gold/30">
                             <h4 className="font-medium text-sm text-accent-gold">Seat {index + 2}: Gift Recipient</h4>
@@ -603,14 +539,14 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                     </Card>
                   )}
 
-                  {/* Specimen Style Selection - 9 Cape Fynbos Styles */}
+                  {/* Specimen */}
                   <Card className="border-border/50">
                     <CardHeader className="pb-4">
                       <CardTitle className="text-lg font-medium">Choose Your Specimen Style</CardTitle>
                       <CardDescription className="text-sm">
                         Select from 9 Cape Fynbos styles — David will personally curate the finest specimen for your chosen style.
                         <span className="block text-xs text-muted-foreground mt-2">
-                          Not sure? Pick what appeals to you now — you can change your selection anytime from your dashboard before casting begins.
+                          Not sure? Pick what appeals now — you can change it anytime from your dashboard before casting begins.
                         </span>
                         <span className="block text-xs text-bronze mt-1">
                           Current season: {seasonInfo.name} ({seasonInfo.months})
@@ -628,23 +564,20 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                             return (
                               <SelectItem key={style.id} value={style.id}>
                                 <div className="flex items-center gap-2">
-                                  <span className={`w-2 h-2 rounded-full ${available ? 'bg-bronze' : 'bg-border'}`} />
+                                  <span className={`w-2 h-2 rounded-full ${available ? "bg-bronze" : "bg-border"}`} />
                                   <span>{style.name}</span>
-                                  {!available && (
-                                    <span className="text-xs text-muted-foreground ml-1">(Wait for season)</span>
-                                  )}
+                                  {!available && <span className="text-xs text-muted-foreground ml-1">(Wait for season)</span>}
                                 </div>
                               </SelectItem>
                             );
                           })}
                         </SelectContent>
                       </Select>
-                      
-                      {/* Selected specimen details */}
+
                       {selectedSpecimen && (
                         <div className="mt-3 p-3 bg-muted/30 rounded-lg border border-border/30">
                           <p className="text-xs text-muted-foreground">
-                            {specimenStyles.find(s => s.id === selectedSpecimen)?.description}
+                            {specimenStyles.find((s) => s.id === selectedSpecimen)?.description}
                           </p>
                           {!specimenCanCastNow && nextSeasonInfo && (
                             <div className="mt-2 flex items-center gap-2 text-xs text-amber-600 dark:text-amber-400">
@@ -656,40 +589,31 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                           )}
                         </div>
                       )}
-                      
+
                       <p className="text-xs text-muted-foreground mt-3">
                         Each specimen is cast from real organic matter at 700°C. Your choice will be documented in your certificate.
                       </p>
                     </CardContent>
                   </Card>
 
-                  {/* Cast Timing - Buy & Cast Now vs Buy & Wait */}
+                  {/* Cast timing */}
                   <Card className="border-border/50">
                     <CardHeader className="pb-4">
                       <CardTitle className="text-lg font-medium">Casting Timeline</CardTitle>
                       <CardDescription className="text-sm">
                         When should we cast your bronze?
-                        {selectedSpecimen && !specimenCanCastNow && (
-                          <span className="block text-xs text-amber-600 dark:text-amber-400 mt-1">
-                            Your selected specimen is not available for immediate casting
-                          </span>
-                        )}
                       </CardDescription>
                     </CardHeader>
                     <CardContent className="space-y-3">
-                      {/* Buy & Cast Now Option */}
-                      <div 
-                        className={`flex items-center gap-3 p-4 rounded-lg transition-all border ${
-                          !specimenCanCastNow && selectedSpecimen
-                            ? "opacity-50 cursor-not-allowed border-border/30 bg-muted/20"
-                            : purchaseMode === "cast_now" 
-                              ? `border-${seatColor}/60 bg-${seatColor}/5 cursor-pointer` 
-                              : "border-border/50 hover:border-border cursor-pointer"
-                        }`}
+                      <div
+                        className={`flex items-center gap-3 p-4 rounded-lg transition-all border ${!specimenCanCastNow && selectedSpecimen
+                          ? "opacity-50 cursor-not-allowed border-border/30 bg-muted/20"
+                          : purchaseMode === "cast_now"
+                            ? `border-${seatColor}/60 bg-${seatColor}/5 cursor-pointer`
+                            : "border-border/50 hover:border-border cursor-pointer"
+                          }`}
                         onClick={() => {
-                          if (specimenCanCastNow || !selectedSpecimen) {
-                            setPurchaseMode("cast_now");
-                          }
+                          if (specimenCanCastNow || !selectedSpecimen) setPurchaseMode("cast_now");
                         }}
                         data-testid="option-cast-now"
                       >
@@ -706,26 +630,21 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                             {specimenCanCastNow && selectedSpecimen && (
                               <span className="text-xs bg-bronze/20 text-bronze px-2 py-0.5 rounded">Available</span>
                             )}
-                            {!specimenCanCastNow && selectedSpecimen && (
-                              <span className="text-xs bg-muted text-muted-foreground px-2 py-0.5 rounded">Not in season</span>
-                            )}
                           </div>
                           <p className="text-xs text-muted-foreground">
-                            {specimenCanCastNow || !selectedSpecimen 
+                            {specimenCanCastNow || !selectedSpecimen
                               ? "Your specimen is in season — we'll begin casting soon"
-                              : `${specimenStyles.find(s => s.id === selectedSpecimen)?.name} peaks in ${nextSeasonInfo?.name || 'another season'}`
-                            }
+                              : `${specimenStyles.find((s) => s.id === selectedSpecimen)?.name} peaks in ${nextSeasonInfo?.name || "another season"
+                              }`}
                           </p>
                         </div>
                       </div>
 
-                      {/* Buy & Wait Option */}
-                      <div 
-                        className={`flex items-center gap-3 p-4 rounded-lg cursor-pointer transition-all border ${
-                          purchaseMode === "wait_for_season" 
-                            ? `border-${seatColor}/60 bg-${seatColor}/5` 
-                            : "border-border/50 hover:border-border"
-                        }`}
+                      <div
+                        className={`flex items-center gap-3 p-4 rounded-lg cursor-pointer transition-all border ${purchaseMode === "wait_for_season"
+                          ? `border-${seatColor}/60 bg-${seatColor}/5`
+                          : "border-border/50 hover:border-border"
+                          }`}
                         onClick={() => setPurchaseMode("wait_for_season")}
                         data-testid="option-wait-for-season"
                       >
@@ -749,7 +668,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                     </CardContent>
                   </Card>
 
-                  {/* Add-ons - FOUNDER ONLY */}
+                  {/* Founder add-ons */}
                   {seatType === "founder" && (
                     <Card className="border-border/50">
                       <CardHeader className="pb-4">
@@ -757,7 +676,6 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                         <CardDescription className="text-sm">Optional enhancements for your sculpture</CardDescription>
                       </CardHeader>
                       <CardContent className="space-y-6">
-                        {/* Patina Finish */}
                         <div className="space-y-3">
                           <div className="flex items-center justify-between">
                             <div>
@@ -767,11 +685,10 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                             <button
                               type="button"
                               onClick={() => setHasPatina(!hasPatina)}
-                              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${
-                                hasPatina
-                                  ? `bg-${seatColor}/20 border border-${seatColor}/40 text-${seatColor}`
-                                  : "bg-border/50 border border-border text-muted-foreground hover:bg-border"
-                              }`}
+                              className={`px-4 py-2 rounded-md text-sm font-medium transition-all ${hasPatina
+                                ? `bg-${seatColor}/20 border border-${seatColor}/40 text-${seatColor}`
+                                : "bg-border/50 border border-border text-muted-foreground hover:bg-border"
+                                }`}
                               data-testid="button-toggle-patina"
                             >
                               {hasPatina ? "Selected" : "Add R1,000"}
@@ -784,7 +701,6 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                           )}
                         </div>
 
-                        {/* Mounting Service */}
                         <div className="space-y-3">
                           <label className="text-sm font-medium block">Display Mounting</label>
                           <Select value={mountingType} onValueChange={setMountingType}>
@@ -804,7 +720,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                     </Card>
                   )}
 
-                  {/* Gift Message (only show when qty > 1, since gift recipients are already shown above) */}
+                  {/* Gift message (only when qty > 1) */}
                   {qty > 1 && (
                     <Card className="border-border/50">
                       <CardHeader className="pb-4">
@@ -818,7 +734,12 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                           render={({ field }) => (
                             <FormItem>
                               <FormControl>
-                                <Textarea {...field} data-testid="textarea-gift-message" className="min-h-20 text-sm" placeholder="Your message to the recipients..." />
+                                <Textarea
+                                  {...field}
+                                  data-testid="textarea-gift-message"
+                                  className="min-h-20 text-sm"
+                                  placeholder="Your message to the recipients..."
+                                />
                               </FormControl>
                             </FormItem>
                           )}
@@ -827,7 +748,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                     </Card>
                   )}
 
-                  {/* Promo Code - Optional */}
+                  {/* Promo */}
                   <Card className="border-border/50">
                     <CardHeader className="pb-4">
                       <CardTitle className="text-lg font-medium">Promo Code</CardTitle>
@@ -854,31 +775,29 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                       {validatedPromo?.valid && (
                         <p className="text-sm text-patina mt-2 flex items-center gap-1">
                           <Check className="w-4 h-4" />
-                          {validatedPromo.discount}% discount applied
+                          {validatedPromo.discount}% discount applied (applies to 1 seat)
                         </p>
                       )}
                     </CardContent>
                   </Card>
 
                   {/* Submit */}
-                  <Button 
-                    type="submit" 
-                    size="lg" 
+                  <Button
+                    type="submit"
+                    size="lg"
                     className="w-full btn-bronze py-6 text-base"
                     disabled={initiatePurchase.isPending || redeemPromo.isPending || loadingSeats || !selectedSpecimen}
                     data-testid="button-complete-purchase"
                   >
-                    {initiatePurchase.isPending || redeemPromo.isPending ? (
-                      "Processing..."
-                    ) : validatedPromo?.valid && validatedPromo.discount === 100 ? (
-                      "Claim Complimentary Seat"
-                    ) : paymentType === "reserve" ? (
-                      "Reserve My Seat (Free)"
-                    ) : paymentType === "deposit" ? (
-                      "Pay R1,000 Deposit"
-                    ) : (
-                      `Pay R${(totalPrice / 100).toLocaleString()}`
-                    )}
+                    {initiatePurchase.isPending || redeemPromo.isPending
+                      ? "Processing..."
+                      : validatedPromo?.valid && validatedPromo.discount === 100
+                        ? "Claim Complimentary Seat"
+                        : paymentType === "reserve"
+                          ? "Reserve My Seat (Free)"
+                          : paymentType === "deposit"
+                            ? "Pay R1,000 Deposit"
+                            : `Pay R${(totalPriceCents / 100).toLocaleString()}`}
                   </Button>
 
                   {!selectedSpecimen && (
@@ -897,24 +816,22 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                   <CardTitle className={`font-serif text-${seatColor}`}>{seatLabel} Seat</CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
-                  
                   {/* Price */}
                   <div>
-                    <div className="text-3xl font-light">
-                      R{(totalPrice / 100).toLocaleString()}
-                    </div>
-                    {discount > 0 && (
-                      <div className="text-sm text-muted-foreground line-through">
-                        R{(basePriceCents / 100).toLocaleString()}
+                    <div className="text-3xl font-light">R{(totalPriceCents / 100).toLocaleString()}</div>
+                    {discountAmountCents > 0 && (
+                      <div className="text-sm text-muted-foreground">
+                        <span className="line-through mr-2">
+                          R{(totalBasePriceCents / 100).toLocaleString()}
+                        </span>
+                        <span>– R{(discountAmountCents / 100).toLocaleString()} promo</span>
                       </div>
                     )}
                   </div>
 
-                  {/* What's Included */}
+                  {/* Included */}
                   <div className="pt-4 border-t border-border/30">
-                    <div className="text-xs uppercase tracking-wider text-muted-foreground mb-3">
-                      What's Included
-                    </div>
+                    <div className="text-xs uppercase tracking-wider text-muted-foreground mb-3">What's Included</div>
                     <ul className="space-y-2">
                       {benefits.map((benefit, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm">
@@ -923,10 +840,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                             {i === 0 && seatType === "founder" ? (
                               <>
                                 One-of-a-kind bronze casting (
-                                <span className="font-light value-gradient">
-                                  R25,000+ retail
-                                </span>
-                                )
+                                <span className="font-light value-gradient">R25,000+ retail</span>)
                               </>
                             ) : (
                               benefit
@@ -937,14 +851,12 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                     </ul>
                   </div>
 
-                  {/* After Purchase Note */}
+                  {/* After purchase */}
                   <div className="pt-4 border-t border-border/30">
-                    <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2">
-                      After Purchase
-                    </div>
+                    <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2">After Purchase</div>
                     <p className="text-xs text-muted-foreground">
-                      You'll choose your specimen style, mounting options, and add-ons from your dashboard. 
-                      Change anytime before we start casting.
+                      You'll choose your specimen style, mounting options, and add-ons from your dashboard. Change anytime
+                      before we start casting.
                     </p>
                   </div>
 
