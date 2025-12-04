@@ -648,6 +648,8 @@ export default function AdminPanel() {
 
   const totalRevenue = purchases?.reduce((sum, p) => sum + (p.status === "completed" ? p.amount : 0), 0) || 0;
   const completedPurchases = purchases?.filter((p) => p.status === "completed").length || 0;
+  const pendingPurchases = purchases?.filter((p) => p.status === "pending").length || 0;
+  const totalPurchases = purchases?.length || 0;
   const totalSeats = seats?.reduce((sum, s) => sum + s.sold, 0) || 0;
   const unusedPromoCodes = promoCodes?.filter((pc) => !pc.used).length || 0;
 
@@ -748,9 +750,14 @@ export default function AdminPanel() {
                 <Badge className="bg-patina text-white">Live</Badge>
               </div>
               <div className="text-3xl font-bold font-serif text-foreground mb-1">
-                {completedPurchases}
+                {totalPurchases}
               </div>
-              <div className="text-sm text-muted-foreground">Total Investors</div>
+              <div className="text-sm text-muted-foreground">
+                Total Purchases
+                {pendingPurchases > 0 && (
+                  <span className="text-accent-gold ml-1">({pendingPurchases} pending)</span>
+                )}
+              </div>
             </Card>
 
             <Card className="bg-card border-card-border p-6">
