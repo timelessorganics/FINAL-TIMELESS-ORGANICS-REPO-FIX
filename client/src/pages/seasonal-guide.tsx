@@ -104,6 +104,35 @@ export default function SeasonalGuide() {
           </div>
         </section>
 
+        {/* The Fynbos Year */}
+        <section className="space-y-6">
+          <h2 className="font-serif text-3xl font-bold">The Fynbos Year</h2>
+          <p className="text-muted-foreground">
+            A quick guide to what's showy when in the Western Cape (winter-rainfall region):
+          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {seasonalCalendar.map((season) => (
+              <Card key={season.season} className="hover-elevate">
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-bronze text-lg">{season.season}</CardTitle>
+                  <CardDescription className="text-xs">{season.months}</CardDescription>
+                </CardHeader>
+                <CardContent className="pt-0">
+                  <ul className="space-y-1 text-xs text-muted-foreground">
+                    {season.highlights.map((highlight, idx) => (
+                      <li key={idx} className="flex items-start gap-2">
+                        <span className="text-bronze mt-0.5">•</span>
+                        <span>{highlight}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </section>
+
         {/* Seasonal Availability Chart */}
         <section className="space-y-6">
           <div className="flex items-center gap-3">
@@ -321,35 +350,6 @@ export default function SeasonalGuide() {
                 </p>
               </CardContent>
             </Card>
-          </div>
-        </section>
-
-        {/* Seasonal Calendar */}
-        <section className="space-y-6">
-          <h2 className="font-serif text-3xl font-bold">The Fynbos Year</h2>
-          <p className="text-muted-foreground">
-            A quick guide to what's showy when in the Western Cape (winter-rainfall region):
-          </p>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {seasonalCalendar.map((season) => (
-              <Card key={season.season} className="hover-elevate">
-                <CardHeader className="pb-2">
-                  <CardTitle className="text-bronze text-lg">{season.season}</CardTitle>
-                  <CardDescription className="text-xs">{season.months}</CardDescription>
-                </CardHeader>
-                <CardContent className="pt-0">
-                  <ul className="space-y-1 text-xs text-muted-foreground">
-                    {season.highlights.map((highlight, idx) => (
-                      <li key={idx} className="flex items-start gap-2">
-                        <span className="text-bronze mt-0.5">•</span>
-                        <span>{highlight}</span>
-                      </li>
-                    ))}
-                  </ul>
-                </CardContent>
-              </Card>
-            ))}
           </div>
         </section>
 
