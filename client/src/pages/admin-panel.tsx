@@ -104,42 +104,42 @@ export default function AdminPanel() {
 
   const { data: seats } = useQuery<Seat[]>({
     queryKey: ["/api/admin/seats"],
-    enabled: false,
+    enabled: activeTab === "overview",
   });
 
   const { data: purchases } = useQuery<Purchase[]>({
     queryKey: ["/api/admin/purchases"],
-    enabled: false,
+    enabled: activeTab === "overview",
   });
 
   const { data: codes } = useQuery<Code[]>({
     queryKey: ["/api/admin/codes"],
-    enabled: false,
+    enabled: activeTab === "overview",
   });
 
   const { data: promoCodes } = useQuery<PromoCode[]>({
     queryKey: ["/api/admin/promo-codes"],
-    enabled: false,
+    enabled: activeTab === "overview",
   });
 
   const { data: customSpecimens } = useQuery<Purchase[]>({
     queryKey: ["/api/admin/custom-specimens"],
-    enabled: false,
+    enabled: activeTab === "specimens",
   });
 
   const { data: productsList } = useQuery<Product[]>({
     queryKey: ["/api/admin/products"],
-    enabled: false,
+    enabled: activeTab === "products",
   });
 
   const { data: auctionsList } = useQuery<Auction[]>({
     queryKey: ["/api/admin/auctions"],
-    enabled: false,
+    enabled: activeTab === "auctions",
   });
 
   const { data: workshopDates } = useQuery<any[]>({
     queryKey: ["/api/admin/workshops"],
-    enabled: false,
+    enabled: activeTab === "workshops",
   });
 
   // Manual holds - admin holds seats for phone/text requests
