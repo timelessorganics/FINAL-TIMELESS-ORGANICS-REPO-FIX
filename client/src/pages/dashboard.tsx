@@ -121,18 +121,21 @@ const SPECIMEN_OPTIONS = [
 ];
 
 const PATINA_OPTIONS = [
-  { value: "natural", label: "Natural Bronze", description: "Classic golden-brown that develops over time" },
-  { value: "antique_copper", label: "Antique Copper", description: "Warm reddish-brown patina" },
-  { value: "verdigris", label: "Verdigris Green", description: "Blue-green oxidized finish" },
-  { value: "custom", label: "Custom Aging", description: "Discuss with David for unique finish" },
+  { value: "natural", label: "Natural Bronze", description: "Classic golden-brown that develops over time", priceCents: 100000 },
+  { value: "antique_copper", label: "Antique Copper", description: "Warm reddish-brown patina", priceCents: 100000 },
+  { value: "verdigris", label: "Verdigris Green", description: "Blue-green oxidized finish", priceCents: 120000 },
+  { value: "custom", label: "Custom Aging", description: "Discuss with David for unique finish", priceCents: 150000 },
 ];
 
-const MOUNTING_OPTIONS: { value: "none" | "wall" | "base" | "custom"; label: string; description: string }[] = [
-  { value: "none", label: "No mounting", description: "Display on shelf or mantle" },
-  { value: "wall", label: "Wall mount", description: "Stainless steel hardware (+R1,000 deposit)" },
-  { value: "base", label: "Display base", description: "Wood or slate base (+R1,000 deposit)" },
-  { value: "custom", label: "Custom installation", description: "Discuss with David (+R1,000 deposit)" },
+const MOUNTING_OPTIONS: { value: "none" | "wall" | "base" | "custom"; label: string; description: string; priceCents: number }[] = [
+  { value: "none", label: "No mounting", description: "Display on shelf or mantle", priceCents: 0 },
+  { value: "wall", label: "Wall mount", description: "Stainless steel hardware", priceCents: 150000 },
+  { value: "base", label: "Display base", description: "Wood or slate base", priceCents: 80000 },
+  { value: "custom", label: "Custom installation", description: "Discuss with David", priceCents: 120000 },
 ];
+
+// Helper to format price
+const formatPrice = (cents: number) => `R${(cents / 100).toLocaleString('en-ZA', { minimumFractionDigits: 0 })}`;
 
 function CustomizeExtras({ purchase }: { purchase: Purchase & { codes: Code[] } }) {
   const { toast } = useToast();
