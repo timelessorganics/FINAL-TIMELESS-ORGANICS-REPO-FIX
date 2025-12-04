@@ -1,0 +1,1001 @@
+2025-12-04T14:08:34.076565370Z [err]    routine: 'enum_in'
+2025-12-04T14:08:34.076569341Z [err]  }
+2025-12-04T14:08:34.193674232Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:34.219206805Z [inf]  [Regenerate] Generating codes for completed purchase ffe12db5-05bb-414c-9ea7-6ef65276d1c4
+2025-12-04T14:08:34.247090858Z [err]  [Regenerate] Error processing purchase ffe12db5-05bb-414c-9ea7-6ef65276d1c4: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:34.247092333Z [err]    internalPosition: undefined,
+2025-12-04T14:08:34.247102823Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:34.247109916Z [err]    internalQuery: undefined,
+2025-12-04T14:08:34.247111814Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:34.247119619Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:34.247120099Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:34.247127837Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:34.247129352Z [err]    schema: undefined,
+2025-12-04T14:08:34.247134836Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:34.247140325Z [err]    table: undefined,
+2025-12-04T14:08:34.247144130Z [err]    length: 141,
+2025-12-04T14:08:34.247149010Z [err]    column: undefined,
+2025-12-04T14:08:34.247155472Z [err]    severity: 'ERROR',
+2025-12-04T14:08:34.247161152Z [err]    dataType: undefined,
+2025-12-04T14:08:34.247167363Z [err]    code: '22P02',
+2025-12-04T14:08:34.247169062Z [err]    constraint: undefined,
+2025-12-04T14:08:34.247176539Z [err]    detail: undefined,
+2025-12-04T14:08:34.247179024Z [err]    file: 'enum.c',
+2025-12-04T14:08:34.247186812Z [err]    hint: undefined,
+2025-12-04T14:08:34.247189268Z [err]    line: '129',
+2025-12-04T14:08:34.247196654Z [err]    position: undefined,
+2025-12-04T14:08:34.247198188Z [err]    routine: 'enum_in'
+2025-12-04T14:08:34.247205009Z [err]  }
+2025-12-04T14:08:34.398475847Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:35.029631402Z [inf]  [Regenerate] Generating codes for completed purchase f171d374-d965-4822-86ef-86e864c4d84c
+2025-12-04T14:08:35.029638562Z [err]  [Regenerate] Error processing purchase f171d374-d965-4822-86ef-86e864c4d84c: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:35.029643984Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:35.029650879Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:35.029680008Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:35.029685354Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:35.029690582Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:35.029695473Z [err]    length: 141,
+2025-12-04T14:08:35.029700152Z [err]    severity: 'ERROR',
+2025-12-04T14:08:35.029707327Z [err]    code: '22P02',
+2025-12-04T14:08:35.029712256Z [err]    detail: undefined,
+2025-12-04T14:08:35.029718763Z [err]    hint: undefined,
+2025-12-04T14:08:35.029725381Z [err]    position: undefined,
+2025-12-04T14:08:35.029730282Z [err]    internalPosition: undefined,
+2025-12-04T14:08:35.029734727Z [err]    internalQuery: undefined,
+2025-12-04T14:08:35.029739251Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:35.029743242Z [err]    schema: undefined,
+2025-12-04T14:08:35.029747421Z [err]    table: undefined,
+2025-12-04T14:08:35.029756341Z [err]    column: undefined,
+2025-12-04T14:08:35.029760244Z [err]    dataType: undefined,
+2025-12-04T14:08:35.029765167Z [err]    constraint: undefined,
+2025-12-04T14:08:35.029769868Z [err]    file: 'enum.c',
+2025-12-04T14:08:35.029773886Z [err]    line: '129',
+2025-12-04T14:08:35.029778355Z [err]    routine: 'enum_in'
+2025-12-04T14:08:35.029782363Z [err]  }
+2025-12-04T14:08:35.033955501Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:35.033962958Z [inf]  [Regenerate] Generating codes for completed purchase c1653ea3-b915-4ccb-93f6-71f04a49cc79
+2025-12-04T14:08:35.033971310Z [err]  [Regenerate] Error processing purchase c1653ea3-b915-4ccb-93f6-71f04a49cc79: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:35.033980111Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:35.033987826Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:35.033994473Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:35.034001390Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:35.034009892Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:35.034023568Z [err]    length: 141,
+2025-12-04T14:08:35.034030864Z [err]    severity: 'ERROR',
+2025-12-04T14:08:35.034037238Z [err]    code: '22P02',
+2025-12-04T14:08:35.034043087Z [err]    detail: undefined,
+2025-12-04T14:08:35.034049648Z [err]    hint: undefined,
+2025-12-04T14:08:35.034056285Z [err]    position: undefined,
+2025-12-04T14:08:35.034065290Z [err]    internalPosition: undefined,
+2025-12-04T14:08:35.034072201Z [err]    internalQuery: undefined,
+2025-12-04T14:08:35.034079928Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:35.034086259Z [err]    schema: undefined,
+2025-12-04T14:08:35.034096497Z [err]    table: undefined,
+2025-12-04T14:08:35.034104048Z [err]    column: undefined,
+2025-12-04T14:08:35.034111801Z [err]    dataType: undefined,
+2025-12-04T14:08:35.034120600Z [err]    constraint: undefined,
+2025-12-04T14:08:35.034126938Z [err]    file: 'enum.c',
+2025-12-04T14:08:35.034133683Z [err]    line: '129',
+2025-12-04T14:08:35.034140054Z [err]    routine: 'enum_in'
+2025-12-04T14:08:35.036923955Z [err]    constraint: undefined,
+2025-12-04T14:08:35.036931744Z [err]    file: 'enum.c',
+2025-12-04T14:08:35.036938726Z [err]    line: '129',
+2025-12-04T14:08:35.036958763Z [inf]  [Regenerate] Generating codes for completed purchase 8dd1d1c2-0c58-409b-95d7-4aae64826f59
+2025-12-04T14:08:35.036960145Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:35.036968822Z [err]  [Regenerate] Error processing purchase 8dd1d1c2-0c58-409b-95d7-4aae64826f59: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:35.036968828Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:35.036975803Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:35.036981845Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:35.036982747Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:35.036992416Z [err]    length: 141,
+2025-12-04T14:08:35.036996948Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:35.036997625Z [err]    schema: undefined,
+2025-12-04T14:08:35.037004857Z [err]    severity: 'ERROR',
+2025-12-04T14:08:35.037015158Z [err]    table: undefined,
+2025-12-04T14:08:35.037019217Z [err]  }
+2025-12-04T14:08:35.037028841Z [err]    code: '22P02',
+2025-12-04T14:08:35.037029924Z [err]    column: undefined,
+2025-12-04T14:08:35.037033974Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:35.037044951Z [err]    detail: undefined,
+2025-12-04T14:08:35.037045378Z [err]    dataType: undefined,
+2025-12-04T14:08:35.037055557Z [err]    hint: undefined,
+2025-12-04T14:08:35.037062658Z [err]    position: undefined,
+2025-12-04T14:08:35.037074031Z [err]    internalPosition: undefined,
+2025-12-04T14:08:35.037081238Z [err]    internalQuery: undefined,
+2025-12-04T14:08:35.043122524Z [err]    routine: 'enum_in'
+2025-12-04T14:08:35.043130292Z [err]  }
+2025-12-04T14:08:35.043136079Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:35.043142050Z [inf]  [Regenerate] Generating codes for completed purchase 39bcdec4-d03e-42fd-9484-86cc0e95c523
+2025-12-04T14:08:35.060384467Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:35.060395564Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:35.060408849Z [err]    length: 141,
+2025-12-04T14:08:35.060409371Z [err]    column: undefined,
+2025-12-04T14:08:35.060414284Z [err]  }
+2025-12-04T14:08:35.060420449Z [err]    severity: 'ERROR',
+2025-12-04T14:08:35.060422779Z [err]    dataType: undefined,
+2025-12-04T14:08:35.060427864Z [err]    code: '22P02',
+2025-12-04T14:08:35.060433964Z [err]    constraint: undefined,
+2025-12-04T14:08:35.060434205Z [err]    detail: undefined,
+2025-12-04T14:08:35.060445782Z [err]    hint: undefined,
+2025-12-04T14:08:35.060451938Z [err]    position: undefined,
+2025-12-04T14:08:35.060457530Z [err]    file: 'enum.c',
+2025-12-04T14:08:35.060471292Z [err]    internalPosition: undefined,
+2025-12-04T14:08:35.060473742Z [err]    line: '129',
+2025-12-04T14:08:35.060486374Z [err]    routine: 'enum_in'
+2025-12-04T14:08:35.060490871Z [err]    internalQuery: undefined,
+2025-12-04T14:08:35.060508551Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:35.060508919Z [err]  [Regenerate] Error processing purchase 39bcdec4-d03e-42fd-9484-86cc0e95c523: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:35.060516811Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:35.060523401Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:35.060529651Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:35.060594073Z [err]    schema: undefined,
+2025-12-04T14:08:35.060601400Z [err]    table: undefined,
+2025-12-04T14:08:35.216169947Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:35.244430543Z [inf]  [Regenerate] Generating codes for completed purchase 0742c545-82bb-4bbb-b6db-6a8587be5802
+2025-12-04T14:08:35.270386998Z [err]    file: 'enum.c',
+2025-12-04T14:08:35.270387703Z [err]  [Regenerate] Error processing purchase 0742c545-82bb-4bbb-b6db-6a8587be5802: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:35.270402956Z [err]    line: '129',
+2025-12-04T14:08:35.270403189Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:35.270414653Z [err]    routine: 'enum_in'
+2025-12-04T14:08:35.270415336Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:35.270419906Z [err]    internalPosition: undefined,
+2025-12-04T14:08:35.270426515Z [err]  }
+2025-12-04T14:08:35.270426775Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:35.270434597Z [err]    internalQuery: undefined,
+2025-12-04T14:08:35.270439595Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:35.270449485Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:35.270452157Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:35.270464808Z [err]    schema: undefined,
+2025-12-04T14:08:35.270465007Z [err]    length: 141,
+2025-12-04T14:08:35.270479807Z [err]    table: undefined,
+2025-12-04T14:08:35.270480342Z [err]    severity: 'ERROR',
+2025-12-04T14:08:35.270495428Z [err]    code: '22P02',
+2025-12-04T14:08:35.270495852Z [err]    column: undefined,
+2025-12-04T14:08:35.270511657Z [err]    detail: undefined,
+2025-12-04T14:08:35.270512518Z [err]    dataType: undefined,
+2025-12-04T14:08:35.270521342Z [err]    hint: undefined,
+2025-12-04T14:08:35.270530415Z [err]    constraint: undefined,
+2025-12-04T14:08:35.270532309Z [err]    position: undefined,
+2025-12-04T14:08:35.420268308Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:36.187131642Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:36.187140250Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:36.187143447Z [err]    detail: undefined,
+2025-12-04T14:08:36.187150224Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:36.187157611Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:36.187170304Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:36.187184273Z [err]    length: 141,
+2025-12-04T14:08:36.187193669Z [err]    severity: 'ERROR',
+2025-12-04T14:08:36.187201082Z [err]    code: '22P02',
+2025-12-04T14:08:36.187209948Z [inf]  [Regenerate] Generating codes for completed purchase ae3b5ba1-a306-4f72-afd6-8b207a9f622c
+2025-12-04T14:08:36.187218496Z [err]  [Regenerate] Error processing purchase ae3b5ba1-a306-4f72-afd6-8b207a9f622c: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:36.192776162Z [err]    hint: undefined,
+2025-12-04T14:08:36.192790832Z [err]    position: undefined,
+2025-12-04T14:08:36.192799016Z [err]    internalPosition: undefined,
+2025-12-04T14:08:36.192805675Z [err]    internalQuery: undefined,
+2025-12-04T14:08:36.192814877Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:36.192823102Z [err]    schema: undefined,
+2025-12-04T14:08:36.192830482Z [err]    table: undefined,
+2025-12-04T14:08:36.192836584Z [err]    column: undefined,
+2025-12-04T14:08:36.192843732Z [err]    dataType: undefined,
+2025-12-04T14:08:36.192850195Z [err]    constraint: undefined,
+2025-12-04T14:08:36.192856251Z [err]    file: 'enum.c',
+2025-12-04T14:08:36.192862874Z [err]    line: '129',
+2025-12-04T14:08:36.192869555Z [err]    routine: 'enum_in'
+2025-12-04T14:08:36.192875417Z [err]  }
+2025-12-04T14:08:36.192997797Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:36.193006777Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:36.193021032Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:36.193030017Z [inf]  [Regenerate] Generating codes for completed purchase 7164494f-6106-4d34-a7d1-4057f61403fb
+2025-12-04T14:08:36.193037563Z [err]  [Regenerate] Error processing purchase 7164494f-6106-4d34-a7d1-4057f61403fb: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:36.193043914Z [err]    constraint: undefined,
+2025-12-04T14:08:36.193050946Z [err]    file: 'enum.c',
+2025-12-04T14:08:36.193056543Z [err]    line: '129',
+2025-12-04T14:08:36.193067464Z [err]    severity: 'ERROR',
+2025-12-04T14:08:36.193077014Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:36.193077660Z [err]    code: '22P02',
+2025-12-04T14:08:36.193089121Z [err]    detail: undefined,
+2025-12-04T14:08:36.193093313Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:36.193097120Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:36.193101076Z [err]    internalQuery: undefined,
+2025-12-04T14:08:36.193106990Z [err]    hint: undefined,
+2025-12-04T14:08:36.193113316Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:36.193116011Z [err]    length: 141,
+2025-12-04T14:08:36.193117270Z [err]    position: undefined,
+2025-12-04T14:08:36.193124514Z [err]    schema: undefined,
+2025-12-04T14:08:36.193127891Z [err]    internalPosition: undefined,
+2025-12-04T14:08:36.193133105Z [err]    table: undefined,
+2025-12-04T14:08:36.193140832Z [err]    column: undefined,
+2025-12-04T14:08:36.193150035Z [err]    dataType: undefined,
+2025-12-04T14:08:36.193165005Z [err]  }
+2025-12-04T14:08:36.193325706Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:36.193333088Z [inf]  [Regenerate] Generating codes for completed purchase 31844ad0-4cae-4276-a6a6-daecce52a4d0
+2025-12-04T14:08:36.193339082Z [err]  [Regenerate] Error processing purchase 31844ad0-4cae-4276-a6a6-daecce52a4d0: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:36.193344917Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:36.193350877Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:36.193358532Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:36.193365012Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:36.193371063Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:36.193376607Z [err]    length: 141,
+2025-12-04T14:08:36.193382491Z [err]    severity: 'ERROR',
+2025-12-04T14:08:36.193388754Z [err]    code: '22P02',
+2025-12-04T14:08:36.193398596Z [err]    detail: undefined,
+2025-12-04T14:08:36.193405090Z [err]    hint: undefined,
+2025-12-04T14:08:36.193410742Z [err]    position: undefined,
+2025-12-04T14:08:36.193426678Z [err]    internalPosition: undefined,
+2025-12-04T14:08:36.193454316Z [err]    internalQuery: undefined,
+2025-12-04T14:08:36.193460658Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:36.193467021Z [err]    schema: undefined,
+2025-12-04T14:08:36.193474854Z [err]    table: undefined,
+2025-12-04T14:08:36.193481817Z [err]    column: undefined,
+2025-12-04T14:08:36.193488248Z [err]    dataType: undefined,
+2025-12-04T14:08:36.193495477Z [err]    constraint: undefined,
+2025-12-04T14:08:36.193502185Z [err]    file: 'enum.c',
+2025-12-04T14:08:36.193509486Z [err]    line: '129',
+2025-12-04T14:08:36.193516167Z [err]    routine: 'enum_in'
+2025-12-04T14:08:36.199585904Z [err]    routine: 'enum_in'
+2025-12-04T14:08:36.199592177Z [err]  }
+2025-12-04T14:08:36.199598695Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:36.199605889Z [inf]  [Regenerate] Generating codes for completed purchase d6701292-b36f-42ad-b6ef-8ab9e2f6f095
+2025-12-04T14:08:36.199612080Z [err]  [Regenerate] Error processing purchase d6701292-b36f-42ad-b6ef-8ab9e2f6f095: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:36.199618251Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:36.199624394Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:36.199630238Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:36.199635815Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:36.199642363Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:36.199648337Z [err]    length: 141,
+2025-12-04T14:08:36.199656169Z [err]    severity: 'ERROR',
+2025-12-04T14:08:36.199662944Z [err]    code: '22P02',
+2025-12-04T14:08:36.199669149Z [err]    detail: undefined,
+2025-12-04T14:08:36.199675204Z [err]    hint: undefined,
+2025-12-04T14:08:36.199682857Z [err]    position: undefined,
+2025-12-04T14:08:36.199688629Z [err]    internalPosition: undefined,
+2025-12-04T14:08:36.199694421Z [err]    internalQuery: undefined,
+2025-12-04T14:08:36.199700814Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:36.199707477Z [err]    schema: undefined,
+2025-12-04T14:08:36.199713467Z [err]    table: undefined,
+2025-12-04T14:08:36.199718548Z [err]    column: undefined,
+2025-12-04T14:08:36.199728904Z [err]    dataType: undefined,
+2025-12-04T14:08:36.199734892Z [err]    constraint: undefined,
+2025-12-04T14:08:36.199741042Z [err]    file: 'enum.c',
+2025-12-04T14:08:36.200133930Z [err]    line: '129',
+2025-12-04T14:08:36.200137749Z [err]    routine: 'enum_in'
+2025-12-04T14:08:36.200141429Z [err]  }
+2025-12-04T14:08:36.259974886Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:36.283053165Z [inf]  [Regenerate] Generating codes for completed purchase ede8154b-5016-4b5c-a8c3-82aa07ae526d
+2025-12-04T14:08:36.313571719Z [err]  [Regenerate] Error processing purchase ede8154b-5016-4b5c-a8c3-82aa07ae526d: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:36.313582072Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:36.313586285Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:36.313590667Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:36.313594740Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:36.313598758Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:36.313602804Z [err]    length: 141,
+2025-12-04T14:08:36.313606621Z [err]    severity: 'ERROR',
+2025-12-04T14:08:36.313613719Z [err]    code: '22P02',
+2025-12-04T14:08:36.313617953Z [err]    detail: undefined,
+2025-12-04T14:08:36.313621586Z [err]    hint: undefined,
+2025-12-04T14:08:36.313625195Z [err]    position: undefined,
+2025-12-04T14:08:36.313629249Z [err]    internalPosition: undefined,
+2025-12-04T14:08:36.313632936Z [err]    internalQuery: undefined,
+2025-12-04T14:08:36.313637038Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:36.313641085Z [err]    schema: undefined,
+2025-12-04T14:08:36.313649135Z [err]    table: undefined,
+2025-12-04T14:08:36.313654977Z [err]    column: undefined,
+2025-12-04T14:08:36.313659760Z [err]    dataType: undefined,
+2025-12-04T14:08:36.313665236Z [err]    constraint: undefined,
+2025-12-04T14:08:36.313670978Z [err]    file: 'enum.c',
+2025-12-04T14:08:36.313677365Z [err]    line: '129',
+2025-12-04T14:08:36.313682879Z [err]    routine: 'enum_in'
+2025-12-04T14:08:36.313687972Z [err]  }
+2025-12-04T14:08:36.904837891Z [err]  [Regenerate] Error processing purchase 9ce4163a-f1c4-49e3-8926-ed8c3ed71a89: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:36.904842863Z [err]    code: '22P02',
+2025-12-04T14:08:36.904849492Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:36.904853302Z [err]    detail: undefined,
+2025-12-04T14:08:36.904860551Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:36.904863349Z [err]    hint: undefined,
+2025-12-04T14:08:36.904868622Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:36.904872480Z [err]    position: undefined,
+2025-12-04T14:08:36.904883606Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:36.904890839Z [err]    line: '129',
+2025-12-04T14:08:36.904892625Z [inf]  [Regenerate] Generating codes for completed purchase bc20e365-a2b0-4f01-96b1-0a9f0d4b5e46
+2025-12-04T14:08:36.904892676Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:36.904895409Z [err]  }
+2025-12-04T14:08:36.904902828Z [err]  [Regenerate] Error processing purchase bc20e365-a2b0-4f01-96b1-0a9f0d4b5e46: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:36.904904788Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:36.904907320Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:36.904911888Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:36.904913837Z [inf]  [Regenerate] Generating codes for completed purchase 9ce4163a-f1c4-49e3-8926-ed8c3ed71a89
+2025-12-04T14:08:36.904918976Z [err]    length: 141,
+2025-12-04T14:08:36.904922293Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:36.904926550Z [err]    internalPosition: undefined,
+2025-12-04T14:08:36.904929270Z [err]    severity: 'ERROR',
+2025-12-04T14:08:36.904929819Z [err]    dataType: undefined,
+2025-12-04T14:08:36.904932945Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:36.904938784Z [err]    internalQuery: undefined,
+2025-12-04T14:08:36.904939579Z [err]    constraint: undefined,
+2025-12-04T14:08:36.904948896Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:36.904949078Z [err]    file: 'enum.c',
+2025-12-04T14:08:36.904949770Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:36.904959143Z [err]    schema: undefined,
+2025-12-04T14:08:36.904960395Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:36.904966766Z [err]    table: undefined,
+2025-12-04T14:08:36.904969004Z [err]    length: 141,
+2025-12-04T14:08:36.904978158Z [err]    severity: 'ERROR',
+2025-12-04T14:08:36.904979475Z [err]    column: undefined,
+2025-12-04T14:08:36.904986012Z [err]    code: '22P02',
+2025-12-04T14:08:36.904993099Z [err]    detail: undefined,
+2025-12-04T14:08:36.904999461Z [err]    hint: undefined,
+2025-12-04T14:08:36.905005250Z [err]    position: undefined,
+2025-12-04T14:08:36.905011612Z [err]    internalPosition: undefined,
+2025-12-04T14:08:36.905019575Z [err]    internalQuery: undefined,
+2025-12-04T14:08:36.905025954Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:36.905032588Z [err]    schema: undefined,
+2025-12-04T14:08:36.905039137Z [err]    table: undefined,
+2025-12-04T14:08:36.905045227Z [err]    column: undefined,
+2025-12-04T14:08:36.905051359Z [err]    dataType: undefined,
+2025-12-04T14:08:36.905057700Z [err]    constraint: undefined,
+2025-12-04T14:08:36.905064760Z [err]    file: 'enum.c',
+2025-12-04T14:08:36.905071651Z [err]    line: '129',
+2025-12-04T14:08:36.905077317Z [err]    routine: 'enum_in'
+2025-12-04T14:08:36.907792844Z [inf]  [Regenerate] Generating codes for completed purchase d587908d-865b-4d06-a47f-1572ab824f99
+2025-12-04T14:08:36.908848334Z [err]    routine: 'enum_in'
+2025-12-04T14:08:36.908855834Z [err]  }
+2025-12-04T14:08:36.908863082Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:36.937108419Z [err]  [Regenerate] Error processing purchase d587908d-865b-4d06-a47f-1572ab824f99: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:36.937112565Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:36.937118230Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:36.937124026Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:36.937137539Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:36.937143596Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:36.937149595Z [err]    length: 141,
+2025-12-04T14:08:36.937155648Z [err]    severity: 'ERROR',
+2025-12-04T14:08:36.937161162Z [err]    code: '22P02',
+2025-12-04T14:08:36.937165461Z [err]    detail: undefined,
+2025-12-04T14:08:36.937169382Z [err]    hint: undefined,
+2025-12-04T14:08:36.937173851Z [err]    position: undefined,
+2025-12-04T14:08:36.937179127Z [err]    internalPosition: undefined,
+2025-12-04T14:08:36.937183009Z [err]    internalQuery: undefined,
+2025-12-04T14:08:36.937187251Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:36.937191313Z [err]    schema: undefined,
+2025-12-04T14:08:36.937195553Z [err]    table: undefined,
+2025-12-04T14:08:36.937199936Z [err]    column: undefined,
+2025-12-04T14:08:36.937204206Z [err]    dataType: undefined,
+2025-12-04T14:08:36.937208105Z [err]    constraint: undefined,
+2025-12-04T14:08:36.937211880Z [err]    file: 'enum.c',
+2025-12-04T14:08:36.937217064Z [err]    line: '129',
+2025-12-04T14:08:36.937222797Z [err]    routine: 'enum_in'
+2025-12-04T14:08:36.937227060Z [err]  }
+2025-12-04T14:08:37.090892303Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:37.118515996Z [inf]  [Regenerate] Generating codes for completed purchase f367f587-8adf-4415-b019-15d23504b1ad
+2025-12-04T14:08:37.142142460Z [err]    length: 141,
+2025-12-04T14:08:37.142162638Z [err]    severity: 'ERROR',
+2025-12-04T14:08:37.142173384Z [err]    code: '22P02',
+2025-12-04T14:08:37.142183146Z [err]    detail: undefined,
+2025-12-04T14:08:37.142192062Z [err]    hint: undefined,
+2025-12-04T14:08:37.142201795Z [err]    position: undefined,
+2025-12-04T14:08:37.142210075Z [err]    internalPosition: undefined,
+2025-12-04T14:08:37.142218923Z [err]    internalQuery: undefined,
+2025-12-04T14:08:37.142226483Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:37.142235202Z [err]    schema: undefined,
+2025-12-04T14:08:37.142243850Z [err]  [Regenerate] Error processing purchase f367f587-8adf-4415-b019-15d23504b1ad: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:37.142252042Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:37.142255071Z [err]    table: undefined,
+2025-12-04T14:08:37.142266999Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:37.142270659Z [err]    column: undefined,
+2025-12-04T14:08:37.142277171Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:37.142286914Z [err]    dataType: undefined,
+2025-12-04T14:08:37.142290034Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:37.142302827Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:37.142304047Z [err]    constraint: undefined,
+2025-12-04T14:08:37.142315825Z [err]    file: 'enum.c',
+2025-12-04T14:08:37.142322995Z [err]    line: '129',
+2025-12-04T14:08:37.142329835Z [err]    routine: 'enum_in'
+2025-12-04T14:08:37.142337780Z [err]  }
+2025-12-04T14:08:37.305691133Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:37.334880221Z [inf]  [Regenerate] Generating codes for completed purchase a2852065-3433-4686-b10e-7f1a4bc02e0e
+2025-12-04T14:08:37.357709061Z [err]  [Regenerate] Error processing purchase a2852065-3433-4686-b10e-7f1a4bc02e0e: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:37.357715361Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:37.357724795Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:37.357730339Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:37.357736817Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:37.357741429Z [err]    code: '22P02',
+2025-12-04T14:08:37.357745687Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:37.357753155Z [err]    length: 141,
+2025-12-04T14:08:37.357753767Z [err]    detail: undefined,
+2025-12-04T14:08:37.357761597Z [err]    severity: 'ERROR',
+2025-12-04T14:08:37.357763521Z [err]    hint: undefined,
+2025-12-04T14:08:37.357772343Z [err]    position: undefined,
+2025-12-04T14:08:37.357777970Z [err]    internalPosition: undefined,
+2025-12-04T14:08:37.357784040Z [err]    internalQuery: undefined,
+2025-12-04T14:08:37.357789989Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:37.357796636Z [err]    schema: undefined,
+2025-12-04T14:08:37.357802879Z [err]    table: undefined,
+2025-12-04T14:08:37.357809621Z [err]    column: undefined,
+2025-12-04T14:08:37.357836993Z [err]    dataType: undefined,
+2025-12-04T14:08:37.357842635Z [err]    constraint: undefined,
+2025-12-04T14:08:37.357848002Z [err]    file: 'enum.c',
+2025-12-04T14:08:37.357855280Z [err]    line: '129',
+2025-12-04T14:08:37.358160948Z [err]    routine: 'enum_in'
+2025-12-04T14:08:37.358168777Z [err]  }
+2025-12-04T14:08:38.104610599Z [err]    line: '129',
+2025-12-04T14:08:38.104623997Z [err]    position: undefined,
+2025-12-04T14:08:38.104629947Z [err]    column: undefined,
+2025-12-04T14:08:38.104633168Z [err]    schema: undefined,
+2025-12-04T14:08:38.104635862Z [err]    length: 141,
+2025-12-04T14:08:38.104637473Z [err]    internalPosition: undefined,
+2025-12-04T14:08:38.104643000Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:38.104643403Z [err]    dataType: undefined,
+2025-12-04T14:08:38.104647284Z [err]    table: undefined,
+2025-12-04T14:08:38.104655599Z [inf]  [Regenerate] Generating codes for completed purchase 7d3ed19a-e1bb-443f-be58-35586b0d17d0
+2025-12-04T14:08:38.104656841Z [err]    code: '22P02',
+2025-12-04T14:08:38.104657156Z [err]    severity: 'ERROR',
+2025-12-04T14:08:38.104666580Z [err]    constraint: undefined,
+2025-12-04T14:08:38.104668028Z [err]  [Regenerate] Error processing purchase 7d3ed19a-e1bb-443f-be58-35586b0d17d0: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:38.104668820Z [err]    internalQuery: undefined,
+2025-12-04T14:08:38.104670410Z [err]    detail: undefined,
+2025-12-04T14:08:38.104678289Z [err]    file: 'enum.c',
+2025-12-04T14:08:38.104678472Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:38.104680417Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:38.104683109Z [err]    hint: undefined,
+2025-12-04T14:08:38.104687426Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:38.104694587Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:38.104700150Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:38.104702874Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:38.104711784Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:38.104712452Z [inf]  [Regenerate] Generating codes for completed purchase a220c8bd-a806-428c-a84b-a574313bb3fd
+2025-12-04T14:08:38.104715296Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:38.104719703Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:38.104722480Z [err]    length: 141,
+2025-12-04T14:08:38.104724296Z [err]  [Regenerate] Error processing purchase a220c8bd-a806-428c-a84b-a574313bb3fd: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:38.104729451Z [err]  }
+2025-12-04T14:08:38.104730239Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:38.104732320Z [err]    severity: 'ERROR',
+2025-12-04T14:08:38.104735322Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:38.104740086Z [err]    code: '22P02',
+2025-12-04T14:08:38.104744318Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:38.104752646Z [err]    detail: undefined,
+2025-12-04T14:08:38.104758855Z [err]    hint: undefined,
+2025-12-04T14:08:38.104765132Z [err]    position: undefined,
+2025-12-04T14:08:38.104771253Z [err]    internalPosition: undefined,
+2025-12-04T14:08:38.104776943Z [err]    internalQuery: undefined,
+2025-12-04T14:08:38.104783136Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:38.104789566Z [err]    schema: undefined,
+2025-12-04T14:08:38.104796357Z [err]    table: undefined,
+2025-12-04T14:08:38.104803656Z [err]    column: undefined,
+2025-12-04T14:08:38.104811626Z [err]    dataType: undefined,
+2025-12-04T14:08:38.104817723Z [err]    constraint: undefined,
+2025-12-04T14:08:38.104823504Z [err]    file: 'enum.c',
+2025-12-04T14:08:38.104829992Z [err]    line: '129',
+2025-12-04T14:08:38.104836773Z [err]    routine: 'enum_in'
+2025-12-04T14:08:38.107981158Z [err]    position: undefined,
+2025-12-04T14:08:38.107989789Z [err]    internalPosition: undefined,
+2025-12-04T14:08:38.107998182Z [err]    internalQuery: undefined,
+2025-12-04T14:08:38.108004696Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:38.108011299Z [err]    schema: undefined,
+2025-12-04T14:08:38.108018499Z [err]    table: undefined,
+2025-12-04T14:08:38.108025560Z [err]    column: undefined,
+2025-12-04T14:08:38.108035359Z [err]    dataType: undefined,
+2025-12-04T14:08:38.108042024Z [err]    constraint: undefined,
+2025-12-04T14:08:38.108049737Z [err]    file: 'enum.c',
+2025-12-04T14:08:38.108530034Z [err]    routine: 'enum_in'
+2025-12-04T14:08:38.108536044Z [err]  }
+2025-12-04T14:08:38.108542536Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:38.108549313Z [inf]  [Regenerate] Generating codes for completed purchase 2ecda956-b473-41ed-91b6-cda9065cd558
+2025-12-04T14:08:38.108555895Z [err]  [Regenerate] Error processing purchase 2ecda956-b473-41ed-91b6-cda9065cd558: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:38.108564166Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:38.108570834Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:38.108577451Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:38.108583979Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:38.108590000Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:38.108597251Z [err]    length: 141,
+2025-12-04T14:08:38.108603535Z [err]    severity: 'ERROR',
+2025-12-04T14:08:38.108609533Z [err]    code: '22P02',
+2025-12-04T14:08:38.108617172Z [err]    detail: undefined,
+2025-12-04T14:08:38.108623430Z [err]    hint: undefined,
+2025-12-04T14:08:38.110308738Z [err]    line: '129',
+2025-12-04T14:08:38.110315887Z [err]    routine: 'enum_in'
+2025-12-04T14:08:38.110321750Z [err]  }
+2025-12-04T14:08:38.110327417Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:38.133872254Z [inf]  [Regenerate] Generating codes for completed purchase fec71e1f-49e2-4904-b4dc-56cd32b0903b
+2025-12-04T14:08:38.161278239Z [err]  [Regenerate] Error processing purchase fec71e1f-49e2-4904-b4dc-56cd32b0903b: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:38.161290684Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:38.161291139Z [err]  }
+2025-12-04T14:08:38.161298044Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:38.161304278Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:38.161312097Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:38.161321584Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:38.161330589Z [err]    length: 141,
+2025-12-04T14:08:38.161338918Z [err]    internalPosition: undefined,
+2025-12-04T14:08:38.161341414Z [err]    severity: 'ERROR',
+2025-12-04T14:08:38.161349405Z [err]    internalQuery: undefined,
+2025-12-04T14:08:38.161354528Z [err]    column: undefined,
+2025-12-04T14:08:38.161359865Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:38.161364267Z [err]    dataType: undefined,
+2025-12-04T14:08:38.161369384Z [err]    schema: undefined,
+2025-12-04T14:08:38.161373344Z [err]    constraint: undefined,
+2025-12-04T14:08:38.161379115Z [err]    table: undefined,
+2025-12-04T14:08:38.161382007Z [err]    file: 'enum.c',
+2025-12-04T14:08:38.161389824Z [err]    line: '129',
+2025-12-04T14:08:38.161394643Z [err]    code: '22P02',
+2025-12-04T14:08:38.161397621Z [err]    routine: 'enum_in'
+2025-12-04T14:08:38.161407560Z [err]    detail: undefined,
+2025-12-04T14:08:38.161416213Z [err]    hint: undefined,
+2025-12-04T14:08:38.161444503Z [err]    position: undefined,
+2025-12-04T14:08:38.312373671Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:38.335243016Z [inf]  [Regenerate] Generating codes for completed purchase 880fff03-eab4-4226-814d-df2c1ef4b24d
+2025-12-04T14:08:38.364553257Z [err]  [Regenerate] Error processing purchase 880fff03-eab4-4226-814d-df2c1ef4b24d: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:38.364564226Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:38.364571770Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:38.364577605Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:38.364586804Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:38.364593466Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:38.364639341Z [err]    length: 141,
+2025-12-04T14:08:38.364645434Z [err]    severity: 'ERROR',
+2025-12-04T14:08:38.364652940Z [err]    code: '22P02',
+2025-12-04T14:08:38.364662986Z [err]    detail: undefined,
+2025-12-04T14:08:38.364670895Z [err]    hint: undefined,
+2025-12-04T14:08:38.364680464Z [err]    position: undefined,
+2025-12-04T14:08:38.364691675Z [err]    internalPosition: undefined,
+2025-12-04T14:08:38.364700600Z [err]    internalQuery: undefined,
+2025-12-04T14:08:38.364707494Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:38.364714033Z [err]    schema: undefined,
+2025-12-04T14:08:38.364722401Z [err]    table: undefined,
+2025-12-04T14:08:38.364729998Z [err]    column: undefined,
+2025-12-04T14:08:38.364736257Z [err]    dataType: undefined,
+2025-12-04T14:08:38.364744180Z [err]    constraint: undefined,
+2025-12-04T14:08:38.364750868Z [err]    file: 'enum.c',
+2025-12-04T14:08:38.364757035Z [err]    line: '129',
+2025-12-04T14:08:38.364765066Z [err]    routine: 'enum_in'
+2025-12-04T14:08:38.364772761Z [err]  }
+2025-12-04T14:08:39.260911181Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:39.260917361Z [inf]  [Regenerate] Generating codes for completed purchase 91137b26-b0da-4081-a6e4-39745e5c7ba8
+2025-12-04T14:08:39.260922897Z [err]  [Regenerate] Error processing purchase 91137b26-b0da-4081-a6e4-39745e5c7ba8: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:39.260933851Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:39.260940080Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:39.260946723Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:39.260952530Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:39.260958392Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:39.260963926Z [err]    length: 141,
+2025-12-04T14:08:39.260969496Z [err]    severity: 'ERROR',
+2025-12-04T14:08:39.260975283Z [err]    code: '22P02',
+2025-12-04T14:08:39.260980689Z [err]    detail: undefined,
+2025-12-04T14:08:39.260986165Z [err]    hint: undefined,
+2025-12-04T14:08:39.260991587Z [err]    position: undefined,
+2025-12-04T14:08:39.260997327Z [err]    internalPosition: undefined,
+2025-12-04T14:08:39.261002786Z [err]    internalQuery: undefined,
+2025-12-04T14:08:39.261008448Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:39.261019089Z [err]    schema: undefined,
+2025-12-04T14:08:39.261024542Z [err]    table: undefined,
+2025-12-04T14:08:39.261029967Z [err]    column: undefined,
+2025-12-04T14:08:39.261038386Z [err]    dataType: undefined,
+2025-12-04T14:08:39.261043820Z [err]    constraint: undefined,
+2025-12-04T14:08:39.261049722Z [err]    file: 'enum.c',
+2025-12-04T14:08:39.261055621Z [err]    line: '129',
+2025-12-04T14:08:39.261061916Z [err]    routine: 'enum_in'
+2025-12-04T14:08:39.265090446Z [err]  }
+2025-12-04T14:08:39.265098688Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:39.265105352Z [inf]  [Regenerate] Generating codes for completed purchase bd1d3cdf-c0e2-40e5-8936-ebd4305db449
+2025-12-04T14:08:39.265117047Z [err]  [Regenerate] Error processing purchase bd1d3cdf-c0e2-40e5-8936-ebd4305db449: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:39.265123242Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:39.265129824Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:39.265135042Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:39.265141104Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:39.265147319Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:39.265153839Z [err]    length: 141,
+2025-12-04T14:08:39.265159806Z [err]    severity: 'ERROR',
+2025-12-04T14:08:39.265166027Z [err]    code: '22P02',
+2025-12-04T14:08:39.265171217Z [err]    routine: 'enum_in'
+2025-12-04T14:08:39.265176111Z [err]    detail: undefined,
+2025-12-04T14:08:39.265183248Z [err]    hint: undefined,
+2025-12-04T14:08:39.265188195Z [err]  }
+2025-12-04T14:08:39.265193585Z [err]    position: undefined,
+2025-12-04T14:08:39.265201885Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:39.265206864Z [err]    internalPosition: undefined,
+2025-12-04T14:08:39.265215846Z [err]    internalQuery: undefined,
+2025-12-04T14:08:39.265219943Z [inf]  [Regenerate] Generating codes for completed purchase c673a746-d27f-41d7-b21f-8cbe0ba236ac
+2025-12-04T14:08:39.265227188Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:39.265230372Z [err]  [Regenerate] Error processing purchase c673a746-d27f-41d7-b21f-8cbe0ba236ac: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:39.265237215Z [err]    schema: undefined,
+2025-12-04T14:08:39.265240186Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:39.265242211Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:39.265247424Z [err]    table: undefined,
+2025-12-04T14:08:39.265255458Z [err]    column: undefined,
+2025-12-04T14:08:39.265258055Z [inf]  [Regenerate] Generating codes for completed purchase 9b475a49-22a4-4c3b-913b-4383318414eb
+2025-12-04T14:08:39.265265317Z [err]    dataType: undefined,
+2025-12-04T14:08:39.265270644Z [err]    column: undefined,
+2025-12-04T14:08:39.265277958Z [err]    constraint: undefined,
+2025-12-04T14:08:39.265278168Z [err]  [Regenerate] Error processing purchase 9b475a49-22a4-4c3b-913b-4383318414eb: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:39.265284176Z [err]    dataType: undefined,
+2025-12-04T14:08:39.265288339Z [err]    file: 'enum.c',
+2025-12-04T14:08:39.265297076Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:39.265298164Z [err]    constraint: undefined,
+2025-12-04T14:08:39.265306705Z [err]    line: '129',
+2025-12-04T14:08:39.265308698Z [err]    file: 'enum.c',
+2025-12-04T14:08:39.265310949Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:39.265339161Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:39.265344241Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:39.265349123Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:39.265355741Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:39.265360535Z [err]    length: 141,
+2025-12-04T14:08:39.265367147Z [err]    severity: 'ERROR',
+2025-12-04T14:08:39.265371793Z [err]    internalPosition: undefined,
+2025-12-04T14:08:39.265376041Z [err]    code: '22P02',
+2025-12-04T14:08:39.265382200Z [err]    internalQuery: undefined,
+2025-12-04T14:08:39.265387858Z [err]    detail: undefined,
+2025-12-04T14:08:39.265396703Z [err]    hint: undefined,
+2025-12-04T14:08:39.265401766Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:39.265409640Z [err]    position: undefined,
+2025-12-04T14:08:39.265416172Z [err]    schema: undefined,
+2025-12-04T14:08:39.265423663Z [err]    table: undefined,
+2025-12-04T14:08:39.265538621Z [err]    line: '129',
+2025-12-04T14:08:39.265545757Z [err]    routine: 'enum_in'
+2025-12-04T14:08:39.265551313Z [err]  }
+2025-12-04T14:08:39.265597278Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:39.265601986Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:39.265606285Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:39.265610814Z [err]    length: 141,
+2025-12-04T14:08:39.265614569Z [err]    severity: 'ERROR',
+2025-12-04T14:08:39.265618769Z [err]    code: '22P02',
+2025-12-04T14:08:39.265624582Z [err]    detail: undefined,
+2025-12-04T14:08:39.265630592Z [err]    hint: undefined,
+2025-12-04T14:08:39.265636027Z [err]    position: undefined,
+2025-12-04T14:08:39.265642071Z [err]    internalPosition: undefined,
+2025-12-04T14:08:39.265648446Z [err]    internalQuery: undefined,
+2025-12-04T14:08:39.265654200Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:39.265659871Z [err]    schema: undefined,
+2025-12-04T14:08:39.265665379Z [err]    table: undefined,
+2025-12-04T14:08:39.265673144Z [err]    column: undefined,
+2025-12-04T14:08:39.265678514Z [err]    dataType: undefined,
+2025-12-04T14:08:39.265684157Z [err]    constraint: undefined,
+2025-12-04T14:08:39.270507397Z [err]    routine: 'enum_in'
+2025-12-04T14:08:39.270521414Z [err]  }
+2025-12-04T14:08:39.270588015Z [err]    file: 'enum.c',
+2025-12-04T14:08:39.270593506Z [err]    line: '129',
+2025-12-04T14:08:39.349057514Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:39.376053800Z [inf]  [Regenerate] Generating codes for completed purchase a98c71b4-43bd-4da5-97af-1ed306599aeb
+2025-12-04T14:08:39.405450906Z [err]  [Regenerate] Error processing purchase a98c71b4-43bd-4da5-97af-1ed306599aeb: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:39.405460493Z [err]  }
+2025-12-04T14:08:39.405481417Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:39.405491890Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:39.405500669Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:39.405508726Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:39.405519177Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:39.405528208Z [err]    length: 141,
+2025-12-04T14:08:39.405537668Z [err]    severity: 'ERROR',
+2025-12-04T14:08:39.405544963Z [err]    code: '22P02',
+2025-12-04T14:08:39.405556789Z [err]    detail: undefined,
+2025-12-04T14:08:39.405564889Z [err]    hint: undefined,
+2025-12-04T14:08:39.405572780Z [err]    position: undefined,
+2025-12-04T14:08:39.405580284Z [err]    internalPosition: undefined,
+2025-12-04T14:08:39.405589080Z [err]    internalQuery: undefined,
+2025-12-04T14:08:39.405597868Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:39.405605962Z [err]    schema: undefined,
+2025-12-04T14:08:39.405614673Z [err]    table: undefined,
+2025-12-04T14:08:39.405622496Z [err]    column: undefined,
+2025-12-04T14:08:39.405632523Z [err]    dataType: undefined,
+2025-12-04T14:08:39.405640302Z [err]    constraint: undefined,
+2025-12-04T14:08:39.405648079Z [err]    file: 'enum.c',
+2025-12-04T14:08:39.405654516Z [err]    line: '129',
+2025-12-04T14:08:39.405661750Z [err]    routine: 'enum_in'
+2025-12-04T14:08:40.163398760Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:40.163403563Z [inf]  [Regenerate] Generating codes for completed purchase 86e8fb40-61e1-46e0-9f61-4df584bb200e
+2025-12-04T14:08:40.163407706Z [err]  [Regenerate] Error processing purchase 86e8fb40-61e1-46e0-9f61-4df584bb200e: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:40.163792005Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:40.163799804Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:40.163805554Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:40.163810562Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:40.163816117Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:40.163823178Z [err]    length: 141,
+2025-12-04T14:08:40.163828563Z [err]    severity: 'ERROR',
+2025-12-04T14:08:40.163839142Z [err]    code: '22P02',
+2025-12-04T14:08:40.163844631Z [err]    detail: undefined,
+2025-12-04T14:08:40.163849703Z [err]    hint: undefined,
+2025-12-04T14:08:40.163855451Z [err]    position: undefined,
+2025-12-04T14:08:40.163861426Z [err]    internalPosition: undefined,
+2025-12-04T14:08:40.163867107Z [err]    internalQuery: undefined,
+2025-12-04T14:08:40.163874476Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:40.163880841Z [err]    schema: undefined,
+2025-12-04T14:08:40.163885842Z [err]    table: undefined,
+2025-12-04T14:08:40.163893960Z [err]    column: undefined,
+2025-12-04T14:08:40.163901363Z [err]    dataType: undefined,
+2025-12-04T14:08:40.163907205Z [err]    constraint: undefined,
+2025-12-04T14:08:40.163918275Z [err]    file: 'enum.c',
+2025-12-04T14:08:40.163923837Z [err]    line: '129',
+2025-12-04T14:08:40.163929845Z [err]    routine: 'enum_in'
+2025-12-04T14:08:40.164735509Z [err]  [Regenerate] Error processing purchase 624f1bfd-23a1-44ea-af5b-bff668d7547f: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:40.164874493Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:40.164882590Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:40.164888757Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:40.164894841Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:40.164899992Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:40.164905940Z [err]    length: 141,
+2025-12-04T14:08:40.164910607Z [err]    severity: 'ERROR',
+2025-12-04T14:08:40.164916834Z [err]    code: '22P02',
+2025-12-04T14:08:40.164921513Z [err]    detail: undefined,
+2025-12-04T14:08:40.164926218Z [err]    hint: undefined,
+2025-12-04T14:08:40.164930898Z [err]    position: undefined,
+2025-12-04T14:08:40.164936630Z [err]    internalPosition: undefined,
+2025-12-04T14:08:40.164939691Z [err]    internalQuery: undefined,
+2025-12-04T14:08:40.164953403Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:40.164965957Z [err]    schema: undefined,
+2025-12-04T14:08:40.164976426Z [err]    table: undefined,
+2025-12-04T14:08:40.164987772Z [err]    column: undefined,
+2025-12-04T14:08:40.164996012Z [err]    dataType: undefined,
+2025-12-04T14:08:40.165052797Z [err]  }
+2025-12-04T14:08:40.165057305Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:40.165061594Z [inf]  [Regenerate] Generating codes for completed purchase 624f1bfd-23a1-44ea-af5b-bff668d7547f
+2025-12-04T14:08:40.165075313Z [err]    constraint: undefined,
+2025-12-04T14:08:40.165083860Z [err]    file: 'enum.c',
+2025-12-04T14:08:40.165090962Z [err]    line: '129',
+2025-12-04T14:08:40.166877891Z [err]    line: '129',
+2025-12-04T14:08:40.166884148Z [err]    routine: 'enum_in'
+2025-12-04T14:08:40.166891531Z [err]  }
+2025-12-04T14:08:40.166985946Z [err]    routine: 'enum_in'
+2025-12-04T14:08:40.166990789Z [err]  }
+2025-12-04T14:08:40.166995479Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:40.167000203Z [inf]  [Regenerate] Generating codes for completed purchase 143c2b0b-0c52-435d-91dd-ed83fe5bf7e6
+2025-12-04T14:08:40.167004347Z [err]  [Regenerate] Error processing purchase 143c2b0b-0c52-435d-91dd-ed83fe5bf7e6: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:40.167008514Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:40.167013155Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:40.167072480Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:40.167077647Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:40.167082267Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:40.167087107Z [err]    length: 141,
+2025-12-04T14:08:40.167092043Z [err]    severity: 'ERROR',
+2025-12-04T14:08:40.167097358Z [err]    code: '22P02',
+2025-12-04T14:08:40.167102354Z [err]    detail: undefined,
+2025-12-04T14:08:40.167107154Z [err]    hint: undefined,
+2025-12-04T14:08:40.167112622Z [err]    position: undefined,
+2025-12-04T14:08:40.167121655Z [err]    internalPosition: undefined,
+2025-12-04T14:08:40.167126932Z [err]    internalQuery: undefined,
+2025-12-04T14:08:40.167132164Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:40.167136921Z [err]    schema: undefined,
+2025-12-04T14:08:40.167142647Z [err]    table: undefined,
+2025-12-04T14:08:40.167148265Z [err]    column: undefined,
+2025-12-04T14:08:40.167153275Z [err]    dataType: undefined,
+2025-12-04T14:08:40.167158130Z [err]    constraint: undefined,
+2025-12-04T14:08:40.167162694Z [err]    file: 'enum.c',
+2025-12-04T14:08:40.186584494Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:40.210990322Z [inf]  [Regenerate] Generating codes for completed purchase 85207787-2941-4a0b-8f18-852532c0754b
+2025-12-04T14:08:40.246579457Z [err]  [Regenerate] Error processing purchase 85207787-2941-4a0b-8f18-852532c0754b: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:40.246583976Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:40.246588404Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:40.246593362Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:40.246597995Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:40.246602028Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:40.246606400Z [err]    length: 141,
+2025-12-04T14:08:40.246629897Z [err]    severity: 'ERROR',
+2025-12-04T14:08:40.246634314Z [err]    code: '22P02',
+2025-12-04T14:08:40.246638768Z [err]    detail: undefined,
+2025-12-04T14:08:40.246646542Z [err]    hint: undefined,
+2025-12-04T14:08:40.246652189Z [err]    position: undefined,
+2025-12-04T14:08:40.246657475Z [err]    internalPosition: undefined,
+2025-12-04T14:08:40.246661913Z [err]    internalQuery: undefined,
+2025-12-04T14:08:40.246667834Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:40.246673117Z [err]    schema: undefined,
+2025-12-04T14:08:40.246677349Z [err]    table: undefined,
+2025-12-04T14:08:40.246681200Z [err]    column: undefined,
+2025-12-04T14:08:40.246685847Z [err]    dataType: undefined,
+2025-12-04T14:08:40.246690807Z [err]    constraint: undefined,
+2025-12-04T14:08:40.246695950Z [err]    file: 'enum.c',
+2025-12-04T14:08:40.246699845Z [err]    line: '129',
+2025-12-04T14:08:40.246705247Z [err]    routine: 'enum_in'
+2025-12-04T14:08:40.246709255Z [err]  }
+2025-12-04T14:08:40.406036305Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:40.430741580Z [inf]  [Regenerate] Generating codes for completed purchase f44446e1-9446-4787-abad-76e4e5047e7e
+2025-12-04T14:08:41.377780802Z [err]  [Regenerate] Error processing purchase f44446e1-9446-4787-abad-76e4e5047e7e: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:41.377788550Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:41.377795161Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:41.377801653Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:41.377807682Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:41.377815561Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:41.377821488Z [err]    length: 141,
+2025-12-04T14:08:41.377842291Z [err]    severity: 'ERROR',
+2025-12-04T14:08:41.377851030Z [err]    code: '22P02',
+2025-12-04T14:08:41.377858421Z [err]    detail: undefined,
+2025-12-04T14:08:41.377864851Z [err]    hint: undefined,
+2025-12-04T14:08:41.377871177Z [err]    position: undefined,
+2025-12-04T14:08:41.377878526Z [err]    internalPosition: undefined,
+2025-12-04T14:08:41.377886504Z [err]    internalQuery: undefined,
+2025-12-04T14:08:41.377894305Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:41.377920156Z [err]    schema: undefined,
+2025-12-04T14:08:41.377928130Z [err]    table: undefined,
+2025-12-04T14:08:41.377936612Z [err]    column: undefined,
+2025-12-04T14:08:41.377943110Z [err]    dataType: undefined,
+2025-12-04T14:08:41.377950142Z [err]    constraint: undefined,
+2025-12-04T14:08:41.377956360Z [err]    file: 'enum.c',
+2025-12-04T14:08:41.377962817Z [err]    line: '129',
+2025-12-04T14:08:41.377983326Z [err]    routine: 'enum_in'
+2025-12-04T14:08:41.382877958Z [err]  }
+2025-12-04T14:08:41.382891712Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:41.382898396Z [inf]  [Regenerate] Generating codes for completed purchase 730dab3b-ef70-4940-96ec-6314a18ad14a
+2025-12-04T14:08:41.383239302Z [inf]  2:08:40 PM [express] POST /api/admin/regenerate-codes-for-completed 200 in 9710ms :: {"message":"Pro…
+2025-12-04T14:08:41.383305174Z [err]      at async DatabaseStorage.createCode (file:///app/dist/index.js:1207:17)
+2025-12-04T14:08:41.383316423Z [err]      at async file:///app/dist/index.js:3618:37 {
+2025-12-04T14:08:41.383406022Z [err]    length: 141,
+2025-12-04T14:08:41.383413933Z [err]    severity: 'ERROR',
+2025-12-04T14:08:41.383420268Z [err]    code: '22P02',
+2025-12-04T14:08:41.383427333Z [err]    detail: undefined,
+2025-12-04T14:08:41.383433936Z [err]    hint: undefined,
+2025-12-04T14:08:41.383439855Z [err]    position: undefined,
+2025-12-04T14:08:41.383445208Z [err]    internalPosition: undefined,
+2025-12-04T14:08:41.383454080Z [err]    internalQuery: undefined,
+2025-12-04T14:08:41.383461979Z [err]    where: "unnamed portal parameter $2 = '...'",
+2025-12-04T14:08:41.383467617Z [err]    schema: undefined,
+2025-12-04T14:08:41.383475440Z [err]    table: undefined,
+2025-12-04T14:08:41.383482902Z [err]    column: undefined,
+2025-12-04T14:08:41.383489027Z [err]    dataType: undefined,
+2025-12-04T14:08:41.383496723Z [err]    constraint: undefined,
+2025-12-04T14:08:41.383502070Z [err]    file: 'enum.c',
+2025-12-04T14:08:41.383508448Z [err]    line: '129',
+2025-12-04T14:08:41.383518709Z [err]    routine: 'enum_in'
+2025-12-04T14:08:41.383524443Z [err]  }
+2025-12-04T14:08:41.383655517Z [err]  [Regenerate] Error processing purchase 730dab3b-ef70-4940-96ec-6314a18ad14a: error: invalid input value for enum code_type: "bronze_claim"
+2025-12-04T14:08:41.383676908Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T14:08:41.383686079Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T14:08:41.383694958Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T14:08:41.391114260Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:08:41.391123616Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:41.391129185Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:08:41.391143028Z [inf]  2:08:41 PM [express] GET /api/admin/codes 304 in 299ms :: []
+2025-12-04T14:08:41.391148489Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:08:41.391155560Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:08:41.391162025Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:41.391170417Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:08:41.391584090Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:08:41.396792284Z [inf]  2:08:41 PM [express] GET /api/admin/purchases 304 in 348ms :: [{"id":"b0924650-6dee-41e8-84ce-b50ad3…
+2025-12-04T14:08:44.143350865Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:08:44.143355592Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:08:44.143360352Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:08:44.143364961Z [inf]  [Email Test] SMTP_HOST: smtp.gmail.com
+2025-12-04T14:08:44.143369446Z [inf]  [Email Test] SMTP_PORT: 587
+2025-12-04T14:08:44.143375081Z [inf]  [Email Test] SMTP_USER: studio@timeless.organic
+2025-12-04T14:08:44.143380189Z [inf]  [Email Test] SMTP_PASS: ***SET***
+2025-12-04T14:08:44.143385958Z [inf]  2:08:43 PM [express] GET /api/admin/test-email-config 200 in 123ms :: {"configured":true,"host":"smt…
+2025-12-04T14:08:52.358472660Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:08:52.358477042Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:08:52.358480961Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:08:53.153262353Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:53.153286919Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:53.153295005Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:53.153302042Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:53.153309469Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:53.153315899Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:08:53.153323479Z [inf]  2:08:52 PM [express] GET /api/dashboard 200 in 335ms :: [{"id":"7e638275-9d78-497b-93a7-fe1d21b6c8d3…
+2025-12-04T14:09:03.145619507Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:09:03.145625522Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:09:03.168713573Z [inf]  2:09:03 PM [express] GET /api/sculptures 304 in 181ms :: [{"id":"1b5bcff5-e900-45dd-8d94-e28b03bef95…
+2025-12-04T14:09:03.325047293Z [inf]  [DB] Manual holds for founder: 1
+2025-12-04T14:09:03.344481281Z [inf]  [DB] Manual holds for patron: 2
+2025-12-04T14:09:03.344492214Z [inf]  [ManualHolds] Founder: 1, Patron: 2
+2025-12-04T14:09:03.375560726Z [inf]  [Availability] founder: total=50, sold=25, current=25, reserved=00, holds=1, available=24
+2025-12-04T14:09:03.375572499Z [inf]  [Availability] patron: total=50, sold=23, current=27, reserved=00, holds=2, available=25
+2025-12-04T14:09:03.375581008Z [inf]  2:09:03 PM [express] GET /api/seats/availability 304 in 384ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-04T14:09:04.307514716Z [inf]  2:09:03 PM [express] GET /api/specimen-customizations 200 in 29ms :: [{"id":"bfdba26f-46dc-455e-947c…
+2025-12-04T14:09:12.241641266Z [inf]  [Storage] Found 26 image files
+2025-12-04T14:09:13.304736434Z [inf]  2:09:12 PM [express] GET /api/admin/media-storage-files 200 in 519ms :: [{"id":"1764681915772-202511…
+2025-12-04T14:09:16.178686487Z [inf]  [ImageProxy] Attempting to download: 1764682537670-547590b5add6582d42f7755be3d26a4f_result.jpg
+2025-12-04T14:09:16.183013095Z [inf]  2:09:16 PM [express] GET /api/media 200 in 102ms :: [{"id":"1764681915772-20251128_120616.jpg","url"…
+2025-12-04T14:09:16.282809500Z [inf]  [ImageProxy] Attempting to download: 1764682515585-7114309_orig_result.jpg
+2025-12-04T14:09:16.287022396Z [inf]  [ImageProxy] Attempting to download: 1764775238402-Gemini_Generated_Image_13k8qx13k8qx13k8_result.webp
+2025-12-04T14:09:16.293468863Z [inf]  [ImageProxy] Attempting to download: 1764807400529-Gemini_Generated_Image_4ipbpv4ipbpv4ipb_result.webp
+2025-12-04T14:09:16.298999190Z [inf]  [ImageProxy] Attempting to download: 1764803650780-20250910_163116_result.jpg
+2025-12-04T14:09:16.304503182Z [inf]  [ImageProxy] Attempting to download: 1764681915772-20251128_120616.jpg
+2025-12-04T14:09:16.362116641Z [inf]  2:09:16 PM [express] GET /api/image-proxy 200 in 186ms
+2025-12-04T14:09:16.516940353Z [inf]  2:09:16 PM [express] GET /api/image-proxy 200 in 232ms
+2025-12-04T14:09:17.258935835Z [inf]  [ImageProxy] Attempting to download: 1764813044730-Gemini_Generated_Image_xsop3rxsop3rxsop_result.webp
+2025-12-04T14:09:17.258979331Z [inf]  2:09:16 PM [express] GET /api/image-proxy 200 in 627ms
+2025-12-04T14:09:17.258982038Z [inf]  [ImageProxy] Attempting to download: 1764809194404-download (7)_result.jpg
+2025-12-04T14:09:17.258991820Z [inf]  [ImageProxy] Attempting to download: 1764809236655-Gemini_Generated_Image_xsop3rxsop3rxsop_result.webp
+2025-12-04T14:09:17.258992136Z [inf]  2:09:16 PM [express] GET /api/image-proxy 200 in 634ms
+2025-12-04T14:09:17.259001604Z [inf]  [ImageProxy] Attempting to download: media-1764644481941-1764644483746-photo.jpg
+2025-12-04T14:09:17.259011278Z [inf]  [ImageProxy] Attempting to download: media-1764644610996-1764644612061-photo.jpg
+2025-12-04T14:09:17.259021202Z [inf]  [ImageProxy] Attempting to download: media-1764645519294-1764645519013-photo.jpg
+2025-12-04T14:09:17.259029542Z [inf]  2:09:16 PM [express] GET /api/image-proxy 200 in 85ms
+2025-12-04T14:09:17.259040605Z [inf]  [ImageProxy] Attempting to download: 1764823730573-images (6)_result.jpg
+2025-12-04T14:09:17.259048293Z [inf]  [ImageProxy] Attempting to download: media-1764644712771-1764644713163-photo.jpg
+2025-12-04T14:09:17.259313113Z [inf]  [ImageProxy] Attempting to download: media-1764645930305-1764645930019-photo.jpg
+2025-12-04T14:09:17.259322803Z [inf]  [ImageProxy] Attempting to download: 1764823744981-Gemini_Generated_Image_bj4357bj4357bj43 (1)_result.webp
+2025-12-04T14:09:17.259331388Z [inf]  [ImageProxy] Attempting to download: media-1764644787727-1764644790065-photo.jpg
+2025-12-04T14:09:17.259339052Z [inf]  [ImageProxy] Attempting to download: media-1764644503779-1764644503207-photo.jpg
+2025-12-04T14:09:17.259346395Z [inf]  2:09:16 PM [express] GET /api/image-proxy 200 in 87ms
+2025-12-04T14:09:17.259354458Z [inf]  2:09:16 PM [express] GET /api/image-proxy 304 in 69ms
+2025-12-04T14:09:17.259361161Z [inf]  2:09:17 PM [express] GET /api/image-proxy 304 in 76ms
+2025-12-04T14:09:17.261966562Z [inf]  [ImageProxy] Attempting to download: 1764813015292-download (7)_result.jpg
+2025-12-04T14:09:17.261979205Z [inf]  2:09:17 PM [express] GET /api/image-proxy 200 in 834ms
+2025-12-04T14:09:17.261989668Z [inf]  2:09:17 PM [express] GET /api/image-proxy 200 in 205ms
+2025-12-04T14:09:17.261990226Z [inf]  [ImageProxy] Attempting to download: media-1764645613387-1764645613117-photo.jpg
+2025-12-04T14:09:17.262003171Z [inf]  2:09:17 PM [express] GET /api/image-proxy 304 in 83ms
+2025-12-04T14:09:17.262011279Z [inf]  2:09:17 PM [express] GET /api/image-proxy 200 in 194ms
+2025-12-04T14:09:17.262024640Z [inf]  2:09:17 PM [express] GET /api/image-proxy 304 in 190ms
+2025-12-04T14:09:17.262036796Z [inf]  2:09:17 PM [express] GET /api/image-proxy 304 in 101ms
+2025-12-04T14:09:17.262045840Z [inf]  2:09:17 PM [express] GET /api/image-proxy 304 in 185ms
+2025-12-04T14:09:17.262080580Z [inf]  2:09:17 PM [express] GET /api/image-proxy 200 in 877ms
+2025-12-04T14:09:17.262092787Z [inf]  2:09:17 PM [express] GET /api/image-proxy 304 in 238ms
+2025-12-04T14:09:17.528499828Z [inf]  2:09:17 PM [express] GET /api/image-proxy 200 in 729ms
+2025-12-04T14:09:18.092859089Z [inf]  2:09:17 PM [express] GET /api/image-proxy 200 in 821ms
+2025-12-04T14:09:18.092882608Z [inf]  2:09:17 PM [express] GET /api/image-proxy 200 in 800ms
+2025-12-04T14:09:47.566127805Z [inf]  [ImageProxy] Attempting to download: test-12345-1764644729010-photo.jpg
+2025-12-04T14:09:47.566139220Z [inf]  [ImageProxy] Attempting to download: test-1764643885019-photo.jpg
+2025-12-04T14:09:47.566145057Z [inf]  [ImageProxy] Attempting to download: test-1764644749846-photo.jpg
+2025-12-04T14:09:47.566150447Z [inf]  [ImageProxy] Attempting to download: test-1764645756250-photo.jpg
+2025-12-04T14:09:47.566155521Z [inf]  [ImageProxy] Attempting to download: media-1764651432583-1764651433953-photo.jpg
+2025-12-04T14:09:47.566160796Z [inf]  [ImageProxy] Attempting to download: media-1764646687915-1764646688353-photo.jpg
+2025-12-04T14:09:47.566166641Z [inf]  2:09:43 PM [express] GET /api/image-proxy 200 in 112ms
+2025-12-04T14:09:47.566170827Z [inf]  2:09:43 PM [express] GET /api/image-proxy 200 in 115ms
+2025-12-04T14:09:47.566175534Z [inf]  2:09:43 PM [express] GET /api/image-proxy 200 in 136ms
+2025-12-04T14:09:47.566180836Z [inf]  2:09:43 PM [express] GET /api/image-proxy 200 in 132ms
+2025-12-04T14:09:47.566187716Z [inf]  2:09:43 PM [express] GET /api/image-proxy 200 in 623ms
+2025-12-04T14:09:47.566191781Z [inf]  2:09:43 PM [express] GET /api/image-proxy 200 in 791ms
+2025-12-04T14:09:47.566196706Z [inf]  2:09:44 PM [express] GET /api/admin/custom-specimens 200 in 5ms
+2025-12-04T14:10:17.570906501Z [inf]  [Upload] Received upload request
+2025-12-04T14:10:17.570913385Z [inf]  [Upload] File received: Untitled Video.mp4 size: 4093453 type: video/mp4
+2025-12-04T14:10:17.570923045Z [inf]  [Upload] Uploading to Supabase Storage as: 1764857415101-Untitled Video.mp4
+2025-12-04T14:10:17.570930554Z [inf]  [Upload] SUPABASE_URL configured: true
+2025-12-04T14:10:17.570937133Z [inf]  [Upload] SUPABASE_SERVICE_ROLE_KEY configured: true
+2025-12-04T14:10:17.570943333Z [inf]  [Upload] Upload successful: {
+2025-12-04T14:10:17.570950147Z [inf]    path: '1764857415101-Untitled Video.mp4',
+2025-12-04T14:10:17.570956221Z [inf]    id: '47058e2b-d9c9-4032-a79e-f064ef813cb0',
+2025-12-04T14:10:17.570963301Z [inf]    fullPath: 'specimen-photos/1764857415101-Untitled Video.mp4'
+2025-12-04T14:10:17.570969673Z [inf]  }
+2025-12-04T14:10:17.570976252Z [inf]  [Upload] Public URL: https://rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/public/specimen-photos/1764857415101-Untitled%20Video.mp4
+2025-12-04T14:10:17.570984699Z [inf]  2:10:15 PM [express] POST /api/admin/upload-specimen-photo 200 in 3528ms :: {"publicUrl":"https://rc…
+2025-12-04T14:10:17.570991737Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:10:17.570998813Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:10:17.571005121Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:10:17.571011321Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:10:17.571017217Z [inf]  [Admin] Website content updated: { pageSlug: 'videos', sectionKey: 'gallery_sculptures' }
+2025-12-04T14:10:17.571023256Z [inf]  2:10:16 PM [express] POST /api/admin/content 200 in 323ms :: {"id":"0d91d0d6-d34b-4be9-bc9d-cc44580c…
+2025-12-04T14:10:17.571029414Z [inf]  2:10:17 PM [express] GET /api/content/videos 200 in 26ms :: {"home_story":"https://rcillyhlieikmzeua…
+2025-12-04T14:10:37.587664244Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:10:37.587671316Z [inf]  2:10:30 PM [express] GET /api/auth/user 304 in 246ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-04T14:10:37.587678884Z [inf]  2:10:31 PM [express] GET /api/auth/user 304 in 75ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c",…
+2025-12-04T14:10:57.604068676Z [inf]  [Upload] SUPABASE_SERVICE_ROLE_KEY configured: true
+2025-12-04T14:10:57.604078566Z [inf]  [Upload] Upload successful: {
+2025-12-04T14:10:57.604080207Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:10:57.604087212Z [inf]    path: '1764857448438-Burnt-Metal-2025-08-29-06-20-21-Utc.mp4',
+2025-12-04T14:10:57.604088597Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:10:57.604095975Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:10:57.604105354Z [inf]  [Admin] Website content updated: { pageSlug: 'videos', sectionKey: 'gallery_sculptures' }
+2025-12-04T14:10:57.604117049Z [inf]    id: 'bc23b980-52d4-42d1-a3d7-47d08619e9a9',
+2025-12-04T14:10:57.604124355Z [inf]    fullPath: 'specimen-photos/1764857448438-Burnt-Metal-2025-08-29-06-20-21-Utc.mp4'
+2025-12-04T14:10:57.604130714Z [inf]  }
+2025-12-04T14:10:57.604141780Z [inf]  [Upload] Public URL: https://rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/public/specimen-photos/1764857448438-Burnt-Metal-2025-08-29-06-20-21-Utc.mp4
+2025-12-04T14:10:57.604144078Z [inf]  [Upload] Received upload request
+2025-12-04T14:10:57.604156034Z [inf]  2:10:49 PM [express] POST /api/admin/upload-specimen-photo 200 in 6013ms :: {"publicUrl":"https://rc…
+2025-12-04T14:10:57.604163895Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:10:57.604181519Z [inf]  [Upload] File received: Burnt-Metal-2025-08-29-06-20-21-Utc.mp4 size: 13055326 type: video/mp4
+2025-12-04T14:10:57.604196040Z [inf]  2:10:50 PM [express] POST /api/admin/content 200 in 339ms :: {"id":"0d91d0d6-d34b-4be9-bc9d-cc44580c…
+2025-12-04T14:10:57.604196286Z [inf]  [Upload] Uploading to Supabase Storage as: 1764857448438-Burnt-Metal-2025-08-29-06-20-21-Utc.mp4
+2025-12-04T14:10:57.604204803Z [inf]  [Upload] SUPABASE_URL configured: true
+2025-12-04T14:10:57.604216181Z [inf]  2:10:51 PM [express] GET /api/content/videos 200 in 27ms :: {"home_story":"https://rcillyhlieikmzeua…
+2025-12-04T14:10:57.608565817Z [inf]  2:10:57 PM [express] GET /api/auth/user 304 in 100ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-04T14:10:57.765774902Z [inf]  2:10:57 PM [express] GET /api/auth/user 304 in 83ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c",…
+2025-12-04T14:11:27.818441346Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:11:27.818453611Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:11:27.818469024Z [inf]  2:11:21 PM [express] GET /api/prelaunch/stats 304 in 274ms :: {"totalReserved":50,"founderDeposits":…
+2025-12-04T14:11:27.818476480Z [inf]  [DB] Manual holds for founder: 1
+2025-12-04T14:11:27.818487244Z [inf]  [DB] Manual holds for patron: 2
+2025-12-04T14:11:27.818517957Z [inf]  [ManualHolds] Founder: 1, Patron: 2
+2025-12-04T14:11:27.818528297Z [inf]  [Availability] founder: total=50, sold=25, current=25, reserved=00, holds=1, available=24
+2025-12-04T14:11:27.818536447Z [inf]  [Availability] patron: total=50, sold=23, current=27, reserved=00, holds=2, available=25
+2025-12-04T14:11:27.818547359Z [inf]  2:11:21 PM [express] GET /api/seats/availability 304 in 400ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-04T14:11:47.289108020Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:11:47.289117436Z [inf]  2:11:46 PM [express] GET /api/sculptures 304 in 192ms :: [{"id":"1b5bcff5-e900-45dd-8d94-e28b03bef95…
+2025-12-04T14:11:47.289122799Z [inf]  2:11:46 PM [express] GET /api/seats/availability 304 in 407ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-04T14:11:47.289126978Z [inf]  [DB] Manual holds for founder: 1
+2025-12-04T14:11:47.289134274Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:11:47.289153868Z [inf]  [DB] Manual holds for patron: 2
+2025-12-04T14:11:47.289164335Z [inf]  [ManualHolds] Founder: 1, Patron: 2
+2025-12-04T14:11:47.289171783Z [inf]  [Availability] founder: total=50, sold=25, current=25, reserved=00, holds=1, available=24
+2025-12-04T14:11:47.289183340Z [inf]  [Availability] patron: total=50, sold=23, current=27, reserved=00, holds=2, available=25
+2025-12-04T14:12:07.271163673Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:12:07.271170592Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:12:07.271177264Z [inf]  2:12:01 PM [express] GET /api/sculptures 304 in 181ms :: [{"id":"1b5bcff5-e900-45dd-8d94-e28b03bef95…
+2025-12-04T14:12:07.271183247Z [inf]  [DB] Manual holds for founder: 1
+2025-12-04T14:12:07.271190250Z [inf]  [DB] Manual holds for patron: 2
+2025-12-04T14:12:07.271197090Z [inf]  [ManualHolds] Founder: 1, Patron: 2
+2025-12-04T14:12:07.271204350Z [inf]  [Availability] founder: total=50, sold=25, current=25, reserved=00, holds=1, available=24
+2025-12-04T14:12:07.271211626Z [inf]  [Availability] patron: total=50, sold=23, current=27, reserved=00, holds=2, available=25
+2025-12-04T14:12:07.271219274Z [inf]  2:12:01 PM [express] GET /api/seats/availability 304 in 364ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-04T14:12:07.271225741Z [inf]  2:12:06 PM [express] GET /api/auth/user 304 in 129ms :: {"id":"1240d908-e702-44ad-a323-5045518bd1e7"…
+2025-12-04T14:12:07.271232285Z [inf]  2:12:07 PM [express] GET /api/auth/user 304 in 79ms :: {"id":"1240d908-e702-44ad-a323-5045518bd1e7",…
