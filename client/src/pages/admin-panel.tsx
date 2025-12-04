@@ -2094,11 +2094,8 @@ export default function AdminPanel() {
                   { id: "restios_seedheads_grasses", name: "Restios & Seedheads" },
                   { id: "small_succulents", name: "Small Succulents" },
                 ].map((specimen) => {
-                  const plantKey = `${specimen.id}_plant`;
-                  const bronzeKey = `${specimen.id}_bronze`;
-                  
-                  const uploadImage = async (file: File, imageType: 'plant' | 'bronze') => {
-                    const key = imageType === 'plant' ? plantKey : bronzeKey;
+                  const uploadImage = async (file: File, imageType: 'plant' | 'bronze', pairNum: number) => {
+                    const key = `${specimen.id}_${imageType}_${pairNum}`;
                     try {
                       const formData = new FormData();
                       formData.append('media-file', file);
@@ -2113,7 +2110,7 @@ export default function AdminPanel() {
                       const { publicUrl } = await response.json();
                       setCustomImages(prev => ({ ...prev, [key]: publicUrl }));
                       saveSpecimenPhoto.mutate({ specimenKey: key, imageUrl: publicUrl });
-                      toast({ title: `${imageType === 'plant' ? 'Plant' : 'Bronze'} image uploaded!` });
+                      toast({ title: `${imageType === 'plant' ? 'Plant' : 'Bronze'} image ${pairNum} uploaded!` });
                     } catch (err: any) {
                       toast({ variant: "destructive", title: "Upload failed", description: err.message });
                     }
@@ -2121,72 +2118,84 @@ export default function AdminPanel() {
                   
                   return (
                   <Card key={specimen.id} className="overflow-hidden" data-testid={`card-${specimen.id}`}>
-                    <div className="p-4 space-y-4">
+                    <div className="p-4 space-y-6">
                       <h3 className="font-medium text-sm">{specimen.name}</h3>
                       
-                      {/* Plant Image */}
-                      <div className="space-y-2">
-                        <p className="text-xs text-patina font-medium">Plant (Original)</p>
-                        <div className="aspect-video relative bg-muted rounded overflow-hidden">
-                          {customImages[plantKey] ? (
-                            <img src={customImages[plantKey]} alt={`${specimen.name} plant`} className="w-full h-full object-cover" />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                              <span className="text-muted-foreground text-xs">No plant image</span>
+                      {/* 3 Plant-Bronze Pairs */}
+                      {[1, 2, 3].map((pairNum) => {
+                        const plantKey = `${specimen.id}_plant_${pairNum}`;
+                        const bronzeKey = `${specimen.id}_bronze_${pairNum}`;
+                        
+                        return (
+                          <div key={pairNum} className="border-t pt-4 space-y-3">
+                            <p className="text-xs font-semibold text-muted-foreground uppercase">Pair {pairNum}</p>
+                            
+                            {/* Plant Image */}
+                            <div className="space-y-2">
+                              <p className="text-xs text-patina font-medium">Plant (Original)</p>
+                              <div className="aspect-video relative bg-muted rounded overflow-hidden">
+                                {customImages[plantKey] ? (
+                                  <img src={customImages[plantKey]} alt={`${specimen.name} plant ${pairNum}`} className="w-full h-full object-cover" />
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center">
+                                    <span className="text-muted-foreground text-xs">No image</span>
+                                  </div>
+                                )}
+                              </div>
+                              <div className="flex gap-2">
+                                <label className="flex-1 cursor-pointer">
+                                  <input 
+                                    type="file" 
+                                    accept="image/*" 
+                                    className="hidden" 
+                                    onChange={(e) => e.target.files?.[0] && uploadImage(e.target.files[0], 'plant', pairNum)} 
+                                    data-testid={`input-upload-${plantKey}`}
+                                  />
+                                  <div className="flex items-center justify-center gap-1 w-full h-8 px-3 text-xs border rounded-md bg-background hover:bg-muted transition-colors">
+                                    <Upload className="w-3 h-3" />
+                                    Upload Plant
+                                  </div>
+                                </label>
+                                {customImages[plantKey] && (
+                                  <Button onClick={() => { setCustomImages(prev => { const u = {...prev}; delete u[plantKey]; return u; }); deleteSpecimenPhoto.mutate(plantKey); }} variant="ghost" size="sm" className="text-destructive" data-testid={`button-delete-${plantKey}`}><Trash2 className="w-3 h-3" /></Button>
+                                )}
+                              </div>
                             </div>
-                          )}
-                        </div>
-                        <div className="flex gap-2">
-                          <label className="flex-1 cursor-pointer">
-                            <input 
-                              type="file" 
-                              accept="image/*" 
-                              className="hidden" 
-                              onChange={(e) => e.target.files?.[0] && uploadImage(e.target.files[0], 'plant')} 
-                              data-testid={`input-upload-${plantKey}`}
-                            />
-                            <div className="flex items-center justify-center gap-1 w-full h-8 px-3 text-xs border rounded-md bg-background hover:bg-muted transition-colors">
-                              <Upload className="w-3 h-3" />
-                              Upload Plant
+                            
+                            {/* Bronze Image */}
+                            <div className="space-y-2">
+                              <p className="text-xs text-bronze font-medium">Bronze (Casting)</p>
+                              <div className="aspect-video relative bg-muted rounded overflow-hidden">
+                                {customImages[bronzeKey] ? (
+                                  <img src={customImages[bronzeKey]} alt={`${specimen.name} bronze ${pairNum}`} className="w-full h-full object-cover" />
+                                ) : (
+                                  <div className="w-full h-full flex items-center justify-center">
+                                    <span className="text-muted-foreground text-xs">No image</span>
+                                  </div>
+                                )}
+                              </div>
+                              <div className="flex gap-2">
+                                <label className="flex-1 cursor-pointer">
+                                  <input 
+                                    type="file" 
+                                    accept="image/*" 
+                                    className="hidden" 
+                                    onChange={(e) => e.target.files?.[0] && uploadImage(e.target.files[0], 'bronze', pairNum)} 
+                                    data-testid={`input-upload-${bronzeKey}`}
+                                  />
+                                  <div className="flex items-center justify-center gap-1 w-full h-8 px-3 text-xs border rounded-md bg-background hover:bg-muted transition-colors">
+                                    <Upload className="w-3 h-3" />
+                                    Upload Bronze
+                                  </div>
+                                </label>
+                                {customImages[bronzeKey] && (
+                                  <Button onClick={() => { setCustomImages(prev => { const u = {...prev}; delete u[bronzeKey]; return u; }); deleteSpecimenPhoto.mutate(bronzeKey); }} variant="ghost" size="sm" className="text-destructive" data-testid={`button-delete-${bronzeKey}`}><Trash2 className="w-3 h-3" /></Button>
+                                )}
+                              </div>
                             </div>
-                          </label>
-                          {customImages[plantKey] && (
-                            <Button onClick={() => { setCustomImages(prev => { const u = {...prev}; delete u[plantKey]; return u; }); deleteSpecimenPhoto.mutate(plantKey); }} variant="ghost" size="sm" className="text-destructive" data-testid={`button-delete-${plantKey}`}><Trash2 className="w-3 h-3" /></Button>
-                          )}
-                        </div>
-                      </div>
-                      
-                      {/* Bronze Image */}
-                      <div className="space-y-2">
-                        <p className="text-xs text-bronze font-medium">Bronze (Casting)</p>
-                        <div className="aspect-video relative bg-muted rounded overflow-hidden">
-                          {customImages[bronzeKey] ? (
-                            <img src={customImages[bronzeKey]} alt={`${specimen.name} bronze`} className="w-full h-full object-cover" />
-                          ) : (
-                            <div className="w-full h-full flex items-center justify-center">
-                              <span className="text-muted-foreground text-xs">No bronze image</span>
-                            </div>
-                          )}
-                        </div>
-                        <div className="flex gap-2">
-                          <label className="flex-1 cursor-pointer">
-                            <input 
-                              type="file" 
-                              accept="image/*" 
-                              className="hidden" 
-                              onChange={(e) => e.target.files?.[0] && uploadImage(e.target.files[0], 'bronze')} 
-                              data-testid={`input-upload-${bronzeKey}`}
-                            />
-                            <div className="flex items-center justify-center gap-1 w-full h-8 px-3 text-xs border rounded-md bg-background hover:bg-muted transition-colors">
-                              <Upload className="w-3 h-3" />
-                              Upload Bronze
-                            </div>
-                          </label>
-                          {customImages[bronzeKey] && (
-                            <Button onClick={() => { setCustomImages(prev => { const u = {...prev}; delete u[bronzeKey]; return u; }); deleteSpecimenPhoto.mutate(bronzeKey); }} variant="ghost" size="sm" className="text-destructive" data-testid={`button-delete-${bronzeKey}`}><Trash2 className="w-3 h-3" /></Button>
-                          )}
-                        </div>
-                      </div>
+                          </div>
+                        );
+                      })}
                     </div>
                   </Card>
                   );
