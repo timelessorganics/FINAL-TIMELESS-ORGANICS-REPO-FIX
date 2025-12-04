@@ -9,7 +9,7 @@ import { supabase } from "@/lib/supabase";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import type { Seat, Purchase, Code, PromoCode, MediaAsset, Product, Auction } from "@shared/schema";
-import { Users, Package, DollarSign, Award, Download, Gift, Copy, CheckCircle, XCircle, Upload, Image as ImageIcon, ShoppingBag, Gavel, Calendar, Trash2, Edit, Plus, ExternalLink, Flame } from "lucide-react";
+import { Users, Package, DollarSign, Award, Download, Gift, Copy, CheckCircle, XCircle, Upload, Image as ImageIcon, ShoppingBag, Gavel, Calendar, Trash2, Edit, Plus, ExternalLink, Flame, Mail } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Eye } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -312,19 +312,27 @@ export default function AdminPanel() {
 
   const regenerateCodesForCompleted = useMutation({
     mutationFn: async () => {
+      console.log("[Admin] Regenerate Codes button clicked - sending request...");
       const response = await apiRequest("POST", "/api/admin/regenerate-codes-for-completed", {});
-      return await response.json();
+      console.log("[Admin] Regenerate response status:", response.status);
+      const data = await response.json();
+      console.log("[Admin] Regenerate response data:", data);
+      return data;
     },
     onSuccess: (data) => {
+      console.log("[Admin] Regenerate SUCCESS:", data);
       queryClient.invalidateQueries({ queryKey: ["/api/admin/purchases"] });
       queryClient.invalidateQueries({ queryKey: ["/api/admin/codes"] });
       const regenerated = data.results?.filter((r: any) => r.status === 'regenerated').length || 0;
+      const skipped = data.results?.filter((r: any) => r.status === 'skipped').length || 0;
+      const errors = data.results?.filter((r: any) => r.status === 'error').length || 0;
       toast({
         title: "Codes Regenerated & Emailed!",
-        description: `Successfully regenerated codes for ${regenerated} completed purchases without codes.`,
+        description: `Regenerated: ${regenerated}, Skipped (already had codes): ${skipped}, Errors: ${errors}`,
       });
     },
     onError: (error: Error) => {
+      console.error("[Admin] Regenerate ERROR:", error);
       toast({
         variant: "destructive",
         title: "Regeneration Failed",
@@ -349,6 +357,42 @@ export default function AdminPanel() {
         variant: "destructive",
         title: "Mailchimp Sync Failed",
         description: error.message || "Could not sync to Mailchimp. Check if API credentials are configured.",
+      });
+    },
+  });
+
+  const testEmailConfig = useMutation({
+    mutationFn: async () => {
+      console.log("[Admin] Testing email config...");
+      const response = await fetch("/api/admin/test-email-config", {
+        credentials: 'include',
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP ${response.status}`);
+      }
+      return await response.json();
+    },
+    onSuccess: (data) => {
+      console.log("[Admin] Email config result:", data);
+      if (data.configured) {
+        toast({
+          title: "Email Configured!",
+          description: `SMTP configured with host: ${data.host}, user: ${data.user}`,
+        });
+      } else {
+        toast({
+          variant: "destructive",
+          title: "Email NOT Configured!",
+          description: "SMTP credentials are missing. Check server environment variables.",
+        });
+      }
+    },
+    onError: (error: Error) => {
+      console.error("[Admin] Email config test error:", error);
+      toast({
+        variant: "destructive",
+        title: "Email Config Test Failed",
+        description: error.message,
       });
     },
   });
@@ -991,6 +1035,16 @@ export default function AdminPanel() {
               >
                 <Gift className="w-4 h-4 mr-2" />
                 {regenerateCodesForCompleted.isPending ? "Regenerating..." : "REGENERATE CODES & EMAIL"}
+              </Button>
+              <Button
+                onClick={() => testEmailConfig.mutate()}
+                disabled={testEmailConfig.isPending}
+                variant="outline"
+                data-testid="button-test-email-config"
+                title="Test if SMTP email is configured on the server"
+              >
+                <Mail className="w-4 h-4 mr-2" />
+                {testEmailConfig.isPending ? "Testing..." : "Test Email Config"}
               </Button>
             </div>
 

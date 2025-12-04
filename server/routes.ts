@@ -45,6 +45,7 @@ import {
   sendPurchaseConfirmationEmail,
   sendGiftNotificationEmail,
   sendCertificateToRecipient,
+  testEmailConfig,
 } from "./utils/emailService";
 import { generatePromoCode } from "./utils/promoCodeGenerator";
 import { addSubscriberToMailchimp } from "./mailchimp";
@@ -1376,14 +1377,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     "/api/admin/regenerate-codes-for-completed",
     isAuthenticated,
     async (req: any, res: Response) => {
+      console.log("[Regenerate] ===== ENDPOINT HIT =====");
       try {
         const userId = await getUserIdFromToken(req);
+        console.log("[Regenerate] User ID from token:", userId);
         if (!userId) {
+          console.log("[Regenerate] No user ID - returning 401");
           return res.status(401).json({ message: "Unauthorized" });
         }
         const user = await storage.getUser(userId);
+        console.log("[Regenerate] User:", user?.email, "isAdmin:", user?.isAdmin);
 
         if (!user?.isAdmin) {
+          console.log("[Regenerate] Not admin - returning 403");
           return res.status(403).json({ message: "Admin access required" });
         }
 
@@ -1952,6 +1958,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
         res
           .status(500)
           .json({ message: error.message || "Failed to fetch subscribers" });
+      }
+    },
+  );
+
+  // Admin: Test email configuration
+  app.get(
+    "/api/admin/test-email-config",
+    isAuthenticated,
+    async (req: any, res: Response) => {
+      try {
+        const userId = await getUserIdFromToken(req);
+        if (!userId) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+        const user = await storage.getUser(userId);
+
+        if (!user?.isAdmin) {
+          return res.status(403).json({ message: "Admin access required" });
+        }
+
+        const emailConfig = testEmailConfig();
+        res.json(emailConfig);
+      } catch (error: any) {
+        console.error("Test email config error:", error);
+        res.status(500).json({ message: error.message });
       }
     },
   );

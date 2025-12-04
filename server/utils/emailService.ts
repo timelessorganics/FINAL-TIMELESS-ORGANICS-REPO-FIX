@@ -68,6 +68,22 @@ function getTransporter(): Transporter | null {
   return transporter;
 }
 
+// Export a function to test email config
+export function testEmailConfig(): { configured: boolean; host?: string; user?: string } {
+  const host = process.env.SMTP_HOST;
+  const port = process.env.SMTP_PORT;
+  const user = process.env.SMTP_USER;
+  const pass = process.env.SMTP_PASS;
+
+  console.log('[Email Test] SMTP_HOST:', host ? host : 'NOT SET');
+  console.log('[Email Test] SMTP_PORT:', port || 'NOT SET');
+  console.log('[Email Test] SMTP_USER:', user ? user : 'NOT SET');
+  console.log('[Email Test] SMTP_PASS:', pass ? '***SET***' : 'NOT SET');
+
+  const configured = !!(host && port && user && pass);
+  return { configured, host, user };
+}
+
 // Send certificate to gift recipient when they claim (or auto-send option)
 export async function sendCertificateToRecipient(
   recipientEmail: string,
