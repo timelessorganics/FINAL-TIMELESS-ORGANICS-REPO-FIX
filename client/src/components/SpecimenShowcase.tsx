@@ -136,7 +136,7 @@ function HoverBronzeImage({ plant, bronze }: SpecimenImage) {
   return (
     <>
       <div
-        className="relative w-full aspect-[4/3] overflow-hidden rounded-lg border border-bronze/20 bg-card cursor-pointer group"
+        className="relative w-full aspect-square overflow-hidden rounded-lg border border-bronze/20 bg-card cursor-pointer group"
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         onClick={openLightbox}
@@ -146,7 +146,7 @@ function HoverBronzeImage({ plant, bronze }: SpecimenImage) {
         <img
           src={plant}
           alt="Plant specimen"
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
             isHovered ? "opacity-0" : "opacity-100"
           }`}
         />
@@ -155,7 +155,7 @@ function HoverBronzeImage({ plant, bronze }: SpecimenImage) {
         <img
           src={bronze}
           alt="Bronze casting"
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-1000 ${
+          className={`absolute inset-0 w-full h-full object-contain transition-opacity duration-1000 ${
             isHovered ? "opacity-100" : "opacity-0"
           }`}
         />
@@ -374,7 +374,7 @@ export default function SpecimenShowcase() {
                       {[0, 1, 2].map((i) => (
                         <div
                           key={i}
-                          className="aspect-[4/3] rounded-lg border border-bronze/20 bg-muted flex items-center justify-center"
+                          className="aspect-square rounded-lg border border-bronze/20 bg-muted flex items-center justify-center"
                         >
                           <span className="text-xs text-muted-foreground">Coming Soon</span>
                         </div>
