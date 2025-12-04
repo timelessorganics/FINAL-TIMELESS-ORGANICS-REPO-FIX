@@ -510,19 +510,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
           depositAmountCents = 100000;
           console.log(`[Purchase] SECURE seat: R1,000 deposit for ${seatType}`);
         } else {
-          // BUY NOW: Full price + add-ons
+          // BUY NOW: Use fire sale price if active, otherwise regular price
+          const isFireSaleActive = seat.fireSalePrice && seat.fireSaleEndsAt && new Date(seat.fireSaleEndsAt) > new Date();
+          const basePriceCents = isFireSaleActive ? (seat.fireSalePrice || seat.price) : seat.price;
+          
           const mountingPriceCents = getMountingPrice(mountingType || "none");
           const patinaPriceCents = hasPatina ? getPatinaPrice() : 0;
           const commissionVoucherPriceCents = commissionVoucher
             ? getCommissionVoucherPrice()
             : 0;
           amount =
-            seat.price +
+            basePriceCents +
             patinaPriceCents +
             mountingPriceCents +
             commissionVoucherPriceCents;
           depositAmountCents = 0;
-          console.log(`[Purchase] BUY NOW: full price R${(amount / 100).toFixed(2)} for ${seatType}`);
+          console.log(`[Purchase] BUY NOW: ${isFireSaleActive ? 'FIRE SALE' : 'regular'} price R${(amount / 100).toFixed(2)} for ${seatType} (base: R${(basePriceCents / 100).toFixed(2)})`);
         }
 
         // Validate delivery information
