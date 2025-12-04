@@ -802,10 +802,12 @@ export const pageAssetsRelations = relations(pageAssets, ({ one }) => ({
 }));
 
 // Specimen Customizations - Store custom images/styles for founding-100 page
+// Note: Plant and bronze images use separate records with keys like:
+//   cones_bracts_seedpods_plant and cones_bracts_seedpods_bronze
 export const specimenCustomizations = pgTable("specimen_customizations", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  specimenKey: varchar("specimen_key").notNull(), // e.g., 'cones_bracts_seedpods'
-  imageUrl: varchar("image_url"), // Custom image URL
+  specimenKey: varchar("specimen_key").notNull(), // e.g., 'cones_bracts_seedpods_plant'
+  imageUrl: varchar("image_url"), // Image URL for this specimen
   name: varchar("name"), // Custom display name
   season: varchar("season"), // Custom season info
   updatedAt: timestamp("updated_at").defaultNow(),

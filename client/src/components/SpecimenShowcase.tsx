@@ -254,13 +254,26 @@ export default function SpecimenShowcase() {
     queryKey: ["/api/specimen-customizations"],
   });
   
-  // Build map of styleId -> custom image URL
-  const customImageMap: Record<string, string> = {};
+  // Build map of styleId -> { plant, bronze } from customizations
+  // Admin uploads use keys like: cones_bracts_seedpods_plant and cones_bracts_seedpods_bronze
+  const customImagePairs: Record<string, { plant?: string; bronze?: string }> = {};
   if (customizations) {
     customizations.forEach((c) => {
-      const styleId = adminToStyleId[c.specimenKey] || c.specimenKey;
-      if (c.imageUrl) {
-        customImageMap[styleId] = c.imageUrl;
+      // Parse the key: {baseKey}_plant or {baseKey}_bronze
+      const match = c.specimenKey.match(/^(.+)_(plant|bronze)$/);
+      if (match) {
+        const [, baseKey, imageType] = match;
+        const styleId = adminToStyleId[baseKey] || baseKey;
+        if (!customImagePairs[styleId]) {
+          customImagePairs[styleId] = {};
+        }
+        customImagePairs[styleId][imageType as 'plant' | 'bronze'] = c.imageUrl;
+      } else {
+        // Legacy: single image key without _plant/_bronze suffix
+        const styleId = adminToStyleId[c.specimenKey] || c.specimenKey;
+        if (c.imageUrl) {
+          customImagePairs[styleId] = { plant: c.imageUrl, bronze: c.imageUrl };
+        }
       }
     });
   }
@@ -281,12 +294,25 @@ export default function SpecimenShowcase() {
       {/* Specimen Grid - 9 styles with 3 examples each */}
       <div className="space-y-12">
         {specimenStyles.map((style, index) => {
-          // Use admin-uploaded image if available, otherwise use static fallback
-          const customImage = customImageMap[style.id];
+          // Use admin-uploaded images, mixing with defaults if only partial upload
+          const customPair = customImagePairs[style.id];
           const defaultImages = specimenImages[style.id] || [];
-          const images = customImage 
-            ? [{ plant: customImage, bronze: customImage }] // Admin uploaded single image
-            : defaultImages;
+          
+          // Build images array: prioritize custom images, fall back to defaults for missing sides
+          let images: SpecimenImage[];
+          if (customPair?.plant || customPair?.bronze) {
+            // At least one custom image uploaded - create hybrid pair
+            const firstDefault = defaultImages[0] || { plant: '', bronze: '' };
+            const customImage: SpecimenImage = {
+              plant: customPair?.plant || firstDefault.plant,
+              bronze: customPair?.bronze || firstDefault.bronze,
+            };
+            // Show custom pair first, then remaining defaults
+            images = [customImage, ...defaultImages.slice(0, 2)];
+          } else {
+            images = defaultImages;
+          }
+          
           const seasonAvailability = style[currentSeason];
           const availabilitySymbol = getAvailabilitySymbol(seasonAvailability);
           

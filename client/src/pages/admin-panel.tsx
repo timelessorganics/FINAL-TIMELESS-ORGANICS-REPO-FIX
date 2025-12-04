@@ -2003,202 +2003,120 @@ export default function AdminPanel() {
                   { id: "erica_sprays", name: "Erica Sprays" },
                   { id: "restios_seedheads_grasses", name: "Restios & Seedheads" },
                   { id: "small_succulents", name: "Small Succulents" },
-                ].map((specimen) => (
+                ].map((specimen) => {
+                  const plantKey = `${specimen.id}_plant`;
+                  const bronzeKey = `${specimen.id}_bronze`;
+                  
+                  const uploadImage = async (file: File, imageType: 'plant' | 'bronze') => {
+                    const key = imageType === 'plant' ? plantKey : bronzeKey;
+                    try {
+                      const formData = new FormData();
+                      formData.append('media-file', file);
+                      const response = await fetch('/api/admin/upload-specimen-photo', {
+                        method: 'POST',
+                        body: formData,
+                      });
+                      if (!response.ok) {
+                        const errorData = await response.json();
+                        throw new Error(errorData.error || `HTTP ${response.status}`);
+                      }
+                      const { publicUrl } = await response.json();
+                      setCustomImages(prev => ({ ...prev, [key]: publicUrl }));
+                      saveSpecimenPhoto.mutate({ specimenKey: key, imageUrl: publicUrl });
+                      toast({ title: `${imageType === 'plant' ? 'Plant' : 'Bronze'} image uploaded!` });
+                    } catch (err: any) {
+                      toast({ variant: "destructive", title: "Upload failed", description: err.message });
+                    }
+                  };
+                  
+                  return (
                   <Card key={specimen.id} className="overflow-hidden" data-testid={`card-${specimen.id}`}>
-                    <div className="aspect-square relative bg-muted overflow-hidden">
-                      {customImages[specimen.id] ? (
-                        <img
-                          src={customImages[specimen.id]}
-                          alt={specimen.name}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        <div className="w-full h-full flex items-center justify-center bg-muted">
-                          <span className="text-muted-foreground text-sm">No image uploaded</span>
+                    <div className="p-4 space-y-4">
+                      <h3 className="font-medium text-sm">{specimen.name}</h3>
+                      
+                      {/* Plant Image */}
+                      <div className="space-y-2">
+                        <p className="text-xs text-patina font-medium">Plant (Original)</p>
+                        <div className="aspect-video relative bg-muted rounded overflow-hidden">
+                          {customImages[plantKey] ? (
+                            <img src={customImages[plantKey]} alt={`${specimen.name} plant`} className="w-full h-full object-cover" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <span className="text-muted-foreground text-xs">No plant image</span>
+                            </div>
+                          )}
                         </div>
-                      )}
-                    </div>
-
-                    <div className="p-4">
-                      <h3 className="font-medium mb-3 text-sm">{specimen.name}</h3>
-
-                      <div className="flex gap-2">
-                        <label className="flex-1">
-                          <Button
-                            asChild
-                            variant="outline"
-                            size="sm"
-                            className="w-full cursor-pointer flex items-center gap-2"
-                            data-testid={`button-upload-${specimen.id}`}
-                          >
-                            <span className="cursor-pointer flex items-center gap-2">
-                              <Upload className="w-4 h-4" />
-                              Upload
-                            </span>
-                            <input
-                              type="file"
-                              accept="image/*"
-                              className="hidden"
-                              onChange={async (e) => {
-                                if (e.target.files?.[0]) {
-                                  const file = e.target.files[0];
-                                  try {
-                                    // Upload via FormData (multipart/form-data)
-                                    const formData = new FormData();
-                                    formData.append('media-file', file);
-
-                                    const uploadUrl = `/api/admin/upload-specimen-photo`;
-                                    console.log('[Upload] Uploading to:', uploadUrl);
-                                    
-                                    const response = await fetch(uploadUrl, {
-                                      method: 'POST',
-                                      body: formData,
-                                    });
-                                    
-                                    console.log('[Upload] Response status:', response.status);
-                                    
-                                    if (!response.ok) {
-                                      const errorData = await response.json();
-                                      console.error('[Upload] Error response:', errorData);
-                                      throw new Error(errorData.error || `HTTP ${response.status}`);
-                                    }
-                                    
-                                    const { publicUrl } = await response.json();
-                                    console.log('[Upload] Success! URL:', publicUrl);
-                                    
-                                    // Update UI immediately
-                                    const updated = { ...customImages, [specimen.id]: publicUrl };
-                                    setCustomImages(updated);
-                                    
-                                    // Save to database
-                                    saveSpecimenPhoto.mutate({ specimenKey: specimen.id, imageUrl: publicUrl });
-                                  } catch (err: any) {
-                                    console.error('[Upload] Error:', err.message);
-                                    toast({ 
-                                      variant: "destructive", 
-                                      title: "Upload failed", 
-                                      description: err.message || "Failed to upload image"
-                                    });
-                                  }
-                                }
-                              }}
+                        <div className="flex gap-2">
+                          <label className="flex-1 cursor-pointer">
+                            <input 
+                              type="file" 
+                              accept="image/*" 
+                              className="hidden" 
+                              onChange={(e) => e.target.files?.[0] && uploadImage(e.target.files[0], 'plant')} 
+                              data-testid={`input-upload-${plantKey}`}
                             />
-                          </Button>
-                        </label>
-
-                        {customImages[specimen.id] && (
-                          <Button
-                            onClick={() => {
-                              const updated = { ...customImages };
-                              delete updated[specimen.id];
-                              setCustomImages(updated);
-                              // Delete from database
-                              deleteSpecimenPhoto.mutate(specimen.id);
-                            }}
-                            variant="ghost"
-                            size="sm"
-                            data-testid={`button-clear-${specimen.id}`}
-                          >
-                            <Trash2 className="w-4 h-4" />
-                          </Button>
-                        )}
+                            <div className="flex items-center justify-center gap-1 w-full h-8 px-3 text-xs border rounded-md bg-background hover:bg-muted transition-colors">
+                              <Upload className="w-3 h-3" />
+                              Upload Plant
+                            </div>
+                          </label>
+                          {customImages[plantKey] && (
+                            <Button onClick={() => { setCustomImages(prev => { const u = {...prev}; delete u[plantKey]; return u; }); deleteSpecimenPhoto.mutate(plantKey); }} variant="ghost" size="sm" className="text-destructive" data-testid={`button-delete-${plantKey}`}><Trash2 className="w-3 h-3" /></Button>
+                          )}
+                        </div>
                       </div>
-
-                      {customImages[specimen.id] && (
-                        <p className="text-xs text-green-600 dark:text-green-400 mt-2">
-                          ✓ Custom image loaded
-                        </p>
-                      )}
+                      
+                      {/* Bronze Image */}
+                      <div className="space-y-2">
+                        <p className="text-xs text-bronze font-medium">Bronze (Casting)</p>
+                        <div className="aspect-video relative bg-muted rounded overflow-hidden">
+                          {customImages[bronzeKey] ? (
+                            <img src={customImages[bronzeKey]} alt={`${specimen.name} bronze`} className="w-full h-full object-cover" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center">
+                              <span className="text-muted-foreground text-xs">No bronze image</span>
+                            </div>
+                          )}
+                        </div>
+                        <div className="flex gap-2">
+                          <label className="flex-1 cursor-pointer">
+                            <input 
+                              type="file" 
+                              accept="image/*" 
+                              className="hidden" 
+                              onChange={(e) => e.target.files?.[0] && uploadImage(e.target.files[0], 'bronze')} 
+                              data-testid={`input-upload-${bronzeKey}`}
+                            />
+                            <div className="flex items-center justify-center gap-1 w-full h-8 px-3 text-xs border rounded-md bg-background hover:bg-muted transition-colors">
+                              <Upload className="w-3 h-3" />
+                              Upload Bronze
+                            </div>
+                          </label>
+                          {customImages[bronzeKey] && (
+                            <Button onClick={() => { setCustomImages(prev => { const u = {...prev}; delete u[bronzeKey]; return u; }); deleteSpecimenPhoto.mutate(bronzeKey); }} variant="ghost" size="sm" className="text-destructive" data-testid={`button-delete-${bronzeKey}`}><Trash2 className="w-3 h-3" /></Button>
+                          )}
+                        </div>
+                      </div>
                     </div>
                   </Card>
-                ))}
+                  );
+                })}
               </div>
-              </div>
+            </div>
             </TabsContent>
 
-            {/* Workshops Tab */}
+            {/* Workshops Tab - placeholder */}
             <TabsContent value="workshops" className="mt-6">
-              <div>
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="font-serif text-2xl font-bold">Workshop Dates</h2>
-                <Dialog open={showWorkshopDialog} onOpenChange={setShowWorkshopDialog}>
-                  <DialogTrigger asChild>
-                    <Button className="gap-2" data-testid="button-add-workshop">
-                      <Plus className="w-4 h-4" />
-                      Add Date
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>Add Workshop Date</DialogTitle>
-                      <DialogDescription>Schedule a new workshop date</DialogDescription>
-                    </DialogHeader>
-                    <div className="space-y-4">
-                      <div className="space-y-2">
-                        <Label htmlFor="workshop-date">Date</Label>
-                        <Input id="workshop-date" type="date" value={workshopForm.date} onChange={(e) => setWorkshopForm({...workshopForm, date: e.target.value})} data-testid="input-workshop-date" />
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="workshop-start-time">Start Time</Label>
-                          <Input id="workshop-start-time" type="time" value={workshopForm.startTime} onChange={(e) => setWorkshopForm({...workshopForm, startTime: e.target.value})} data-testid="input-workshop-start-time" />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="workshop-end-time">End Time</Label>
-                          <Input id="workshop-end-time" type="time" value={workshopForm.endTime} onChange={(e) => setWorkshopForm({...workshopForm, endTime: e.target.value})} data-testid="input-workshop-end-time" />
-                        </div>
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="space-y-2">
-                          <Label htmlFor="workshop-max">Max Participants</Label>
-                          <Input id="workshop-max" type="number" value={workshopForm.maxParticipants} onChange={(e) => setWorkshopForm({...workshopForm, maxParticipants: e.target.value})} data-testid="input-workshop-max" />
-                        </div>
-                        <div className="space-y-2">
-                          <Label htmlFor="workshop-deposit">Deposit (cents)</Label>
-                          <Input id="workshop-deposit" type="number" value={workshopForm.depositAmount} onChange={(e) => setWorkshopForm({...workshopForm, depositAmount: e.target.value})} data-testid="input-workshop-deposit" />
-                        </div>
-                      </div>
-                      <div className="space-y-2">
-                        <Label htmlFor="workshop-location">Location</Label>
-                        <Input id="workshop-location" value={workshopForm.location} onChange={(e) => setWorkshopForm({...workshopForm, location: e.target.value})} data-testid="input-workshop-location" />
-                      </div>
-                    </div>
-                    <DialogFooter>
-                      <Button variant="outline" onClick={() => setShowWorkshopDialog(false)}>Cancel</Button>
-                      <Button onClick={() => createWorkshopDate.mutate({ date: workshopForm.date, startTime: workshopForm.startTime, endTime: workshopForm.endTime, maxParticipants: parseInt(workshopForm.maxParticipants), depositAmount: parseInt(workshopForm.depositAmount), location: workshopForm.location })} disabled={createWorkshopDate.isPending} data-testid="button-save-workshop">
-                        {createWorkshopDate.isPending ? "Adding..." : "Add Date"}
-                      </Button>
-                    </DialogFooter>
-                  </DialogContent>
-                </Dialog>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {workshopDates?.map((date: any) => (
-                  <Card key={date.id} className="bg-card border-card-border p-4">
-                    <div className="flex items-center justify-between mb-3">
-                      <Badge variant={date.status === 'fully_booked' ? 'destructive' : date.status === 'available' ? 'default' : 'outline'}>{date.status}</Badge>
-                      <span className="text-sm text-muted-foreground">{date.currentParticipants}/{date.maxParticipants} spots</span>
-                    </div>
-                    <h3 className="font-semibold">{new Date(date.date).toLocaleDateString('en-ZA', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}</h3>
-                    <p className="text-sm text-muted-foreground mt-1">{date.startTime} - {date.endTime}</p>
-                    <p className="text-sm text-muted-foreground">{date.location}</p>
-                    <p className="text-sm font-semibold text-accent-gold mt-2">Deposit: R{(date.depositAmount / 100).toLocaleString()}</p>
-                  </Card>
-                ))}
-                {(!workshopDates || workshopDates.length === 0) && (
-                  <Card className="col-span-full bg-card border-card-border p-12 text-center">
-                    <Calendar className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
-                    <p className="text-muted-foreground">No workshop dates scheduled. Add your first date above.</p>
-                  </Card>
-                )}
-              </div>
+              <div className="text-center py-12 text-muted-foreground">
+                Workshop management coming soon
               </div>
             </TabsContent>
+
           </Tabs>
         </div>
       </div>
-      
       <Footer />
     </>
   );
 }
+

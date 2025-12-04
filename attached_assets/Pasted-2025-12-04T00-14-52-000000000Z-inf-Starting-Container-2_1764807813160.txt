@@ -1,0 +1,205 @@
+2025-12-04T00:14:52.000000000Z [inf]  Starting Container
+2025-12-04T00:14:54.968279533Z [inf]  [Init] Founder: 50 remaining, Patron: 50 remaining
+2025-12-04T00:14:54.968292501Z [inf]  [Supabase Auth] Authentication configured
+2025-12-04T00:14:54.968300468Z [inf]  12:14:53 AM [express] serving on port 8080
+2025-12-04T00:14:54.968424513Z [inf]  [Mailchimp] Integration configured
+2025-12-04T00:14:54.968432107Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T00:14:54.968438239Z [inf]  [Init] Found 2 existing seats
+2025-12-04T00:15:34.667547951Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T00:15:34.667553862Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T00:15:34.667559637Z [inf]  12:15:25 AM [express] GET /api/prelaunch/stats 304 in 272ms :: {"totalReserved":0,"founderDeposits":0…
+2025-12-04T00:15:34.667565117Z [inf]  12:15:25 AM [express] GET /api/seats/availability 304 in 327ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-04T00:15:37.453709651Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T00:15:37.453716479Z [inf]  12:15:37 AM [express] GET /api/auth/user 304 in 361ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-04T00:15:38.493714967Z [inf]  12:15:38 AM [express] GET /api/prelaunch/stats 304 in 98ms :: {"totalReserved":0,"founderDeposits":0,…
+2025-12-04T00:15:38.493721837Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T00:15:38.565417889Z [inf]  12:15:38 AM [express] GET /api/seats/availability 304 in 317ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-04T00:15:41.423352085Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T00:15:41.423360533Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T00:15:41.423368554Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T00:15:41.423375246Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T00:15:41.423386632Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T00:15:41.423393051Z [inf]  [Storage] Found 19 image files
+2025-12-04T00:15:41.423395365Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T00:15:41.423405773Z [inf]  12:15:41 AM [express] GET /api/admin/content 304 in 170ms :: []
+2025-12-04T00:15:41.423414365Z [inf]  12:15:41 AM [express] GET /api/admin/specimen-customizations 304 in 238ms :: [{"id":"034bacee-18e5-4a…
+2025-12-04T00:15:41.477653776Z [inf]  12:15:41 AM [express] GET /api/admin/media-storage-files 200 in 319ms :: [{"id":"1764681915772-202511…
+2025-12-04T00:16:01.577396125Z [inf]  [ImageProxy] Attempting to download: media-1764644712771-1764644713163-photo.jpg
+2025-12-04T00:16:01.577403279Z [inf]  [ImageProxy] Attempting to download: media-1764645930305-1764645930019-photo.jpg
+2025-12-04T00:16:01.577414244Z [inf]  [ImageProxy] Attempting to download: media-1764644787727-1764644790065-photo.jpg
+2025-12-04T00:16:01.577423087Z [inf]  12:15:55 AM [express] GET /api/image-proxy 200 in 108ms
+2025-12-04T00:16:01.577432246Z [inf]  [ImageProxy] Attempting to download: media-1764644481941-1764644483746-photo.jpg
+2025-12-04T00:16:01.577441931Z [inf]  [ImageProxy] Attempting to download: media-1764644610996-1764644612061-photo.jpg
+2025-12-04T00:16:01.577450858Z [inf]  [ImageProxy] Attempting to download: media-1764644503779-1764644503207-photo.jpg
+2025-12-04T00:16:01.577459512Z [inf]  [ImageProxy] Attempting to download: media-1764645613387-1764645613117-photo.jpg
+2025-12-04T00:16:01.577468304Z [inf]  12:15:55 AM [express] GET /api/image-proxy 200 in 120ms
+2025-12-04T00:16:01.577474951Z [inf]  12:15:55 AM [express] GET /api/image-proxy 200 in 265ms
+2025-12-04T00:16:01.577482994Z [inf]  [ImageProxy] Attempting to download: media-1764646687915-1764646688353-photo.jpg
+2025-12-04T00:16:01.577493799Z [inf]  12:15:55 AM [express] GET /api/image-proxy 200 in 324ms
+2025-12-04T00:16:01.577500712Z [inf]  [ImageProxy] Attempting to download: media-1764651432583-1764651433953-photo.jpg
+2025-12-04T00:16:01.577513810Z [inf]  12:15:55 AM [express] GET /api/image-proxy 304 in 78ms
+2025-12-04T00:16:01.577522515Z [inf]  12:15:55 AM [express] GET /api/image-proxy 304 in 113ms
+2025-12-04T00:16:01.577530993Z [inf]  12:15:55 AM [express] GET /api/media 304 in 854ms :: [{"id":"1764681915772-20251128_120616.jpg","url"…
+2025-12-04T00:16:01.577539831Z [inf]  12:15:56 AM [express] GET /api/image-proxy 200 in 837ms
+2025-12-04T00:16:01.577548610Z [inf]  12:15:56 AM [express] GET /api/image-proxy 200 in 881ms
+2025-12-04T00:16:02.922939574Z [inf]  12:15:56 AM [express] GET /api/image-proxy 200 in 880ms
+2025-12-04T00:16:02.922945198Z [inf]  [ImageProxy] Attempting to download: media-1764644481941-1764644483746-photo.jpg
+2025-12-04T00:16:02.922950453Z [inf]  12:15:58 AM [express] GET /api/image-proxy 304 in 69ms
+2025-12-04T00:16:09.845465671Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T00:16:09.868670010Z [inf]  12:16:09 AM [express] GET /api/auth/user 304 in 272ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-04T00:16:10.751744440Z [inf]  12:16:10 AM [express] GET /api/auth/user 304 in 70ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c",…
+2025-12-04T00:16:41.109240302Z [inf]  [Upload] Received upload request
+2025-12-04T00:16:41.109251301Z [inf]  [Upload] File received: Gemini_Generated_Image_4ipbpv4ipbpv4ipb_result.webp size: 681914 type: image/webp
+2025-12-04T00:16:41.109259056Z [inf]  [Upload] Uploading to Supabase Storage as: 1764807400529-Gemini_Generated_Image_4ipbpv4ipbpv4ipb_result.webp
+2025-12-04T00:16:41.109269076Z [inf]  [Upload] SUPABASE_URL configured: true
+2025-12-04T00:16:41.109291043Z [inf]  [Upload] SUPABASE_SERVICE_ROLE_KEY configured: true
+2025-12-04T00:16:41.232724943Z [inf]  [Upload] Upload successful: {
+2025-12-04T00:16:41.232732245Z [inf]    path: '1764807400529-Gemini_Generated_Image_4ipbpv4ipbpv4ipb_result.webp',
+2025-12-04T00:16:41.232737196Z [inf]    id: 'df5fd36d-89bd-4bdd-814c-65e52111b827',
+2025-12-04T00:16:41.232742082Z [inf]    fullPath: 'specimen-photos/1764807400529-Gemini_Generated_Image_4ipbpv4ipbpv4ipb_result.webp'
+2025-12-04T00:16:41.232749702Z [inf]  }
+2025-12-04T00:16:41.232754081Z [inf]  [Upload] Public URL: https://rcillyhlieikmzeuaghc.supabase.co/storage/v1/object/public/specimen-photos/1764807400529-Gemini_Generated_Image_4ipbpv4ipbpv4ipb_result.webp
+2025-12-04T00:16:41.235752609Z [inf]  12:16:41 AM [express] POST /api/admin/upload-specimen-photo 200 in 2064ms :: {"publicUrl":"https://rc…
+2025-12-04T00:16:41.907628861Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T00:16:41.936872844Z [inf]  12:16:41 AM [express] POST /api/admin/media 201 in 179ms :: {"id":"7d8b2677-6276-4a04-9cde-18cf462fd5…
+2025-12-04T00:16:48.012583996Z [inf]  12:16:47 AM [express] GET /api/auth/user 304 in 135ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-04T00:16:48.091827826Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T00:16:48.091835878Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T00:16:48.096136510Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T00:16:48.098864189Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T00:16:48.098949907Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T00:16:48.098960673Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T00:16:48.170973183Z [inf]  [Storage] Found 20 image files
+2025-12-04T00:16:48.899126145Z [inf]  12:16:48 AM [express] GET /api/admin/content 304 in 191ms :: []
+2025-12-04T00:16:48.899130804Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T00:16:48.899135796Z [inf]  12:16:48 AM [express] GET /api/admin/media-storage-files 200 in 322ms :: [{"id":"1764681915772-202511…
+2025-12-04T00:16:48.899140979Z [inf]  12:16:48 AM [express] GET /api/admin/specimen-customizations 304 in 382ms :: [{"id":"034bacee-18e5-4a…
+2025-12-04T00:16:51.005873198Z [inf]  [ImageProxy] Attempting to download: 1764807400529-Gemini_Generated_Image_4ipbpv4ipbpv4ipb_result.webp
+2025-12-04T00:16:51.035439069Z [inf]  12:16:51 AM [express] GET /api/media 200 in 61ms :: [{"id":"1764681915772-20251128_120616.jpg","url":…
+2025-12-04T00:16:51.068420558Z [inf]  [ImageProxy] Attempting to download: media-1764644503779-1764644503207-photo.jpg
+2025-12-04T00:16:51.068434890Z [inf]  [ImageProxy] Attempting to download: media-1764645613387-1764645613117-photo.jpg
+2025-12-04T00:16:51.071451454Z [inf]  [ImageProxy] Attempting to download: media-1764644787727-1764644790065-photo.jpg
+2025-12-04T00:16:51.076314272Z [inf]  [ImageProxy] Attempting to download: media-1764644610996-1764644612061-photo.jpg
+2025-12-04T00:16:51.078629175Z [inf]  [ImageProxy] Attempting to download: media-1764645930305-1764645930019-photo.jpg
+2025-12-04T00:16:51.115228082Z [inf]  12:16:51 AM [express] GET /api/image-proxy 304 in 49ms
+2025-12-04T00:16:51.183020252Z [inf]  12:16:51 AM [express] GET /api/image-proxy 304 in 96ms
+2025-12-04T00:16:51.183027425Z [inf]  12:16:51 AM [express] GET /api/image-proxy 304 in 104ms
+2025-12-04T00:16:51.215656435Z [inf]  12:16:51 AM [express] GET /api/image-proxy 304 in 139ms
+2025-12-04T00:16:51.215670061Z [inf]  12:16:51 AM [express] GET /api/image-proxy 304 in 134ms
+2025-12-04T00:16:51.883197593Z [inf]  12:16:51 AM [express] GET /api/image-proxy 200 in 771ms
+2025-12-04T00:17:11.476479804Z [err]      at async DatabaseStorage.setPageAsset (file:///app/dist/index.js:1438:22)
+2025-12-04T00:17:11.476493756Z [err]      at async file:///app/dist/index.js:4451:21 {
+2025-12-04T00:17:11.476503503Z [err]    length: 340,
+2025-12-04T00:17:11.476512918Z [err]    severity: 'ERROR',
+2025-12-04T00:17:11.476527336Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T00:17:11.476530337Z [err]    code: '23503',
+2025-12-04T00:17:11.476550621Z [err]    detail: 'Key (asset_id)=(1764775238402-Gemini_Generated_Image_13k8qx13k8qx13k8_result.webp) is not present in table "media_assets".',
+2025-12-04T00:17:11.476552604Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T00:17:11.476564249Z [err]    hint: undefined,
+2025-12-04T00:17:11.476568723Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T00:17:11.476579325Z [err]    position: undefined,
+2025-12-04T00:17:11.476585594Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T00:17:11.476587725Z [err]    internalPosition: undefined,
+2025-12-04T00:17:11.476603424Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T00:17:11.476616867Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T00:17:11.476632125Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T00:17:11.476642213Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T00:17:11.476652530Z [err]  Set page asset error: error: insert or update on table "page_assets" violates foreign key constraint "page_assets_asset_id_fkey"
+2025-12-04T00:17:11.476663539Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T00:17:11.476672952Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T00:17:11.476682827Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T00:17:11.480026886Z [err]    severity: 'ERROR',
+2025-12-04T00:17:11.480031480Z [err]    file: 'ri_triggers.c',
+2025-12-04T00:17:11.480037999Z [err]    code: '23503',
+2025-12-04T00:17:11.480044452Z [err]    line: '2599',
+2025-12-04T00:17:11.480047871Z [err]    detail: 'Key (asset_id)=(1764775238402-Gemini_Generated_Image_13k8qx13k8qx13k8_result.webp) is not present in table "media_assets".',
+2025-12-04T00:17:11.480054841Z [err]    hint: undefined,
+2025-12-04T00:17:11.480060861Z [err]    routine: 'ri_ReportViolation'
+2025-12-04T00:17:11.480063517Z [err]    position: undefined,
+2025-12-04T00:17:11.480068387Z [err]  }
+2025-12-04T00:17:11.480075609Z [inf]  12:17:09 AM [express] POST /api/admin/page-assets 500 in 291ms :: {"message":"insert or update on tab…
+2025-12-04T00:17:11.480081645Z [err]    internalQuery: undefined,
+2025-12-04T00:17:11.480082331Z [err]  Set page asset error: error: insert or update on table "page_assets" violates foreign key constraint "page_assets_asset_id_fkey"
+2025-12-04T00:17:11.480088989Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T00:17:11.480096105Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T00:17:11.480097072Z [err]    where: undefined,
+2025-12-04T00:17:11.480103721Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T00:17:11.480107135Z [err]    schema: 'public',
+2025-12-04T00:17:11.480111062Z [err]      at async DatabaseStorage.setPageAsset (file:///app/dist/index.js:1438:22)
+2025-12-04T00:17:11.480116863Z [err]    table: 'page_assets',
+2025-12-04T00:17:11.480118129Z [err]      at async file:///app/dist/index.js:4451:21 {
+2025-12-04T00:17:11.480125459Z [err]    length: 340,
+2025-12-04T00:17:11.480126157Z [err]    column: undefined,
+2025-12-04T00:17:11.480135810Z [err]    dataType: undefined,
+2025-12-04T00:17:11.480143188Z [err]    constraint: 'page_assets_asset_id_fkey',
+2025-12-04T00:17:11.483120795Z [err]    internalPosition: undefined,
+2025-12-04T00:17:11.483132143Z [err]    internalQuery: undefined,
+2025-12-04T00:17:11.483146849Z [err]    where: undefined,
+2025-12-04T00:17:11.483155262Z [err]    schema: 'public',
+2025-12-04T00:17:11.483162275Z [err]    table: 'page_assets',
+2025-12-04T00:17:11.483169130Z [err]    column: undefined,
+2025-12-04T00:17:11.483173500Z [err]    dataType: undefined,
+2025-12-04T00:17:11.483177833Z [err]    constraint: 'page_assets_asset_id_fkey',
+2025-12-04T00:17:11.483182529Z [err]    file: 'ri_triggers.c',
+2025-12-04T00:17:11.483187622Z [err]    line: '2599',
+2025-12-04T00:17:11.483193243Z [err]    routine: 'ri_ReportViolation'
+2025-12-04T00:17:11.483197608Z [err]  }
+2025-12-04T00:17:11.483201871Z [inf]  12:17:09 AM [express] POST /api/admin/page-assets 500 in 340ms :: {"message":"insert or update on tab…
+2025-12-04T00:17:15.523931835Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T00:17:15.523941693Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T00:17:15.523947731Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T00:17:15.523952966Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T00:17:15.523959982Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T00:17:15.523966295Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T00:17:16.423195057Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T00:17:16.423202383Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T00:17:16.423210207Z [err]  Set page asset error: error: insert or update on table "page_assets" violates foreign key constraint "page_assets_asset_id_fkey"
+2025-12-04T00:17:16.423216857Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T00:17:16.423226068Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T00:17:16.423235013Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T00:17:16.423242046Z [err]      at async DatabaseStorage.setPageAsset (file:///app/dist/index.js:1438:22)
+2025-12-04T00:17:16.423249315Z [err]      at async file:///app/dist/index.js:4451:21 {
+2025-12-04T00:17:16.423256784Z [err]    length: 340,
+2025-12-04T00:17:16.423264456Z [err]    severity: 'ERROR',
+2025-12-04T00:17:16.423273013Z [err]    code: '23503',
+2025-12-04T00:17:16.423280846Z [err]    detail: 'Key (asset_id)=(1764807400529-Gemini_Generated_Image_4ipbpv4ipbpv4ipb_result.webp) is not present in table "media_assets".',
+2025-12-04T00:17:16.423290400Z [err]    hint: undefined,
+2025-12-04T00:17:16.423298271Z [err]    position: undefined,
+2025-12-04T00:17:16.423305599Z [err]    internalPosition: undefined,
+2025-12-04T00:17:16.423313390Z [err]    internalQuery: undefined,
+2025-12-04T00:17:16.423320882Z [err]    where: undefined,
+2025-12-04T00:17:16.423329187Z [err]    schema: 'public',
+2025-12-04T00:17:16.423337703Z [err]    table: 'page_assets',
+2025-12-04T00:17:16.423346494Z [err]    column: undefined,
+2025-12-04T00:17:16.423354496Z [err]    dataType: undefined,
+2025-12-04T00:17:16.423362219Z [err]    constraint: 'page_assets_asset_id_fkey',
+2025-12-04T00:17:16.423370415Z [err]    file: 'ri_triggers.c',
+2025-12-04T00:17:16.423378381Z [err]    line: '2599',
+2025-12-04T00:17:16.423493055Z [err]    detail: 'Key (asset_id)=(1764807400529-Gemini_Generated_Image_4ipbpv4ipbpv4ipb_result.webp) is not present in table "media_assets".',
+2025-12-04T00:17:16.423507019Z [err]    hint: undefined,
+2025-12-04T00:17:16.423513962Z [err]    position: undefined,
+2025-12-04T00:17:16.423520472Z [err]    internalPosition: undefined,
+2025-12-04T00:17:16.423526917Z [err]    internalQuery: undefined,
+2025-12-04T00:17:16.423533941Z [err]    where: undefined,
+2025-12-04T00:17:16.423542837Z [err]    schema: 'public',
+2025-12-04T00:17:16.423543256Z [err]    routine: 'ri_ReportViolation'
+2025-12-04T00:17:16.423553766Z [err]  }
+2025-12-04T00:17:16.423554510Z [err]    table: 'page_assets',
+2025-12-04T00:17:16.423563912Z [err]    column: undefined,
+2025-12-04T00:17:16.423564362Z [inf]  12:17:15 AM [express] POST /api/admin/page-assets 500 in 341ms :: {"message":"insert or update on tab…
+2025-12-04T00:17:16.423574484Z [err]    dataType: undefined,
+2025-12-04T00:17:16.423574772Z [err]  Set page asset error: error: insert or update on table "page_assets" violates foreign key constraint "page_assets_asset_id_fkey"
+2025-12-04T00:17:16.423584940Z [err]      at /app/node_modules/pg-pool/index.js:45:11
+2025-12-04T00:17:16.423587198Z [err]    constraint: 'page_assets_asset_id_fkey',
+2025-12-04T00:17:16.423594290Z [err]      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+2025-12-04T00:17:16.423602141Z [err]      at async file:///app/node_modules/drizzle-orm/node-postgres/session.js:83:22
+2025-12-04T00:17:16.423611618Z [err]      at async DatabaseStorage.setPageAsset (file:///app/dist/index.js:1438:22)
+2025-12-04T00:17:16.423619414Z [err]      at async file:///app/dist/index.js:4451:21 {
+2025-12-04T00:17:16.423628676Z [err]    length: 340,
+2025-12-04T00:17:16.423636331Z [err]    routine: 'ri_ReportViolation'
+2025-12-04T00:17:16.423638389Z [err]    severity: 'ERROR',
+2025-12-04T00:17:16.423646403Z [err]    code: '23503',
+2025-12-04T00:17:16.423651435Z [err]  }
+2025-12-04T00:17:16.423663514Z [inf]  12:17:15 AM [express] POST /api/admin/page-assets 500 in 335ms :: {"message":"insert or update on tab…
+2025-12-04T00:17:16.423673190Z [err]    file: 'ri_triggers.c',
+2025-12-04T00:17:16.423683188Z [err]    line: '2599',
