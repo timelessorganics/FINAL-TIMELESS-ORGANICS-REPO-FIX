@@ -331,18 +331,18 @@ export default function SeasonalGuide() {
             A quick guide to what's showy when in the Western Cape (winter-rainfall region):
           </p>
 
-          <div className="space-y-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {seasonalCalendar.map((season) => (
               <Card key={season.season} className="hover-elevate">
-                <CardHeader>
-                  <CardTitle className="text-bronze">{season.season}</CardTitle>
-                  <CardDescription>{season.months}</CardDescription>
+                <CardHeader className="pb-2">
+                  <CardTitle className="text-bronze text-lg">{season.season}</CardTitle>
+                  <CardDescription className="text-xs">{season.months}</CardDescription>
                 </CardHeader>
-                <CardContent>
-                  <ul className="space-y-2 text-sm text-muted-foreground">
+                <CardContent className="pt-0">
+                  <ul className="space-y-1 text-xs text-muted-foreground">
                     {season.highlights.map((highlight, idx) => (
                       <li key={idx} className="flex items-start gap-2">
-                        <span className="text-bronze mt-1">•</span>
+                        <span className="text-bronze mt-0.5">•</span>
                         <span>{highlight}</span>
                       </li>
                     ))}
@@ -382,28 +382,6 @@ export default function SeasonalGuide() {
 // Seasonal calendar data
 const seasonalCalendar = [
   {
-    season: "Winter",
-    months: "May–August",
-    highlights: [
-      "Proteas kick into full bloom (many species, especially king protea June–October)",
-      "Aloes fire bright red/orange spikes (May–August)",
-      "Leucadendron bracts begin colouring (from April onward)",
-      "Buchus and confetti bush ramp up fragrance",
-      "Restios flower (mostly autumn–winter)",
-    ]
-  },
-  {
-    season: "Spring",
-    months: "September–November",
-    highlights: [
-      "Absolute peak season for colour and diversity",
-      "Pincushions (Leucospermum) in full tilt (many species July–December)",
-      "Geophytes explode: watsonias, ixias, gladioli, babianas",
-      "West Coast annuals (if rain cooperates)",
-      "Late proteas and leucadendrons still showy",
-    ]
-  },
-  {
     season: "Summer",
     months: "December–February",
     highlights: [
@@ -423,6 +401,28 @@ const seasonalCalendar = [
       "Leucadendron bracts begin colouring again",
       "Early preparation for winter bloom season",
       "Woody structures and seed pods become prominent",
+    ]
+  },
+  {
+    season: "Winter",
+    months: "May–August",
+    highlights: [
+      "Proteas kick into full bloom (many species, especially king protea June–October)",
+      "Aloes fire bright red/orange spikes (May–August)",
+      "Leucadendron bracts begin colouring (from April onward)",
+      "Buchus and confetti bush ramp up fragrance",
+      "Restios flower (mostly autumn–winter)",
+    ]
+  },
+  {
+    season: "Spring",
+    months: "September–November",
+    highlights: [
+      "Absolute peak season for colour and diversity",
+      "Pincushions (Leucospermum) in full tilt (many species July–December)",
+      "Geophytes explode: watsonias, ixias, gladioli, babianas",
+      "West Coast annuals (if rain cooperates)",
+      "Late proteas and leucadendrons still showy",
     ]
   },
 ];
