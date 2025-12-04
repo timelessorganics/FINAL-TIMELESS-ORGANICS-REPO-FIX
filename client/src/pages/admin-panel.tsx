@@ -112,7 +112,7 @@ export default function AdminPanel() {
     enabled: activeTab === "overview",
   });
 
-  const { data: codes, refetch: refetchCodes } = useQuery<Code[]>({
+  const { data: codes, refetch: refetchCodes, isLoading: isRefetching } = useQuery<Code[]>({
     queryKey: ["/api/admin/codes"],
     enabled: activeTab === "overview",
   });
@@ -1202,10 +1202,25 @@ export default function AdminPanel() {
                 <Button 
                   size="sm" 
                   variant="outline"
-                  onClick={() => refetchCodes()}
+                  onClick={async () => {
+                    try {
+                      await refetchCodes();
+                      toast({
+                        title: "Codes Refreshed!",
+                        description: "Successfully fetched latest codes.",
+                      });
+                    } catch (err) {
+                      toast({
+                        variant: "destructive",
+                        title: "Refresh Failed",
+                        description: err instanceof Error ? err.message : "Could not refresh codes",
+                      });
+                    }
+                  }}
+                  disabled={isRefetching}
                   data-testid="button-refetch-codes"
                 >
-                  Refetch Codes
+                  {isRefetching ? "Refreshing..." : "Refetch Codes"}
                 </Button>
               </div>
             </div>
