@@ -436,7 +436,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                           <FormItem>
                             <FormLabel className="text-sm font-normal text-muted-foreground">Full Name</FormLabel>
                             <FormControl>
-                              <Input {...field} placeholder="Your Full Name" data-testid="input-full-name" className="border-border/50" />
+                              <Input {...field} data-testid="input-full-name" className="border-border/50" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -450,7 +450,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                           <FormItem>
                             <FormLabel className="text-sm font-normal text-muted-foreground">Email</FormLabel>
                             <FormControl>
-                              <Input {...field} type="email" placeholder="you@example.com" data-testid="input-email" className="border-border/50" />
+                              <Input {...field} type="email" data-testid="input-email" className="border-border/50" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -464,7 +464,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                           <FormItem>
                             <FormLabel className="text-sm font-normal text-muted-foreground">Phone</FormLabel>
                             <FormControl>
-                              <Input {...field} placeholder="082 123 4567" data-testid="input-phone" className="border-border/50" />
+                              <Input {...field} data-testid="input-phone" className="border-border/50" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -478,7 +478,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                           <FormItem>
                             <FormLabel className="text-sm font-normal text-muted-foreground">Delivery Address</FormLabel>
                             <FormControl>
-                              <Textarea {...field} placeholder="123 Main Street, Cape Town, 8001" data-testid="input-address" className="border-border/50 min-h-20" />
+                              <Textarea {...field} data-testid="input-address" className="border-border/50 min-h-20" />
                             </FormControl>
                             <FormMessage />
                           </FormItem>
@@ -515,7 +515,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                                   <FormItem>
                                     <FormLabel className="text-xs font-normal text-muted-foreground">Recipient Name</FormLabel>
                                     <FormControl>
-                                      <Input {...field} placeholder="Gift recipient's full name" data-testid={`input-gift-name-${index + 2}`} className="border-border/50 text-sm" />
+                                      <Input {...field} data-testid={`input-gift-name-${index + 2}`} className="border-border/50 text-sm" />
                                     </FormControl>
                                     <FormMessage />
                                   </FormItem>
@@ -528,7 +528,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                                   <FormItem>
                                     <FormLabel className="text-xs font-normal text-muted-foreground">Recipient Email</FormLabel>
                                     <FormControl>
-                                      <Input {...field} type="email" placeholder="recipient@email.com" data-testid={`input-gift-email-${index + 2}`} className="border-border/50 text-sm" />
+                                      <Input {...field} type="email" data-testid={`input-gift-email-${index + 2}`} className="border-border/50 text-sm" />
                                     </FormControl>
                                     <FormMessage />
                                   </FormItem>
@@ -810,7 +810,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                                   <FormItem>
                                     <FormLabel className="text-xs">Name</FormLabel>
                                     <FormControl>
-                                      <Input {...field} placeholder="Jane Doe" data-testid={`input-gift-name-${i}`} />
+                                      <Input {...field} data-testid={`input-gift-name-${i}`} />
                                     </FormControl>
                                   </FormItem>
                                 )}
@@ -822,7 +822,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                                   <FormItem>
                                     <FormLabel className="text-xs">Email</FormLabel>
                                     <FormControl>
-                                      <Input {...field} type="email" placeholder="jane@example.com" data-testid={`input-gift-email-${i}`} />
+                                      <Input {...field} type="email" data-testid={`input-gift-email-${i}`} />
                                     </FormControl>
                                   </FormItem>
                                 )}
@@ -837,7 +837,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                               <FormItem>
                                 <FormLabel className="text-sm font-normal text-muted-foreground">Personal Message (Optional)</FormLabel>
                                 <FormControl>
-                                  <Textarea {...field} placeholder="Add a personal note..." data-testid="textarea-gift-message" className="min-h-20 text-sm" />
+                                  <Textarea {...field} data-testid="textarea-gift-message" className="min-h-20 text-sm" />
                                 </FormControl>
                               </FormItem>
                             )}
@@ -858,7 +858,6 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                         <Input
                           value={promoCode}
                           onChange={(e) => setPromoCode(e.target.value.toUpperCase())}
-                          placeholder="Enter code"
                           className="font-mono uppercase border-border/50"
                           data-testid="input-promo-code"
                         />

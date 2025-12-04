@@ -128,7 +128,6 @@ export default function SignIn() {
               onChange={(e) => setEmail(e.target.value)}
               required
               data-testid="input-email"
-              placeholder="you@example.com"
             />
           </div>
 
@@ -141,7 +140,6 @@ export default function SignIn() {
               onChange={(e) => setPassword(e.target.value)}
               required
               data-testid="input-password"
-              placeholder="••••••••"
             />
           </div>
 
