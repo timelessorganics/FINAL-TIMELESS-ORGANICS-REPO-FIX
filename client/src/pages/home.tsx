@@ -476,7 +476,7 @@ export default function HomePage() {
               {/* The 100 believers message */}
               <p className="text-base text-white/90 font-light max-w-3xl mx-auto mb-8 leading-relaxed">
                 There are three types of <span className="text-bronze font-medium">investing</span> happening here — and we love the play on words. 
-                You invest financially. We invest your specimen in plaster. Both happen simultaneously. 
+                You invest financially. We invest your specimen in specialised heat-resistant investment material. You get a one-of-a-kind sculpture as an "investment" for your future for generations to come. All three happen simultaneously. 
                 <span className="text-accent-gold font-medium">This is not crowdfunding. This is co-creation.</span>
               </p>
               
