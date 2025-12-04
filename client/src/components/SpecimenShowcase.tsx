@@ -1,10 +1,24 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Calendar, X, ZoomIn, ArrowRight } from "lucide-react";
 import { Link } from "wouter";
 import { specimenStyles, getCurrentSeason, getAvailabilitySymbol, type SpecimenStyle } from "@/lib/specimenAvailability";
+
+// Map admin panel IDs (underscores) to specimenStyles IDs (hyphens)
+const adminToStyleId: Record<string, string> = {
+  'cones_bracts_seedpods': 'cones-bracts-seedpods',
+  'protea_pincushion_blooms_heads': 'protea-pincushion-blooms',
+  'bulb_spikes': 'bulb-spikes',
+  'branches_leaves': 'branches-leaves',
+  'aloe_inflorescence_heads': 'aloe-inflorescence',
+  'flower_heads': 'flower-heads',
+  'erica_sprays': 'erica-sprays',
+  'restios_seedheads_grasses': 'restios-grasses',
+  'small_succulents': 'small-succulents',
+};
 
 // Import specimen images from assets/specimens folder
 import conebracts1 from "../assets/specimens/cone-bracts-1.jpg";
@@ -234,6 +248,22 @@ function getSeasonDisplay(style: SpecimenStyle): string {
 
 export default function SpecimenShowcase() {
   const currentSeason = getCurrentSeason();
+  
+  // Fetch admin-uploaded custom images
+  const { data: customizations } = useQuery<Array<{ specimenKey: string; imageUrl: string }>>({
+    queryKey: ["/api/specimen-customizations"],
+  });
+  
+  // Build map of styleId -> custom image URL
+  const customImageMap: Record<string, string> = {};
+  if (customizations) {
+    customizations.forEach((c) => {
+      const styleId = adminToStyleId[c.specimenKey] || c.specimenKey;
+      if (c.imageUrl) {
+        customImageMap[styleId] = c.imageUrl;
+      }
+    });
+  }
 
   return (
     <section className="space-y-8">
@@ -251,7 +281,12 @@ export default function SpecimenShowcase() {
       {/* Specimen Grid - 9 styles with 3 examples each */}
       <div className="space-y-12">
         {specimenStyles.map((style, index) => {
-          const images = specimenImages[style.id] || [];
+          // Use admin-uploaded image if available, otherwise use static fallback
+          const customImage = customImageMap[style.id];
+          const defaultImages = specimenImages[style.id] || [];
+          const images = customImage 
+            ? [{ plant: customImage, bronze: customImage }] // Admin uploaded single image
+            : defaultImages;
           const seasonAvailability = style[currentSeason];
           const availabilitySymbol = getAvailabilitySymbol(seasonAvailability);
           
