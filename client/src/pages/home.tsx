@@ -500,7 +500,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="font-serif text-2xl font-light text-white mb-3">Our Technical Investment</h3>
                 <p className="text-white/70 leading-relaxed text-base font-light">
-                  We <span className="text-bronze font-light">invest</span> your specimen in a heat-resistant plaster mix, encasing it to withstand 700°C and create your bronze mold.
+                  We "<span className="text-bronze font-medium">invest</span>" your specimen in a heat-resistant plaster mix — this is actually a technical term for encasing a specimen inside a mold. The beauty of the Founding 100 is once you invest, we invest! We can keep these moulds under special conditions for as long as needed. Your bronze castings will be the first 100 ever cast at Timeless Organics.
                 </p>
               </div>
 
