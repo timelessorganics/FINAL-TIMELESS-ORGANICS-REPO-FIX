@@ -134,7 +134,7 @@ export default function SeasonalGuide() {
                   <tr key={specimen.id} className="hover-elevate">
                     <td className="p-4">
                       <span className="font-medium">{specimen.name}</span>
-                      <span className="block text-xs text-muted-foreground mt-1">{specimen.examples}</span>
+                      <span className="block text-xs text-muted-foreground mt-1">{specimen.description}</span>
                     </td>
                     <td className="text-center p-4">
                       <span className={`inline-block w-3 h-3 rounded-full ${getAvailabilityColor(specimen.winter)}`} />
