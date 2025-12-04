@@ -203,6 +203,29 @@ export default function MainLaunch() {
               Before You Invest
             </h3>
 
+            {/* SEASONAL GUIDE NOTICE - Moved to top */}
+            <div className="bg-gradient-to-br from-card/40 via-background to-card/40 rounded-xl border border-border/50 py-6 sm:py-8 px-4 mb-6 sm:mb-8">
+              <div className="text-center">
+                <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4">
+                  <AlertCircle className="w-4 h-4" />
+                  BEFORE YOU INVEST
+                </div>
+                <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mb-4">
+                  Understand Seasonal Availability
+                </h2>
+                <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-light mb-6">
+                  Read our seasonal guide for clarity on specimen seasons and selection criteria before investing.
+                </p>
+                <Link href="/seasonal-guide">
+                  <Button size="lg" className="gap-2 bg-bronze text-background font-semibold" data-testid="button-view-seasonal-guide-top">
+                    <Calendar className="w-5 h-5" />
+                    View Seasonal Guide
+                    <ArrowRight className="w-5 h-5" />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+
             {/* Three Stat Cards */}
             <div className="relative z-30 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
               <Card className="p-6 bg-card/80 border-card-border backdrop-blur-sm">
@@ -278,30 +301,7 @@ export default function MainLaunch() {
             </div>
           </section>
 
-          {/* SEASONAL GUIDE NOTICE - SIMPLE LINK TO FULL PAGE */}
-          <section className="relative z-10 mb-8 sm:mb-12 lg:mb-16 py-6 sm:py-8 lg:py-10 bg-gradient-to-br from-card/40 via-background to-card/40 rounded-xl border border-border/50" data-testid="section-specimen-guide">
-            <div className="text-center px-4">
-              <div className="inline-flex items-center gap-2 px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4">
-                <AlertCircle className="w-4 h-4" />
-                BEFORE YOU INVEST
-              </div>
-              <h2 className="font-serif text-2xl sm:text-3xl md:text-4xl font-light mb-4">
-                Understand Seasonal Availability
-              </h2>
-              <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto font-light mb-6">
-                Read our seasonal guide for clarity on specimen seasons and selection criteria before investing.
-              </p>
-              <Link href="/seasonal-guide">
-                <Button size="lg" className="gap-2 bg-bronze text-background font-semibold" data-testid="button-view-seasonal-guide">
-                  <Calendar className="w-5 h-5" />
-                  View Seasonal Guide
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </Link>
-            </div>
-          </section>
-
-          {/* SEAT SELECTION - NOW AFTER SPECIMEN GUIDE */}
+          {/* SEAT SELECTION */}
           <section id="seats" className="mb-8 sm:mb-12 lg:mb-16 py-8 sm:py-12 lg:py-16 scroll-mt-20" data-testid="section-seats">
             <div className="text-center mb-6 sm:mb-10">
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-light mb-3 sm:mb-4">
