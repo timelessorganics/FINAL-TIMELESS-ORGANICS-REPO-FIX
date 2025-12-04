@@ -546,7 +546,10 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                     <CardHeader className="pb-4">
                       <CardTitle className="text-lg font-medium">Choose Your Specimen Style</CardTitle>
                       <CardDescription className="text-sm">
-                        Select from 9 Cape Fynbos styles — David will personally curate the finest specimen
+                        Select from 9 Cape Fynbos styles — David will personally curate the finest specimen for your chosen style.
+                        <span className="block text-xs text-muted-foreground mt-2">
+                          Not sure? Pick what appeals to you now — you can change your selection anytime from your dashboard before casting begins.
+                        </span>
                         <span className="block text-xs text-bronze mt-1">
                           Current season: {seasonInfo.name} ({seasonInfo.months})
                         </span>
