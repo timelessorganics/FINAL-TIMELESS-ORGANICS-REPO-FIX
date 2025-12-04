@@ -1007,8 +1007,14 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getManualHoldsCount(seatType: 'founder' | 'patron'): Promise<number> {
-    const holds = await db.select().from(manualHolds).where(eq(manualHolds.seatType, seatType));
-    return holds.length;
+    try {
+      const holds = await db.select().from(manualHolds).where(eq(manualHolds.seatType, seatType));
+      console.log(`[DB] Manual holds for ${seatType}: ${holds.length}`);
+      return holds.length;
+    } catch (err: any) {
+      console.log(`[DB] Error counting manual holds for ${seatType}:`, err.message);
+      return 0;
+    }
   }
 }
 

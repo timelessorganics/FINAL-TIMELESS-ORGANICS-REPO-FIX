@@ -410,8 +410,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       try {
         founderManualHolds = await storage.getManualHoldsCount('founder');
         patronManualHolds = await storage.getManualHoldsCount('patron');
+        console.log(`[ManualHolds] Founder: ${founderManualHolds}, Patron: ${patronManualHolds}`);
       } catch (holdError: any) {
-        console.log(`[ManualHolds] Table not available, skipping manual hold adjustments`);
+        console.log(`[ManualHolds] Error getting counts:`, holdError.message);
       }
 
       const seats = await storage.getSeats();
@@ -421,9 +422,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         const currentAvailable = seat.totalAvailable - seat.sold;
         const reservedForType = seat.type === "founder" ? founderReservations : patronReservations;
         const manualHoldsForType = seat.type === "founder" ? founderManualHolds : patronManualHolds;
+        const adjusted = Math.max(0, currentAvailable - reservedForType - manualHoldsForType);
+        console.log(`[Availability] ${seat.type}: total=${seat.totalAvailable}, sold=${seat.sold}, current=${currentAvailable}, reserved=${reservedForType}, holds=${manualHoldsForType}, available=${adjusted}`);
         return {
           ...seat,
-          available: Math.max(0, currentAvailable - reservedForType - manualHoldsForType),
+          available: adjusted,
           reservedCount: reservedForType,
           manualHolds: manualHoldsForType
         };
