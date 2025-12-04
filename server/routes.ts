@@ -480,6 +480,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
         if (!seat) {
           return res.status(404).json({ message: "Seat type not found" });
         }
+        
+        // Debug fire sale data
+        console.log(`[Purchase] Seat data for ${seatType}:`, {
+          price: seat.price,
+          fireSalePrice: seat.fireSalePrice,
+          fireSaleEndsAt: seat.fireSaleEndsAt,
+          fireSaleEndsAtType: typeof seat.fireSaleEndsAt,
+          now: new Date().toISOString(),
+          isFireSaleActive: seat.fireSalePrice && seat.fireSaleEndsAt && new Date(seat.fireSaleEndsAt) > new Date()
+        });
 
         const available = seat.totalAvailable - seat.sold;
         if (available <= 0) {
