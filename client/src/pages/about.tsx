@@ -34,40 +34,95 @@ export default function AboutPage() {
           </section>
 
           <section className="prose prose-invert prose-lg max-w-none mb-16">
-            <div className="space-y-6 text-muted-foreground leading-relaxed">
-              <p className="text-xl text-foreground/90 font-light first-letter:text-5xl first-letter:font-serif first-letter:text-accent-gold first-letter:mr-1 first-letter:float-left first-letter:leading-none">
-                Timeless Organics represents 25 years of precision casting expertise, refined through 
-                mastery of the most exacting metalwork discipline: dental technology. For 15 years in 
-                London's prestigious West End, I crafted microscopic prosthetics for the top echelon of 
-                medicine and dentistry — work where a fraction of a millimeter determines success or failure.
-              </p>
+            <div className="space-y-8 text-muted-foreground leading-relaxed">
+              
+              <div className="text-center mb-8">
+                <p className="text-accent-gold text-lg font-medium italic">Built From Zero. Built To Last.</p>
+              </div>
 
-              <p>
-                I owned my own laboratory for three years, serving an elite clientele who demanded perfection. 
-                That precision — the ability to capture and reproduce organic forms with absolute accuracy — 
-                became the foundation for bronze sculpture. I spent years making botanical castings for an 
-                established artist, learning the ancient lost-wax process while perfecting modern techniques.
-              </p>
+              <div className="space-y-4">
+                <h3 className="font-serif text-2xl font-bold text-foreground">Why This Foundry Exists</h3>
+                <p className="text-lg">
+                  Two parents, two jobs lost overnight. After nearly a decade creating world-class botanical bronzes 
+                  for someone else—and 25 years mastering precision casting—our family was suddenly left with zero. 
+                  No contract. No safety net. No Plan B.
+                </p>
+                <p>
+                  Quitting wasn't an option. We kept building, brick by brick, on stubborn faith and ridiculous hard work. 
+                  Today, the studio is 90% finished. We did the heavy lifting alone, but the final 10% happens with the 
+                  people who believe in what we're doing. This is not crowdfunding; it is co-creation. If you know our 
+                  story, you know exactly why this matters.
+                </p>
+              </div>
 
-              <p>
-                Now, I'm building something of my own: a foundry dedicated to preserving South Africa's 
-                extraordinary Cape Fynbos kingdom in permanent bronze. Proteas. Ericas. Restios. Succulents. 
-                Plants found nowhere else on Earth, evolved over millions of years, now threatened by climate 
-                change and development.
-              </p>
+              <div className="space-y-4">
+                <h3 className="font-serif text-2xl font-bold text-foreground">What We Are Building</h3>
+                <p>
+                  Timeless Organics is a focused foundry in Kommetjie dedicated to preserving South Africa's Cape Fynbos 
+                  in bronze. We take forms that are fleeting in nature—Proteas, Ericas, Restios, and succulents—and cast 
+                  them so they can outlast us all.
+                </p>
+                <p>
+                  Every piece begins with a real specimen. Through the investment and burnout process, the plant is 
+                  sacrificed; only its perfect negative remains. We pour bronze into that space to capture the exact 
+                  geometry of growth, keeping every vein and cell-level texture forever.
+                </p>
+              </div>
 
-              <p>
-                Every casting is an act of preservation. The organic matter burns away completely in the 
-                investment process, leaving only its perfect impression in bronze. What remains is permanent — 
-                every vein, every texture, every curve held forever in metal that will outlive us all.
-              </p>
+              <div className="space-y-4">
+                <h3 className="font-serif text-2xl font-bold text-foreground">Why You Can Trust The Craft</h3>
+                <p>We are applying clinical discipline to art. This foundry is built on:</p>
+                <ul className="space-y-3 list-none pl-0">
+                  <li className="flex items-start gap-3">
+                    <span className="text-accent-gold font-bold">25 Years of Precision Casting:</span>
+                    <span>Deep technical experience in high-tolerance metalwork.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-accent-gold font-bold">15 Years in London's West End:</span>
+                    <span>A background in elite dental labs where a fraction of a millimeter determines success or failure.</span>
+                  </li>
+                  <li className="flex items-start gap-3">
+                    <span className="text-accent-gold font-bold">Complex Botanical Expertise:</span>
+                    <span>Years spent solving the hardest problems in sculpture to achieve faithful organic reproduction.</span>
+                  </li>
+                </ul>
+                <p>
+                  We built labs, ran teams, and delivered for demanding clients. Now, that same precision is redirected 
+                  toward art that matters.
+                </p>
+              </div>
 
-              <p className="text-foreground/90 font-medium">
-                But this isn't about hiding knowledge — it's about sharing it. My passion has always been 
-                teaching. While others guard their techniques, I believe in empowering people with these skills. 
-                The Founding 100 workshops will give you hands-on access to 25 years of expertise. This is 
-                craft as conservation, art as archive, and knowledge as a gift passed forward.
-              </p>
+              <div className="space-y-4">
+                <h3 className="font-serif text-2xl font-bold text-foreground">What We Believe</h3>
+                <p>
+                  We believe in open-handed craft. We don't hoard knowledge or gatekeep; we teach. We believe in art as 
+                  an archive, ensuring each casting preserves a living form. Most importantly, we believe in community. 
+                  The "Founding 100" isn't a gimmick; it is how we finish the foundry and keep prices sane for future 
+                  workshops and commissions.
+                </p>
+              </div>
+
+              <div className="space-y-4">
+                <h3 className="font-serif text-2xl font-bold text-foreground">Who Is Behind It</h3>
+                <p>
+                  <span className="text-foreground font-medium">David Junor — Sculptor & Founder.</span> I am a precision 
+                  caster by training and a teacher by instinct. I am building this foundry with my wife and our community 
+                  because the work matters. We stand for honest craft, durable beauty, and a deep respect for the wild 
+                  plants that make this place unlike anywhere else on Earth.
+                </p>
+              </div>
+
+              <div className="space-y-4 border-t border-accent-gold/30 pt-8">
+                <h3 className="font-serif text-2xl font-bold text-accent-gold">An Invitation</h3>
+                <p className="text-foreground/90 italic">
+                  If you have ever been forced to start again, you understand this feeling: don't quit.
+                </p>
+                <p className="text-foreground/90 font-medium">
+                  If you believe in what we are making, join the Founding 100 or book a workshop. Help us finish the 
+                  last 10%—and take home a piece of South African botany that will outlive us both.
+                </p>
+              </div>
+
             </div>
           </section>
 
