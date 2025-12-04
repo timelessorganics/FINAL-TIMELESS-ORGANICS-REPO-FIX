@@ -1,0 +1,288 @@
+2025-12-04T04:45:29.235866507Z [inf]  scheduling build on Metal builder "builder-zwnsbu"
+2025-12-04T04:46:00.120291857Z [inf]  receiving snapshot
+2025-12-04T04:46:30.120607964Z [inf]  receiving snapshot
+2025-12-04T04:47:00.120716219Z [inf]  receiving snapshot
+2025-12-04T04:47:30.120942833Z [inf]  receiving snapshot
+2025-12-04T04:47:31.721223473Z [inf]  [snapshot] received sha256:fbe20a184bf5c7980c115706a135864122daaec7ff6214139dad7dd840051829 md5:e8f5b8adc5946a0e79e167417d04473f
+2025-12-04T04:47:31.721302081Z [inf]  receiving snapshot
+2025-12-04T04:47:34.019872871Z [dbg]  found 'railway.json' at 'railway.json'
+2025-12-04T04:47:34.019968445Z [inf]  analyzing snapshot
+2025-12-04T04:47:57.196791969Z [inf]  uploading snapshot
+2025-12-04T04:48:02.868722500Z [inf]  scheduling build on Metal builder "builder-zwnsbu"
+2025-12-04T04:48:15.300473183Z [inf]  fetched snapshot sha256:fbe20a184bf5c7980c115706a135864122daaec7ff6214139dad7dd840051829 (549 MB bytes)
+2025-12-04T04:48:15.300515186Z [inf]  fetching snapshot
+2025-12-04T04:48:18.723785318Z [inf]  unpacking archive
+2025-12-04T04:48:19.395916649Z [inf]  using build driver nixpacks-v1.41.0
+2025-12-04T04:48:20.168302112Z [inf]  
+2025-12-04T04:48:20.168328061Z [inf]  ╔═════════════════════ Nixpacks v1.41.0 ═════════════════════╗
+2025-12-04T04:48:20.168331245Z [inf]  ║ setup      │ nodejs_20, npm-9_x, openssl                   ║
+2025-12-04T04:48:20.168334731Z [inf]  ║────────────────────────────────────────────────────────────║
+2025-12-04T04:48:20.168335402Z [inf]  ║ caddy      │ pkgs: caddy                                   ║
+2025-12-04T04:48:20.168336002Z [inf]  ║            │ cmds: caddy fmt --overwrite /assets/Caddyfile ║
+2025-12-04T04:48:20.168336603Z [inf]  ║────────────────────────────────────────────────────────────║
+2025-12-04T04:48:20.168337214Z [inf]  ║ install    │ npm ci                                        ║
+2025-12-04T04:48:20.168337605Z [inf]  ║────────────────────────────────────────────────────────────║
+2025-12-04T04:48:20.168337985Z [inf]  ║ build      │ npm run build                                 ║
+2025-12-04T04:48:20.168338436Z [inf]  ║────────────────────────────────────────────────────────────║
+2025-12-04T04:48:20.168338897Z [inf]  ║ start      │ NODE_ENV=production node dist/index.js        ║
+2025-12-04T04:48:20.168339468Z [inf]  ╚════════════════════════════════════════════════════════════╝
+2025-12-04T04:48:20.168339878Z [inf]  
+2025-12-04T04:48:20.169366819Z [inf]  
+2025-12-04T04:48:20.169389413Z [inf]  Saved output to:
+2025-12-04T04:48:20.169392207Z [inf]    snapshot-target-unpack
+2025-12-04T04:48:20.982539027Z [inf]  [internal] load build definition from Dockerfile
+2025-12-04T04:48:20.982579879Z [inf]  [internal] load build definition from Dockerfile
+2025-12-04T04:48:20.982601291Z [inf]  [internal] load build definition from Dockerfile
+2025-12-04T04:48:21.267802314Z [inf]  [internal] load build definition from Dockerfile
+2025-12-04T04:48:21.308288670Z [inf]  [internal] load metadata for ghcr.io/railwayapp/nixpacks:ubuntu-1745885067
+2025-12-04T04:48:21.646803756Z [inf]  [internal] load metadata for ghcr.io/railwayapp/nixpacks:ubuntu-1745885067
+2025-12-04T04:48:21.647174041Z [inf]  [internal] load .dockerignore
+2025-12-04T04:48:21.647301252Z [inf]  [internal] load .dockerignore
+2025-12-04T04:48:21.647470666Z [inf]  [internal] load .dockerignore
+2025-12-04T04:48:21.813914578Z [inf]  [internal] load .dockerignore
+2025-12-04T04:48:21.848937145Z [wrn]  SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "MAILCHIMP_API_KEY") (line 13)(https://docs.docker.com/go/dockerfile/rule/secrets-used-in-arg-or-env/)
+ details: Sensitive data should not be used in the ARG or ENV commands
+
+2025-12-04T04:48:21.848940380Z [wrn]  SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "PAYFAST_MERCHANT_KEY") (line 13)(https://docs.docker.com/go/dockerfile/rule/secrets-used-in-arg-or-env/)
+ details: Sensitive data should not be used in the ARG or ENV commands
+
+2025-12-04T04:48:21.848941011Z [wrn]  SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "RAILWAY_TOKEN") (line 13)(https://docs.docker.com/go/dockerfile/rule/secrets-used-in-arg-or-env/)
+ details: Sensitive data should not be used in the ARG or ENV commands
+
+2025-12-04T04:48:21.848941322Z [wrn]  SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "SESSION_SECRET") (line 13)(https://docs.docker.com/go/dockerfile/rule/secrets-used-in-arg-or-env/)
+ details: Sensitive data should not be used in the ARG or ENV commands
+
+2025-12-04T04:48:21.848941722Z [wrn]  SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "SUPABASE_JWT_SECRET") (line 13)(https://docs.docker.com/go/dockerfile/rule/secrets-used-in-arg-or-env/)
+ details: Sensitive data should not be used in the ARG or ENV commands
+
+2025-12-04T04:48:21.848942013Z [wrn]  SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ARG "SUPABASE_SERVICE_ROLE_KEY") (line 13)(https://docs.docker.com/go/dockerfile/rule/secrets-used-in-arg-or-env/)
+ details: Sensitive data should not be used in the ARG or ENV commands
+
+2025-12-04T04:48:21.850142053Z [wrn]  SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "MAILCHIMP_API_KEY") (line 14)(https://docs.docker.com/go/dockerfile/rule/secrets-used-in-arg-or-env/)
+ details: Sensitive data should not be used in the ARG or ENV commands
+
+2025-12-04T04:48:21.850157146Z [wrn]  SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "PAYFAST_MERCHANT_KEY") (line 14)(https://docs.docker.com/go/dockerfile/rule/secrets-used-in-arg-or-env/)
+ details: Sensitive data should not be used in the ARG or ENV commands
+
+2025-12-04T04:48:21.850249374Z [wrn]  SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "RAILWAY_TOKEN") (line 14)(https://docs.docker.com/go/dockerfile/rule/secrets-used-in-arg-or-env/)
+ details: Sensitive data should not be used in the ARG or ENV commands
+
+2025-12-04T04:48:21.850250856Z [wrn]  SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "SESSION_SECRET") (line 14)(https://docs.docker.com/go/dockerfile/rule/secrets-used-in-arg-or-env/)
+ details: Sensitive data should not be used in the ARG or ENV commands
+
+2025-12-04T04:48:21.850251517Z [wrn]  SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "SUPABASE_JWT_SECRET") (line 14)(https://docs.docker.com/go/dockerfile/rule/secrets-used-in-arg-or-env/)
+ details: Sensitive data should not be used in the ARG or ENV commands
+
+2025-12-04T04:48:21.850251998Z [wrn]  SecretsUsedInArgOrEnv: Do not use ARG or ENV instructions for sensitive data (ENV "SUPABASE_SERVICE_ROLE_KEY") (line 14)(https://docs.docker.com/go/dockerfile/rule/secrets-used-in-arg-or-env/)
+ details: Sensitive data should not be used in the ARG or ENV commands
+
+2025-12-04T04:48:21.850335203Z [wrn]  UndefinedVar: Usage of undefined variable '$NIXPACKS_PATH' (line 24)(https://docs.docker.com/go/dockerfile/rule/undefined-var/)
+ details: Variables should be defined before their use
+
+2025-12-04T04:48:21.856134254Z [inf]  [stage-0 11/15] RUN --mount=type=cache,id=s/bed39136-4587-4f39-b184-163e7b21f95b-/root/npm,target=/root/.npm npm ci
+2025-12-04T04:48:21.856137259Z [inf]  [stage-0 10/15] COPY . /app/.
+2025-12-04T04:48:21.856138360Z [inf]  [stage-0  9/15] RUN  caddy fmt --overwrite /assets/Caddyfile
+2025-12-04T04:48:21.856139221Z [inf]  [stage-0  6/15] RUN nix-env -if .nixpacks/nixpkgs-ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7.nix && nix-collect-garbage -d
+2025-12-04T04:48:21.856139722Z [inf]  [stage-0  7/15] COPY .nixpacks/assets /assets/
+2025-12-04T04:48:21.856140023Z [inf]  [stage-0 13/15] RUN --mount=type=cache,id=s/bed39136-4587-4f39-b184-163e7b21f95b-node_modules/cache,target=/app/node_modules/.cache npm run build
+2025-12-04T04:48:21.856140303Z [inf]  [stage-0 15/15] COPY . /app
+2025-12-04T04:48:21.856140593Z [inf]  [stage-0  4/15] RUN nix-env -if .nixpacks/nixpkgs-ba913eda2df8eb72147259189d55932012df6301.nix && nix-collect-garbage -d
+2025-12-04T04:48:21.856141084Z [inf]  [stage-0  3/15] COPY .nixpacks/nixpkgs-ba913eda2df8eb72147259189d55932012df6301.nix .nixpacks/nixpkgs-ba913eda2df8eb72147259189d55932012df6301.nix
+2025-12-04T04:48:21.856141575Z [inf]  [internal] load build context
+2025-12-04T04:48:21.856141865Z [inf]  [stage-0  2/15] WORKDIR /app/
+2025-12-04T04:48:21.856142306Z [inf]  [stage-0 12/15] COPY . /app/.
+2025-12-04T04:48:21.856142587Z [inf]  [stage-0 14/15] RUN printf '\nPATH=/app/node_modules/.bin:$PATH' >> /root/.profile
+2025-12-04T04:48:21.856142867Z [inf]  [stage-0  5/15] COPY .nixpacks/nixpkgs-ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7.nix .nixpacks/nixpkgs-ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7.nix
+2025-12-04T04:48:21.856143167Z [inf]  [stage-0  1/15] FROM ghcr.io/railwayapp/nixpacks:ubuntu-1745885067@sha256:d45c89d80e13d7ad0fd555b5130f22a866d9dd10e861f589932303ef2314c7de
+2025-12-04T04:48:21.856143478Z [inf]  [stage-0  8/15] COPY . /app/.
+2025-12-04T04:48:21.856898941Z [inf]  [stage-0  1/15] FROM ghcr.io/railwayapp/nixpacks:ubuntu-1745885067@sha256:d45c89d80e13d7ad0fd555b5130f22a866d9dd10e861f589932303ef2314c7de
+2025-12-04T04:48:21.856909207Z [inf]  [internal] load build context
+2025-12-04T04:48:21.856913864Z [inf]  [internal] load build context
+2025-12-04T04:48:21.888274126Z [inf]  [stage-0  1/15] FROM ghcr.io/railwayapp/nixpacks:ubuntu-1745885067@sha256:d45c89d80e13d7ad0fd555b5130f22a866d9dd10e861f589932303ef2314c7de
+2025-12-04T04:48:24.577109968Z [inf]  [internal] load build context
+2025-12-04T04:48:24.867979216Z [inf]  [stage-0  2/15] WORKDIR /app/
+2025-12-04T04:48:24.867983683Z [inf]  [stage-0  3/15] COPY .nixpacks/nixpkgs-ba913eda2df8eb72147259189d55932012df6301.nix .nixpacks/nixpkgs-ba913eda2df8eb72147259189d55932012df6301.nix
+2025-12-04T04:48:24.867984635Z [inf]  [stage-0  4/15] RUN nix-env -if .nixpacks/nixpkgs-ba913eda2df8eb72147259189d55932012df6301.nix && nix-collect-garbage -d
+2025-12-04T04:48:24.867984965Z [inf]  [stage-0  5/15] COPY .nixpacks/nixpkgs-ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7.nix .nixpacks/nixpkgs-ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7.nix
+2025-12-04T04:48:24.867985385Z [inf]  [stage-0  6/15] RUN nix-env -if .nixpacks/nixpkgs-ffeebf0acf3ae8b29f8c7049cd911b9636efd7e7.nix && nix-collect-garbage -d
+2025-12-04T04:48:24.867991815Z [inf]  [stage-0  7/15] COPY .nixpacks/assets /assets/
+2025-12-04T04:48:24.867992316Z [inf]  [stage-0  8/15] COPY . /app/.
+2025-12-04T04:48:27.823130656Z [inf]  [stage-0  8/15] COPY . /app/.
+2025-12-04T04:48:27.849515073Z [inf]  [stage-0  9/15] RUN  caddy fmt --overwrite /assets/Caddyfile
+2025-12-04T04:48:28.359059240Z [inf]  [stage-0  9/15] RUN  caddy fmt --overwrite /assets/Caddyfile
+2025-12-04T04:48:28.411709266Z [inf]  [stage-0 10/15] COPY . /app/.
+2025-12-04T04:48:30.102112616Z [inf]  [stage-0 10/15] COPY . /app/.
+2025-12-04T04:48:30.134271657Z [inf]  [stage-0 11/15] RUN --mount=type=cache,id=s/bed39136-4587-4f39-b184-163e7b21f95b-/root/npm,target=/root/.npm npm ci
+2025-12-04T04:48:30.534222591Z [inf]  npm warn config production Use `--omit=dev` instead.
+
+2025-12-04T04:48:33.806561517Z [inf]  npm warn deprecated @esbuild-kit/esm-loader@2.6.5: Merged into tsx: https://tsx.is
+
+2025-12-04T04:48:33.914351734Z [inf]  npm warn deprecated @esbuild-kit/core-utils@3.3.2: Merged into tsx: https://tsx.is
+
+2025-12-04T04:48:33.973765298Z [inf]  npm warn deprecated formidable@1.2.6: Please upgrade to latest, formidable@v2 or formidable@v3! Check these notes: https://bit.ly/2ZEqIau
+
+2025-12-04T04:48:34.460622245Z [inf]  npm warn deprecated superagent@3.8.1: Please upgrade to superagent v10.2.2+, see release notes at https://github.com/forwardemail/superagent/releases/tag/v10.2.2 - maintenance is supported by Forward Email @ https://forwardemail.net
+
+2025-12-04T04:48:36.752888066Z [inf]  
+added 662 packages, and audited 663 packages in 6s
+
+66 packages are looking for funding
+
+2025-12-04T04:48:36.752921666Z [inf]    run `npm fund` for details
+
+2025-12-04T04:48:36.779611822Z [inf]  
+6 vulnerabilities (1 low, 5 moderate)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+
+2025-12-04T04:48:37.908218666Z [inf]  [stage-0 11/15] RUN --mount=type=cache,id=s/bed39136-4587-4f39-b184-163e7b21f95b-/root/npm,target=/root/.npm npm ci
+2025-12-04T04:48:37.949713144Z [inf]  [stage-0 12/15] COPY . /app/.
+2025-12-04T04:48:39.737362191Z [inf]  [stage-0 12/15] COPY . /app/.
+2025-12-04T04:48:39.782004051Z [inf]  [stage-0 13/15] RUN --mount=type=cache,id=s/bed39136-4587-4f39-b184-163e7b21f95b-node_modules/cache,target=/app/node_modules/.cache npm run build
+2025-12-04T04:48:40.239953536Z [inf]  npm warn config production Use `--omit=dev` instead.
+
+2025-12-04T04:48:40.258803959Z [inf]  
+> rest-express@1.0.0 build
+> vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist
+
+
+2025-12-04T04:48:40.503452958Z [inf]  [36mvite v5.4.21 [32mbuilding for production...[36m[39m
+
+2025-12-04T04:48:40.552946949Z [inf]  transforming...
+
+2025-12-04T04:48:41.703877007Z [inf]  
+A PostCSS plugin did not pass the `from` option to `postcss.parse`. This may cause imported assets to be incorrectly transformed. If you've recently added a PostCSS plugin that raised this warning, please contact the package author to fix the issue.
+
+2025-12-04T04:48:41.704825069Z [inf]  
+/attached_assets/Bronze Aloe Sculpture in Resin Block_1764516081629.png referenced in /attached_assets/Bronze Aloe Sculpture in Resin Block_1764516081629.png didn't resolve at build time, it will remain unchanged to be resolved at runtime
+
+2025-12-04T04:48:41.936362927Z [inf]  
+new URL("../../attached_assets/Bronze Aloe Sculpture in Resin Block_1764516081629.png", import.meta.url) doesn't exist at build time, it will remain unchanged to be resolved at runtime. If this is intended, you can use the /* @vite-ignore */ comment to suppress this warning.
+
+2025-12-04T04:48:41.958711168Z [inf]  
+new URL("../../attached_assets/Bronze Aloe Sculpture in Resin Block 2_1763150497628.jpg", import.meta.url) doesn't exist at build time, it will remain unchanged to be resolved at runtime. If this is intended, you can use the /* @vite-ignore */ comment to suppress this warning.
+
+2025-12-04T04:48:45.275792145Z [inf]  [32m✓[39m 1917 modules transformed.
+
+2025-12-04T04:48:46.054051771Z [inf]  rendering chunks...
+
+2025-12-04T04:48:46.194600369Z [inf]  computing gzip size...
+
+2025-12-04T04:48:46.25260639Z [inf]  [2m../dist/public/[22m[32mindex.html                                                                                                         [39m[1m[2m     1.08 kB[22m[1m[22m[2m │ gzip:   0.59 kB[22m
+
+2025-12-04T04:48:46.252704738Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mpelargonium-1-BD7Aq5zw.jpg                                                                                  [39m[1m[2m     7.10 kB[22m[1m[22m
+
+2025-12-04T04:48:46.252815274Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mprotea-head-4-DoC5UNSq.jpg                                                                                  [39m[1m[2m     7.36 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mprotea-head-3-RsHQuTqa.jpg                                                                                  [39m[1m[2m     7.36 kB[22m[1m[22m
+
+2025-12-04T04:48:46.252841553Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mpelargonium-2-B9osSkhw.jpg                                                                                  [39m[1m[2m     7.83 kB[22m[1m[22m
+
+2025-12-04T04:48:46.253108073Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mrestio-1-CdbN7jcB.jpg                                                                                       [39m[1m[2m     8.91 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32msucculent-1-D9JROU3v.jpg                                                                                    [39m[1m[2m     9.48 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mwoody-branch-2-C9V-_ief.jpg                                                                                 [39m[1m[2m    10.54 kB[22m[1m[22m
+
+2025-12-04T04:48:46.253133862Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mcone-seed-2-CwW5u8bV.jpg                                                                                    [39m[1m[2m    11.08 kB[22m[1m[22m
+
+2025-12-04T04:48:46.253313181Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mcone-bracts-2-DBMyRg61.jpg                                                                                  [39m[1m[2m    11.23 kB[22m[1m[22m
+
+2025-12-04T04:48:46.253424758Z [inf]  [2m../dist/public/[22m[2massets/[22m[32msucculent-3-SZnkWaMz.jpg                                                                                    [39m[1m[2m    11.58 kB[22m[1m[22m
+
+2025-12-04T04:48:46.253457808Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mcone-seed-1-HpzzEofv.jpg                                                                                    [39m[1m[2m    11.58 kB[22m[1m[22m
+
+2025-12-04T04:48:46.253498449Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mbulb-spike-2-C8WjvNJe.jpg                                                                                   [39m[1m[2m    12.20 kB[22m[1m[22m
+
+2025-12-04T04:48:46.253625269Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mprotea-head-2-C8u-V2OW.jpg                                                                                  [39m[1m[2m    12.41 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mbulb-spike-3-CmAc7LkT.jpg                                                                                   [39m[1m[2m    13.91 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mpincushion-1-3fraQD2_.jpg                                                                                   [39m[1m[2m    15.41 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mwoody-branch-3-BYEx1l5a.jpg                                                                                 [39m[1m[2m    17.18 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32merica-2-DN0JPk6z.jpg                                                                                        [39m[1m[2m    18.12 kB[22m[1m[22m
+
+2025-12-04T04:48:46.253684167Z [inf]  [2m../dist/public/[22m[2massets/[22m[32merica-1-DQmDl_ap.jpg                                                                                        [39m[1m[2m    26.42 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mrestio-3-dnU_hctd.jpg                                                                                       [39m[1m[2m    29.27 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32maloe-1-7NfuvAEL.jpg                                                                                         [39m[1m[2m    30.89 kB[22m[1m[22m
+
+2025-12-04T04:48:46.253742335Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mprotea-head-1-C5A7kZXe.jpg                                                                                  [39m[1m[2m    36.49 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32maloe-2-DejV8uWi.jpg                                                                                         [39m[1m[2m    46.26 kB[22m[1m[22m
+
+2025-12-04T04:48:46.25380534Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mwoody-branch-1-CQu6SVzj.jpg                                                                                 [39m[1m[2m    49.05 kB[22m[1m[22m
+
+2025-12-04T04:48:46.254036616Z [inf]  [2m../dist/public/[22m[2massets/[22m[32msucculent-2-Drx324Hd.jpg                                                                                    [39m[1m[2m    55.05 kB[22m[1m[22m
+
+2025-12-04T04:48:46.254284979Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mcone-bracts-1-CUfaprij.jpg                                                                                  [39m[1m[2m    71.07 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mpincushion-2-CD122-dB.jpg                                                                                   [39m[1m[2m    99.19 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mrestio-2-CSqViHtd.jpg                                                                                       [39m[1m[2m   102.25 kB[22m[1m[22m
+
+2025-12-04T04:48:46.254306401Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mpincushion-4-D2dUt7nP.jpg                                                                                   [39m[1m[2m   124.79 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mbulb-spike-1-BOUgn6zE.jpg                                                                                   [39m[1m[2m   176.54 kB[22m[1m[22m
+
+2025-12-04T04:48:46.25435249Z [inf]  [2m../dist/public/[22m[2massets/[22m[32m1 SMOKE HOVERS BOTTOM OF SCREEN_1761435915769-CLS2CLMh.mp4                                                  [39m[1m[2m   475.25 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mGemini_Generated_Image_qhu6lzqhu6lzqhu6_result_1764291106964-nY3wre-p.webp                                  [39m[1m[2m   592.53 kB[22m[1m[22m
+
+2025-12-04T04:48:46.254361684Z [inf]  [2m../dist/public/[22m[2massets/[22m[32m2 SMOKE HOVERS IN BACKGROUND_1761435915770-C9EFkZ4U.mp4                                                     [39m[1m[2m   649.60 kB[22m[1m[22m
+
+2025-12-04T04:48:46.254432651Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mGemini_Generated_Image_ie60w2ie60w2ie60_result_1764291291740-CKGS5GEH.webp                                  [39m[1m[2m   682.44 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mGemini_Generated_Image_dx6keedx6keedx6k_result_1764291106964-BOQz-Fqw.webp                                  [39m[1m[2m   808.05 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mGemini_Generated_Image_hrdzhzhrdzhzhrdz_1764103956649-Dgxq9cul.png                                          [39m[1m[2m   821.93 kB[22m[1m[22m
+
+2025-12-04T04:48:46.254448574Z [inf]  [2m../dist/public/[22m[2massets/[22m[32m6 SMOKE HOVERS BIGGER SPARKS_1761435915771-DkslpRGp.mp4                                                     [39m[1m[2m   823.44 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32m4 SMOKE HOVERS FLAMES STSRT_1761435915771-BICwmKXJ.mp4                                                      [39m[1m[2m   825.12 kB[22m[1m[22m
+
+2025-12-04T04:48:46.254473332Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mGemini_Generated_Image_pgo4cnpgo4cnpgo4_result_1764779086107-XKlATqvC.webp                                  [39m[1m[2m   835.67 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mGemini_Generated_Image_o0oi1oo0oi1oo0oi_1764170102464-Z8ZbnL3x.png                                          [39m[1m[2m   892.88 kB[22m[1m[22m
+
+2025-12-04T04:48:46.254530007Z [inf]  [2m../dist/public/[22m[2massets/[22m[32maloe-3-D2OKWgsc.jpg                                                                                         [39m[1m[2m   985.12 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mGemini_Generated_Image_rf3vd6rf3vd6rf3v_1764170102466-DpFrS3Fa.png                                          [39m[1m[2m 1,336.48 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32m3 SMOKE HOVERS TINY SPARKS7_1761435915770-CXr51NJ-.mp4                                                      [39m[1m[2m 1,548.88 kB[22m[1m[22m
+
+2025-12-04T04:48:46.254611008Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mYellow-Lily-Opening-On-Black-Background-4K-2025-08-29-08-44-48-Utc_1764103216693-CYwCYYL8.mp4               [39m[1m[2m 1,864.61 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mcone-seed-3-8N6kyS7e.jpg                                                                                    [39m[1m[2m 1,943.89 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mTime-Lapse-Of-Beautiful-Red-Lily-Flower-Blossoms-2025-08-28-17-35-06-Utc_1764103216692-BmGjcg04.mp4         [39m[1m[2m 2,597.82 kB[22m[1m[22m
+
+2025-12-04T04:48:46.254619121Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mPolygala Myrtifolia T Obronze_1764103216692-Dc07DDbv.mp4                                                    [39m[1m[2m 2,786.44 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32m5 SMOKE HOVERS BIGGER SPARKS_1761435915772-DKy1O6QI.mp4                                                     [39m[1m[2m 4,761.08 kB[22m[1m[22m
+
+2025-12-04T04:48:46.254652851Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mTime-Lapse-Of-Beautiful-Red-Lily-Flower-Blossoms-2025-08-28-17-19-50-Utc (1)(1)_1764103216692-C3NU2Kkt.mp4  [39m[1m[2m 4,762.51 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mTime-Lapse-Of-Opening-Gladiolus-Flower-4K-2025-08-28-09-11-59-Utc_1764103216693-BukwqeC4.mp4                [39m[1m[2m 6,515.08 kB[22m[1m[22m
+
+2025-12-04T04:48:46.2546851Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mRed-Hibiscus-Rosa-Sinensis-Time-Lapse-Of-Floral-Bl-4K-2025-08-28-10-27-22-Utc_1764103216692-CT_UoSCl.mp4    [39m[1m[2m 7,813.17 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mWhite-Flowers-Blossoms-On-The-Branches-Cherry-Tree-4K-2025-08-29-06-24-57-Utc_1764103216693-BXQJzhsz.mp4    [39m[1m[2m 8,203.73 kB[22m[1m[22m
+
+2025-12-04T04:48:46.2547521Z [inf]  [2m../dist/public/[22m[2massets/[22m[32mYellow-Lily-Blooming-In-Time-Lapse-On-A-Leaves-And-4K-2025-08-29-04-46-46-Utc_1764103216693-BDiBtO_E.mp4    [39m[1m[2m 9,894.43 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mBlue-Lily-Blooming-In-Time-Lapse-On-A-Leaves-And-B-4K-2025-08-28-23-03-13-Utc_1764103216691-BISmPiCS.mp4    [39m[1m[2m13,001.42 kB[22m[1m[22m
+[2m../dist/public/[22m[2massets/[22m[32mBurnt-Metal-2025-08-29-06-20-21-Utc_1764160699730-G7Bhuq1z.mp4                                              [39m[1m[2m29,888.16 kB[22m[1m[22m
+
+2025-12-04T04:48:46.254847663Z [inf]  [2m../dist/public/[22m[2massets/[22m[35mindex-Wf1tLMDp.css                                                                                          [39m[1m[2m   124.45 kB[22m[1m[22m[2m │ gzip:  19.58 kB[22m
+[2m../dist/public/[22m[2massets/[22m[36mindex-9Ye3pAdz.js                                                                                           [39m[1m[33m   909.11 kB[39m[22m[2m │ gzip: 246.81 kB[22m
+
+2025-12-04T04:48:46.255036947Z [inf]  [33m
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.[39m
+
+2025-12-04T04:48:46.255603598Z [inf]  [32m✓ built in 5.73s[39m
+
+2025-12-04T04:48:46.380290607Z [inf]  
+  dist/index.js  214.0kb
+
+⚡ Done in 28ms
+
+2025-12-04T04:48:46.772868358Z [inf]  [stage-0 13/15] RUN --mount=type=cache,id=s/bed39136-4587-4f39-b184-163e7b21f95b-node_modules/cache,target=/app/node_modules/.cache npm run build
+2025-12-04T04:48:46.813161063Z [inf]  [stage-0 14/15] RUN printf '\nPATH=/app/node_modules/.bin:$PATH' >> /root/.profile
+2025-12-04T04:48:47.215471918Z [inf]  [stage-0 14/15] RUN printf '\nPATH=/app/node_modules/.bin:$PATH' >> /root/.profile
+2025-12-04T04:48:47.252337981Z [inf]  [stage-0 15/15] COPY . /app
+2025-12-04T04:48:48.884273587Z [inf]  [stage-0 15/15] COPY . /app
+2025-12-04T04:48:48.927243028Z [inf]  exporting to docker image format
+2025-12-04T04:48:58.416328830Z [inf]  exporting to docker image format
+2025-12-04T04:48:58.492862460Z [inf]  containerimage.digest: sha256:36ece21323664811df060283da344c74494d57b78cf87ad7f65986d5678423f4
+2025-12-04T04:48:58.492871174Z [inf]  containerimage.descriptor: eyJtZWRpYVR5cGUiOiJhcHBsaWNhdGlvbi92bmQub2NpLmltYWdlLm1hbmlmZXN0LnYxK2pzb24iLCJkaWdlc3QiOiJzaGEyNTY6MzZlY2UyMTMyMzY2NDgxMWRmMDYwMjgzZGEzNDRjNzQ0OTRkNTdiNzhjZjg3YWQ3ZjY1OTg2ZDU2Nzg0MjNmNCIsInNpemUiOjM3MTMsImFubm90YXRpb25zIjp7Im9yZy5vcGVuY29udGFpbmVycy5pbWFnZS5jcmVhdGVkIjoiMjAyNS0xMi0wNFQwNDo0ODo1M1oifSwicGxhdGZvcm0iOnsiYXJjaGl0ZWN0dXJlIjoiYW1kNjQiLCJvcyI6ImxpbnV4In19
+2025-12-04T04:48:58.492874799Z [inf]  containerimage.config.digest: sha256:14cdd25fe1baa977c359beb1a946f169a41e919db220296a3b281cf7635cb0a5
+2025-12-04T04:49:16.772878416Z [inf]  image push
+2025-12-04T04:49:33.828681471Z [inf]  image push
+2025-12-04T04:49:33.828761171Z [inf]  image push
