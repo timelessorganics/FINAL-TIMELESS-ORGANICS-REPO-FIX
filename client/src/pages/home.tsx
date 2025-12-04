@@ -470,13 +470,13 @@ export default function HomePage() {
             {/* Main heading + scarcity */}
             <div className="text-center">
               <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-light mb-8 tracking-tight text-white">
-                <span className="hero-glass-text">Your Investment Is Our Investment</span>
+                <span className="hero-glass-text">Your <span className="text-bronze">Investment</span> Is Our <span className="text-bronze">Investment</span></span>
               </h2>
               
               {/* The 100 believers message */}
               <p className="text-base text-white/90 font-light max-w-3xl mx-auto mb-8 leading-relaxed">
                 There are three types of <span className="text-bronze font-medium">investing</span> happening here — and we love the play on words. 
-                You invest financially. We invest your specimen in specialised heat-resistant investment material. You get a one-of-a-kind sculpture as an "investment" for your future for generations to come. All three happen simultaneously. 
+                You <span className="text-bronze font-medium">invest</span> financially. We <span className="text-bronze font-medium">invest</span> your specimen in specialised heat-resistant <span className="text-bronze font-medium">investment</span> material. You get a one-of-a-kind sculpture as an "<span className="text-bronze font-medium">investment</span>" for your future for generations to come. All three happen simultaneously. 
                 <span className="text-accent-gold font-medium">This is not crowdfunding. This is co-creation.</span>
               </p>
               
@@ -488,7 +488,7 @@ export default function HomePage() {
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <Users className="w-8 h-8 text-accent-gold" />
                 </div>
-                <h3 className="font-serif text-2xl font-light text-white mb-3">Your Financial Investment</h3>
+                <h3 className="font-serif text-2xl font-light text-white mb-3">Your Financial <span className="text-bronze">Investment</span></h3>
                 <p className="text-white/70 leading-relaxed text-base font-light">
                   Founders R4,500 or Patron R6,500 (yes that ain't a typo — and for 48hrs our community friends and families get discounts stupidly priced to sell). Let's sell them all within 48hrs! Come and join me to get hands on experience and witness this magical, mind bending art form. This has to be shared not hidden.
                 </p>
@@ -498,9 +498,9 @@ export default function HomePage() {
                 <div className="flex items-center justify-center gap-3 mb-4">
                   <Flame className="w-8 h-8 text-bronze" />
                 </div>
-                <h3 className="font-serif text-2xl font-light text-white mb-3">Our Technical Investment</h3>
+                <h3 className="font-serif text-2xl font-light text-white mb-3">Our Technical <span className="text-bronze">Investment</span></h3>
                 <p className="text-white/70 leading-relaxed text-base font-light">
-                  We "<span className="text-bronze font-medium">invest</span>" your specimen in a heat-resistant plaster mix — this is actually a technical term for encasing a specimen inside a mold. The beauty of the Founding 100 is once you invest, we invest! We can keep these moulds under special conditions for as long as needed. Your bronze castings will be the first 100 ever cast at Timeless Organics.
+                  We "<span className="text-bronze font-medium">invest</span>" your specimen in a heat-resistant plaster mix — this is actually a technical term for encasing a specimen inside a mold. The beauty of the Founding 100 is once you <span className="text-bronze font-medium">invest</span>, we <span className="text-bronze font-medium">invest</span>! We can keep these moulds under special conditions for as long as needed. Your bronze castings will be the first 100 ever cast at Timeless Organics.
                 </p>
               </div>
 
