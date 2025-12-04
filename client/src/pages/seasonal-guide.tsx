@@ -1,3 +1,4 @@
+import { useQuery } from "@tanstack/react-query";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { Link } from "wouter";
@@ -14,33 +15,63 @@ import {
 } from "@/lib/specimenAvailability";
 
 export default function SeasonalGuide() {
+  const { data: savedVideos } = useQuery<Record<string, string>>({
+    queryKey: ['/api/content/videos'],
+  });
+  
+  const getVideo = (key: string, fallback: string = "") => {
+    return savedVideos?.[key] || fallback;
+  };
+
   return (
     <>
       <Header />
       <div className="min-h-screen bg-background">
-        <div className="max-w-5xl mx-auto px-4 py-12 space-y-16">
-          
-          {/* Back Navigation */}
-          <div>
-            <Link href="/">
-              <Button variant="ghost" className="gap-2" data-testid="button-back-home">
-                <ArrowLeft className="w-4 h-4" />
-                Back to Home
-              </Button>
-            </Link>
+        {/* Hero with Video Background */}
+        <section className="py-16 px-6 bg-black relative overflow-hidden" data-testid="section-seasonal-hero">
+          {/* Video background - faded */}
+          <div className="absolute inset-0 opacity-[0.15]">
+            {getVideo('seasonal_guide') && (
+              <video 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+                className="w-full h-full object-cover"
+                key={getVideo('seasonal_guide')}
+              >
+                <source src={getVideo('seasonal_guide')} type="video/mp4" />
+              </video>
+            )}
           </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black/80" />
 
-          {/* Hero Section */}
-          <header className="text-center space-y-4">
-            <h1 className="font-serif text-5xl font-bold moving-fill">
-              The Seasonal Nature of Fynbos
-            </h1>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Cape Fynbos is a winter-rainfall ecosystem. Each botanical specimen has its own season 
-            of peak beauty—when flowers bloom, bracts colour, and seedheads form. We cast nature 
-            at its finest, which means timing matters.
-          </p>
-        </header>
+          <div className="max-w-5xl mx-auto relative z-10 px-4">
+            {/* Back Navigation */}
+            <div className="mb-8">
+              <Link href="/">
+                <Button variant="ghost" className="gap-2 text-white hover:text-white/80" data-testid="button-back-home">
+                  <ArrowLeft className="w-4 h-4" />
+                  Back to Home
+                </Button>
+              </Link>
+            </div>
+
+            {/* Hero Section */}
+            <header className="text-center space-y-4">
+              <h1 className="font-serif text-5xl font-bold text-white">
+                The Seasonal Nature of Fynbos
+              </h1>
+              <p className="text-xl text-white/90 max-w-3xl mx-auto">
+                Cape Fynbos is a winter-rainfall ecosystem. Each botanical specimen has its own season 
+                of peak beauty—when flowers bloom, bracts colour, and seedheads form. We cast nature 
+                at its finest, which means timing matters.
+              </p>
+            </header>
+          </div>
+        </section>
+
+        <div className="max-w-5xl mx-auto px-4 py-12 space-y-16">
 
         {/* Why Seasons Matter */}
         <section className="space-y-6">

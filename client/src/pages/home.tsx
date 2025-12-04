@@ -542,6 +542,63 @@ export default function HomePage() {
           </div>
         </section>
 
+        {/* DAVID'S STORY - About the Craftsperson */}
+        <section className="py-16 px-6 relative overflow-hidden" data-testid="section-david-story">
+          {/* Video background - faded */}
+          <div className="absolute inset-0 opacity-[0.08]">
+            {getVideo('home_story') && (
+              <video 
+                autoPlay 
+                loop 
+                muted 
+                playsInline
+                className="w-full h-full object-cover"
+                key={getVideo('home_story')}
+              >
+                <source src={getVideo('home_story')} type="video/mp4" />
+              </video>
+            )}
+          </div>
+          <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background/80" />
+
+          <div className="max-w-5xl mx-auto relative z-10">
+            <div className="grid md:grid-cols-2 gap-12 items-center">
+              <div>
+                <span className="text-xs tracking-[0.3em] text-bronze uppercase font-light mb-4 block">
+                  Meet the Artist
+                </span>
+                <h2 className="font-serif text-4xl font-light mb-6 tracking-tight">
+                  David's 30 Years of Mastery
+                </h2>
+                <div className="space-y-4 text-foreground/90 font-light leading-relaxed">
+                  <p>
+                    David brings three decades of world-renowned precision metalwork to Timeless Organics. 
+                    His technique in lost-wax casting—the ancient craft that transforms botanical specimens 
+                    into permanent bronze sculptures—has been perfected through thousands of pieces.
+                  </p>
+                  <p>
+                    Each sculpture is hand-cast with meticulous attention to detail. Every vein, every texture 
+                    of your chosen specimen is captured in bronze. It's not mass production. It's a 
+                    one-of-a-kind art piece created specifically for you.
+                  </p>
+                  <p>
+                    The Founding 100 represents something special—your cutting becomes the first 100 pieces 
+                    ever cast under the Timeless Organics name. You're not just buying a sculpture. You're 
+                    becoming part of a legacy.
+                  </p>
+                </div>
+              </div>
+              <div className="rounded-lg overflow-hidden border border-bronze/20">
+                <img 
+                  src={davidStoryImage} 
+                  alt="David's bronze sculpture artwork" 
+                  className="w-full h-full object-cover bronze-warmth image-fade-in"
+                />
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* WHAT ARE THE WORKSHOPS */}
         <section className="py-12 px-6" data-testid="section-workshops">
           <div className="max-w-4xl mx-auto">
