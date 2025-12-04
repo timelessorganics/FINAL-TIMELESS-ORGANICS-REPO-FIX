@@ -2166,7 +2166,6 @@ export default function AdminPanel() {
                   ))}
                 </div>
               </Card>
-              </div>
             </TabsContent>
 
             {/* Products Tab */}
