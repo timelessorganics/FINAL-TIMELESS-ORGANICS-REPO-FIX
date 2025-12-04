@@ -756,9 +756,16 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                             : "border-border/50 hover:border-border"
                         }`}
                         onClick={() => {
-                          setIsGift(!isGift);
-                          form.setValue("isGift", !isGift);
-                          if (!isGift) {
+                          const newIsGift = !isGift;
+                          setIsGift(newIsGift);
+                          form.setValue("isGift", newIsGift);
+                          if (newIsGift) {
+                            // Opening gift mode - initialize with 1 recipient
+                            form.setValue("giftRecipients", [{ email: "", name: "" }]);
+                          } else {
+                            // Closing gift mode - reset quantity to 1 and clear recipients
+                            setQuantity("1");
+                            form.setValue("quantity", "1");
                             form.setValue("giftRecipients", []);
                           }
                         }}
