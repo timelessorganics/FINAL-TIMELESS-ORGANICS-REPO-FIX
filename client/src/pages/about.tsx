@@ -34,9 +34,9 @@ export default function AboutPage() {
           </section>
 
           <section className="prose prose-invert prose-lg max-w-none mb-16">
-            <div className="space-y-8 text-muted-foreground leading-relaxed">
+            <div className="space-y-10 text-muted-foreground leading-relaxed">
               
-              <div className="text-center mb-8">
+              <div className="text-center">
                 <p className="text-accent-gold text-lg font-medium italic">Built From Zero. Built To Last.</p>
               </div>
 
