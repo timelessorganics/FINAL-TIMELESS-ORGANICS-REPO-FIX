@@ -149,12 +149,19 @@ export default function AdminPanel() {
 
   const [holdForm, setHoldForm] = useState({ name: "", seatType: "founder" as "founder" | "patron", note: "" });
   
-  // Background videos state
-  const [backgroundVideos, setBackgroundVideos] = useState<{[key: string]: string}>({
-    home_hero: "",
-    home_investments: "",
-    founding_100: "",
+  // Background videos - fetch from database
+  const { data: savedVideos } = useQuery<Record<string, string>>({
+    queryKey: ["/api/content/videos"],
   });
+  
+  const [backgroundVideos, setBackgroundVideos] = useState<{[key: string]: string}>({});
+  
+  // Sync saved videos from database into state
+  useEffect(() => {
+    if (savedVideos && typeof savedVideos === 'object') {
+      setBackgroundVideos(savedVideos);
+    }
+  }, [savedVideos]);
 
   const createHold = useMutation({
     mutationFn: async (data: { name: string; seatType: string; note?: string }) => {
@@ -2089,18 +2096,30 @@ export default function AdminPanel() {
                           type="file" 
                           accept="video/mp4,video/webm,video/ogg" 
                           className="hidden" 
-                          onChange={(e) => {
+                          onChange={async (e) => {
                             if (e.target.files?.[0]) {
                               const file = e.target.files[0];
                               const formData = new FormData();
                               formData.append('media-file', file);
-                              fetch('/api/admin/upload-specimen-photo', {
-                                method: 'POST',
-                                body: formData,
-                              }).then(r => r.json()).then(({ publicUrl }) => {
+                              try {
+                                const uploadRes = await fetch('/api/admin/upload-specimen-photo', {
+                                  method: 'POST',
+                                  body: formData,
+                                });
+                                const { publicUrl } = await uploadRes.json();
+                                
+                                await apiRequest("POST", "/api/admin/content", {
+                                  pageSlug: "videos",
+                                  sectionKey: key,
+                                  content: publicUrl,
+                                });
+                                
                                 setBackgroundVideos(prev => ({...prev, [key]: publicUrl}));
-                                toast({ title: "Video uploaded!" });
-                              }).catch(err => toast({ variant: "destructive", title: "Upload failed", description: err.message }));
+                                queryClient.invalidateQueries({ queryKey: ["/api/content/videos"] });
+                                toast({ title: "Video uploaded and saved!" });
+                              } catch (err: any) {
+                                toast({ variant: "destructive", title: "Upload failed", description: err.message });
+                              }
                             }
                           }}
                           data-testid={`input-video-${key}`}

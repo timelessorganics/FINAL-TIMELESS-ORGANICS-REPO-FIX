@@ -53,6 +53,14 @@ export default function HomePage() {
     staleTime: 0,
     refetchOnMount: true,
   });
+  
+  const { data: savedVideos } = useQuery<Record<string, string>>({
+    queryKey: ['/api/content/videos'],
+  });
+  
+  const getVideo = (key: string, fallback: string) => {
+    return savedVideos?.[key] || fallback;
+  };
 
   // 24-hour countdown timer
   useEffect(() => {
@@ -500,8 +508,9 @@ export default function HomePage() {
               muted 
               playsInline
               className="w-full h-full object-cover"
+              key={getVideo('home_investments', burntMetalVideo)}
             >
-              <source src={burntMetalVideo} type="video/mp4" />
+              <source src={getVideo('home_investments', burntMetalVideo)} type="video/mp4" />
             </video>
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-[#050505]/95 to-[#050505]/80" />
