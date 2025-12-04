@@ -92,6 +92,24 @@ export const seats = pgTable("seats", {
 
 export type Seat = typeof seats.$inferSelect;
 
+// Manual holds - Admin can hold seats for people who call/text
+export const manualHolds = pgTable("manual_holds", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: varchar("name").notNull(),
+  seatType: seatTypeEnum("seat_type").notNull(),
+  note: text("note"),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
+export const insertManualHoldSchema = createInsertSchema(manualHolds).pick({
+  name: true,
+  seatType: true,
+  note: true,
+});
+
+export type InsertManualHold = z.infer<typeof insertManualHoldSchema>;
+export type ManualHold = typeof manualHolds.$inferSelect;
+
 // Purchase status enum
 export const purchaseStatusEnum = pgEnum('purchase_status', ['pending', 'completed', 'failed']);
 

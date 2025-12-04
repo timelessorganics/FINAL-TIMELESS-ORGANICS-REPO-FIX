@@ -831,7 +831,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                     ) : paymentType === "deposit" ? (
                       "Pay R1,000 Deposit"
                     ) : (
-                      `Pay R${totalPrice.toLocaleString()}`
+                      `Pay R${(totalPrice / 100).toLocaleString()}`
                     )}
                   </Button>
 
