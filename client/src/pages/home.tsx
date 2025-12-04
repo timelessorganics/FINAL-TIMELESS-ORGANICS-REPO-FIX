@@ -350,7 +350,7 @@ export default function HomePage() {
             </div>
 
             {/* The Bronze - Star of the show with IMAGES */}
-            <div className="grid md:grid-cols-2 gap-6 sm:gap-12 items-center mb-12 sm:mb-16">
+            <div className="grid md:grid-cols-2 gap-6 sm:gap-12 items-center mb-6 sm:mb-8">
               {/* Left: Bronze Images Gallery */}
               <div className="grid grid-cols-2 gap-4">
                 <div className="aspect-square rounded-lg overflow-hidden border border-bronze/20">
@@ -479,17 +479,6 @@ export default function HomePage() {
                 <span className="text-bronze font-light"> Not crowdfunding. Co-creation.</span>
               </p>
               
-              {/* Scarcity display */}
-              {totalRemaining > 0 && (
-                <div className="mb-12">
-                  <span className="inline-block text-8xl md:text-9xl font-light text-bronze mb-3">
-                    {totalRemaining}
-                  </span>
-                  <p className="text-base text-white/60 font-light">
-                    seats remaining • then this chapter closes
-                  </p>
-                </div>
-              )}
             </div>
 
             {/* The triple meaning - Three types of investment */}
@@ -500,7 +489,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="font-serif text-2xl font-light text-white mb-3">Your Financial Investment</h3>
                 <p className="text-white/70 leading-relaxed text-base font-light">
-                  Founder R3,500 or Patron R5,500 (48-hour Friends & Family pricing available) — funds our foundry's final fit-out. The kilns, crucibles, and precision equipment that make this art possible.
+                  Founders R4,500 or Patron R6,500 (yes that ain't a typo — and for 48hrs our community friends and families get discounts stupidly priced to sell). Let's sell them all within 48hrs! Come and join me to get hands on experience and witness this magical, mind bending art form. This has to be shared not hidden.
                 </p>
               </div>
 
