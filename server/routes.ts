@@ -525,7 +525,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
             mountingPriceCents +
             commissionVoucherPriceCents;
           depositAmountCents = 0;
-          console.log(`[Purchase] BUY NOW: ${isFireSaleActive ? 'FIRE SALE' : 'regular'} price R${(amount / 100).toFixed(2)} for ${seatType} (base: R${(basePriceCents / 100).toFixed(2)})`);
+          console.log(`[Purchase] BUY NOW breakdown:`, {
+            fireSale: isFireSaleActive,
+            seatType,
+            basePriceCents,
+            hasPatina,
+            patinaPriceCents,
+            mountingType,
+            mountingPriceCents,
+            commissionVoucher,
+            commissionVoucherPriceCents,
+            totalAmount: amount,
+            totalRand: `R${(amount / 100).toFixed(2)}`
+          });
         }
 
         // Validate delivery information
