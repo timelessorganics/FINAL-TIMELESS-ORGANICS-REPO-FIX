@@ -310,6 +310,29 @@ export default function AdminPanel() {
     },
   });
 
+  const regenerateCodesForCompleted = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest("POST", "/api/admin/regenerate-codes-for-completed", {});
+      return await response.json();
+    },
+    onSuccess: (data) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/purchases"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/codes"] });
+      const regenerated = data.results?.filter((r: any) => r.status === 'regenerated').length || 0;
+      toast({
+        title: "Codes Regenerated & Emailed!",
+        description: `Successfully regenerated codes for ${regenerated} completed purchases without codes.`,
+      });
+    },
+    onError: (error: Error) => {
+      toast({
+        variant: "destructive",
+        title: "Regeneration Failed",
+        description: error.message || "Could not regenerate codes.",
+      });
+    },
+  });
+
   const syncToMailchimp = useMutation({
     mutationFn: async () => {
       const response = await apiRequest("POST", "/api/admin/mailchimp/sync", {});
@@ -958,6 +981,16 @@ export default function AdminPanel() {
               >
                 <Gift className="w-4 h-4 mr-2" />
                 {generateCodes.isPending ? "Generating..." : "Generate Codes"}
+              </Button>
+              <Button
+                onClick={() => regenerateCodesForCompleted.mutate()}
+                disabled={regenerateCodesForCompleted.isPending}
+                className="bg-bronze hover:bg-bronze/90 text-white"
+                data-testid="button-regenerate-codes-for-completed"
+                title="CRITICAL: Regenerate codes for all completed purchases without codes and email them"
+              >
+                <Gift className="w-4 h-4 mr-2" />
+                {regenerateCodesForCompleted.isPending ? "Regenerating..." : "REGENERATE CODES & EMAIL"}
               </Button>
             </div>
 

@@ -1371,6 +1371,144 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   );
 
+  // Admin: Regenerate codes for completed purchases without codes + SEND EMAILS
+  app.post(
+    "/api/admin/regenerate-codes-for-completed",
+    isAuthenticated,
+    async (req: any, res: Response) => {
+      try {
+        const userId = await getUserIdFromToken(req);
+        if (!userId) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+        const user = await storage.getUser(userId);
+
+        if (!user?.isAdmin) {
+          return res.status(403).json({ message: "Admin access required" });
+        }
+
+        // Get all completed purchases
+        const allPurchases = await storage.getAllPurchases();
+        const completedPurchases = allPurchases.filter((p: any) => p.status === "completed");
+
+        console.log(`[Regenerate Codes] Found ${completedPurchases.length} completed purchases, checking for missing codes...`);
+
+        const results: any[] = [];
+
+        for (const purchase of completedPurchases) {
+          try {
+            // Check if codes already exist
+            const existingCodes = await storage.getCodesByPurchaseId(purchase.id);
+            if (existingCodes && existingCodes.length > 0) {
+              console.log(`[Regenerate] Purchase ${purchase.id} already has ${existingCodes.length} codes`);
+              results.push({ purchaseId: purchase.id, status: "skipped", reason: `codes exist (${existingCodes.length})`, codes: existingCodes });
+              continue;
+            }
+
+            console.log(`[Regenerate] Generating codes for completed purchase ${purchase.id}`);
+
+            // Generate codes
+            const bronzeClaimCode = await storage.createCode({
+              purchaseId: purchase.id,
+              type: "bronze_claim",
+              code: generateBronzeClaimCode(),
+              discount: 0,
+              transferable: false,
+              maxRedemptions: 1,
+              appliesTo: "bronze_claim",
+            });
+
+            const workshopCode = await storage.createCode({
+              purchaseId: purchase.id,
+              type: "workshop_voucher",
+              code: generateWorkshopVoucherCode(purchase.seatType),
+              discount: getWorkshopVoucherDiscount(purchase.seatType),
+              transferable: true,
+              maxRedemptions: 1,
+              appliesTo: "workshop",
+            });
+
+            const lifetimeWorkshopCode = await storage.createCode({
+              purchaseId: purchase.id,
+              type: "lifetime_workshop",
+              code: generateLifetimeWorkshopCode(purchase.seatType),
+              discount: getLifetimeWorkshopDiscount(purchase.seatType),
+              transferable: true,
+              maxRedemptions: null as any,
+              appliesTo: "workshop",
+            });
+
+            // Generate commission voucher if purchased
+            let commissionVoucherCode = null;
+            if (purchase.commissionVoucher) {
+              commissionVoucherCode = await storage.createCode({
+                purchaseId: purchase.id,
+                type: "commission_voucher",
+                code: generateCommissionVoucherCode(purchase.seatType),
+                discount: getCommissionVoucherDiscount(purchase.seatType),
+                transferable: true,
+                maxRedemptions: 1,
+                appliesTo: "commission",
+              });
+            }
+
+            const allCodes = [bronzeClaimCode, workshopCode, lifetimeWorkshopCode];
+            if (commissionVoucherCode) {
+              allCodes.push(commissionVoucherCode);
+            }
+
+            // Get user info
+            const purchaseUser = await storage.getUser(purchase.userId);
+            const userName = purchaseUser?.firstName && purchaseUser?.lastName
+              ? `${purchaseUser.firstName} ${purchaseUser.lastName}`
+              : purchaseUser?.firstName || "Valued Investor";
+
+            const userEmail = purchaseUser?.email;
+
+            // Send emails with codes
+            if (userEmail) {
+              sendCertificateEmail(
+                userEmail,
+                userName,
+                purchase,
+                allCodes,
+                purchase.certificateUrl || "",
+                ""
+              ).catch((err) => console.error(`[Email] Certificate email failed for ${purchase.id}:`, err));
+
+              console.log(`[Email] Sent certificate email with codes to ${userEmail} for purchase ${purchase.id}`);
+            }
+
+            results.push({
+              purchaseId: purchase.id,
+              status: "regenerated",
+              email: userEmail,
+              codesGenerated: allCodes.length,
+              codes: allCodes.map(c => ({ type: c.type, code: c.code })),
+            });
+
+            console.log(`[Regenerate] Successfully regenerated ${allCodes.length} codes for ${purchase.id}`);
+          } catch (purchaseError: any) {
+            console.error(`[Regenerate] Error processing purchase ${purchase.id}:`, purchaseError);
+            results.push({
+              purchaseId: purchase.id,
+              status: "error",
+              error: purchaseError.message,
+            });
+          }
+        }
+
+        res.json({
+          message: `Processed ${completedPurchases.length} completed purchases, regenerated codes for ${results.filter(r => r.status === 'regenerated').length}`,
+          results,
+        });
+      } catch (error: any) {
+        console.error("Regenerate codes error:", error);
+        res.status(500).json({ message: error.message || "Failed to regenerate codes" });
+      }
+    },
+  );
+
   // Protected: Redeem code
   app.post(
     "/api/codes/redeem",
