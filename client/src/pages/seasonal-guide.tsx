@@ -364,15 +364,6 @@ export default function SeasonalGuide() {
             Join the Founding 100 and secure your bronze casting. Choose your specimen style during checkout, 
             and we'll immortalize it at peak seasonal beauty.
           </p>
-          <Link href="/founding100">
-            <Button 
-              size="lg" 
-              className="bg-bronze hover:bg-bronze/90 text-white font-semibold"
-              data-testid="button-view-founding100"
-            >
-              View Founding 100 Seats
-            </Button>
-          </Link>
           <Link href="/founding-100">
             <Button 
               size="lg"
