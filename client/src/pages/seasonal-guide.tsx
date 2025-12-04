@@ -378,7 +378,7 @@ export default function SeasonalGuide() {
               View Founding 100 Seats
             </Button>
           </Link>
-          <Link href="/founding-100#seats">
+          <Link href="/founding-100">
             <Button 
               size="lg"
               className="bg-gradient-to-r from-bronze via-accent-gold to-bronze text-background font-bold"

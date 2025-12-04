@@ -388,7 +388,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
     <>
       <Header 
         variant="checkout" 
-        backHref="/#seats" 
+        backHref="/" 
         backLabel="Back" 
         context="Founding 100" 
       />

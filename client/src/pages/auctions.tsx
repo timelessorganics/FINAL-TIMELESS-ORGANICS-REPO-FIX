@@ -33,7 +33,7 @@ export default function AuctionsPage() {
             </div>
 
             <div className="flex flex-wrap justify-center gap-4 mb-12">
-              <Link href="/founding-100#seats">
+              <Link href="/founding-100">
                 <Button size="lg" className="btn-bronze text-lg px-8 py-6" data-testid="button-founding-100">
                   View Founding 100 Seats
                 </Button>
