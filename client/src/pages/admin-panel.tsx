@@ -2061,9 +2061,20 @@ export default function AdminPanel() {
                 
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                   {[
-                    { key: "home_hero", label: "Home Hero Video", desc: "Hero section top" },
-                    { key: "home_investments", label: "Investments Section", desc: "The Investments video" },
-                    { key: "founding_100", label: "Founding 100 Hero", desc: "Founding 100 page hero" },
+                    { key: "home_hero", label: "Home Hero", desc: "Main homepage hero section" },
+                    { key: "home_investments", label: "Home Investments", desc: "Investment section background" },
+                    { key: "home_story", label: "Home Story", desc: "David's story section" },
+                    { key: "founding_100", label: "Founding 100 Hero", desc: "Founding 100 page top" },
+                    { key: "founding_100_seats", label: "Founding 100 Seats", desc: "Seat selection section" },
+                    { key: "seasonal_guide", label: "Seasonal Guide", desc: "Seasonal guide page hero" },
+                    { key: "gallery_hero", label: "Gallery Hero", desc: "Gallery page header" },
+                    { key: "gallery_sculptures", label: "Gallery Sculptures", desc: "Sculptures section" },
+                    { key: "workshops_hero", label: "Workshops Hero", desc: "Workshops page header" },
+                    { key: "shop_hero", label: "Shop Hero", desc: "Shop page header" },
+                    { key: "auctions_hero", label: "Auctions Hero", desc: "Auctions page header" },
+                    { key: "about_hero", label: "About Hero", desc: "About page header" },
+                    { key: "about_studio", label: "About Studio", desc: "Studio section background" },
+                    { key: "checkout_hero", label: "Checkout Hero", desc: "Checkout page background" },
                   ].map(({ key, label, desc }) => (
                     <div key={key} className="border rounded-lg p-4 space-y-3">
                       <div>
