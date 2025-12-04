@@ -1614,6 +1614,76 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   );
 
+  // Admin: Resend email to a single purchase
+  app.post(
+    "/api/admin/resend-email/:purchaseId",
+    isAuthenticated,
+    async (req: any, res: Response) => {
+      console.log("[Resend Single Email] ===== ENDPOINT HIT =====");
+      try {
+        const userId = await getUserIdFromToken(req);
+        if (!userId) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+        const user = await storage.getUser(userId);
+        if (!user?.isAdmin) {
+          return res.status(403).json({ message: "Admin access required" });
+        }
+
+        const { purchaseId } = req.params;
+        console.log(`[Resend Single Email] Purchase ID: ${purchaseId}`);
+
+        // Get the purchase
+        const purchase = await storage.getPurchase(purchaseId);
+        if (!purchase) {
+          return res.status(404).json({ message: "Purchase not found" });
+        }
+
+        if (purchase.status !== "completed") {
+          return res.status(400).json({ message: "Purchase is not completed" });
+        }
+
+        // Get existing codes for this purchase
+        const existingCodes = await storage.getCodesByPurchaseId(purchase.id);
+        if (!existingCodes || existingCodes.length === 0) {
+          return res.status(400).json({ message: "No codes found for this purchase" });
+        }
+
+        // Get user info
+        const purchaseUser = await storage.getUser(purchase.userId);
+        const userName = purchaseUser?.firstName && purchaseUser?.lastName
+          ? `${purchaseUser.firstName} ${purchaseUser.lastName}`
+          : purchaseUser?.firstName || "Valued Investor";
+        const userEmail = purchaseUser?.email;
+
+        if (!userEmail) {
+          return res.status(400).json({ message: "No email found for this purchase" });
+        }
+
+        // Send email with existing codes
+        const emailSent = await sendCertificateEmail(
+          userEmail,
+          userName,
+          purchase,
+          existingCodes,
+          purchase.certificateUrl || "",
+          ""
+        );
+
+        if (emailSent) {
+          console.log(`[Resend Single Email] Successfully sent to ${userEmail}`);
+          res.json({ message: `Email sent to ${userEmail}`, success: true });
+        } else {
+          console.log(`[Resend Single Email] FAILED for ${userEmail}`);
+          res.status(500).json({ message: "Failed to send email - check SMTP configuration" });
+        }
+      } catch (error: any) {
+        console.error("[Resend Single Email] Error:", error);
+        res.status(500).json({ message: error.message || "Failed to resend email" });
+      }
+    },
+  );
+
   // Protected: Redeem code
   app.post(
     "/api/codes/redeem",
