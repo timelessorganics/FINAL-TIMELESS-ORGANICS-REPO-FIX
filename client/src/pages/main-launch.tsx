@@ -12,6 +12,13 @@ import SeatSelectionModal from "@/components/seat-selection-modal";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import type { Seat, Sculpture } from "@shared/schema";
 
+// Extended type with API response fields
+interface SeatWithAvailability extends Seat {
+  remaining?: number;
+  reservedCount?: number;
+  manualHolds?: number;
+}
+
 import bronzeMountedSculpture from "@assets/Gemini_Generated_Image_pgo4cnpgo4cnpgo4_result_1764779086107.webp";
 
 const DEFAULT_SPECIMEN_IMAGES: Record<string, string> = {
@@ -102,7 +109,7 @@ export default function MainLaunch() {
     },
   });
   
-  const { data: seats, isLoading } = useQuery<Seat[]>({
+  const { data: seats, isLoading } = useQuery<SeatWithAvailability[]>({
     queryKey: ["/api/seats/availability"],
     staleTime: 0,
     refetchOnMount: true,
@@ -116,6 +123,11 @@ export default function MainLaunch() {
 
   const founderSeat = seats?.find((s) => s.type === "founder");
   const patronSeat = seats?.find((s) => s.type === "patron");
+  
+  // Get remaining seats from API (defaults to 50 while loading)
+  const founderRemaining = seats ? (founderSeat?.remaining ?? 50) : 50;
+  const patronRemaining = seats ? (patronSeat?.remaining ?? 50) : 50;
+  const totalRemaining = founderRemaining + patronRemaining;
 
   const scrollToSeats = () => {
     document.getElementById('seats')?.scrollIntoView({ behavior: 'smooth' });
@@ -198,9 +210,9 @@ export default function MainLaunch() {
             {/* Three Stat Cards */}
             <div className="relative z-30 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
               <Card className="p-6 bg-card/80 border-card-border backdrop-blur-sm">
-                <div className="text-5xl font-bold font-serif text-bronze mb-2">100</div>
-                <div className="text-muted-foreground">Limited Seats</div>
-                <div className="text-xs text-foreground/60 mt-1">50 Founder + 50 Patron</div>
+                <div className="text-5xl font-bold font-serif text-bronze mb-2">{totalRemaining}</div>
+                <div className="text-muted-foreground">Seats Remaining</div>
+                <div className="text-xs text-foreground/60 mt-1">{founderRemaining} Founder + {patronRemaining} Patron</div>
               </Card>
               
               <Card className="p-6 bg-card/80 border-card-border backdrop-blur-sm">

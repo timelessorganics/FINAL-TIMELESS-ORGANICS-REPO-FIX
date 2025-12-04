@@ -257,7 +257,7 @@ export default function HomePage() {
                         <p className="text-sm sm:text-base lg:text-lg text-white font-bold uppercase tracking-wider mb-1 sm:mb-2">Founder</p>
                         <p className="text-xs sm:text-sm lg:text-base text-white/60 font-light mb-1 sm:mb-2 leading-tight">Unmounted & unpatinated<br/>Services available now or later</p>
                       </div>
-                      <p className="text-xs sm:text-sm text-white/70 font-medium whitespace-nowrap">50 available</p>
+                      <p className="text-xs sm:text-sm text-white/70 font-medium whitespace-nowrap">{founderRemaining} available</p>
                     </div>
                     
                     <div className="space-y-0.5 sm:space-y-1">
@@ -285,7 +285,7 @@ export default function HomePage() {
                         <p className="text-sm sm:text-base lg:text-lg font-bold uppercase tracking-wider mb-1 sm:mb-2" style={{color: 'rgba(241, 243, 224, 0.9)'}}>Patron</p>
                         <p className="text-xs sm:text-sm lg:text-base font-light mb-1 sm:mb-2 leading-tight" style={{color: 'rgba(241, 243, 224, 0.7)'}}>+ Patina + Mounting included</p>
                       </div>
-                      <p className="text-xs sm:text-sm font-medium whitespace-nowrap" style={{color: 'rgba(241, 243, 224, 0.7)'}}>50 available</p>
+                      <p className="text-xs sm:text-sm font-medium whitespace-nowrap" style={{color: 'rgba(241, 243, 224, 0.7)'}}>{patronRemaining} available</p>
                     </div>
                     
                     <div className="space-y-0.5 sm:space-y-1">
