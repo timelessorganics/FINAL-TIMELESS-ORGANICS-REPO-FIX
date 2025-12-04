@@ -9,7 +9,7 @@ import { supabase } from "@/lib/supabase";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 import type { Seat, Purchase, Code, PromoCode, MediaAsset, Product, Auction } from "@shared/schema";
-import { Users, Package, DollarSign, Award, Download, Gift, Copy, CheckCircle, XCircle, Upload, Image as ImageIcon, ShoppingBag, Gavel, Calendar, Trash2, Edit, Plus, ExternalLink, Flame, Mail } from "lucide-react";
+import { Users, Package, DollarSign, Award, Download, Gift, Copy, CheckCircle, XCircle, Upload, Image as ImageIcon, ShoppingBag, Gavel, Calendar, Trash2, Edit, Plus, ExternalLink, Flame, Mail, Phone, MapPin } from "lucide-react";
 import { useState, useEffect } from "react";
 import { Eye } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -1353,6 +1353,7 @@ export default function AdminPanel() {
                 <thead>
                   <tr className="border-b border-border bg-muted/50">
                     <th className="text-left py-3 px-3 font-semibold text-muted-foreground">Investor</th>
+                    <th className="text-left py-3 px-3 font-semibold text-muted-foreground">Contact</th>
                     <th className="text-left py-3 px-3 font-semibold text-muted-foreground">Type</th>
                     <th className="text-left py-3 px-3 font-semibold text-muted-foreground">Amount</th>
                     <th className="text-left py-3 px-3 font-semibold text-muted-foreground">Add-ons</th>
@@ -1362,13 +1363,45 @@ export default function AdminPanel() {
                   </tr>
                 </thead>
                 <tbody>
-                  {purchases?.filter(p => p.status === 'completed').map((purchase) => {
+                  {purchases?.filter(p => p.status === 'completed').map((purchase: any) => {
                     const purchaseCodes = codes?.filter(c => c.purchaseId === purchase.id) || [];
+                    const displayName = purchase.isGift 
+                      ? (purchase.giftRecipientName || 'Gift Recipient') 
+                      : (purchase.deliveryName || purchase.userFullName || 'No Name');
+                    const displayEmail = purchase.isGift 
+                      ? purchase.giftRecipientEmail 
+                      : purchase.userEmail;
                     return (
                       <tr key={purchase.id} className="border-b border-border/30 hover:bg-muted/30">
                         <td className="py-3 px-3">
-                          <div className="font-medium text-foreground">#{purchase.id.slice(0, 8)}</div>
+                          <div className="font-medium text-foreground">{displayName}</div>
+                          <div className="text-xs text-muted-foreground">#{purchase.id.slice(0, 8)}</div>
                           {purchase.isGift && <Badge variant="outline" className="text-xs mt-1">Gift</Badge>}
+                        </td>
+                        <td className="py-3 px-3">
+                          <div className="flex flex-col gap-0.5 text-xs">
+                            {displayEmail && (
+                              <div className="flex items-center gap-1 text-muted-foreground">
+                                <Mail className="w-3 h-3" />
+                                <span className="truncate max-w-[180px]">{displayEmail}</span>
+                              </div>
+                            )}
+                            {purchase.deliveryPhone && (
+                              <div className="flex items-center gap-1 text-muted-foreground">
+                                <Phone className="w-3 h-3" />
+                                <span>{purchase.deliveryPhone}</span>
+                              </div>
+                            )}
+                            {purchase.deliveryAddress && (
+                              <div className="flex items-center gap-1 text-muted-foreground">
+                                <MapPin className="w-3 h-3" />
+                                <span className="truncate max-w-[150px]">{purchase.deliveryAddress}</span>
+                              </div>
+                            )}
+                            {!purchase.deliveryPhone && !displayEmail && !purchase.deliveryAddress && (
+                              <span className="text-muted-foreground italic">No contact info</span>
+                            )}
+                          </div>
                         </td>
                         <td className="py-3 px-3">
                           <Badge className={purchase.seatType === 'founder' ? 'bg-bronze text-white' : 'bg-patina text-white'}>

@@ -1160,7 +1160,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   );
 
-  // Admin: Get all purchases (admin only)
+  // Admin: Get all purchases (admin only) - includes user email
   app.get(
     "/api/admin/purchases",
     isAuthenticated,
@@ -1177,7 +1177,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
 
         const purchases = await storage.getAllPurchases();
-        res.json(purchases);
+        
+        // Enrich purchases with user email for better investor tracking
+        const enrichedPurchases = await Promise.all(
+          purchases.map(async (purchase) => {
+            const purchaseUser = await storage.getUser(purchase.userId);
+            return {
+              ...purchase,
+              userEmail: purchaseUser?.email || null,
+              userFullName: purchaseUser?.fullName || null,
+            };
+          })
+        );
+        
+        res.json(enrichedPurchases);
       } catch (error: any) {
         console.error("Admin purchases error:", error);
         res
