@@ -3685,6 +3685,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Public: Get background videos (for homepage and pages)
+  app.get("/api/content/videos", async (req: Request, res: Response) => {
+    try {
+      // For now, return empty object
+      // Videos should be stored in Supabase media_assets table with tag "video-background"
+      // TODO: Query media_assets where tag contains "video-background" and return URLs
+      res.json({});
+    } catch (error: any) {
+      console.error("Get videos error:", error);
+      res.json({});
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
