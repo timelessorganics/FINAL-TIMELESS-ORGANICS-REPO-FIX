@@ -112,7 +112,7 @@ export default function AdminPanel() {
     enabled: activeTab === "overview",
   });
 
-  const { data: codes } = useQuery<Code[]>({
+  const { data: codes, refetch: refetchCodes } = useQuery<Code[]>({
     queryKey: ["/api/admin/codes"],
     enabled: activeTab === "overview",
   });
@@ -1202,7 +1202,7 @@ export default function AdminPanel() {
                 <Button 
                   size="sm" 
                   variant="outline"
-                  onClick={() => queryClient.invalidateQueries({ queryKey: ["/api/admin/codes"] })}
+                  onClick={() => refetchCodes()}
                   data-testid="button-refetch-codes"
                 >
                   Refetch Codes
