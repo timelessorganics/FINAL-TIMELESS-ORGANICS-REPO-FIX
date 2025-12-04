@@ -1159,13 +1159,21 @@ export default function AdminPanel() {
                   Complete view of all investors, their codes, and order status
                 </p>
               </div>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2 items-center">
                 <Badge className="bg-bronze text-white px-3 py-1">
                   {purchases?.filter(p => p.seatType === 'founder' && p.status === 'completed').length || 0} Founders
                 </Badge>
                 <Badge className="bg-patina text-white px-3 py-1">
                   {purchases?.filter(p => p.seatType === 'patron' && p.status === 'completed').length || 0} Patrons
                 </Badge>
+                <Button 
+                  size="sm" 
+                  variant="outline"
+                  onClick={() => queryClient.invalidateQueries({ queryKey: ["/api/admin/codes"] })}
+                  data-testid="button-refetch-codes"
+                >
+                  Refetch Codes
+                </Button>
               </div>
             </div>
             
