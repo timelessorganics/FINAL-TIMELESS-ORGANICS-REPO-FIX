@@ -389,7 +389,7 @@ export default function SpecimenShowcase() {
                 <div className="py-8 text-center">
                   <div className="inline-flex flex-col items-center gap-3 px-8 py-6 rounded-lg bg-bronze/5 border border-bronze/20">
                     <p className="text-sm text-muted-foreground">Ready to secure your place?</p>
-                    <Link href="/founding-100">
+                    <Link href="/founding-100#seats">
                       <Button 
                         size="lg" 
                         className="gap-2 bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border border-bronze/50 text-background font-semibold"

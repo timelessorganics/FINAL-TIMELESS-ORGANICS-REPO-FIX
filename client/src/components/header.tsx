@@ -87,7 +87,7 @@ export default function Header({
               )}
 
               {!isCheckoutVariant && (
-                <Link href="/founding-100">
+                <Link href="/founding-100#seats">
                   <Button size="sm" className="btn-bronze hidden lg:inline-flex" data-testid="button-header-founding-100">
                     Founding 100
                   </Button>
@@ -166,13 +166,13 @@ export default function Header({
             ))}
             
             {/* Mobile Founding 100 Link */}
-            <Link href="/founding-100">
+            <Link href="/founding-100#seats">
               <Button
                 className="w-full justify-start btn-bronze"
                 onClick={handleNavLinkClick}
                 data-testid="button-mobile-founding-100"
               >
-                🔥 Founding 100 Fire Sale
+                Founding 100 Fire Sale
               </Button>
             </Link>
           </nav>

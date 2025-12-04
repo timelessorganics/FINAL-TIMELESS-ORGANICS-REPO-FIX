@@ -276,7 +276,7 @@ export default function HomePage() {
                     </div>
 
                     <button
-                      onClick={() => setLocation(`/founding-100?seat=founder`)}
+                      onClick={() => setLocation(`/founding-100?seat=founder#seats`)}
                       className="w-full py-1 sm:py-1.5 px-2 bg-white/10 border border-white/30 rounded-md hover:bg-white/20 transition-colors flex items-center gap-1 justify-center text-[0.65rem] sm:text-xs font-semibold text-white"
                       data-testid="button-buy-now-founder"
                     >
@@ -304,7 +304,7 @@ export default function HomePage() {
                     </div>
 
                     <button
-                      onClick={() => setLocation(`/founding-100?seat=patron`)}
+                      onClick={() => setLocation(`/founding-100?seat=patron#seats`)}
                       className="w-full py-1.5 px-2 border rounded-md transition-colors flex items-center gap-1 justify-center text-xs font-semibold"
                       style={{backgroundColor: 'rgba(241, 243, 224, 0.2)', borderColor: 'rgba(241, 243, 224, 0.35)', color: 'rgba(241, 243, 224, 0.9)'}}
                       data-testid="button-buy-now-patron"
@@ -533,7 +533,7 @@ export default function HomePage() {
               </p>
               
               <Button asChild size="lg" className="btn-bronze gap-2 min-h-14 text-lg px-10" data-testid="button-investments-cta">
-                <Link href="/founding-100">
+                <Link href="/founding-100#seats">
                   Secure Your Seat Now
                   <ArrowRight className="w-5 h-5" />
                 </Link>
