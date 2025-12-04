@@ -354,23 +354,25 @@ export default function SeasonalGuide() {
         </section>
 
         {/* CTA */}
-        <section className="text-center space-y-6 py-12">
+        <section className="text-center space-y-4 py-8">
           <h3 className="font-serif text-3xl font-bold">Ready to Invest?</h3>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Join the Founding 100 and secure your bronze casting. Choose your specimen style during checkout, 
             and we'll immortalize it at peak seasonal beauty.
           </p>
-          <Link href="/founding-100">
-            <Button 
-              size="lg"
-              className="bg-gradient-to-r from-bronze via-accent-gold to-bronze text-background font-bold"
-              data-testid="button-invest-now"
-            >
-              <Sparkles className="w-5 h-5 mr-2" />
-              Invest Now — Choose Your Seat
-              <ArrowRight className="w-5 h-5 ml-2" />
-            </Button>
-          </Link>
+          <div className="pt-4">
+            <Link href="/founding-100">
+              <Button 
+                size="lg"
+                className="bg-gradient-to-r from-bronze via-accent-gold to-bronze text-background font-bold"
+                data-testid="button-invest-now"
+              >
+                <Sparkles className="w-5 h-5 mr-2" />
+                Invest Now — Choose Your Seat
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </Button>
+            </Link>
+          </div>
         </section>
       </div>
     </div>
