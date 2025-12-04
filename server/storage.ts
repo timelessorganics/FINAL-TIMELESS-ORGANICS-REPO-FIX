@@ -21,6 +21,7 @@ import {
   auctionImages,
   auctionBids,
   specimenCustomizations,
+  manualHolds,
   type User,
   type UpsertUser,
   type Seat,
@@ -186,6 +187,12 @@ export interface IStorage {
   getContentItem(pageSlug: string, sectionKey: string): Promise<WebsiteContent | undefined>;
   setWebsiteContent(data: InsertWebsiteContent): Promise<WebsiteContent>;
   deleteWebsiteContent(pageSlug: string, sectionKey: string): Promise<boolean>;
+
+  // Manual Holds operations (Admin holds seats for phone/text requests)
+  getManualHolds(): Promise<any[]>;
+  createManualHold(data: { name: string; seatType: 'founder' | 'patron'; note?: string }): Promise<any>;
+  deleteManualHold(id: string): Promise<boolean>;
+  getManualHoldsCount(seatType: 'founder' | 'patron'): Promise<number>;
 
   // Specimen Customization operations
   getAllSpecimenCustomizations(): Promise<SpecimenCustomization[]>;
@@ -965,6 +972,43 @@ export class DatabaseStorage implements IStorage {
       .orderBy(desc(auctionBids.amountCents))
       .limit(1);
     return result;
+  }
+
+  // Manual Holds - Admin can hold seats for people who call/text
+  async getManualHolds(): Promise<any[]> {
+    try {
+      return await db.select().from(manualHolds).orderBy(desc(manualHolds.createdAt));
+    } catch (error: any) {
+      // Table might not exist yet - create it
+      if (error.message?.includes('relation') && error.message?.includes('does not exist')) {
+        await db.execute(sql`
+          CREATE TABLE IF NOT EXISTS manual_holds (
+            id VARCHAR PRIMARY KEY DEFAULT gen_random_uuid(),
+            name VARCHAR NOT NULL,
+            seat_type seat_type NOT NULL,
+            note TEXT,
+            created_at TIMESTAMP DEFAULT NOW()
+          )
+        `);
+        return [];
+      }
+      throw error;
+    }
+  }
+
+  async createManualHold(data: { name: string; seatType: 'founder' | 'patron'; note?: string }): Promise<any> {
+    const [result] = await db.insert(manualHolds).values(data).returning();
+    return result;
+  }
+
+  async deleteManualHold(id: string): Promise<boolean> {
+    await db.delete(manualHolds).where(eq(manualHolds.id, id));
+    return true;
+  }
+
+  async getManualHoldsCount(seatType: 'founder' | 'patron'): Promise<number> {
+    const holds = await db.select().from(manualHolds).where(eq(manualHolds.seatType, seatType));
+    return holds.length;
   }
 }
 

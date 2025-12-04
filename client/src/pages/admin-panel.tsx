@@ -142,6 +142,40 @@ export default function AdminPanel() {
     enabled: false,
   });
 
+  // Manual holds - admin holds seats for phone/text requests
+  const { data: manualHolds } = useQuery<any[]>({
+    queryKey: ["/api/admin/holds"],
+  });
+
+  const [holdForm, setHoldForm] = useState({ name: "", seatType: "founder" as "founder" | "patron", note: "" });
+
+  const createHold = useMutation({
+    mutationFn: async (data: { name: string; seatType: string; note?: string }) => {
+      const response = await apiRequest("POST", "/api/admin/holds", data);
+      return await response.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/holds"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/seats/availability"] });
+      setHoldForm({ name: "", seatType: "founder", note: "" });
+      toast({ title: "Seat held!", description: "Seat removed from available pool." });
+    },
+    onError: (error: Error) => {
+      toast({ variant: "destructive", title: "Failed to hold seat", description: error.message });
+    },
+  });
+
+  const releaseHold = useMutation({
+    mutationFn: async (id: string) => {
+      await apiRequest("DELETE", `/api/admin/holds/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/holds"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/seats/availability"] });
+      toast({ title: "Seat released!", description: "Seat returned to available pool." });
+    },
+  });
+
   const [approvalNotes, setApprovalNotes] = useState<{[key: string]: string}>({});
   const [editingPrice, setEditingPrice] = useState<{ founderPrice: string; patronPrice: string }>({ founderPrice: "", patronPrice: "" });
   
@@ -811,6 +845,62 @@ export default function AdminPanel() {
               );
             })}
           </div>
+
+          {/* Manual Seat Holds - Quick hold for phone/text requests */}
+          <Card className="bg-card border-card-border p-7 mb-12">
+            <div className="flex flex-wrap items-center justify-between gap-4 mb-6">
+              <div>
+                <h2 className="font-serif text-2xl font-bold text-foreground mb-1">
+                  Hold Seats
+                </h2>
+                <p className="text-sm text-muted-foreground">
+                  Quick hold for people who call or text - removes from available count
+                </p>
+              </div>
+              <Badge className="bg-bronze text-white">{manualHolds?.length || 0} held</Badge>
+            </div>
+
+            <div className="flex flex-wrap items-end gap-3 mb-6 p-4 bg-muted rounded-lg border border-border">
+              <div className="flex-1 min-w-[150px]">
+                <Label htmlFor="hold-name">Name</Label>
+                <Input id="hold-name" placeholder="Mark, John, etc." value={holdForm.name} onChange={(e) => setHoldForm({...holdForm, name: e.target.value})} data-testid="input-hold-name" />
+              </div>
+              <div className="w-32">
+                <Label htmlFor="hold-type">Seat Type</Label>
+                <Select value={holdForm.seatType} onValueChange={(v: "founder" | "patron") => setHoldForm({...holdForm, seatType: v})}>
+                  <SelectTrigger data-testid="select-hold-type"><SelectValue /></SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="founder">Founder</SelectItem>
+                    <SelectItem value="patron">Patron</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div className="flex-1 min-w-[150px]">
+                <Label htmlFor="hold-note">Note (optional)</Label>
+                <Input id="hold-note" placeholder="Friend from..." value={holdForm.note} onChange={(e) => setHoldForm({...holdForm, note: e.target.value})} data-testid="input-hold-note" />
+              </div>
+              <Button onClick={() => createHold.mutate(holdForm)} disabled={createHold.isPending || !holdForm.name} className="bg-bronze text-white" data-testid="button-hold-seat">
+                {createHold.isPending ? "Holding..." : "Hold Seat"}
+              </Button>
+            </div>
+
+            {manualHolds && manualHolds.length > 0 && (
+              <div className="space-y-2">
+                {manualHolds.map((hold: any) => (
+                  <div key={hold.id} className="flex items-center justify-between p-3 bg-muted/50 rounded-lg border border-border">
+                    <div className="flex items-center gap-3">
+                      <Badge variant={hold.seatType === 'founder' ? 'default' : 'secondary'}>{hold.seatType}</Badge>
+                      <span className="font-medium">{hold.name}</span>
+                      {hold.note && <span className="text-sm text-muted-foreground">- {hold.note}</span>}
+                    </div>
+                    <Button onClick={() => releaseHold.mutate(hold.id)} variant="ghost" size="sm" className="text-destructive" data-testid={`button-release-${hold.id}`}>
+                      Release
+                    </Button>
+                  </div>
+                ))}
+              </div>
+            )}
+          </Card>
 
           {/* Promo Code Management */}
           <Card className="bg-card border-card-border p-7 mb-12">

@@ -404,16 +404,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log(`[Reservations] Table not available, skipping reservation adjustments`);
       }
 
+      // Get manual holds count (admin phone/text holds)
+      let founderManualHolds = 0;
+      let patronManualHolds = 0;
+      try {
+        founderManualHolds = await storage.getManualHoldsCount('founder');
+        patronManualHolds = await storage.getManualHoldsCount('patron');
+      } catch (holdError: any) {
+        console.log(`[ManualHolds] Table not available, skipping manual hold adjustments`);
+      }
+
       const seats = await storage.getSeats();
 
-      // Adjust available counts by subtracting active reservations
+      // Adjust available counts by subtracting active reservations AND manual holds
       const adjustedSeats = seats.map(seat => {
         const currentAvailable = seat.totalAvailable - seat.sold;
         const reservedForType = seat.type === "founder" ? founderReservations : patronReservations;
+        const manualHoldsForType = seat.type === "founder" ? founderManualHolds : patronManualHolds;
         return {
           ...seat,
-          available: Math.max(0, currentAvailable - reservedForType),
-          reservedCount: reservedForType
+          available: Math.max(0, currentAvailable - reservedForType - manualHoldsForType),
+          reservedCount: reservedForType,
+          manualHolds: manualHoldsForType
         };
       });
 
@@ -3137,6 +3149,54 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ success: true, message: "Fire sale deactivated", seats });
     } catch (error: any) {
       console.error("[Admin] Fire sale deactivation error:", error);
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Admin: Get Manual Holds
+  app.get("/api/admin/holds", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const holds = await storage.getManualHolds();
+      res.json(holds);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Admin: Create Manual Hold
+  app.post("/api/admin/holds", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      const { name, seatType, note } = req.body;
+      if (!name || !seatType) return res.status(400).json({ message: "Name and seat type required" });
+
+      const hold = await storage.createManualHold({ name, seatType, note });
+      res.json(hold);
+    } catch (error: any) {
+      res.status(500).json({ message: error.message });
+    }
+  });
+
+  // Admin: Delete Manual Hold
+  app.delete("/api/admin/holds/:id", isAuthenticated, async (req: any, res: Response) => {
+    try {
+      const userId = await getUserIdFromToken(req);
+      if (!userId) return res.status(401).json({ message: "Unauthorized" });
+      const user = await storage.getUser(userId);
+      if (!user?.isAdmin) return res.status(403).json({ message: "Admin access required" });
+
+      await storage.deleteManualHold(req.params.id);
+      res.json({ success: true });
+    } catch (error: any) {
       res.status(500).json({ message: error.message });
     }
   });
