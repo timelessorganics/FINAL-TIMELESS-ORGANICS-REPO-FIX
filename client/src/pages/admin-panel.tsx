@@ -2115,7 +2115,7 @@ export default function AdminPanel() {
               <div className="mb-8">
                 <h2 className="font-serif text-2xl font-bold mb-2">Specimen Image Manager</h2>
                 <p className="text-muted-foreground">
-                  Upload custom images for each specimen style to test the gallery. Images are stored temporarily in your browser session.
+                  Upload custom images for each specimen style. Images are saved permanently to Supabase storage and will display on the Seasonal Guide.
                 </p>
               </div>
 
