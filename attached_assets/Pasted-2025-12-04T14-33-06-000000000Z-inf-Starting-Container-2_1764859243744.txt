@@ -1,0 +1,721 @@
+2025-12-04T14:33:06.000000000Z [inf]  Starting Container
+2025-12-04T14:33:07.603251144Z [inf]  [Mailchimp] Integration configured
+2025-12-04T14:33:07.663438370Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:33:07.699920474Z [inf]  [Init] Found 2 existing seats
+2025-12-04T14:33:07.699925530Z [inf]  [Init] Founder: 25 remaining, Patron: 27 remaining
+2025-12-04T14:33:07.699931040Z [inf]  [Supabase Auth] Authentication configured
+2025-12-04T14:33:07.715074158Z [inf]  2:33:07 PM [express] serving on port 8080
+2025-12-04T14:35:37.216504485Z [inf]  2:35:33 PM [express] GET /api/auth/user 304 in 501ms :: {"id":"1240d908-e702-44ad-a323-5045518bd1e7"…
+2025-12-04T14:35:37.216512908Z [inf]  2:35:34 PM [express] GET /api/auth/user 304 in 90ms :: {"id":"1240d908-e702-44ad-a323-5045518bd1e7",…
+2025-12-04T14:35:37.216541036Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:36:27.233942626Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:36:27.233948927Z [inf]  2:36:21 PM [express] GET /api/auth/user 304 in 311ms :: {"id":"1240d908-e702-44ad-a323-5045518bd1e7"…
+2025-12-04T14:36:27.233971153Z [inf]  2:36:22 PM [express] GET /api/auth/user 304 in 90ms :: {"id":"1240d908-e702-44ad-a323-5045518bd1e7",…
+2025-12-04T14:36:29.232230677Z [inf]  2:36:29 PM [express] GET /api/auth/user 304 in 153ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-04T14:36:30.203215837Z [inf]  2:36:30 PM [express] GET /api/auth/user 304 in 86ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c",…
+2025-12-04T14:36:31.190807519Z [inf]  2:36:31 PM [express] GET /api/auth/user 200 in 82ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c",…
+2025-12-04T14:36:32.257352183Z [inf]  2:36:31 PM [express] GET /api/specimen-customizations 200 in 33ms :: [{"id":"bfdba26f-46dc-455e-947c…
+2025-12-04T14:36:33.142483999Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:36:33.142503980Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:36:33.142515248Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:36:33.142523699Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:36:33.142529761Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:36:33.142536004Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:36:33.142542059Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:36:33.142548659Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:36:33.142555189Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:36:33.142664230Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:36:33.142684469Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:36:33.142694798Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:36:33.142706491Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:36:33.142715816Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:36:33.142725005Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:36:33.142738301Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:36:33.142748049Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:36:33.142757404Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:36:33.142766459Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:36:33.142777205Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:36:33.150237392Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:36:33.150251358Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:36:33.150259148Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:36:33.150265660Z [inf]  2:36:33 PM [express] GET /api/admin/codes 304 in 317ms :: []
+2025-12-04T14:36:33.150272358Z [inf]  2:36:33 PM [express] GET /api/admin/purchases 304 in 334ms :: [{"id":"b0924650-6dee-41e8-84ce-b50ad3…
+2025-12-04T14:36:33.150485660Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:36:33.150492189Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:36:33.150502853Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:36:33.150510496Z [inf]  [DB] Manual holds for founder: 1
+2025-12-04T14:36:33.150517255Z [inf]  2:36:32 PM [express] GET /api/sculptures 304 in 180ms :: [{"id":"1b5bcff5-e900-45dd-8d94-e28b03bef95…
+2025-12-04T14:36:33.150523867Z [inf]  [DB] Manual holds for patron: 2
+2025-12-04T14:36:33.150529904Z [inf]  [ManualHolds] Founder: 1, Patron: 2
+2025-12-04T14:36:33.150536132Z [inf]  2:36:32 PM [express] GET /api/content/videos 304 in 206ms :: {"home_story":"https://rcillyhlieikmzeu…
+2025-12-04T14:36:33.150541973Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:36:33.150548148Z [inf]  [Availability] founder: total=50, sold=25, current=25, reserved=00, holds=1, available=24
+2025-12-04T14:36:33.150554514Z [inf]  [Availability] patron: total=50, sold=23, current=27, reserved=00, holds=2, available=25
+2025-12-04T14:36:33.150561049Z [inf]  2:36:32 PM [express] GET /api/seats/availability 304 in 247ms :: [{"id":"5b2c079b-6680-443a-823e-bf0…
+2025-12-04T14:36:33.150566747Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:36:33.150572818Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:36:33.150579845Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:36:33.154469488Z [inf]    {
+2025-12-04T14:36:33.154470171Z [inf]      seatType: 'patron'
+2025-12-04T14:36:33.154483537Z [inf]      id: '6fdcc0aa-4191-4829-94e2-ca98379e3286',
+2025-12-04T14:36:33.154484079Z [inf]    }
+2025-12-04T14:36:33.154494222Z [inf]      name: 'Jonny Patron',
+2025-12-04T14:36:33.154494936Z [inf]  ]
+2025-12-04T14:36:33.154504192Z [inf]      seatType: 'patron'
+2025-12-04T14:36:33.154505333Z [inf]  2:36:33 PM [express] GET /api/admin/holds 304 in 417ms :: [{"id":"6fdcc0aa-4191-4829-94e2-ca98379e32…
+2025-12-04T14:36:33.154513646Z [inf]    },
+2025-12-04T14:36:33.154523119Z [inf]    {
+2025-12-04T14:36:33.154526038Z [inf]    {
+2025-12-04T14:36:33.154534361Z [inf]      id: '5c26dd79-10fc-4f9f-9362-08becf2085a8',
+2025-12-04T14:36:33.154534688Z [inf]      id: '3015994e-ae8f-4c64-ae7c-914e2e150639',
+2025-12-04T14:36:33.154544757Z [inf]      name: 'john ',
+2025-12-04T14:36:33.154544919Z [inf]      name: 'paul founder',
+2025-12-04T14:36:33.154552886Z [inf]      seatType: 'founder'
+2025-12-04T14:36:33.154560122Z [inf]    },
+2025-12-04T14:36:33.154564278Z [inf]  2:36:33 PM [express] GET /api/admin/content 200 in 391ms :: [{"id":"8985a844-8964-43ab-b2c9-aeb2477b…
+2025-12-04T14:36:33.154570596Z [inf]  2:36:33 PM [express] GET /api/admin/promo-codes 304 in 388ms :: [{"id":"4a76b3fa-9d53-4434-9088-2472…
+2025-12-04T14:36:33.154577061Z [inf]  [DB] All manual holds: [
+2025-12-04T14:36:33.154606557Z [inf]  [Storage] Found 26 image files
+2025-12-04T14:36:33.177251507Z [inf]  2:36:33 PM [express] GET /api/admin/seats 304 in 408ms :: [{"id":"5b2c079b-6680-443a-823e-bf07f6d19f…
+2025-12-04T14:36:33.177260991Z [inf]  2:36:33 PM [express] GET /api/admin/specimen-customizations 304 in 402ms :: [{"id":"bfdba26f-46dc-45…
+2025-12-04T14:36:33.535605931Z [inf]  2:36:33 PM [express] GET /api/admin/media-storage-files 200 in 803ms :: [{"id":"1764681915772-202511…
+2025-12-04T14:36:36.290756853Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:36:36.290761182Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:36:36.290765299Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:36:36.290770864Z [inf]  [Regenerate] ===== ENDPOINT HIT =====
+2025-12-04T14:36:36.290774956Z [inf]  [Regenerate] User ID from token: c4e12a8b-b835-4daf-8506-7b8b5b7f227c
+2025-12-04T14:36:36.290778886Z [inf]  [Regenerate] User: studio@timeless.organic isAdmin: true
+2025-12-04T14:36:36.290783072Z [inf]  [Regenerate Codes] Found 50 completed purchases, checking for missing codes...
+2025-12-04T14:36:36.290787174Z [inf]  [Regenerate] Generating codes for completed purchase b0924650-6dee-41e8-84ce-b50ad32d14f3
+2025-12-04T14:36:36.290791334Z [inf]  [Email] Checking configuration...
+2025-12-04T14:36:36.290795982Z [inf]  [Email] SMTP_HOST: smtp.gmail...
+2025-12-04T14:36:36.290802071Z [inf]  [Email] SMTP_PORT: 587
+2025-12-04T14:36:36.290808447Z [inf]  [Email] SMTP_USER: studi...
+2025-12-04T14:36:36.290815728Z [inf]  [Email] SMTP_PASS: ***SET***
+2025-12-04T14:36:36.290822713Z [inf]  [Email] Configuration complete - emails will be sent
+2025-12-04T14:36:36.290828436Z [inf]  [Email] Sent certificate email with codes to mikejunor@gmail.com for purchase b0924650-6dee-41e8-84ce-b50ad32d14f3
+2025-12-04T14:36:36.290834033Z [inf]  [Regenerate] Successfully regenerated 3 codes for b0924650-6dee-41e8-84ce-b50ad32d14f3
+2025-12-04T14:36:36.290839278Z [inf]  [Regenerate] Generating codes for completed purchase ff400f5b-5e04-45c5-8200-faca5ea1df65
+2025-12-04T14:36:36.290843952Z [inf]  [Email] Sent certificate email with codes to mikejunor@gmail.com for purchase ff400f5b-5e04-45c5-8200-faca5ea1df65
+2025-12-04T14:36:36.290848391Z [inf]  [Regenerate] Successfully regenerated 3 codes for ff400f5b-5e04-45c5-8200-faca5ea1df65
+2025-12-04T14:36:36.290856851Z [inf]  [Regenerate] Generating codes for completed purchase b7361256-4c31-40f3-bd1a-d61253536b06
+2025-12-04T14:36:36.374138264Z [inf]  [Email] Sent certificate email with codes to ianjunor@gmail.com for purchase b7361256-4c31-40f3-bd1a-d61253536b06
+2025-12-04T14:36:36.374142197Z [inf]  [Regenerate] Successfully regenerated 3 codes for b7361256-4c31-40f3-bd1a-d61253536b06
+2025-12-04T14:36:36.397476487Z [inf]  [Regenerate] Generating codes for completed purchase c4d2b6a1-1539-4c67-8c3b-43af0f7968cf
+2025-12-04T14:36:36.503132572Z [inf]  [Email] Sent certificate email with codes to mikejunor@gmail.com for purchase c4d2b6a1-1539-4c67-8c3b-43af0f7968cf
+2025-12-04T14:36:36.503138415Z [inf]  [Regenerate] Successfully regenerated 3 codes for c4d2b6a1-1539-4c67-8c3b-43af0f7968cf
+2025-12-04T14:36:36.530405960Z [inf]  [Regenerate] Generating codes for completed purchase 804ef0af-1b26-4f52-b33e-b20d6e385927
+2025-12-04T14:36:37.210506675Z [inf]  [Regenerate] Generating codes for completed purchase 7e638275-9d78-497b-93a7-fe1d21b6c8d3
+2025-12-04T14:36:37.210517191Z [inf]  [Email] Sent certificate email with codes to studio@timeless.organic for purchase 7e638275-9d78-497b-93a7-fe1d21b6c8d3
+2025-12-04T14:36:37.210524994Z [inf]  [Regenerate] Successfully regenerated 3 codes for 7e638275-9d78-497b-93a7-fe1d21b6c8d3
+2025-12-04T14:36:37.210566839Z [inf]  [Email] Sent certificate email with codes to davidjunor@hotmail.com for purchase 804ef0af-1b26-4f52-b33e-b20d6e385927
+2025-12-04T14:36:37.210573059Z [inf]  [Regenerate] Successfully regenerated 3 codes for 804ef0af-1b26-4f52-b33e-b20d6e385927
+2025-12-04T14:36:37.210630485Z [inf]  [Regenerate] Generating codes for completed purchase 9f942162-d3b2-4df6-95f8-edd8844c43d5
+2025-12-04T14:36:37.210639840Z [inf]  [Email] Sent certificate email with codes to davidjunor@hotmail.com for purchase 9f942162-d3b2-4df6-95f8-edd8844c43d5
+2025-12-04T14:36:37.210646604Z [inf]  [Regenerate] Successfully regenerated 3 codes for 9f942162-d3b2-4df6-95f8-edd8844c43d5
+2025-12-04T14:36:37.216157612Z [inf]  [Regenerate] Generating codes for completed purchase 40119838-49bf-4df8-ad19-0254e4654608
+2025-12-04T14:36:37.216169130Z [inf]  [Email] Sent certificate email with codes to davidjunortimelessorganics@gmail.com for purchase 40119838-49bf-4df8-ad19-0254e4654608
+2025-12-04T14:36:37.216175479Z [inf]  [Regenerate] Successfully regenerated 3 codes for 40119838-49bf-4df8-ad19-0254e4654608
+2025-12-04T14:36:37.216181333Z [inf]  [Regenerate] Generating codes for completed purchase dcb0e802-2993-46be-84e4-70884148b6d9
+2025-12-04T14:36:37.216187015Z [inf]  [Email] Sent certificate email with codes to studio@timeless.organic for purchase dcb0e802-2993-46be-84e4-70884148b6d9
+2025-12-04T14:36:37.216192370Z [inf]  [Regenerate] Successfully regenerated 3 codes for dcb0e802-2993-46be-84e4-70884148b6d9
+2025-12-04T14:36:37.216198064Z [inf]  [Regenerate] Generating codes for completed purchase e43e56f1-8d85-425f-92eb-8cd74a86cd03
+2025-12-04T14:36:37.267446085Z [inf]  [Regenerate] Successfully regenerated 3 codes for e43e56f1-8d85-425f-92eb-8cd74a86cd03
+2025-12-04T14:36:37.267621110Z [inf]  [Email] Sent certificate email with codes to davidjunortimelessorganics@gmail.com for purchase e43e56f1-8d85-425f-92eb-8cd74a86cd03
+2025-12-04T14:36:37.291426679Z [inf]  [Regenerate] Generating codes for completed purchase 1f6adaf8-b751-42c1-9410-92cc2b8443b0
+2025-12-04T14:36:37.393622931Z [inf]  [Email] Sent certificate email with codes to davidjunortimelessorganics@gmail.com for purchase 1f6adaf8-b751-42c1-9410-92cc2b8443b0
+2025-12-04T14:36:37.393637685Z [inf]  [Regenerate] Successfully regenerated 3 codes for 1f6adaf8-b751-42c1-9410-92cc2b8443b0
+2025-12-04T14:36:37.418812899Z [inf]  [Regenerate] Generating codes for completed purchase 65ca24f2-5574-4333-be66-fd6f0cd77ce8
+2025-12-04T14:36:37.521652399Z [inf]  [Email] Sent certificate email with codes to helenazappa@hotmail.com for purchase 65ca24f2-5574-4333-be66-fd6f0cd77ce8
+2025-12-04T14:36:37.521659492Z [inf]  [Regenerate] Successfully regenerated 3 codes for 65ca24f2-5574-4333-be66-fd6f0cd77ce8
+2025-12-04T14:36:37.546434659Z [inf]  [Regenerate] Generating codes for completed purchase beae0b3c-9060-4d48-b082-b73b7fe121f2
+2025-12-04T14:36:38.201747630Z [inf]  [Email] Sent certificate email with codes to helenazappa@hotmail.com for purchase beae0b3c-9060-4d48-b082-b73b7fe121f2
+2025-12-04T14:36:38.201753623Z [inf]  [Regenerate] Successfully regenerated 3 codes for beae0b3c-9060-4d48-b082-b73b7fe121f2
+2025-12-04T14:36:38.201759505Z [inf]  [Regenerate] Generating codes for completed purchase dc8b81bd-96b5-4a4e-b7b6-1b9148ebf528
+2025-12-04T14:36:38.201765497Z [inf]  [Email] Sent certificate email with codes to helenazappa@hotmail.com for purchase dc8b81bd-96b5-4a4e-b7b6-1b9148ebf528
+2025-12-04T14:36:38.201771248Z [inf]  [Regenerate] Successfully regenerated 3 codes for dc8b81bd-96b5-4a4e-b7b6-1b9148ebf528
+2025-12-04T14:36:38.201777026Z [inf]  [Regenerate] Generating codes for completed purchase 32dfee78-b9eb-4442-8d36-06d067713f88
+2025-12-04T14:36:38.201783276Z [inf]  [Email] Sent certificate email with codes to davidjunor74@gmail.com for purchase 32dfee78-b9eb-4442-8d36-06d067713f88
+2025-12-04T14:36:38.201789145Z [inf]  [Regenerate] Successfully regenerated 3 codes for 32dfee78-b9eb-4442-8d36-06d067713f88
+2025-12-04T14:36:38.201794469Z [inf]  [Regenerate] Generating codes for completed purchase 01d17273-15b5-40e8-917b-5e7fe6c399fc
+2025-12-04T14:36:38.201801393Z [inf]  [Email] Sent certificate email with codes to studio@timeless.organic for purchase 01d17273-15b5-40e8-917b-5e7fe6c399fc
+2025-12-04T14:36:38.201811312Z [inf]  [Regenerate] Successfully regenerated 3 codes for 01d17273-15b5-40e8-917b-5e7fe6c399fc
+2025-12-04T14:36:38.201817295Z [inf]  [Regenerate] Generating codes for completed purchase 3ebeb79c-5f9a-46a1-a053-40761a2b9e59
+2025-12-04T14:36:38.201823154Z [inf]  [Email] Sent certificate email with codes to davidjunor@hotmail.com for purchase 3ebeb79c-5f9a-46a1-a053-40761a2b9e59
+2025-12-04T14:36:38.201828738Z [inf]  [Regenerate] Successfully regenerated 3 codes for 3ebeb79c-5f9a-46a1-a053-40761a2b9e59
+2025-12-04T14:36:38.201835191Z [inf]  [Regenerate] Generating codes for completed purchase a4c43897-eb92-443a-9483-13cf509f9843
+2025-12-04T14:36:38.291884695Z [inf]  [Email] Sent certificate email with codes to davidjunortimelessorganics@gmail.com for purchase a4c43897-eb92-443a-9483-13cf509f9843
+2025-12-04T14:36:38.291890309Z [inf]  [Regenerate] Successfully regenerated 3 codes for a4c43897-eb92-443a-9483-13cf509f9843
+2025-12-04T14:36:38.312804048Z [inf]  [Regenerate] Generating codes for completed purchase ffe12db5-05bb-414c-9ea7-6ef65276d1c4
+2025-12-04T14:36:38.426447279Z [inf]  [Email] Sent certificate email with codes to davidjunor@hotmail.com for purchase ffe12db5-05bb-414c-9ea7-6ef65276d1c4
+2025-12-04T14:36:38.426451939Z [inf]  [Regenerate] Successfully regenerated 3 codes for ffe12db5-05bb-414c-9ea7-6ef65276d1c4
+2025-12-04T14:36:38.449317771Z [inf]  [Regenerate] Generating codes for completed purchase f171d374-d965-4822-86ef-86e864c4d84c
+2025-12-04T14:36:38.549375897Z [inf]  [Email] Sent certificate email with codes to davidjunor@hotmail.com for purchase f171d374-d965-4822-86ef-86e864c4d84c
+2025-12-04T14:36:38.549382820Z [inf]  [Regenerate] Successfully regenerated 3 codes for f171d374-d965-4822-86ef-86e864c4d84c
+2025-12-04T14:36:38.570609886Z [inf]  [Regenerate] Generating codes for completed purchase c1653ea3-b915-4ccb-93f6-71f04a49cc79
+2025-12-04T14:36:39.324812284Z [inf]  [Regenerate] Successfully regenerated 3 codes for 31844ad0-4cae-4276-a6a6-daecce52a4d0
+2025-12-04T14:36:39.324846263Z [inf]  [Email] Sent certificate email with codes to davidj.helenaz.litigation@gmail.com for purchase 31844ad0-4cae-4276-a6a6-daecce52a4d0
+2025-12-04T14:36:39.324935693Z [inf]  [Email] Sent certificate email with codes to davidjunor@hotmail.com for purchase c1653ea3-b915-4ccb-93f6-71f04a49cc79
+2025-12-04T14:36:39.324942655Z [inf]  [Regenerate] Successfully regenerated 3 codes for c1653ea3-b915-4ccb-93f6-71f04a49cc79
+2025-12-04T14:36:39.324948072Z [inf]  [Regenerate] Generating codes for completed purchase 8dd1d1c2-0c58-409b-95d7-4aae64826f59
+2025-12-04T14:36:39.324953498Z [inf]  [Email] Sent certificate email with codes to davidjunor74@gmail.com for purchase 8dd1d1c2-0c58-409b-95d7-4aae64826f59
+2025-12-04T14:36:39.324960624Z [inf]  [Regenerate] Successfully regenerated 3 codes for 8dd1d1c2-0c58-409b-95d7-4aae64826f59
+2025-12-04T14:36:39.324966913Z [inf]  [Regenerate] Generating codes for completed purchase 39bcdec4-d03e-42fd-9484-86cc0e95c523
+2025-12-04T14:36:39.324975533Z [inf]  [Email] Sent certificate email with codes to davidj.helenaz.litigation@gmail.com for purchase 39bcdec4-d03e-42fd-9484-86cc0e95c523
+2025-12-04T14:36:39.324982124Z [inf]  [Regenerate] Successfully regenerated 3 codes for 39bcdec4-d03e-42fd-9484-86cc0e95c523
+2025-12-04T14:36:39.324988533Z [inf]  [Regenerate] Generating codes for completed purchase 0742c545-82bb-4bbb-b6db-6a8587be5802
+2025-12-04T14:36:39.324994929Z [inf]  [Email] Sent certificate email with codes to davidj.helenaz.litigation@gmail.com for purchase 0742c545-82bb-4bbb-b6db-6a8587be5802
+2025-12-04T14:36:39.325001159Z [inf]  [Regenerate] Successfully regenerated 3 codes for 0742c545-82bb-4bbb-b6db-6a8587be5802
+2025-12-04T14:36:39.325007675Z [inf]  [Regenerate] Generating codes for completed purchase ae3b5ba1-a306-4f72-afd6-8b207a9f622c
+2025-12-04T14:36:39.325013459Z [inf]  [Email] Sent certificate email with codes to davidj.helenaz.litigation@gmail.com for purchase ae3b5ba1-a306-4f72-afd6-8b207a9f622c
+2025-12-04T14:36:39.325019611Z [inf]  [Regenerate] Successfully regenerated 3 codes for ae3b5ba1-a306-4f72-afd6-8b207a9f622c
+2025-12-04T14:36:39.325030485Z [inf]  [Regenerate] Generating codes for completed purchase 31844ad0-4cae-4276-a6a6-daecce52a4d0
+2025-12-04T14:36:39.332787348Z [inf]  [Regenerate] Generating codes for completed purchase 7164494f-6106-4d34-a7d1-4057f61403fb
+2025-12-04T14:36:39.435197085Z [inf]  [Email] Sent certificate email with codes to davidj.helenaz.litigation@gmail.com for purchase 7164494f-6106-4d34-a7d1-4057f61403fb
+2025-12-04T14:36:39.435206468Z [inf]  [Regenerate] Successfully regenerated 3 codes for 7164494f-6106-4d34-a7d1-4057f61403fb
+2025-12-04T14:36:39.459230914Z [inf]  [Regenerate] Generating codes for completed purchase d6701292-b36f-42ad-b6ef-8ab9e2f6f095
+2025-12-04T14:36:39.565191278Z [inf]  [Email] Sent certificate email with codes to davidj.helenaz.litigation@gmail.com for purchase d6701292-b36f-42ad-b6ef-8ab9e2f6f095
+2025-12-04T14:36:39.565196752Z [inf]  [Regenerate] Successfully regenerated 3 codes for d6701292-b36f-42ad-b6ef-8ab9e2f6f095
+2025-12-04T14:36:39.587527871Z [inf]  [Regenerate] Generating codes for completed purchase ede8154b-5016-4b5c-a8c3-82aa07ae526d
+2025-12-04T14:36:40.269002721Z [inf]  [Email] Sent certificate email with codes to davidj.helenaz.litigation@gmail.com for purchase ede8154b-5016-4b5c-a8c3-82aa07ae526d
+2025-12-04T14:36:40.269008045Z [inf]  [Regenerate] Successfully regenerated 3 codes for ede8154b-5016-4b5c-a8c3-82aa07ae526d
+2025-12-04T14:36:40.269014966Z [inf]  [Regenerate] Generating codes for completed purchase bc20e365-a2b0-4f01-96b1-0a9f0d4b5e46
+2025-12-04T14:36:40.269022657Z [inf]  [Regenerate] Successfully regenerated 3 codes for d587908d-865b-4d06-a47f-1572ab824f99
+2025-12-04T14:36:40.269023417Z [inf]  [Email] Sent certificate email with codes to davidj.helenaz.litigation@gmail.com for purchase bc20e365-a2b0-4f01-96b1-0a9f0d4b5e46
+2025-12-04T14:36:40.269031102Z [inf]  [Regenerate] Successfully regenerated 3 codes for bc20e365-a2b0-4f01-96b1-0a9f0d4b5e46
+2025-12-04T14:36:40.269042190Z [inf]  [Regenerate] Generating codes for completed purchase 9ce4163a-f1c4-49e3-8926-ed8c3ed71a89
+2025-12-04T14:36:40.269043552Z [inf]  [Regenerate] Generating codes for completed purchase f367f587-8adf-4415-b019-15d23504b1ad
+2025-12-04T14:36:40.269047444Z [inf]  [Regenerate] Generating codes for completed purchase a2852065-3433-4686-b10e-7f1a4bc02e0e
+2025-12-04T14:36:40.269051679Z [inf]  [Regenerate] Successfully regenerated 3 codes for 9ce4163a-f1c4-49e3-8926-ed8c3ed71a89
+2025-12-04T14:36:40.269052632Z [inf]  [Regenerate] Successfully regenerated 3 codes for f367f587-8adf-4415-b019-15d23504b1ad
+2025-12-04T14:36:40.269054211Z [inf]  [Email] Sent certificate email with codes to davidj.helenaz.litigation@gmail.com for purchase 9ce4163a-f1c4-49e3-8926-ed8c3ed71a89
+2025-12-04T14:36:40.269065195Z [inf]  [Regenerate] Generating codes for completed purchase d587908d-865b-4d06-a47f-1572ab824f99
+2025-12-04T14:36:40.269071657Z [inf]  [Email] Sent certificate email with codes to davidjunor@hotmail.com for purchase f367f587-8adf-4415-b019-15d23504b1ad
+2025-12-04T14:36:40.269071987Z [inf]  [Email] Sent certificate email with codes to davidj.helenaz.litigation@gmail.com for purchase d587908d-865b-4d06-a47f-1572ab824f99
+2025-12-04T14:36:40.321694525Z [inf]  [Email] Sent certificate email with codes to davidjunor@hotmail.com for purchase a2852065-3433-4686-b10e-7f1a4bc02e0e
+2025-12-04T14:36:40.321700412Z [inf]  [Regenerate] Successfully regenerated 3 codes for a2852065-3433-4686-b10e-7f1a4bc02e0e
+2025-12-04T14:36:40.346525466Z [inf]  [Regenerate] Generating codes for completed purchase 7d3ed19a-e1bb-443f-be58-35586b0d17d0
+2025-12-04T14:36:40.450978143Z [inf]  [Email] Sent certificate email with codes to davidjunor@hotmail.com for purchase 7d3ed19a-e1bb-443f-be58-35586b0d17d0
+2025-12-04T14:36:40.450983686Z [inf]  [Regenerate] Successfully regenerated 3 codes for 7d3ed19a-e1bb-443f-be58-35586b0d17d0
+2025-12-04T14:36:40.478711689Z [inf]  [Regenerate] Generating codes for completed purchase a220c8bd-a806-428c-a84b-a574313bb3fd
+2025-12-04T14:36:40.573115833Z [inf]  [Email] Sent certificate email with codes to davidjunortimelessorganics@gmail.com for purchase a220c8bd-a806-428c-a84b-a574313bb3fd
+2025-12-04T14:36:40.573123352Z [inf]  [Regenerate] Successfully regenerated 3 codes for a220c8bd-a806-428c-a84b-a574313bb3fd
+2025-12-04T14:36:40.602202492Z [inf]  [Regenerate] Generating codes for completed purchase 2ecda956-b473-41ed-91b6-cda9065cd558
+2025-12-04T14:36:41.308527742Z [inf]  [Regenerate] Generating codes for completed purchase bd1d3cdf-c0e2-40e5-8936-ebd4305db449
+2025-12-04T14:36:41.308537999Z [inf]  [Email] Sent certificate email with codes to davidjunor@hotmail.com for purchase bd1d3cdf-c0e2-40e5-8936-ebd4305db449
+2025-12-04T14:36:41.308544457Z [inf]  [Regenerate] Successfully regenerated 3 codes for bd1d3cdf-c0e2-40e5-8936-ebd4305db449
+2025-12-04T14:36:41.308550587Z [inf]  [Email] Sent certificate email with codes to davidjunor74@gmail.com for purchase 880fff03-eab4-4226-814d-df2c1ef4b24d
+2025-12-04T14:36:41.308558758Z [inf]  [Email] Sent certificate email with codes to davidjunortimelessorganics@gmail.com for purchase 2ecda956-b473-41ed-91b6-cda9065cd558
+2025-12-04T14:36:41.308560076Z [inf]  [Regenerate] Successfully regenerated 3 codes for 880fff03-eab4-4226-814d-df2c1ef4b24d
+2025-12-04T14:36:41.308568325Z [inf]  [Regenerate] Successfully regenerated 3 codes for 2ecda956-b473-41ed-91b6-cda9065cd558
+2025-12-04T14:36:41.308568424Z [inf]  [Regenerate] Generating codes for completed purchase 91137b26-b0da-4081-a6e4-39745e5c7ba8
+2025-12-04T14:36:41.308577298Z [inf]  [Regenerate] Generating codes for completed purchase fec71e1f-49e2-4904-b4dc-56cd32b0903b
+2025-12-04T14:36:41.308577505Z [inf]  [Email] Sent certificate email with codes to studio@timeless.organic for purchase 91137b26-b0da-4081-a6e4-39745e5c7ba8
+2025-12-04T14:36:41.308587584Z [inf]  [Email] Sent certificate email with codes to davidjunor74@gmail.com for purchase fec71e1f-49e2-4904-b4dc-56cd32b0903b
+2025-12-04T14:36:41.308590483Z [inf]  [Regenerate] Successfully regenerated 3 codes for 91137b26-b0da-4081-a6e4-39745e5c7ba8
+2025-12-04T14:36:41.308594757Z [inf]  [Regenerate] Successfully regenerated 3 codes for fec71e1f-49e2-4904-b4dc-56cd32b0903b
+2025-12-04T14:36:41.308600916Z [inf]  [Regenerate] Generating codes for completed purchase 880fff03-eab4-4226-814d-df2c1ef4b24d
+2025-12-04T14:36:41.314393508Z [inf]  [Regenerate] Generating codes for completed purchase c673a746-d27f-41d7-b21f-8cbe0ba236ac
+2025-12-04T14:36:41.346533896Z [inf]  [Email] Sent certificate email with codes to studio@timeless.organic for purchase c673a746-d27f-41d7-b21f-8cbe0ba236ac
+2025-12-04T14:36:41.346540531Z [inf]  [Regenerate] Successfully regenerated 3 codes for c673a746-d27f-41d7-b21f-8cbe0ba236ac
+2025-12-04T14:36:41.357499398Z [inf]  [Regenerate] Generating codes for completed purchase 9b475a49-22a4-4c3b-913b-4383318414eb
+2025-12-04T14:36:41.459946281Z [inf]  [Email] Sent certificate email with codes to studio@timeless.organic for purchase 9b475a49-22a4-4c3b-913b-4383318414eb
+2025-12-04T14:36:41.459958772Z [inf]  [Regenerate] Successfully regenerated 3 codes for 9b475a49-22a4-4c3b-913b-4383318414eb
+2025-12-04T14:36:41.484690444Z [inf]  [Regenerate] Generating codes for completed purchase a98c71b4-43bd-4da5-97af-1ed306599aeb
+2025-12-04T14:36:41.590733274Z [inf]  [Email] Sent certificate email with codes to davidj.helenaz.litigation@gmail.com for purchase a98c71b4-43bd-4da5-97af-1ed306599aeb
+2025-12-04T14:36:41.590745129Z [inf]  [Regenerate] Successfully regenerated 3 codes for a98c71b4-43bd-4da5-97af-1ed306599aeb
+2025-12-04T14:36:42.387308561Z [inf]  [Regenerate] Generating codes for completed purchase 86e8fb40-61e1-46e0-9f61-4df584bb200e
+2025-12-04T14:36:42.387315494Z [inf]  [Email] Sent certificate email with codes to davidj.helenaz.litigation@gmail.com for purchase 86e8fb40-61e1-46e0-9f61-4df584bb200e
+2025-12-04T14:36:42.387324842Z [inf]  [Regenerate] Successfully regenerated 3 codes for 86e8fb40-61e1-46e0-9f61-4df584bb200e
+2025-12-04T14:36:42.387332152Z [inf]  [Regenerate] Generating codes for completed purchase 624f1bfd-23a1-44ea-af5b-bff668d7547f
+2025-12-04T14:36:42.387339663Z [inf]  [Email] Sent certificate email with codes to davidjunor74@gmail.com for purchase 624f1bfd-23a1-44ea-af5b-bff668d7547f
+2025-12-04T14:36:42.387346264Z [inf]  [Regenerate] Successfully regenerated 3 codes for 624f1bfd-23a1-44ea-af5b-bff668d7547f
+2025-12-04T14:36:42.387352734Z [inf]  [Regenerate] Generating codes for completed purchase 143c2b0b-0c52-435d-91dd-ed83fe5bf7e6
+2025-12-04T14:36:42.387359070Z [inf]  [Email] Sent certificate email with codes to davidjunor74@gmail.com for purchase 143c2b0b-0c52-435d-91dd-ed83fe5bf7e6
+2025-12-04T14:36:42.387364728Z [inf]  [Regenerate] Successfully regenerated 3 codes for 143c2b0b-0c52-435d-91dd-ed83fe5bf7e6
+2025-12-04T14:36:42.387370731Z [inf]  [Regenerate] Generating codes for completed purchase 85207787-2941-4a0b-8f18-852532c0754b
+2025-12-04T14:36:42.387376888Z [inf]  [Email] Sent certificate email with codes to davidjunor74@gmail.com for purchase 85207787-2941-4a0b-8f18-852532c0754b
+2025-12-04T14:36:42.387382840Z [inf]  [Regenerate] Successfully regenerated 3 codes for 85207787-2941-4a0b-8f18-852532c0754b
+2025-12-04T14:36:42.387388689Z [inf]  [Regenerate] Generating codes for completed purchase f44446e1-9446-4787-abad-76e4e5047e7e
+2025-12-04T14:36:42.387394657Z [inf]  [Email] Sent certificate email with codes to davidjunor74@gmail.com for purchase f44446e1-9446-4787-abad-76e4e5047e7e
+2025-12-04T14:36:42.387400682Z [inf]  [Regenerate] Successfully regenerated 3 codes for f44446e1-9446-4787-abad-76e4e5047e7e
+2025-12-04T14:36:42.389288421Z [inf]  [Regenerate] Generating codes for completed purchase 730dab3b-ef70-4940-96ec-6314a18ad14a
+2025-12-04T14:36:42.389295991Z [inf]  [Email] Sent certificate email with codes to studio@timeless.organic for purchase 730dab3b-ef70-4940-96ec-6314a18ad14a
+2025-12-04T14:36:42.389302296Z [inf]  [Regenerate] Successfully regenerated 3 codes for 730dab3b-ef70-4940-96ec-6314a18ad14a
+2025-12-04T14:36:42.389308484Z [inf]  2:36:42 PM [express] POST /api/admin/regenerate-codes-for-completed 200 in 6535ms :: {"message":"Pro…
+2025-12-04T14:36:43.388458407Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:36:43.388462884Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:36:43.388467816Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:36:43.388473505Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:36:43.388478111Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:36:43.388482817Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:36:43.388487661Z [inf]  2:36:43 PM [express] GET /api/admin/codes 200 in 161ms :: [{"id":"fd83c106-b340-4c44-9a2e-b9b8d3b46b…
+2025-12-04T14:36:43.388492455Z [inf]  2:36:43 PM [express] GET /api/admin/purchases 304 in 223ms :: [{"id":"b0924650-6dee-41e8-84ce-b50ad3…
+2025-12-04T14:37:23.677241191Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:37:23.677249116Z [inf]  2:37:14 PM [express] GET /api/auth/user 304 in 253ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c"…
+2025-12-04T14:37:23.677256769Z [inf]  2:37:14 PM [express] GET /api/auth/user 304 in 82ms :: {"id":"c4e12a8b-b835-4daf-8506-7b8b5b7f227c",…
+2025-12-04T14:37:23.677263227Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:37:23.677268408Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:37:23.677275846Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:37:23.677282383Z [inf]  2:37:21 PM [express] GET /api/admin/codes 304 in 180ms :: [{"id":"fd83c106-b340-4c44-9a2e-b9b8d3b46b…
+2025-12-04T14:37:33.585612320Z [inf]  [DB] Connected to Supabase successfully
+2025-12-04T14:37:33.611412002Z [inf]  2:37:33 PM [express] GET /api/auth/user 304 in 282ms :: {"id":"1240d908-e702-44ad-a323-5045518bd1e7"…
+2025-12-04T14:37:34.537654550Z [inf]  2:37:34 PM [express] GET /api/auth/user 304 in 80ms :: {"id":"1240d908-e702-44ad-a323-5045518bd1e7",…
+2025-12-04T14:37:36.826644263Z [inf]  [Auth] Checking authorization header: Bearer eyJhbGciOiJIU...
+2025-12-04T14:37:36.826657982Z [inf]  [Auth] Verifying JWT token manually...
+2025-12-04T14:37:36.826664986Z [inf]  [Auth] Token verified successfully, user: 4ae949da-0101-4b42-bf88-dddfacf74d52
+2025-12-04T14:37:37.596261228Z [inf]  [Email Test] SMTP_HOST: smtp.gmail.com
+2025-12-04T14:37:37.596267286Z [inf]  [Email Test] SMTP_PORT: 587
+2025-12-04T14:37:37.596272955Z [inf]  [Email Test] SMTP_USER: studio@timeless.organic
+2025-12-04T14:37:37.596279005Z [inf]  [Email Test] SMTP_PASS: ***SET***
+2025-12-04T14:37:37.614345954Z [inf]  2:37:36 PM [express] GET /api/admin/test-email-config 304 in 111ms :: {"configured":true,"host":"smt…
+2025-12-04T14:38:36.950604335Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:36.950605354Z [err]  }
+2025-12-04T14:38:36.950614570Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:36.950615970Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:36.950622970Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:36.950624297Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:36.950630073Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:36.950636113Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:36.950642194Z [err]    command: 'CONN'
+2025-12-04T14:38:36.950700502Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:36.950706200Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:36.950713605Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:36.950717993Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:36.950722486Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:36.950727176Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:36.950734198Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:36.950739149Z [err]    command: 'CONN'
+2025-12-04T14:38:36.950744947Z [err]  }
+2025-12-04T14:38:36.950751210Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:36.950756822Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:36.956247711Z [err]    command: 'CONN'
+2025-12-04T14:38:36.956257573Z [err]  }
+2025-12-04T14:38:36.956268223Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:36.956273814Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:36.956279898Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:36.956285571Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:36.956462710Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:36.956466892Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:36.956470972Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:36.956475660Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:36.956479728Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:36.956483746Z [err]    command: 'CONN'
+2025-12-04T14:38:36.956489155Z [err]  }
+2025-12-04T14:38:36.956494180Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:36.956498660Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:36.956502903Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:36.956507087Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:36.956511059Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:36.956515493Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:36.956520378Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:36.961153249Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:36.961155517Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:36.961157404Z [err]    command: 'CONN'
+2025-12-04T14:38:36.961164043Z [err]    command: 'CONN'
+2025-12-04T14:38:36.961167668Z [err]  }
+2025-12-04T14:38:36.961169689Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:36.961174835Z [err]  }
+2025-12-04T14:38:36.961175312Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:36.961180456Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:36.961185690Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:36.961190936Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:36.961194878Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:36.961196532Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:36.961206064Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:36.961213853Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:36.961225872Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:36.961236822Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:36.961242811Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:36.961250142Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:36.961306350Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:36.961312009Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:36.964194197Z [err]    command: 'CONN'
+2025-12-04T14:38:36.964199891Z [err]  }
+2025-12-04T14:38:37.014875139Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:37.014879665Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:37.014883456Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:37.014887132Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:37.014891044Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:37.014894972Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:37.014902710Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:37.014907563Z [err]    command: 'CONN'
+2025-12-04T14:38:37.014914352Z [err]  }
+2025-12-04T14:38:37.917360555Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:37.917364822Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:37.917369235Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:37.917373920Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:37.917378029Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:37.917382399Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:37.917386854Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:37.917393544Z [err]    command: 'CONN'
+2025-12-04T14:38:37.917398743Z [err]  }
+2025-12-04T14:38:37.917407812Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:37.917418966Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:37.917425571Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:37.917439086Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:37.917443379Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:37.917454123Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:37.917455652Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:37.917468776Z [err]    command: 'CONN'
+2025-12-04T14:38:37.917469707Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:37.917482281Z [err]  }
+2025-12-04T14:38:37.917482906Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:37.917491413Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:37.917500704Z [err]    command: 'CONN'
+2025-12-04T14:38:37.917508826Z [err]  }
+2025-12-04T14:38:37.917517869Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:37.917521969Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:37.917529844Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:37.917534115Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:37.917540551Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:37.917547997Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:37.917572068Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:37.917580388Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:37.917587806Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:37.917596601Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:37.917604898Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:37.917614825Z [err]    command: 'CONN'
+2025-12-04T14:38:37.917629677Z [err]  }
+2025-12-04T14:38:37.917638435Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:37.917655514Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:37.917664129Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:37.917672903Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:37.921695627Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:37.921701663Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:37.921708871Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:37.921714932Z [err]    command: 'CONN'
+2025-12-04T14:38:37.921721222Z [err]  }
+2025-12-04T14:38:37.921727139Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:37.921733341Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:37.921739160Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:37.921744960Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:37.921757035Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:37.921763646Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:37.921769820Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:37.921778170Z [err]    command: 'CONN'
+2025-12-04T14:38:37.921784042Z [err]  }
+2025-12-04T14:38:37.921790174Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:37.921796658Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:37.921803103Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:37.921809152Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:37.921815144Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:37.921820760Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:37.921827191Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:37.922054214Z [err]    command: 'CONN'
+2025-12-04T14:38:37.922060004Z [err]  }
+2025-12-04T14:38:38.044776773Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:38.044783320Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:38.044788101Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:38.044792400Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:38.044797407Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:38.044803489Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:38.044809044Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:38.044816848Z [err]    command: 'CONN'
+2025-12-04T14:38:38.044821388Z [err]  }
+2025-12-04T14:38:38.740143614Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:38.740159032Z [err]  }
+2025-12-04T14:38:38.740186682Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:38.740586595Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:38.740591791Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:38.740596860Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:38.740602082Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:38.740608955Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:38.740614562Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:38.740619922Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:38.740625200Z [err]    command: 'CONN'
+2025-12-04T14:38:38.740630881Z [err]  }
+2025-12-04T14:38:38.740636271Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:38.740646966Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:38.740652300Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:38.740657480Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:38.740662314Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:38.740667653Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:38.740673110Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:38.740678224Z [err]    command: 'CONN'
+2025-12-04T14:38:38.744091740Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:38.744096784Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:38.744103206Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:38.744108635Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:38.744113854Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:38.744118758Z [err]    command: 'CONN'
+2025-12-04T14:38:38.744123790Z [err]  }
+2025-12-04T14:38:38.744129013Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:38.744134053Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:38.744139126Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:38.744144007Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:38.744149095Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:38.744154616Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:38.744159466Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:38.744165943Z [err]    command: 'CONN'
+2025-12-04T14:38:38.744171198Z [err]  }
+2025-12-04T14:38:38.744176259Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:38.744181137Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:38.744185969Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:38.744190804Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:38.744958500Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:38.744964952Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:38.744970444Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:38.744975924Z [err]    command: 'CONN'
+2025-12-04T14:38:38.744980995Z [err]  }
+2025-12-04T14:38:38.804004347Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:38.804013367Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:38.804021403Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:38.804027026Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:38.804033264Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:38.804039100Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:38.804045503Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:38.804051412Z [err]    command: 'CONN'
+2025-12-04T14:38:38.804057616Z [err]  }
+2025-12-04T14:38:38.948300839Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:38.948306324Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:38.948314005Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:38.948319200Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:38.948325118Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:38.948330392Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:38.948336383Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:38.948342526Z [err]    command: 'CONN'
+2025-12-04T14:38:38.948348055Z [err]  }
+2025-12-04T14:38:39.054022029Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:39.054032904Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:39.054034463Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:39.054038826Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:39.054043143Z [err]    command: 'CONN'
+2025-12-04T14:38:39.054045120Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:39.054049488Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:39.054053947Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:39.054058373Z [err]  }
+2025-12-04T14:38:39.746710447Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:39.746729148Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:39.746735009Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:39.746740730Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:39.746746279Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:39.746751775Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:39.746757551Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:39.746763064Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:39.746769157Z [err]    command: 'CONN'
+2025-12-04T14:38:39.746775744Z [err]  }
+2025-12-04T14:38:39.746781519Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:39.746787118Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:39.746792405Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:39.746797808Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:39.746803406Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:39.746808415Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:39.746813824Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:39.746819547Z [err]    command: 'CONN'
+2025-12-04T14:38:39.746825258Z [err]  }
+2025-12-04T14:38:39.746831429Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:39.746837414Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:39.746956567Z [err]    command: 'CONN'
+2025-12-04T14:38:39.746963901Z [err]  }
+2025-12-04T14:38:39.747018864Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:39.747026754Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:39.747033075Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:39.747129345Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:39.747135355Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:39.747140812Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:39.747145982Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:39.747151741Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:39.747158095Z [err]    command: 'CONN'
+2025-12-04T14:38:39.747164738Z [err]  }
+2025-12-04T14:38:39.747170575Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:39.747176357Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:39.747182041Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:39.747187320Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:39.747193125Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:39.747199203Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:39.747206692Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:39.747214118Z [err]    command: 'CONN'
+2025-12-04T14:38:39.747220235Z [err]  }
+2025-12-04T14:38:39.747226301Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:39.747231712Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:39.747237122Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:39.812984610Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:39.812990529Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:39.812996044Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:39.813001164Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:39.813006987Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:39.813012800Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:39.813019087Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:39.813024349Z [err]    command: 'CONN'
+2025-12-04T14:38:39.813030187Z [err]  }
+2025-12-04T14:38:39.945414750Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:39.945423817Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:39.945429556Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:39.945434115Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:39.945438296Z [err]    command: 'CONN'
+2025-12-04T14:38:39.945443175Z [err]  }
+2025-12-04T14:38:39.945461128Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:39.945466360Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:39.945471758Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:40.069724597Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:40.069731344Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:40.069737755Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:40.069743595Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:40.069749959Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:40.069755848Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:40.069761779Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:40.069767856Z [err]    command: 'CONN'
+2025-12-04T14:38:40.069773626Z [err]  }
+2025-12-04T14:38:40.757018138Z [err]  }
+2025-12-04T14:38:40.757032463Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:40.757041234Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:40.757048953Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:40.757097050Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:40.757104902Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:40.757110777Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:40.757118729Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:40.757131705Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:40.757139216Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:40.757144789Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:40.757151505Z [err]    command: 'CONN'
+2025-12-04T14:38:40.757192784Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:40.757202914Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:40.757209152Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:40.757212000Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:40.757229007Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:40.757243458Z [err]    command: 'CONN'
+2025-12-04T14:38:40.757254854Z [err]  }
+2025-12-04T14:38:40.757263619Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:40.757273064Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:40.758094911Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:40.758101995Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:40.758106224Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:40.758110474Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:40.758114100Z [err]    command: 'CONN'
+2025-12-04T14:38:40.758118212Z [err]  }
+2025-12-04T14:38:40.758122928Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:40.758127026Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:40.758130871Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:40.758134930Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:40.758138577Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:40.758142616Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:40.758146484Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:40.758150345Z [err]    command: 'CONN'
+2025-12-04T14:38:40.758154054Z [err]  }
+2025-12-04T14:38:40.758157803Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:40.758161423Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:40.758165597Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:40.758169403Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:40.760301088Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:40.760304765Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:40.760308393Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:40.760312316Z [err]    command: 'CONN'
+2025-12-04T14:38:40.760316382Z [err]  }
+2025-12-04T14:38:40.830357538Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:40.830366435Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:40.830371401Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:40.830376866Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:40.830382288Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:40.830387381Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:40.830393635Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:40.830400007Z [err]    command: 'CONN'
+2025-12-04T14:38:40.830405628Z [err]  }
+2025-12-04T14:38:40.956014813Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:40.956020235Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:40.956026646Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:40.956032125Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:40.956037665Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:40.956043007Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:40.956048360Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:40.956055007Z [err]    command: 'CONN'
+2025-12-04T14:38:40.956060966Z [err]  }
+2025-12-04T14:38:41.081902542Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:41.081907574Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:41.081912069Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:41.081916091Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:41.081920064Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:41.081924003Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:41.081928364Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:41.081932288Z [err]    command: 'CONN'
+2025-12-04T14:38:41.081936143Z [err]  }
+2025-12-04T14:38:41.626301321Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:41.626452552Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:41.626459630Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:41.626464201Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:41.626468423Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:41.626475593Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:41.626479833Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:41.626484333Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:41.626490122Z [err]    command: 'CONN'
+2025-12-04T14:38:41.626494049Z [err]  }
+2025-12-04T14:38:41.626501478Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:41.626507807Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:41.626513589Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:41.626521485Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:41.626526219Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:41.626531234Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:41.626538868Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:41.626543363Z [err]    command: 'CONN'
+2025-12-04T14:38:41.626549645Z [err]  }
+2025-12-04T14:38:41.626554740Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:41.631029063Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:41.631036170Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:41.631047060Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:41.631080056Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:41.631089003Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:41.631097746Z [err]    command: 'CONN'
+2025-12-04T14:38:41.631106058Z [err]  }
+2025-12-04T14:38:41.631117907Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:41.631126394Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:41.631137543Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:41.631145446Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:41.631154010Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:41.631162644Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:41.631172057Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:41.631180702Z [err]    command: 'CONN'
+2025-12-04T14:38:41.631187598Z [err]  }
+2025-12-04T14:38:41.720272342Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:41.720278882Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:41.720293471Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:41.720299410Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:41.720304921Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:41.720310451Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:41.720316247Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:41.720321796Z [err]    command: 'CONN'
+2025-12-04T14:38:41.720327358Z [err]  }
+2025-12-04T14:38:41.849849287Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:41.849856320Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:41.849862433Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:41.849866451Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:41.849870635Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:41.849874885Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:41.849878712Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:41.849884996Z [err]    command: 'CONN'
+2025-12-04T14:38:41.849888731Z [err]  }
+2025-12-04T14:38:41.975693484Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:41.975699304Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:41.975705040Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:41.975710695Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:41.975716391Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:41.975723891Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:41.975729886Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:41.975735789Z [err]    command: 'CONN'
+2025-12-04T14:38:41.975741380Z [err]  }
+2025-12-04T14:38:42.103850467Z [err]    command: 'CONN'
+2025-12-04T14:38:42.103859582Z [err]  }
+2025-12-04T14:38:42.103917672Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:42.103924666Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:42.103930310Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:42.103936798Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:42.103942935Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:42.103949744Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:42.103955817Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:42.751592370Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:42.751597294Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:42.751601792Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:42.751606407Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:42.751610867Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:42.751614985Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:42.751619447Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:42.751668968Z [err]    command: 'CONN'
+2025-12-04T14:38:42.751681001Z [err]  }
+2025-12-04T14:38:42.751689194Z [err]  Failed to send certificate email: Error: Connection timeout
+2025-12-04T14:38:42.751696356Z [err]      at SMTPConnection._formatError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:809:19)
+2025-12-04T14:38:42.751703012Z [err]      at SMTPConnection._onError (/app/node_modules/nodemailer/lib/smtp-connection/index.js:795:20)
+2025-12-04T14:38:42.751715251Z [err]      at Timeout.<anonymous> (/app/node_modules/nodemailer/lib/smtp-connection/index.js:237:22)
+2025-12-04T14:38:42.751728068Z [err]      at listOnTimeout (node:internal/timers:573:17)
+2025-12-04T14:38:42.751735119Z [err]      at process.processTimers (node:internal/timers:514:7) {
+2025-12-04T14:38:42.751744656Z [err]    code: 'ETIMEDOUT',
+2025-12-04T14:38:42.751751069Z [err]    command: 'CONN'
+2025-12-04T14:38:42.751759904Z [err]  }
