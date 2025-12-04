@@ -175,14 +175,50 @@ export function createPaymentData(
 
 export function verifyPayFastSignature(data: Record<string, string>, signature: string): boolean {
   const config = getPayFastConfig();
-  // For webhook verification, include ALL fields (even empty ones)
-  const calculatedSignature = generateSignature(data, config.passphrase, false);
+  
+  // CRITICAL: ITN (webhook) signature uses ALPHABETICAL order, not form order!
+  // Reference: https://developers.payfast.co.za/docs#step_4_confirm_payment
+  // "Sort the data alphabetically by key before creating the parameter string"
+  
+  // Get all keys except signature, sort alphabetically
+  const sortedKeys = Object.keys(data)
+    .filter(key => key !== 'signature')
+    .sort();
+  
+  // Build param string in alphabetical order
+  let paramString = '';
+  for (const key of sortedKeys) {
+    const value = data[key];
+    if (value !== undefined && value !== '') {
+      // URL encode and replace %20 with + as per PayFast spec
+      const encodedValue = encodeURIComponent(value.trim()).replace(/%20/g, '+');
+      paramString += `${key}=${encodedValue}&`;
+    }
+  }
+  
+  // Remove trailing &
+  paramString = paramString.slice(0, -1);
+  
+  // Add passphrase at the end
+  if (config.passphrase) {
+    paramString += `&passphrase=${encodeURIComponent(config.passphrase.trim()).replace(/%20/g, '+')}`;
+  }
+  
+  console.log('[PayFast ITN] Verifying with alphabetical order');
+  console.log('[PayFast ITN] Param string (first 100 chars):', paramString.substring(0, 100));
+  
+  // Generate MD5 hash
+  const calculatedSignature = crypto.createHash('md5').update(paramString).digest('hex');
+  
+  console.log('[PayFast ITN] Expected signature:', signature);
+  console.log('[PayFast ITN] Calculated signature:', calculatedSignature);
+  
   const isValid = calculatedSignature === signature;
   
   if (!isValid) {
-    console.log('[PayFast] Signature mismatch!');
-    console.log('[PayFast] Expected:', signature);
-    console.log('[PayFast] Calculated:', calculatedSignature);
+    console.log('[PayFast ITN] Signature mismatch!');
+  } else {
+    console.log('[PayFast ITN] Signature verified successfully!');
   }
   
   return isValid;
