@@ -195,6 +195,11 @@ export default function HomePage() {
                 <p className="text-sm sm:text-base text-white/90 font-serif font-light leading-relaxed">We've built this studio 90% with our own hands. These 100 seats finish the last 10% — and we want the first chapter to belong to our closest people.</p>
               </div>
 
+              {/* Before You Invest heading */}
+              <div className="hero-text-reveal hero-text-reveal-delay-3 mb-6 sm:mb-8">
+                <h2 className="font-serif text-xl sm:text-2xl md:text-3xl font-light text-white/95 tracking-tight">Before You Invest</h2>
+              </div>
+
               {/* Why You're Being Invited First - DESKTOP VERSION (md+) */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-8 sm:mb-8 lg:mb-10 hidden md:block">
                 <div className="max-w-5xl mx-auto p-3 sm:p-4 lg:p-6 border rounded-xl backdrop-blur-sm" style={{backgroundColor: 'rgba(107, 95, 62, 0.35)', borderColor: 'rgba(107, 95, 62, 0.5)'}}>
@@ -322,14 +327,6 @@ export default function HomePage() {
                   <span className="text-xl sm:text-2xl font-bold text-bronze">{totalRemaining}</span>
                   <span className="text-sm sm:text-base text-white/90 font-semibold">of 100 remaining</span>
                 </div>
-              </div>
-
-              {/* Value Proposition Text */}
-              <div className="hero-text-reveal hero-text-reveal-delay-3 text-center px-4 sm:px-6 mb-2 sm:mb-4">
-                <p className="text-sm sm:text-base lg:text-lg text-white/95 leading-relaxed max-w-2xl mx-auto font-semibold tracking-tight">
-                  No waiting list. No phase two. When these sell out, this exclusive opportunity closes.{' '}
-                  <span className="text-bronze">Only Founding 100 members get these terms for life.</span>
-                </p>
               </div>
             </div>
           </div>
