@@ -521,8 +521,8 @@ export default function HomePage() {
             {/* The punchline */}
             <div className="text-center border-t border-bronze/20 pt-10">
               <p className="text-lg text-white/90 font-light max-w-3xl mx-auto leading-relaxed mb-6">
-                Both <span className="text-accent-gold font-medium">investments</span> happen <span className="text-bronze font-medium">simultaneously</span>. You <span className="text-patina font-medium">invest</span> in our future. We <span className="text-bronze font-medium">invest</span> your cutting. Together, we create something 
-                <span className="text-bronze font-serif italic"> Timeless</span>.
+                Three <span className="text-bronze font-medium">investments</span> happen <span className="text-bronze font-medium">simultaneously</span>. You <span className="text-bronze font-medium">invest</span> in our future. We <span className="text-bronze font-medium">invest</span> your cutting. You get an <span className="text-bronze font-medium">investment</span> for generations to come. Let's create something 
+                <span className="text-bronze font-serif italic"> Timeless</span> together.
               </p>
               
               <p className="text-xl font-light italic mb-10 pb-10 border-b border-bronze/20">
