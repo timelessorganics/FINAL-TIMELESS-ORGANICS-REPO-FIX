@@ -180,11 +180,12 @@ export default function HomePage() {
 
               {/* FIRE SALE BADGE - Orange Patina Glow */}
               <div className="hero-text-reveal hero-text-reveal-delay-3 mb-8 sm:mb-8">
-                <div className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-amber-600/30 rounded-full text-amber-200 text-[0.75rem] sm:text-sm font-black tracking-wide shadow-lg shadow-amber-600/40 border border-amber-500/50">
-                  <div className="flex items-center gap-2 justify-center">
-                    <Flame className="w-3 h-3 sm:w-4 sm:h-4 animate-pulse" />
-                    <span>Your Founding 100 Window — Ends Soon</span>
-                    <Flame className="w-3 h-3 sm:w-4 sm:h-4 animate-pulse" />
+                <div className="inline-block px-3 sm:px-6 py-2 sm:py-3 bg-amber-600/30 rounded-full text-amber-200 text-[0.65rem] sm:text-sm font-black tracking-wide shadow-lg shadow-amber-600/40 border border-amber-500/50">
+                  <div className="flex items-center gap-1.5 sm:gap-2 justify-center">
+                    <Flame className="w-3 h-3 sm:w-4 sm:h-4 animate-pulse flex-shrink-0" />
+                    <span className="hidden sm:inline">Your Founding 100 Window — Ends Soon</span>
+                    <span className="sm:hidden">48-Hour Window — Ends Soon</span>
+                    <Flame className="w-3 h-3 sm:w-4 sm:h-4 animate-pulse flex-shrink-0" />
                   </div>
                 </div>
               </div>
@@ -334,57 +335,6 @@ export default function HomePage() {
           </div>
         </section>
 
-        {/* FIRE SALE URGENCY & VALUE */}
-        <section className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-bronze/10 via-card/50 to-accent-gold/10 border-y border-bronze/30" data-testid="section-urgency">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center">
-              <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2 justify-center">
-                <Flame className="w-4 h-4" />
-                48-HOUR FIRE SALE
-              </div>
-              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-6 tracking-tight">
-                This Is The Founding 100 Moment
-              </h2>
-              
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8">
-                <div className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-bronze mb-2">R25K+</div>
-                  <p className="text-xs sm:text-sm text-foreground/80">Bronze Sculpture market value (Mounted and Patinated)</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-accent-gold mb-2">50-80%</div>
-                  <p className="text-xs sm:text-sm text-foreground/80">First hands-on 2-day casting workshop</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-patina mb-2">20-30%</div>
-                  <p className="text-xs sm:text-sm text-foreground/80">Lifetime discount on everything</p>
-                </div>
-                <div className="text-center">
-                  <div className="text-2xl sm:text-3xl font-bold text-bronze mb-2">FOREVER</div>
-                  <p className="text-xs sm:text-sm text-foreground/80">Giftable, transferable benefits</p>
-                </div>
-              </div>
-
-              <p className="text-base sm:text-lg text-foreground/90 max-w-2xl mx-auto mb-8 leading-relaxed">
-                100 seats. No waiting list. No phase two. When these sell out, this exclusive opportunity closes. 
-                <span className="text-accent-gold font-medium"> Only Founding 100 members get these terms for life.</span>
-              </p>
-
-              <Link href="/founding-100#seats">
-                <Button 
-                  size="lg"
-                  className="relative overflow-hidden text-lg px-10 py-6 font-bold bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background"
-                  data-testid="button-urgency-claim-seat"
-                >
-                  <Sparkles className="w-5 h-5 mr-2" />
-                  Your Founding 100 Window — Ends Soon
-                  <ArrowRight className="w-5 h-5 ml-2" />
-                </Button>
-              </Link>
-            </div>
-          </div>
-        </section>
-
         {/* WHAT YOU GET - The Full Value */}
         <section id="seats" className="py-8 sm:py-16 px-4 sm:px-6">
           <div className="max-w-6xl mx-auto">
@@ -498,6 +448,52 @@ export default function HomePage() {
             </div>          </div>
         </section>
 
+        {/* FIRE SALE URGENCY & VALUE */}
+        <section className="py-8 sm:py-12 lg:py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-bronze/10 via-card/50 to-accent-gold/10 border-y border-bronze/30" data-testid="section-urgency">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center">
+              <div className="inline-block px-4 py-2 bg-accent-gold/20 rounded-full text-accent-gold text-sm font-bold mb-4 flex items-center gap-2 justify-center">
+                <Flame className="w-4 h-4" />
+                48-HOUR FIRE SALE
+              </div>
+              <h2 className="font-serif text-3xl sm:text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+                This Is The Founding 100 Moment
+              </h2>
+              
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-8">
+                <div className="text-center">
+                  <div className="text-2xl sm:text-3xl font-bold text-bronze mb-2">R25K+</div>
+                  <p className="text-xs sm:text-sm text-foreground/80">Bronze Sculpture market value (Mounted and Patinated)</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl sm:text-3xl font-bold text-accent-gold mb-2">50-80%</div>
+                  <p className="text-xs sm:text-sm text-foreground/80">First hands-on 2-day casting workshop</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl sm:text-3xl font-bold text-patina mb-2">20-30%</div>
+                  <p className="text-xs sm:text-sm text-foreground/80">Lifetime discount on everything</p>
+                </div>
+                <div className="text-center">
+                  <div className="text-2xl sm:text-3xl font-bold text-bronze mb-2">FOREVER</div>
+                  <p className="text-xs sm:text-sm text-foreground/80">Giftable, transferable benefits</p>
+                </div>
+              </div>
+
+              <Link href="/founding-100#seats">
+                <Button 
+                  size="lg"
+                  className="relative overflow-hidden text-lg px-10 py-6 font-bold bg-gradient-to-r from-bronze via-accent-gold to-bronze bg-[length:200%_100%] animate-shimmer border-2 border-bronze/50 text-background"
+                  data-testid="button-urgency-claim-seat"
+                >
+                  <Sparkles className="w-5 h-5 mr-2" />
+                  Your Founding 100 Window — Ends Soon
+                  <ArrowRight className="w-5 h-5 ml-2" />
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </section>
+
         {/* THE INVESTMENTS MERGED - ONE Unified Black Section */}
         <section className="py-16 px-6 bg-[#050505] relative overflow-hidden" data-testid="section-investments-unified">
           {/* Kiln/forge video background - faded */}
@@ -550,7 +546,7 @@ export default function HomePage() {
                 </div>
                 <h3 className="font-serif text-2xl font-light text-white mb-3">Your Financial Investment</h3>
                 <p className="text-white/70 leading-relaxed text-base font-light">
-                  Capital (R3,000–R5,000) funds our foundry's final fit-out — the kilns, crucibles, and precision equipment that make this art possible.
+                  Founder R3,500 or Patron R5,500 (48-hour Friends & Family pricing available) — funds our foundry's final fit-out. The kilns, crucibles, and precision equipment that make this art possible.
                 </p>
               </div>
 
