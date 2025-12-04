@@ -158,30 +158,15 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
         throw new Error(`Please enter ${expectedRecipients} recipient(s)`);
       }
 
-      // Multi-seat purchase: Seat 1 for you + Seats 2+ as gifts
-      if (qty > 1) {
-        const purchases = [];
-        
-        // Seat 1: Your seat (not a gift)
-        const selfResponse = await apiRequest("POST", "/api/purchase/initiate", {
-          seatType,
-          purchaseMode,
-          paymentType,
-          deliveryName: data.fullName,
-          deliveryPhone: data.phone,
-          deliveryAddress: data.address,
-          specimenStyle: selectedSpecimen || null,
-          hasPatina,
-          mountingType,
-          internationalShipping: false,
-          commissionVoucher: false,
-          isGift: false,
-        });
-        purchases.push(await selfResponse.json());
-        
-        // Seats 2+: Gift seats for recipients
-        for (const recipient of data.giftRecipients || []) {
-          const response = await apiRequest("POST", "/api/purchase/initiate", {
+      try {
+        // Multi-seat purchase: Seat 1 for you + Seats 2+ as gifts
+        if (qty > 1) {
+          console.log("[Checkout] Processing multi-seat purchase:", qty, "seats");
+          const purchases = [];
+          
+          // Seat 1: Your seat (not a gift)
+          console.log("[Checkout] Creating seat 1 (personal)...");
+          const selfResponse = await apiRequest("POST", "/api/purchase/initiate", {
             seatType,
             purchaseMode,
             paymentType,
@@ -193,39 +178,74 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
             mountingType,
             internationalShipping: false,
             commissionVoucher: false,
-            isGift: true,
-            giftRecipientEmail: recipient.email,
-            giftRecipientName: recipient.name,
-            giftMessage: data.giftMessage,
+            isGift: false,
           });
-          purchases.push(await response.json());
+          const selfPurchase = await selfResponse.json();
+          console.log("[Checkout] Seat 1 response:", selfPurchase);
+          purchases.push(selfPurchase);
+          
+          // Seats 2+: Gift seats for recipients
+          for (let i = 0; i < (data.giftRecipients || []).length; i++) {
+            const recipient = data.giftRecipients![i];
+            console.log(`[Checkout] Creating seat ${i + 2} (gift for ${recipient.name})...`);
+            const response = await apiRequest("POST", "/api/purchase/initiate", {
+              seatType,
+              purchaseMode,
+              paymentType,
+              deliveryName: data.fullName,
+              deliveryPhone: data.phone,
+              deliveryAddress: data.address,
+              specimenStyle: selectedSpecimen || null,
+              hasPatina,
+              mountingType,
+              internationalShipping: false,
+              commissionVoucher: false,
+              isGift: true,
+              giftRecipientEmail: recipient.email,
+              giftRecipientName: recipient.name,
+              giftMessage: data.giftMessage,
+            });
+            const giftPurchase = await response.json();
+            console.log(`[Checkout] Seat ${i + 2} response:`, giftPurchase);
+            purchases.push(giftPurchase);
+          }
+          console.log("[Checkout] All purchases created, returning first one for redirect");
+          return purchases[0]; // Return first for redirect
         }
-        return purchases[0]; // Return first for redirect
-      }
 
-      // Single purchase (personal or single gift)
-      const response = await apiRequest("POST", "/api/purchase/initiate", {
-        seatType,
-        purchaseMode,
-        paymentType,
-        deliveryName: data.fullName,
-        deliveryPhone: data.phone,
-        deliveryAddress: data.address,
-        specimenStyle: selectedSpecimen || null,
-        hasPatina,
-        mountingType,
-        internationalShipping: false,
-        commissionVoucher: false,
-        isGift: data.isGift,
-        giftRecipientEmail: data.isGift && data.giftRecipients?.[0] ? data.giftRecipients[0].email : undefined,
-        giftRecipientName: data.isGift && data.giftRecipients?.[0] ? data.giftRecipients[0].name : undefined,
-        giftMessage: data.isGift ? data.giftMessage : undefined,
-      });
-      
-      return await response.json();
+        // Single purchase (personal or single gift)
+        console.log("[Checkout] Creating single purchase");
+        const response = await apiRequest("POST", "/api/purchase/initiate", {
+          seatType,
+          purchaseMode,
+          paymentType,
+          deliveryName: data.fullName,
+          deliveryPhone: data.phone,
+          deliveryAddress: data.address,
+          specimenStyle: selectedSpecimen || null,
+          hasPatina,
+          mountingType,
+          internationalShipping: false,
+          commissionVoucher: false,
+          isGift: data.isGift,
+          giftRecipientEmail: data.isGift && data.giftRecipients?.[0] ? data.giftRecipients[0].email : undefined,
+          giftRecipientName: data.isGift && data.giftRecipients?.[0] ? data.giftRecipients[0].name : undefined,
+          giftMessage: data.isGift ? data.giftMessage : undefined,
+        });
+        
+        const result = await response.json();
+        console.log("[Checkout] Single purchase response:", result);
+        return result;
+      } catch (error) {
+        console.error("[Checkout] Mutation error:", error);
+        throw error;
+      }
     },
     onSuccess: (response: any) => {
+      console.log("[Checkout] onSuccess called with response:", response);
+      
       if (response.paymentType === 'reserve') {
+        console.log("[Checkout] Reserve payment - redirecting to dashboard");
         toast({
           title: "Seat Reserved!",
           description: "Your seat is held for 24 hours. Check your email for details.",
@@ -236,21 +256,34 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
         return;
       }
 
+      if (!response.purchaseId) {
+        console.error("[Checkout] ERROR: No purchaseId in response:", response);
+        toast({
+          variant: "destructive",
+          title: "Error",
+          description: "No purchase ID received. Please try again.",
+        });
+        return;
+      }
+
       toast({
         title: "Redirecting to Payment",
         description: "Taking you to PayFast secure checkout...",
       });
 
       // Use redirect flow instead of modal - more reliable
-      const apiUrl = import.meta.env.VITE_API_URL || '';
-      const redirectUrl = `${apiUrl}/api/purchase/${response.purchaseId}/redirect`;
+      // Build redirect URL - always use relative path since frontend and backend are same domain
+      const redirectUrl = `/api/purchase/${response.purchaseId}/redirect`;
       
-      // Small delay to show toast, then redirect
-      setTimeout(() => {
-        window.location.href = redirectUrl;
-      }, 500);
+      console.log("[Checkout] Redirecting to:", redirectUrl);
+      console.log("[Checkout] PaymentType:", response.paymentType);
+      console.log("[Checkout] Amount:", response.amount);
+      
+      // Perform redirect immediately (most browsers will still show toast)
+      window.location.href = redirectUrl;
     },
     onError: (error: Error) => {
+      console.error("[Checkout] onError called:", error);
       toast({
         variant: "destructive",
         title: "Purchase Failed",
@@ -298,7 +331,10 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
 
   const handleCheckout = (data: CheckoutForm) => {
     console.log("[Checkout] Form submitted with data:", data);
+    console.log("[Checkout] Quantity:", parseInt(data.quantity), "isGift:", data.isGift, "Recipients:", data.giftRecipients?.length);
+    
     if (validatedPromo?.valid && validatedPromo.discount === 100) {
+      console.log("[Checkout] Using promo code:", promoCode);
       if (validatedPromo.seatType !== seatType) {
         toast({
           variant: "destructive",
@@ -309,6 +345,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
       }
       redeemPromo.mutate({ ...data, promoCode: promoCode.toUpperCase() });
     } else {
+      console.log("[Checkout] Initiating standard purchase");
       initiatePurchase.mutate(data);
     }
   };
