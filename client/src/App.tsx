@@ -116,6 +116,9 @@ function Router() {
       <Route path="/sculptures">
         {() => <SculptureGallery />}
       </Route>
+      <Route path="/gallery">
+        {() => <SculptureGallery />}
+      </Route>
 
       {/* Sculpture Selection with Purchase ID */}
       {isAuthenticated && (
