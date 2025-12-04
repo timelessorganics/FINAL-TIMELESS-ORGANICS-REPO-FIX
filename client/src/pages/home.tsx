@@ -475,7 +475,7 @@ export default function HomePage() {
               
               {/* The 100 believers message */}
               <p className="text-base text-white/90 font-light max-w-3xl mx-auto mb-8 leading-relaxed">
-                There are two types of <span className="text-bronze font-medium">investing</span> happening here — and we love the play on words. 
+                There are three types of <span className="text-bronze font-medium">investing</span> happening here — and we love the play on words. 
                 You invest financially. We invest your specimen in plaster. Both happen simultaneously. 
                 <span className="text-accent-gold font-medium">This is not crowdfunding. This is co-creation.</span>
               </p>
