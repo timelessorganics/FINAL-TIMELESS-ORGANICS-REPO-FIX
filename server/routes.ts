@@ -426,7 +426,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         console.log(`[Availability] ${seat.type}: total=${seat.totalAvailable}, sold=${seat.sold}, current=${currentAvailable}, reserved=${reservedForType}, holds=${manualHoldsForType}, available=${adjusted}`);
         return {
           ...seat,
-          available: adjusted,
+          remaining: adjusted,
           reservedCount: reservedForType,
           manualHolds: manualHoldsForType
         };
