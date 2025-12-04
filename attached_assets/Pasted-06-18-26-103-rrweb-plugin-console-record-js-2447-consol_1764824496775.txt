@@ -1,0 +1,119 @@
+06:18:26.103 rrweb-plugin-console-record.js:2447 console.clear() was prevented due to 'Preserve log'
+06:18:26.103 rrweb-plugin-console-record.js:2447 
+    _____
+ ___ |[]|_n__n_I_c
+|___||__|###|____}
+ O-O--O-O+++--O-O
+****************************************
+*                                      *
+*           Enjoying Railway?          *
+*                                      *
+*         Want to ride with us?        *
+*                                      *
+*              Hop aboard,             *
+*   the train is leaving the station!  *
+*                                      *
+*      https://railway.com/careers     *
+*                                      *
+****************************************
+
+06:58:40.936 Error: <svg> attribute viewBox: Expected number, "0 0 100% 44px".
+06:58:40.936 Error: <svg> attribute viewBox: Expected number, "0 0 100% 44px".
+06:58:40.936 Error: <svg> attribute viewBox: Expected number, "0 0 100% 44px".
+06:58:40.936 Error: <svg> attribute viewBox: Expected number, "0 0 100% 44px".
+06:58:40.936 Error: <svg> attribute viewBox: Expected number, "0 0 100% 44px".
+06:58:40.936 Error: <svg> attribute viewBox: Expected number, "0 0 100% 44px".
+06:58:40.936 Error: <svg> attribute viewBox: Expected number, "0 0 100% 44px".
+06:58:40.936 Error: <svg> attribute viewBox: Expected number, "0 0 100% 44px".
+06:19:03.057 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 100% 58px".
+l @ osano.js:1
+06:19:04.977 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 76% 20".
+l @ osano.js:1
+06:19:04.977 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 81% 18".
+l @ osano.js:1
+06:19:04.977 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 68% 16".
+l @ osano.js:1
+06:19:04.978 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 76% 20".
+l @ osano.js:1
+06:19:04.978 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 95% 18".
+l @ osano.js:1
+06:19:04.978 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 49% 16".
+l @ osano.js:1
+06:19:04.978 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 84% 20".
+l @ osano.js:1
+06:19:04.979 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 88% 18".
+l @ osano.js:1
+06:19:04.979 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 63% 16".
+l @ osano.js:1
+06:19:04.979 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 78% 20".
+l @ osano.js:1
+06:19:04.979 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 85% 18".
+l @ osano.js:1
+06:19:04.980 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 40% 16".
+l @ osano.js:1
+06:19:04.980 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 85% 20".
+l @ osano.js:1
+06:19:04.980 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 86% 18".
+l @ osano.js:1
+06:19:04.980 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 67% 16".
+l @ osano.js:1
+06:19:04.980 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 85% 20".
+l @ osano.js:1
+06:19:04.981 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 82% 18".
+l @ osano.js:1
+06:19:04.981 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 36% 16".
+l @ osano.js:1
+06:19:12.540 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 100% 129px".
+l @ osano.js:1
+06:19:14.349 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 260px 20px".
+l @ osano.js:1
+06:19:19.004 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 100% 46px".
+l @ osano.js:1
+06:25:13.301 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 80px 20px".
+l @ osano.js:1
+06:26:54.155 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 80px 20px".
+l @ osano.js:1
+06:31:39.638 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 80px 20px".
+l @ osano.js:1
+06:31:39.964 /project/4dd038cf-5201-42d8-a62b-07ed2765d00e/service/bed39136-4587-4f39-b184-163e7b21f95b?environmentId=03d36006-1b7c-4cb5-98c8-69410101c0dd&id=82a5796e-307e-4ebe-acb9-044c1a3b8a28#details:1 Access to fetch at 'https://backboard.railway.com/graphql/internal?q=deploymentSnapshot' from origin 'https://railway.com' has been blocked by CORS policy: Response to preflight request doesn't pass access control check: No 'Access-Control-Allow-Origin' header is present on the requested resource.
+06:31:39.964 backboard.railway.com/graphql/internal?q=deploymentSnapshot:1  Failed to load resource: net::ERR_FAILED
+06:40:17.237 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 80px 20px".
+l @ osano.js:1
+06:40:49.018 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 100% 46px".
+l @ osano.js:1
+06:50:40.629 osano.js:1 Error: <svg> attribute viewBox: Expected number, "0 0 100% 129px".
+l @ osano.js:1
+07:00:13.404 Fetch finished loading: POST "<URL>".
+07:00:13.404 Fetch finished loading: POST "<URL>".
+07:00:13.404 Fetch finished loading: POST "<URL>".
+07:00:13.404 Fetch finished loading: POST "<URL>".
+07:00:13.404 Fetch finished loading: POST "<URL>".
+07:00:13.404 Fetch finished loading: POST "<URL>".
+07:00:13.404 Fetch finished loading: POST "<URL>".
+07:00:13.404 Fetch finished loading: POST "<URL>".
+07:00:13.404 Fetch finished loading: POST "<URL>".
+07:00:13.404 Fetch finished loading: POST "<URL>".
+07:00:13.404 Fetch finished loading: POST "<URL>".
+07:00:13.404 Fetch finished loading: POST "<URL>".
+07:00:13.404 Fetch finished loading: POST "<URL>".
+07:00:15.040 shared-eb57a279d7de708862e7d1098f12adf9.js:1 Fetch finished loading: POST "https://r.stripe.com/b".
+(anonymous) @ shared-eb57a279d7de708862e7d1098f12adf9.js:1
+e @ shared-eb57a279d7de708862e7d1098f12adf9.js:1
+c @ shared-eb57a279d7de708862e7d1098f12adf9.js:1
+value @ shared-eb57a279d7de708862e7d1098f12adf9.js:1
+value @ shared-eb57a279d7de708862e7d1098f12adf9.js:1
+value @ shared-eb57a279d7de708862e7d1098f12adf9.js:1
+value @ shared-eb57a279d7de708862e7d1098f12adf9.js:1
+value @ shared-eb57a279d7de708862e7d1098f12adf9.js:1
+(anonymous) @ shared-eb57a279d7de708862e7d1098f12adf9.js:1
+setTimeout
+value @ shared-eb57a279d7de708862e7d1098f12adf9.js:1
+value @ shared-eb57a279d7de708862e7d1098f12adf9.js:1
+value @ shared-eb57a279d7de708862e7d1098f12adf9.js:1
+(anonymous) @ shared-eb57a279d7de708862e7d1098f12adf9.js:1
+value @ shared-eb57a279d7de708862e7d1098f12adf9.js:1
+log @ shared-eb57a279d7de708862e7d1098f12adf9.js:1
+log @ controller-with-preconnect-59a406394b5c6de81428d23b3918407c.js:1
+Se @ controller-with-preconnect-59a406394b5c6de81428d23b3918407c.js:1
+(anonymous) @ controller-with-preconnect-59a406394b5c6de81428d23b3918407c.js:1
+07:00:36.480 lazy-recorder.js?v=1.298.0:1 [Violation] 'setInterval' handler took 248ms
