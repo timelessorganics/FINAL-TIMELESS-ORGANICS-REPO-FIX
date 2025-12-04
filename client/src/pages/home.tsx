@@ -545,19 +545,17 @@ export default function HomePage() {
         {/* DAVID'S STORY - About the Craftsperson */}
         <section className="py-16 px-6 relative overflow-hidden" data-testid="section-david-story">
           {/* Video background - faded */}
-          <div className="absolute inset-0 opacity-[0.08]">
-            {getVideo('home_story', '') && (
-              <video 
-                autoPlay 
-                loop 
-                muted 
-                playsInline
-                className="w-full h-full object-cover"
-                key={getVideo('home_story', '')}
-              >
-                <source src={getVideo('home_story', '')} type="video/mp4" />
-              </video>
-            )}
+          <div className="absolute inset-0 opacity-[0.15]">
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full h-full object-cover"
+              key={savedVideos?.home_story || 'default'}
+            >
+              <source src={savedVideos?.home_story || smokeVideo} type="video/mp4" />
+            </video>
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-background via-background/95 to-background/80" />
 

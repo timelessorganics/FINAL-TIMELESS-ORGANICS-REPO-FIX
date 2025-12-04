@@ -13,15 +13,12 @@ import {
   getAvailabilityColor,
   type Season 
 } from "@/lib/specimenAvailability";
+import flowerBloomVideo from "@assets/Yellow-Lily-Opening-On-Black-Background-4K-2025-08-29-08-44-48-Utc_1764103216693.mp4";
 
 export default function SeasonalGuide() {
   const { data: savedVideos } = useQuery<Record<string, string>>({
     queryKey: ['/api/content/videos'],
   });
-  
-  const getVideo = (key: string, fallback: string = "") => {
-    return savedVideos?.[key] || fallback;
-  };
 
   return (
     <>
@@ -31,18 +28,16 @@ export default function SeasonalGuide() {
         <section className="py-16 px-6 bg-black relative overflow-hidden" data-testid="section-seasonal-hero">
           {/* Video background - faded */}
           <div className="absolute inset-0 opacity-[0.15]">
-            {getVideo('seasonal_guide') && (
-              <video 
-                autoPlay 
-                loop 
-                muted 
-                playsInline
-                className="w-full h-full object-cover"
-                key={getVideo('seasonal_guide')}
-              >
-                <source src={getVideo('seasonal_guide')} type="video/mp4" />
-              </video>
-            )}
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline
+              className="w-full h-full object-cover"
+              key={savedVideos?.seasonal_guide || 'default'}
+            >
+              <source src={savedVideos?.seasonal_guide || flowerBloomVideo} type="video/mp4" />
+            </video>
           </div>
           <div className="absolute inset-0 bg-gradient-to-b from-black via-black/95 to-black/80" />
 
