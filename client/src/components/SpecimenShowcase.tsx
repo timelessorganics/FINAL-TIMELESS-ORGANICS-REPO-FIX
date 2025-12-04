@@ -254,25 +254,34 @@ export default function SpecimenShowcase() {
     queryKey: ["/api/specimen-customizations"],
   });
   
-  // Build map of styleId -> { plant, bronze } from customizations
-  // Admin uploads use keys like: cones_bracts_seedpods_plant and cones_bracts_seedpods_bronze
-  const customImagePairs: Record<string, { plant?: string; bronze?: string }> = {};
+  // Build map of styleId -> { plants: string[], bronzes: string[] } from customizations
+  // Admin uploads use keys like: cones_bracts_seedpods_plant, cones_bracts_seedpods_bronze, 
+  // or with index suffix: cones_bracts_seedpods_plant_1, cones_bracts_seedpods_bronze_1
+  const customImageArrays: Record<string, { plants: string[]; bronzes: string[] }> = {};
   if (customizations) {
     customizations.forEach((c) => {
-      // Parse the key: {baseKey}_plant or {baseKey}_bronze
-      const match = c.specimenKey.match(/^(.+)_(plant|bronze)$/);
+      // Parse the key: {baseKey}_(plant|bronze) or {baseKey}_(plant|bronze)_\d+
+      const match = c.specimenKey.match(/^(.+?)_(plant|bronze)(?:_\d+)?$/);
       if (match) {
         const [, baseKey, imageType] = match;
         const styleId = adminToStyleId[baseKey] || baseKey;
-        if (!customImagePairs[styleId]) {
-          customImagePairs[styleId] = {};
+        if (!customImageArrays[styleId]) {
+          customImageArrays[styleId] = { plants: [], bronzes: [] };
         }
-        customImagePairs[styleId][imageType as 'plant' | 'bronze'] = c.imageUrl;
+        if (imageType === 'plant') {
+          customImageArrays[styleId].plants.push(c.imageUrl);
+        } else {
+          customImageArrays[styleId].bronzes.push(c.imageUrl);
+        }
       } else {
         // Legacy: single image key without _plant/_bronze suffix
         const styleId = adminToStyleId[c.specimenKey] || c.specimenKey;
         if (c.imageUrl) {
-          customImagePairs[styleId] = { plant: c.imageUrl, bronze: c.imageUrl };
+          if (!customImageArrays[styleId]) {
+            customImageArrays[styleId] = { plants: [], bronzes: [] };
+          }
+          customImageArrays[styleId].plants.push(c.imageUrl);
+          customImageArrays[styleId].bronzes.push(c.imageUrl);
         }
       }
     });
@@ -295,20 +304,22 @@ export default function SpecimenShowcase() {
       <div className="space-y-12">
         {specimenStyles.map((style, index) => {
           // Use admin-uploaded images, mixing with defaults if only partial upload
-          const customPair = customImagePairs[style.id];
+          const customArrays = customImageArrays[style.id];
           const defaultImages = specimenImages[style.id] || [];
           
-          // Build images array: prioritize custom images, fall back to defaults for missing sides
+          // Build images array: pair plants with bronzes from admin uploads
           let images: SpecimenImage[];
-          if (customPair?.plant || customPair?.bronze) {
-            // At least one custom image uploaded - create hybrid pair
+          if (customArrays && (customArrays.plants.length > 0 || customArrays.bronzes.length > 0)) {
+            // Build pairs from admin uploads - match plant[i] with bronze[i]
+            const maxPairs = Math.max(customArrays.plants.length, customArrays.bronzes.length, 3);
             const firstDefault = defaultImages[0] || { plant: '', bronze: '' };
-            const customImage: SpecimenImage = {
-              plant: customPair?.plant || firstDefault.plant,
-              bronze: customPair?.bronze || firstDefault.bronze,
-            };
-            // Show custom pair first, then remaining defaults
-            images = [customImage, ...defaultImages.slice(0, 2)];
+            images = [];
+            for (let i = 0; i < Math.min(maxPairs, 3); i++) {
+              images.push({
+                plant: customArrays.plants[i] || firstDefault.plant,
+                bronze: customArrays.bronzes[i] || firstDefault.bronze,
+              });
+            }
           } else {
             images = defaultImages;
           }
