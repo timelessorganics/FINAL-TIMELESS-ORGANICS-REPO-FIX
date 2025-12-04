@@ -170,6 +170,7 @@ export default function AdminPanel() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/holds"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/seats"] });
       queryClient.invalidateQueries({ queryKey: ["/api/seats/availability"] });
       setHoldForm({ name: "", seatType: "founder", note: "" });
       toast({ title: "Seat held!", description: "Seat removed from available pool." });
@@ -185,6 +186,7 @@ export default function AdminPanel() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["/api/admin/holds"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/seats"] });
       queryClient.invalidateQueries({ queryKey: ["/api/seats/availability"] });
       toast({ title: "Seat released!", description: "Seat returned to available pool." });
     },
