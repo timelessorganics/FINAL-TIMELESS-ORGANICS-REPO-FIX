@@ -475,8 +475,9 @@ export default function HomePage() {
               
               {/* The 100 believers message */}
               <p className="text-base text-white/90 font-light max-w-3xl mx-auto mb-8 leading-relaxed">
-                This foundry will only exist and get finished because of the 100 people who believed in something special. 
-                <span className="text-bronze font-light"> Not crowdfunding. Co-creation.</span>
+                There are two types of <span className="text-bronze font-medium">investing</span> happening here — and we love the play on words. 
+                You invest financially. We invest your specimen in plaster. Both happen simultaneously. 
+                <span className="text-accent-gold font-medium">This is not crowdfunding. This is co-creation.</span>
               </p>
               
             </div>
