@@ -876,7 +876,7 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                     type="submit" 
                     size="lg" 
                     className="w-full btn-bronze py-6 text-base"
-                    disabled={initiatePurchase.isPending || redeemPromo.isPending || loadingSeats}
+                    disabled={initiatePurchase.isPending || redeemPromo.isPending || loadingSeats || !selectedSpecimen}
                     data-testid="button-complete-purchase"
                   >
                     {initiatePurchase.isPending || redeemPromo.isPending ? (
@@ -892,9 +892,11 @@ export default function CheckoutPage({ seatType: propSeatType }: CheckoutPagePro
                     )}
                   </Button>
 
-                  <p className="text-xs text-center text-muted-foreground">
-                    You'll choose your specimen style and add-ons after purchase
-                  </p>
+                  {!selectedSpecimen && (
+                    <p className="text-xs text-center text-amber-600 dark:text-amber-400">
+                      Please select a specimen style above to continue
+                    </p>
+                  )}
                 </form>
               </Form>
             </div>
