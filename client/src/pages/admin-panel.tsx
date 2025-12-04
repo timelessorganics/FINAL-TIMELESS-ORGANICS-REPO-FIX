@@ -2132,7 +2132,10 @@ export default function AdminPanel() {
                             
                             {/* Plant Image */}
                             <div className="space-y-2">
-                              <p className="text-xs text-patina font-medium">Plant (Original)</p>
+                              <div className="flex items-center justify-between">
+                                <p className="text-xs text-patina font-medium">Plant (Original)</p>
+                                {customImages[plantKey] && <span className="text-xs text-patina">✓ Saved</span>}
+                              </div>
                               <div className="aspect-video relative bg-muted rounded overflow-hidden">
                                 {customImages[plantKey] ? (
                                   <img src={customImages[plantKey]} alt={`${specimen.name} plant ${pairNum}`} className="w-full h-full object-cover" />
@@ -2164,7 +2167,10 @@ export default function AdminPanel() {
                             
                             {/* Bronze Image */}
                             <div className="space-y-2">
-                              <p className="text-xs text-bronze font-medium">Bronze (Casting)</p>
+                              <div className="flex items-center justify-between">
+                                <p className="text-xs text-bronze font-medium">Bronze (Casting)</p>
+                                {customImages[bronzeKey] && <span className="text-xs text-bronze">✓ Saved</span>}
+                              </div>
                               <div className="aspect-video relative bg-muted rounded overflow-hidden">
                                 {customImages[bronzeKey] ? (
                                   <img src={customImages[bronzeKey]} alt={`${specimen.name} bronze ${pairNum}`} className="w-full h-full object-cover" />
