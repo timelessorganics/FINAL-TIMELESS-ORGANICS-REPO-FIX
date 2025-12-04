@@ -810,7 +810,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // 3. Get purchase and validate
-      const purchaseId = pfData.m_payment_id;
+      // CRITICAL: m_payment_id has hyphens stripped (32 chars), restore to UUID format (36 chars)
+      const rawPaymentId = pfData.m_payment_id;
+      const purchaseId = rawPaymentId.length === 32 
+        ? `${rawPaymentId.slice(0, 8)}-${rawPaymentId.slice(8, 12)}-${rawPaymentId.slice(12, 16)}-${rawPaymentId.slice(16, 20)}-${rawPaymentId.slice(20)}`
+        : rawPaymentId;
+      console.log("[ITN] Restored purchaseId from m_payment_id:", rawPaymentId, "->", purchaseId);
       const paymentStatus = pfData.payment_status;
 
       const purchase = await storage.getPurchase(purchaseId);
