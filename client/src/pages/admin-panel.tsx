@@ -190,6 +190,27 @@ export default function AdminPanel() {
     },
   });
 
+  // Fix pending purchases (generate codes, send emails)
+  const fixPendingPurchases = useMutation({
+    mutationFn: async () => {
+      const response = await apiRequest("POST", "/api/admin/fix-pending-purchases");
+      return await response.json();
+    },
+    onSuccess: (data: any) => {
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/purchases"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/admin/codes"] });
+      queryClient.invalidateQueries({ queryKey: ["/api/seats/availability"] });
+      const fixedCount = data.results?.filter((r: any) => r.status === "fixed").length || 0;
+      toast({ 
+        title: "Pending Purchases Fixed!", 
+        description: `${fixedCount} purchases completed. Codes generated and emails sent.` 
+      });
+    },
+    onError: (error: Error) => {
+      toast({ variant: "destructive", title: "Failed to fix purchases", description: error.message });
+    },
+  });
+
   const [approvalNotes, setApprovalNotes] = useState<{[key: string]: string}>({});
   const [editingPrice, setEditingPrice] = useState<{ founderPrice: string; patronPrice: string }>({ founderPrice: "", patronPrice: "" });
   
@@ -1159,13 +1180,23 @@ export default function AdminPanel() {
                   Complete view of all investors, their codes, and order status
                 </p>
               </div>
-              <div className="flex gap-2">
+              <div className="flex flex-wrap gap-2">
                 <Badge className="bg-bronze text-white px-3 py-1">
                   {purchases?.filter(p => p.seatType === 'founder' && p.status === 'completed').length || 0} Founders
                 </Badge>
                 <Badge className="bg-patina text-white px-3 py-1">
                   {purchases?.filter(p => p.seatType === 'patron' && p.status === 'completed').length || 0} Patrons
                 </Badge>
+                {purchases?.filter(p => p.status === 'pending' || p.status === 'failed').length ? (
+                  <Button
+                    onClick={() => fixPendingPurchases.mutate()}
+                    disabled={fixPendingPurchases.isPending}
+                    className="bg-orange-600 hover:bg-orange-700 text-white"
+                    data-testid="button-fix-pending-purchases"
+                  >
+                    {fixPendingPurchases.isPending ? "Fixing..." : `Fix ${purchases?.filter(p => p.status === 'pending' || p.status === 'failed').length} Pending`}
+                  </Button>
+                ) : null}
               </div>
             </div>
             

@@ -1213,6 +1213,182 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   );
 
+  // Admin: Fix pending purchases (complete them, generate codes, send emails)
+  app.post(
+    "/api/admin/fix-pending-purchases",
+    isAuthenticated,
+    async (req: any, res: Response) => {
+      try {
+        const userId = await getUserIdFromToken(req);
+        if (!userId) {
+          return res.status(401).json({ message: "Unauthorized" });
+        }
+        const user = await storage.getUser(userId);
+
+        if (!user?.isAdmin) {
+          return res.status(403).json({ message: "Admin access required" });
+        }
+
+        // Get all pending and failed purchases
+        const allPurchases = await storage.getAllPurchases();
+        const pendingPurchases = allPurchases.filter((p: any) => p.status === "pending" || p.status === "failed");
+
+        console.log(`[Admin Fix] Found ${pendingPurchases.length} pending/failed purchases to fix`);
+
+        const results: any[] = [];
+
+        for (const purchase of pendingPurchases) {
+          try {
+            console.log(`[Admin Fix] Processing purchase ${purchase.id}`);
+
+            // Check if codes already exist for this purchase
+            const existingCodes = await storage.getCodesByPurchaseId(purchase.id);
+            if (existingCodes && existingCodes.length > 0) {
+              console.log(`[Admin Fix] Purchase ${purchase.id} already has codes, skipping code generation`);
+              results.push({ purchaseId: purchase.id, status: "skipped", reason: "codes already exist" });
+              continue;
+            }
+
+            // Mark as completed
+            await storage.updatePurchaseStatus(
+              purchase.id,
+              "completed",
+              purchase.paymentReference || `ADMIN-FIX-${Date.now()}`,
+              undefined,
+            );
+
+            // Update seat count
+            await storage.updateSeatSold(purchase.seatType, 1);
+
+            // Generate codes
+            const bronzeClaimCode = await storage.createCode({
+              purchaseId: purchase.id,
+              type: "bronze_claim",
+              code: generateBronzeClaimCode(),
+              discount: 0,
+              transferable: false,
+              maxRedemptions: 1,
+              appliesTo: "bronze_claim",
+            });
+
+            const workshopCode = await storage.createCode({
+              purchaseId: purchase.id,
+              type: "workshop_voucher",
+              code: generateWorkshopVoucherCode(purchase.seatType),
+              discount: getWorkshopVoucherDiscount(purchase.seatType),
+              transferable: true,
+              maxRedemptions: 1,
+              appliesTo: "workshop",
+            });
+
+            const lifetimeWorkshopCode = await storage.createCode({
+              purchaseId: purchase.id,
+              type: "lifetime_workshop",
+              code: generateLifetimeWorkshopCode(purchase.seatType),
+              discount: getLifetimeWorkshopDiscount(purchase.seatType),
+              transferable: true,
+              maxRedemptions: null as any,
+              appliesTo: "workshop",
+            });
+
+            // Generate commission voucher if purchased
+            let commissionVoucherCode = null;
+            if (purchase.commissionVoucher) {
+              commissionVoucherCode = await storage.createCode({
+                purchaseId: purchase.id,
+                type: "commission_voucher",
+                code: generateCommissionVoucherCode(purchase.seatType),
+                discount: getCommissionVoucherDiscount(purchase.seatType),
+                transferable: true,
+                maxRedemptions: 1,
+                appliesTo: "commission",
+              });
+            }
+
+            // Get user info
+            const purchaseUser = await storage.getUser(purchase.userId);
+            const userName =
+              purchaseUser?.firstName && purchaseUser?.lastName
+                ? `${purchaseUser.firstName} ${purchaseUser.lastName}`
+                : purchaseUser?.firstName || "Valued Investor";
+
+            const allCodes = [bronzeClaimCode, workshopCode, lifetimeWorkshopCode];
+            if (commissionVoucherCode) {
+              allCodes.push(commissionVoucherCode);
+            }
+
+            // Generate certificate
+            let certificateUrl = "";
+            let codeSlipsUrl = "";
+            try {
+              certificateUrl = await generateCertificate(purchase, allCodes, userName);
+              codeSlipsUrl = await generateCodeSlips(purchase, allCodes, userName);
+
+              if (certificateUrl) {
+                await storage.updatePurchaseStatus(
+                  purchase.id,
+                  "completed",
+                  purchase.paymentReference || `ADMIN-FIX-${Date.now()}`,
+                  certificateUrl,
+                );
+              }
+            } catch (certError) {
+              console.error(`[Admin Fix] Certificate generation failed for ${purchase.id}:`, certError);
+            }
+
+            // Send emails
+            const userEmail = purchaseUser?.email;
+            if (userEmail) {
+              console.log(`[Admin Fix] Sending emails to ${userEmail} for purchase ${purchase.id}`);
+              
+              sendPurchaseConfirmationEmail(userEmail, userName, purchase).catch(
+                (err) => console.error("[Admin Fix] Confirmation email failed:", err),
+              );
+
+              if (certificateUrl) {
+                sendCertificateEmail(
+                  userEmail,
+                  userName,
+                  purchase,
+                  allCodes,
+                  certificateUrl,
+                  codeSlipsUrl,
+                ).catch((err) => console.error("[Admin Fix] Certificate email failed:", err));
+              }
+            }
+
+            results.push({
+              purchaseId: purchase.id,
+              status: "fixed",
+              email: userEmail,
+              codesGenerated: allCodes.length,
+              certificateUrl,
+            });
+
+            console.log(`[Admin Fix] Successfully fixed purchase ${purchase.id}`);
+          } catch (purchaseError: any) {
+            console.error(`[Admin Fix] Error processing purchase ${purchase.id}:`, purchaseError);
+            results.push({
+              purchaseId: purchase.id,
+              status: "error",
+              error: purchaseError.message,
+            });
+          }
+        }
+
+        res.json({
+          message: `Processed ${pendingPurchases.length} pending purchases`,
+          results,
+        });
+      } catch (error: any) {
+        console.error("Admin fix pending purchases error:", error);
+        res
+          .status(500)
+          .json({ message: error.message || "Failed to fix pending purchases" });
+      }
+    },
+  );
+
   // Protected: Redeem code
   app.post(
     "/api/codes/redeem",
