@@ -1,0 +1,57 @@
+Build Configuration
+
+Copy as Markdown
+Railway will build and deploy your code with zero configuration, but when necessary, there are several ways to configure this behavior to suit your needs.
+
+Railpack
+Railway uses Railpack to build your code. It works with zero configuration, but can be customized using environment variables or a config file. Configuration options include:
+
+Language versions
+Build/install/start commands
+Mise and Apt packages to install
+Directories to cache
+For a full list of configuration options, please view the Railpack docs. You can find a complete list of languages we support out of the box here.
+
+Nixpacks
+Nixpacks is deprecated and in maintenance mode. New services default to Railpack.
+
+Existing services will continue to work with Nixpacks. To migrate to Railpack, update your service settings or set "builder": "RAILPACK" in your railway.json file.
+
+For services still using Nixpacks, it can be configured with environment variables. For a full list of options, view the Nixpacks docs.
+
+You can find a complete list of languages we support out of the box here.
+
+Customize the Build Command
+You can override the detected build command by setting a value in your service settings. This is run after languages and packages have been installed.
+
+Screenshot of Railway Build Command
+Set the Root Directory
+The root directory defaults to / but can be changed for various use-cases like monorepo projects.
+
+Screenshot of Root Directory
+When specified, all build and deploy commands will operate within the defined root directory.
+
+Note: The Railway Config File does not follow the Root Directory path. You have to specify the absolute path for the railway.json or railway.toml file, for example: /backend/railway.toml
+
+Configure Watch Paths
+Watch paths are gitignore-style patterns that can be used to trigger a new deployment based on what file paths have changed.
+
+Screenshot of Railway Watch Paths
+For example, a monorepo might want to only trigger builds if files are changed in the /packages/backend directory.
+
+When specified, any changes that don't match the patterns will skip creating a new deployment. Multiple patterns can be combined, one per line.
+
+Note, if a Root Directory is provided, patterns still operate from /. For a root directory of /app, /app/**.js would be used as a pattern to match files in the new root.
+
+Here are a few examples of common use-cases:
+
+# Match all TypeScript files under src/
+/src/**/*.ts
+# Match Go files in the root, but not in subdirectories
+/*.go
+# Ignore all Markdown files
+**
+!/*.md
+Note, negations will only work if you include files in a preceding rule.
+
+Install Specific Packages using Railpack
