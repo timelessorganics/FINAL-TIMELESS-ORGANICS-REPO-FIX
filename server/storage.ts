@@ -977,7 +977,9 @@ export class DatabaseStorage implements IStorage {
   // Manual Holds - Admin can hold seats for people who call/text
   async getManualHolds(): Promise<any[]> {
     try {
-      return await db.select().from(manualHolds).orderBy(desc(manualHolds.createdAt));
+      const holds = await db.select().from(manualHolds).orderBy(desc(manualHolds.createdAt));
+      console.log('[DB] All manual holds:', holds.map(h => ({ id: h.id, name: h.name, seatType: h.seatType })));
+      return holds;
     } catch (error: any) {
       // Table might not exist yet - create it
       if (error.message?.includes('relation') && error.message?.includes('does not exist')) {
