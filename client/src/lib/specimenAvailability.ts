@@ -17,10 +17,11 @@ export interface SpecimenStyle {
 }
 
 // The 9 specimen STYLES customers choose from
+// IDs MUST match database enum values exactly (underscores, not hyphens)
 // Availability: peak (●), good (◐), limited (○)
 export const specimenStyles: SpecimenStyle[] = [
   {
-    id: 'cones-bracts-seedpods',
+    id: 'cones_bracts_seedpods',
     name: 'Cones / Bracts / Seedpods',
     description: 'Leucadendron cones, coloured bracts, dried seedpods. Best late summer-autumn when dried.',
     winter: 'good',      // ◐
@@ -29,7 +30,7 @@ export const specimenStyles: SpecimenStyle[] = [
     autumn: 'peak',      // ●
   },
   {
-    id: 'protea-pincushion-blooms',
+    id: 'protea_pincushion_blooms_heads',
     name: 'Protea Heads / Pincushion Blooms',
     description: 'King Protea, Sugarbush, Pincushion Protea. Peak late winter through spring.',
     winter: 'good',      // ◐
@@ -38,7 +39,7 @@ export const specimenStyles: SpecimenStyle[] = [
     autumn: 'limited',   // ○
   },
   {
-    id: 'bulb-spikes',
+    id: 'bulb_spikes',
     name: 'Bulb Spikes',
     description: 'Watsonia, Ixia, Babiana, Moraea. Wild iris and bulb flower spikes.',
     winter: 'peak',      // ●
@@ -47,7 +48,7 @@ export const specimenStyles: SpecimenStyle[] = [
     autumn: 'limited',   // ○
   },
   {
-    id: 'branches-leaves',
+    id: 'branches_leaves',
     name: 'Branches + Leaves',
     description: 'Sculptural twigs with foliage. Year-round, avoid soft new growth after spring flush.',
     winter: 'peak',      // ●
@@ -56,7 +57,7 @@ export const specimenStyles: SpecimenStyle[] = [
     autumn: 'peak',      // ●
   },
   {
-    id: 'aloe-inflorescence',
+    id: 'aloe_inflorescence_heads',
     name: 'Aloe Inflorescence Heads',
     description: 'Striking aloe flower spikes. Peak winter flowering period.',
     winter: 'peak',      // ●
@@ -65,7 +66,7 @@ export const specimenStyles: SpecimenStyle[] = [
     autumn: 'good',      // ◐
   },
   {
-    id: 'flower-heads',
+    id: 'flower_heads',
     name: 'Flower Heads',
     description: 'Pelargonium, wild geraniums, and other delicate flower heads.',
     winter: 'good',      // ◐
@@ -74,7 +75,7 @@ export const specimenStyles: SpecimenStyle[] = [
     autumn: 'good',      // ◐
   },
   {
-    id: 'erica-sprays',
+    id: 'erica_sprays',
     name: 'Erica Sprays',
     description: 'Cape Heath, Heather sprays. Many winter-spring, some autumn.',
     winter: 'peak',      // ●
@@ -83,7 +84,7 @@ export const specimenStyles: SpecimenStyle[] = [
     autumn: 'good',      // ◐
   },
   {
-    id: 'restios-grasses',
+    id: 'restios_seedheads_grasses',
     name: 'Restios / Seedheads / Grasses',
     description: 'Cape Reed, Thatching reed. Structural year-round.',
     winter: 'peak',      // ●
@@ -92,7 +93,7 @@ export const specimenStyles: SpecimenStyle[] = [
     autumn: 'peak',      // ●
   },
   {
-    id: 'small-succulents',
+    id: 'small_succulents',
     name: 'Small Succulents',
     description: 'Compact rosettes, Vygies. Structure year-round, many flower autumn-winter.',
     winter: 'peak',      // ●
