@@ -199,10 +199,6 @@ export default function MainLaunch() {
               And we want the first chapter to belong to our closest people.
             </p>
 
-            <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-light text-foreground mb-6 sm:mb-8">
-              Before You Invest
-            </h3>
-
             {/* SEASONAL GUIDE NOTICE - Moved to top */}
             <div className="bg-gradient-to-br from-card/40 via-background to-card/40 rounded-xl border border-border/50 py-6 sm:py-8 px-4 mb-6 sm:mb-8">
               <div className="text-center">
