@@ -199,13 +199,9 @@ export default function MainLaunch() {
               And we want the first chapter to belong to our closest people.
             </p>
 
-            <div className="bg-card/40 border border-bronze/30 rounded-lg p-6 sm:p-8 max-w-2xl mx-auto mb-8">
-              <p className="text-lg sm:text-xl font-serif text-foreground mb-4">
-                <strong>100 seats. No waiting list. No phase two.</strong>
-              </p>
-              <p className="text-accent-gold font-medium">When these sell out, this exclusive opportunity closes.</p>
-              <p className="text-muted-foreground mt-3">Only Founding 100 members get these terms for life.</p>
-            </div>
+            <h3 className="font-serif text-xl sm:text-2xl md:text-3xl font-light text-foreground mb-6 sm:mb-8">
+              Before You Invest
+            </h3>
 
             {/* Three Stat Cards */}
             <div className="relative z-30 grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto">
