@@ -789,234 +789,249 @@ export async function registerRoutes(app: Express): Promise<Server> {
     },
   );
 
-  // Public: PayFast webhook (ITN - Instant Transaction Notification)
-  app.post("/api/payfast/notify", async (req: Request, res: Response) => {
-    try {
-      const pfData = req.body;
-      console.log("PayFast notification received:", pfData);
+// Public: PayFast webhook (ITN - Instant Transaction Notification)
+app.post("/api/payfast/notify", async (req: Request, res: Response) => {
+  try {
+    const pfData = req.body;
+    console.log("[PayFast ITN] Notification received");
 
-      // 1. Log source IP for security audit
-      const sourceIp =
-        req.headers["x-forwarded-for"] || req.socket.remoteAddress;
-      console.log("PayFast notification from IP:", sourceIp);
+    // 1. Get client IP and signature
+    const clientIp =
+      (req.headers["x-forwarded-for"] as string)?.split(",")[0]?.trim() ||
+      (req.headers["x-real-ip"] as string) ||
+      req.socket.remoteAddress ||
+      "unknown";
 
-      // 2. Verify signature
-      const signature = pfData.signature;
-      delete pfData.signature;
+    const signature = pfData.signature || "";
+    delete pfData.signature; // Remove before validation
 
-      const isValid = verifyPayFastSignature(pfData, signature);
-      if (!isValid) {
-        console.error("Invalid PayFast signature");
-        return res.status(400).send("Invalid signature");
-      }
+    // 2. Comprehensive validation using new validateITN helper
+    // Note: We use dynamic import to ensure we get the latest utility
+    const { validateITN } = await import("./utils/payfast");
+    const validation = await validateITN(pfData, signature, clientIp);
 
-      // 3. Get purchase and validate
-      // CRITICAL: m_payment_id has hyphens stripped (32 chars), restore to UUID format (36 chars)
-      const rawPaymentId = pfData.m_payment_id;
-      const purchaseId = rawPaymentId.length === 32 
-        ? `${rawPaymentId.slice(0, 8)}-${rawPaymentId.slice(8, 12)}-${rawPaymentId.slice(12, 16)}-${rawPaymentId.slice(16, 20)}-${rawPaymentId.slice(20)}`
+    if (!validation.valid) {
+      console.error("[PayFast ITN] Validation failed:", validation.errors);
+      return res.status(400).send("Invalid ITN");
+    }
+
+    console.log("[PayFast ITN] All validation checks passed ✓");
+
+    // 3. Respond immediately to PayFast (REQUIRED)
+    res.status(200).send("OK");
+
+    // 4. Process payment asynchronously
+    const rawPaymentId = pfData.m_payment_id;
+    const purchaseId =
+      rawPaymentId.length === 32
+        ? `${rawPaymentId.slice(0, 8)}-${rawPaymentId.slice(
+            8,
+            12
+          )}-${rawPaymentId.slice(12, 16)}-${rawPaymentId.slice(
+            16,
+            20
+          )}-${rawPaymentId.slice(20)}`
         : rawPaymentId;
-      console.log("[ITN] Restored purchaseId from m_payment_id:", rawPaymentId, "->", purchaseId);
-      const paymentStatus = pfData.payment_status;
 
-      const purchase = await storage.getPurchase(purchaseId);
-      if (!purchase) {
-        console.error("Purchase not found:", purchaseId);
-        return res.status(404).send("Purchase not found");
+    console.log("[PayFast ITN] Processing purchase:", purchaseId);
+    const purchase = await storage.getPurchase(purchaseId);
+
+    if (!purchase) {
+      console.error("[PayFast ITN] Purchase not found:", purchaseId);
+      return;
+    }
+
+    // 5. Validate amount matches
+    const pfAmount = Math.round(parseFloat(pfData.amount_gross) * 100);
+    if (Math.abs(purchase.amount - pfAmount) > 1) {
+      console.error("[PayFast ITN] Amount mismatch:", {
+        expected: purchase.amount,
+        received: pfAmount,
+      });
+      return;
+    }
+
+    // 6. Handle payment completion
+    const paymentStatus = pfData.payment_status;
+
+    if (paymentStatus === "COMPLETE") {
+      const wasUpdated = await storage.updatePurchaseStatus(
+        purchase.id,
+        "completed",
+        pfData.pf_payment_id,
+        undefined
+      );
+
+      if (!wasUpdated) {
+        console.log(
+          "[PayFast ITN] Purchase already processed (duplicate):",
+          purchaseId
+        );
+        return;
       }
 
-      // 4. Validate amount matches (prevent forged notifications)
-      const pfAmount = parseFloat(pfData.amount_gross) * 100; // Convert to cents
-      if (Math.abs(purchase.amount - pfAmount) > 1) {
-        // Allow 1 cent rounding
-        console.error("Amount mismatch:", {
-          expected: purchase.amount,
-          received: pfAmount,
+      console.log("[PayFast ITN] Processing completion:", purchaseId);
+
+      // Update deposit tracking if applicable
+      if (purchase.isDepositOnly) {
+        const balanceDue = new Date();
+        balanceDue.setDate(balanceDue.getDate() + 2);
+        await storage.updatePurchase(purchase.id, {
+          depositPaidAt: new Date(),
+          balanceDueAt: balanceDue,
         });
-        return res.status(400).send("Amount mismatch");
+        console.log(`[SECURE] Deposit paid for ${purchaseId}`);
       }
 
-      // 5. Respond immediately (PayFast requirement)
-      res.status(200).send("OK");
+      // Send gift notification if applicable
+      await handlePurchaseCompletion(purchase.id);
 
-      // 6. Process asynchronously with atomic idempotency
-      if (paymentStatus === "COMPLETE") {
-        // Atomic status update - only proceeds if not already completed
-        const wasUpdated = await storage.updatePurchaseStatus(
-          purchase.id,
-          "completed",
-          pfData.pf_payment_id,
-          undefined, // Certificate URL added later
+      // Update seat count
+      await storage.updateSeatSold(purchase.seatType, 1);
+
+      // Generate codes
+      const bronzeClaimCode = await storage.createCode({
+        purchaseId: purchase.id,
+        type: "bronze_claim",
+        code: generateBronzeClaimCode(),
+        discount: 0,
+        transferable: false,
+        maxRedemptions: 1,
+        appliesTo: "bronze_claim",
+      });
+
+      const workshopCode = await storage.createCode({
+        purchaseId: purchase.id,
+        type: "workshop_voucher",
+        code: generateWorkshopVoucherCode(purchase.seatType),
+        discount: getWorkshopVoucherDiscount(purchase.seatType),
+        transferable: true,
+        maxRedemptions: 1,
+        appliesTo: "workshop",
+      });
+
+      const lifetimeWorkshopCode = await storage.createCode({
+        purchaseId: purchase.id,
+        type: "lifetime_workshop",
+        code: generateLifetimeWorkshopCode(purchase.seatType),
+        discount: getLifetimeWorkshopDiscount(purchase.seatType),
+        transferable: true,
+        maxRedemptions: null as any,
+        appliesTo: "workshop",
+      });
+
+      let commissionVoucherCode = null;
+      if (purchase.commissionVoucher) {
+        commissionVoucherCode = await storage.createCode({
+          purchaseId: purchase.id,
+          type: "commission_voucher",
+          code: generateCommissionVoucherCode(purchase.seatType),
+          discount: getCommissionVoucherDiscount(purchase.seatType),
+          transferable: true,
+          maxRedemptions: 1,
+          appliesTo: "commission",
+        });
+      }
+
+      // Get user info
+      const user = await storage.getUser(purchase.userId);
+      const userName =
+        user?.firstName && user?.lastName
+          ? `${user.firstName} ${user.lastName}`
+          : user?.firstName || "Valued Investor";
+
+      const allCodes = [bronzeClaimCode, workshopCode, lifetimeWorkshopCode];
+      if (commissionVoucherCode) allCodes.push(commissionVoucherCode);
+
+      // Generate certificate and code slips
+      let certificateUrl = "";
+      let codeSlipsUrl = "";
+      try {
+        certificateUrl = await generateCertificate(
+          purchase,
+          allCodes,
+          userName
+        );
+        codeSlipsUrl = await generateCodeSlips(purchase, allCodes, userName);
+
+        if (certificateUrl) {
+          await storage.updatePurchaseStatus(
+            purchase.id,
+            "completed",
+            pfData.pf_payment_id,
+            certificateUrl
+          );
+        }
+      } catch (certError) {
+        console.error(
+          "[PayFast ITN] Certificate generation failed:",
+          certError
+        );
+      }
+
+      console.log(
+        "[PayFast ITN] Purchase completed successfully:",
+        purchaseId
+      );
+
+      // Send emails
+      const userEmail = user?.email || pfData.email_address;
+      if (userEmail) {
+        // Always send confirmation email
+        sendPurchaseConfirmationEmail(userEmail, userName, purchase).catch(
+          (err) => console.error("[Email] Confirmation failed:", err)
         );
 
-        if (!wasUpdated) {
-          console.log(
-            "Purchase already processed (duplicate notification):",
-            purchaseId,
-          );
-          return; // Another notification already processed this purchase
-        }
-
-        // Now safe to proceed - only one notification won the race
-        console.log("Processing purchase completion:", purchaseId);
-
-        // Update deposit tracking if this is a deposit payment
-        if (purchase.isDepositOnly) {
-          const balanceDue = new Date();
-          balanceDue.setDate(balanceDue.getDate() + 2); // 48 hours to pay balance
-          await storage.updatePurchase(purchase.id, {
-            depositPaidAt: new Date(),
-            balanceDueAt: balanceDue,
-          });
-          console.log(`[SECURE] Deposit paid for ${purchaseId}, balance due ${balanceDue.toISOString()}`);
-        }
-
-        // Send gift notification if this is a gift purchase
-        await handlePurchaseCompletion(purchase.id);
-
-        // Update seat count
-        await storage.updateSeatSold(purchase.seatType, 1);
-
-        // Generate codes: bronze claim + workshop vouchers (always) + commission voucher (if purchased)
-        const bronzeClaimCode = await storage.createCode({
-          purchaseId: purchase.id,
-          type: "bronze_claim",
-          code: generateBronzeClaimCode(),
-          discount: 0,
-          transferable: false,
-          maxRedemptions: 1,
-          appliesTo: "bronze_claim",
-        });
-
-        const workshopCode = await storage.createCode({
-          purchaseId: purchase.id,
-          type: "workshop_voucher",
-          code: generateWorkshopVoucherCode(purchase.seatType),
-          discount: getWorkshopVoucherDiscount(purchase.seatType),
-          transferable: true,
-          maxRedemptions: 1,
-          appliesTo: "workshop",
-        });
-
-        const lifetimeWorkshopCode = await storage.createCode({
-          purchaseId: purchase.id,
-          type: "lifetime_workshop",
-          code: generateLifetimeWorkshopCode(purchase.seatType),
-          discount: getLifetimeWorkshopDiscount(purchase.seatType),
-          transferable: true,
-          maxRedemptions: null as any,
-          appliesTo: "workshop",
-        });
-
-        // Generate commission voucher code if purchased
-        let commissionVoucherCode = null;
-        if (purchase.commissionVoucher) {
-          commissionVoucherCode = await storage.createCode({
-            purchaseId: purchase.id,
-            type: "commission_voucher",
-            code: generateCommissionVoucherCode(purchase.seatType),
-            discount: getCommissionVoucherDiscount(purchase.seatType),
-            transferable: true,
-            maxRedemptions: 1,
-            appliesTo: "commission",
-          });
-        }
-
-        // Get user info for certificate
-        const user = await storage.getUser(purchase.userId);
-        const userName =
-          user?.firstName && user?.lastName
-            ? `${user.firstName} ${user.lastName}`
-            : user?.firstName || "Valued Investor";
-
-        // Build codes array for certificate and emails (3 or 4 codes depending on commission voucher)
-        const allCodes = [bronzeClaimCode, workshopCode, lifetimeWorkshopCode];
-        if (commissionVoucherCode) {
-          allCodes.push(commissionVoucherCode);
-        }
-
-        // Generate certificate and code slips (can fail without breaking completion)
-        let certificateUrl = "";
-        let codeSlipsUrl = "";
-        try {
-          certificateUrl = await generateCertificate(
+        // Send certificate email if we have the certificate
+        if (certificateUrl) {
+          sendCertificateEmail(
+            userEmail,
+            userName,
             purchase,
             allCodes,
-            userName,
+            certificateUrl,
+            codeSlipsUrl
+          ).catch((err) =>
+            console.error("[Email] Certificate email failed:", err)
           );
-
-          codeSlipsUrl = await generateCodeSlips(purchase, allCodes, userName);
-
-          // Update with certificate URL if generated
-          if (certificateUrl) {
-            await storage.updatePurchaseStatus(
-              purchase.id,
-              "completed",
-              pfData.pf_payment_id,
-              certificateUrl,
-            );
-          }
-        } catch (certError) {
-          console.error("Certificate/code slip generation failed:", certError);
-          // Purchase still marked complete, certificate can be regenerated later
-        }
-
-        console.log("Purchase completed successfully:", purchaseId);
-
-        // Send email notifications (best effort, async)
-        // Try to get email from user record first, then from PayFast notification
-        const userEmail = user?.email || pfData.email_address;
-        console.log("[Email] Sending notifications to:", userEmail, "| Certificate:", certificateUrl ? "generated" : "pending");
-
-        if (userEmail) {
-          // Always send confirmation email - certificate can fail without blocking email
-          sendPurchaseConfirmationEmail(userEmail, userName, purchase).catch(
-            (err) => console.error("[Email] Confirmation failed:", err),
-          );
-
-          // Send certificate email if we have the certificate
-          if (certificateUrl) {
-            sendCertificateEmail(
-              userEmail,
-              userName,
-              purchase,
-              allCodes,
-              certificateUrl,
-              codeSlipsUrl,
-            ).catch((err) => console.error("[Email] Certificate email failed:", err));
-          } else {
-            console.log("[Email] Certificate not yet ready for", purchaseId, "- will be sent when generated");
-          }
         } else {
-          console.error("[Email] No email found for purchase", purchaseId, "- user:", user, "payfast data:", pfData.email_address);
-        }
-
-        // Add to Mailchimp (async, best effort)
-        if (userEmail) {
-          const nameParts = userName.split(" ");
-          addSubscriberToMailchimp({
-            email: userEmail,
-            firstName: nameParts[0] || undefined,
-            lastName: nameParts.slice(1).join(" ") || undefined,
-            tags: ["Founding 100 Investor", purchase.seatType],
-          }).catch((err) =>
-            console.error("[Mailchimp] Failed to sync purchaser:", err),
+          console.log(
+            "[Email] Certificate not yet ready for",
+            purchaseId,
+            "- will be sent when generated"
           );
         }
-      } else if (paymentStatus === "FAILED" || paymentStatus === "CANCELLED") {
-        await storage.updatePurchaseStatus(
-          purchaseId,
-          "failed",
-          pfData.pf_payment_id,
-          undefined,
+      } else {
+        console.error("[Email] No email found for purchase", purchaseId);
+      }
+
+      // Add to Mailchimp
+      if (userEmail) {
+        const nameParts = userName.split(" ");
+        addSubscriberToMailchimp({
+          email: userEmail,
+          firstName: nameParts[0] || undefined,
+          lastName: nameParts.slice(1).join(" ") || undefined,
+          tags: ["Founding 100 Investor", purchase.seatType],
+        }).catch((err) =>
+          console.error("[Mailchimp] Failed to sync purchaser:", err)
         );
       }
-    } catch (error: any) {
-      console.error("Payment notification error:", error);
-      // Already responded, so just log the error
+    } else if (
+      paymentStatus === "FAILED" ||
+      paymentStatus === "CANCELLED"
+    ) {
+      await storage.updatePurchaseStatus(
+        purchaseId,
+        "failed",
+        pfData.pf_payment_id,
+        undefined
+      );
     }
-  });
-
+  } catch (error: any) {
+    console.error("Payment notification error:", error);
+  }
+});
   // Public: Get all sculptures
   app.get("/api/sculptures", async (_req: Request, res: Response) => {
     try {
