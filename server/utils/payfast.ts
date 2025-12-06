@@ -192,8 +192,8 @@ export function verifyPayFastSignature(data: Record<string, string>, signature: 
   for (const key of sortedKeys) {
     const raw = data[key];
 
-    // Only skip undefined – PayFast still includes empty strings ("")
-    if (raw === undefined) continue;
+    // Skip undefined AND empty strings
+if (raw === undefined || raw === '') continue;
 
     const value = raw.toString();
     // URL encode and replace %20 with + as per PayFast spec
