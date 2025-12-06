@@ -187,15 +187,18 @@ export function verifyPayFastSignature(data: Record<string, string>, signature: 
     .filter(key => key !== 'signature')
     .sort();
   
-  // Build param string in alphabetical order
+   // Build param string in alphabetical order
   let paramString = '';
   for (const key of sortedKeys) {
-    const value = data[key];
-    if (value !== undefined && value !== '') {
-      // URL encode and replace %20 with + as per PayFast spec
-      const encodedValue = encodeURIComponent(value.trim()).replace(/%20/g, '+');
-      paramString += `${key}=${encodedValue}&`;
-    }
+    const raw = data[key];
+
+    // Only skip undefined – PayFast still includes empty strings ("")
+    if (raw === undefined) continue;
+
+    const value = raw.toString();
+    // URL encode and replace %20 with + as per PayFast spec
+    const encodedValue = encodeURIComponent(value.trim()).replace(/%20/g, '+');
+    paramString += `${key}=${encodedValue}&`;
   }
   
   // Remove trailing &
