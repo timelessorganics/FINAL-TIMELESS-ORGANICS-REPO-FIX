@@ -3983,7 +3983,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         urls: {
           return_url: `${process.env.FRONTEND_URL || 'https://www.timeless.organic'}/payment/success`,
           cancel_url: `${process.env.FRONTEND_URL || 'https://www.timeless.organic'}/payment/cancel`,
-          notify_url: `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/payment/notify`,
+          notify_url: `${process.env.BACKEND_URL || 'http://localhost:5000'}/api/payfast/notify`,
         },
         issues: [] as string[],
       };
