@@ -790,7 +790,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   );
 
   // Public: PayFast webhook (ITN - Instant Transaction Notification)
-  app.post("/api/payment/notify", async (req: Request, res: Response) => {
+  app.post("/api/payfast/notify", async (req: Request, res: Response) => {
     try {
       const pfData = req.body;
       console.log("PayFast notification received:", pfData);
