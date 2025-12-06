@@ -105,3 +105,7 @@ app.use((req, res, next) => {
   });
 })();
 // Force redeploy
+import adminEmailRoutes from "./routes/admin-email";
+
+// after app = fastify(...) and before app.listen(...)
+await adminEmailRoutes(app);
