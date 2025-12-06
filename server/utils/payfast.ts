@@ -138,9 +138,10 @@ export function createPaymentData(
   const frontendUrl = process.env.FRONTEND_URL || 'https://www.timeless.organic';
   
   // Backend URL for PayFast webhook notifications
-  const backendUrl = process.env.BACKEND_URL
-    || (process.env.REPLIT_DOMAINS ? `https://${process.env.REPLIT_DOMAINS.split(',')[0]}` : null)
-    || 'http://localhost:5000';
+const backendUrl = process.env.BACKEND_URL;
+if (!backendUrl) {
+  throw new Error("[PayFast] BACKEND_URL is not set. Set it to your Railway URL.");
+}
   
   console.log('[PayFast] Frontend URL (return/cancel):', frontendUrl);
   console.log('[PayFast] Backend URL (notify webhook):', backendUrl);
