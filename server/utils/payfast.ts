@@ -23,15 +23,21 @@ interface PaymentData {
   [key: string]: string | undefined;
 }
 
+// PayFast server IPs for ITN validation
+const PAYFAST_IPS = [
+  '197.97.145.144',
+  '197.97.145.145',
+  '197.97.145.146',
+  '197.97.145.147',
+  '197.97.145.148'
+];
+
 export function getPayFastConfig(): PayFastConfig {
-  // CRITICAL: PayFast Onsite Payments require production/live mode and credentials
-  // Sandbox mode is NOT supported for onsite payments
   const mode = (process.env.PAYFAST_MODE as 'sandbox' | 'production' | 'live');
   const merchantId = process.env.PAYFAST_MERCHANT_ID;
   const merchantKey = process.env.PAYFAST_MERCHANT_KEY;
   const passphrase = process.env.PAYFAST_PASSPHRASE;
   
-  // Enforce required configuration
   if (!merchantId || !merchantKey || !passphrase || !mode) {
     throw new Error(
       'PayFast configuration missing. Required: PAYFAST_MERCHANT_ID, PAYFAST_MERCHANT_KEY, PAYFAST_PASSPHRASE, PAYFAST_MODE'
@@ -40,7 +46,6 @@ export function getPayFastConfig(): PayFastConfig {
   
   if (mode === 'sandbox') {
     console.warn('[PayFast Config] WARNING: Sandbox mode does not support Onsite Payments!');
-    console.warn('[PayFast Config] Set PAYFAST_MODE=production or PAYFAST_MODE=live for real transactions.');
   }
   
   const config: PayFastConfig = {
@@ -59,18 +64,14 @@ export function generatePayFastUrl(): string {
   const config = getPayFastConfig();
   return config.mode === 'sandbox'
     ? 'https://sandbox.payfast.co.za/eng/process'
-    : 'https://www.payfast.co.za/eng/process'; // production and live both use live endpoint
+    : 'https://www.payfast.co.za/eng/process';
 }
 
-export function generateSignature(data: Record<string, string>, passphrase?: string, skipEmptyFields: boolean = true): string {
-  // CRITICAL: PayFast CUSTOM INTEGRATION (simple form) uses FIELD ORDER, NOT alphabetical
-  // Reference: https://developers.payfast.co.za/docs#step_2_signature
-  // Quote: "The pairs must be listed in the order in which they appear in the attributes description"
-  // Quote: "*Do not use the API signature format, which uses alphabetical ordering!*"
-  // For webhooks (ITN): skipEmptyFields=false (include all fields PayFast sends)
-  // For payment forms: skipEmptyFields=true (skip empty/blank fields)
-  
-  // Preserve the correct field order from PayFast documentation (NOT alphabetical)
+export function generateSignature(
+  data: Record<string, string>, 
+  passphrase?: string, 
+  skipEmptyFields: boolean = true
+): string {
   const fieldOrder = [
     'merchant_id', 'merchant_key', 'return_url', 'cancel_url', 'notify_url',
     'name_first', 'name_last', 'email_address', 'cell_number',
@@ -82,22 +83,17 @@ export function generateSignature(data: Record<string, string>, passphrase?: str
   
   let paramString = '';
   
-  // Build parameter string using PayFast field order
   for (const key of fieldOrder) {
     const value = data[key];
     
-    // Skip signature and passphrase fields (passphrase is appended separately at the end)
     if (key === 'signature' || key === 'passphrase') continue;
     
-    // For payment forms, skip empty fields. For webhooks, include them.
     if (skipEmptyFields && (!value || value === '')) continue;
     
-    // URL encode and replace %20 with + as per PayFast spec
     const encodedValue = encodeURIComponent((value || '').trim()).replace(/%20/g, '+');
     paramString += `${key}=${encodedValue}&`;
   }
   
-  // Also add any extra fields not in the standard list (for future extensibility)
   for (const key of Object.keys(data)) {
     if (fieldOrder.includes(key) || key === 'signature' || key === 'passphrase') continue;
     const value = data[key];
@@ -106,19 +102,15 @@ export function generateSignature(data: Record<string, string>, passphrase?: str
     paramString += `${key}=${encodedValue}&`;
   }
   
-  // Remove trailing ampersand
   paramString = paramString.slice(0, -1);
   
-  // SECURITY: Log BEFORE adding passphrase
-  console.log('[PayFast] Building signature using FIELD ORDER (not alphabetical) for merchant:', data.merchant_id?.substring(0, 4) + '****');
+  console.log('[PayFast] Building signature using FIELD ORDER');
   console.log('[PayFast] Param string (first 100 chars):', paramString.substring(0, 100));
   
-  // Append passphrase to end
   if (passphrase) {
     paramString += `&passphrase=${encodeURIComponent(passphrase.trim()).replace(/%20/g, '+')}`;
   }
   
-  // Generate MD5 hash
   const signature = crypto.createHash('md5').update(paramString).digest('hex');
   console.log('[PayFast] Generated signature:', signature);
   
@@ -134,30 +126,22 @@ export function createPaymentData(
 ): PaymentData {
   const config = getPayFastConfig();
   
-  // Frontend URL for user redirects (return/cancel)
   const frontendUrl = process.env.FRONTEND_URL || 'https://www.timeless.organic';
+  const backendUrl = process.env.BACKEND_URL;
   
-  // Backend URL for PayFast webhook notifications
-const backendUrl = process.env.BACKEND_URL;
-if (!backendUrl) {
-  throw new Error("[PayFast] BACKEND_URL is not set. Set it to your Railway URL.");
-}
-  console.log('[PayFast] notify_url ->', `${backendUrl}/api/payfast/notify`);
-
-  console.log('[PayFast] Frontend URL (return/cancel):', frontendUrl);
-  console.log('[PayFast] Backend URL (notify webhook):', backendUrl);
-
-  // CRITICAL: PayFast m_payment_id has 32-character limit
-  // Strip hyphens from UUID (36 chars → 32 chars)
+  if (!backendUrl) {
+    throw new Error("[PayFast] BACKEND_URL is not set. Set it to your Railway URL.");
+  }
+  
+  console.log('[PayFast] Frontend URL:', frontendUrl);
+  console.log('[PayFast] Backend URL:', backendUrl);
+  
   const paymentRef = purchaseId.replace(/-/g, '');
   
   if (paymentRef.length > 32) {
     throw new Error(`PayFast m_payment_id too long: ${paymentRef.length} chars (max 32)`);
   }
 
-  // CRITICAL: Order of properties MUST match PayFast documentation exactly
-  // This order is used for signature generation - DO NOT REORDER!
-  // Reference: https://developers.payfast.co.za/docs#step_2_signature
   const data: PaymentData = {
     merchant_id: config.merchantId,
     merchant_key: config.merchantKey,
@@ -167,7 +151,7 @@ if (!backendUrl) {
     name_first: firstName,
     email_address: email,
     m_payment_id: paymentRef,
-    amount: (amount / 100).toFixed(2), // Convert cents to rands
+    amount: (amount / 100).toFixed(2),
     item_name: seatType === 'founder' ? 'Founders Pass' : 'Patron Gift Card',
     item_description: `Timeless Organics ${seatType === 'founder' ? 'Founder' : 'Patron'} Seat`,
   };
@@ -175,36 +159,31 @@ if (!backendUrl) {
   return data;
 }
 
-export function verifyPayFastSignature(data: Record<string, string>, signature: string): boolean {
+export function verifyPayFastSignature(
+  data: Record<string, string>, 
+  signature: string
+): boolean {
   const config = getPayFastConfig();
   
-  // CRITICAL: ITN (webhook) signature uses ALPHABETICAL order, not form order!
-  // Reference: https://developers.payfast.co.za/docs#step_4_confirm_payment
-  // "Sort the data alphabetically by key before creating the parameter string"
-  
-  // Get all keys except signature, sort alphabetically
+  // Sort alphabetically for ITN verification
   const sortedKeys = Object.keys(data)
     .filter(key => key !== 'signature')
     .sort();
   
-   // Build param string in alphabetical order
   let paramString = '';
   for (const key of sortedKeys) {
     const raw = data[key];
 
-    // Skip undefined AND empty strings
-if (raw === undefined || raw === '') continue;
+    // FIXED: Skip undefined AND empty strings for ITN
+    if (raw === undefined || raw === '') continue;
 
-    const value = raw.toString();
-    // URL encode and replace %20 with + as per PayFast spec
+    const value = String(raw); // Safer type coercion
     const encodedValue = encodeURIComponent(value.trim()).replace(/%20/g, '+');
     paramString += `${key}=${encodedValue}&`;
   }
   
-  // Remove trailing &
   paramString = paramString.slice(0, -1);
   
-  // Add passphrase at the end
   if (config.passphrase) {
     paramString += `&passphrase=${encodeURIComponent(config.passphrase.trim()).replace(/%20/g, '+')}`;
   }
@@ -212,7 +191,6 @@ if (raw === undefined || raw === '') continue;
   console.log('[PayFast ITN] Verifying with alphabetical order');
   console.log('[PayFast ITN] Param string (first 100 chars):', paramString.substring(0, 100));
   
-  // Generate MD5 hash
   const calculatedSignature = crypto.createHash('md5').update(paramString).digest('hex');
   
   console.log('[PayFast ITN] Expected signature:', signature);
@@ -221,10 +199,111 @@ if (raw === undefined || raw === '') continue;
   const isValid = calculatedSignature === signature;
   
   if (!isValid) {
-    console.log('[PayFast ITN] Signature mismatch!');
+    console.error('[PayFast ITN] Signature mismatch!');
   } else {
-    console.log('[PayFast ITN] Signature verified successfully!');
+    console.log('[PayFast ITN] Signature verified ✓');
   }
   
   return isValid;
+}
+
+// NEW: Validate PayFast server IP
+export function isValidPayFastIP(ip: string): boolean {
+  // Extract IP from potential X-Forwarded-For format
+  const clientIp = ip.split(',')[0].trim();
+  const isValid = PAYFAST_IPS.includes(clientIp);
+  
+  if (!isValid) {
+    console.warn(`[PayFast ITN] Invalid IP: ${clientIp}`);
+  }
+  
+  return isValid;
+}
+
+// NEW: Validate payment status
+export function isSuccessfulPayment(paymentStatus: string): boolean {
+  return paymentStatus === 'COMPLETE';
+}
+
+// NEW: Confirm payment with PayFast API
+export async function validatePaymentWithPayFast(
+  pfData: Record<string, string>
+): Promise<boolean> {
+  const config = getPayFastConfig();
+  const validationUrl = config.mode === 'sandbox'
+    ? 'https://sandbox.payfast.co.za/eng/query/validate'
+    : 'https://www.payfast.co.za/eng/query/validate';
+  
+  // Build param string (same format as signature, without passphrase)
+  const paramString = Object.keys(pfData)
+    .filter(key => key !== 'signature')
+    .sort()
+    .map(key => {
+      const value = String(pfData[key] || '');
+      return `${key}=${encodeURIComponent(value)}`;
+    })
+    .join('&');
+  
+  try {
+    console.log('[PayFast] Validating with API:', validationUrl);
+    
+    const response = await fetch(validationUrl, {
+      method: 'POST',
+      headers: { 
+        'Content-Type': 'application/x-www-form-urlencoded',
+        'User-Agent': 'Timeless-Organics/1.0'
+      },
+      body: paramString
+    });
+    
+    const result = await response.text();
+    const isValid = result.trim() === 'VALID';
+    
+    console.log('[PayFast] API validation result:', result, '→', isValid ? '✓' : '✗');
+    
+    return isValid;
+  } catch (error) {
+    console.error('[PayFast] Validation API error:', error);
+    return false;
+  }
+}
+
+// NEW: Complete ITN validation workflow
+export async function validateITN(
+  pfData: Record<string, string>,
+  signature: string,
+  clientIp: string
+): Promise<{ valid: boolean; errors: string[] }> {
+  const errors: string[] = [];
+  
+  // Step 1: Verify IP
+  if (!isValidPayFastIP(clientIp)) {
+    errors.push(`Invalid source IP: ${clientIp}`);
+  }
+  
+  // Step 2: Verify signature
+  if (!verifyPayFastSignature(pfData, signature)) {
+    errors.push('Signature verification failed');
+  }
+  
+  // Step 3: Verify payment status
+  if (!isSuccessfulPayment(pfData.payment_status || '')) {
+    errors.push(`Payment not complete: ${pfData.payment_status}`);
+  }
+  
+  // Step 4: Validate with PayFast API
+  const apiValid = await validatePaymentWithPayFast(pfData);
+  if (!apiValid) {
+    errors.push('PayFast API validation failed');
+  }
+  
+  const valid = errors.length === 0;
+  
+  if (valid) {
+    console.log('[PayFast ITN] All validation checks passed ✓');
+  } else {
+    console.error('[PayFast ITN] Validation failed:', errors);
+  }
+  
+  return { valid, errors };
 }
