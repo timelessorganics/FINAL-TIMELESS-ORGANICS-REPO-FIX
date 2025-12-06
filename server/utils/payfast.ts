@@ -142,7 +142,8 @@ const backendUrl = process.env.BACKEND_URL;
 if (!backendUrl) {
   throw new Error("[PayFast] BACKEND_URL is not set. Set it to your Railway URL.");
 }
-  
+  console.log('[PayFast] notify_url ->', `${backendUrl}/api/payment/notify`);
+
   console.log('[PayFast] Frontend URL (return/cancel):', frontendUrl);
   console.log('[PayFast] Backend URL (notify webhook):', backendUrl);
 
